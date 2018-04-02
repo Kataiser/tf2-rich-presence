@@ -1,0 +1,2 @@
+https://teamwork.tf/community/quickplay/
+https://teamwork.tf/images/quickplay/gamemode/*.png
