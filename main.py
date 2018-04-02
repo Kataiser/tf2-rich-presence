@@ -1,5 +1,4 @@
 import os
-import sys
 import time
 
 import psutil
@@ -49,6 +48,7 @@ def main():
 
             current_map = ''
             current_class = ''
+            party_state = 'Not in a party'
 
             config_files('classes', tf2_location)
 
@@ -57,10 +57,13 @@ def main():
                 line = consolelog_file.readline()
 
                 while line != '':
+                    if '[PartyClient] Joining party ' in line and not line.endswith('0\n'):
+                        party_state = 'In a party'
 
                     if 'Map: ' in line:
                         current_map = line[5:-1]
                         current_class = 'unselected'
+                        party_state = 'Not in a party'
 
                     if ' selected' in line:
                         current_class = line[:-11]
@@ -92,7 +95,6 @@ def main():
                 activity['details'] = 'Map: {}'.format(current_map)
                 activity['state'] = 'Class: {}'.format(current_class)
             else:
-                party_state = 'Not in a party'
                 print('{} ({})'.format(current_map, party_state.lower()))
                 activity['details'] = current_map
                 activity['state'] = party_state
@@ -101,16 +103,16 @@ def main():
 
             client.update_activity(activity)
         else:
-            print("Not running TF2")
-
             if client_connected:
                 try:
                     client.disconnect()
                 except:
                     pass
 
-                print('TF2 closed')
+                print('TF2 closed, exiting')
                 raise SystemExit
+            else:
+                print("Not running TF2")
 
             client_connected = False
 
@@ -163,12 +165,9 @@ def config_files(mode, exe_location):
                   '\n2. Open properties (very bottom)'
                   '\n3. Click "Set launch options..."'
                   '\n4. Add -condebug'
-                  '\n5. OK and Close\n', file=sys.stderr)
+                  '\n5. OK and Close\n')
             raise SystemExit
 
 
 if __name__ == '__main__':
     main()
-
-'[PartyClient] Joining party 489756397856 (joined)'
-'[PartyClient] Joining party 0'
