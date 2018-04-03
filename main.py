@@ -44,7 +44,7 @@ def main():
 
         # used for display only
         current_time = datetime.datetime.now()
-        current_time_formatted = current_time.strftime('%#I:%#M:%S %p')
+        current_time_formatted = current_time.strftime('%I:%sM:%S %p')
 
         if tf2_is_running:
             if not client_connected:
