@@ -1,5 +1,7 @@
-from bs4 import BeautifulSoup
+import json
+
 import requests
+from bs4 import BeautifulSoup
 
 gamemodes = {'Capture the Flag': 'ctf', 'Control Point': 'control-point', 'Attack/Defend': 'attack-defend', 'Attack/Defend (Medieval Mode)': 'medieval-mode',
              'Control Point (Domination)': 'control-point', 'Territorial Control': 'territorial-control', 'Payload': 'payload', 'Payload Race': 'payload-race',
@@ -31,3 +33,6 @@ for tr in soup.find_all('tr'):
         map_gamemodes[map_file] = (map_name, map_mode, gamemode_fancy)
 
 print(map_gamemodes)
+
+with open('maps.json', 'w') as maps_db:
+    json.dump(map_gamemodes, maps_db, indent=4)

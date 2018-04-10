@@ -1,5 +1,5 @@
-import shutil
 import os
+import shutil
 
 items_to_delete = ['tf2_rich_presence\\resources\\venv\\Scripts\\tk86t.dll',
                    'tf2_rich_presence\\resources\\venv\\Scripts\\tcl86t.dll',
@@ -8,6 +8,7 @@ items_to_delete = ['tf2_rich_presence\\resources\\venv\\Scripts\\tk86t.dll',
 requirements_to_keep = ['discoIPC', 'discoIPC-1.0.0.dist-info', 'psutil', 'psutil-5.4.3.dist-info', 'easy-install.pth']
 
 print("Copied", shutil.copy2('main.py', 'tf2_rich_presence\\resources\\'))
+print("Copied", shutil.copy2('maps.json', 'tf2_rich_presence\\resources\\'))
 print("Copied", shutil.copy2('run.bat', 'tf2_rich_presence\\'))
 
 shutil.rmtree('tf2_rich_presence\\resources\\venv')

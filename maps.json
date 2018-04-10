@@ -1,0 +1,477 @@
+{
+    "ctf_2fort": [
+        "2Fort",
+        "ctf",
+        "Capture the Flag"
+    ],
+    "ctf_2fort_invasion": [
+        "2Fort Invasion",
+        "ctf",
+        "Capture the Flag"
+    ],
+    "ctf_doublecross": [
+        "Double Cross",
+        "ctf",
+        "Capture the Flag"
+    ],
+    "ctf_landfall": [
+        "Landfall",
+        "ctf",
+        "Capture the Flag"
+    ],
+    "ctf_sawmill": [
+        "Sawmill",
+        "ctf",
+        "Capture the Flag"
+    ],
+    "ctf_turbine": [
+        "Turbine",
+        "ctf",
+        "Capture the Flag"
+    ],
+    "ctf_well": [
+        "Well",
+        "ctf",
+        "Capture the Flag"
+    ],
+    "cp_5gorge": [
+        "5Gorge",
+        "control-point",
+        "Control Point"
+    ],
+    "cp_badlands": [
+        "Badlands",
+        "control-point",
+        "Control Point"
+    ],
+    "cp_coldfront": [
+        "Coldfront",
+        "control-point",
+        "Control Point"
+    ],
+    "cp_fastlane": [
+        "Fastlane",
+        "control-point",
+        "Control Point"
+    ],
+    "cp_foundry": [
+        "Foundry",
+        "control-point",
+        "Control Point"
+    ],
+    "cp_freight_final1": [
+        "Freight",
+        "control-point",
+        "Control Point"
+    ],
+    "cp_granary": [
+        "Granary",
+        "control-point",
+        "Control Point"
+    ],
+    "cp_gullywash_final1": [
+        "Gullywash",
+        "control-point",
+        "Control Point"
+    ],
+    "cp_metalworks": [
+        "Metalworks",
+        "control-point",
+        "Control Point"
+    ],
+    "cp_powerhouse": [
+        "Powerhouse",
+        "control-point",
+        "Control Point"
+    ],
+    "cp_process_final": [
+        "Process",
+        "control-point",
+        "Control Point"
+    ],
+    "cp_sunshine_event": [
+        "Sinshine",
+        "control-point",
+        "Control Point"
+    ],
+    "cp_snakewater_final1": [
+        "Snakewater",
+        "control-point",
+        "Control Point"
+    ],
+    "cp_sunshine": [
+        "Sunshine",
+        "control-point",
+        "Control Point"
+    ],
+    "cp_vanguard": [
+        "Vanguard",
+        "control-point",
+        "Control Point"
+    ],
+    "cp_well": [
+        "Well",
+        "control-point",
+        "Control Point"
+    ],
+    "cp_yukon_final": [
+        "Yukon",
+        "control-point",
+        "Control Point"
+    ],
+    "cp_dustbowl": [
+        "Dustbowl",
+        "attack-defend",
+        "Attack/Defend"
+    ],
+    "cp_egypt_final": [
+        "Egypt",
+        "attack-defend",
+        "Attack/Defend"
+    ],
+    "cp_gorge": [
+        "Gorge",
+        "attack-defend",
+        "Attack/Defend"
+    ],
+    "cp_gorge_event": [
+        "Gorge Event",
+        "attack-defend",
+        "Attack/Defend"
+    ],
+    "cp_gravelpit": [
+        "Gravel Pit",
+        "attack-defend",
+        "Attack/Defend"
+    ],
+    "cp_junction_final": [
+        "Junction",
+        "attack-defend",
+        "Attack/Defend"
+    ],
+    "cp_manor_event": [
+        "Mann Manor",
+        "attack-defend",
+        "Attack/Defend"
+    ],
+    "cp_mercenarypark": [
+        "Mercenary Park",
+        "attack-defend",
+        "Attack/Defend"
+    ],
+    "cp_mossrock": [
+        "Mossrock",
+        "attack-defend",
+        "Attack/Defend"
+    ],
+    "cp_mountainlab": [
+        "Mountain Lab",
+        "attack-defend",
+        "Attack/Defend"
+    ],
+    "cp_snowplow": [
+        "Snowplow",
+        "attack-defend",
+        "Attack/Defend"
+    ],
+    "cp_steel": [
+        "Steel",
+        "attack-defend",
+        "Attack/Defend"
+    ],
+    "cp_degrootkeep": [
+        "DeGroot Keep",
+        "attack-defend",
+        "Attack/Defend (Medieval Mode)"
+    ],
+    "cp_standin_final": [
+        "Standin",
+        "control-point",
+        "Control Point (Domination)"
+    ],
+    "tc_hydro": [
+        "Hydro",
+        "territorial-control",
+        "Territorial Control"
+    ],
+    "pl_badwater": [
+        "Badwater Basin",
+        "payload",
+        "Payload"
+    ],
+    "pl_barnblitz": [
+        "Barnblitz",
+        "payload",
+        "Payload"
+    ],
+    "pl_borneo": [
+        "Borneo",
+        "payload",
+        "Payload"
+    ],
+    "pl_fifthcurve_event": [
+        "Brimstone",
+        "payload",
+        "Payload"
+    ],
+    "pl_cactuscanyon ": [
+        "Cactus Canyon",
+        "payload",
+        "Payload"
+    ],
+    "pl_enclosure_final": [
+        "Enclosure",
+        "payload",
+        "Payload"
+    ],
+    "pl_frontier_final": [
+        "Frontier",
+        "payload",
+        "Payload"
+    ],
+    "pl_goldrush": [
+        "Gold Rush",
+        "payload",
+        "Payload"
+    ],
+    "pl_millstone_event": [
+        "Hellstone",
+        "payload",
+        "Payload"
+    ],
+    "pl_hoodoo_final": [
+        "Hoodoo",
+        "payload",
+        "Payload"
+    ],
+    "pl_snowycoast": [
+        "Snowycoast",
+        "payload",
+        "Payload"
+    ],
+    "pl_swiftwater_final1": [
+        "Swiftwater",
+        "payload",
+        "Payload"
+    ],
+    "pl_thundermountain": [
+        "Thunder Mountain",
+        "payload",
+        "Payload"
+    ],
+    "pl_upward": [
+        "Upward",
+        "payload",
+        "Payload"
+    ],
+    "plr_bananabay": [
+        "Banana Bay",
+        "payload-race",
+        "Payload Race"
+    ],
+    "plr_hightower_event": [
+        "Helltower",
+        "payload-race",
+        "Payload Race"
+    ],
+    "plr_hightower": [
+        "Hightower",
+        "payload-race",
+        "Payload Race"
+    ],
+    "plr_nightfall_final": [
+        "Nightfall",
+        "payload-race",
+        "Payload Race"
+    ],
+    "plr_pipeline": [
+        "Pipeline",
+        "payload-race",
+        "Payload Race"
+    ],
+    "koth_badlands": [
+        "Badlands",
+        "koth",
+        "King of the Hill"
+    ],
+    "koth_brazil": [
+        "Brazil",
+        "koth",
+        "King of the Hill"
+    ],
+    "koth_viaduct_event": [
+        "Eyeaduct",
+        "koth",
+        "King of the Hill"
+    ],
+    "koth_lakeside_event": [
+        "Ghost Fort",
+        "koth",
+        "King of the Hill"
+    ],
+    "koth_harvest_final": [
+        "Harvest",
+        "koth",
+        "King of the Hill"
+    ],
+    "koth_harvest_event": [
+        "Harvest Event",
+        "koth",
+        "King of the Hill"
+    ],
+    "koth_highpass": [
+        "Highpass",
+        "koth",
+        "King of the Hill"
+    ],
+    "koth_king": [
+        "Kong King",
+        "koth",
+        "King of the Hill"
+    ],
+    "koth_lakeside_final": [
+        "Lakeside",
+        "koth",
+        "King of the Hill"
+    ],
+    "koth_lazarus": [
+        "Lazarus",
+        "koth",
+        "King of the Hill"
+    ],
+    "koth_maple_ridge_event": [
+        "Maple Ridge Event",
+        "koth",
+        "King of the Hill"
+    ],
+    "koth_moonshine_event": [
+        "Moonshine Event",
+        "koth",
+        "King of the Hill"
+    ],
+    "koth_nucleus": [
+        "Nucleus",
+        "koth",
+        "King of the Hill"
+    ],
+    "koth_probed": [
+        "Probed",
+        "koth",
+        "King of the Hill"
+    ],
+    "koth_sawmill": [
+        "Sawmill",
+        "koth",
+        "King of the Hill"
+    ],
+    "koth_suijin": [
+        "Suijin",
+        "koth",
+        "King of the Hill"
+    ],
+    "koth_viaduct": [
+        "Viaduct",
+        "koth",
+        "King of the Hill"
+    ],
+    "sd_doomsday_event": [
+        "Carnival of Carnage",
+        "special-delivery",
+        "Special Delivery"
+    ],
+    "sd_doomsday": [
+        "Doomsday",
+        "special-delivery",
+        "Special Delivery"
+    ],
+    "mvm_bigrock": [
+        "Bigrock",
+        "mvm",
+        "Mann vs. Machine"
+    ],
+    "mvm_coaltown": [
+        "Coal Town",
+        "mvm",
+        "Mann vs. Machine"
+    ],
+    "mvm_decoy": [
+        "Decoy",
+        "mvm",
+        "Mann vs. Machine"
+    ],
+    "mvm_example": [
+        "Example",
+        "mvm",
+        "Mann vs. Machine"
+    ],
+    "mvm_ghost_town": [
+        "Ghost Town",
+        "mvm",
+        "Mann vs. Machine"
+    ],
+    "mvm_mannhattan": [
+        "Mannhattan",
+        "mvm",
+        "Mann vs. Machine"
+    ],
+    "mvm_mannworks": [
+        "Mannworks",
+        "mvm",
+        "Mann vs. Machine"
+    ],
+    "mvm_rottenburg": [
+        "Rottenburg",
+        "mvm",
+        "Mann vs. Machine"
+    ],
+    "rd_asteroid": [
+        "Asteroid",
+        "beta-map",
+        "Robot Destruction"
+    ],
+    "ctf_foundry": [
+        "Foundry",
+        "mannpower",
+        "Mannpower"
+    ],
+    "ctf_gorge": [
+        "Gorge",
+        "mannpower",
+        "Mannpower"
+    ],
+    "ctf_hellfire": [
+        "Hellfire",
+        "mannpower",
+        "Mannpower"
+    ],
+    "ctf_thundermountain": [
+        "Thunder Mountain",
+        "mannpower",
+        "Mannpower"
+    ],
+    "pass_brickyard": [
+        "Brickyard",
+        "passtime",
+        "PASS Time"
+    ],
+    "pass_district": [
+        "District",
+        "passtime",
+        "PASS Time"
+    ],
+    "pass_timbertown": [
+        "Timberlodge",
+        "passtime",
+        "PASS Time"
+    ],
+    "pd_pit_of_death_event": [
+        "Pit of Death",
+        "player-destruction",
+        "Player Destruction"
+    ],
+    "pd_watergate": [
+        "Watergate",
+        "player-destruction",
+        "Player Destruction"
+    ]
+}
