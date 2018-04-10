@@ -130,7 +130,6 @@ def main():
                 except:
                     pass
 
-                print('{}\nTF2 closed, exiting'.format(current_time_formatted))
                 raise SystemExit  # ...but this does
             else:
                 print("{}\nNot running TF2\n".format(current_time_formatted))
