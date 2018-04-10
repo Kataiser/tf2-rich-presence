@@ -98,13 +98,14 @@ def main():
                 # not in menus = in a game
                 try:
                     map_fancy, current_gamemode, gamemode_fancy = map_gamemodes[current_map]
+                    activity['details'] = 'Map: {}'.format(map_fancy)
                     activity['assets']['large_image'] = current_gamemode
                     activity['assets']['large_text'] = gamemode_fancy
                 except KeyError:
+                    activity['details'] = 'Map: {}'.format(current_map)
                     activity['assets']['large_image'] = 'unknown_map'
                     activity['assets']['large_text'] = 'Unknown gamemode'
 
-                activity['details'] = 'Map: {}'.format(map_fancy)
                 activity['state'] = 'Class: {}'.format(current_class)
             else:
                 # in menus displays the main menu
