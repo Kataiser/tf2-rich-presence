@@ -21,6 +21,7 @@ def main():
     while True:
         tf2_is_running = False
         steam_is_running = False
+        discord_is_running = False
 
         # looks through all running processes to determine if tf2 is running and to find the paths of tf2 and steam
         for pid in psutil.pids():
@@ -34,6 +35,9 @@ def main():
                 if p.name() == "Steam.exe":
                     steam_location = p.cmdline()[0][:-9]
                     steam_is_running = True
+
+                if 'Discord' in p.name():
+                    discord_is_running = True
             except ps_exceptions.NoSuchProcess:
                 pass
             except ps_exceptions.AccessDenied:
@@ -47,7 +51,7 @@ def main():
         current_time = datetime.datetime.now()
         current_time_formatted = current_time.strftime('%I:%M:%S %p')
 
-        if tf2_is_running:
+        if tf2_is_running and discord_is_running:
             if not client_connected:
                 # connects to Discord
                 client = ipc.DiscordIPC('429389143756374017')
@@ -124,6 +128,8 @@ def main():
 
             # send everything to discord
             client.update_activity(activity)
+        elif not discord_is_running:
+            print("{}\nDiscord isn't running\n".format(current_time_formatted))
         else:
             if client_connected:
                 try:
@@ -133,7 +139,7 @@ def main():
 
                 raise SystemExit  # ...but this does
             else:
-                print("{}\nNot running TF2\n".format(current_time_formatted))
+                print("{}\nTF2 isn't running\n".format(current_time_formatted))
 
             # to prevent connecting when already connected
             client_connected = False
