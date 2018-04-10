@@ -1,17 +1,11 @@
 import shutil
 import os
 
-items_to_delete = ['tf2_rich_presence\\resources\\venv\\Lib\\site-packages\\beautifulsoup4-4.6.0.dist-info',
-                   'tf2_rich_presence\\resources\\venv\\Lib\\site-packages\\bs4',
-                   'tf2_rich_presence\\resources\\venv\\Lib\\site-packages\\lxml',
-                   'tf2_rich_presence\\resources\\venv\\Lib\\site-packages\\lxml-4.2.1.dist-info',
-                   'tf2_rich_presence\\resources\\venv\\Lib\\site-packages\\PIL',
-                   'tf2_rich_presence\\resources\\venv\\Lib\\site-packages\\pip-9.0.1-py3.6.egg',
-                   'tf2_rich_presence\\resources\\venv\\Scripts\\tk86t.dll',
+items_to_delete = ['tf2_rich_presence\\resources\\venv\\Scripts\\tk86t.dll',
                    'tf2_rich_presence\\resources\\venv\\Scripts\\tcl86t.dll',
                    'tf2_rich_presence\\resources\\venv\\Scripts\\sqlite3.dll',
-                   'tf2_rich_presence\\resources\\venv\Lib\\site-packages\\psutil\\tests',
-                   'tf2_rich_presence\\resources\\venv\\Lib\\site-packages\\setuptools-28.8.0-py3.6.egg']
+                   'tf2_rich_presence\\resources\\venv\Lib\\site-packages\\psutil\\tests']
+requirements_to_keep = ['discoIPC', 'discoIPC-1.0.0.dist-info', 'psutil', 'psutil-5.4.3.dist-info', 'easy-install.pth']
 
 print("Copied", shutil.copy2('main.py', 'tf2_rich_presence\\resources\\'))
 print("Copied", shutil.copy2('run.bat', 'tf2_rich_presence\\'))
@@ -28,6 +22,17 @@ for delete_this in items_to_delete:
         os.remove(delete_this)
 
     print("Deleted {}".format(delete_this))
+
+for site_package_item in os.listdir('tf2_rich_presence\\resources\\venv\Lib\\site-packages'):
+    if site_package_item not in requirements_to_keep:
+        delete_location = 'tf2_rich_presence\\resources\\venv\Lib\\site-packages\\' + site_package_item
+
+        try:
+            shutil.rmtree(delete_location)
+        except NotADirectoryError:
+            os.remove(delete_location)
+
+        print("Deleted {}".format(delete_location))
 
 for subdirectory in os.walk('tf2_rich_presence\\resources\\venv'):
     subdirectory_top = subdirectory[0]
