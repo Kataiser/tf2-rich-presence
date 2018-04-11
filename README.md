@@ -6,4 +6,4 @@ Discord Rich Presence for Team Fortress 2
 ## Download
 https://github.com/Kataiser/tf2-rich-presence/releases
 ## Installation and running
-Extract tf2_rich_presence.zip and double-click "run.bat". Only works when TF2, Steam, and Discord are running.
+Extract tf2_rich_presence.zip and double-click "TF2 rich presence.bat". Only works when TF2, Steam, and Discord are running.
