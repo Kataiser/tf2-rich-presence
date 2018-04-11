@@ -5,11 +5,11 @@ items_to_delete = ['tf2_rich_presence\\resources\\venv\\Scripts\\tk86t.dll',
                    'tf2_rich_presence\\resources\\venv\\Scripts\\tcl86t.dll',
                    'tf2_rich_presence\\resources\\venv\\Scripts\\sqlite3.dll',
                    'tf2_rich_presence\\resources\\venv\Lib\\site-packages\\psutil\\tests']
-requirements_to_keep = ['discoIPC', 'discoIPC-1.0.0.dist-info', 'psutil', 'psutil-5.4.3.dist-info', 'easy-install.pth']
+requirements_to_keep = ['discoIPC', 'discoIPC-1.0.0.dist-info', 'psutil', 'psutil-5.4.3.dist-info']
 
 print("Copied", shutil.copy2('main.py', 'tf2_rich_presence\\resources\\'))
 print("Copied", shutil.copy2('maps.json', 'tf2_rich_presence\\resources\\'))
-print("Copied", shutil.copy2('run.bat', 'tf2_rich_presence\\'))
+print("Copied", shutil.copy2('TF2 rich presence.bat', 'tf2_rich_presence\\'))
 
 shutil.rmtree('tf2_rich_presence\\resources\\venv')
 print("Cleared venv")
