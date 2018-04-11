@@ -97,8 +97,11 @@ def main():
 
                     if '[PartyClient] Entering queue for ' in line:
                         current_map = 'In menus'
-
                         current_class = 'Queued for {}'.format(match_types[line[33:-1]])
+
+                    if '[PartyClient] Entering standby queue ' in line:
+                        current_map = 'In menus'
+                        current_class = 'Queued for a party\'s match'
 
                     if '[PartyClient] Leaving queue' in line:
                         current_class = 'Not queued'
