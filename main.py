@@ -17,8 +17,13 @@ def main():
                 'state': ''}
     client_connected = False
 
-    with open('maps.json', 'r') as maps_db:
-        map_gamemodes = json.load(maps_db)
+    try:
+        maps_db = open('resources/maps.json', 'r')
+    except FileNotFoundError:
+        maps_db = open('maps.json', 'r')
+
+    map_gamemodes = json.load(maps_db)
+    maps_db.close()
 
     while True:
         tf2_is_running = False
