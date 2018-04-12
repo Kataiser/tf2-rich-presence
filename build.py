@@ -1,5 +1,7 @@
 import os
 import shutil
+import time
+import zipfile
 
 items_to_delete = ['tf2_rich_presence\\resources\\venv\\Scripts\\tk86t.dll',
                    'tf2_rich_presence\\resources\\venv\\Scripts\\tcl86t.dll',
@@ -7,12 +9,22 @@ items_to_delete = ['tf2_rich_presence\\resources\\venv\\Scripts\\tk86t.dll',
                    'tf2_rich_presence\\resources\\venv\Lib\\site-packages\\psutil\\tests']
 requirements_to_keep = ['discoIPC', 'discoIPC-1.0.0.dist-info', 'psutil', 'psutil-5.4.3.dist-info']
 
+try:
+    shutil.rmtree('tf2_rich_presence')
+    print("Removed old build folder")
+except FileNotFoundError:
+    print("No old build folder found")
+
+time.sleep(0.25)
+os.mkdir('tf2_rich_presence')
+os.mkdir('tf2_rich_presence\\resources')
+print("Created new build folder")
+
 print("Copied", shutil.copy2('main.py', 'tf2_rich_presence\\resources\\'))
 print("Copied", shutil.copy2('maps.json', 'tf2_rich_presence\\resources\\'))
 print("Copied", shutil.copy2('TF2 rich presence.bat', 'tf2_rich_presence\\'))
-
-shutil.rmtree('tf2_rich_presence\\resources\\venv')
-print("Cleared venv")
+print("Copied", shutil.copy2('LICENSE', 'tf2_rich_presence\\resources\\'))
+print("Copied", shutil.copy2('readme.txt', 'tf2_rich_presence\\'))
 
 print("Copied", shutil.copytree('venv', 'tf2_rich_presence\\resources\\venv'))
 
@@ -47,5 +59,9 @@ try:
 except FileNotFoundError:
     pass
 
-shutil.make_archive('tf2_rich_presence', 'zip', 'tf2_rich_presence')
+with zipfile.ZipFile('tf2_rich_presence.zip', 'w', zipfile.ZIP_LZMA) as archive_file:
+    for root, dirs, files in os.walk('tf2_rich_presence\\'):
+        for file in files:
+            archive_file.write(os.path.join(root, file))
+
 print("Created new archive")
