@@ -30,25 +30,31 @@ def main():
         steam_is_running = False
         discord_is_running = False
 
-        # looks through all running processes to determine if tf2 is running and to find the paths of tf2 and steam
-        for pid in psutil.pids():
+        # looks through all running processes to look for TF2, Steam, and Discord
+
+        for process in psutil.process_iter():
             try:
-                p = psutil.Process(pid)
+                with process.oneshot():
+                    p_name = process.name()
 
-                if p.name() == "hl2.exe" and 'Team Fortress 2' in p.cmdline()[0]:
-                    tf2_location = p.cmdline()[0][:-7]
-                    tf2_is_running = True
+                    if p_name == "hl2.exe":
+                        path_to = process.cmdline()[0][:-7]
 
-                if p.name() == "Steam.exe":
-                    steam_location = p.cmdline()[0][:-9]
-                    steam_is_running = True
-
-                if 'Discord' in p.name():
-                    discord_is_running = True
+                        if 'Team Fortress 2' in path_to:
+                            start_time = process.create_time()
+                            tf2_location = path_to
+                            tf2_is_running = True
+                    elif p_name == "Steam.exe":
+                        steam_location = process.cmdline()[0][:-9]
+                        steam_is_running = True
+                    elif 'Discord' in p_name:
+                        discord_is_running = True
             except ps_exceptions.NoSuchProcess:
                 pass
             except ps_exceptions.AccessDenied:
                 pass
+
+            time.sleep(0.001)
 
         if steam_is_running:
             # reads a steam config file
@@ -65,7 +71,7 @@ def main():
                 client.connect()
 
                 # sends first status, starts on main menu
-                start_time = int(time.time())
+                # start_time = int(time.time())
                 activity['timestamps']['start'] = start_time
                 client.update_activity(activity)
                 client_connected = True
@@ -103,7 +109,7 @@ def main():
                         current_map = 'In menus'
                         current_class = 'Queued for a party\'s match'
 
-                    if '[PartyClient] Leaving queue' in line:
+                    if '[PartyClient] Leaving queue' in line or '[PartyClient] Leaving standby queue' in line:
                         current_class = 'Not queued'
 
                     line = consolelog_file.readline()
