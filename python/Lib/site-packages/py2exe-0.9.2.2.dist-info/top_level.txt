@@ -1,0 +1,2 @@
+zipextimporter
+py2exe

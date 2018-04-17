@@ -3,10 +3,7 @@ import shutil
 import time
 import zipfile
 
-items_to_delete = ['tf2_rich_presence\\resources\\venv\\Scripts\\tk86t.dll',
-                   'tf2_rich_presence\\resources\\venv\\Scripts\\tcl86t.dll',
-                   'tf2_rich_presence\\resources\\venv\\Scripts\\sqlite3.dll',
-                   'tf2_rich_presence\\resources\\venv\Lib\\site-packages\\psutil\\tests']
+items_to_delete = []
 requirements_to_keep = ['discoIPC', 'discoIPC-1.0.0.dist-info', 'psutil', 'psutil-5.4.3.dist-info']
 
 try:
@@ -26,7 +23,7 @@ print("Copied", shutil.copy2('TF2 rich presence.bat', 'tf2_rich_presence\\'))
 print("Copied", shutil.copy2('LICENSE', 'tf2_rich_presence\\resources\\'))
 print("Copied", shutil.copy2('readme.txt', 'tf2_rich_presence\\'))
 
-print("Copied", shutil.copytree('venv', 'tf2_rich_presence\\resources\\venv'))
+print("Copied", shutil.copytree('python', 'tf2_rich_presence\\resources\\python'))
 
 for delete_this in items_to_delete:
     try:
@@ -36,26 +33,20 @@ for delete_this in items_to_delete:
 
     print("Deleted {}".format(delete_this))
 
-for site_package_item in os.listdir('tf2_rich_presence\\resources\\venv\Lib\\site-packages'):
-    if site_package_item not in requirements_to_keep:
-        delete_location = 'tf2_rich_presence\\resources\\venv\Lib\\site-packages\\' + site_package_item
+for root, dirs, files in os.walk('tf2_rich_presence\\resources\\python'):
+    if '__pycache__' in root:
+        shutil.rmtree(root)
+        print("Deleted", root)
 
-        try:
-            shutil.rmtree(delete_location)
-        except NotADirectoryError:
-            os.remove(delete_location)
-
-        print("Deleted {}".format(delete_location))
-
-for subdirectory in os.walk('tf2_rich_presence\\resources\\venv'):
-    subdirectory_top = subdirectory[0]
-    if '__pycache__' in subdirectory_top:
-        shutil.rmtree(subdirectory_top)
-        print("Deleted", subdirectory_top)
+    for file in files:
+        if file.endswith(".pdb"):
+            pdb_path = os.path.join(root, file)
+            os.remove(pdb_path)
+            print("Deleted {}".format(pdb_path))
 
 try:
     os.remove('tf2_rich_presence.zip')
-    print("Deleted old archive")
+    print("Old archive deleted")
 except FileNotFoundError:
     pass
 
@@ -63,5 +54,6 @@ with zipfile.ZipFile('tf2_rich_presence.zip', 'w', zipfile.ZIP_LZMA) as archive_
     for root, dirs, files in os.walk('tf2_rich_presence\\'):
         for file in files:
             archive_file.write(os.path.join(root, file))
+    print("New archive filled")
 
-print("Created new archive")
+print("New archive compressed")
