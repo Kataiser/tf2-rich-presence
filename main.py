@@ -2,16 +2,20 @@ import datetime
 import json
 import os
 import time
-import urllib3
-import certifi
 
+import certifi
 import psutil
 import psutil._exceptions as ps_exceptions
+import urllib3
 from discoIPC import ipc
 
 
 def main():
+    print("TF2 Rich Presence (v1.5) by Kataiser")
+    print("https://github.com/Kataiser/tf2-rich-presence\n")
+
     match_types = {'match group 12v12 Casual Match': 'Casual', 'match group MvM Practice': 'MvM', 'match group 6v6 Ladder Match': 'Competitive'}
+    disconnect_messages = ('Lobby destroyed', 'Steam config directory:', 'Dropped ', 'Disconnect: ', 'Missing map maps/')
     start_time = int(time.time())
     activity = {'details': 'In menus',  # this is what gets modified and sent to Discord via discoIPC
                 'timestamps': {'start': start_time},
@@ -99,7 +103,7 @@ def main():
                     if 'selected' in line and 'candidates' not in line:
                         current_class = line[:-11]
 
-                    if 'Lobby destroyed' in line or 'Steam config directory:' in line or 'Dropped ' in line or 'Disconnect: ' in line:
+                    if [i for i in disconnect_messages if i in line]:
                         current_map = 'In menus'  # so is this one
                         current_class = 'Not queued'
 
