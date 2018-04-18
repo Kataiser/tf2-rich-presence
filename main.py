@@ -237,7 +237,7 @@ def steam_config_file(exe_location):
 
 def find_custom_map_gamemode(map_filename):
     try:
-        custom_maps_db = open('resources/custom_maps.json', 'r')
+        custom_maps_db = open('resources\\custom_maps.json', 'r')
     except FileNotFoundError:
         custom_maps_db = open('custom_maps.json', 'r')
 
@@ -259,10 +259,15 @@ def find_custom_map_gamemode(map_filename):
         try:
             first_gamemode = map_info['all_gamemodes'][0]
             first_gamemode_fancy = gamemodes[first_gamemode]
-
             custom_map_gamemodes[map_filename] = [first_gamemode, first_gamemode_fancy]
-            with open('custom_maps.json', 'w') as maps_db:
-                json.dump(custom_map_gamemodes, maps_db, indent=4)
+
+            try:
+                custom_maps_db = open('resources\\custom_maps.json', 'w')
+            except FileNotFoundError:
+                custom_maps_db = open('custom_maps.json', 'w')
+
+            json.dump(custom_map_gamemodes, custom_maps_db, indent=4)
+            custom_maps_db.close()
 
             return first_gamemode, first_gamemode_fancy
         except KeyError:
