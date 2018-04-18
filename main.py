@@ -2,6 +2,8 @@ import datetime
 import json
 import os
 import time
+import urllib3
+import certifi
 
 import psutil
 import psutil._exceptions as ps_exceptions
@@ -123,8 +125,15 @@ def main():
                     activity['assets']['large_text'] = gamemode_fancy
                 except KeyError:
                     activity['details'] = 'Map: {}'.format(current_map)
-                    activity['assets']['large_image'] = 'unknown_map'
-                    activity['assets']['large_text'] = 'Unknown gamemode'
+
+                    custom_gamemode, custom_gamemode_fancy = find_custom_map_gamemode(current_map)
+                    if custom_gamemode is None:
+                        activity['assets']['large_image'] = 'unknown_map'
+                        activity['assets']['large_text'] = 'Unknown gamemode'
+                    else:
+                        activity['details'] = 'Map: {}'.format(current_map)
+                        activity['assets']['large_image'] = custom_gamemode
+                        activity['assets']['large_text'] = custom_gamemode_fancy
 
                 activity['state'] = 'Class: {}'.format(current_class)
             else:
@@ -224,6 +233,40 @@ def steam_config_file(exe_location):
               "\n5. OK and Close\n")
         # -condebug is kinda necessary so just exit if it's not there
         raise SystemExit
+
+
+def find_custom_map_gamemode(map_filename):
+    try:
+        custom_maps_db = open('resources/custom_maps.json', 'r')
+    except FileNotFoundError:
+        custom_maps_db = open('custom_maps.json', 'r')
+
+    custom_map_gamemodes = json.load(custom_maps_db)
+    custom_maps_db.close()
+
+    try:
+        return custom_map_gamemodes[map_filename]
+    except KeyError:
+        gamemodes = {'ctf': 'Capture the Flag', 'control-point': 'Control Point', 'attack-defend': 'Attack/Defend', 'medieval-mode': 'Attack/Defend (Medieval Mode)',
+                     'territorial-control': 'Territorial Control', 'payload': 'Payload', 'payload-race': 'Payload Race', 'koth': 'King of the Hill', 'special-delivery': 'Special Delivery',
+                     'mvm': 'Mann vs. Machine', 'beta-map': 'Robot Destruction', 'mannpower': 'Mannpower', 'passtime': 'PASS Time', 'player-destruction': 'Player Destruction', 'arena': 'Arena',
+                     'training': 'Training'}
+
+        http = urllib3.PoolManager(cert_reqs='CERT_REQUIRED', ca_certs=certifi.where())
+        r = http.request('GET', 'https://teamwork.tf/api/v1/map-stats/map/{}?key=nvsDhCxoVHcSiAZ7pFBTWbMy91RaIYgq'.format(map_filename))
+        map_info = json.loads(r.data.decode('utf-8'))
+
+        try:
+            first_gamemode = map_info['all_gamemodes'][0]
+            first_gamemode_fancy = gamemodes[first_gamemode]
+
+            custom_map_gamemodes[map_filename] = [first_gamemode, first_gamemode_fancy]
+            with open('custom_maps.json', 'w') as maps_db:
+                json.dump(custom_map_gamemodes, maps_db, indent=4)
+
+            return first_gamemode, first_gamemode_fancy
+        except KeyError:
+            return None, None
 
 
 if __name__ == '__main__':

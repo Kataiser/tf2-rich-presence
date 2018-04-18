@@ -289,6 +289,56 @@
         "payload-race",
         "Payload Race"
     ],
+    "arena_badlands": [
+        "Badlands",
+        "arena",
+        "Arena"
+    ],
+    "arena_byre": [
+        "Byre",
+        "arena",
+        "Arena"
+    ],
+    "arena_granary": [
+        "Granary",
+        "arena",
+        "Arena"
+    ],
+    "arena_lumberyard": [
+        "Lumberyard",
+        "arena",
+        "Arena"
+    ],
+    "arena_nucleus": [
+        "Nucleus",
+        "arena",
+        "Arena"
+    ],
+    "arena_offblast_final": [
+        "Offblast",
+        "arena",
+        "Arena"
+    ],
+    "arena_ravine": [
+        "Ravine",
+        "arena",
+        "Arena"
+    ],
+    "arena_sawmill": [
+        "Sawmill",
+        "arena",
+        "Arena"
+    ],
+    "arena_watchtower": [
+        "Watchtower",
+        "arena",
+        "Arena"
+    ],
+    "arena_well": [
+        "Well",
+        "arena",
+        "Arena"
+    ],
     "koth_badlands": [
         "Badlands",
         "koth",
