@@ -6,7 +6,8 @@ from bs4 import BeautifulSoup
 gamemodes = {'Capture the Flag': 'ctf', 'Control Point': 'control-point', 'Attack/Defend': 'attack-defend', 'Attack/Defend (Medieval Mode)': 'medieval-mode',
              'Control Point (Domination)': 'control-point', 'Territorial Control': 'territorial-control', 'Payload': 'payload', 'Payload Race': 'payload-race',
              'King of the Hill': 'koth', 'Special Delivery': 'special-delivery', 'Mann vs. Machine': 'mvm', 'Robot Destruction': 'beta-map', 'Mannpower': 'mannpower',
-             'PASS Time': 'passtime', 'Player Destruction': 'player-destruction', 'Attack/Defend(Medieval Mode)': 'attack-defend', 'Control Point(Domination)': 'control-point'}
+             'PASS Time': 'passtime', 'Player Destruction': 'player-destruction', 'Attack/Defend(Medieval Mode)': 'attack-defend', 'Control Point(Domination)': 'control-point',
+             'Arena': 'arena', 'Training Mode': 'training'}
 map_gamemodes = {}
 
 r = requests.get('https://wiki.teamfortress.com/wiki/List_of_maps')
@@ -28,8 +29,10 @@ for tr in soup.find_all('tr'):
             gamemode_fancy = td_text
 
     if map_mode and map_name:
+        map_file = map_file.replace(' ', '')
         gamemode_fancy = gamemode_fancy.replace('d(M', 'd (M')
         gamemode_fancy = gamemode_fancy.replace('t(D', 't (D')
+        gamemode_fancy = gamemode_fancy.replace(' Mode', '')
         map_gamemodes[map_file] = (map_name, map_mode, gamemode_fancy)
 
 print(map_gamemodes)

@@ -132,13 +132,8 @@ def main():
                     activity['details'] = 'Map: {}'.format(current_map)
 
                     custom_gamemode, custom_gamemode_fancy = find_custom_map_gamemode(current_map)
-                    if custom_gamemode is None:
-                        activity['assets']['large_image'] = 'unknown_map'
-                        activity['assets']['large_text'] = 'Unknown gamemode'
-                    else:
-                        activity['details'] = 'Map: {}'.format(current_map)
-                        activity['assets']['large_image'] = custom_gamemode
-                        activity['assets']['large_text'] = custom_gamemode_fancy
+                    activity['assets']['large_image'] = custom_gamemode
+                    activity['assets']['large_text'] = custom_gamemode_fancy
 
                 activity['state'] = 'Class: {}'.format(current_class)
             else:
@@ -285,7 +280,19 @@ def find_custom_map_gamemode(map_filename):
             return first_gamemode, first_gamemode_fancy
         except KeyError:
             # unrecognized gamemodes
-            return None, None
+            first_gamemode = 'unknown_map'
+            first_gamemode_fancy = 'Unknown gamemode'
+            custom_map_gamemodes[map_filename] = [first_gamemode, first_gamemode_fancy]
+
+            try:
+                custom_maps_db = open('resources\\custom_maps.json', 'w')
+            except FileNotFoundError:
+                custom_maps_db = open('custom_maps.json', 'w')
+
+            json.dump(custom_map_gamemodes, custom_maps_db, indent=4)
+            custom_maps_db.close()
+
+            return first_gamemode, first_gamemode_fancy
 
 
 if __name__ == '__main__':

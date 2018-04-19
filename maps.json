@@ -182,7 +182,7 @@
     "cp_degrootkeep": [
         "DeGroot Keep",
         "attack-defend",
-        "Attack/Defend (Medieval Mode)"
+        "Attack/Defend (Medieval)"
     ],
     "cp_standin_final": [
         "Standin",
@@ -214,7 +214,7 @@
         "payload",
         "Payload"
     ],
-    "pl_cactuscanyon ": [
+    "pl_cactuscanyon": [
         "Cactus Canyon",
         "payload",
         "Payload"
@@ -433,6 +433,16 @@
         "Doomsday",
         "special-delivery",
         "Special Delivery"
+    ],
+    "tr_dustbowl": [
+        "Dustbowl",
+        "training",
+        "Training"
+    ],
+    "tr_target": [
+        "Target",
+        "training",
+        "Training"
     ],
     "mvm_bigrock": [
         "Bigrock",
