@@ -23,6 +23,7 @@ def main():
                 'state': ''}
     client_connected = False
 
+    # Load maps database
     try:
         maps_db = open('resources/maps.json', 'r')
     except FileNotFoundError:
@@ -239,7 +240,9 @@ def steam_config_file(exe_location):
         raise SystemExit
 
 
+# uses teamwork.tf's API to find the gamemode of a custom map
 def find_custom_map_gamemode(map_filename):
+    # to avoid constantly using internet, each map is cached to custom_maps.json
     try:
         custom_maps_db = open('resources\\custom_maps.json', 'r')
     except FileNotFoundError:
@@ -249,22 +252,27 @@ def find_custom_map_gamemode(map_filename):
     custom_maps_db.close()
 
     try:
+        # look for map in loaded cache
         return custom_map_gamemodes[map_filename]
-    except KeyError:
+    except KeyError:  # map never seen before
         gamemodes = {'ctf': 'Capture the Flag', 'control-point': 'Control Point', 'attack-defend': 'Attack/Defend', 'medieval-mode': 'Attack/Defend (Medieval Mode)',
                      'territorial-control': 'Territorial Control', 'payload': 'Payload', 'payload-race': 'Payload Race', 'koth': 'King of the Hill', 'special-delivery': 'Special Delivery',
-                     'mvm': 'Mann vs. Machine', 'beta-map': 'Robot Destruction', 'mannpower': 'Mannpower', 'passtime': 'PASS Time', 'player-destruction': 'Player Destruction', 'arena': 'Arena',
-                     'training': 'Training'}
+                     'mvm': 'Mann vs. Machine', 'beta-map': 'Robot Destruction', 'mannpower': 'Mannpower', 'passtime': 'PASS Time', 'player-destruction': 'Player Destruction',
+                     'arena': 'Arena', 'training': 'Training'}
 
+        # I'd prefer requests but that would bloat the filesize (more)
         http = urllib3.PoolManager(cert_reqs='CERT_REQUIRED', ca_certs=certifi.where())
         r = http.request('GET', 'https://teamwork.tf/api/v1/map-stats/map/{}?key=nvsDhCxoVHcSiAZ7pFBTWbMy91RaIYgq'.format(map_filename))
         map_info = json.loads(r.data.decode('utf-8'))
 
         try:
+            # parses the api result
             first_gamemode = map_info['all_gamemodes'][0]
             first_gamemode_fancy = gamemodes[first_gamemode]
+            # modify the cache locally
             custom_map_gamemodes[map_filename] = [first_gamemode, first_gamemode_fancy]
 
+            # load the cache to actually modify it
             try:
                 custom_maps_db = open('resources\\custom_maps.json', 'w')
             except FileNotFoundError:
@@ -273,8 +281,10 @@ def find_custom_map_gamemode(map_filename):
             json.dump(custom_map_gamemodes, custom_maps_db, indent=4)
             custom_maps_db.close()
 
+            # ex: 'mvm', 'Mann vs. Machine'
             return first_gamemode, first_gamemode_fancy
         except KeyError:
+            # unrecognized gamemodes
             return None, None
 
 
