@@ -19,12 +19,25 @@ def main():
     print("Created new build folder")
 
     # copies needed files
-    print("Copied", shutil.copy2('main.py', 'tf2_rich_presence\\resources\\'))
     print("Copied", shutil.copy2('maps.json', 'tf2_rich_presence\\resources\\'))
     print("Copied", shutil.copy2('custom_maps.json', 'tf2_rich_presence\\resources\\'))
     print("Copied", shutil.copy2('TF2 rich presence.bat', 'tf2_rich_presence\\'))
     print("Copied", shutil.copy2('LICENSE', 'tf2_rich_presence\\resources\\'))
-    print("Copied", shutil.copy2('readme.txt', 'tf2_rich_presence\\'))
+
+    # so I only have to change this in one place
+    version_num = 'v1.4.1'
+
+    # copies and modifies main.py to have the above version number
+    with open('main.py', 'r') as main_py_source:
+        with open('tf2_rich_presence\\resources\\main.py', 'w') as main_py_target:
+            modified_main = main_py_source.read().replace('{tf2rpvnum}', version_num)
+            main_py_target.write(modified_main)
+
+    # ditto but with the readme
+    with open('readme.txt', 'r') as readme_source:
+        with open('tf2_rich_presence\\readme.txt', 'w') as readme_target:
+            modified_readme = readme_source.read().replace('{tf2rpvnum}', version_num)
+            readme_target.write(modified_readme)
 
     # clears custom map cache
     with open('tf2_rich_presence\\resources\\custom_maps.json', 'w') as maps_db:
