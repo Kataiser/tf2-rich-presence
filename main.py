@@ -38,30 +38,32 @@ def main():
         discord_is_running = False
 
         # looks through all running processes to look for TF2, Steam, and Discord
-
         for process in psutil.process_iter():
-            try:
-                with process.oneshot():
-                    p_name = process.name()
+            if tf2_is_running and steam_is_running and discord_is_running:
+                break
+            else:
+                try:
+                    with process.oneshot():
+                        p_name = process.name()
 
-                    if p_name == "hl2.exe":
-                        path_to = process.cmdline()[0][:-7]
+                        if p_name == "hl2.exe":
+                            path_to = process.cmdline()[0][:-7]
 
-                        if 'Team Fortress 2' in path_to:
-                            start_time = process.create_time()
-                            tf2_location = path_to
-                            tf2_is_running = True
-                    elif p_name == "Steam.exe":
-                        steam_location = process.cmdline()[0][:-9]
-                        steam_is_running = True
-                    elif 'Discord' in p_name:
-                        discord_is_running = True
-            except ps_exceptions.NoSuchProcess:
-                pass
-            except ps_exceptions.AccessDenied:
-                pass
+                            if 'Team Fortress 2' in path_to:
+                                start_time = process.create_time()
+                                tf2_location = path_to
+                                tf2_is_running = True
+                        elif p_name == "Steam.exe":
+                            steam_location = process.cmdline()[0][:-9]
+                            steam_is_running = True
+                        elif 'Discord' in p_name:
+                            discord_is_running = True
+                except ps_exceptions.NoSuchProcess:
+                    pass
+                except ps_exceptions.AccessDenied:
+                    pass
 
-            time.sleep(0.001)
+                time.sleep(0.001)
 
         if steam_is_running:
             # reads a steam config file
