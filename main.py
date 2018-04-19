@@ -11,7 +11,7 @@ from discoIPC import ipc
 
 
 def main():
-    print("TF2 Rich Presence (v1.5) by Kataiser")
+    print("TF2 Rich Presence (v1.4.1) by Kataiser")
     print("https://github.com/Kataiser/tf2-rich-presence\n")
 
     match_types = {'match group 12v12 Casual Match': 'Casual', 'match group MvM Practice': 'MvM', 'match group 6v6 Ladder Match': 'Competitive'}
