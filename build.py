@@ -32,12 +32,21 @@ def main():
         with open('tf2_rich_presence\\resources\\main.py', 'w') as main_py_target:
             modified_main = main_py_source.read().replace('{tf2rpvnum}', version_num)
             main_py_target.write(modified_main)
+            print("Copied and modified main.py")
 
-    # ditto but with the readme
+    # ditto but with readme.txt
     with open('readme.txt', 'r') as readme_source:
         with open('tf2_rich_presence\\readme.txt', 'w') as readme_target:
             modified_readme = readme_source.read().replace('{tf2rpvnum}', version_num)
             readme_target.write(modified_readme)
+            print("Copied and modified readme.txt")
+
+    # creates readme.md from readme-source.md
+    with open('readme-source.md', 'r') as readme_md_source:
+        modified_readme_md = readme_md_source.read().replace('{tf2rpvnum}', version_num)
+    with open('readme.md', 'w') as readme_md_target:
+        readme_md_target.write(modified_readme_md)
+        print("Created readme.md from modified readme-source.md")
 
     # clears custom map cache
     with open('tf2_rich_presence\\resources\\custom_maps.json', 'w') as maps_db:
