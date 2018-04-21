@@ -131,11 +131,12 @@ def main():
                     activity['assets']['large_image'] = current_gamemode
                     activity['assets']['large_text'] = gamemode_fancy
                 except KeyError:
+                    # is a custom map
                     activity['details'] = 'Map: {}'.format(current_map)
 
                     custom_gamemode, custom_gamemode_fancy = find_custom_map_gamemode(current_map)
                     activity['assets']['large_image'] = custom_gamemode
-                    activity['assets']['large_text'] = custom_gamemode_fancy
+                    activity['assets']['large_text'] = custom_gamemode_fancy + ' [custom/community map]'
 
                 activity['state'] = 'Class: {}'.format(current_class)
             else:
@@ -149,8 +150,9 @@ def main():
             print(current_time_formatted)
             print("{} ({})".format(activity['details'], activity['assets']['large_text']))
             print(activity['state'])
-            time_elapsed = time.time() - start_time
-            print("{:02}:{:02} elapsed".format(int(time_elapsed / 60), round(time_elapsed % 60)))
+
+            time_elapsed = int(time.time() - start_time)
+            print("{} elapsed".format(datetime.timedelta(seconds=time_elapsed)))
             print()
 
             # send everything to discord

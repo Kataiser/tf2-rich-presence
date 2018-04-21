@@ -4,7 +4,9 @@ import shutil
 import time
 
 
-def main():
+def main(version_num):
+    github_repo_path = input("Github repo path: ")
+
     # starts from scratch each time
     try:
         shutil.rmtree('tf2_rich_presence')
@@ -23,9 +25,6 @@ def main():
     print("Copied", shutil.copy2('custom_maps.json', 'tf2_rich_presence\\resources\\'))
     print("Copied", shutil.copy2('TF2 rich presence.bat', 'tf2_rich_presence\\'))
     print("Copied", shutil.copy2('LICENSE', 'tf2_rich_presence\\resources\\'))
-
-    # so I only have to change this in one place
-    version_num = 'v1.4.1'
 
     # copies and modifies main.py to have the above version number
     with open('main.py', 'r') as main_py_source:
@@ -74,6 +73,21 @@ def main():
                 os.remove(pdb_path)
                 print("Deleted {}".format(pdb_path))
 
+    # copies stuff to the Github repo
+    print("Copied", shutil.copy2('main.py', github_repo_path))
+    print("Copied", shutil.copy2('build.py', github_repo_path))
+    print("Copied", shutil.copy2('map list generator.py', github_repo_path))
+    print("Copied", shutil.copy2('thumb formatter.py', github_repo_path))
+    print("Copied", shutil.copy2('maps.json', github_repo_path))
+    print("Copied", shutil.copy2('main menu.png', github_repo_path))
+    print("Copied", shutil.copy2('preview.png', github_repo_path))
+    print("Copied", shutil.copy2('Tf2-logo.png', github_repo_path))
+    print("Copied", shutil.copy2('unknown_map.png', github_repo_path))
+    print("Copied", shutil.copy2('readme.txt', github_repo_path))
+    print("Copied", shutil.copy2('TF2 rich presence.bat', github_repo_path))
+    print("Copied", shutil.copytree('map_thumbs', github_repo_path))
+    print("Copied", shutil.copytree('map_thumbs - Copy', github_repo_path))
+
 
 if __name__ == '__main__':
-    main()
+    main('v1.4.2')
