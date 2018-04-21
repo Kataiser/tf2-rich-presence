@@ -85,8 +85,6 @@ def main(version_num):
     print("Copied", shutil.copy2('unknown_map.png', github_repo_path))
     print("Copied", shutil.copy2('readme.txt', github_repo_path))
     print("Copied", shutil.copy2('TF2 rich presence.bat', github_repo_path))
-    print("Copied", shutil.copytree('map_thumbs', github_repo_path))
-    print("Copied", shutil.copytree('map_thumbs - Copy', github_repo_path))
 
 
 if __name__ == '__main__':
