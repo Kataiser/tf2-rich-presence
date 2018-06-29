@@ -15,7 +15,7 @@ def main():
     print("https://github.com/Kataiser/tf2-rich-presence\n")
 
     match_types = {'match group 12v12 Casual Match': 'Casual', 'match group MvM Practice': 'MvM', 'match group 6v6 Ladder Match': 'Competitive'}
-    disconnect_messages = ('Lobby destroyed', 'Steam config directory:', 'Dropped ', 'Disconnect: ', 'Missing map maps/')
+    disconnect_messages = ('Lobby destroyed', 'Steam config directory:', ' from server (Server shutting down)', 'Disconnect: ', 'Missing map maps/')
     start_time = int(time.time())
     activity = {'details': 'In menus',  # this is what gets modified and sent to Discord via discoIPC
                 'timestamps': {'start': start_time},
@@ -80,7 +80,6 @@ def main():
                 client.connect()
 
                 # sends first status, starts on main menu
-                # start_time = int(time.time())
                 activity['timestamps']['start'] = start_time
                 client.update_activity(activity)
                 client_connected = True
