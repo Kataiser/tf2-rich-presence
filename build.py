@@ -7,6 +7,18 @@ import time
 def main(version_num):
     github_repo_path = input("Github repo path: ")
 
+    got_valid_input = False
+    while not got_valid_input:
+        update_readme_raw = input("Update README? (y/n) ")
+        if update_readme_raw.lower() == 'y':
+            update_readme = True
+            got_valid_input = True
+        elif update_readme_raw.lower() == 'n':
+            update_readme = False
+            got_valid_input = True
+        else:
+            print('Invalid input, must be "y" or "n".')
+
     # starts from scratch each time
     try:
         shutil.rmtree('tf2_rich_presence')
@@ -40,12 +52,12 @@ def main(version_num):
             readme_target.write(modified_readme)
             print("Copied and modified readme.txt")
 
-    # creates readme.md from readme-source.md
-    with open('readme-source.md', 'r') as readme_md_source:
+    # creates README.md from README-source.md
+    with open('README-source.md', 'r') as readme_md_source:
         modified_readme_md = readme_md_source.read().replace('{tf2rpvnum}', version_num)
-    with open('readme.md', 'w') as readme_md_target:
+    with open('README.md', 'w') as readme_md_target:
         readme_md_target.write(modified_readme_md)
-        print("Created readme.md from modified readme-source.md")
+    print("Created README.md from modified README-source.md")
 
     # clears custom map cache
     with open('tf2_rich_presence\\resources\\custom_maps.json', 'w') as maps_db:
@@ -85,6 +97,9 @@ def main(version_num):
     print("Copied", shutil.copy2('unknown_map.png', github_repo_path))
     print("Copied", shutil.copy2('readme.txt', github_repo_path))
     print("Copied", shutil.copy2('TF2 rich presence.bat', github_repo_path))
+    print("Copied", shutil.copy2('README-source.MD', github_repo_path))
+    if update_readme:
+        print("Copied", shutil.copy2('README.MD', github_repo_path))
 
 
 if __name__ == '__main__':
