@@ -16,7 +16,7 @@ def main():
     # https://github.com/Kataiser/tf2-rich-presence
 
     match_types = {'match group 12v12 Casual Match': 'Casual', 'match group MvM Practice': 'MvM', 'match group 6v6 Ladder Match': 'Competitive'}
-    disconnect_messages = ('Lobby destroyed', 'Steam config directory:', ' from server (Server shutting down)', 'Disconnect: ', 'Missing map maps/')
+    disconnect_messages = ('Lobby destroyed', 'Steam config directory:', ' from server (Server shutting down)', ' from server (Disconnect by user.)', 'Disconnect: ', 'Missing map maps/')
     start_time = int(time.time())
     activity = {'details': 'In menus',  # this is what gets modified and sent to Discord via discoIPC
                 'timestamps': {'start': start_time},
@@ -284,20 +284,24 @@ def find_custom_map_gamemode(map_filename):
             # ex: 'mvm', 'Mann vs. Machine'
             return first_gamemode, first_gamemode_fancy
         except KeyError:
-            # unrecognized gamemodes
-            first_gamemode = 'unknown_map'
-            first_gamemode_fancy = 'Unknown gamemode'
-            custom_map_gamemodes[map_filename] = [first_gamemode, first_gamemode_fancy]
+            pass
+        except IndexError:
+            pass
 
-            try:
-                custom_maps_db = open(os.path.join('resources', 'custom_maps.json'), 'w')
-            except FileNotFoundError:
-                custom_maps_db = open('custom_maps.json', 'w')
+        # unrecognized gamemodes
+        first_gamemode = 'unknown_map'
+        first_gamemode_fancy = 'Unknown gamemode'
+        custom_map_gamemodes[map_filename] = [first_gamemode, first_gamemode_fancy]
 
-            json.dump(custom_map_gamemodes, custom_maps_db, indent=4)
-            custom_maps_db.close()
+        try:
+            custom_maps_db = open(os.path.join('resources', 'custom_maps.json'), 'w')
+        except FileNotFoundError:
+            custom_maps_db = open('custom_maps.json', 'w')
 
-            return first_gamemode, first_gamemode_fancy
+        json.dump(custom_map_gamemodes, custom_maps_db, indent=4)
+        custom_maps_db.close()
+
+        return first_gamemode, first_gamemode_fancy
 
 
 if __name__ == '__main__':
