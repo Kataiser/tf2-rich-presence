@@ -235,7 +235,8 @@ def steam_config_file(exe_location):
               "\n3. Click \"Set launch options...\""
               "\n4. Add -condebug"
               "\n5. OK and Close\n")
-        # -condebug is kinda necessary so just exit if it's not there
+        # -condebug is kinda necessary so just wait to restart if it's not there
+        input('Press enter to try again\n')
         raise SystemExit
 
 
