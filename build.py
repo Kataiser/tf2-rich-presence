@@ -32,10 +32,9 @@ def main(version_num):
     os.mkdir('tf2_rich_presence\\resources')
     print("Created new build folder")
 
-    # copies needed files
+    # copies needed files that aren't modified to have the version number
     print("Copied", shutil.copy2('maps.json', 'tf2_rich_presence\\resources\\'))
     print("Copied", shutil.copy2('custom_maps.json', 'tf2_rich_presence\\resources\\'))
-    print("Copied", shutil.copy2('TF2 rich presence.bat', 'tf2_rich_presence\\'))
     print("Copied", shutil.copy2('LICENSE', 'tf2_rich_presence\\resources\\'))
 
     # copies and modifies main.py to have the above version number
@@ -51,6 +50,13 @@ def main(version_num):
             modified_readme = readme_source.read().replace('{tf2rpvnum}', version_num)
             readme_target.write(modified_readme)
             print("Copied and modified readme.txt")
+
+    # ditto but with the batch launcher
+    with open('TF2 rich presence.bat', 'r') as batch_source:
+        with open('tf2_rich_presence\\TF2 rich presence.bat', 'w') as batch_target:
+            modified_batch = batch_source.read().replace('{tf2rpvnum}', version_num)
+            batch_target.write(modified_batch)
+            print("Copied and modified TF2 rich presence.bat")
 
     # creates README.md from README-source.md
     with open('README-source.md', 'r') as readme_md_source:
@@ -103,4 +109,4 @@ def main(version_num):
 
 
 if __name__ == '__main__':
-    main('v1.4.3')
+    main('v1.5')

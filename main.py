@@ -11,8 +11,9 @@ from discoIPC import ipc
 
 
 def main():
-    print("TF2 Rich Presence ({tf2rpvnum}) by Kataiser")
-    print("https://github.com/Kataiser/tf2-rich-presence\n")
+    # TF2 rich presence by Kataiser
+    # {tf2rpvnum}
+    # https://github.com/Kataiser/tf2-rich-presence
 
     match_types = {'match group 12v12 Casual Match': 'Casual', 'match group MvM Practice': 'MvM', 'match group 6v6 Ladder Match': 'Competitive'}
     disconnect_messages = ('Lobby destroyed', 'Steam config directory:', ' from server (Server shutting down)', 'Disconnect: ', 'Missing map maps/')
