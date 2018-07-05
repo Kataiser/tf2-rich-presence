@@ -107,6 +107,9 @@ def main(version_num):
     if update_readme:
         print("Copied", shutil.copy2('README.MD', github_repo_path))
 
+    print(f"\ntf2_rich_presence_{version_num}_installer.exe")
+    print(f"tf2_rich_presence_{version_num}.zip")
+
 
 if __name__ == '__main__':
     main('v1.5')
