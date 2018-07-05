@@ -21,39 +21,43 @@ def main(version_num):
 
     # starts from scratch each time
     try:
-        shutil.rmtree('tf2_rich_presence')
-        print("Removed old build folder")
+        root_folders = [f.path for f in os.scandir('.') if f.is_dir()]
+        for folder in root_folders:
+            if folder.startswith('.\\tf2_rich_presence'):
+                shutil.rmtree(folder)
+                print(f"Removed old build folder: {folder}")
     except FileNotFoundError:
         print("No old build folder found")
 
     # creates folders again
     time.sleep(0.25)  # because windows is slow sometimes
-    os.mkdir('tf2_rich_presence')
-    os.mkdir('tf2_rich_presence\\resources')
-    print("Created new build folder")
+    new_build_folder_name = f'tf2_rich_presence_{version_num}'
+    os.mkdir(new_build_folder_name)
+    os.mkdir(f'{new_build_folder_name}\\resources')
+    print(f"Created new build folder: {new_build_folder_name}")
 
     # copies needed files that aren't modified to have the version number
-    print("Copied", shutil.copy2('maps.json', 'tf2_rich_presence\\resources\\'))
-    print("Copied", shutil.copy2('custom_maps.json', 'tf2_rich_presence\\resources\\'))
-    print("Copied", shutil.copy2('LICENSE', 'tf2_rich_presence\\resources\\'))
+    print("Copied", shutil.copy2('maps.json', f'{new_build_folder_name}\\resources\\'))
+    print("Copied", shutil.copy2('custom_maps.json', f'{new_build_folder_name}\\resources\\'))
+    print("Copied", shutil.copy2('LICENSE', f'{new_build_folder_name}\\resources\\'))
 
     # copies and modifies main.py to have the above version number
     with open('main.py', 'r') as main_py_source:
-        with open('tf2_rich_presence\\resources\\main.py', 'w') as main_py_target:
+        with open(f'{new_build_folder_name}\\resources\\main.py', 'w') as main_py_target:
             modified_main = main_py_source.read().replace('{tf2rpvnum}', version_num)
             main_py_target.write(modified_main)
             print("Copied and modified main.py")
 
     # ditto but with readme.txt
     with open('readme.txt', 'r') as readme_source:
-        with open('tf2_rich_presence\\readme.txt', 'w') as readme_target:
+        with open(f'{new_build_folder_name}\\readme.txt', 'w') as readme_target:
             modified_readme = readme_source.read().replace('{tf2rpvnum}', version_num)
             readme_target.write(modified_readme)
             print("Copied and modified readme.txt")
 
     # ditto but with the batch launcher
     with open('TF2 rich presence.bat', 'r') as batch_source:
-        with open('tf2_rich_presence\\TF2 rich presence.bat', 'w') as batch_target:
+        with open(f'{new_build_folder_name}\\TF2 rich presence.bat', 'w') as batch_target:
             modified_batch = batch_source.read().replace('{tf2rpvnum}', version_num)
             batch_target.write(modified_batch)
             print("Copied and modified TF2 rich presence.bat")
@@ -66,14 +70,14 @@ def main(version_num):
     print("Created README.md from modified README-source.md")
 
     # clears custom map cache
-    with open('tf2_rich_presence\\resources\\custom_maps.json', 'w') as maps_db:
+    with open(f'{new_build_folder_name}\\resources\\custom_maps.json', 'w') as maps_db:
         json.dump({}, maps_db, indent=4)
 
     # copies the python installation (good luck running this yourself lol)
-    print("Copied", shutil.copytree('python', 'tf2_rich_presence\\resources\\python'))
+    print("Copied", shutil.copytree('python', f'{new_build_folder_name}\\resources\\python'))
 
     # looks at every file and folder in python
-    for root, dirs, files in os.walk('tf2_rich_presence\\resources\\python'):
+    for root, dirs, files in os.walk(f'{new_build_folder_name}\\resources\\python'):
         # deletes cache files (will get regenerated anyway)
         if '__pycache__' in root:
             shutil.rmtree(root)
@@ -109,6 +113,7 @@ def main(version_num):
 
     print(f"\ntf2_rich_presence_{version_num}_installer.exe")
     print(f"tf2_rich_presence_{version_num}.zip")
+    print("Remember to only package immediately after building")
 
 
 if __name__ == '__main__':
