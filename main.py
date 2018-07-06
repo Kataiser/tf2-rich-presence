@@ -254,28 +254,49 @@ def find_custom_map_gamemode(map_filename):
     custom_maps_db.close()
 
     # look for map in loaded cache
-    cached_data = custom_map_gamemodes[map_filename]
-    if days_since_epoch_now - cached_data[2] <= 5:  # custom map cache expires after 5 days
-        return cached_data[:-1]
-
-    gamemodes = {'ctf': 'Capture the Flag', 'control-point': 'Control Point', 'attack-defend': 'Attack/Defend', 'medieval-mode': 'Attack/Defend (Medieval Mode)',
-                 'territorial-control': 'Territorial Control', 'payload': 'Payload', 'payload-race': 'Payload Race', 'koth': 'King of the Hill', 'special-delivery': 'Special Delivery',
-                 'mvm': 'Mann vs. Machine', 'beta-map': 'Robot Destruction', 'mannpower': 'Mannpower', 'passtime': 'PASS Time', 'player-destruction': 'Player Destruction',
-                 'arena': 'Arena', 'training': 'Training'}
-
-    # I'd prefer requests but that would bloat the filesize (more)
-    http = urllib3.PoolManager(cert_reqs='CERT_REQUIRED', ca_certs=certifi.where())
-    r = http.request('GET', 'https://teamwork.tf/api/v1/map-stats/map/{}?key=nvsDhCxoVHcSiAZ7pFBTWbMy91RaIYgq'.format(map_filename))
-    map_info = json.loads(r.data.decode('utf-8'))
-
     try:
-        # parses the api result
-        first_gamemode = map_info['all_gamemodes'][0]
-        first_gamemode_fancy = gamemodes[first_gamemode]
-        # modify the cache locally
+        cached_data = custom_map_gamemodes[map_filename]
+        if days_since_epoch_now - cached_data[2] <= 5:  # custom map cache expires after 5 days
+            return cached_data[:-1]
+    except KeyError:
+        gamemodes = {'ctf': 'Capture the Flag', 'control-point': 'Control Point', 'attack-defend': 'Attack/Defend', 'medieval-mode': 'Attack/Defend (Medieval Mode)',
+                     'territorial-control': 'Territorial Control', 'payload': 'Payload', 'payload-race': 'Payload Race', 'koth': 'King of the Hill', 'special-delivery': 'Special Delivery',
+                     'mvm': 'Mann vs. Machine', 'beta-map': 'Robot Destruction', 'mannpower': 'Mannpower', 'passtime': 'PASS Time', 'player-destruction': 'Player Destruction',
+                     'arena': 'Arena', 'training': 'Training'}
+
+        # I'd prefer requests but that would bloat the filesize (more)
+        http = urllib3.PoolManager(cert_reqs='CERT_REQUIRED', ca_certs=certifi.where())
+        r = http.request('GET', 'https://teamwork.tf/api/v1/map-stats/map/{}?key=nvsDhCxoVHcSiAZ7pFBTWbMy91RaIYgq'.format(map_filename))
+        map_info = json.loads(r.data.decode('utf-8'))
+
+        try:
+            # parses the api result
+            first_gamemode = map_info['all_gamemodes'][0]
+            first_gamemode_fancy = gamemodes[first_gamemode]
+            # modify the cache locally
+            custom_map_gamemodes[map_filename] = [first_gamemode, first_gamemode_fancy, days_since_epoch_now]
+
+            # load the cache to actually modify it
+            try:
+                custom_maps_db = open(os.path.join('resources', 'custom_maps.json'), 'w')
+            except FileNotFoundError:
+                custom_maps_db = open('custom_maps.json', 'w')
+
+            json.dump(custom_map_gamemodes, custom_maps_db, indent=4)
+            custom_maps_db.close()
+
+            # ex: 'mvm', 'Mann vs. Machine'
+            return first_gamemode, first_gamemode_fancy
+        except KeyError:
+            pass
+        except IndexError:
+            pass
+
+        # unrecognized gamemodes
+        first_gamemode = 'unknown_map'
+        first_gamemode_fancy = 'Unknown gamemode'
         custom_map_gamemodes[map_filename] = [first_gamemode, first_gamemode_fancy, days_since_epoch_now]
 
-        # load the cache to actually modify it
         try:
             custom_maps_db = open(os.path.join('resources', 'custom_maps.json'), 'w')
         except FileNotFoundError:
@@ -284,27 +305,7 @@ def find_custom_map_gamemode(map_filename):
         json.dump(custom_map_gamemodes, custom_maps_db, indent=4)
         custom_maps_db.close()
 
-        # ex: 'mvm', 'Mann vs. Machine'
         return first_gamemode, first_gamemode_fancy
-    except KeyError:
-        pass
-    except IndexError:
-        pass
-
-    # unrecognized gamemodes
-    first_gamemode = 'unknown_map'
-    first_gamemode_fancy = 'Unknown gamemode'
-    custom_map_gamemodes[map_filename] = [first_gamemode, first_gamemode_fancy, days_since_epoch_now]
-
-    try:
-        custom_maps_db = open(os.path.join('resources', 'custom_maps.json'), 'w')
-    except FileNotFoundError:
-        custom_maps_db = open('custom_maps.json', 'w')
-
-    json.dump(custom_map_gamemodes, custom_maps_db, indent=4)
-    custom_maps_db.close()
-
-    return first_gamemode, first_gamemode_fancy
 
 
 if __name__ == '__main__':
