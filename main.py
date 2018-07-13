@@ -16,7 +16,7 @@ def main():
     # https://github.com/Kataiser/tf2-rich-presence
 
     match_types = {'match group 12v12 Casual Match': 'Casual', 'match group MvM Practice': 'MvM', 'match group 6v6 Ladder Match': 'Competitive'}
-    disconnect_messages = ('Lobby destroyed', 'Steam config directory:', ' from server (Server shutting down)', ' from server (Disconnect by user.)', 'Disconnect: ', 'Missing map maps/')
+    disconnect_messages = ('Lobby destroyed', 'Steam config directory', 'Server shutting down', 'Disconnect by user', 'Disconnect:', 'Missing map')
     start_time = int(time.time())
     activity = {'details': 'In menus',  # this is what gets modified and sent to Discord via discoIPC
                 'timestamps': {'start': start_time},
@@ -40,31 +40,31 @@ def main():
 
         # looks through all running processes to look for TF2, Steam, and Discord
         for process in psutil.process_iter():
+            try:
+                with process.oneshot():
+                    p_name = process.name()
+
+                    if p_name == "hl2.exe":
+                        path_to = process.cmdline()[0][:-7]
+
+                        if 'Team Fortress 2' in path_to:
+                            start_time = process.create_time()
+                            tf2_location = path_to
+                            tf2_is_running = True
+                    elif p_name == "Steam.exe":
+                        steam_location = process.cmdline()[0][:-9]
+                        steam_is_running = True
+                    elif 'Discord' in p_name:
+                        discord_is_running = True
+            except ps_exceptions.NoSuchProcess:
+                pass
+            except ps_exceptions.AccessDenied:
+                pass
+
             if tf2_is_running and steam_is_running and discord_is_running:
                 break
-            else:
-                try:
-                    with process.oneshot():
-                        p_name = process.name()
 
-                        if p_name == "hl2.exe":
-                            path_to = process.cmdline()[0][:-7]
-
-                            if 'Team Fortress 2' in path_to:
-                                start_time = process.create_time()
-                                tf2_location = path_to
-                                tf2_is_running = True
-                        elif p_name == "Steam.exe":
-                            steam_location = process.cmdline()[0][:-9]
-                            steam_is_running = True
-                        elif 'Discord' in p_name:
-                            discord_is_running = True
-                except ps_exceptions.NoSuchProcess:
-                    pass
-                except ps_exceptions.AccessDenied:
-                    pass
-
-                time.sleep(0.001)
+            time.sleep(0.001)
 
         if steam_is_running:
             # reads a steam config file
@@ -95,11 +95,15 @@ def main():
             # console.log is a log of tf2's console (duh), only exists if tf2 has -condebug (see the bottom of config_files)
             consolelog_filename = os.path.join(tf2_location, 'tf', 'console.log')
             with open(consolelog_filename, 'r', errors='replace') as consolelog_file:
+                consolelog_file_size = os.stat(consolelog_filename).st_size
+                if consolelog_file_size > 1100000:  # if the file size of console.log is over 1.1 MB
+                    consolelog_file.seek(consolelog_file_size - 1000000)  # skip to the last MB
+
                 line = consolelog_file.readline()
 
                 # iterates though every line in the log (I KNOW) and learns everything from it
                 while line != '':
-                    if 'Map: ' in line:
+                    if 'Map:' in line:
                         current_map = line[5:-1]
                         current_class = 'unselected'  # this variable is poorly named
 
@@ -110,15 +114,15 @@ def main():
                         current_map = 'In menus'  # so is this one
                         current_class = 'Not queued'
 
-                    if '[PartyClient] Entering queue for ' in line:
+                    if '[PartyClient] Entering queue ' in line:
                         current_map = 'In menus'
                         current_class = 'Queued for {}'.format(match_types[line[33:-1]])
 
-                    if '[PartyClient] Entering standby queue ' in line:
+                    if '[PartyClient] Entering s' in line:  # full line: [PartyClient] Entering standby queue
                         current_map = 'In menus'
                         current_class = 'Queued for a party\'s match'
 
-                    if '[PartyClient] Leaving queue' in line or '[PartyClient] Leaving standby queue' in line:
+                    if '[PartyClient] L' in line:  # full line: [PartyClient] Leaving queue
                         current_class = 'Not queued'
 
                     line = consolelog_file.readline()
@@ -157,6 +161,7 @@ def main():
 
             # send everything to discord
             client.update_activity(activity)
+            # print(client.client_id, client.connected, client.ipc_path, client.pid, client.platform, client.socket)
         elif not discord_is_running:
             print("{}\nDiscord isn't running\n".format(current_time_formatted))
         else:
