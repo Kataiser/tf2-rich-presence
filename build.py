@@ -36,31 +36,20 @@ def main(version_num):
     os.mkdir(f'{new_build_folder_name}\\resources')
     print(f"Created new build folder: {new_build_folder_name}")
 
-    # copies needed files that aren't modified to have the version number
-    print("Copied", shutil.copy2('maps.json', f'{new_build_folder_name}\\resources\\'))
-    print("Copied", shutil.copy2('custom_maps.json', f'{new_build_folder_name}\\resources\\'))
-    print("Copied", shutil.copy2('LICENSE', f'{new_build_folder_name}\\resources\\'))
+    files_to_copy = [('maps.json', f'{new_build_folder_name}\\resources\\'),
+                     ('custom_maps.json', f'{new_build_folder_name}\\resources\\'),
+                     ('LICENSE', f'{new_build_folder_name}\\resources\\'),
+                     ('main.py', f'{new_build_folder_name}\\resources\\'),
+                     ('readme.txt', f'{new_build_folder_name}\\'),
+                     ('Launch TF2 with Rich Presence.bat', f'{new_build_folder_name}\\')]
 
-    # copies and modifies main.py to have the above version number
-    with open('main.py', 'r') as main_py_source:
-        with open(f'{new_build_folder_name}\\resources\\main.py', 'w') as main_py_target:
-            modified_main = main_py_source.read().replace('{tf2rpvnum}', version_num)
-            main_py_target.write(modified_main)
-            print("Copied and modified main.py")
-
-    # ditto but with readme.txt
-    with open('readme.txt', 'r') as readme_source:
-        with open(f'{new_build_folder_name}\\readme.txt', 'w') as readme_target:
-            modified_readme = readme_source.read().replace('{tf2rpvnum}', version_num)
-            readme_target.write(modified_readme)
-            print("Copied and modified readme.txt")
-
-    # ditto but with the batch launcher
-    with open('TF2 rich presence.bat', 'r') as batch_source:
-        with open(f'{new_build_folder_name}\\TF2 rich presence.bat', 'w') as batch_target:
-            modified_batch = batch_source.read().replace('{tf2rpvnum}', version_num)
-            batch_target.write(modified_batch)
-            print("Copied and modified TF2 rich presence.bat")
+    # copies files, adding any version numbers
+    for file_dest_pair in files_to_copy:
+        with open(file_dest_pair[0], 'r') as file_source:
+            with open(f'{file_dest_pair[1]}{file_dest_pair[0]}', 'w') as file_target:
+                modified_file = file_source.read().replace('{tf2rpvnum}', version_num)
+                file_target.write(modified_file)
+                print(f"Copied and modified {file_dest_pair[0]}")
 
     # creates README.md from README-source.md
     with open('README-source.md', 'r') as readme_md_source:
@@ -73,7 +62,7 @@ def main(version_num):
     with open(f'{new_build_folder_name}\\resources\\custom_maps.json', 'w') as maps_db:
         json.dump({}, maps_db, indent=4)
 
-    # copies the python installation (good luck running this yourself lol)
+    # copies the python installation
     print("Copied", shutil.copytree('python', f'{new_build_folder_name}\\resources\\python'))
 
     # looks at every file and folder in python
@@ -106,7 +95,6 @@ def main(version_num):
     print("Copied", shutil.copy2('Tf2-logo.png', github_repo_path))
     print("Copied", shutil.copy2('unknown_map.png', github_repo_path))
     print("Copied", shutil.copy2('readme.txt', github_repo_path))
-    print("Copied", shutil.copy2('TF2 rich presence.bat', github_repo_path))
     print("Copied", shutil.copy2('README-source.MD', github_repo_path))
     if update_readme:
         print("Copied", shutil.copy2('README.MD', github_repo_path))
