@@ -1,23 +1,25 @@
 import json
 import os
 import shutil
+import subprocess
 import time
 
 
 def main(version_num):
-    github_repo_path = input("Github repo path: ")
+    github_repo_path = input("Github repo path ('n' to skip): ")
 
-    got_valid_input = False
-    while not got_valid_input:
-        update_readme_raw = input("Update README? (y/n) ")
-        if update_readme_raw.lower() == 'y':
-            update_readme = True
-            got_valid_input = True
-        elif update_readme_raw.lower() == 'n':
-            update_readme = False
-            got_valid_input = True
-        else:
-            print('Invalid input, must be "y" or "n".')
+    if github_repo_path != 'n':
+        got_valid_input = False
+        while not got_valid_input:
+            update_readme_raw = input("Update README? (y/n) ")
+            if update_readme_raw.lower() == 'y':
+                update_readme = True
+                got_valid_input = True
+            elif update_readme_raw.lower() == 'n':
+                update_readme = False
+                got_valid_input = True
+            else:
+                print('Invalid input, must be "y" or "n".')
 
     # starts from scratch each time
     try:
@@ -34,6 +36,7 @@ def main(version_num):
     new_build_folder_name = f'tf2_rich_presence_{version_num}'
     os.mkdir(new_build_folder_name)
     os.mkdir(f'{new_build_folder_name}\\resources')
+    os.mkdir(f'{new_build_folder_name}\\logs')
     print(f"Created new build folder: {new_build_folder_name}")
 
     files_to_copy = [('maps.json', f'{new_build_folder_name}\\resources\\'),
@@ -41,13 +44,14 @@ def main(version_num):
                      ('LICENSE', f'{new_build_folder_name}\\resources\\'),
                      ('main.py', f'{new_build_folder_name}\\resources\\'),
                      ('readme.txt', f'{new_build_folder_name}\\'),
-                     ('Launch TF2 with Rich Presence.bat', f'{new_build_folder_name}\\')]
+                     ('Launch TF2 with Rich Presence.bat', f'{new_build_folder_name}\\'),
+                     ('logger.py', f'{new_build_folder_name}\\resources\\')]
 
     # copies files, adding any version numbers
     for file_dest_pair in files_to_copy:
         with open(file_dest_pair[0], 'r') as file_source:
             with open(f'{file_dest_pair[1]}{file_dest_pair[0]}', 'w') as file_target:
-                modified_file = file_source.read().replace('{tf2rpvnum}', version_num)
+                modified_file = file_source.read().replace('{tf2rpvnum}', version_num).replace('log.to_stderr = True', 'log.to_stderr = False')
                 file_target.write(modified_file)
                 print(f"Copied and modified {file_dest_pair[0]}")
 
@@ -62,8 +66,11 @@ def main(version_num):
     with open(f'{new_build_folder_name}\\resources\\custom_maps.json', 'w') as maps_db:
         json.dump({}, maps_db, indent=4)
 
-    # copies the python installation
-    print("Copied", shutil.copytree('python', f'{new_build_folder_name}\\resources\\python'))
+    # copies the python interpreter
+    python_source = os.path.abspath('python')
+    python_target = os.path.abspath(f'{new_build_folder_name}\\resources\\python')
+    print(f"Copying from {python_source} to {python_target}")
+    subprocess.run(f'xcopy \"{python_source}\" \"{python_target}\\\" /E /Q')
 
     # looks at every file and folder in python
     for root, dirs, files in os.walk(f'{new_build_folder_name}\\resources\\python'):
@@ -85,19 +92,22 @@ def main(version_num):
                 print("Deleted {}".format(pdb_path))
 
     # copies stuff to the Github repo
-    print("Copied", shutil.copy2('main.py', github_repo_path))
-    print("Copied", shutil.copy2('build.py', github_repo_path))
-    print("Copied", shutil.copy2('map list generator.py', github_repo_path))
-    print("Copied", shutil.copy2('thumb formatter.py', github_repo_path))
-    print("Copied", shutil.copy2('maps.json', github_repo_path))
-    print("Copied", shutil.copy2('main menu.png', github_repo_path))
-    print("Copied", shutil.copy2('preview.png', github_repo_path))
-    print("Copied", shutil.copy2('Tf2-logo.png', github_repo_path))
-    print("Copied", shutil.copy2('unknown_map.png', github_repo_path))
-    print("Copied", shutil.copy2('readme.txt', github_repo_path))
-    print("Copied", shutil.copy2('README-source.MD', github_repo_path))
-    if update_readme:
-        print("Copied", shutil.copy2('README.MD', github_repo_path))
+    if github_repo_path != 'n':
+        print("Copied", shutil.copy2('main.py', github_repo_path))
+        print("Copied", shutil.copy2('build.py', github_repo_path))
+        print("Copied", shutil.copy2('logger.py', github_repo_path))
+        print("Copied", shutil.copy2('map list generator.py', github_repo_path))
+        print("Copied", shutil.copy2('thumb formatter.py', github_repo_path))
+        print("Copied", shutil.copy2('maps.json', github_repo_path))
+        print("Copied", shutil.copy2('main menu.png', github_repo_path))
+        print("Copied", shutil.copy2('preview.png', github_repo_path))
+        print("Copied", shutil.copy2('Tf2-logo.png', github_repo_path))
+        print("Copied", shutil.copy2('unknown_map.png', github_repo_path))
+        print("Copied", shutil.copy2('readme.txt', github_repo_path))
+        print("Copied", shutil.copy2('Launch TF2 with Rich Presence.bat', github_repo_path))
+        print("Copied", shutil.copy2('README-source.MD', github_repo_path))
+        if update_readme:
+            print("Copied", shutil.copy2('README.MD', github_repo_path))
 
     print(f"\ntf2_rich_presence_{version_num}_installer.exe")
     print(f"tf2_rich_presence_{version_num}.zip")
@@ -105,4 +115,4 @@ def main(version_num):
 
 
 if __name__ == '__main__':
-    main('v1.5')
+    main('v1.4.3')
