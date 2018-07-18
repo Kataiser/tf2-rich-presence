@@ -40,7 +40,11 @@ def main():
     map_gamemodes = json.load(maps_db)
     maps_db.close()
 
+    loop_iteration = 0
     while True:
+        loop_iteration += 1
+        log.debug(f"Loop iteration this app session: {loop_iteration}")
+
         tf2_is_running = False
         steam_is_running = False
         discord_is_running = False
