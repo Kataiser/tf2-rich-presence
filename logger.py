@@ -40,7 +40,12 @@ def cleanup(max_logs):  # deletes older logs
         deleted.append(log_to_delete)
         os.remove(os.path.join('logs/', log_to_delete))
         overshoot = max_logs - len(all_logs)
-    info("Deleted {} log(s): {}".format(len(deleted), deleted))
+    debug("Deleted {} log(s): {}".format(len(deleted), deleted))
+
+
+def current_log():
+    debug(f"Current log: '{filename}'")
+
 
 try:
     main_file = open(os.path.join('resources', 'main.py'), 'rb')

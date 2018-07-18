@@ -17,12 +17,13 @@ def main():
     # {tf2rpvnum}
     # https://github.com/Kataiser/tf2-rich-presence
 
-    log.to_stderr = False
+    log.to_stderr = True
     log.info("Starting TF2 Rich Presence {tf2rpvnum}")
     log.cleanup(5)
+    log.current_log()
 
     match_types = {'match group 12v12 Casual Match': 'Casual', 'match group MvM Practice': 'MvM', 'match group 6v6 Ladder Match': 'Competitive'}
-    disconnect_messages = ('Server shutting down', 'Steam config directory', 'Lobby destroyed', 'Disconnect by user', 'Disconnect:', 'Missing map')
+    disconnect_messages = ('Server shutting down', 'Steam config directory', 'Lobby destroyed', 'Disconnect:', 'Missing map')
     start_time = int(time.time())
     activity = {'details': 'In menus',  # this is what gets modified and sent to Discord via discoIPC
                 'timestamps': {'start': start_time},
@@ -81,7 +82,7 @@ def main():
 
         if steam_is_running:
             # reads a steam config file
-            steam_config_file(steam_location)
+            username = steam_config_file(steam_location)
 
         # used for display only
         current_time = datetime.datetime.now()
@@ -132,9 +133,14 @@ def main():
                         current_class = line[:-11]
                         line_used = line
 
+                    if 'Disconnect by user' in line and username in line:
+                        current_map = 'In menus'  # so is this one
+                        current_class = 'Not queued'
+                        line_used = line
+
                     for disconnect_message in disconnect_messages:
                         if disconnect_message in line:
-                            current_map = 'In menus'  # so is this one
+                            current_map = 'In menus'
                             current_class = 'Not queued'
                             line_used = line
                             break
@@ -263,6 +269,9 @@ def steam_config_file(exe_location):
                 tf2_line_num = 0
 
                 for line in enumerate(lines):
+                    if line[1].startswith('\t\t"PersonaName"\t\t'):
+                        possible_username = line[1].replace('\t', '')[14:-2]
+                        log.debug(f"Possible username: {possible_username}")
                     if line[1] == '\t\t\t\t\t"440"\n':  # looks for tf2's ID and finds the line number
                         log.debug(f"Found TF2's ID at line {line[0]}")
                         tf2_line_num = line[0]
@@ -273,6 +282,9 @@ def steam_config_file(exe_location):
                         # oh also this might be slow to update
                         found_condebug = True
                         log.debug(f"Found -condebug with offset {line_offset} in line: {launchoptions_line[:-1]}")
+                        found_username = possible_username
+                        log.debug(f"Username with -condebug: {found_username}")
+                        return found_username
         except FileNotFoundError:
             pass
 
