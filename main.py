@@ -332,10 +332,12 @@ def find_custom_map_gamemode(map_filename):
             log.debug(f"Outdated cache ({cached_data[2]} -> {days_since_epoch_now})")
             raise KeyError
     except KeyError:
-        gamemodes = {'ctf': 'Capture the Flag', 'control-point': 'Control Point', 'attack-defend': 'Attack/Defend', 'medieval-mode': 'Attack/Defend (Medieval Mode)',
+        gamemodes = {'ctf': 'Capture the Flag', 'control-point': 'Control Point (Domination)', 'attack-defend': 'Attack/Defend', 'medieval-mode': 'Attack/Defend (Medieval Mode)',
                      'territorial-control': 'Territorial Control', 'payload': 'Payload', 'payload-race': 'Payload Race', 'koth': 'King of the Hill', 'special-delivery': 'Special Delivery',
                      'mvm': 'Mann vs. Machine', 'beta-map': 'Robot Destruction', 'mannpower': 'Mannpower', 'passtime': 'PASS Time', 'player-destruction': 'Player Destruction',
-                     'arena': 'Arena', 'training': 'Training'}
+                     'arena': 'Arena', 'training': 'Training', 'surfing': 'Surfing', 'trading': 'Trading', 'jumping': 'Jumping', 'deathmatch': 'Deathmatch', 'cp-orange': 'Orange',
+                     'versus-saxton-hale': 'Versus Saxton Hale', 'deathrun': 'Deathrun', 'achievement': 'Achievement', 'breakout': 'Jail Breakout', 'slender': 'Slender',
+                     'dodgeball': 'Dodgeball', 'mario-kart': 'Mario Kart'}
 
         # I'd prefer requests but that would bloat the filesize (more)
         before_request_time = time.perf_counter()
