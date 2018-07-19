@@ -6,6 +6,7 @@ import time
 
 
 def main(version_num):
+    print(f"Building TF2 Rich Presence {version_num}")
     github_repo_path = input("Github repo path ('n' to skip): ")
 
     if github_repo_path != 'n':
@@ -51,7 +52,7 @@ def main(version_num):
     for file_dest_pair in files_to_copy:
         with open(file_dest_pair[0], 'r') as file_source:
             with open(f'{file_dest_pair[1]}{file_dest_pair[0]}', 'w') as file_target:
-                modified_file = file_source.read().replace('{tf2rpvnum}', version_num).replace('log.to_stderr = True', 'log.to_stderr = False')
+                modified_file = file_source.read().replace('{tf2rpvnum}', version_num).replace('log.dev = True', 'log.dev = False')
                 file_target.write(modified_file)
                 print(f"Copied and modified {file_dest_pair[0]}")
 
