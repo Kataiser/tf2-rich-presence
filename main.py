@@ -1,6 +1,7 @@
 import datetime
 import json
 import os
+import random
 import time
 import traceback
 
@@ -17,7 +18,7 @@ def main():
     # {tf2rpvnum}
     # https://github.com/Kataiser/tf2-rich-presence
 
-    log.to_stderr = True
+    log.dev = True
     log.info("Starting TF2 Rich Presence {tf2rpvnum}")
     log.cleanup(5)
     log.current_log()
@@ -204,6 +205,9 @@ def main():
             log.debug(f"Sent over RPC: {activity}")
             client_state = (client.client_id, client.connected, client.ipc_path, client.pid, client.platform, client.socket)
             log.debug(f"Client state: {client_state}")
+            if not client.connected:
+                log.critical('Client is disconnected')
+                log.report_log()
         elif not discord_is_running:
             log.debug("Discord isn't running")
             print("{}\nDiscord isn't running\n".format(current_time_formatted))
@@ -216,6 +220,8 @@ def main():
                 except Exception as err:
                     log.error(f"Client error while disconnecting: {err}")
 
+                if random.random() < 0.1:
+                    log.report_log()  # send 10% of logs when closing TF2, for telemetry more than bugfixing
                 raise SystemExit  # ...but this does
             else:
                 log.debug("TF2 isn't running")
@@ -225,6 +231,7 @@ def main():
             client_connected = False
 
         # rich presence only updates every 15 seconds, but it listens constantly so sending every 5 seconds is fine
+        log.report_log()
         time.sleep(5)
 
 
@@ -393,3 +400,4 @@ if __name__ == '__main__':
         main()
     except Exception:
         log.critical(traceback.format_exc())
+        log.report_log()

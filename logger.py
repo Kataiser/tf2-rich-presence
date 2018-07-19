@@ -1,7 +1,10 @@
 import hashlib
 import os
+import socket
 import sys
 import time
+
+from raven import Client
 
 
 def write_log(level, message_out):
@@ -11,7 +14,7 @@ def write_log(level, message_out):
     full_line = "[{} +{}] {}: {}\n".format(current_time, time_since_start, level, message_out)
     log_file.write(full_line)
     log_file.close()
-    if to_stderr:
+    if dev:
         print(full_line.rstrip('\n'), file=sys.stderr)
 
 
@@ -47,6 +50,13 @@ def current_log():
     debug(f"Current log: '{filename}'")
 
 
+def report_log():
+    critical(f"Reporting {filename} ({os.stat(filename).st_size} bytes) to Sentry")
+    if not dev:
+        with open(filename) as current_log_file:
+            client.captureMessage(f"{filename} {current_log_file.read()}")
+
+
 try:
     main_file = open(os.path.join('resources', 'main.py'), 'rb')
 except FileNotFoundError:
@@ -57,9 +67,18 @@ main_hash = hasher.hexdigest()
 
 start_time = time.perf_counter()
 user_identifier = os.getlogin()
-filename = str(os.path.join('logs', '{}-{}-{}.log'.format(user_identifier, '{tf2rpvnum}', main_hash[:8])))
-to_stderr = False
-enable_debug = True
+if socket.gethostname().find('.') >= 0:
+    user_pc_name = socket.gethostname()
+else:
+    user_pc_name = socket.gethostbyaddr(socket.gethostname())[0]
+filename = os.path.join('logs', '{}-{}-{}-{}.log'.format(user_pc_name, user_identifier, '{tf2rpvnum}', main_hash[:8]))
+dev = False
+
+# sentry.io, for error reporting
+client = Client(dsn='https://de781ce2454f458eafab1992630bc100:ce637f5993b14663a0840cd9f98a714a@sentry.io/1245944',
+                release='{tf2rpvnum}',
+                string_max_length=1000000,
+                processors=('raven.processors.SanitizePasswordsProcessor',))
 
 try:
     open(filename, 'x')
