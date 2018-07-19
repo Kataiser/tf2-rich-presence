@@ -231,7 +231,6 @@ def main():
             client_connected = False
 
         # rich presence only updates every 15 seconds, but it listens constantly so sending every 5 seconds is fine
-        log.report_log()
         time.sleep(5)
 
 

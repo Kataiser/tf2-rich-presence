@@ -51,7 +51,7 @@ def current_log():
 
 
 def report_log():
-    critical(f"Reporting {filename} ({os.stat(filename).st_size} bytes) to Sentry")
+    info(f"Reporting {filename} ({os.stat(filename).st_size} bytes) to Sentry")
     if not dev:
         with open(filename) as current_log_file:
             client.captureMessage(f"{filename} {current_log_file.read()}")
