@@ -11,6 +11,7 @@ import urllib3
 from discoIPC import ipc
 
 import logger as log
+import updater
 
 
 def main():
@@ -22,6 +23,8 @@ def main():
     log.info("Starting TF2 Rich Presence {tf2rpvnum}")
     log.cleanup(5)
     log.current_log()
+
+    updater.check('{tf2rpvnum}', 5)
 
     match_types = {'match group 12v12 Casual Match': 'Casual', 'match group MvM Practice': 'MvM', 'match group 6v6 Ladder Match': 'Competitive'}
     disconnect_messages = ('Server shutting down', 'Steam config directory', 'Lobby destroyed', 'Disconnect:', 'Missing map')

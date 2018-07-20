@@ -77,7 +77,7 @@ dev = False
 # sentry.io, for error reporting
 client = Client(dsn='https://de781ce2454f458eafab1992630bc100:ce637f5993b14663a0840cd9f98a714a@sentry.io/1245944',
                 release='{tf2rpvnum}',
-                string_max_length=1000000,
+                string_max_length=512,
                 processors=('raven.processors.SanitizePasswordsProcessor',))
 
 try:
