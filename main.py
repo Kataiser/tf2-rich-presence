@@ -120,6 +120,7 @@ def main():
             # console.log is a log of tf2's console (duh), only exists if tf2 has -condebug (see the bottom of config_files)
             consolelog_filename = os.path.join(tf2_location, 'tf', 'console.log')
             log.debug(f"Looking for console.log at {consolelog_filename}")
+            log.console_log_path = consolelog_filename
             with open(consolelog_filename, 'r', errors='replace') as consolelog_file:
                 consolelog_file_size = os.stat(consolelog_filename).st_size
                 log.debug(f"console.log: {consolelog_file_size} bytes, {len(consolelog_file.readlines())} lines")

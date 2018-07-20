@@ -53,8 +53,18 @@ def current_log():
 def report_log():
     info(f"Reporting {filename} ({os.stat(filename).st_size} bytes) to Sentry")
     if not dev:
-        with open(filename) as current_log_file:
-            client.captureMessage(f"{filename} {current_log_file.read()}")
+        if not console_log_path:
+            client.captureMessage(f"{filename}\n{read_truncated_file(filename)}")
+        else:
+            client.captureMessage(f"{filename}\n{read_truncated_file(filename)}\n{read_truncated_file(console_log_path)}")
+
+
+def read_truncated_file(path):
+    with open(path, 'r', errors='replace') as file:
+        file_size = os.stat(path).st_size
+        if file_size > 410000:
+            file.seek(file_size - 400000)
+        return file.read()
 
 
 try:
@@ -73,6 +83,7 @@ else:
     user_pc_name = socket.gethostbyaddr(socket.gethostname())[0]
 filename = os.path.join('logs', '{}-{}-{}-{}.log'.format(user_pc_name, user_identifier, '{tf2rpvnum}', main_hash[:8]))
 dev = False
+console_log_path = None
 
 # sentry.io, for error reporting
 client = Client(dsn='https://de781ce2454f458eafab1992630bc100:ce637f5993b14663a0840cd9f98a714a@sentry.io/1245944',

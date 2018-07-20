@@ -13,7 +13,7 @@ def check(current_version, timeout):
         r = http.request('GET', 'https://api.github.com/repos/Kataiser/tf2-rich-presence/releases/latest', timeout=timeout)
     except urllib3.exceptions.MaxRetryError:
         log.error(f"Update check timed out")
-        line1 = "\nCouldn't connect to GitHub to check for updates (timed out after {} seconds).\n".format(timeout)
+        line1 = "Couldn't connect to GitHub to check for updates (timed out after {} seconds).\n".format(timeout)
         line2 = "To check for updates yourself, go to https://github.com/Kataiser/tf2-rich-presence/releases\n"
         line3 = "(you are currently running {}).\n".format(current_version)
         print(f"{line1}{line2}{line3}")
@@ -24,7 +24,7 @@ def check(current_version, timeout):
         if current_version != newest_version:  # out of date
             log.error(f"Out of date, newest version is {newest_version}")
             downloads_url = response['html_url']
-            print(f"\nThis version ({current_version}) is out of date (newest version is {newest_version}).\nGet the update at {downloads_url}\n")
+            print(f"This version ({current_version}) is out of date (newest version is {newest_version}).\nGet the update at {downloads_url}\n")
 
 
 if __name__ == '__main__':
