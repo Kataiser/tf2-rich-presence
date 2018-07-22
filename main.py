@@ -90,7 +90,7 @@ def main():
 
         if steam_is_running:
             # reads a steam config file
-            username = steam_config_file(steam_location)
+            valid_usernames = steam_config_file(steam_location)
 
         # used for display only
         current_time = datetime.datetime.now()
@@ -121,6 +121,11 @@ def main():
             consolelog_filename = os.path.join(tf2_location, 'tf', 'console.log')
             log.debug(f"Looking for console.log at {consolelog_filename}")
             log.console_log_path = consolelog_filename
+
+            if not os.path.exists(consolelog_filename):
+                log.critical("console.log doesn't exist, issuing warning")
+                no_condebug_warning()
+
             with open(consolelog_filename, 'r', errors='replace') as consolelog_file:
                 consolelog_file_size = os.stat(consolelog_filename).st_size
                 log.debug(f"console.log: {consolelog_file_size} bytes, {len(consolelog_file.readlines())} lines")
@@ -142,7 +147,7 @@ def main():
                         current_class = line[:-11]
                         line_used = line
 
-                    if 'Disconnect by user' in line and username in line:
+                    if 'Disconnect by user' in line and [i for i in valid_usernames if i in line]:
                         current_map = 'In menus'  # so is this one
                         current_class = 'Not queued'
                         line_used = line
@@ -238,6 +243,20 @@ def main():
         time.sleep(5)
 
 
+# alerts the user that they don't seem to have -condebug
+def no_condebug_warning():
+    print("\nYour TF2 installation doesn't seem to be set up properly. To fix:"
+          "\n1. Right click on Team Fortress 2 in your Steam library"
+          "\n2. Open properties (very bottom)"
+          "\n3. Click \"Set launch options...\""
+          "\n4. Add -condebug"
+          "\n5. OK and Close\n")
+    # -condebug is kinda necessary so just wait to restart if it's not there
+    input('Press enter to try again\n')
+    log.debug("Restarting")
+    raise SystemExit
+
+
 # allows the console to output 'class selected' on class choose
 def class_config_files(exe_location):
     log.debug(f"Reading (and possibly modifying) class configs at {exe_location}")
@@ -273,13 +292,17 @@ def class_config_files(exe_location):
 def steam_config_file(exe_location):
     log.debug("Looking for -condebug")
     found_condebug = False
+    found_usernames = []
 
-    for user_id_folder in next(os.walk(exe_location + 'userdata'))[1]:  # possibly multiple users for the same steam install
+    user_id_folders = next(os.walk(exe_location + 'userdata'))[1]
+    log.debug(f"User id folders: {user_id_folders}")
+    for user_id_folder in user_id_folders:  # possibly multiple users for the same steam install
         try:
             # 'C:\Program Files (x86)\Steam\userdata\*user id number*\config\localconfig.vdf'
-            with open(os.path.join(exe_location, 'userdata', user_id_folder, 'config', 'localconfig.vdf'), 'r+', errors='replace') as global_config_file:
+            global_config_file_path = os.path.join(exe_location, 'userdata', user_id_folder, 'config', 'localconfig.vdf')
+            with open(global_config_file_path, 'r+', errors='replace') as global_config_file:
                 lines = global_config_file.readlines()
-                log.debug(f"Reading {global_config_file.name} ({len(lines)} lines) for -condebug")
+                log.debug(f"Reading {global_config_file_path} ({len(lines)} lines) for -condebug")
                 tf2_line_num = 0
 
                 for line in enumerate(lines):
@@ -296,25 +319,19 @@ def steam_config_file(exe_location):
                         # oh also this might be slow to update
                         found_condebug = True
                         log.debug(f"Found -condebug with offset {line_offset} in line: {launchoptions_line[:-1]}")
-                        found_username = possible_username
-                        log.debug(f"Username with -condebug: {found_username}")
-                        return found_username
+                        found_usernames.append(possible_username)
         except FileNotFoundError:
-            pass
+            log.error(f"FileNotFoundError for {global_config_file_path}")
+        except IndexError:
+            log.error(f"IndexError in {global_config_file_path}, probably a very short file")
 
     if not found_condebug:
         log.debug("-condebug not found, telling user")
         # yell at the user to fix their settings
-        print("\nYour TF2 installation doesn't seem to be set up properly. To fix:"
-              "\n1. Right click on Team Fortress 2 in your Steam library"
-              "\n2. Open properties (very bottom)"
-              "\n3. Click \"Set launch options...\""
-              "\n4. Add -condebug"
-              "\n5. OK and Close\n")
-        # -condebug is kinda necessary so just wait to restart if it's not there
-        input('Press enter to try again\n')
-        log.debug("Restarting")
-        raise SystemExit
+        no_condebug_warning()
+    else:
+        log.debug(f"Usernames with -condebug: {found_usernames}")
+        return found_usernames
 
 
 # uses teamwork.tf's API to find the gamemode of a custom map
