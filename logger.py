@@ -60,7 +60,7 @@ def report_log():
             paste_text = f"{filename}\n{read_truncated_file(filename)}\n{read_truncated_file(console_log_path)}"
 
         paste_url = pastebin(paste_text)
-        client.captureMessage(paste_url)
+        client.captureMessage(f'{filename}\n{paste_url}')
 
 
 def read_truncated_file(path):
