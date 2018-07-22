@@ -2,6 +2,7 @@ import json
 
 import certifi
 import urllib3
+
 import logger as log
 
 

@@ -4,6 +4,7 @@ import socket
 import sys
 import time
 
+from pbwrap import Pastebin
 from raven import Client
 
 
@@ -54,9 +55,12 @@ def report_log():
     info(f"Reporting {filename} ({os.stat(filename).st_size} bytes) to Sentry")
     if not dev:
         if not console_log_path:
-            client.captureMessage(f"{filename}\n{read_truncated_file(filename)}")
+            paste_text = f"{filename}\n{read_truncated_file(filename)}"
         else:
-            client.captureMessage(f"{filename}\n{read_truncated_file(filename)}\n{read_truncated_file(console_log_path)}")
+            paste_text = f"{filename}\n{read_truncated_file(filename)}\n{read_truncated_file(console_log_path)}"
+
+        paste_url = pastebin(paste_text)
+        client.captureMessage(paste_url)
 
 
 def read_truncated_file(path):
@@ -65,6 +69,11 @@ def read_truncated_file(path):
         if file_size > 410000:
             file.seek(file_size - 400000)
         return file.read()
+
+
+def pastebin(text):
+    pb = Pastebin('909483860965ed941bff77e61c962ac2')
+    return pb.create_paste(text, api_paste_private=1, api_paste_name=filename, api_paste_expire_date='1M')
 
 
 try:
@@ -82,7 +91,7 @@ if socket.gethostname().find('.') >= 0:
 else:
     user_pc_name = socket.gethostbyaddr(socket.gethostname())[0]
 filename = os.path.join('logs', '{}-{}-{}-{}.log'.format(user_pc_name, user_identifier, '{tf2rpvnum}', main_hash[:8]))
-dev = False
+dev = True
 console_log_path = None
 
 # sentry.io, for error reporting
