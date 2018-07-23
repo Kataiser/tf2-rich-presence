@@ -51,7 +51,7 @@ def current_log():
     debug(f"Current log: '{filename}'")
 
 
-def report_log():
+def report_log(reason):
     info(f"Reporting {filename} ({os.stat(filename).st_size} bytes) to Sentry")
     if not dev:
         if not console_log_path:
@@ -60,7 +60,7 @@ def report_log():
             paste_text = f"{filename}\n{read_truncated_file(filename)}\n{read_truncated_file(console_log_path)}"
 
         paste_url = pastebin(paste_text)
-        client.captureMessage(f'{filename}\n{paste_url}')
+        client.captureMessage(f'{reason}\n{filename}\n{paste_url}')
 
 
 def read_truncated_file(path):

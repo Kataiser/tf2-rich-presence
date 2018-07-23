@@ -214,7 +214,7 @@ def main():
             log.debug(f"Client state: {client_state}")
             if not client.connected:
                 log.critical('Client is disconnected')
-                log.report_log()
+                log.report_log("Client disconnect")
         elif not discord_is_running:
             log.debug("Discord isn't running")
             print("{}\nDiscord isn't running\n".format(current_time_formatted))
@@ -228,7 +228,7 @@ def main():
                     log.error(f"Client error while disconnecting: {err}")
 
                 if random.random() < 0.1:
-                    log.report_log()  # send 10% of logs when closing TF2, for telemetry more than bugfixing
+                    log.report_log("Telemetry")  # send 10% of logs when closing TF2, for telemetry more than bugfixing
                 raise SystemExit  # ...but this does
             else:
                 log.debug("TF2 isn't running")
@@ -421,6 +421,6 @@ def find_custom_map_gamemode(map_filename):
 if __name__ == '__main__':
     try:
         main()
-    except Exception:
+    except Exception as error:
         log.critical(traceback.format_exc())
-        log.report_log()
+        log.report_log(error)
