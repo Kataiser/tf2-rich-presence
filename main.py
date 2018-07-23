@@ -1,14 +1,13 @@
 import datetime
+import gc
 import json
 import os
 import random
 import time
 import traceback
-import gc
 
-import certifi
 import psutil
-import urllib3
+import requests
 from discoIPC import ipc
 
 import logger as log
@@ -369,11 +368,9 @@ def find_custom_map_gamemode(map_filename):
                      'versus-saxton-hale': 'Versus Saxton Hale', 'deathrun': 'Deathrun', 'achievement': 'Achievement', 'breakout': 'Jail Breakout', 'slender': 'Slender',
                      'dodgeball': 'Dodgeball', 'mario-kart': 'Mario Kart'}
 
-        # I'd prefer requests but that would bloat the filesize (more)
         before_request_time = time.perf_counter()
-        http = urllib3.PoolManager(cert_reqs='CERT_REQUIRED', ca_certs=certifi.where())
-        r = http.request('GET', 'https://teamwork.tf/api/v1/map-stats/map/{}?key=nvsDhCxoVHcSiAZ7pFBTWbMy91RaIYgq'.format(map_filename))
-        map_info = json.loads(r.data.decode('utf-8'))
+        r = requests.get('https://teamwork.tf/api/v1/map-stats/map/{}?key=nvsDhCxoVHcSiAZ7pFBTWbMy91RaIYgq'.format(map_filename))
+        map_info = r.json()
         log.debug(f"API lookup took {time.perf_counter() - before_request_time} secs")
 
         try:
