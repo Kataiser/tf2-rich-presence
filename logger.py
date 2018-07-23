@@ -90,7 +90,7 @@ if socket.gethostname().find('.') >= 0:
     user_pc_name = socket.gethostname()
 else:
     user_pc_name = socket.gethostbyaddr(socket.gethostname())[0]
-filename = os.path.join('logs', '{}-{}-{}-{}.log'.format(user_pc_name, user_identifier, '{tf2rpvnum}', main_hash[:8]))
+filename = os.path.join('logs', '{}_{}_{}_{}.log'.format(user_pc_name, user_identifier, '{tf2rpvnum}', main_hash[:8]))
 dev = True
 console_log_path = None
 
