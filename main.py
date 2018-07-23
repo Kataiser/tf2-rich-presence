@@ -4,6 +4,7 @@ import os
 import random
 import time
 import traceback
+import gc
 
 import certifi
 import psutil
@@ -239,6 +240,10 @@ def main():
         # rich presence only updates every 15 seconds, but it listens constantly so sending every 5 seconds is fine
         time.sleep(5)
 
+        # runs garbage collection after waiting
+        log.debug(f"This GC: {gc.collect()}")
+        log.debug(f"Total GC: {gc.get_stats()}")
+
 
 # alerts the user that they don't seem to have -condebug
 def no_condebug_warning():
@@ -247,7 +252,8 @@ def no_condebug_warning():
           "\n2. Open properties (very bottom)"
           "\n3. Click \"Set launch options...\""
           "\n4. Add -condebug"
-          "\n5. OK and Close\n")
+          "\n5. OK and Close"
+          "\n6. Restart TF2\n")
     # -condebug is kinda necessary so just wait to restart if it's not there
     input('Press enter to try again\n')
     log.debug("Restarting")
