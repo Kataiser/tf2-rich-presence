@@ -128,16 +128,15 @@ def main():
 
             with open(consolelog_filename, 'r', errors='replace') as consolelog_file:
                 consolelog_file_size = os.stat(consolelog_filename).st_size
-                log.debug(f"console.log: {consolelog_file_size} bytes, {len(consolelog_file.readlines())} lines")
-                if consolelog_file_size > 1100000:  # if the file size of console.log is over 1.1 MB
-                    consolelog_file.seek(consolelog_file_size - 1000000)  # skip to the last MB
-                    log.debug(f"Skipping to byte {consolelog_file_size - 1000000} in console.log")
-
-                line = consolelog_file.readline()
+                lines = consolelog_file.readlines()
+                log.debug(f"console.log: {consolelog_file_size} bytes, {len(lines)} lines")
+                if len(lines) > 11000:
+                    lines = lines[-10000:]
+                    log.debug(f"Limited to reading {len(lines)} lines")
 
                 # iterates though every line in the log (I KNOW) and learns everything from it
                 line_used = ''
-                while line != '':
+                for line in lines:
                     if 'Map:' in line:
                         current_map = line[5:-1]
                         current_class = 'unselected'  # this variable is poorly named
@@ -172,8 +171,6 @@ def main():
                     if '[PartyClient] L' in line:  # full line: [PartyClient] Leaving queue
                         current_class = 'Not queued'
                         line_used = line
-
-                    line = consolelog_file.readline()
 
             log.debug(f"Got '{current_map}' and '{current_class}' from this line: '{line_used[:-1]}'")
 
