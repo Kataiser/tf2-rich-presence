@@ -451,8 +451,8 @@
     ],
     "cp_cloak": [
         "Cloak",
-        "unknown_map",
-        "No gamemode"
+        "control-point",
+        "Control Point"
     ],
     "mvm_bigrock": [
         "Bigrock",
