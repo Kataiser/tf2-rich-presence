@@ -118,4 +118,4 @@ def main(version_num):
 
 
 if __name__ == '__main__':
-    main('v1.5.3')
+    main('v1.5.4')
