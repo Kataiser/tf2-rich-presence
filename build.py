@@ -22,25 +22,6 @@ def main(version_num):
             else:
                 print('Invalid input, must be "y" or "n".')
 
-    # copies stuff to the Github repo
-    if github_repo_path != 'n':
-        print("Copied", shutil.copy2('main.py', github_repo_path))
-        print("Copied", shutil.copy2('build.py', github_repo_path))
-        print("Copied", shutil.copy2('logger.py', github_repo_path))
-        print("Copied", shutil.copy2('updater.py', github_repo_path))
-        print("Copied", shutil.copy2('map list generator.py', github_repo_path))
-        print("Copied", shutil.copy2('thumb formatter.py', github_repo_path))
-        print("Copied", shutil.copy2('maps.json', github_repo_path))
-        print("Copied", shutil.copy2('main menu.png', github_repo_path))
-        print("Copied", shutil.copy2('preview.png', github_repo_path))
-        print("Copied", shutil.copy2('Tf2-logo.png', github_repo_path))
-        print("Copied", shutil.copy2('unknown_map.png', github_repo_path))
-        print("Copied", shutil.copy2('readme.txt', github_repo_path))
-        print("Copied", shutil.copy2('Launch TF2 with Rich Presence.bat', github_repo_path))
-        print("Copied", shutil.copy2('README-source.MD', github_repo_path))
-        if update_readme:
-            print("Copied", shutil.copy2('README.MD', github_repo_path))
-
     # starts from scratch each time
     try:
         root_folders = [f.path for f in os.scandir('.') if f.is_dir()]
@@ -82,6 +63,25 @@ def main(version_num):
     with open('README.md', 'w') as readme_md_target:
         readme_md_target.write(modified_readme_md)
     print("Created README.md from modified README-source.md")
+
+    # copies stuff to the Github repo
+    if github_repo_path != 'n':
+        print("Copied", shutil.copy2('main.py', github_repo_path))
+        print("Copied", shutil.copy2('build.py', github_repo_path))
+        print("Copied", shutil.copy2('logger.py', github_repo_path))
+        print("Copied", shutil.copy2('updater.py', github_repo_path))
+        print("Copied", shutil.copy2('map list generator.py', github_repo_path))
+        print("Copied", shutil.copy2('thumb formatter.py', github_repo_path))
+        print("Copied", shutil.copy2('maps.json', github_repo_path))
+        print("Copied", shutil.copy2('main menu.png', github_repo_path))
+        print("Copied", shutil.copy2('preview.png', github_repo_path))
+        print("Copied", shutil.copy2('Tf2-logo.png', github_repo_path))
+        print("Copied", shutil.copy2('unknown_map.png', github_repo_path))
+        print("Copied", shutil.copy2('readme.txt', github_repo_path))
+        print("Copied", shutil.copy2('Launch TF2 with Rich Presence.bat', github_repo_path))
+        print("Copied", shutil.copy2('README-source.MD', github_repo_path))
+        if update_readme:
+            print("Copied", shutil.copy2('README.MD', github_repo_path))
 
     # clears custom map cache
     with open(f'{new_build_folder_name}\\resources\\custom_maps.json', 'w') as maps_db:
