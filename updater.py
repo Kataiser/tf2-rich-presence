@@ -10,6 +10,10 @@ def check(current_version, timeout):
 
     try:
         r = requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/releases/latest', timeout=timeout)
+        response = r.json()
+        newest_version = response['tag_name']
+        downloads_url = response['html_url']
+        changelog = response['body'].replace('## ', '')
     except requests.exceptions.Timeout:
         log.error(f"Update check timed out")
         failure_message(current_version, f"(timed out after {timeout} seconds)")
@@ -17,13 +21,10 @@ def check(current_version, timeout):
         log.error(f"Non-timout update error: {traceback.format_exc()}")
         failure_message(failure_message(current_version, other_error))
     else:
-        response = r.json()
-        newest_version = response['tag_name']
-
         if current_version != newest_version:  # out of date
             log.error(f"Out of date, newest version is {newest_version}")
-            downloads_url = response['html_url']
-            print(f"This version ({current_version}) is out of date (newest version is {newest_version}).\nGet the update at {downloads_url}\n")
+            print(f"This version ({current_version}) is out of date (newest version is {newest_version}).\nGet the update at {downloads_url}")
+            print(f"\n{newest_version} changelog:\n{changelog}\n")
 
 
 def failure_message(current_version, error_message):
