@@ -367,36 +367,35 @@ def find_custom_map_gamemode(map_filename):
                      'arena': 'Arena', 'training': 'Training', 'surfing': 'Surfing', 'trading': 'Trading', 'jumping': 'Jumping', 'deathmatch': 'Deathmatch', 'cp-orange': 'Orange',
                      'versus-saxton-hale': 'Versus Saxton Hale', 'deathrun': 'Deathrun', 'achievement': 'Achievement', 'breakout': 'Jail Breakout', 'slender': 'Slender',
                      'dodgeball': 'Dodgeball', 'mario-kart': 'Mario Kart'}
+        gamemodes_keys = gamemodes.keys()
 
         before_request_time = time.perf_counter()
         r = requests.get('https://teamwork.tf/api/v1/map-stats/map/{}?key=nvsDhCxoVHcSiAZ7pFBTWbMy91RaIYgq'.format(map_filename))
         map_info = r.json()
         log.debug(f"API lookup took {time.perf_counter() - before_request_time} secs")
 
-        try:
-            # parses the api result
-            log.debug(f"All gamemodes found: {map_info['all_gamemodes']}")
-            first_gamemode = map_info['all_gamemodes'][0]
-            first_gamemode_fancy = gamemodes[first_gamemode]
-            # modify the cache locally
-            custom_map_gamemodes[map_filename] = [first_gamemode, first_gamemode_fancy, days_since_epoch_now]
+        # parses the api result
+        log.debug(f"All gamemodes found: {map_info['all_gamemodes']}")
+        map_gamemode = map_info['all_gamemodes']
+        for gamemode in map_gamemode:
+            if gamemode in gamemodes_keys:
+                log.debug(f"Using gamemode {gamemode}")
+                first_gamemode_fancy = gamemodes[gamemode]
+                # modify the cache locally
+                custom_map_gamemodes[map_filename] = [gamemode, first_gamemode_fancy, days_since_epoch_now]
 
-            # load the cache to actually modify it
-            try:
-                custom_maps_db = open(os.path.join('resources', 'custom_maps.json'), 'w')
-            except FileNotFoundError:
-                custom_maps_db = open('custom_maps.json', 'w')
+                # load the cache to actually modify it
+                try:
+                    custom_maps_db = open(os.path.join('resources', 'custom_maps.json'), 'w')
+                except FileNotFoundError:
+                    custom_maps_db = open('custom_maps.json', 'w')
 
-            json.dump(custom_map_gamemodes, custom_maps_db, indent=4)
-            custom_maps_db.close()
+                json.dump(custom_map_gamemodes, custom_maps_db, indent=4)
+                custom_maps_db.close()
 
-            # ex: 'mvm', 'Mann vs. Machine'
-            log.debug(f"{map_filename}'s gamemode is {[first_gamemode, first_gamemode_fancy]} (fresh from teamwork.tf)")
-            return first_gamemode, first_gamemode_fancy
-        except KeyError:
-            log.error("KeyError, probably unrecognized gamemode")
-        except IndexError:
-            log.error("IndexError, possibly unrecognized gamemode or something similar")
+                # ex: 'mvm', 'Mann vs. Machine'
+                log.debug(f"{map_filename}'s gamemode is {[gamemode, first_gamemode_fancy]} (fresh from teamwork.tf)")
+                return gamemode, first_gamemode_fancy
 
         # unrecognized gamemodes
         first_gamemode = 'unknown_map'
