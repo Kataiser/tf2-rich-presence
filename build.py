@@ -47,7 +47,9 @@ def main(version_num):
                      ('readme.txt', f'{new_build_folder_name}\\'),
                      ('Launch TF2 with Rich Presence.bat', f'{new_build_folder_name}\\'),
                      ('logger.py', f'{new_build_folder_name}\\resources\\'),
-                     ('updater.py', f'{new_build_folder_name}\\resources\\')]
+                     ('updater.py', f'{new_build_folder_name}\\resources\\'),
+                     ('configs.py', f'{new_build_folder_name}\\resources\\'),
+                     ('custom_maps.py', f'{new_build_folder_name}\\resources\\')]
 
     # copies files, adding any version numbers
     for file_dest_pair in files_to_copy:
@@ -69,6 +71,8 @@ def main(version_num):
         print("Copied", shutil.copy2('main.py', github_repo_path))
         print("Copied", shutil.copy2('build.py', github_repo_path))
         print("Copied", shutil.copy2('logger.py', github_repo_path))
+        print("Copied", shutil.copy2('configs.py', github_repo_path))
+        print("Copied", shutil.copy2('custom_maps.py', github_repo_path))
         print("Copied", shutil.copy2('updater.py', github_repo_path))
         print("Copied", shutil.copy2('map list generator.py', github_repo_path))
         print("Copied", shutil.copy2('thumb formatter.py', github_repo_path))

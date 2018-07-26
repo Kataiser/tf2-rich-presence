@@ -5,11 +5,15 @@ import os
 import random
 import time
 import traceback
+from typing import Dict, Union, TextIO, Any, List, Tuple
 
 import psutil
-import requests
 from discoIPC import ipc
+from discoIPC.ipc import DiscordIPC
+from psutil import Process
 
+import configs
+import custom_maps
 import logger as log
 import updater
 
@@ -26,53 +30,55 @@ def main():
 
     updater.check('{tf2rpvnum}', 5)
 
-    match_types = {'match group 12v12 Casual Match': 'Casual', 'match group MvM Practice': 'MvM', 'match group 6v6 Ladder Match': 'Competitive'}
+    match_types: Dict[str, str] = {'match group 12v12 Casual Match': 'Casual', 'match group MvM Practice': 'MvM', 'match group 6v6 Ladder Match': 'Competitive'}
     disconnect_messages = ('Server shutting down', 'Steam config directory', 'Lobby destroyed', 'Disconnect:', 'Missing map')
-    start_time = int(time.time())
-    activity = {'details': 'In menus',  # this is what gets modified and sent to Discord via discoIPC
-                'timestamps': {'start': start_time},
-                'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2', 'large_image': 'main_menu', 'large_text': 'In menus'},
-                'state': ''}
-    client_connected = False
+    start_time: int = int(time.time())
+    activity: Dict[str, Union[str, Dict[str, int], Dict[str, str]]] = {'details': 'In menus',  # this is what gets modified and sent to Discord via discoIPC
+                                                                       'timestamps': {'start': start_time},
+                                                                       'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2', 'large_image': 'main_menu',
+                                                                                  'large_text': 'In menus'},
+                                                                       'state': ''}
+    client_connected: bool = False
 
     # load maps database
     try:
-        maps_db = open(os.path.join('resources', 'maps.json'), 'r')
+        maps_db: TextIO = open(os.path.join('resources', 'maps.json'), 'r')
     except FileNotFoundError:
         maps_db = open('maps.json', 'r')
 
-    map_gamemodes = json.load(maps_db)
+    map_gamemodes: object = json.load(maps_db)
     maps_db.close()
 
-    loop_iteration = 0
+    loop_iteration: int = 0
     while True:
         loop_iteration += 1
         log.debug(f"Loop iteration this app session: {loop_iteration}")
 
-        tf2_is_running = False
-        steam_is_running = False
-        discord_is_running = False
+        tf2_is_running: bool = False
+        steam_is_running: bool = False
+        discord_is_running: bool = False
 
         # looks through all running processes to look for TF2, Steam, and Discord
-        before_process_time = time.perf_counter()
-        processes_searched = 0
+        before_process_time: float = time.perf_counter()
+        processes_searched: int = 0
+        process: Process
         for process in psutil.process_iter():
             try:
                 with process.oneshot():
                     processes_searched += 1
-                    p_name = process.name()
+                    p_name: str = process.name()
 
-                    if p_name == "hl2.exe":
-                        path_to = process.cmdline()[0][:-7]
+                    if p_name == 'hl2.exe':
+                        path_to: str = process.cmdline()[0][:-7]
                         log.debug(f"hl2.exe path: {path_to}")
 
                         if 'Team Fortress 2' in path_to:
                             start_time = process.create_time()
                             log.debug(f"TF2 start time: {start_time}")
-                            tf2_location = path_to
+                            tf2_location: str = path_to
                             tf2_is_running = True
-                    elif p_name == "Steam.exe":
-                        steam_location = process.cmdline()[0][:-9]
+                    elif p_name == 'Steam.exe':
+                        steam_location: str = process.cmdline()[0][:-9]
                         log.debug(f"Steam.exe path: {steam_location}")
                         steam_is_running = True
                     elif 'Discord' in p_name:
@@ -90,18 +96,18 @@ def main():
 
         if steam_is_running:
             # reads a steam config file
-            valid_usernames = steam_config_file(steam_location)
+            valid_usernames: List[str] = configs.steam_config_file(steam_location)
 
         # used for display only
         current_time = datetime.datetime.now()
-        current_time_formatted = current_time.strftime('%I:%M:%S %p')
+        current_time_formatted: str = current_time.strftime('%I:%M:%S %p')
 
         if tf2_is_running and discord_is_running:
             if not client_connected:
                 # connects to Discord
-                client = ipc.DiscordIPC('429389143756374017')
+                client: DiscordIPC = ipc.DiscordIPC('429389143756374017')
                 client.connect()
-                client_state = (client.client_id, client.connected, client.ipc_path, client.pid, client.platform, client.socket)
+                client_state: Tuple[Any, bool, str, int, str, Any] = (client.client_id, client.connected, client.ipc_path, client.pid, client.platform, client.socket)
                 log.debug(f"Initial client state: {client_state}")
 
                 # sends first status, starts on main menu
@@ -111,14 +117,14 @@ def main():
                 client_connected = True
 
             # defaults
-            current_map = ''
-            current_class = ''
+            current_map: str = ''
+            current_class: str = ''
 
             # modifies a few tf2 config files
-            class_config_files(tf2_location)
+            configs.class_config_files(tf2_location)
 
             # console.log is a log of tf2's console (duh), only exists if tf2 has -condebug (see the bottom of config_files)
-            consolelog_filename = os.path.join(tf2_location, 'tf', 'console.log')
+            consolelog_filename: Union[bytes, str] = os.path.join(tf2_location, 'tf', 'console.log')
             log.debug(f"Looking for console.log at {consolelog_filename}")
             log.console_log_path = consolelog_filename
 
@@ -127,15 +133,16 @@ def main():
                 no_condebug_warning()
 
             with open(consolelog_filename, 'r', errors='replace') as consolelog_file:
-                consolelog_file_size = os.stat(consolelog_filename).st_size
-                lines = consolelog_file.readlines()
+                consolelog_file_size: int = os.stat(consolelog_filename).st_size
+                lines: List[str] = consolelog_file.readlines()
                 log.debug(f"console.log: {consolelog_file_size} bytes, {len(lines)} lines")
                 if len(lines) > 11000:
                     lines = lines[-10000:]
                     log.debug(f"Limited to reading {len(lines)} lines")
 
                 # iterates though every line in the log (I KNOW) and learns everything from it
-                line_used = ''
+                line_used: str = ''
+                line: str
                 for line in lines:
                     if 'Map:' in line:
                         current_map = line[5:-1]
@@ -151,6 +158,7 @@ def main():
                         current_class = 'Not queued'
                         line_used = line
 
+                    disconnect_message: str
                     for disconnect_message in disconnect_messages:
                         if disconnect_message in line:
                             current_map = 'In menus'
@@ -177,6 +185,9 @@ def main():
             if current_map != 'In menus' and current_map != 'In queue':
                 # not in menus = in a game
                 try:
+                    map_fancy: str
+                    current_gamemode: str
+                    gamemode_fancy: str
                     map_fancy, current_gamemode, gamemode_fancy = map_gamemodes[current_map]
                     activity['details'] = 'Map: {}'.format(map_fancy)
                     activity['assets']['large_image'] = current_gamemode
@@ -185,7 +196,9 @@ def main():
                     # is a custom map
                     activity['details'] = 'Map: {}'.format(current_map)
 
-                    custom_gamemode, custom_gamemode_fancy = find_custom_map_gamemode(current_map)
+                    custom_gamemode: str
+                    custom_gamemode_fancy: str
+                    custom_gamemode, custom_gamemode_fancy = custom_maps.find_custom_map_gamemode(current_map)
                     activity['assets']['large_image'] = custom_gamemode
                     activity['assets']['large_text'] = custom_gamemode_fancy + ' [custom/community map]'
 
@@ -257,161 +270,6 @@ def no_condebug_warning():
     input('Press enter to try again\n')
     log.debug("Restarting")
     raise SystemExit
-
-
-# allows the console to output 'class selected' on class choose
-def class_config_files(exe_location):
-    log.debug(f"Reading (and possibly modifying) class configs at {exe_location}")
-    tf2_classes = ['Scout', 'Soldier', 'Pyro', 'Demoman', 'Heavy', 'Engineer', 'Medic', 'Sniper', 'Spy']
-
-    for tf2_class in tf2_classes:
-        # 'echo' means 'output to console' in source-speak
-        selected_line = 'echo "{} selected"'.format(tf2_class)
-
-        config_filename = tf2_class.lower().replace('heavy', 'heavyweapons')  # valve why
-
-        # config files are at 'Steam\steamapps\common\Team Fortress 2\tf\cfg'
-        try:
-            # reads each existing class.cfg
-            class_config_file = open(os.path.join(exe_location, 'tf', 'cfg', f'{config_filename}.cfg'), 'r+', errors='replace')
-            if selected_line not in class_config_file.read():
-                # if it doesn't already have the echo line, add it
-                log.debug(f"'{selected_line}' not found in {class_config_file.name}, adding it")
-                class_config_file.write('\n\n' + selected_line)
-            else:
-                log.debug(f"{selected_line} found in {class_config_file.name}")
-        except FileNotFoundError:
-            # the config file doesn't exist, so create it and add the echo line
-            class_config_file = open(os.path.join(exe_location, 'tf', 'cfg', f'{config_filename}.cfg'), 'w')
-            log.debug(f"Created {class_config_file.name}")
-            class_config_file.write(selected_line)
-
-        # I know a 'with open()' is better but eh
-        class_config_file.close()
-
-
-# reads steams launch options save file to find -condebug
-def steam_config_file(exe_location):
-    log.debug("Looking for -condebug")
-    found_condebug = False
-    found_usernames = []
-
-    user_id_folders = next(os.walk(exe_location + 'userdata'))[1]
-    log.debug(f"User id folders: {user_id_folders}")
-    for user_id_folder in user_id_folders:  # possibly multiple users for the same steam install
-        try:
-            # 'C:\Program Files (x86)\Steam\userdata\*user id number*\config\localconfig.vdf'
-            global_config_file_path = os.path.join(exe_location, 'userdata', user_id_folder, 'config', 'localconfig.vdf')
-            with open(global_config_file_path, 'r+', errors='replace') as global_config_file:
-                lines = global_config_file.readlines()
-                log.debug(f"Reading {global_config_file_path} ({len(lines)} lines) for -condebug")
-                tf2_line_num = 0
-
-                for line in enumerate(lines):
-                    if line[1].startswith('\t\t"PersonaName"\t\t'):
-                        possible_username = line[1].replace('\t', '')[14:-2]
-                        log.debug(f"Possible username: {possible_username}")
-                    if line[1] == '\t\t\t\t\t"440"\n':  # looks for tf2's ID and finds the line number
-                        log.debug(f"Found TF2's ID at line {line[0]}")
-                        tf2_line_num = line[0]
-
-                for line_offset in range(1, 21):
-                    launchoptions_line = lines[tf2_line_num + line_offset]
-                    if 'LaunchOptions' in launchoptions_line and'-condebug' in launchoptions_line:
-                        # oh also this might be slow to update
-                        found_condebug = True
-                        log.debug(f"Found -condebug with offset {line_offset} in line: {launchoptions_line[:-1]}")
-                        found_usernames.append(possible_username)
-        except FileNotFoundError:
-            log.error(f"FileNotFoundError for {global_config_file_path}")
-        except IndexError:
-            log.error(f"IndexError in {global_config_file_path}, probably a very short file")
-
-    if not found_condebug:
-        log.debug("-condebug not found, telling user")
-        # yell at the user to fix their settings
-        no_condebug_warning()
-    else:
-        log.debug(f"Usernames with -condebug: {found_usernames}")
-        return found_usernames
-
-
-# uses teamwork.tf's API to find the gamemode of a custom map
-def find_custom_map_gamemode(map_filename):
-    log.debug(f"Finding gamemode for custom map: {map_filename}")
-    days_since_epoch_now = int(time.time() / 86400)
-
-    # to avoid constantly using internet, each map is cached to custom_maps.json
-    try:
-        custom_maps_db = open(os.path.join('resources', 'custom_maps.json'), 'r')
-    except FileNotFoundError:
-        custom_maps_db = open('custom_maps.json', 'r')
-
-    custom_map_gamemodes = json.load(custom_maps_db)
-    custom_maps_db.close()
-    log.debug(f"{len(custom_map_gamemodes)} maps cached: {list(custom_map_gamemodes.keys())}")
-
-    # look for map in loaded cache
-    try:
-        cached_data = custom_map_gamemodes[map_filename]
-        if days_since_epoch_now - cached_data[2] <= 5:  # custom map cache expires after 5 days
-            log.debug(f"{map_filename}'s gamemode is {list(cached_data[:-1])} (from cache)")
-            return cached_data[:-1]
-        else:
-            log.debug(f"Outdated cache ({cached_data[2]} -> {days_since_epoch_now})")
-            raise KeyError
-    except KeyError:
-        gamemodes = {'ctf': 'Capture the Flag', 'control-point': 'Control Point', 'attack-defend': 'Attack/Defend', 'medieval-mode': 'Attack/Defend (Medieval Mode)',
-                     'territorial-control': 'Territorial Control', 'payload': 'Payload', 'payload-race': 'Payload Race', 'koth': 'King of the Hill', 'special-delivery': 'Special Delivery',
-                     'mvm': 'Mann vs. Machine', 'beta-map': 'Robot Destruction', 'mannpower': 'Mannpower', 'passtime': 'PASS Time', 'player-destruction': 'Player Destruction',
-                     'arena': 'Arena', 'training': 'Training', 'surfing': 'Surfing', 'trading': 'Trading', 'jumping': 'Jumping', 'deathmatch': 'Deathmatch', 'cp-orange': 'Orange',
-                     'versus-saxton-hale': 'Versus Saxton Hale', 'deathrun': 'Deathrun', 'achievement': 'Achievement', 'breakout': 'Jail Breakout', 'slender': 'Slender',
-                     'dodgeball': 'Dodgeball', 'mario-kart': 'Mario Kart'}
-        gamemodes_keys = gamemodes.keys()
-
-        before_request_time = time.perf_counter()
-        r = requests.get('https://teamwork.tf/api/v1/map-stats/map/{}?key=nvsDhCxoVHcSiAZ7pFBTWbMy91RaIYgq'.format(map_filename))
-        map_info = r.json()
-        log.debug(f"API lookup took {time.perf_counter() - before_request_time} secs")
-
-        # parses the api result
-        log.debug(f"All gamemodes found: {map_info['all_gamemodes']}")
-        map_gamemode = map_info['all_gamemodes']
-        for gamemode in map_gamemode:
-            if gamemode in gamemodes_keys:
-                log.debug(f"Using gamemode {gamemode}")
-                first_gamemode_fancy = gamemodes[gamemode]
-                # modify the cache locally
-                custom_map_gamemodes[map_filename] = [gamemode, first_gamemode_fancy, days_since_epoch_now]
-
-                # load the cache to actually modify it
-                try:
-                    custom_maps_db = open(os.path.join('resources', 'custom_maps.json'), 'w')
-                except FileNotFoundError:
-                    custom_maps_db = open('custom_maps.json', 'w')
-
-                json.dump(custom_map_gamemodes, custom_maps_db, indent=4)
-                custom_maps_db.close()
-
-                # ex: 'mvm', 'Mann vs. Machine'
-                log.debug(f"{map_filename}'s gamemode is {[gamemode, first_gamemode_fancy]} (fresh from teamwork.tf)")
-                return gamemode, first_gamemode_fancy
-
-        # unrecognized gamemodes
-        first_gamemode = 'unknown_map'
-        first_gamemode_fancy = 'Unknown gamemode'
-        custom_map_gamemodes[map_filename] = [first_gamemode, first_gamemode_fancy, days_since_epoch_now]
-
-        try:
-            custom_maps_db = open(os.path.join('resources', 'custom_maps.json'), 'w')
-        except FileNotFoundError:
-            custom_maps_db = open('custom_maps.json', 'w')
-
-        json.dump(custom_map_gamemodes, custom_maps_db, indent=4)
-        custom_maps_db.close()
-
-        log.debug(f"{map_filename}'s gamemode is {[first_gamemode, first_gamemode_fancy]} (fresh from the API)")
-        return first_gamemode, first_gamemode_fancy
 
 
 if __name__ == '__main__':
