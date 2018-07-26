@@ -78,6 +78,7 @@ def main(version_num):
         print("Copied", shutil.copy2('Tf2-logo.png', github_repo_path))
         print("Copied", shutil.copy2('unknown_map.png', github_repo_path))
         print("Copied", shutil.copy2('readme.txt', github_repo_path))
+        print("Copied", shutil.copy2('requirements.txt', github_repo_path))
         print("Copied", shutil.copy2('Launch TF2 with Rich Presence.bat', github_repo_path))
         print("Copied", shutil.copy2('README-source.MD', github_repo_path))
         if update_readme:
