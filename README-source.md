@@ -1,3 +1,7 @@
+[![Github all releases](https://img.shields.io/github/downloads/Kataiser/tf2-rich-presence/total.svg)](https://GitHub.com/Kataiser/tf2-rich-presence/releases/)
+[![GitHub release](https://img.shields.io/github/release/Kataiser/tf2-rich-presence.svg)](https://GitHub.com/Kataiser/tf2-rich-presence/releases/)
+[![Updates](https://pyup.io/repos/github/Kataiser/tf2-rich-presence/shield.svg)](https://pyup.io/repos/github/Kataiser/tf2-rich-presence/)
+[![BCH compliance](https://bettercodehub.com/edge/badge/Kataiser/tf2-rich-presence?branch=master)](https://bettercodehub.com/)
 # tf2-rich-presence
 Discord Rich Presence for Team Fortress 2
 
