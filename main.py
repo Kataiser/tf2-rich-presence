@@ -44,9 +44,9 @@ def main():
     try:
         maps_db: TextIO = open(os.path.join('resources', 'maps.json'), 'r')
     except FileNotFoundError:
-        maps_db = open('maps.json', 'r')
+        maps_db: TextIO = open('maps.json', 'r')
 
-    map_gamemodes: object = json.load(maps_db)
+    map_gamemodes: dict = json.load(maps_db)
     maps_db.close()
 
     loop_iteration: int = 0

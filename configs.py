@@ -38,7 +38,7 @@ def class_config_files(exe_location: str):
 
 
 # reads steams launch options save file to find -condebug
-def steam_config_file(exe_location: str) -> object:
+def steam_config_file(exe_location: str) -> list:
     log.debug("Looking for -condebug")
     found_condebug: bool = False
     found_usernames: List[str] = []

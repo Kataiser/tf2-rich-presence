@@ -1,7 +1,7 @@
 import json
 import os
 import time
-from typing import TextIO, Dict, KeysView, List
+from typing import TextIO, Dict, KeysView, List, Tuple, Union
 
 import requests
 from requests import Response
@@ -10,18 +10,12 @@ import logger as log
 
 
 # uses teamwork.tf's API to find the gamemode of a custom map
-def find_custom_map_gamemode(map_filename):
+def find_custom_map_gamemode(map_filename: str) -> Tuple[str, str]:
     log.debug(f"Finding gamemode for custom map: {map_filename}")
     days_since_epoch_now: int = int(time.time() / 86400)
 
     # to avoid constantly using internet, each map is cached to custom_maps.json
-    try:
-        custom_maps_db: TextIO = open(os.path.join('resources', 'custom_maps.json'), 'r')
-    except FileNotFoundError:
-        custom_maps_db = open('custom_maps.json', 'r')
-
-    custom_map_gamemodes: dict = json.load(custom_maps_db)
-    custom_maps_db.close()
+    custom_map_gamemodes = access_custom_maps_cache()
     log.debug(f"{len(custom_map_gamemodes)} maps cached: {list(custom_map_gamemodes.keys())}")
 
     # look for map in loaded cache
@@ -58,13 +52,7 @@ def find_custom_map_gamemode(map_filename):
                 custom_map_gamemodes[map_filename] = [gamemode, first_gamemode_fancy, days_since_epoch_now]
 
                 # load the cache to actually modify it
-                try:
-                    custom_maps_db = open(os.path.join('resources', 'custom_maps.json'), 'w')
-                except FileNotFoundError:
-                    custom_maps_db = open('custom_maps.json', 'w')
-
-                json.dump(custom_map_gamemodes, custom_maps_db, indent=4)
-                custom_maps_db.close()
+                access_custom_maps_cache(dict_input=custom_map_gamemodes)
 
                 # ex: 'mvm', 'Mann vs. Machine'
                 log.debug(f"{map_filename}'s gamemode is {[gamemode, first_gamemode_fancy]} (fresh from teamwork.tf)")
@@ -75,13 +63,32 @@ def find_custom_map_gamemode(map_filename):
         first_gamemode_fancy: str = 'Unknown gamemode'
         custom_map_gamemodes[map_filename] = [first_gamemode, first_gamemode_fancy, days_since_epoch_now]
 
-        try:
-            custom_maps_db = open(os.path.join('resources', 'custom_maps.json'), 'w')
-        except FileNotFoundError:
-            custom_maps_db = open('custom_maps.json', 'w')
-
-        json.dump(custom_map_gamemodes, custom_maps_db, indent=4)
-        custom_maps_db.close()
+        access_custom_maps_cache(dict_input=custom_map_gamemodes)
 
         log.debug(f"{map_filename}'s gamemode is {[first_gamemode, first_gamemode_fancy]} (fresh from the API)")
         return first_gamemode, first_gamemode_fancy
+
+
+# reads or writes custom_maps.json, the cache of custom maps
+def access_custom_maps_cache(dict_input: Union[dict, None] = None) -> dict:
+    if dict_input is None:
+        file_mode: str = 'r'
+    else:
+        file_mode: str = 'w'
+
+    try:
+        custom_maps_cache_file: TextIO = open(os.path.join('resources', 'custom_maps.json'), file_mode)
+    except FileNotFoundError:
+        custom_maps_cache_file: TextIO = open('custom_maps.json', file_mode)
+
+    if dict_input is None:
+        loaded_cache: dict = json.load(custom_maps_cache_file)
+        custom_maps_cache_file.close()
+        return loaded_cache
+    else:
+        json.dump(dict_input, custom_maps_cache_file, indent=4)
+        custom_maps_cache_file.close()
+
+
+if __name__ == '__main__':
+    print(find_custom_map_gamemode('cp_catwalk_a5c'))
