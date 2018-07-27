@@ -2,8 +2,8 @@ certifi==2018.4.16
 chardet==3.0.4
 discoIPC==1.0.0
 idna==2.7
-pbwrap=1.0.7
+pbwrap==1.0.7
 psutil==5.4.6
-raven=6.9.0
-requests=2.19.1
+raven==6.9.0
+requests==2.19.1
 urllib3==1.23
