@@ -3,7 +3,9 @@ import os
 import socket
 import sys
 import time
-from typing import Union, TextIO, List, BinaryIO
+import traceback
+from operator import itemgetter
+from typing import Union, TextIO, List
 
 from pbwrap import Pastebin
 from raven import Client
@@ -37,14 +39,23 @@ def critical(message_in):
 
 
 def cleanup(max_logs):  # deletes older logs
-    all_logs: List[str] = sorted(os.listdir('logs'))
-    overshoot: int = max_logs - len(all_logs)
+    all_logs = os.listdir('logs')
+    all_logs_times = [(log_filename, os.stat(os.path.join('logs', log_filename)).st_mtime_ns) for log_filename in all_logs]  # yeah, an ugly one liner, sorry
+    all_logs_sorted = [log_pair[0] for log_pair in sorted(all_logs_times, key=itemgetter(1))]
+    overshoot: int = max_logs - len(all_logs_sorted)
     deleted: List[str] = []
+
     while overshoot < 0:
-        log_to_delete: str = all_logs.pop(0)
+        log_to_delete: str = all_logs_sorted.pop(0)
         deleted.append(log_to_delete)
-        os.remove(os.path.join('logs/', log_to_delete))
-        overshoot = max_logs - len(all_logs)
+
+        try:
+            os.remove(os.path.join('logs/', log_to_delete))
+        except:
+            error(f"Couldn't delete log file {log_to_delete}: {traceback.format_exc()}")
+
+        overshoot = max_logs - len(all_logs_sorted)
+
     debug("Deleted {} log(s): {}".format(len(deleted), deleted))
 
 
@@ -78,12 +89,17 @@ def pastebin(text):
     return pb.create_paste(text, api_paste_private=1, api_paste_name=filename, api_paste_expire_date='1M')
 
 
-try:
-    main_file: BinaryIO = open(os.path.join('resources', 'main.py'), 'rb')
-except FileNotFoundError:
-    main_file: BinaryIO = open('main.py', 'rb')
+files_to_hash = ['main.py', 'configs.py', 'custom_maps.py', 'logger.py', 'updater.py']
+files_to_hash_text = []
+for file_to_hash in files_to_hash:
+    try:
+        file = open(os.path.join('resources', file_to_hash), 'rb')
+    except FileNotFoundError:
+        file = open(file_to_hash, 'rb')
+
+    files_to_hash_text.append(file.read())
 hasher = hashlib.md5()
-hasher.update(main_file.read())
+hasher.update(b'\n'.join(files_to_hash_text))
 main_hash: str = hasher.hexdigest()
 
 start_time: float = time.perf_counter()
