@@ -69,7 +69,7 @@ def main(version_num):
     # copies stuff to the Github repo
     if github_repo_path != 'n':
         print("Copied", shutil.copy2('main.py', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy2('build.py', github_repo_path))
+        print("Copied", shutil.copy2('build.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('logger.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('configs.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('custom_maps.py', f'{github_repo_path}\\TF2 Rich Presence'))
