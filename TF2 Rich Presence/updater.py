@@ -19,7 +19,7 @@ def check(current_version, timeout):
         failure_message(current_version, f"(timed out after {timeout} seconds)")
     except Exception as other_error:
         log.error(f"Non-timout update error: {traceback.format_exc()}")
-        failure_message(failure_message(current_version, other_error))
+        failure_message(current_version, other_error)
     else:
         if current_version != newest_version:  # out of date
             log.error(f"Out of date, newest version is {newest_version}")

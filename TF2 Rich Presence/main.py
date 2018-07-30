@@ -10,7 +10,6 @@ from typing import Dict, Union, TextIO, Any, List, Tuple
 import psutil
 from discoIPC import ipc
 from discoIPC.ipc import DiscordIPC
-from psutil import Process
 
 import configs
 import custom_maps
@@ -61,7 +60,6 @@ def main():
         # looks through all running processes to look for TF2, Steam, and Discord
         before_process_time: float = time.perf_counter()
         processes_searched: int = 0
-        process: Process
         for process in psutil.process_iter():
             try:
                 with process.oneshot():
@@ -142,7 +140,6 @@ def main():
 
                 # iterates though every line in the log (I KNOW) and learns everything from it
                 line_used: str = ''
-                line: str
                 for line in lines:
                     if 'Map:' in line:
                         current_map = line[5:-1]
@@ -158,7 +155,6 @@ def main():
                         current_class = 'Not queued'
                         line_used = line
 
-                    disconnect_message: str
                     for disconnect_message in disconnect_messages:
                         if disconnect_message in line:
                             current_map = 'In menus'
@@ -185,9 +181,6 @@ def main():
             if current_map != 'In menus' and current_map != 'In queue':
                 # not in menus = in a game
                 try:
-                    map_fancy: str
-                    current_gamemode: str
-                    gamemode_fancy: str
                     map_fancy, current_gamemode, gamemode_fancy = map_gamemodes[current_map]
                     activity['details'] = 'Map: {}'.format(map_fancy)
                     activity['assets']['large_image'] = current_gamemode
@@ -196,8 +189,6 @@ def main():
                     # is a custom map
                     activity['details'] = 'Map: {}'.format(current_map)
 
-                    custom_gamemode: str
-                    custom_gamemode_fancy: str
                     custom_gamemode, custom_gamemode_fancy = custom_maps.find_custom_map_gamemode(current_map)
                     activity['assets']['large_image'] = custom_gamemode
                     activity['assets']['large_text'] = custom_gamemode_fancy + ' [custom/community map]'

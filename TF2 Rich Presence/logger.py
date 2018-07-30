@@ -76,12 +76,11 @@ def report_log(reason):
 
 
 def read_truncated_file(path):
-    file: TextIO
-    with open(path, 'r', errors='replace') as file:
+    with open(path, 'r', errors='replace') as file_to_truncate:
         file_size: int = os.stat(path).st_size
         if file_size > 410000:
-            file.seek(file_size - 400000)
-        return file.read()
+            file_to_truncate.seek(file_size - 400000)
+        return file_to_truncate.read()
 
 
 def pastebin(text):

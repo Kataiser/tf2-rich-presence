@@ -1,5 +1,5 @@
 import os
-from typing import List, TextIO, Union, Tuple
+from typing import List, TextIO, Union
 
 import logger as log
 from main import no_condebug_warning
@@ -10,7 +10,6 @@ def class_config_files(exe_location: str):
     log.debug(f"Reading (and possibly modifying) class configs at {exe_location}")
     tf2_classes: List[str] = ['Scout', 'Soldier', 'Pyro', 'Demoman', 'Heavy', 'Engineer', 'Medic', 'Sniper', 'Spy']
 
-    tf2_class: str
     for tf2_class in tf2_classes:
         # 'echo' means 'output to console' in source-speak
         selected_line: str = 'echo "{} selected"'.format(tf2_class)
@@ -45,7 +44,6 @@ def steam_config_file(exe_location: str) -> list:
 
     user_id_folders: List[str] = next(os.walk(exe_location + 'userdata'))[1]
     log.debug(f"User id folders: {user_id_folders}")
-    user_id_folder: str
     for user_id_folder in user_id_folders:  # possibly multiple users for the same steam install
         try:
             # 'C:\Program Files (x86)\Steam\userdata\*user id number*\config\localconfig.vdf'
@@ -55,7 +53,6 @@ def steam_config_file(exe_location: str) -> list:
                 log.debug(f"Reading {global_config_file_path} ({len(lines)} lines) for -condebug")
                 tf2_line_num: int = 0
 
-                line: Tuple[int, str]
                 for line in enumerate(lines):
                     if line[1].startswith('\t\t"PersonaName"\t\t'):
                         possible_username: str = line[1].replace('\t', '')[14:-2]
@@ -64,7 +61,6 @@ def steam_config_file(exe_location: str) -> list:
                         log.debug(f"Found TF2's ID at line {line[0]}")
                         tf2_line_num = line[0]
 
-                line_offset: int
                 for line_offset in range(1, 21):
                     launchoptions_line: str = lines[tf2_line_num + line_offset]
                     if 'LaunchOptions' in launchoptions_line and'-condebug' in launchoptions_line:
