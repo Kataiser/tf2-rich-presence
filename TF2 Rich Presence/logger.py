@@ -51,7 +51,7 @@ def cleanup(max_logs):  # deletes older logs
 
         try:
             os.remove(os.path.join('logs/', log_to_delete))
-        except:
+        except Exception:
             error(f"Couldn't delete log file {log_to_delete}: {traceback.format_exc()}")
 
         overshoot = max_logs - len(all_logs_sorted)
@@ -64,8 +64,9 @@ def current_log():
 
 
 def report_log(reason):
-    info(f"Reporting {filename} ({os.stat(filename).st_size} bytes) to Sentry")
     if not dev:
+        info(f"Reporting {filename} ({os.stat(filename).st_size} bytes) to Sentry")
+
         if not console_log_path:
             paste_text = f"{filename}\n{read_truncated_file(filename)}"
         else:

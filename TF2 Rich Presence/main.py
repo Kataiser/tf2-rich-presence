@@ -9,7 +9,6 @@ from typing import Dict, Union, TextIO, Any, List, Tuple
 
 import psutil
 from discoIPC import ipc
-from discoIPC.ipc import DiscordIPC
 
 import configs
 import custom_maps
@@ -24,8 +23,12 @@ def main():
 
     log.dev = True
     log.info("Starting TF2 Rich Presence {tf2rpvnum}")
-    log.cleanup(5)
     log.current_log()
+
+    if log.dev:
+        log.cleanup(20)
+    else:
+        log.cleanup(5)
 
     updater.check('{tf2rpvnum}', 5)
 
@@ -38,6 +41,7 @@ def main():
                                                                                        'large_text': 'In menus'},
                                                                             'state': ''}
     client_connected_init: bool = False
+    client_init = None
 
     # load maps database
     try:
@@ -50,7 +54,7 @@ def main():
 
     loop_iteration_init: int = 0
     while True:
-        loop_body(match_types_init, disconnect_messages_init, activity_init, client_connected_init, map_gamemodes_init, loop_iteration_init)
+        client_connected_init, client_init = loop_body(match_types_init, disconnect_messages_init, activity_init, client_connected_init, client_init, map_gamemodes_init, loop_iteration_init)
 
         # rich presence only updates every 15 seconds, but it listens constantly so sending every 5 seconds is fine
         time.sleep(5)
@@ -61,7 +65,7 @@ def main():
 
 
 # the main logic. runs every 5 seconds
-def loop_body(match_types, disconnect_messages, activity, client_connected, map_gamemodes, loop_iteration):
+def loop_body(match_types, disconnect_messages, activity, client_connected, client, map_gamemodes, loop_iteration):
     loop_iteration += 1
     log.debug(f"Loop iteration this app session: {loop_iteration}")
 
@@ -115,7 +119,7 @@ def loop_body(match_types, disconnect_messages, activity, client_connected, map_
     if tf2_is_running and discord_is_running:
         if not client_connected:
             # connects to Discord
-            client: DiscordIPC = ipc.DiscordIPC('429389143756374017')
+            client = ipc.DiscordIPC('429389143756374017')
             client.connect()
             client_state: Tuple[Any, bool, str, int, str, Any] = (client.client_id, client.connected, client.ipc_path, client.pid, client.platform, client.socket)
             log.debug(f"Initial client state: {client_state}")
@@ -233,7 +237,7 @@ def loop_body(match_types, disconnect_messages, activity, client_connected, map_
     elif not discord_is_running:
         log.debug("Discord isn't running")
         print("{}\nDiscord isn't running\n".format(current_time_formatted))
-    else:
+    else:  # tf2 isn't running
         if client_connected:
             try:
                 log.debug("Disconnecting client")
@@ -251,6 +255,8 @@ def loop_body(match_types, disconnect_messages, activity, client_connected, map_
 
         # to prevent connecting when already connected
         client_connected = False
+
+    return client_connected, client
 
 
 # alerts the user that they don't seem to have -condebug
