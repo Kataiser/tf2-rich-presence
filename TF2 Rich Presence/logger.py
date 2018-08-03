@@ -12,14 +12,15 @@ from raven import Client
 
 
 def write_log(level, message_out):
-    current_time: str = str(time.strftime('%c'))
-    time_since_start: str = format(time.perf_counter() - start_time, '.4f')  # the format() adds trailing zeroes
-    log_file: TextIO = open(filename, 'a')
-    full_line: str = "[{} +{}] {}: {}\n".format(current_time, time_since_start, level, message_out)
-    log_file.write(full_line)
-    log_file.close()
-    if dev:
-        print(full_line.rstrip('\n'), file=sys.stderr)
+    if logging_enabled:
+        current_time: str = str(time.strftime('%c'))
+        time_since_start: str = format(time.perf_counter() - start_time, '.4f')  # the format() adds trailing zeroes
+        log_file: TextIO = open(filename, 'a')
+        full_line: str = "[{} +{}] {}: {}\n".format(current_time, time_since_start, level, message_out)
+        log_file.write(full_line)
+        log_file.close()
+        if dev:
+            print(full_line.rstrip('\n'), file=sys.stderr)
 
 
 def info(message_in):
@@ -111,6 +112,7 @@ else:
 filename: Union[bytes, str] = os.path.join('logs', '{}_{}_{}_{}.log'.format(user_pc_name, user_identifier, '{tf2rpvnum}', main_hash[:8]))
 dev: bool = True
 console_log_path: Union[str, None] = None
+logging_enabled = True
 
 # sentry.io, for error reporting
 client: Client = Client(dsn='https://de781ce2454f458eafab1992630bc100:ce637f5993b14663a0840cd9f98a714a@sentry.io/1245944',

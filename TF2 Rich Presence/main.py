@@ -204,7 +204,8 @@ class TF2RichPresense:
         return self.client_connected, self.client
 
 
-def interpret_console_log(console_log_path, user_usernames):
+# reads a console.log and returns current map and class
+def interpret_console_log(console_log_path: str, user_usernames: list) -> tuple:
     # defaults
     current_map: str = ''
     current_class: str = ''
