@@ -36,8 +36,6 @@ def main():
 
 class TF2RichPresense:
     def __init__(self):
-        self.match_types: Dict[str, str] = {'match group 12v12 Casual Match': 'Casual', 'match group MvM Practice': 'MvM', 'match group 6v6 Ladder Match': 'Competitive'}
-        self.disconnect_messages = ('Server shutting down', 'Steam config directory', 'Lobby destroyed', 'Disconnect:', 'Missing map')
         self.start_time: int = int(time.time())
         self.activity: Dict[str, Union[str, Dict[str, int], Dict[str, str]]] = {'details': 'In menus',  # this is what gets modified and sent to Discord via discoIPC
                                                                                 'timestamps': {'start': self.start_time},
@@ -135,90 +133,31 @@ class TF2RichPresense:
                 log.debug(f"Sent over RPC: {self.activity}")
                 self.client_connected = True
 
-            # defaults
-            current_map: str = ''
-            current_class: str = ''
-
             # modifies a few tf2 config files
             configs.class_config_files(tf2_location)
 
-            # console.log is a log of tf2's console (duh), only exists if tf2 has -condebug (see the bottom of config_files)
-            consolelog_filename: Union[bytes, str] = os.path.join(tf2_location, 'tf', 'console.log')
-            log.debug(f"Looking for console.log at {consolelog_filename}")
-            log.console_log_path = consolelog_filename
+            state_line, details_line = interpret_console_log(os.path.join(tf2_location, 'tf', 'console.log'), valid_usernames)
 
-            if not os.path.exists(consolelog_filename):
-                log.critical("console.log doesn't exist, issuing warning")
-                no_condebug_warning()
-
-            with open(consolelog_filename, 'r', errors='replace') as consolelog_file:
-                consolelog_file_size: int = os.stat(consolelog_filename).st_size
-                lines: List[str] = consolelog_file.readlines()
-                log.debug(f"console.log: {consolelog_file_size} bytes, {len(lines)} lines")
-                if len(lines) > 11000:
-                    lines = lines[-10000:]
-                    log.debug(f"Limited to reading {len(lines)} lines")
-
-                # iterates though every line in the log (I KNOW) and learns everything from it
-                line_used: str = ''
-                for line in lines:
-                    if 'Map:' in line:
-                        current_map = line[5:-1]
-                        current_class = 'unselected'  # this variable is poorly named
-                        line_used = line
-
-                    if 'selected' in line and 'candidates' not in line:
-                        current_class = line[:-11]
-                        line_used = line
-
-                    if 'Disconnect by user' in line and [i for i in valid_usernames if i in line]:
-                        current_map = 'In menus'  # so is this one
-                        current_class = 'Not queued'
-                        line_used = line
-
-                    for disconnect_message in self.disconnect_messages:
-                        if disconnect_message in line:
-                            current_map = 'In menus'
-                            current_class = 'Not queued'
-                            line_used = line
-                            break
-
-                    if '[Partyclient] Entering queue ' in line:
-                        current_map = 'In menus'
-                        current_class = 'Queued for {}'.format(self.match_types[line[33:-1]])
-                        line_used = line
-
-                    if '[Partyclient] Entering s' in line:  # full line: [Partyclient] Entering standby queue
-                        current_map = 'In menus'
-                        current_class = 'Queued for a party\'s match'
-                        line_used = line
-
-                    if '[Partyclient] L' in line:  # full line: [Partyclient] Leaving queue
-                        current_class = 'Not queued'
-                        line_used = line
-
-            log.debug(f"Got '{current_map}' and '{current_class}' from this line: '{line_used[:-1]}'")
-
-            if current_map != 'In menus' and current_map != 'In queue':
+            if state_line != 'In menus' and state_line != 'In queue':
                 # not in menus = in a game
                 try:
-                    map_fancy, current_gamemode, gamemode_fancy = self.map_gamemodes[current_map]
+                    map_fancy, current_gamemode, gamemode_fancy = self.map_gamemodes[state_line]
                     self.activity['details'] = 'Map: {}'.format(map_fancy)
                     self.activity['assets']['large_image'] = current_gamemode
                     self.activity['assets']['large_text'] = gamemode_fancy
                 except KeyError:
                     # is a custom map
-                    self.activity['details'] = 'Map: {}'.format(current_map)
+                    self.activity['details'] = 'Map: {}'.format(state_line)
 
-                    custom_gamemode, custom_gamemode_fancy = custom_maps.find_custom_map_gamemode(current_map)
+                    custom_gamemode, custom_gamemode_fancy = custom_maps.find_custom_map_gamemode(state_line)
                     self.activity['assets']['large_image'] = custom_gamemode
                     self.activity['assets']['large_text'] = custom_gamemode_fancy + ' [custom/community map]'
 
-                self.activity['state'] = 'Class: {}'.format(current_class)
+                self.activity['state'] = 'Class: {}'.format(details_line)
             else:
                 # in menus displays the main menu
-                self.activity['details'] = current_map
-                self.activity['state'] = current_class
+                self.activity['details'] = state_line
+                self.activity['state'] = details_line
                 self.activity['assets']['large_image'] = 'main_menu'
                 self.activity['assets']['large_text'] = 'Main menu'
 
@@ -263,6 +202,73 @@ class TF2RichPresense:
             self.client_connected = False
 
         return self.client_connected, self.client
+
+
+def interpret_console_log(console_log_path, user_usernames):
+    # defaults
+    current_map: str = ''
+    current_class: str = ''
+    
+    match_types: Dict[str, str] = {'match group 12v12 Casual Match': 'Casual', 'match group MvM Practice': 'MvM', 'match group 6v6 Ladder Match': 'Competitive'}
+    disconnect_messages = ('Server shutting down', 'Steam config directory', 'Lobby destroyed', 'Disconnect:', 'Missing map')
+
+    # console.log is a log of tf2's console (duh), only exists if tf2 has -condebug (see the bottom of config_files)
+    consolelog_filename: Union[bytes, str] = console_log_path
+    log.debug(f"Looking for console.log at {consolelog_filename}")
+    log.console_log_path = consolelog_filename
+
+    if not os.path.exists(consolelog_filename):
+        log.critical("console.log doesn't exist, issuing warning")
+        no_condebug_warning()
+
+    with open(consolelog_filename, 'r', errors='replace') as consolelog_file:
+        consolelog_file_size: int = os.stat(consolelog_filename).st_size
+        lines: List[str] = consolelog_file.readlines()
+        log.debug(f"console.log: {consolelog_file_size} bytes, {len(lines)} lines")
+        if len(lines) > 11000:
+            lines = lines[-10000:]
+            log.debug(f"Limited to reading {len(lines)} lines")
+
+        # iterates though every line in the log (I KNOW) and learns everything from it
+        line_used: str = ''
+        for line in lines:
+            if 'Map:' in line:
+                current_map = line[5:-1]
+                current_class = 'unselected'  # this variable is poorly named
+                line_used = line
+
+            if 'selected' in line and 'candidates' not in line:
+                current_class = line[:-11]
+                line_used = line
+
+            if 'Disconnect by user' in line and [i for i in user_usernames if i in line]:
+                current_map = 'In menus'  # so is this one
+                current_class = 'Not queued'
+                line_used = line
+
+            for disconnect_message in disconnect_messages:
+                if disconnect_message in line:
+                    current_map = 'In menus'
+                    current_class = 'Not queued'
+                    line_used = line
+                    break
+
+            if '[Partyclient] Entering queue ' in line:
+                current_map = 'In menus'
+                current_class = 'Queued for {}'.format(match_types[line[33:-1]])
+                line_used = line
+
+            if '[Partyclient] Entering s' in line:  # full line: [Partyclient] Entering standby queue
+                current_map = 'In menus'
+                current_class = 'Queued for a party\'s match'
+                line_used = line
+
+            if '[Partyclient] L' in line:  # full line: [Partyclient] Leaving queue
+                current_class = 'Not queued'
+                line_used = line
+
+    log.debug(f"Got '{current_map}' and '{current_class}' from this line: '{line_used[:-1]}'")
+    return current_map, current_class
 
 
 # alerts the user that they don't seem to have -condebug
