@@ -21,7 +21,7 @@ def find_custom_map_gamemode(map_filename: str) -> Tuple[str, str]:
     # look for map in loaded cache
     try:
         cached_data: list = custom_map_gamemodes[map_filename]
-        if days_since_epoch_now - cached_data[2] <= 5:  # custom map cache expires after 5 days
+        if days_since_epoch_now - cached_data[2] <= 1:  # custom map cache expires after 1 day
             log.debug(f"{map_filename}'s gamemode is {list(cached_data[:-1])} (from cache)")
             return cached_data[:-1]
         else:
