@@ -77,11 +77,11 @@ def report_log(reason):
         client.captureMessage(f'{reason}\n{filename}\n{paste_url}')
 
 
-def read_truncated_file(path):
+def read_truncated_file(path, limit=400000):
     with open(path, 'r', errors='replace') as file_to_truncate:
         file_size: int = os.stat(path).st_size
-        if file_size > 410000:
-            file_to_truncate.seek(file_size - 400000)
+        if file_size > int(limit * 1.1):
+            file_to_truncate.seek(file_size - limit)
         return file_to_truncate.read()
 
 
