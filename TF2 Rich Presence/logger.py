@@ -5,7 +5,7 @@ import sys
 import time
 import traceback
 from operator import itemgetter
-from typing import Union, TextIO, List
+from typing import Union, TextIO, List, BinaryIO
 
 from pbwrap import Pastebin
 from raven import Client
@@ -39,7 +39,7 @@ def critical(message_in):
     write_log('CRITICAL', message_in)
 
 
-def cleanup(max_logs):  # deletes older logs
+def cleanup(max_logs: int):  # deletes older logs
     all_logs = os.listdir('logs')
     all_logs_times = [(log_filename, os.stat(os.path.join('logs', log_filename)).st_mtime_ns) for log_filename in all_logs]  # yeah, an ugly one liner, sorry
     all_logs_sorted = [log_pair[0] for log_pair in sorted(all_logs_times, key=itemgetter(1))]
@@ -64,7 +64,7 @@ def current_log():
     debug(f"Current log: '{filename}'")
 
 
-def report_log(reason):
+def report_log(reason: str):
     if not dev:
         info(f"Reporting {filename} ({os.stat(filename).st_size} bytes) to Sentry")
 
@@ -77,7 +77,7 @@ def report_log(reason):
         client.captureMessage(f'{reason}\n{filename}\n{paste_url}')
 
 
-def read_truncated_file(path, limit=400000):
+def read_truncated_file(path: str, limit: int = 400000) -> str:
     with open(path, 'r', errors='replace') as file_to_truncate:
         file_size: int = os.stat(path).st_size
         if file_size > int(limit * 1.1):
@@ -85,18 +85,18 @@ def read_truncated_file(path, limit=400000):
         return file_to_truncate.read()
 
 
-def pastebin(text):
+def pastebin(text: str) -> str:
     pb: Pastebin = Pastebin('909483860965ed941bff77e61c962ac2')
     return pb.create_paste(text, api_paste_private=1, api_paste_name=filename, api_paste_expire_date='1M')
 
 
-files_to_hash = ['main.py', 'configs.py', 'custom_maps.py', 'logger.py', 'updater.py']
-files_to_hash_text = []
+files_to_hash: List[str] = ['main.py', 'configs.py', 'custom_maps.py', 'logger.py', 'updater.py']
+files_to_hash_text: List = []
 for file_to_hash in files_to_hash:
     try:
-        file = open(os.path.join('resources', file_to_hash), 'rb')
+        file: BinaryIO = open(os.path.join('resources', file_to_hash), 'rb')
     except FileNotFoundError:
-        file = open(file_to_hash, 'rb')
+        file: BinaryIO = open(file_to_hash, 'rb')
 
     files_to_hash_text.append(file.read())
 hasher = hashlib.md5()
