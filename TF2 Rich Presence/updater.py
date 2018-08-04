@@ -25,7 +25,7 @@ def check(current_version, timeout):
         if current_version != newest_version:  # out of date
             log.error(f"Out of date, newest version is {newest_version}")
             print(f"This version ({current_version}) is out of date (newest version is {newest_version}).\nGet the update at {downloads_url}")
-            print(f"\n{newest_version} changelog:\n{changelog}\n")
+            print(f"\n{newest_version} changelog:\n{changelog}\n(If you're more than one version out of date, there have been more changes than this.)\n")
 
 
 def failure_message(current_version, error_message):
@@ -37,6 +37,7 @@ def failure_message(current_version, error_message):
 
 if __name__ == '__main__':
     try:
+        log.dev = True
         check('{tf2rpvnum}', 5)
     except Exception as error:
         main.handle_crash(error)
