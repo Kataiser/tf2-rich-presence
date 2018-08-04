@@ -1,5 +1,5 @@
-import unittest
 import os
+import unittest
 
 import configs
 import custom_maps
