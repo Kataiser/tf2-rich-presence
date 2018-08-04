@@ -291,5 +291,8 @@ if __name__ == '__main__':
     try:
         main()
     except Exception as error:
-        log.critical(traceback.format_exc())
+        formatted_exception = traceback.format_exc()
+        print(f"TF2 Rich Presence has crashed, the error should now be reported to the developer. Here's the full error message if you're interested.\n{formatted_exception}")
+        log.critical(formatted_exception)
         log.report_log(error)
+        time.sleep(5)
