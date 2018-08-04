@@ -70,6 +70,7 @@ def main(version_num):
     if github_repo_path != 'n':
         print("Copied", shutil.copy2('main.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('build.py', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy2('tests.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('logger.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('configs.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('custom_maps.py', f'{github_repo_path}\\TF2 Rich Presence'))
@@ -87,6 +88,13 @@ def main(version_num):
         print("Copied", shutil.copy2('README-source.MD', github_repo_path))
         if update_readme:
             print("Copied", shutil.copy2('README.MD', github_repo_path))
+
+        # copies test_resources
+        test_resources_source = os.path.abspath('test_resources')
+        test_resources_target = os.path.abspath(f'{github_repo_path}\\TF2 Rich Presence\\test_resources')
+        shutil.rmtree(test_resources_target)
+        print(f"Copying from {test_resources_source} to {test_resources_target}")
+        subprocess.run(f'xcopy \"{test_resources_source}\" \"{test_resources_target}\\\" /E /Q')
 
     # clears custom map cache
     with open(f'{new_build_folder_name}\\resources\\custom_maps.json', 'w') as maps_db:

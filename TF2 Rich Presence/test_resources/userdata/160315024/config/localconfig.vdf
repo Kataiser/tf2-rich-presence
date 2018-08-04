@@ -1,0 +1,35 @@
+"UserLocalConfigStore"
+{
+	"friends"
+	{
+		"PersonaName"		"Kataiser"
+	}
+	"Software"
+	{
+		"Valve"
+		{
+			"Steam"
+			{
+				"Apps"
+				{
+					"440"
+					{
+						"LastPlayed"		"1533334441"
+						"vid"
+						{
+							"dxsupport_crc"		"-637978338"
+							"VendorID"		"4318"
+							"deviceid"		"7171"
+							"nowarnifunsupported"		"0"
+							"nowarnifunknown"		"0"
+							"nowarnifoutdated"		"0"
+							"unknowninfouploaded"		"0"
+						}
+						"BadgeData"		"0a000000080e1206080210011800"
+						"LaunchOptions"		"-novid -noipx -refresh 120 -w 1920 -h 1080 -windowed -noborder -useforcedmparms -noforcemaccel -noforcemspd -dxlevel 95 -condebug"
+					}
+				}
+			}
+		}
+	}
+}
