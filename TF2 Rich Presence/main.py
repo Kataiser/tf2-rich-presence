@@ -121,7 +121,7 @@ class TF2RichPresense:
                 try:
                     # connects to Discord
                     self.client = ipc.DiscordIPC('429389143756374017')
-                    self.client.conect()
+                    self.client.connect()
                     self.client_state: Tuple[Any, bool, str, int, str, Any] = (self.client.client_id, self.client.connected, self.client.ipc_path, self.client.pid, self.client.platform, self.client.socket)
                     log.debug(f"Initial client state: {self.client_state}")
                 except Exception as client_connect_error:
