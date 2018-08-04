@@ -196,8 +196,6 @@ class TF2RichPresense:
                 except Exception as err:
                     log.error(f"client error while disconnecting: {err}")
 
-                if random.random() < 0.1:
-                    log.report_log("Telemetry")  # send 10% of logs when closing TF2, for telemetry more than bugfixing
                 raise SystemExit  # ...but this does
             else:
                 log.debug("TF2 isn't running")
