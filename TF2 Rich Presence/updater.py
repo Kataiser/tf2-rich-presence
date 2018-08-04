@@ -3,6 +3,7 @@ import traceback
 import requests
 
 import logger as log
+import main
 
 
 def check(current_version, timeout):
@@ -35,4 +36,7 @@ def failure_message(current_version, error_message):
 
 
 if __name__ == '__main__':
-    check('v1.4.2', 5)
+    try:
+        check('{tf2rpvnum}', 5)
+    except Exception as error:
+        main.handle_crash(error)

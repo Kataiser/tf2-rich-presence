@@ -13,7 +13,6 @@ from discoIPC import ipc
 import configs
 import custom_maps
 import logger as log
-import updater
 
 
 def main():
@@ -28,8 +27,6 @@ def main():
         log.cleanup(20)
     else:
         log.cleanup(5)
-
-    updater.check('{tf2rpvnum}', 5)
 
     TF2RichPresense().run()
 
@@ -121,11 +118,19 @@ class TF2RichPresense:
 
         if tf2_is_running and discord_is_running:
             if not self.client_connected:
-                # connects to Discord
-                self.client = ipc.DiscordIPC('429389143756374017')
-                self.client.connect()
-                self.client_state: Tuple[Any, bool, str, int, str, Any] = (self.client.client_id, self.client.connected, self.client.ipc_path, self.client.pid, self.client.platform, self.client.socket)
-                log.debug(f"Initial client state: {self.client_state}")
+                try:
+                    # connects to Discord
+                    self.client = ipc.DiscordIPC('429389143756374017')
+                    self.client.conect()
+                    self.client_state: Tuple[Any, bool, str, int, str, Any] = (self.client.client_id, self.client.connected, self.client.ipc_path, self.client.pid, self.client.platform, self.client.socket)
+                    log.debug(f"Initial client state: {self.client_state}")
+                except Exception as client_connect_error:
+                    if client_connect_error == "Can't connect to Discord Client.":  # Discord is still running but an RPC client can't be established
+                        log.debug("Can't RPC")
+                        print(f"{current_time_formatted}\nCan't connect to Discord for Rich Presence.\n")
+                        raise SystemExit
+                    else:  # some other error
+                        raise
 
                 # sends first status, starts on main menu
                 self.activity['timestamps']['start'] = self.start_time
@@ -287,12 +292,16 @@ def no_condebug_warning():
     raise SystemExit
 
 
+def handle_crash(exception):
+    formatted_exception = traceback.format_exc()
+    log.critical(formatted_exception)
+    print(f"TF2 Rich Presence has crashed, the error should now be reported to the developer.\nHere's the full error message if you're interested.\n{formatted_exception}")
+    log.report_log(exception)
+    time.sleep(5)
+
+
 if __name__ == '__main__':
     try:
         main()
     except Exception as error:
-        formatted_exception = traceback.format_exc()
-        print(f"TF2 Rich Presence has crashed, the error should now be reported to the developer. Here's the full error message if you're interested.\n{formatted_exception}")
-        log.critical(formatted_exception)
-        log.report_log(error)
-        time.sleep(5)
+        handle_crash(error)
