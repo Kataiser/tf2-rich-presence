@@ -82,7 +82,9 @@ def read_truncated_file(path: str, limit: int = 400000) -> str:
         file_size: int = os.stat(path).st_size
         if file_size > int(limit * 1.1):
             file_to_truncate.seek(file_size - limit)
-        return file_to_truncate.read()
+
+        trunc_message = f'TRUNCATED "{path}" TO LAST {limit} BYTES'
+        return f'{trunc_message}\n{file_to_truncate.read()}\n{trunc_message}'
 
 
 def pastebin(text: str) -> str:

@@ -1,3 +1,4 @@
+TRUNCATED "test_resources\console_queued_casual.log" TO LAST 1000 BYTES
 erver shutting down)
 Dropped CrySomeMore from server (Server shutting down)
 Dropped Hostage from server (Server shutting down)
@@ -16,3 +17,5 @@ Dropped Kataiser from server (Server shutting down)
 [PartyClient] Entering queue for match group 12v12 Casual Match
 [PartyClient] Joining party 449503282159189
 [PartyClient] Re-joining party 449503282159189 we previously had queued messages for.  Triggering full resend of options.
+
+TRUNCATED "test_resources\console_queued_casual.log" TO LAST 1000 BYTES
