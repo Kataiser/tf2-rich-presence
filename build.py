@@ -2,6 +2,7 @@ import json
 import os
 import shutil
 import subprocess
+import tempfile
 import time
 
 
@@ -34,6 +35,13 @@ def main(version_num):
                 print(f"Removed old build folder: {folder}")
     except FileNotFoundError:
         print("No old build folder found")
+
+    files_in_cwd = os.listdir('.')
+    for file in files_in_cwd:
+        if file.startswith('tf2_rich_presence_'):
+            if file.endswith('.exe') or file.endswith('.zip'):
+                os.remove(file)
+                print(f"Removed old package: {file}")
 
     # creates folders again
     time.sleep(0.25)  # because windows is slow sometimes
@@ -87,19 +95,25 @@ def main(version_num):
         print("Copied", shutil.copy2('unknown_map.png', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('readme.txt', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('requirements.txt', github_repo_path))
-        print("Copied", shutil.copy2('Bat_To_Exe_Converter.exe', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('tf2_logo_blurple.ico', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('Launch TF2 with Rich Presence.bat', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('README-source.MD', github_repo_path))
         if update_readme:
             print("Copied", shutil.copy2('README.MD', github_repo_path))
 
-        # copies test_resources
+        # copies test resources
         test_resources_source = os.path.abspath('test_resources')
         test_resources_target = os.path.abspath(f'{github_repo_path}\\TF2 Rich Presence\\test_resources')
         shutil.rmtree(test_resources_target)
         print(f"Copying from {test_resources_source} to {test_resources_target}")
         subprocess.run(f'xcopy \"{test_resources_source}\" \"{test_resources_target}\\\" /E /Q')
+
+        # copies build tools
+        build_tools_source = os.path.abspath('build_tools')
+        build_tools_target = os.path.abspath(f'{github_repo_path}\\build_tools')
+        shutil.rmtree(build_tools_target)
+        print(f"Copying from {build_tools_source} to {build_tools_target}")
+        subprocess.run(f'xcopy \"{build_tools_source}\" \"{build_tools_target}\\\" /E /Q')
 
     # clears custom map cache
     with open(f'{new_build_folder_name}\\resources\\custom_maps.json', 'w') as maps_db:
@@ -130,20 +144,25 @@ def main(version_num):
                 os.remove(pdb_path)
                 print("Deleted {}".format(pdb_path))
 
-    print("Converting .bat to .exe")
     batch_location = os.path.abspath(f'{new_build_folder_name}\\Launch TF2 with Rich Presence.bat')
     exe_location = os.path.abspath(f'{new_build_folder_name}\\Launch TF2 with Rich Presence.exe')
     icon_location = os.path.abspath('tf2_logo_blurple.ico')
     version_num_windows = version_num[1:].replace('.', ',') + ',0'
-    command_1 = f'Bat_To_Exe_Converter.exe -bat "{batch_location}" -save "{exe_location}" -icon "{icon_location}" -x64 -fileversion "{version_num_windows}"'
-    command_2 = f'-productversion "{version_num_windows}" -company "Kataiser" -productname "TF2 Rich Presence" -description "Discord Rich Presence for Team Fortress 2"'
-    subprocess.run(f'{command_1} {command_2}')
+    bat2exe_command_1 = f'build_tools\\Bat_To_Exe_Converter.exe -bat "{batch_location}" -save "{exe_location}" -icon "{icon_location}" -x64 -fileversion "{version_num_windows}"'
+    bat2exe_command_2 = f'-productversion "{version_num_windows}" -company "Kataiser" -productname "TF2 Rich Presence" -description "Discord Rich Presence for Team Fortress 2"'
+    print(f"Creating {batch_location}...")
+    subprocess.run(f'{bat2exe_command_1} {bat2exe_command_2}')
     os.remove(batch_location)
     print(f"Deleted {batch_location}")
 
-    print(f"\ntf2_rich_presence_{version_num}_installer.exe")
-    print(f"tf2_rich_presence_{version_num}.zip")
-    print("Remember to only package immediately after building")
+    package7zip_command_exe_1 = f'build_tools\\7za.exe a tf2_rich_presence_{version_num}_installer.exe tf2_rich_presence_{version_num}\\'
+    package7zip_command_exe_2 = f'-sfx build_tools\\7zCon.sfx -ssw -mx=9 -myx=9 -mmt=2 -m0=LZMA2:d=8m'
+    package7zip_command_zip = f'build_tools\\7za.exe a tf2_rich_presence_{version_num}.zip tf2_rich_presence_{version_num}\\ -ssw -mx=9 -m0=LZMA:d=8m -mmt=2'
+    with tempfile.TemporaryFile() as nowhere:
+        print(f"Creating tf2_rich_presence_{version_num}_installer.exe...")
+        subprocess.run(f'{package7zip_command_exe_1} {package7zip_command_exe_2}', stdout=nowhere)
+        print(f"Creating tf2_rich_presence_{version_num}.zip...")
+        subprocess.run(package7zip_command_zip, stdout=nowhere)
 
 
 if __name__ == '__main__':
