@@ -116,6 +116,11 @@ class TF2RichPresense:
         current_time_formatted: str = current_time.strftime('%I:%M:%S %p')
 
         if tf2_is_running and discord_is_running:
+            # modifies a few tf2 config files
+            configs.class_config_files(tf2_location)
+
+            state_line, details_line = interpret_console_log(os.path.join(tf2_location, 'tf', 'console.log'), valid_usernames)
+
             if not self.client_connected:
                 try:
                     # connects to Discord
@@ -136,11 +141,6 @@ class TF2RichPresense:
                 self.client.update_activity(self.activity)
                 log.debug(f"Sent over RPC: {self.activity}")
                 self.client_connected = True
-
-            # modifies a few tf2 config files
-            configs.class_config_files(tf2_location)
-
-            state_line, details_line = interpret_console_log(os.path.join(tf2_location, 'tf', 'console.log'), valid_usernames)
 
             if state_line != 'In menus' and state_line != 'In queue':
                 # not in menus = in a game
