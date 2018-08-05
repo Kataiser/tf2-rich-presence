@@ -92,6 +92,7 @@ def pastebin(text: str) -> str:
 
 files_to_hash: List[str] = ['main.py', 'configs.py', 'custom_maps.py', 'logger.py', 'updater.py']
 files_to_hash_text: List = []
+
 for file_to_hash in files_to_hash:
     try:
         file: BinaryIO = open(os.path.join('resources', file_to_hash), 'rb')
@@ -99,16 +100,18 @@ for file_to_hash in files_to_hash:
         file: BinaryIO = open(file_to_hash, 'rb')
 
     files_to_hash_text.append(file.read())
+
 hasher = hashlib.md5()
 hasher.update(b'\n'.join(files_to_hash_text))
 main_hash: str = hasher.hexdigest()
 
-start_time: float = time.perf_counter()
 user_identifier: str = os.getlogin()
 if socket.gethostname().find('.') >= 0:
     user_pc_name: str = socket.gethostname()
 else:
     user_pc_name: str = socket.gethostbyaddr(socket.gethostname())[0]
+
+start_time: float = time.perf_counter()
 filename: Union[bytes, str] = os.path.join('logs', '{}_{}_{}_{}.log'.format(user_pc_name, user_identifier, '{tf2rpvnum}', main_hash[:8]))
 dev: bool = True
 console_log_path: Union[str, None] = None
