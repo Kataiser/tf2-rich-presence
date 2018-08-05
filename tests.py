@@ -11,6 +11,8 @@ class TestTF2RichPresense(unittest.TestCase):
     def setUp(self):
         log.logging_enabled = False
         log.dev = True
+        if not os.path.exists('main.py'):
+            os.chdir(os.path.abspath('TF2 Rich Presence'))
 
     def test_console_log_in_menus(self):
         self.assertEqual(main.interpret_console_log('test_resources\\console_in_menus.log', ['Kataiser']), ('In menus', 'Not queued'))
