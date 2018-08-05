@@ -219,6 +219,7 @@ def interpret_console_log(console_log_path: str, user_usernames: list) -> tuple:
     consolelog_filename: Union[bytes, str] = console_log_path
     log.debug(f"Looking for console.log at {consolelog_filename}")
     log.console_log_path = consolelog_filename
+    log.debug(f"Set console_log_path to {consolelog_filename}")
 
     if not os.path.exists(consolelog_filename):
         log.critical("console.log doesn't exist, issuing warning")
