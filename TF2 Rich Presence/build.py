@@ -84,6 +84,8 @@ def main(version_num):
         print("Copied", shutil.copy2('unknown_map.png', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('readme.txt', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('requirements.txt', github_repo_path))
+        print("Copied", shutil.copy2('Bat_To_Exe_Converter.exe', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy2('tf2_logo_blurple.ico', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('Launch TF2 with Rich Presence.bat', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('README-source.MD', github_repo_path))
         if update_readme:
@@ -124,6 +126,17 @@ def main(version_num):
                 pdb_path = os.path.join(root, file)
                 os.remove(pdb_path)
                 print("Deleted {}".format(pdb_path))
+
+    print("Converting .bat to .exe")
+    batch_location = os.path.abspath(f'{new_build_folder_name}\\Launch TF2 with Rich Presence.bat')
+    exe_location = os.path.abspath(f'{new_build_folder_name}\\Launch TF2 with Rich Presence.exe')
+    icon_location = os.path.abspath('tf2_logo_blurple.ico')
+    version_num_windows = version_num[1:].replace('.', ',') + ',0'
+    command_1 = f'Bat_To_Exe_Converter.exe -bat "{batch_location}" -save "{exe_location}" -icon "{icon_location}" -x64 -fileversion "{version_num_windows}"'
+    command_2 = f'-productversion "{version_num_windows}" -company "Kataiser" -productname "TF2 Rich Presence" -description "Discord Rich Presence for Team Fortress 2"'
+    subprocess.run(f'{command_1} {command_2}')
+    os.remove(batch_location)
+    print(f"Deleted {batch_location}")
 
     print(f"\ntf2_rich_presence_{version_num}_installer.exe")
     print(f"tf2_rich_presence_{version_num}.zip")
