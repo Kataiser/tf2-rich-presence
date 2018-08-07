@@ -262,12 +262,12 @@ def interpret_console_log(console_log_path: str, user_usernames: list) -> tuple:
                 current_class = 'Queued for {}'.format(match_types[line[33:-1]])
                 line_used = line
 
-            if '[PartyClient] Entering s' in line:  # full line: [Partyclient] Entering standby queue
+            if '[PartyClient] Entering s' in line:  # full line: [PartyClient] Entering standby queue
                 current_map = 'In menus'
                 current_class = 'Queued for a party\'s match'
                 line_used = line
 
-            if '[PartyClient] L' in line:  # full line: [Partyclient] Leaving queue
+            if '[PartyClient] L' in line:  # full line: [PartyClient] Leaving queue
                 current_class = 'Not queued'
                 line_used = line
 
