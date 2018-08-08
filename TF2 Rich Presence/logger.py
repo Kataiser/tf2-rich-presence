@@ -116,7 +116,7 @@ else:
 start_time: float = time.perf_counter()
 filename: Union[bytes, str] = os.path.join('logs', '{}_{}_{}_{}.log'.format(user_pc_name, user_identifier, '{tf2rpvnum}', main_hash[:8]))
 console_log_path: Union[str, None] = None
-to_stderr: bool = True
+to_stderr: bool = False
 enabled: bool = True
 sentry_enabled: bool = True
 
