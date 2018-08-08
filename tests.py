@@ -12,20 +12,23 @@ class TestTF2RichPresense(unittest.TestCase):
         log.enabled = False
         log.to_stderr = False
         log.sentry_enabled = False
+
         if not os.path.exists('main.py'):
             os.chdir(os.path.abspath('TF2 Rich Presence'))
 
+        self.console_lines = 10000
+
     def test_console_log_in_menus(self):
-        self.assertEqual(main.interpret_console_log('test_resources\\console_in_menus.log', ['Kataiser']), ('In menus', 'Not queued'))
+        self.assertEqual(main.interpret_console_log('test_resources\\console_in_menus.log', ['Kataiser'], self.console_lines), ('In menus', 'Not queued'))
 
     def test_console_queued_casual(self):
-        self.assertEqual(main.interpret_console_log('test_resources\\console_queued_casual.log', ['Kataiser']), ('In menus', 'Queued for Casual'))
+        self.assertEqual(main.interpret_console_log('test_resources\\console_queued_casual.log', ['Kataiser'], self.console_lines), ('In menus', 'Queued for Casual'))
 
     def test_console_badwater(self):
-        self.assertEqual(main.interpret_console_log('test_resources\\console_badwater.log', ['Kataiser']), ('pl_badwater', 'Pyro'))
+        self.assertEqual(main.interpret_console_log('test_resources\\console_badwater.log', ['Kataiser'], self.console_lines), ('pl_badwater', 'Pyro'))
 
     def test_console_custom_map(self):
-        self.assertEqual(main.interpret_console_log('test_resources\\console_custom_map.log', ['Kataiser']), ('cp_catwalk_a5c', 'Soldier'))
+        self.assertEqual(main.interpret_console_log('test_resources\\console_custom_map.log', ['Kataiser'], self.console_lines), ('cp_catwalk_a5c', 'Soldier'))
 
     def test_steam_config_file(self):
         self.assertEqual(configs.steam_config_file('test_resources\\'), ['Kataiser'])

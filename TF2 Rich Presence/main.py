@@ -203,13 +203,14 @@ class TF2RichPresense:
 
 
 # reads a console.log and returns current map and class
-def interpret_console_log(console_log_path: str, user_usernames: list) -> tuple:
+def interpret_console_log(console_log_path: str, user_usernames: list, line_limit=10000) -> tuple:
     # defaults
     current_map: str = ''
     current_class: str = ''
     
     match_types: Dict[str, str] = {'match group 12v12 Casual Match': 'Casual', 'match group MvM Practice': 'MvM', 'match group 6v6 Ladder Match': 'Competitive'}
     disconnect_messages = ('Server shutting down', 'Steam config directory', 'Lobby destroyed', 'Disconnect:', 'Missing map')
+    tf2_classes = ('Scout', 'Soldier', 'Pyro', 'Demoman', 'Heavy', 'Engineer', 'Medic', 'Sniper', 'Spy')
 
     # console.log is a log of tf2's console (duh), only exists if tf2 has -condebug (see the bottom of config_files)
     consolelog_filename: Union[bytes, str] = console_log_path
@@ -225,8 +226,9 @@ def interpret_console_log(console_log_path: str, user_usernames: list) -> tuple:
         consolelog_file_size: int = os.stat(consolelog_filename).st_size
         lines: List[str] = consolelog_file.readlines()
         log.debug(f"console.log: {consolelog_file_size} bytes, {len(lines)} lines")
-        if len(lines) > 11000:
-            lines = lines[-10000:]
+
+        if len(lines) > line_limit * 1.1:
+            lines = lines[-line_limit:]
             log.debug(f"Limited to reading {len(lines)} lines")
 
         # iterates though every line in the log (I KNOW) and learns everything from it
@@ -237,9 +239,12 @@ def interpret_console_log(console_log_path: str, user_usernames: list) -> tuple:
                 current_class = 'unselected'  # this variable is poorly named
                 line_used = line
 
-            if 'selected' in line and 'candidates' not in line:
-                current_class = line[:-11]
-                line_used = line
+            if 'selected' in line:
+                current_class_possibly = line[:-11]
+
+                if current_class_possibly in tf2_classes:
+                    current_class = current_class_possibly
+                    line_used = line
 
             if 'Disconnect by user' in line and [i for i in user_usernames if i in line]:
                 current_map = 'In menus'  # so is this one
