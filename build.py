@@ -153,7 +153,7 @@ def main(version_num):
     version_num_windows = version_num[1:].replace('.', ',') + ',0'
     bat2exe_command_1 = f'build_tools\\Bat_To_Exe_Converter.exe -bat "{batch_location}" -save "{exe_location}" -icon "{icon_location}" -x64 -fileversion "{version_num_windows}"'
     bat2exe_command_2 = f'-productversion "{version_num_windows}" -company "Kataiser" -productname "TF2 Rich Presence" -description "Discord Rich Presence for Team Fortress 2"'
-    print(f"Creating {batch_location}...")
+    print(f"Creating {exe_location}...")
     subprocess.run(f'{bat2exe_command_1} {bat2exe_command_2}')
     os.remove(batch_location)
     print(f"Deleted {batch_location}")
