@@ -12,14 +12,14 @@ from raven import Client
 
 
 def write_log(level, message_out):
-    if logging_enabled:
+    if enabled:
         current_time: str = str(time.strftime('%c'))
         time_since_start: str = format(time.perf_counter() - start_time, '.4f')  # the format() adds trailing zeroes
         log_file: TextIO = open(filename, 'a')
         full_line: str = "[{} +{}] {}: {}\n".format(current_time, time_since_start, level, message_out)
         log_file.write(full_line)
         log_file.close()
-        if dev:
+        if to_stderr:
             print(full_line.rstrip('\n'), file=sys.stderr)
 
 
@@ -65,7 +65,7 @@ def current_log():
 
 
 def report_log(reason: str):
-    if not dev:
+    if sentry_enabled:
         info(f"Reporting {filename} ({os.stat(filename).st_size} bytes) to Sentry")
 
         if not console_log_path:
@@ -115,9 +115,10 @@ else:
 
 start_time: float = time.perf_counter()
 filename: Union[bytes, str] = os.path.join('logs', '{}_{}_{}_{}.log'.format(user_pc_name, user_identifier, '{tf2rpvnum}', main_hash[:8]))
-dev: bool = True
 console_log_path: Union[str, None] = None
-logging_enabled = True
+to_stderr: bool = True
+enabled: bool = True
+sentry_enabled: bool = True
 
 # sentry.io, for error reporting
 client: Client = Client(dsn='https://de781ce2454f458eafab1992630bc100:ce637f5993b14663a0840cd9f98a714a@sentry.io/1245944',

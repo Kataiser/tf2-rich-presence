@@ -18,14 +18,10 @@ def main():
     # TF2 rich presence by Kataiser
     # {tf2rpvnum}
     # https://github.com/Kataiser/tf2-rich-presence
-    log.dev = True
+    log.to_stderr = True
     log.info("Starting TF2 Rich Presence {tf2rpvnum}")
     log.current_log()
-
-    if log.dev:
-        log.cleanup(20)
-    else:
-        log.cleanup(5)
+    log.cleanup(20)
 
     TF2RichPresense().run()
 

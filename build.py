@@ -66,7 +66,10 @@ def main(version_num):
     for file_dest_pair in files_to_copy:
         with open(file_dest_pair[0], 'r') as file_source:
             with open(f'{file_dest_pair[1]}{file_dest_pair[0]}', 'w') as file_target:
-                modified_file = file_source.read().replace('{tf2rpvnum}', version_num).replace('log.dev = True', 'log.dev = False')
+                modified_file = file_source.read().replace('{tf2rpvnum}', version_num)
+                if file_dest_pair[0] == 'main.py':
+                    modified_file = modified_file.replace('log.to_stderr = True', 'log.to_stderr = False').replace('log.cleanup(20)', 'log.cleanup(5)')
+
                 file_target.write(modified_file)
                 print(f"Copied and modified {file_dest_pair[0]}")
 

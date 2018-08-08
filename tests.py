@@ -9,8 +9,9 @@ import main
 
 class TestTF2RichPresense(unittest.TestCase):
     def setUp(self):
-        log.logging_enabled = False
-        log.dev = True
+        log.enabled = False
+        log.to_stderr = False
+        log.sentry_enabled = False
         if not os.path.exists('main.py'):
             os.chdir(os.path.abspath('TF2 Rich Presence'))
 
@@ -35,7 +36,7 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual(custom_maps.find_custom_map_gamemode('surf_air_arena_v4'), ['surfing', 'Surfing'])
 
     def test_logger(self):
-        log.logging_enabled = True
+        log.enabled = True
         log.filename = 'test_resources\\test_log.log'
         log.info("Test.")
 
@@ -43,7 +44,7 @@ class TestTF2RichPresense(unittest.TestCase):
             self.assertTrue(current_log_file.read().endswith('] INFO: Test.\n'))
 
         os.remove(log.filename)
-        log.logging_enabled = False
+        log.enabled = False
 
     def test_read_truncated_file(self):
         with open('test_resources\\correct_file_ending.txt', 'r') as correct_file_ending_file:
