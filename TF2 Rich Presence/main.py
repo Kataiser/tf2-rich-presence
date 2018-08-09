@@ -122,7 +122,8 @@ class TF2RichPresense:
                     # connects to Discord
                     self.client = ipc.DiscordIPC('429389143756374017')
                     self.client.connect()
-                    self.client_state: Tuple[Any, bool, str, int, str, Any] = (self.client.client_id, self.client.connected, self.client.ipc_path, self.client.pid, self.client.platform, self.client.socket)
+                    self.client_state: Tuple[Any, bool, str, int, str, Any] = (
+                        self.client.client_id, self.client.connected, self.client.ipc_path, self.client.pid, self.client.platform, self.client.socket)
                     log.debug(f"Initial client state: {self.client_state}")
                 except Exception as client_connect_error:
                     if client_connect_error == "Can't connect to Discord Client.":  # Discord is still running but an RPC client can't be established
@@ -174,7 +175,7 @@ class TF2RichPresense:
             self.client.update_activity(self.activity)
             log.debug(f"Sent over RPC: {self.activity}")
             self.client_state = (self.client.client_id, self.client.connected, self.client.ipc_path, self.client.pid, self.client.platform, self.client.socket)
-            log.debug(f"self.client state: {self.client_state}")
+            log.debug(f"client state: {self.client_state}")
             if not self.client_connected:
                 log.critical('self.client is disconnected')
                 log.report_log("self.client disconnect")
@@ -187,7 +188,7 @@ class TF2RichPresense:
                     log.debug("Disconnecting client")
                     self.client.disconnect()  # doesn't work...
                     self.client_state = (self.client.client_id, self.client.connected, self.client.ipc_path, self.client.pid, self.client.platform, self.client.socket)
-                    log.debug(f"self.client state after disconnect: {self.client_state}")
+                    log.debug(f"client state after disconnect: {self.client_state}")
                 except Exception as err:
                     log.error(f"client error while disconnecting: {err}")
 
@@ -207,7 +208,7 @@ def interpret_console_log(console_log_path: str, user_usernames: list, line_limi
     # defaults
     current_map: str = ''
     current_class: str = ''
-    
+
     match_types: Dict[str, str] = {'match group 12v12 Casual Match': 'Casual', 'match group MvM Practice': 'MvM', 'match group 6v6 Ladder Match': 'Competitive'}
     disconnect_messages = ('Server shutting down', 'Steam config directory', 'Lobby destroyed', 'Disconnect:', 'Missing map')
     tf2_classes = ('Scout', 'Soldier', 'Pyro', 'Demoman', 'Heavy', 'Engineer', 'Medic', 'Sniper', 'Spy')
