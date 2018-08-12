@@ -18,6 +18,7 @@ def main():
     # TF2 rich presence by Kataiser
     # {tf2rpvnum}
     # https://github.com/Kataiser/tf2-rich-presence
+
     log.to_stderr = True
     log.info("Starting TF2 Rich Presence {tf2rpvnum}")
     log.current_log()
@@ -166,10 +167,10 @@ class TF2RichPresense:
             print(current_time_formatted)
             print("{} ({})".format(self.activity['details'], self.activity['assets']['large_text']))
             print(self.activity['state'])
+            print()
 
             time_elapsed = int(time.time() - self.start_time)
             print("{} elapsed".format(datetime.timedelta(seconds=time_elapsed)))
-            print()
 
             # send everything to discord
             self.client.update_activity(self.activity)

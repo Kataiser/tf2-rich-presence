@@ -34,9 +34,9 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual(configs.steam_config_file('test_resources\\'), ['Kataiser'])
 
     def test_find_custom_map_gamemode(self):
-        self.assertEqual(custom_maps.find_custom_map_gamemode('cp_catwalk_a5c'), ['control-point', 'Control Point'])
-        self.assertEqual(custom_maps.find_custom_map_gamemode('koth_wubwubwub_remix_vip'), ['koth', 'King of the Hill'])
-        self.assertEqual(custom_maps.find_custom_map_gamemode('surf_air_arena_v4'), ['surfing', 'Surfing'])
+        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode('cp_catwalk_a5c')), ('control-point', 'Control Point'))
+        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode('koth_wubwubwub_remix_vip')), ('koth', 'King of the Hill'))
+        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode('surf_air_arena_v4')), ('surfing', 'Surfing'))
 
     def test_logger(self):
         log.enabled = True

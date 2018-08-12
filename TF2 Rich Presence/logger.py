@@ -11,7 +11,7 @@ from pbwrap import Pastebin
 from raven import Client
 
 
-def write_log(level, message_out):
+def write_log(level: str, message_out: str):
     if enabled:
         current_time: str = str(time.strftime('%c'))
         time_since_start: str = format(time.perf_counter() - start_time, '.4f')  # the format() adds trailing zeroes
