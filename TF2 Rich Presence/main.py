@@ -167,10 +167,9 @@ class TF2RichPresense:
             print(current_time_formatted)
             print("{} ({})".format(self.activity['details'], self.activity['assets']['large_text']))
             print(self.activity['state'])
-            print()
-
             time_elapsed = int(time.time() - self.start_time)
             print("{} elapsed".format(datetime.timedelta(seconds=time_elapsed)))
+            print()
 
             # send everything to discord
             self.client.update_activity(self.activity)
