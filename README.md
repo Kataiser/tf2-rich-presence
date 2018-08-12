@@ -10,7 +10,7 @@ Discord Rich Presence for Team Fortress 2
 ![Preview image](preview.png)
 
 ## Download
-With installer: [tf2_rich_presence_v1.5.8_installer.exe](https://github.com/Kataiser/tf2-rich-presence/releases/download/v1.5.8/tf2_rich_presence_v1.5.8_installer.exe)
+With installer: [tf2_rich_presence_v1.5.8_installer.exe](https://github.com/Kataiser/tf2-rich-presence/releases/download/v1.5.8/tf2_rich_presence_v1.5.8_installer.exe)  
 Without installer: [tf2_rich_presence_v1.5.8.zip](https://github.com/Kataiser/tf2-rich-presence/releases/download/v1.5.8/tf2_rich_presence_v1.5.8.zip)
 
 ## Installation and running
