@@ -15,4 +15,4 @@ Without installer: [tf2_rich_presence_v1.5.8.zip](https://github.com/Kataiser/tf
 
 ## Installation and running
 1. Extract tf2_rich_presence_v1.5.8.zip OR run tf2_rich_presence_v1.5.8_installer.exe, whichever you download.
-2. Double-click "TF2 rich presence.bat". Only works when Steam and Discord are running.
+2. Run "Launch TF2 with Rich Presence.exe". Only works when Steam and Discord are running.
