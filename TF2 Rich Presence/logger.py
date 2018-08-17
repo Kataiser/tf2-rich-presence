@@ -116,11 +116,12 @@ else:
 start_time: float = time.perf_counter()
 filename: Union[bytes, str] = os.path.join('logs', '{}_{}_{}_{}.log'.format(user_pc_name, user_identifier, '{tf2rpvnum}', main_hash[:8]))
 console_log_path: Union[str, None] = None
-to_stderr: bool = False
+to_stderr: bool = True
 enabled: bool = True
-sentry_enabled: bool = True
+sentry_enabled: bool = False
 
 # sentry.io, for error reporting
+
 client: Client = Client(dsn='https://de781ce2454f458eafab1992630bc100:ce637f5993b14663a0840cd9f98a714a@sentry.io/1245944',
                         release='{tf2rpvnum}',
                         string_max_length=512,

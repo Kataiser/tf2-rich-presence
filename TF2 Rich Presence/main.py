@@ -19,7 +19,6 @@ def main():
     # {tf2rpvnum}
     # https://github.com/Kataiser/tf2-rich-presence
 
-    log.to_stderr = True
     log.info("Starting TF2 Rich Presence {tf2rpvnum}")
     log.current_log()
     log.cleanup(20)
