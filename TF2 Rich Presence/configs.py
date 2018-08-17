@@ -71,9 +71,9 @@ def steam_config_file(exe_location: str) -> list:
                         log.debug(f"Found -condebug with offset {line_offset} in line: {launchoptions_line[:-1]}")
                         found_usernames.append(possible_username)
         except FileNotFoundError:
-            log.error(f"FileNotFoundError for {global_config_file_path}")
+            pass
         except IndexError:
-            log.error(f"IndexError in {global_config_file_path}, probably a very short file")
+            pass
 
     if not found_condebug:
         log.debug("-condebug not found, telling user")
