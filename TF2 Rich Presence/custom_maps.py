@@ -42,21 +42,24 @@ def find_custom_map_gamemode(map_filename: str) -> Tuple[str, str]:
         log.debug(f"API lookup took {time.perf_counter() - before_request_time} secs")
 
         # parses the api result
-        log.debug(f"All gamemodes found: {map_info['all_gamemodes']}")
-        map_gamemode: List[str] = map_info['all_gamemodes']
-        for gamemode in map_gamemode:
-            if gamemode in gamemodes_keys:
-                log.debug(f"Using gamemode {gamemode}")
-                first_gamemode_fancy: str = gamemodes[gamemode]
-                # modify the cache locally
-                custom_map_gamemodes[map_filename] = [gamemode, first_gamemode_fancy, days_since_epoch_now]
+        try:
+            log.debug(f"All gamemodes found: {map_info['all_gamemodes']}")
+            map_gamemode: List[str] = map_info['all_gamemodes']
+            for gamemode in map_gamemode:
+                if gamemode in gamemodes_keys:
+                    log.debug(f"Using gamemode {gamemode}")
+                    first_gamemode_fancy: str = gamemodes[gamemode]
+                    # modify the cache locally
+                    custom_map_gamemodes[map_filename] = [gamemode, first_gamemode_fancy, days_since_epoch_now]
 
-                # load the cache to actually modify it
-                access_custom_maps_cache(dict_input=custom_map_gamemodes)
+                    # load the cache to actually modify it
+                    access_custom_maps_cache(dict_input=custom_map_gamemodes)
 
-                # ex: 'mvm', 'Mann vs. Machine'
-                log.debug(f"{map_filename}'s gamemode is {[gamemode, first_gamemode_fancy]} (fresh from teamwork.tf)")
-                return gamemode, first_gamemode_fancy
+                    # ex: 'mvm', 'Mann vs. Machine'
+                    log.debug(f"{map_filename}'s gamemode is {[gamemode, first_gamemode_fancy]} (fresh from teamwork.tf)")
+                    return gamemode, first_gamemode_fancy
+        except KeyError:
+            log.error(f"Couldn't find gamemode for that custom map (KeyError while parsing the api result). Full json response: \n{map_info}")
 
         # unrecognized gamemodes
         first_gamemode: str = 'unknown_map'
