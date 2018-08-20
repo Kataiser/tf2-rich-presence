@@ -108,14 +108,14 @@ def main(version_num):
         test_resources_source = os.path.abspath('test_resources')
         test_resources_target = os.path.abspath(f'{github_repo_path}\\TF2 Rich Presence\\test_resources')
         shutil.rmtree(test_resources_target)
-        print(f"Copying from {test_resources_source} to {test_resources_target}")
+        print(f"Copying from {test_resources_source} to {test_resources_target}: ", end='')
         subprocess.run(f'xcopy \"{test_resources_source}\" \"{test_resources_target}\\\" /E /Q')
 
         # copies build tools
         build_tools_source = os.path.abspath('build_tools')
         build_tools_target = os.path.abspath(f'{github_repo_path}\\TF2 Rich Presence\\build_tools')
         shutil.rmtree(build_tools_target)
-        print(f"Copying from {build_tools_source} to {build_tools_target}")
+        print(f"Copying from {build_tools_source} to {build_tools_target}: ", end='')
         subprocess.run(f'xcopy \"{build_tools_source}\" \"{build_tools_target}\\\" /E /Q')
 
     # clears custom map cache
@@ -125,27 +125,36 @@ def main(version_num):
     # copies the python interpreter
     python_source = os.path.abspath('python')
     python_target = os.path.abspath(f'{new_build_folder_name}\\resources\\python')
-    print(f"Copying from {python_source} to {python_target}")
+    print(f"Copying from {python_source} to {python_target}: ", end='')
     subprocess.run(f'xcopy \"{python_source}\" \"{python_target}\\\" /E /Q')
+
+    print('Deleting unnecessary files from python...')
+    pycaches_deleted = 0
+    tests_deleted = 0
+    pdbs_deleted = 0
 
     # looks at every file and folder in python
     for root, dirs, files in os.walk(f'{new_build_folder_name}\\resources\\python'):
         # deletes cache files (will get regenerated anyway)
         if '__pycache__' in root:
             shutil.rmtree(root)
-            print("Deleted", root)
+            pycaches_deleted += 1
 
         # deletes tests (not used during runtime hopefully)
         if 'test' in root:
             shutil.rmtree(root)
-            print("Deleted", root)
+            tests_deleted += 1
 
         # deletes .pdb files (debugger stuff I think, also not runtime)
         for file in files:
-            if file.endswith(".pdb"):
+            if file.endswith('.pdb'):
                 pdb_path = os.path.join(root, file)
                 os.remove(pdb_path)
-                print(f"Deleted {pdb_path}")
+                pdbs_deleted += 1
+
+    print(f"pycaches deleted: {pycaches_deleted}")
+    print(f"tests deleted: {tests_deleted}")
+    print(f"pdbs deleted: {pdbs_deleted}")
 
     # converts the batch file to an exe with Bat To Exe Converter (http://www.f2ko.de/en/b2e.php)
     batch_location = os.path.abspath(f'{new_build_folder_name}\\Launch TF2 with Rich Presence.bat')
