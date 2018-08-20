@@ -22,6 +22,8 @@ def main():
     log.info("Starting TF2 Rich Presence {tf2rpvnum}")
     log.debug(f"Current log: {log.filename}")
     log.cleanup(20)
+    log.debug(f"CPU: {psutil.cpu_count(logical=False)} cores, {psutil.cpu_count()} threads")
+    log.debug(f"CPU frequency info: {psutil.cpu_freq()}")
 
     TF2RichPresense().run()
 
@@ -71,6 +73,10 @@ class TF2RichPresense:
         # looks through all running processes to look for TF2, Steam, and Discord
         before_process_time: float = time.perf_counter()
         processes_searched: int = 0
+
+        cpu_usage = psutil.cpu_percent()
+        log.debug(f"CPU usage: {cpu_usage}%")
+
         for process in psutil.process_iter():
             try:
                 with process.oneshot():
@@ -100,7 +106,8 @@ class TF2RichPresense:
                 log.debug("Broke from process loop")
                 break
 
-            time.sleep(0.001)
+            if cpu_usage > 25 or cpu_usage == 0.0:
+                time.sleep(0.001)
         log.debug(f"Process loop took {time.perf_counter() - before_process_time} sec for {processes_searched} processes")
 
         if steam_is_running:
