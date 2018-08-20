@@ -1,3 +1,4 @@
+import sys
 import traceback
 from typing import Tuple
 
@@ -15,10 +16,10 @@ def check_for_update(current_version: str, timeout: float):
         newest_version, downloads_url, changelog = access_github_api(timeout)
     except requests.exceptions.Timeout:
         log.error(f"Update check timed out")
-        failure_message(current_version, f"(timed out after {int(timeout)} seconds)")
+        failure_message(current_version, f"timed out after {int(timeout)} seconds")
     except Exception as other_error:
         log.error(f"Non-timout update error: {traceback.format_exc()}")
-        failure_message(current_version, str(other_error))
+        failure_message(current_version, sys.exc_info()[1])
     else:
         if current_version != newest_version:  # out of date
             log.error(f"Out of date, newest version is {newest_version}")
@@ -36,7 +37,7 @@ def access_github_api(time_limit: float) -> Tuple[str, str, str]:
 
 
 def failure_message(current_version: str, error_message: str):
-    line1 = f"Couldn't connect to GitHub to check for updates {error_message}.\n"
+    line1 = f"Couldn't connect to GitHub to check for updates ({error_message}).\n"
     line2 = "To check for updates yourself, go to https://github.com/Kataiser/tf2-rich-presence/releases\n"
     line3 = f"(you are currently running {current_version}).\n"
     print(f"{line1}{line2}{line3}")
