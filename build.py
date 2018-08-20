@@ -10,19 +10,6 @@ def main(version_num):
     print(f"Building TF2 Rich Presence {version_num}")
     github_repo_path = input("Github repo path ('n' to skip): ")
 
-    if github_repo_path != 'n':
-        got_valid_input = False
-        while not got_valid_input:
-            update_readme_raw = input("Update README? (y/n) ")
-            if update_readme_raw.lower() == 'y':
-                update_readme = True
-                got_valid_input = True
-            elif update_readme_raw.lower() == 'n':
-                update_readme = False
-                got_valid_input = True
-            else:
-                print('Invalid input, must be "y" or "n".')
-
     if not os.path.exists('main.py'):
         os.chdir(os.path.abspath('TF2 Rich Presence'))
 
@@ -104,8 +91,7 @@ def main(version_num):
         print("Copied", shutil.copy2('tf2_logo_blurple.ico', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('Launch TF2 with Rich Presence.bat', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('README-source.MD', github_repo_path))
-        if update_readme:
-            print("Copied", shutil.copy2('README.MD', github_repo_path))
+        print("Copied", shutil.copy2('README.MD', github_repo_path))
 
         # copies test resources
         test_resources_source = os.path.abspath('test_resources')
