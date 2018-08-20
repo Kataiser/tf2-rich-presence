@@ -17,7 +17,7 @@ def check_for_update(current_version: str, timeout: float):
     except requests.exceptions.Timeout:
         log.error(f"Update check timed out")
         failure_message(current_version, f"timed out after {int(timeout)} seconds")
-    except Exception as other_error:
+    except Exception:
         log.error(f"Non-timout update error: {traceback.format_exc()}")
         failure_message(current_version, sys.exc_info()[1])
     else:
