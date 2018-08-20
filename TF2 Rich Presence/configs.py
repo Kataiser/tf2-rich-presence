@@ -13,7 +13,7 @@ def class_config_files(exe_location: str):
 
     for tf2_class in tf2_classes:
         # 'echo' means 'output to console' in source-speak
-        selected_line: str = 'echo "{} selected"'.format(tf2_class)
+        selected_line: str = f'echo "{tf2_class} selected"'
 
         config_filename: str = tf2_class.lower().replace('heavy', 'heavyweapons')  # valve why
 

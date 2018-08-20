@@ -143,18 +143,18 @@ class TF2RichPresense:
                 # not in menus = in a game
                 try:
                     map_fancy, current_gamemode, gamemode_fancy = self.map_gamemodes[state_line]
-                    self.activity['details'] = 'Map: {}'.format(map_fancy)
+                    self.activity['details'] = f'Map: {map_fancy}'
                     self.activity['assets']['large_image'] = current_gamemode
                     self.activity['assets']['large_text'] = gamemode_fancy
                 except KeyError:
                     # is a custom map
-                    self.activity['details'] = 'Map: {}'.format(state_line)
+                    self.activity['details'] = f'Map: {state_line}'
 
                     custom_gamemode, custom_gamemode_fancy = custom_maps.find_custom_map_gamemode(state_line)
                     self.activity['assets']['large_image'] = custom_gamemode
                     self.activity['assets']['large_text'] = custom_gamemode_fancy + ' [custom/community map]'
 
-                self.activity['state'] = 'Class: {}'.format(details_line)
+                self.activity['state'] = f'Class: {details_line}'
             else:
                 # in menus displays the main menu
                 self.activity['details'] = state_line
@@ -164,10 +164,10 @@ class TF2RichPresense:
 
             # output to terminal, just for monitoring
             print(current_time_formatted)
-            print("{} ({})".format(self.activity['details'], self.activity['assets']['large_text']))
+            print(f"{self.activity['details']} ({self.activity['assets']['large_text']})")
             print(self.activity['state'])
             time_elapsed = int(time.time() - self.start_time)
-            print("{} elapsed".format(datetime.timedelta(seconds=time_elapsed)))
+            print(f"{datetime.timedelta(seconds=time_elapsed)} elapsed")
             print()
 
             # send everything to discord
@@ -180,7 +180,7 @@ class TF2RichPresense:
                 log.report_log("self.client disconnect")
         elif not discord_is_running:
             log.debug("Discord isn't running")
-            print("{}\nDiscord isn't running\n".format(current_time_formatted))
+            print(f"{current_time_formatted}\nDiscord isn't running\n")
         else:  # tf2 isn't running
             if self.client_connected:
                 try:
@@ -194,7 +194,7 @@ class TF2RichPresense:
                 raise SystemExit  # ...but this does
             else:
                 log.debug("TF2 isn't running")
-                print("{}\nTF2 isn't running\n".format(current_time_formatted))
+                print(f"{current_time_formatted}\nTF2 isn't running\n")
 
             # to prevent connecting when already connected
             self.client_connected = False
@@ -260,7 +260,7 @@ def interpret_console_log(console_log_path: str, user_usernames: list, line_limi
 
             if '[PartyClient] Entering queue ' in line:
                 current_map = 'In menus'
-                current_class = 'Queued for {}'.format(match_types[line[33:-1]])
+                current_class = f'Queued for {match_types[line[33:-1]]}'
                 line_used = line
 
             if '[PartyClient] Entering s' in line:  # full line: [PartyClient] Entering standby queue

@@ -5,7 +5,7 @@ import sys
 import time
 import traceback
 from operator import itemgetter
-from typing import Union, TextIO, List, BinaryIO
+from typing import Union, List, BinaryIO
 
 from pbwrap import Pastebin
 from raven import Client
@@ -15,12 +15,13 @@ def write_log(level: str, message_out: str):
     if enabled:
         current_time: str = str(time.strftime('%c'))
         time_since_start: str = format(time.perf_counter() - start_time, '.4f')  # the format() adds trailing zeroes
-        log_file: TextIO = open(filename, 'a')
-        full_line: str = "[{} +{}] {}: {}\n".format(current_time, time_since_start, level, message_out)
-        log_file.write(full_line)
-        log_file.close()
-        if to_stderr:
-            print(full_line.rstrip('\n'), file=sys.stderr)
+
+        with open(filename, 'a') as log_file:
+            full_line: str = f"[{current_time} +{time_since_start}] {level}: {message_out}\n"
+            log_file.write(full_line)
+
+            if to_stderr:
+                print(full_line.rstrip('\n'), file=sys.stderr)
 
 
 def info(message_in):
@@ -57,7 +58,7 @@ def cleanup(max_logs: int):  # deletes older logs
 
         overshoot = max_logs - len(all_logs_sorted)
 
-    debug("Deleted {} log(s): {}".format(len(deleted), deleted))
+    debug(f"Deleted {len(deleted)} log(s): {deleted}")
 
 
 def current_log():
@@ -121,7 +122,6 @@ enabled: bool = True
 sentry_enabled: bool = False
 
 # sentry.io, for error reporting
-
 client: Client = Client(dsn='https://de781ce2454f458eafab1992630bc100:ce637f5993b14663a0840cd9f98a714a@sentry.io/1245944',
                         release='{tf2rpvnum}',
                         string_max_length=512,

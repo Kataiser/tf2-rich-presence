@@ -37,7 +37,7 @@ def find_custom_map_gamemode(map_filename: str) -> Tuple[str, str]:
         gamemodes_keys: KeysView[str] = gamemodes.keys()
 
         before_request_time: float = time.perf_counter()
-        r: Response = requests.get('https://teamwork.tf/api/v1/map-stats/map/{}?key=nvsDhCxoVHcSiAZ7pFBTWbMy91RaIYgq'.format(map_filename))
+        r: Response = requests.get(f'https://teamwork.tf/api/v1/map-stats/map/{map_filename}?key=nvsDhCxoVHcSiAZ7pFBTWbMy91RaIYgq')
         map_info: dict = r.json()
         log.debug(f"API lookup took {time.perf_counter() - before_request_time} secs")
 

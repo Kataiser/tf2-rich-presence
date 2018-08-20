@@ -148,7 +148,7 @@ def main(version_num):
             if file.endswith(".pdb"):
                 pdb_path = os.path.join(root, file)
                 os.remove(pdb_path)
-                print("Deleted {}".format(pdb_path))
+                print(f"Deleted {pdb_path}")
 
     batch_location = os.path.abspath(f'{new_build_folder_name}\\Launch TF2 with Rich Presence.bat')
     exe_location = os.path.abspath(f'{new_build_folder_name}\\Launch TF2 with Rich Presence.exe')
