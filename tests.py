@@ -1,10 +1,13 @@
 import os
 import unittest
 
+import requests
+
 import configs
 import custom_maps
 import logger as log
 import main
+import updater
 
 
 class TestTF2RichPresense(unittest.TestCase):
@@ -54,6 +57,15 @@ class TestTF2RichPresense(unittest.TestCase):
             correct_file_ending_text = correct_file_ending_file.read()
 
         self.assertTrue(log.read_truncated_file('test_resources\\console_queued_casual.log', limit=1000) == correct_file_ending_text)
+
+    def test_access_github_api(self):
+        newest_version, downloads_url, changelog = updater.access_github_api(10)
+        self.assertTrue(newest_version.startswith('v') and '.' in newest_version)
+        self.assertTrue(downloads_url.startswith('https://github.com/Kataiser/tf2-rich-presence/releases/tag/v'))
+        self.assertTrue(len(changelog) > 0)
+
+        with self.assertRaises(requests.exceptions.Timeout):
+            updater.access_github_api(0.01)
 
 
 if __name__ == '__main__':
