@@ -2,3 +2,5 @@ languages:
 - python
 exclude:
 - /test_resources/hash_targets/.*
+- /test_resources/hash_targets/
+- /test_resources/hash_targets
