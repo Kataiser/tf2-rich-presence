@@ -150,6 +150,7 @@ def main(version_num):
                 os.remove(pdb_path)
                 print(f"Deleted {pdb_path}")
 
+    # converts the batch file to an exe with Bat To Exe Converter (http://www.f2ko.de/en/b2e.php)
     batch_location = os.path.abspath(f'{new_build_folder_name}\\Launch TF2 with Rich Presence.bat')
     exe_location = os.path.abspath(f'{new_build_folder_name}\\Launch TF2 with Rich Presence.exe')
     icon_location = os.path.abspath('tf2_logo_blurple.ico')
@@ -161,10 +162,11 @@ def main(version_num):
     os.remove(batch_location)
     print(f"Deleted {batch_location}")
 
+    # generates zip package and an "installer" (a self extracting .7z as an exe), both with 7zip
     package7zip_command_exe_1 = f'build_tools\\7za.exe a tf2_rich_presence_{version_num}_installer.exe tf2_rich_presence_{version_num}\\'
     package7zip_command_exe_2 = f'-sfx build_tools\\7zCon.sfx -ssw -mx=9 -myx=9 -mmt=2 -m0=LZMA2:d=8m'
     package7zip_command_zip = f'build_tools\\7za.exe a tf2_rich_presence_{version_num}.zip tf2_rich_presence_{version_num}\\ -ssw -mx=9 -m0=LZMA:d=8m -mmt=2'
-    with tempfile.TemporaryFile() as nowhere:
+    with tempfile.TemporaryFile() as nowhere:  # 7zip creates too much output
         print(f"Creating tf2_rich_presence_{version_num}_installer.exe...")
         subprocess.run(f'{package7zip_command_exe_1} {package7zip_command_exe_2}', stdout=nowhere)
         print(f"Creating tf2_rich_presence_{version_num}.zip...")

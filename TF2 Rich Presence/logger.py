@@ -99,7 +99,7 @@ def pastebin(text: str) -> str:
 
 
 # generates a short hash string from several source files
-def generate_hash():
+def generate_hash() -> str:
     files_to_hash: List[str] = ['main.py', 'configs.py', 'custom_maps.py', 'logger.py', 'updater.py']
     files_to_hash_text: List = []
 
