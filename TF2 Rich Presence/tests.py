@@ -64,6 +64,14 @@ class TestTF2RichPresense(unittest.TestCase):
 
         os.chdir(old_dir)
 
+    def test_generate_hash(self):
+        old_dir = os.getcwd()
+        os.chdir(os.path.abspath('test_resources\\hash_targets'))
+
+        self.assertEqual(log.generate_hash(), 'f7339756')
+
+        os.chdir(old_dir)
+
     def test_read_truncated_file(self):
         with open('test_resources\\correct_file_ending.txt', 'r') as correct_file_ending_file:
             correct_file_ending_text = correct_file_ending_file.read()

@@ -110,7 +110,6 @@ def generate_hash():
             file: BinaryIO = open(file_to_hash, 'rb')
 
         files_to_hash_text.append(file.read())
-        file.close()
 
     hasher = hashlib.md5()
     hasher.update(b'\n'.join(files_to_hash_text))
@@ -125,9 +124,8 @@ if socket.gethostname().find('.') >= 0:
 else:
     user_pc_name: str = socket.gethostbyaddr(socket.gethostname())[0]
 
-# setup
 start_time: float = time.perf_counter()
-filename: Union[bytes, str] = os.path.join('logs', f'{user_pc_name}_{user_identifier}_{"{tf2rpvnum}"}_{generate_hash()}.log')
+filename: Union[bytes, str] = os.path.join('logs', '{}_{}_{}_{}.log'.format(user_pc_name, user_identifier, '{tf2rpvnum}', generate_hash()))
 console_log_path: Union[str, None] = None
 to_stderr: bool = True
 enabled: bool = True
