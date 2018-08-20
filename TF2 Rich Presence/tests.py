@@ -1,4 +1,5 @@
 import os
+import shutil
 import unittest
 
 import requests
@@ -51,6 +52,17 @@ class TestTF2RichPresense(unittest.TestCase):
 
         os.remove(log.filename)
         log.enabled = False
+
+    def test_log_cleanup(self):
+        old_dir = os.getcwd()
+        os.chdir(os.path.abspath('test_resources'))
+
+        shutil.copytree('empty_logs', 'logs')
+        log.cleanup(4)
+        self.assertEqual(os.listdir('logs'), ['267d4853.log', '46b087ff.log', '898ff621.log', 'da0d028a.log'])
+        shutil.rmtree('logs')
+
+        os.chdir(old_dir)
 
     def test_read_truncated_file(self):
         with open('test_resources\\correct_file_ending.txt', 'r') as correct_file_ending_file:
