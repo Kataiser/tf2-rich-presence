@@ -8,7 +8,21 @@ import time
 
 def main(version_num):
     print(f"Building TF2 Rich Presence {version_num}")
-    github_repo_path = input("Github repo path ('n' to skip): ")
+
+    if os.path.exists('last_repo_path.txt'):
+        with open('last_repo_path.txt', 'r') as last_repo_path_file:
+            last_repo_path = last_repo_path_file.read()
+
+        github_repo_path = input(f"Github repo path ('n' to skip, 'h' to use \"{last_repo_path}\"): ")
+
+        if github_repo_path == 'h':
+            github_repo_path = last_repo_path
+    else:
+        github_repo_path = input("Github repo path ('n' to skip): ")
+
+    if github_repo_path != 'n':
+        with open('last_repo_path.txt', 'w') as last_repo_path_file:
+            last_repo_path_file.write(github_repo_path)
 
     if not os.path.exists('main.py'):
         os.chdir(os.path.abspath('TF2 Rich Presence'))
