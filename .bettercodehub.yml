@@ -1,8 +1,0 @@
-languages:
-- python
-exclude:
-- /test_resources/hash_targets/configs\.py
-- /test_resources/hash_targets/custom_maps\.py
-- /test_resources/hash_targets/logger\.py
-- /test_resources/hash_targets/main\.py
-- /test_resources/hash_targets/updater\.py
