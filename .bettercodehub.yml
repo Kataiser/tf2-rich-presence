@@ -1,0 +1,4 @@
+languages:
+- python
+exclude:
+- /test_resources/hash_targets/.*
