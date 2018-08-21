@@ -222,6 +222,7 @@ def interpret_console_log(console_log_path: str, user_usernames: list, line_limi
     # defaults
     current_map: str = ''
     current_class: str = ''
+    build_number: Union[str, None] = None
 
     match_types: Dict[str, str] = {'match group 12v12 Casual Match': 'Casual', 'match group MvM Practice': 'MvM', 'match group 6v6 Ladder Match': 'Competitive'}
     disconnect_messages = ('Server shutting down', 'Steam config directory', 'Lobby destroyed', 'Disconnect:', 'Missing map')
@@ -287,6 +288,10 @@ def interpret_console_log(console_log_path: str, user_usernames: list, line_limi
                 current_class = 'Not queued'
                 line_used = line
 
+            if 'Build:' in line:
+                build_number = line[7:-1]
+
+    log.debug(f"TF2 build number: {build_number}")
     log.debug(f"Got '{current_map}' and '{current_class}' from this line: '{line_used[:-1]}'")
     return current_map, current_class
 
