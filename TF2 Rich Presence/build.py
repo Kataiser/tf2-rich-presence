@@ -24,6 +24,9 @@ def main(version_num):
         with open('last_repo_path.txt', 'w') as last_repo_path_file:
             last_repo_path_file.write(github_repo_path)
 
+    build_start_time = time.perf_counter()
+    print()
+
     # starts from scratch each time
     try:
         root_folders = [f.path for f in os.scandir('.') if f.is_dir()]
@@ -177,6 +180,8 @@ def main(version_num):
         subprocess.run(f'{package7zip_command_exe_1} {package7zip_command_exe_2}', stdout=nowhere)
         print(f"Creating tf2_rich_presence_{version_num}.zip...")
         subprocess.run(package7zip_command_zip, stdout=nowhere)
+
+    print(f"\nFinished building TF2 Rich Presence {version_num} (took {int(time.perf_counter() - build_start_time)} seconds)")
 
 
 if __name__ == '__main__':
