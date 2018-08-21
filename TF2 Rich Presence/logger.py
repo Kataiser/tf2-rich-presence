@@ -8,7 +8,8 @@ from operator import itemgetter
 from typing import Union, List, BinaryIO
 
 from pbwrap import Pastebin
-import raven
+
+import launcher
 
 
 # adds a line to the current log file
@@ -78,7 +79,7 @@ def report_log(reason: str):
             paste_text = f"{filename}\n{read_truncated_file(filename)}\n{read_truncated_file(console_log_path)}"
 
         paste_url: str = pastebin(paste_text)
-        client.captureMessage(f'{reason}\n{filename}\n{paste_url}')
+        launcher.sentry_client.captureMessage(f'{reason}\n{filename}\n{paste_url}')
 
 
 # reads a text file, truncating it to the last 'limit' bytes if it's over that size
@@ -133,8 +134,4 @@ to_stderr: bool = True
 enabled: bool = True
 sentry_enabled: bool = False
 
-# the raven client for Sentry (https://sentry.io/)
-client = raven.Client(dsn='https://de781ce2454f458eafab1992630bc100:ce637f5993b14663a0840cd9f98a714a@sentry.io/1245944',
-                      release='{tf2rpvnum}',
-                      string_max_length=512,
-                      processors=('raven.processors.SanitizePasswordsProcessor',))
+

@@ -9,6 +9,6 @@ start steam://rungameid/440
 "%~dp0\resources\python\python.exe" "%~dp0\resources\updater.py"
 
 :start
-"%~dp0\resources\python\python.exe" "%~dp0\resources\main.py"
+"%~dp0\resources\python\python.exe" "%~dp0\resources\launcher.py"
 
 goto start

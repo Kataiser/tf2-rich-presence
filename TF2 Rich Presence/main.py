@@ -21,13 +21,16 @@ def main():
     # {tf2rpvnum}
     # https://github.com/Kataiser/tf2-rich-presence
 
-    log.info("Starting TF2 Rich Presence {tf2rpvnum}")
-    log.debug(f"Current log: {log.filename}")
-    log.cleanup(20)
-    log.debug(f"CPU: {psutil.cpu_count(logical=False)} cores, {psutil.cpu_count()} threads")
-    log.debug(f"CPU frequency info: {psutil.cpu_freq()}")
+    try:
+        log.info("Starting TF2 Rich Presence {tf2rpvnum}")
+        log.debug(f"Current log: {log.filename}")
+        log.cleanup(20)
+        log.debug(f"CPU: {psutil.cpu_count(logical=False)} cores, {psutil.cpu_count()} threads")
+        log.debug(f"CPU frequency info: {psutil.cpu_freq()}")
 
-    TF2RichPresense().run()
+        TF2RichPresense().run()
+    except Exception as error:
+        handle_crash(error)
 
 
 class TF2RichPresense:
@@ -331,7 +334,4 @@ def get_idle_duration() -> float:
 
 
 if __name__ == '__main__':
-    try:
-        main()
-    except Exception as error:
-        handle_crash(error)
+    main()

@@ -56,6 +56,7 @@ def main(version_num):
                      ('custom_maps.json', f'{new_build_folder_name}\\resources\\'),
                      ('LICENSE', f'{new_build_folder_name}\\resources\\'),
                      ('main.py', f'{new_build_folder_name}\\resources\\'),
+                     ('launcher.py', f'{new_build_folder_name}\\resources\\'),
                      ('readme.txt', f'{new_build_folder_name}\\'),
                      ('Launch TF2 with Rich Presence.bat', f'{new_build_folder_name}\\'),
                      ('logger.py', f'{new_build_folder_name}\\resources\\'),
@@ -72,7 +73,9 @@ def main(version_num):
                 if file_dest_pair[0] == 'main.py':
                     modified_file = modified_file.replace('log.cleanup(20)', 'log.cleanup(5)')
                 if file_dest_pair[0] == 'logger.py':
-                    modified_file = modified_file.replace('to_stderr: bool = True', 'to_stderr: bool = False').replace('sentry_enabled: bool = False', 'sentry_enabled: bool = True')
+                    modified_file = modified_file.replace('to_stderr: bool = True', 'to_stderr: bool = False')
+                if file_dest_pair[0] == 'launcher.py':
+                    modified_file = modified_file.replace('sentry_enabled: bool = False', 'sentry_enabled: bool = True')
 
                 file_target.write(modified_file)
                 print(f"Copied and modified {file_dest_pair[0]}")
@@ -87,6 +90,7 @@ def main(version_num):
     # copies stuff to the Github repo
     if github_repo_path != 'n':
         print("Copied", shutil.copy2('main.py', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy2('launcher.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('build.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('tests.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('logger.py', f'{github_repo_path}\\TF2 Rich Presence'))
