@@ -4,6 +4,7 @@ import json
 import os
 import time
 import traceback
+from ctypes import Structure, windll, c_uint, sizeof, byref
 from typing import Dict, Union, TextIO, Any, List, Tuple
 
 import psutil
@@ -55,7 +56,10 @@ class TF2RichPresense:
             self.loop_body()
 
             # rich presence only updates every 15 seconds, but it listens constantly so sending every 5 seconds is fine
-            time.sleep(5)
+            if get_idle_duration() < 60:
+                time.sleep(5)
+            else:
+                time.sleep(15)
 
             # runs garbage collection after waiting
             log.debug(f"This GC: {gc.collect()}")
@@ -133,8 +137,8 @@ class TF2RichPresense:
                         self.client.client_id, self.client.connected, self.client.ipc_path, self.client.pid, self.client.platform, self.client.socket)
                     log.debug(f"Initial client state: {self.client_state}")
                 except Exception as client_connect_error:
-                    if client_connect_error == "Can't connect to Discord Client.":  # Discord is still running but an RPC client can't be established
-                        log.debug("Can't RPC")
+                    if str(client_connect_error) == "Can't connect to Discord Client.":  # Discord is still running but an RPC client can't be established
+                        log.debug("Can't connect to RPC")
                         print(f"{current_time_formatted}\nCan't connect to Discord for Rich Presence.\n")
                         raise SystemExit
                     else:  # some other error
@@ -305,6 +309,24 @@ def handle_crash(exception: Exception):
     print(f"TF2 Rich Presence has crashed, the error should now be reported to the developer.\nHere's the full error message if you're interested.\n{formatted_exception}")
     log.report_log(str(exception))
     time.sleep(5)
+
+
+# https://www.blog.pythonlibrary.org/2010/05/05/python-how-to-tell-how-long-windows-has-been-idle/
+# http://stackoverflow.com/questions/911856/detecting-idle-time-in-python
+class LASTINPUTINFO(Structure):
+    _fields_ = [
+        ('cbSize', c_uint),
+        ('dwTime', c_uint),
+    ]
+
+
+# how long the user has been idle for, in seconds
+def get_idle_duration() -> float:
+    last_input_info = LASTINPUTINFO()
+    last_input_info.cbSize = sizeof(last_input_info)
+    windll.user32.GetLastInputInfo(byref(last_input_info))
+    millis = windll.kernel32.GetTickCount() - last_input_info.dwTime
+    return millis / 1000.0
 
 
 if __name__ == '__main__':

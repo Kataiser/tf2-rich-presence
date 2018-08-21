@@ -22,6 +22,10 @@ class TestTF2RichPresense(unittest.TestCase):
 
         self.console_lines = 10000
 
+    def test_get_idle_duration(self):
+        idle_duration = main.get_idle_duration()
+        self.assertTrue(10.0 > idle_duration >= 0.0)
+
     def test_console_log_in_menus(self):
         self.assertEqual(main.interpret_console_log('test_resources\\console_in_menus.log', ['Kataiser'], self.console_lines), ('In menus', 'Not queued'))
 
