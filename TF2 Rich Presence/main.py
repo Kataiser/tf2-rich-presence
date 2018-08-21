@@ -56,9 +56,11 @@ class TF2RichPresense:
             self.loop_body()
 
             # rich presence only updates every 15 seconds, but it listens constantly so sending every 5 seconds is fine
-            if get_idle_duration() < 60:
+            idle_duration: float = get_idle_duration()
+            if idle_duration < 60:
                 time.sleep(5)
             else:
+                log.debug(f"Sleeping for 15 secs, user has been idle for {idle_duration} secs")
                 time.sleep(15)
 
             # runs garbage collection after waiting
