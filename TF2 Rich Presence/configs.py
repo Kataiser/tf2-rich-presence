@@ -8,7 +8,6 @@ import main
 # allows the console to output 'class selected' on class choose
 def class_config_files(exe_location: str):
     log.debug(f"Reading (and possibly modifying) class configs at {exe_location}")
-    log.debug(f"Reading (and possibly modifying) class configs at {exe_location}")
     tf2_classes: List[str] = ['Scout', 'Soldier', 'Pyro', 'Demoman', 'Heavy', 'Engineer', 'Medic', 'Sniper', 'Spy']
 
     for tf2_class in tf2_classes:
