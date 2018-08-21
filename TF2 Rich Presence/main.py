@@ -5,6 +5,7 @@ import os
 import time
 import traceback
 from ctypes import Structure, windll, c_uint, sizeof, byref
+from decimal import Decimal
 from typing import Dict, Union, TextIO, Any, List, Tuple
 
 import psutil
@@ -57,11 +58,9 @@ class TF2RichPresense:
 
             # rich presence only updates every 15 seconds, but it listens constantly so sending every 5 seconds is fine
             idle_duration: float = get_idle_duration()
-            if idle_duration < 60:
-                time.sleep(5)
-            else:
-                log.debug(f"Sleeping for 15 secs, user has been idle for {idle_duration} secs")
-                time.sleep(15)
+            sleep_time = round(max(Decimal(idle_duration) ** Decimal('0.6'), 5), 3)
+            log.debug(f"Sleeping for {sleep_time} secs, user has been idle for {idle_duration} secs")
+            time.sleep(sleep_time)
 
             # runs garbage collection after waiting
             log.debug(f"This GC: {gc.collect()}")
