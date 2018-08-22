@@ -312,12 +312,16 @@ def no_condebug_warning():
 
 
 # displays and reports current traceback
-def handle_crash(exception: Exception):
+def handle_crash(exception: Exception, silent=False):
     formatted_exception = traceback.format_exc()
     log.critical(formatted_exception)
-    print(f"TF2 Rich Presence has crashed, the error should now be reported to the developer.\nHere's the full error message if you're interested.\n{formatted_exception}")
+
+    if not silent:
+        print(f"TF2 Rich Presence has crashed, the error should now be reported to the developer.\nHere's the full error message if you're interested.\n{formatted_exception}")
+
     log.report_log(str(exception))
-    time.sleep(5)
+    if not silent:
+        time.sleep(5)
 
 
 # https://www.blog.pythonlibrary.org/2010/05/05/python-how-to-tell-how-long-windows-has-been-idle/

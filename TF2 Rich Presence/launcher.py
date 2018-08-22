@@ -10,6 +10,8 @@ def launch():
     try:
         import main
         main.main()
+    except (KeyboardInterrupt, SystemExit):
+        raise SystemExit
     except Exception as error:
         if sentry_enabled:
             handle_crash_without_log(error, client=sentry_client)

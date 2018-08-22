@@ -51,5 +51,7 @@ if __name__ == '__main__':
     try:
         log.to_stderr = False
         check_for_update('{tf2rpvnum}', 5)
+    except (KeyboardInterrupt, SystemExit):
+        raise SystemExit
     except Exception as error:
-        main.handle_crash(error)
+        main.handle_crash(error, silent=True)
