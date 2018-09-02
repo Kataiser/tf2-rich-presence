@@ -1,8 +1,8 @@
-certifi==2018.8.13
+certifi==2018.8.24
 chardet==3.0.4
 discoIPC==1.0.0
 idna==2.7
-pbwrap==1.0.7
+pbwrap==1.1.0
 psutil==5.4.7
 raven==6.9.0
 requests==2.19.1
