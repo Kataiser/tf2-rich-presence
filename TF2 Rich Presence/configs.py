@@ -42,7 +42,7 @@ def steam_config_file(exe_location: str) -> list:
     found_condebug: bool = False
     found_usernames: List[str] = []
 
-    user_id_folders: List[str] = next(os.walk(exe_location + 'userdata'))[1]
+    user_id_folders: List[str] = next(os.walk(os.path.join(exe_location, 'userdata')))[1]
     log.debug(f"User id folders: {user_id_folders}")
     for user_id_folder in user_id_folders:  # possibly multiple users for the same steam install
         try:

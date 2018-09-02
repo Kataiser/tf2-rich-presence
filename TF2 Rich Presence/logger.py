@@ -1,5 +1,8 @@
+import gzip
 import hashlib
 import os
+import random
+import shutil
 import socket
 import sys
 import time
@@ -10,6 +13,7 @@ from typing import Union, List, BinaryIO
 from pbwrap import Pastebin
 
 import launcher
+import settings
 
 
 # adds a line to the current log file
@@ -22,28 +26,32 @@ def write_log(level: str, message_out: str):
             full_line: str = f"[{current_time} +{time_since_start}] {level}: {message_out}\n"
             log_file.write(full_line)
 
-            if to_stderr:
-                print(full_line.rstrip('\n'), file=sys.stderr)
+        if to_stderr:
+            print(full_line.rstrip('\n'), file=sys.stderr)
 
 
 # a log with a level of INFO (rarely used)
 def info(message_in):
-    write_log('INFO', message_in)
+    if 'Info' in log_levels_allowed:
+        write_log('INFO', message_in)
 
 
 # a log with a level of DEBUG (most things)
 def debug(message_in):
-    write_log('DEBUG', message_in)
+    if 'Debug' in log_levels_allowed:
+        write_log('DEBUG', message_in)
 
 
 # a log with a level of ERROR (caught, non-fatal errors)
 def error(message_in):
-    write_log('ERROR', message_in)
+    if 'Error' in log_levels_allowed:
+        write_log('ERROR', message_in)
 
 
 # a log with a level of CRITICAL (uncaught, fatal errors, probably sent to Sentry)
 def critical(message_in):
-    write_log('CRITICAL', message_in)
+    if 'Critical' in log_levels_allowed:
+        write_log('CRITICAL', message_in)
 
 
 # deletes older log files
@@ -70,7 +78,7 @@ def cleanup(max_logs: int):
 
 # uses raven (https://github.com/getsentry/raven-python) to report the current log and hopefully some of the current console.log to Sentry (https://sentry.io/)
 def report_log(reason: str):
-    if sentry_enabled:
+    if sentry_enabled and launcher.sentry_enabled:
         info(f"Reporting {filename} ({os.stat(filename).st_size} bytes) to Sentry")
 
         if not console_log_path:
@@ -79,11 +87,15 @@ def report_log(reason: str):
             paste_text = f"{filename}\n{read_truncated_file(filename)}\n{read_truncated_file(console_log_path)}"
 
         paste_url: str = pastebin(paste_text)
-        launcher.sentry_client.captureMessage(f'{reason}\n{filename}\n{paste_url}')
+
+        try:
+            launcher.sentry_client.captureMessage(f'{reason}\n{filename}\n{paste_url}')
+        except Exception as err:
+            error(f"Couldn't report crash to Sentry: {err}")
 
 
-# reads a text file, truncating it to the last 'limit' bytes if it's over that size
-def read_truncated_file(path: str, limit: int = 400000) -> str:
+# reads a text file, truncating it to the last 'limit' bytes (default: 200KB) if it's over that size
+def read_truncated_file(path: str, limit: int = 200000) -> str:
     with open(path, 'r', errors='replace') as file_to_truncate:
         file_size: int = os.stat(path).st_size
         if file_size > int(limit * 1.1):
@@ -95,8 +107,12 @@ def read_truncated_file(path: str, limit: int = 400000) -> str:
 
 # sends log contents (or any other text) to pastebin and returns the paste's URL
 def pastebin(text: str) -> str:
-    pb: Pastebin = Pastebin('909483860965ed941bff77e61c962ac2')
-    return pb.create_paste(text, api_paste_private=1, api_paste_name=filename, api_paste_expire_date='1M')
+    try:
+        pb: Pastebin = Pastebin('909483860965ed941bff77e61c962ac2')
+        return pb.create_paste(text, api_paste_private=1, api_paste_name=filename, api_paste_expire_date='1M')
+    except Exception as err:
+        error(f"Couldn't create paste: {err}")
+        return f"Couldn't create paste: {err}"
 
 
 # generates a short hash string from several source files
@@ -131,7 +147,29 @@ start_time: float = time.perf_counter()
 filename: Union[bytes, str] = os.path.join('logs', f'{user_pc_name}_{user_identifier}_{"{tf2rpvnum}"}_{generate_hash()}.log')
 console_log_path: Union[str, None] = None
 to_stderr: bool = True
-enabled: bool = True
-sentry_enabled: bool = False
+sentry_enabled: bool = settings.get('enable_sentry')
+enabled: bool = settings.get('log_level') != 'Off'
+log_levels: list = ['Debug', 'Info', 'Error', 'Critical', 'Off']
 
+if enabled:
+    log_level: str = settings.get('log_level')
+    log_levels_allowed = [level for level in log_levels if log_levels.index(level) >= log_levels.index(log_level)]
+else:
+    log_levels_allowed = log_levels
 
+# gzip compress old logs and current log every 1 MB
+if os.path.exists(filename) and os.stat(filename).st_size >= 1000000:
+    while True:
+        filename = f'{filename[:-4]}_{str(random.randrange(10000)).zfill(4)}.log'
+        if not os.path.exists(filename):
+            break
+
+for old_filename in os.listdir('logs'):
+    old_filename = os.path.join('logs', old_filename)
+
+    if old_filename != filename and 'gzip' not in old_filename:
+        with open(old_filename, 'rb') as f_in:
+            with gzip.open(f'{old_filename}.gzip', 'wb') as f_out:
+                shutil.copyfileobj(f_in, f_out)
+
+        os.remove(old_filename)

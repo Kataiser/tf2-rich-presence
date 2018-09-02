@@ -1,7 +1,11 @@
+import os
+import sys
 import time
 import traceback
 from typing import Union
 
+sys.path.append(os.path.abspath(os.path.join('resources', 'python', 'packages')))
+sys.path.append(os.path.abspath(os.path.join('resources')))
 import raven
 from raven import Client
 
@@ -23,10 +27,12 @@ def launch():
 def handle_crash_without_log(exception: Exception, client: Union[Client, None] = None):
     if client:
         formatted_exception = traceback.format_exc()
-        print(f"TF2 Rich Presence has crashed, the error should now be reported to the developer.\nHere's the full error message if you're interested.\n{formatted_exception}")
+        print(f"\n{formatted_exception}\nTF2 Rich Presence has crashed, and the error message cannot be reported to the developer."
+              f"\nConsider opening an issue at https://github.com/Kataiser/tf2-rich-presence/issues."
+              f"\nRestarting in 2 seconds...")
         client.captureMessage(str(exception))
 
-    time.sleep(5)
+    time.sleep(2)
 
 
 sentry_enabled: bool = False

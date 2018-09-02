@@ -59,26 +59,34 @@ def main(version_num):
                      ('launcher.py', f'{new_build_folder_name}\\resources\\'),
                      ('readme.txt', f'{new_build_folder_name}\\'),
                      ('Launch TF2 with Rich Presence.bat', f'{new_build_folder_name}\\'),
+                     ('Change settings.bat', f'{new_build_folder_name}\\'),
                      ('logger.py', f'{new_build_folder_name}\\resources\\'),
                      ('updater.py', f'{new_build_folder_name}\\resources\\'),
                      ('configs.py', f'{new_build_folder_name}\\resources\\'),
-                     ('custom_maps.py', f'{new_build_folder_name}\\resources\\')]
+                     ('custom_maps.py', f'{new_build_folder_name}\\resources\\'),
+                     ('settings.py', f'{new_build_folder_name}\\resources\\'),
+                     ('tf2_logo_blurple.ico', f'{new_build_folder_name}\\resources\\'),
+                     ('tf2_logo_blurple_wrench.ico', f'{new_build_folder_name}\\resources\\'),
+                     ('community_server_ips.json', f'{new_build_folder_name}\\resources\\')]
 
     # copies files, adding any version numbers
     for file_dest_pair in files_to_copy:
-        with open(file_dest_pair[0], 'r') as file_source:
-            with open(f'{file_dest_pair[1]}{file_dest_pair[0]}', 'w') as file_target:
-                modified_file = file_source.read().replace('{tf2rpvnum}', version_num)
+        try:
+            with open(file_dest_pair[0], 'r') as file_source:
+                with open(f'{file_dest_pair[1]}{file_dest_pair[0]}', 'w') as file_target:
+                    modified_file = file_source.read().replace('{tf2rpvnum}', version_num)
 
-                if file_dest_pair[0] == 'main.py':
-                    modified_file = modified_file.replace('log.cleanup(20)', 'log.cleanup(5)')
-                if file_dest_pair[0] == 'logger.py':
-                    modified_file = modified_file.replace('to_stderr: bool = True', 'to_stderr: bool = False')
-                if file_dest_pair[0] == 'launcher.py':
-                    modified_file = modified_file.replace('sentry_enabled: bool = False', 'sentry_enabled: bool = True')
+                    if file_dest_pair[0] == 'main.py':
+                        modified_file = modified_file.replace('log.cleanup(20)', 'log.cleanup(5)')
+                    if file_dest_pair[0] == 'launcher.py':
+                        modified_file = modified_file.replace('sentry_enabled: bool = False', 'sentry_enabled: bool = True')
+                    if file_dest_pair[0] == 'logger.py':
+                        modified_file = modified_file.replace('to_stderr: bool = True', 'to_stderr: bool = False')
 
-                file_target.write(modified_file)
-                print(f"Copied and modified {file_dest_pair[0]}")
+                    file_target.write(modified_file)
+                    print(f"Copied (and possibly modified) {file_dest_pair[0]}")
+        except UnicodeDecodeError:
+            print("Copied", shutil.copy2(*file_dest_pair))
 
     # creates README.md from README-source.md
     with open('README-source.md', 'r') as readme_md_source:
@@ -99,7 +107,9 @@ def main(version_num):
         print("Copied", shutil.copy2('updater.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('map list generator.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('thumb formatter.py', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy2('find_server_ids.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('maps.json', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy2('community_server_ips.json', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('main menu.png', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('preview.png', github_repo_path))
         print("Copied", shutil.copy2('Tf2-logo.png', f'{github_repo_path}\\TF2 Rich Presence'))
@@ -107,6 +117,7 @@ def main(version_num):
         print("Copied", shutil.copy2('readme.txt', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('requirements.txt', github_repo_path))
         print("Copied", shutil.copy2('tf2_logo_blurple.ico', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy2('tf2_logo_blurple_wrench.ico', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('Launch TF2 with Rich Presence.bat', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('README-source.MD', github_repo_path))
         print("Copied", shutil.copy2('README.MD', github_repo_path))
@@ -130,7 +141,7 @@ def main(version_num):
         json.dump({}, maps_db, indent=4)
 
     # copies the python interpreter
-    python_source = os.path.abspath('python')
+    python_source = os.path.abspath('python-3.7.0-embed-win32')
     python_target = os.path.abspath(f'{new_build_folder_name}\\resources\\python')
     print(f"Copying from {python_source} to {python_target}: ", end='')
     subprocess.run(f'xcopy \"{python_source}\" \"{python_target}\\\" /E /Q')
@@ -163,17 +174,8 @@ def main(version_num):
     print(f"tests deleted: {tests_deleted}")
     print(f"pdbs deleted: {pdbs_deleted}")
 
-    # converts the batch file to an exe with Bat To Exe Converter (http://www.f2ko.de/en/b2e.php)
-    batch_location = os.path.abspath(f'{new_build_folder_name}\\Launch TF2 with Rich Presence.bat')
-    exe_location = os.path.abspath(f'{new_build_folder_name}\\Launch TF2 with Rich Presence.exe')
-    icon_location = os.path.abspath('tf2_logo_blurple.ico')
-    version_num_windows = version_num[1:].replace('.', ',') + ',0'
-    bat2exe_command_1 = f'build_tools\\Bat_To_Exe_Converter.exe -bat "{batch_location}" -save "{exe_location}" -icon "{icon_location}" -x64 -fileversion "{version_num_windows}"'
-    bat2exe_command_2 = f'-productversion "{version_num_windows}" -company "Kataiser" -productname "TF2 Rich Presence" -description "Discord Rich Presence for Team Fortress 2"'
-    print(f"Creating {exe_location}...")
-    subprocess.run(f'{bat2exe_command_1} {bat2exe_command_2}')
-    os.remove(batch_location)
-    print(f"Deleted {batch_location}")
+    convert_bat_to_exe(os.path.abspath(f'{new_build_folder_name}\\Launch TF2 with Rich Presence.bat'), version_num, 'tf2_logo_blurple.ico')
+    convert_bat_to_exe(os.path.abspath(f'{new_build_folder_name}\\Change settings.bat'), version_num, 'tf2_logo_blurple_wrench.ico')
 
     # generates zip package and an "installer" (a self extracting .7z as an exe), both with 7zip
     package7zip_command_exe_1 = f'build_tools\\7za.exe a tf2_rich_presence_{version_num}_installer.exe tf2_rich_presence_{version_num}\\'
@@ -186,6 +188,19 @@ def main(version_num):
         subprocess.run(package7zip_command_zip, stdout=nowhere)
 
     print(f"\nFinished building TF2 Rich Presence {version_num} (took {int(time.perf_counter() - build_start_time)} seconds)")
+
+
+# converts a batch file to an exe with Bat To Exe Converter (http://www.f2ko.de/en/b2e.php)
+def convert_bat_to_exe(batch_location: str, vnum: str, icon_path: str):
+    exe_location = batch_location.replace('.bat', '.exe')
+    icon_location = os.path.abspath(icon_path)
+    version_num_windows = vnum[1:].replace('.', ',') + ',0'
+    bat2exe_command_1 = f'build_tools\\Bat_To_Exe_Converter.exe -bat "{batch_location}" -save "{exe_location}" -icon "{icon_location}" -x64 -fileversion "{version_num_windows}"'
+    bat2exe_command_2 = f'-productversion "{version_num_windows}" -company "Kataiser" -productname "TF2 Rich Presence" -description "Discord Rich Presence for Team Fortress 2"'
+    print(f"Creating {exe_location}...")
+    subprocess.run(f'{bat2exe_command_1} {bat2exe_command_2}')
+    os.remove(batch_location)
+    print(f"Deleted {batch_location}")
 
 
 if __name__ == '__main__':

@@ -7,12 +7,17 @@ import requests
 from requests import Response
 
 import logger as log
+import settings
 
 
 # uses teamwork.tf's API to find the gamemode of a custom map
-def find_custom_map_gamemode(map_filename: str) -> Tuple[str, str]:
+def find_custom_map_gamemode(map_filename: str, timeout: float = settings.get('request_timeout')) -> Tuple[str, str]:
+    if map_filename == '':
+        log.error("Map filename is blank")
+        return 'unknown_map', 'Unknown gamemode'
+
     log.debug(f"Finding gamemode for custom map: {map_filename}")
-    days_since_epoch_now: int = int(time.time() / 86400)
+    seconds_since_epoch_now: int = int(time.time())
 
     # to avoid constantly using internet, each map is cached to custom_maps.json
     custom_map_gamemodes = access_custom_maps_cache()
@@ -21,11 +26,11 @@ def find_custom_map_gamemode(map_filename: str) -> Tuple[str, str]:
     # look for map in loaded cache
     try:
         cached_data: list = custom_map_gamemodes[map_filename]
-        if days_since_epoch_now - cached_data[2] <= 1:  # custom map cache expires after 1 day
+        if seconds_since_epoch_now - cached_data[2] <= settings.get('map_invalidation_hours') * 3600:  # custom map cache expiration
             log.debug(f"{map_filename}'s gamemode is {list(cached_data[:-1])} (from cache)")
-            return cached_data[:-1]
+            return cached_data[0], cached_data[1]
         else:
-            log.debug(f"Outdated cache ({cached_data[2]} -> {days_since_epoch_now})")
+            log.debug(f"Outdated cache ({cached_data[2]} -> {seconds_since_epoch_now})")
             raise KeyError
     except KeyError:
         gamemodes: Dict[str, str] = {'ctf': 'Capture the Flag', 'control-point': 'Control Point', 'attack-defend': 'Attack/Defend', 'medieval-mode': 'Attack/Defend (Medieval Mode)',
@@ -37,9 +42,15 @@ def find_custom_map_gamemode(map_filename: str) -> Tuple[str, str]:
         gamemodes_keys: KeysView[str] = gamemodes.keys()
 
         before_request_time: float = time.perf_counter()
-        r: Response = requests.get(f'https://teamwork.tf/api/v1/map-stats/map/{map_filename}?key=nvsDhCxoVHcSiAZ7pFBTWbMy91RaIYgq')
-        map_info: dict = r.json()
-        log.debug(f"API lookup took {time.perf_counter() - before_request_time} secs")
+        try:
+            r: Response = requests.get(f'https://teamwork.tf/api/v1/map-stats/map/{map_filename}?key=nvsDhCxoVHcSiAZ7pFBTWbMy91RaIYgq', timeout=timeout)
+            map_info: dict = r.json()
+            log.debug(f"API lookup took {time.perf_counter() - before_request_time} secs")
+        except requests.ConnectTimeout:
+            log.debug("Timeout connecting to teamwork.tf, defaulting to \"Unknown gamemode\" and not caching")
+            first_gamemode: str = 'unknown_map'
+            first_gamemode_fancy: str = 'Unknown gamemode'
+            return first_gamemode, first_gamemode_fancy
 
         # parses the api result
         try:
@@ -50,7 +61,7 @@ def find_custom_map_gamemode(map_filename: str) -> Tuple[str, str]:
                     log.debug(f"Using gamemode {gamemode}")
                     first_gamemode_fancy: str = gamemodes[gamemode]
                     # modify the cache locally
-                    custom_map_gamemodes[map_filename] = [gamemode, first_gamemode_fancy, days_since_epoch_now]
+                    custom_map_gamemodes[map_filename] = [gamemode, first_gamemode_fancy, seconds_since_epoch_now]
 
                     # load the cache to actually modify it
                     access_custom_maps_cache(dict_input=custom_map_gamemodes)
@@ -64,7 +75,7 @@ def find_custom_map_gamemode(map_filename: str) -> Tuple[str, str]:
         # unrecognized gamemodes
         first_gamemode: str = 'unknown_map'
         first_gamemode_fancy: str = 'Unknown gamemode'
-        custom_map_gamemodes[map_filename] = [first_gamemode, first_gamemode_fancy, days_since_epoch_now]
+        custom_map_gamemodes[map_filename] = [first_gamemode, first_gamemode_fancy, seconds_since_epoch_now]
 
         access_custom_maps_cache(dict_input=custom_map_gamemodes)
 

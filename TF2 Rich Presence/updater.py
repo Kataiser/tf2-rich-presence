@@ -1,16 +1,24 @@
+import os
 import sys
 import traceback
 from typing import Tuple
 
+sys.path.append(os.path.abspath(os.path.join('resources', 'python', 'packages')))
+sys.path.append(os.path.abspath(os.path.join('resources')))
 import requests
 from requests import Response
 
 import logger as log
 import main
+import settings
 
 
 # uses Github api to get the tag of the newest public release and compare it to the current version number, alerting the user if out of date
 def check_for_update(current_version: str, timeout: float):
+    if not settings.get('check_updates'):
+        log.debug("Updater is disabled, skipping")
+        raise SystemExit
+
     log.debug(f"Checking for updates, timeout: {timeout} secs")
 
     try:
@@ -50,7 +58,7 @@ if __name__ == '__main__':
     # this gets run by the batch file, before the restart loop and main.py
     try:
         log.to_stderr = False
-        check_for_update('{tf2rpvnum}', 5)
+        check_for_update('{tf2rpvnum}', settings.get('request_timeout'))
     except (KeyboardInterrupt, SystemExit):
         raise SystemExit
     except Exception as error:
