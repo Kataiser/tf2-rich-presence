@@ -166,7 +166,7 @@ class TF2RichPresense:
                     log.debug(f"Initial client state: {client_state}")
                 except Exception as client_connect_error:
                     if str(client_connect_error) == "Can't connect to Discord Client.":  # Discord is still running but an RPC client can't be established
-                        log.debug("Can't connect to RPC")
+                        log.error("Can't connect to RPC")
                         print(f"{current_time_formatted}\nCan't connect to Discord for Rich Presence.\n")
                         raise SystemExit
                     else:  # some other error
@@ -239,6 +239,7 @@ class TF2RichPresense:
                 except Exception as err:
                     log.error(f"client error while disconnecting: {err}")
 
+                log.debug("Restarting")
                 raise SystemExit  # ...but this does
             else:
                 log.debug("TF2 isn't running")
