@@ -142,6 +142,13 @@ def main(version_num):
         print(f"Copying from {build_tools_source} to {build_tools_target}: ", end='')
         subprocess.run(f'xcopy \"{build_tools_source}\" \"{build_tools_target}\\\" /E /Q')
 
+        # copies Python interpreter
+        interpreter_source = os.path.abspath('python-3.7.0-embed-win32')
+        interpreter_target = os.path.abspath(f'{github_repo_path}\\TF2 Rich Presence\\python-3.7.0-embed-win32')
+        shutil.rmtree(interpreter_target)
+        print(f"Copying from {interpreter_source} to {interpreter_target}: ", end='')
+        subprocess.run(f'xcopy \"{interpreter_source}\" \"{interpreter_target}\\\" /E /Q')
+
     # clears custom map cache
     with open(f'{new_build_folder_name}\\resources\\custom_maps.json', 'w') as maps_db:
         json.dump({}, maps_db, indent=4)
