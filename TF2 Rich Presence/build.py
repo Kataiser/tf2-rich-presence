@@ -67,7 +67,9 @@ def main(version_num):
                      ('settings.py', f'{new_build_folder_name}\\resources\\'),
                      ('tf2_logo_blurple.ico', f'{new_build_folder_name}\\resources\\'),
                      ('tf2_logo_blurple_wrench.ico', f'{new_build_folder_name}\\resources\\'),
-                     ('community_server_ips.json', f'{new_build_folder_name}\\resources\\')]
+                     ('community_server_ips.json', f'{new_build_folder_name}\\resources\\'),
+                     ('changelogs.html', f'{new_build_folder_name}\\'),
+                     ('changelogs.css', f'{new_build_folder_name}\\resources\\')]
 
     # copies files, adding any version numbers
     for file_dest_pair in files_to_copy:
@@ -109,6 +111,9 @@ def main(version_num):
         print("Copied", shutil.copy2('map list generator.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('thumb formatter.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('find_server_ids.py', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy2('changelog generator.py', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy2('changelogs.html', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy2('changelogs.css', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('maps.json', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('community_server_ips.json', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('main menu.png', f'{github_repo_path}\\TF2 Rich Presence'))

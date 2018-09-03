@@ -1,0 +1,39 @@
+body {
+    text-align: center;
+    font-family: sans-serif;
+    background: #111314;
+}
+div {
+    background: white;
+    width: 1000px;
+    margin: 0 auto;
+    text-align: left;
+    padding: 0 20px;
+    box-shadow: 0 0 100px rgba(255, 255, 255, 0.2);
+}
+h1 {
+    padding-top: 20px;
+}
+h4 {
+    font-weight: lighter;
+    border-bottom: 1px solid #99AAB5;
+    padding-top: 10px;
+    font-size: 1.5em;
+    color: rgba(0, 0, 0, 0.8);
+}
+a {
+    text-decoration: none;
+}
+h3 {
+    padding-left: 20px;
+}
+ul {
+    padding-left: 60px;
+}
+p {
+    padding-left: 20px;
+    padding-bottom: 20px;
+}
+.version_a {
+    font-size: 1.25em;
+}
