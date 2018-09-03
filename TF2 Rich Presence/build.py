@@ -125,6 +125,7 @@ def main(version_num):
         print("Copied", shutil.copy2('tf2_logo_blurple.ico', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('tf2_logo_blurple_wrench.ico', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('Launch TF2 with Rich Presence.bat', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy2('Launch TF2 with Rich Presence.bat', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('README-source.MD', github_repo_path))
         print("Copied", shutil.copy2('README.MD', github_repo_path))
 
@@ -141,13 +142,6 @@ def main(version_num):
         shutil.rmtree(build_tools_target)
         print(f"Copying from {build_tools_source} to {build_tools_target}: ", end='')
         subprocess.run(f'xcopy \"{build_tools_source}\" \"{build_tools_target}\\\" /E /Q')
-
-        # copies Python interpreter
-        interpreter_source = os.path.abspath('python-3.7.0-embed-win32')
-        interpreter_target = os.path.abspath(f'{github_repo_path}\\TF2 Rich Presence\\python-3.7.0-embed-win32')
-        shutil.rmtree(interpreter_target)
-        print(f"Copying from {interpreter_source} to {interpreter_target}: ", end='')
-        subprocess.run(f'xcopy \"{interpreter_source}\" \"{interpreter_target}\\\" /E /Q')
 
     # clears custom map cache
     with open(f'{new_build_folder_name}\\resources\\custom_maps.json', 'w') as maps_db:
