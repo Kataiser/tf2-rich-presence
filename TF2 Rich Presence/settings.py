@@ -18,13 +18,11 @@ class GUI(tk.Frame):
         tk.Frame.__init__(self, master)
         self.master = master
 
-        self.old_settings: dict = access_settings_file()
-        log.debug(f"Current settings: {self.old_settings}")
-
         master.title("TF2 Rich Presence settings")
-        master.resizable(0, 0)
-        master.geometry("+600+300")
+        master.resizable(0, 0)  # disables resizing
+        master.geometry("+710+362")  # positions the window kinda near the center of the screen (or perfectly centered if monitor is 1920x1080)
 
+        # set window icon, doesn't work if launching from Pycharm for some reason
         try:
             master.iconbitmap(default='tf2_logo_blurple_wrench.ico')
         except tk.TclError:
@@ -32,6 +30,7 @@ class GUI(tk.Frame):
 
         self.log_levels = ['Debug', 'Info', 'Error', 'Critical', 'Off']
 
+        # create every setting variable without values
         self.enable_sentry = tk.BooleanVar()
         self.wait_time = tk.IntVar()
         self.map_invalidation_hours = tk.IntVar()
@@ -44,22 +43,27 @@ class GUI(tk.Frame):
         self.hide_provider = tk.BooleanVar()
 
         try:
-            settings_loaded = access_settings_file()
-            self.enable_sentry.set(settings_loaded['enable_sentry'])
-            self.wait_time.set(settings_loaded['wait_time'])
-            self.map_invalidation_hours.set(settings_loaded['map_invalidation_hours'])
-            self.check_updates.set(settings_loaded['check_updates'])
-            self.request_timeout.set(settings_loaded['request_timeout'])
-            self.scale_wait_time.set(settings_loaded['scale_wait_time'])
-            self.hide_queued_gamemode.set(settings_loaded['hide_queued_gamemode'])
-            self.log_level.set(settings_loaded['log_level'])
-            self.console_scan_lines.set(settings_loaded['console_scan_lines'])
-            self.hide_provider.set(settings_loaded['hide_provider'])
+            # load settings from settings.json
+            self.settings_loaded = access_settings_file()
+            log.debug(f"Current settings: {self.settings_loaded}")
+
+            self.enable_sentry.set(self.settings_loaded['enable_sentry'])
+            self.wait_time.set(self.settings_loaded['wait_time'])
+            self.map_invalidation_hours.set(self.settings_loaded['map_invalidation_hours'])
+            self.check_updates.set(self.settings_loaded['check_updates'])
+            self.request_timeout.set(self.settings_loaded['request_timeout'])
+            self.scale_wait_time.set(self.settings_loaded['scale_wait_time'])
+            self.hide_queued_gamemode.set(self.settings_loaded['hide_queued_gamemode'])
+            self.log_level.set(self.settings_loaded['log_level'])
+            self.console_scan_lines.set(self.settings_loaded['console_scan_lines'])
+            self.hide_provider.set(self.settings_loaded['hide_provider'])
         except Exception:
+            # probably a json decode error
             formatted_exception = traceback.format_exc()
             log.error(f"Error in loading settings, defaulting: \n{formatted_exception}")
             messagebox.showerror("Error", f"Couldn't load settings, reverting to defaults.\n\n{formatted_exception}")
 
+            # set all settings to defaults
             self.enable_sentry.set(get_setting_default('enable_sentry'))
             self.wait_time.set(get_setting_default('wait_time'))
             self.map_invalidation_hours.set(get_setting_default('map_invalidation_hours'))
@@ -72,10 +76,8 @@ class GUI(tk.Frame):
             self.hide_provider.set(get_setting_default('hide_provider'))
 
         check_int_command = self.register(check_int)
-        style = ttk.Style()
-        style.configure('TCheckbutton', wraplength=800)
-        style.configure('TEntry', wraplength=800)
 
+        # create settings widgets
         setting1 = ttk.Checkbutton(master, variable=self.enable_sentry, text="{}".format(
             "Report error logs to the developer, via Sentry (https://sentry.io/)"))
         setting3_frame = ttk.Frame()
@@ -110,6 +112,7 @@ class GUI(tk.Frame):
         setting11 = ttk.Checkbutton(master, variable=self.hide_provider, text="{}".format(
             "Hide community server provider"))
 
+        # add widgets to the main window
         setting1.grid(row=8, sticky=tk.W, columnspan=2, padx=(15, 15), pady=(2, 0))
         setting3_text.pack(side='left', fill=None, expand=False)
         setting3_option.pack(side='left', fill=None, expand=False)
@@ -140,7 +143,9 @@ class GUI(tk.Frame):
         master.update()
         log.debug(f"Window size: {master.winfo_width()}x{master.winfo_height()}")
 
+    # saves settings to file and closes window
     def save_and_close(self):
+        # spinboxes can be set to blank, so if the user saves while blank, they try to default or be set to 0
         int_settings = self.wait_time, self.map_invalidation_hours, self.request_timeout, self.console_scan_lines
         for int_setting in int_settings:
             try:
@@ -159,26 +164,29 @@ class GUI(tk.Frame):
                             'console_scan_lines': self.console_scan_lines.get(),
                             'hide_provider': self.hide_provider.get()}
 
-        settings_changed = {k: settings_to_save[k] for k in settings_to_save if k in self.old_settings and settings_to_save[k] != self.old_settings[k]}  # haha what
+        settings_changed = {k: settings_to_save[k] for k in settings_to_save if k in self.settings_loaded and settings_to_save[k] != self.settings_loaded[k]}  # haha what
         log.debug(f"Setting(s) changed: {settings_changed}")
         log.info("Saving and closing settings menu")
         access_settings_file(save_dict=settings_to_save)
         log.debug(f"Settings have been saved as: {settings_to_save}")
-        self.master.destroy()
+        self.master.destroy()  # closes window
 
+    # closes window without saving
     def close_without_saving(self):
         log.info("Closing settings menu without saving")
         self.master.destroy()
 
 
+# main entry point
 def open_settings_menu():
     log.info("Opening settings menu for TF2 Rich Presence {tf2rpvnum}")
 
     root = tk.Tk()
-    settings_gui = GUI(root)
+    settings_gui = GUI(root)  # only set to a variable to prevent garbage collection? idk
     root.mainloop()
 
 
+# access a setting from any file, with a string that is the same as the variable name (cached, so settings changes won't be rechecked right away)
 @functools.lru_cache(maxsize=None)
 def get(setting: str) -> Any:
     try:
@@ -186,8 +194,12 @@ def get(setting: str) -> Any:
     except FileNotFoundError:
         log.error(f"Error in getting setting {setting} (settings.json can't be found), defaulting")
         return get_setting_default(setting)
+    except Exception as error:
+        log.error(f"Error in getting setting {setting} ({error}), defaulting\n{traceback.format_exc()}")
+        return get_setting_default(setting)
 
 
+# either reads the settings file and returns it a a dict, or if a dict is provided, saves it as a json
 def access_settings_file(save_dict: Union[dict, None] = None) -> dict:
     if os.path.isdir('resources'):
         settings_path = os.path.join('resources', 'settings.json')
@@ -207,14 +219,15 @@ def access_settings_file(save_dict: Union[dict, None] = None) -> dict:
         except NameError:  # log.log_levels_allowed is not defined, should actually happen every time lol
             pass
 
+        # saves with defualt settings
         default_settings: dict = get_setting_default(return_dict=True)
-
         with open(settings_path, 'w') as settings_json_create:
             json.dump(default_settings, settings_json_create)
 
         return default_settings
 
 
+# either gets a settings default, or if return_dict, returns all defaults as a dict
 def get_setting_default(setting: str = '', return_dict: bool = False) -> Any:
     defaults = {'enable_sentry': True,
                 'wait_time': 5,
@@ -233,6 +246,7 @@ def get_setting_default(setting: str = '', return_dict: bool = False) -> Any:
         return defaults[setting]
 
 
+# checks if a string is an integer between 0 and a supplied maximum (blank is allowed, will get set to default when saving)
 def check_int(text_in_entry: str, maximum: int) -> bool:
     if text_in_entry == '':
         log.debug(f"Checking entry: \"{text_in_entry}\" passes (is blank)")
