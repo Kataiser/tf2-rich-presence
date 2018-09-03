@@ -178,7 +178,21 @@ class TF2RichPresense:
                 log.debug(f"Sent over RPC: {self.activity}")
                 self.client_connected = True
 
-            if top_line != 'In menus' and top_line != 'In queue':
+            if top_line == 'In menus':
+                # in menus displays the main menu
+                if bottom_line == 'Queued for Casual':
+                    self.activity['assets']['large_image'] = 'casual'
+                    self.activity['assets']['large_text'] = bottom_line
+                elif bottom_line == 'Queued for Competitive':
+                    self.activity['assets']['large_image'] = 'comp'
+                    self.activity['assets']['large_text'] = bottom_line
+                elif bottom_line == 'Queued for MvM':
+                    self.activity['assets']['large_image'] = 'mvm_queued'
+                    self.activity['assets']['large_text'] = bottom_line
+                else:
+                    self.activity['assets']['large_image'] = 'main_menu'
+                    self.activity['assets']['large_text'] = 'Main menu'
+            else:
                 # not in menus = in a game
                 bottom_line = f"Class: {bottom_line}"
 
@@ -202,10 +216,6 @@ class TF2RichPresense:
                         top_line = f'Map: {map_out}'
                     else:
                         top_line = f'Map: {map_out} ({server_provider} server)'
-            else:
-                # in menus displays the main menu
-                self.activity['assets']['large_image'] = 'main_menu'
-                self.activity['assets']['large_text'] = 'Main menu'
 
             self.activity['details'] = top_line
             self.activity['state'] = bottom_line
