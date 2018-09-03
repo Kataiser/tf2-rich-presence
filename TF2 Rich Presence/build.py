@@ -105,6 +105,7 @@ def main(version_num):
         print("Copied", shutil.copy2('configs.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('custom_maps.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('updater.py', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy2('settings.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('map list generator.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('thumb formatter.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('find_server_ids.py', f'{github_repo_path}\\TF2 Rich Presence'))
