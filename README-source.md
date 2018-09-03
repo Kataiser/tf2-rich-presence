@@ -17,3 +17,7 @@ Without installer: [tf2_rich_presence_{tf2rpvnum}.zip](https://github.com/Katais
 ## Installation and running
 1. Extract tf2_rich_presence_{tf2rpvnum}.zip OR run tf2_rich_presence_{tf2rpvnum}_installer.exe, whichever you download.
 2. Run "Launch TF2 with Rich Presence.exe". Requires Steam and Discord to be running as well.
+
+## Changelogs
+- [changelogs.html](https://htmlpreview.github.io/?https://github.com/Kataiser/tf2-rich-presence/blob/master/TF2%20Rich%20Presence/changelogs.html)
+- [Releases](https://github.com/Kataiser/tf2-rich-presence/releases)
