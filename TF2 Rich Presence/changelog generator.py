@@ -16,6 +16,7 @@ def main():
             </title>
             <meta charset="UTF-8">
             <link rel="shortcut icon" type="image/x-icon" href="tf2_logo_blurple.ico">
+            <link href="resources/tf2_logo_blurple.ico" rel="shortcut icon" type="image/x-icon">
             <link rel="stylesheet" href="changelogs.css">
             <link rel="stylesheet" href="resources/changelogs.css">
         </head>
