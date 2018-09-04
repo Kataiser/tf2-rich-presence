@@ -15,16 +15,15 @@ def main():
                 TF2 Rich Presence changelogs
             </title>
             <meta charset="UTF-8">
-            <link rel="shortcut icon" type="image/x-icon" href="tf2_logo_blurple.ico">
-            <link href="resources/tf2_logo_blurple.ico" rel="shortcut icon" type="image/x-icon">
-            <link rel="stylesheet" href="https://github.com/Kataiser/tf2-rich-presence/blob/master/TF2%20Rich%20Presence/changelogs.css">
-            <link rel="stylesheet" href="changelogs.css">
-            <link rel="stylesheet" href="resources/changelogs.css">
+            <link href="https://github.com/Kataiser/tf2-rich-presence/raw/master/TF2%20Rich%20Presence/tf2_logo_blurple.ico" rel="shortcut icon" type="image/x-icon">
+            <link href="https://github.com/Kataiser/tf2-rich-presence/raw/master/TF2%20Rich%20Presence/changelogs.css" rel="stylesheet">
+            <link href="changelogs.css" rel="stylesheet">
+            <link href="resources/changelogs.css" rel="stylesheet">
         </head>
         <body>
         <div>
             <h1><a href="https://github.com/Kataiser/tf2-rich-presence">
-            <img src="https://github.com/Kataiser/tf2-rich-presence/blob/master/TF2%20Rich%20Presence/tf2_logo_blurple.png">
+            <img src="https://github.com/Kataiser/tf2-rich-presence/raw/master/TF2%20Rich%20Presence/tf2_logo_blurple.ico">
             TF2 Rich Presence</a> changelogs</h1>
         {replace}
         </div>
