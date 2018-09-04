@@ -31,7 +31,7 @@ def main():
                     border: 4px solid #7289DA;
                 }
                 h4 {
-                    font-weight: lighter;
+                    font-weight: normal;
                     border-bottom: 1px solid #99AAB5;
                     padding-top: 10px;
                     font-size: 1.5em;
@@ -52,6 +52,7 @@ def main():
                 }
                 .version_a {
                     font-size: 1.25em;
+                    vertical-align: middle;
                 }
                 img {
                     width: 1em;
