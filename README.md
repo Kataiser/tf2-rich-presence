@@ -19,5 +19,5 @@ Without installer: [tf2_rich_presence_v1.5.9.zip](https://github.com/Kataiser/tf
 2. Run "Launch TF2 with Rich Presence.exe". Requires Steam and Discord to be running as well.
 
 ## Changelogs
-- [changelogs.html](https://htmlpreview.github.io/?https://github.com/Kataiser/tf2-rich-presence/blob/master/changelogs.html)
+- [changelogs.html](https://htmlpreview.github.io/?https://github.com/Kataiser/tf2-rich-presence/blob/master/TF2%20Rich%20Presence/changelogs.html)
 - [Releases](https://github.com/Kataiser/tf2-rich-presence/releases)
