@@ -112,7 +112,7 @@ def main(version_num):
         print("Copied", shutil.copy2('thumb formatter.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('find_server_ids.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('changelog generator.py', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy2('changelogs.html', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy2('changelogs.html', f'{github_repo_path}\\'))
         print("Copied", shutil.copy2('changelogs.css', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('maps.json', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('community_server_ips.json', f'{github_repo_path}\\TF2 Rich Presence'))
