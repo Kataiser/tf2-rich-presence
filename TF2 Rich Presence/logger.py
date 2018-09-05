@@ -136,7 +136,7 @@ def generate_hash() -> str:
 
 
 # compress a file with gzip
-def compress_file(path):
+def compress_file(path: str):
     with open(path, 'rb') as f_in:
         with gzip.open(f'{path}.gzip', 'wb') as f_out:
             shutil.copyfileobj(f_in, f_out)
@@ -145,7 +145,7 @@ def compress_file(path):
 
 
 # uncompress a file with gzip (not used, but could be useful)
-def decompress_file(path):
+def decompress_file(path: str):
     path_modified = path.replace('.gzip', '')
 
     with gzip.open(path, 'rb') as f_in:

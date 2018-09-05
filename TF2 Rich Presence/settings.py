@@ -157,7 +157,7 @@ class GUI(tk.Frame):
                             'wait_time': self.wait_time.get(),
                             'map_invalidation_hours': self.map_invalidation_hours.get(),
                             'check_updates': self.check_updates.get(),
-                            'request_timeout': self.request_timeout.get(),
+                            'request_timeout': max(self.request_timeout.get(), 1),
                             'scale_wait_time': self.scale_wait_time.get(),
                             'hide_queued_gamemode': self.hide_queued_gamemode.get(),
                             'log_level': self.log_level.get(),
@@ -169,6 +169,14 @@ class GUI(tk.Frame):
         log.info("Saving and closing settings menu")
         access_settings_file(save_dict=settings_to_save)
         log.debug(f"Settings have been saved as: {settings_to_save}")
+
+        restart_message = "If TF2 Rich Presence is currently running, it may need to be restarted for changes to take effect."
+        settings_changed_num = len(settings_changed)
+        if settings_changed_num == 1:
+            messagebox.showinfo("Saved", f"1 setting has been changed. {restart_message}")
+        elif settings_changed_num > 1:
+            messagebox.showinfo("Saved", f"{settings_changed_num} settings have been changed. {restart_message}")
+
         self.master.destroy()  # closes window
 
     # closes window without saving
