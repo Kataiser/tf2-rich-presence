@@ -414,6 +414,18 @@ def calculate_wait_time(base: int, afk: float) -> float:
 
 # find what server provider an IP belongs to
 def find_provider_for_ip(ip):
+    try:
+        community_server_ips_json = open('community_server_ips.json', 'r')
+    except FileNotFoundError:
+        community_server_ips_json = open(os.path.join('resources', 'community_server_ips.json'), 'r')
+
+    community_server_ips_dict = json.load(community_server_ips_json)
+    community_server_ips_json.close()
+
+    community_server_ips_list = []
+    for ip_list in community_server_ips_dict.values():
+        community_server_ips_list.extend([ip for ip in ip_list])
+
     if ip != '' and ip in community_server_ips_list:
         for provider_name in community_server_ips_dict.keys():
             if ip in community_server_ips_dict[provider_name]:
@@ -422,20 +434,6 @@ def find_provider_for_ip(ip):
 
     log.debug(f"IP {ip} is not run by a known provider")
     return None
-
-
-# setup community provider server IPs
-try:
-    community_server_ips_json = open('community_server_ips.json', 'r')
-except FileNotFoundError:
-    community_server_ips_json = open(os.path.join('resources', 'community_server_ips.json'), 'r')
-
-community_server_ips_dict = json.load(community_server_ips_json)
-community_server_ips_json.close()
-
-community_server_ips_list = []
-for ip_list in community_server_ips_dict.values():
-    community_server_ips_list.extend([ip for ip in ip_list])
 
 
 if __name__ == '__main__':
