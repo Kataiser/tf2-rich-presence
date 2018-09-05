@@ -230,7 +230,7 @@ def access_settings_file(save_dict: Union[dict, None] = None) -> dict:
         # saves with defualt settings
         default_settings: dict = get_setting_default(return_dict=True)
         with open(settings_path, 'w') as settings_json_create:
-            json.dump(default_settings, settings_json_create)
+            json.dump(default_settings, settings_json_create, indent=4)
 
         return default_settings
 
