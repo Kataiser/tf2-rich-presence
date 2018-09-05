@@ -135,6 +135,29 @@ def generate_hash() -> str:
     return main_hash[:8]
 
 
+# compress a file with gzip
+def compress_file(path):
+    with open(path, 'rb') as f_in:
+        with gzip.open(f'{path}.gzip', 'wb') as f_out:
+            shutil.copyfileobj(f_in, f_out)
+
+    os.remove(path)
+
+
+# uncompress a file with gzip (not used, but could be useful)
+def decompress_file(path):
+    path_modified = path.replace('.gzip', '')
+
+    with gzip.open(path, 'rb') as f_in:
+        with open(path_modified, 'wb') as f_out:
+            if os.path.exists(path_modified):
+                f_out.seek(0)  # put uncompressed at the beginning of the file
+
+            shutil.copyfileobj(f_in, f_out)
+
+    os.remove(path)
+
+
 # find user's pc and account name
 user_identifier: str = os.getlogin()
 if socket.gethostname().find('.') >= 0:
@@ -168,8 +191,4 @@ for old_filename in os.listdir('logs'):
     old_filename = os.path.join('logs', old_filename)
 
     if old_filename != filename and 'gzip' not in old_filename:
-        with open(old_filename, 'rb') as f_in:
-            with gzip.open(f'{old_filename}.gzip', 'wb') as f_out:
-                shutil.copyfileobj(f_in, f_out)
-
-        os.remove(old_filename)
+        compress_file(old_filename)
