@@ -1,4 +1,5 @@
 import os
+import random
 import shutil
 import unittest
 
@@ -19,22 +20,16 @@ class TestTF2RichPresense(unittest.TestCase):
         log.sentry_enabled = False
         log.log_levels_allowed = log.log_levels
 
-        self.console_lines = 200000
+        self.console_lines = 200000  # way more than normal
 
     def test_get_idle_duration(self):
         idle_duration = main.get_idle_duration()
         self.assertTrue(10.0 > idle_duration >= 0.0)
 
-    def test_console_log_in_menus(self):
+    def test_interpret_console_log(self):
         self.assertEqual(main.interpret_console_log('test_resources\\console_in_menus.log', ['Kataiser'], self.console_lines), ('In menus', 'Not queued', ''))
-
-    def test_console_queued_casual(self):
         self.assertEqual(main.interpret_console_log('test_resources\\console_queued_casual.log', ['Kataiser'], self.console_lines), ('In menus', 'Queued for Casual', ''))
-
-    def test_console_badwater(self):
         self.assertEqual(main.interpret_console_log('test_resources\\console_badwater.log', ['Kataiser'], self.console_lines), ('pl_badwater', 'Pyro', ''))
-
-    def test_console_custom_map(self):
         self.assertEqual(main.interpret_console_log('test_resources\\console_custom_map.log', ['Kataiser'], self.console_lines), ('cp_catwalk_a5c', 'Soldier', ''))
 
     def test_steam_config_file(self):
@@ -91,6 +86,19 @@ class TestTF2RichPresense(unittest.TestCase):
 
         self.assertTrue(log.read_truncated_file('test_resources\\console_queued_casual.log', limit=1000) == correct_file_ending_text)
 
+    def test_gzip_compression(self):
+        random_data = str(bytearray(random.getrandbits(8) for _ in range(10000)))
+        test_file = 'test_resources\\random_data.txt'
+        with open(test_file, 'w') as random_data_txt:
+            random_data_txt.write(random_data)
+
+        log.compress_file(test_file)
+        log.decompress_file(f'{test_file}.gzip')
+
+        with open(test_file, 'r') as random_data_txt:
+            self.assertEqual(random_data_txt.read(), random_data)
+        os.remove(test_file)
+
     def test_access_github_api(self):
         newest_version, downloads_url, changelog = updater.access_github_api(10)
         self.assertTrue(newest_version.startswith('v') and '.' in newest_version)
@@ -127,8 +135,18 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertFalse(settings.check_int('a', 1000))
         self.assertFalse(settings.check_int('abc123qwe098', 1000))
 
+    def test_settings_access(self):
+        default_settings = settings.get_setting_default(return_dict=True)
+
+        for setting in default_settings:
+            self.assertEqual(type(default_settings[setting]), type(settings.get(setting)))
+
     def test_find_provider_for_ip(self):
         self.assertEqual(main.find_provider_for_ip('104.243.38.50:27026'), 'Wonderland.TF')
+        self.assertEqual(main.find_provider_for_ip('74.91.116.5:27015'), 'Skial')
+        self.assertEqual(main.find_provider_for_ip('192.223.30.133:27015'), 'TF2Maps')
+        self.assertEqual(main.find_provider_for_ip('19.22.3.13:2701'), None)
+        self.assertEqual(main.find_provider_for_ip(''), None)
 
 
 if __name__ == '__main__':
