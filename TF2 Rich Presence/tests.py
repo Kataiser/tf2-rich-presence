@@ -7,7 +7,7 @@ import requests
 
 import configs
 import custom_maps
-import logger as log
+import logger
 import main
 import settings
 import updater
@@ -15,10 +15,11 @@ import updater
 
 class TestTF2RichPresense(unittest.TestCase):
     def setUp(self):
-        log.enabled = False
-        log.to_stderr = False
-        log.sentry_enabled = False
-        log.log_levels_allowed = log.log_levels
+        self.log = logger.Log()
+        self.log.enabled = False
+        self.log.to_stderr = False
+        self.log.sentry_enabled = False
+        self.log.log_levels_allowed = self.log.log_levels
 
         self.console_lines = 200000  # way more than normal
 
@@ -27,34 +28,43 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertTrue(10.0 > idle_duration >= 0.0)
 
     def test_interpret_console_log(self):
-        self.assertEqual(main.interpret_console_log('test_resources\\console_in_menus.log', ['Kataiser'], self.console_lines), ('In menus', 'Not queued', ''))
-        self.assertEqual(main.interpret_console_log('test_resources\\console_queued_casual.log', ['Kataiser'], self.console_lines), ('In menus', 'Queued for Casual', ''))
-        self.assertEqual(main.interpret_console_log('test_resources\\console_badwater.log', ['Kataiser'], self.console_lines), ('pl_badwater', 'Pyro', ''))
-        self.assertEqual(main.interpret_console_log('test_resources\\console_custom_map.log', ['Kataiser'], self.console_lines), ('cp_catwalk_a5c', 'Soldier', ''))
+        app = main.TF2RichPresense(self.log)
+        self.assertEqual(app.interpret_console_log('test_resources\\console_in_menus.log', ['Kataiser'], self.console_lines), ('In menus', 'Not queued', ''))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_queued_casual.log', ['Kataiser'], self.console_lines), ('In menus', 'Queued for Casual', ''))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', ['Kataiser'], self.console_lines), ('pl_badwater', 'Pyro', ''))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_custom_map.log', ['Kataiser'], self.console_lines), ('cp_catwalk_a5c', 'Soldier', ''))
 
     def test_steam_config_file(self):
-        self.assertEqual(configs.steam_config_file('test_resources\\'), ['Kataiser'])
+        self.assertEqual(configs.steam_config_file(self.log, 'test_resources\\'), ['Kataiser'])
 
     def test_find_custom_map_gamemode(self):
-        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode('cp_catwalk_a5c', 5)), ('control-point', 'Control Point'))
-        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode('koth_wubwubwub_remix_vip', 5)), ('koth', 'King of the Hill'))
-        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode('surf_air_arena_v4', 5)), ('surfing', 'Surfing'))
+        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'cp_catwalk_a5c', 5)), ('control-point', 'Control Point'))
+        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'koth_wubwubwub_remix_vip', 5)), ('koth', 'King of the Hill'))
+        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'surf_air_arena_v4', 5)), ('surfing', 'Surfing'))
 
     def test_logger(self):
-        log.enabled = True
-        log.filename = 'test_resources\\test_log.log'
-
+        self.log.log_file.close()
         try:
-            os.remove(log.filename)
+            os.remove(self.log.filename)
         except FileNotFoundError:
             pass
 
-        log.info("Test.")
-        with open(log.filename, 'r') as current_log_file:
+        self.log.enabled = True
+        self.log.filename = 'test_resources\\test_self.log'
+
+        try:
+            os.remove(self.log.filename)
+        except FileNotFoundError:
+            pass
+
+        self.log.log_file = open(self.log.filename, 'a')
+        self.log.info("Test.")
+        self.log.log_file.close()
+
+        with open(self.log.filename, 'r') as current_log_file:
             self.assertTrue(current_log_file.read().endswith('] INFO: Test.\n'))
 
-        os.remove(log.filename)
-        log.enabled = False
+        os.remove(self.log.filename)
 
     def test_log_cleanup(self):
         old_dir = os.getcwd()
@@ -66,7 +76,7 @@ class TestTF2RichPresense(unittest.TestCase):
             pass
 
         shutil.copytree('empty_logs', 'logs')
-        log.cleanup(4)
+        self.log.cleanup(4)
         self.assertEqual(os.listdir('logs'), ['267d4853.log', '46b087ff.log', '898ff621.log', 'da0d028a.log'])
         shutil.rmtree('logs')
 
@@ -76,7 +86,7 @@ class TestTF2RichPresense(unittest.TestCase):
         old_dir = os.getcwd()
         os.chdir(os.path.abspath('test_resources\\hash_targets'))
 
-        self.assertEqual(log.generate_hash(), 'c9311b6e')
+        self.assertEqual(logger.generate_hash(), 'c9311b6e')
 
         os.chdir(old_dir)
 
@@ -84,7 +94,7 @@ class TestTF2RichPresense(unittest.TestCase):
         with open('test_resources\\correct_file_ending.txt', 'r') as correct_file_ending_file:
             correct_file_ending_text = correct_file_ending_file.read()
 
-        self.assertTrue(log.read_truncated_file('test_resources\\console_queued_casual.log', limit=1000) == correct_file_ending_text)
+        self.assertTrue(logger.read_truncated_file('test_resources\\console_queued_casual.log', limit=1000) == correct_file_ending_text)
 
     def test_gzip_compression(self):
         random_data = str(bytearray(random.getrandbits(8) for _ in range(10000)))
@@ -92,8 +102,8 @@ class TestTF2RichPresense(unittest.TestCase):
         with open(test_file, 'w') as random_data_txt:
             random_data_txt.write(random_data)
 
-        log.compress_file(test_file)
-        log.decompress_file(f'{test_file}.gzip')
+        logger.compress_file(test_file)
+        logger.decompress_file(f'{test_file}.gzip')
 
         with open(test_file, 'r') as random_data_txt:
             self.assertEqual(random_data_txt.read(), random_data)
@@ -142,11 +152,12 @@ class TestTF2RichPresense(unittest.TestCase):
             self.assertEqual(type(default_settings[setting]), type(settings.get(setting)))
 
     def test_find_provider_for_ip(self):
-        self.assertEqual(main.find_provider_for_ip('104.243.38.50:27026'), 'Wonderland.TF')
-        self.assertEqual(main.find_provider_for_ip('74.91.116.5:27015'), 'Skial')
-        self.assertEqual(main.find_provider_for_ip('192.223.30.133:27015'), 'TF2Maps')
-        self.assertEqual(main.find_provider_for_ip('19.22.3.13:2701'), None)
-        self.assertEqual(main.find_provider_for_ip(''), None)
+        app = main.TF2RichPresense(self.log)
+        self.assertEqual(app.find_provider_for_ip('104.243.38.50:27026'), 'Wonderland.TF')
+        self.assertEqual(app.find_provider_for_ip('74.91.116.5:27015'), 'Skial')
+        self.assertEqual(app.find_provider_for_ip('192.223.30.133:27015'), 'TF2Maps')
+        self.assertEqual(app.find_provider_for_ip('192.223.30.133:2701'), None)
+        self.assertEqual(app.find_provider_for_ip(''), None)
 
 
 if __name__ == '__main__':

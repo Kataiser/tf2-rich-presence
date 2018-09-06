@@ -1,12 +1,11 @@
 import os
 from typing import List, TextIO, Union
 
-import logger as log
 import main
 
 
 # allows the console to output 'class selected' on class choose
-def class_config_files(exe_location: str):
+def class_config_files(log, exe_location: str):
     log.debug(f"Reading (and possibly modifying) class configs at {exe_location}")
     tf2_classes: List[str] = ['Scout', 'Soldier', 'Pyro', 'Demoman', 'Heavy', 'Engineer', 'Medic', 'Sniper', 'Spy']
 
@@ -37,7 +36,7 @@ def class_config_files(exe_location: str):
 
 
 # reads steams launch options save file to find -condebug
-def steam_config_file(exe_location: str) -> list:
+def steam_config_file(log, exe_location: str) -> list:
     log.debug("Looking for -condebug")
     found_condebug: bool = False
     found_usernames: List[str] = []

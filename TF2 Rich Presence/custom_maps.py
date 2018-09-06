@@ -6,12 +6,11 @@ from typing import TextIO, Dict, KeysView, List, Tuple, Union
 import requests
 from requests import Response
 
-import logger as log
 import settings
 
 
 # uses teamwork.tf's API to find the gamemode of a custom map
-def find_custom_map_gamemode(map_filename: str, timeout: float = settings.get('request_timeout')) -> Tuple[str, str]:
+def find_custom_map_gamemode(log, map_filename: str, timeout: float = settings.get('request_timeout')) -> Tuple[str, str]:
     if map_filename == '':
         log.error("Map filename is blank")
         return 'unknown_map', 'Unknown gamemode'

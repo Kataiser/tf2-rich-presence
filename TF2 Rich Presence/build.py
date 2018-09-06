@@ -79,6 +79,7 @@ def main(version_num):
 
                     if file_dest_pair[0] == 'main.py':
                         modified_file = modified_file.replace('log.cleanup(20)', 'log.cleanup(5)')
+                        modified_file = modified_file.replace('to_stderr = True', 'to_stderr = False')
                     if file_dest_pair[0] == 'launcher.py':
                         modified_file = modified_file.replace('sentry_enabled: bool = False', 'sentry_enabled: bool = True')
                     if file_dest_pair[0] == 'logger.py':

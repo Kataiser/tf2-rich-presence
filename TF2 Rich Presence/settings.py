@@ -10,13 +10,16 @@ from typing import Any, Union
 
 sys.path.append(os.path.abspath(os.path.join('resources', 'python', 'packages')))
 sys.path.append(os.path.abspath(os.path.join('resources')))
-import logger as log
+import logger
 
 
 class GUI(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
         self.master = master
+
+        self.log = logger.Log()
+        self.log.info("Opening settings menu for TF2 Rich Presence {tf2rpvnum}")
 
         master.title("TF2 Rich Presence settings")
         master.resizable(0, 0)  # disables resizing
@@ -45,7 +48,7 @@ class GUI(tk.Frame):
         try:
             # load settings from settings.json
             self.settings_loaded = access_settings_file()
-            log.debug(f"Current settings: {self.settings_loaded}")
+            self.log.debug(f"Current settings: {self.settings_loaded}")
 
             self.enable_sentry.set(self.settings_loaded['enable_sentry'])
             self.wait_time.set(self.settings_loaded['wait_time'])
@@ -60,7 +63,7 @@ class GUI(tk.Frame):
         except Exception:
             # probably a json decode error
             formatted_exception = traceback.format_exc()
-            log.error(f"Error in loading settings, defaulting: \n{formatted_exception}")
+            self.log.error(f"Error in loading settings, defaulting: \n{formatted_exception}")
             messagebox.showerror("Error", f"Couldn't load settings, reverting to defaults.\n\n{formatted_exception}")
 
             # set all settings to defaults
@@ -141,7 +144,7 @@ class GUI(tk.Frame):
         ok_button.grid(row=100, column=1, sticky=tk.W, padx=15, pady=(15, 15))
 
         master.update()
-        log.debug(f"Window size: {master.winfo_width()}x{master.winfo_height()}")
+        self.log.debug(f"Window size: {master.winfo_width()}x{master.winfo_height()}")
 
     # saves settings to file and closes window
     def save_and_close(self):
@@ -165,10 +168,10 @@ class GUI(tk.Frame):
                             'hide_provider': self.hide_provider.get()}
 
         settings_changed = {k: settings_to_save[k] for k in settings_to_save if k in self.settings_loaded and settings_to_save[k] != self.settings_loaded[k]}  # haha what
-        log.debug(f"Setting(s) changed: {settings_changed}")
-        log.info("Saving and closing settings menu")
+        self.log.debug(f"Setting(s) changed: {settings_changed}")
+        self.log.info("Saving and closing settings menu")
         access_settings_file(save_dict=settings_to_save)
-        log.debug(f"Settings have been saved as: {settings_to_save}")
+        self.log.debug(f"Settings have been saved as: {settings_to_save}")
 
         restart_message = "If TF2 Rich Presence is currently running, it may need to be restarted for changes to take effect."
         settings_changed_num = len(settings_changed)
@@ -181,14 +184,12 @@ class GUI(tk.Frame):
 
     # closes window without saving
     def close_without_saving(self):
-        log.info("Closing settings menu without saving")
+        self.log.info("Closing settings menu without saving")
         self.master.destroy()
 
 
 # main entry point
 def open_settings_menu():
-    log.info("Opening settings menu for TF2 Rich Presence {tf2rpvnum}")
-
     root = tk.Tk()
     settings_gui = GUI(root)  # only set to a variable to prevent garbage collection? idk
     root.mainloop()
@@ -200,10 +201,8 @@ def get(setting: str) -> Any:
     try:
         return access_settings_file()[setting]
     except FileNotFoundError:
-        log.error(f"Error in getting setting {setting} (settings.json can't be found), defaulting")
         return get_setting_default(setting)
-    except Exception as error:
-        log.error(f"Error in getting setting {setting} ({error}), defaulting\n{traceback.format_exc()}")
+    except Exception:
         return get_setting_default(setting)
 
 
@@ -222,11 +221,6 @@ def access_settings_file(save_dict: Union[dict, None] = None) -> dict:
             with open(settings_path, 'r') as settings_json_read:
                 return json.load(settings_json_read)
     except FileNotFoundError:
-        try:
-            log.debug("Creating settings.json from defaults")
-        except NameError:  # log.log_levels_allowed is not defined, should actually happen every time lol
-            pass
-
         # saves with defualt settings
         default_settings: dict = get_setting_default(return_dict=True)
         with open(settings_path, 'w') as settings_json_create:
@@ -257,14 +251,11 @@ def get_setting_default(setting: str = '', return_dict: bool = False) -> Any:
 # checks if a string is an integer between 0 and a supplied maximum (blank is allowed, will get set to default when saving)
 def check_int(text_in_entry: str, maximum: int) -> bool:
     if text_in_entry == '':
-        log.debug(f"Checking entry: \"{text_in_entry}\" passes (is blank)")
         return True
 
     if text_in_entry.isdigit() and 0 <= int(text_in_entry) <= float(maximum):
-        log.debug(f"Checking entry: \"{text_in_entry}\" passes (is digit and is between 0 and {float(maximum)})")
         return True
 
-    log.debug(f"Checking entry: \"{text_in_entry}\" fails")
     return False
 
 
