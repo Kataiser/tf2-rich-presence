@@ -6,43 +6,53 @@ from bs4 import BeautifulSoup
 
 
 def main():
-    # watch out for rate limiting (60 requests per hour)
+    # watch out for rate limiting (60 requests per hour, this uses 2 per run)
 
     with open('changelogs_source.html', 'r') as changelogs_source_html:
         source_html = changelogs_source_html.read()
 
-    requests_made = 1
     api_response = requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/releases').json()
     check_rate_limited(str(api_response))
-    htmls = []
+    releases = []
+    bodies = []
 
-    for release in api_response:
-        version_num = release['tag_name']
-        body = release['body']
-        published = release['published_at'][:10]
-
-        as_html = requests.post('https://api.github.com/markdown/raw', data=body, headers={'Content-Type': 'text/plain'}).text.replace('h2', 'h3')
-        requests_made += 1
-        htmls.append(f'<h4><a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/{version_num}">{version_num}</a> ({published})</h4>{as_html}')
+    for found_release in api_response:
+        version_num = found_release['tag_name']
+        body = found_release['body']
+        published = found_release['published_at'][:10]
+        releases.append({'version_num': version_num, 'published': published})
+        bodies.append(body)
 
         print(version_num)
+        print(published)
         print(body)
-        print(as_html.replace('\n', ''))
         print()
 
-        check_rate_limited(as_html)
+    bodies_combined = '\n\nSPLITTER\n\n'.join(bodies)
 
-    generated_html_logs = ''.join(htmls)
-    generated_html_pretty = prettify_custom(BeautifulSoup(generated_html_logs, 'lxml'))
+    as_html = requests.post('https://api.github.com/markdown/raw', data=bodies_combined, headers={'Content-Type': 'text/plain'}).text.replace('h2', 'h3')
+    check_rate_limited(as_html)
+
+    htmls = as_html.split('\n<p>SPLITTER</p>\n')
+    extended_htmls = []
+
+    htmls_index = 0
+    for release in releases:
+        extended_htmls.append(f"<h4><a class=\"version_a\" href=\"https://github.com/Kataiser/tf2-rich-presence/releases/tag/"
+                              f"{release['version_num']}\">{release['version_num']}</a> ({release['published']})</h4>{htmls[htmls_index]}")
+        htmls_index += 1
+
+    generated_html_logs = ''.join(extended_htmls)
+    generated_html_pretty = prettify_custom(BeautifulSoup(generated_html_logs, 'lxml')).replace('<html>\n    <body>', '').replace('</body>\n</html>', '')
 
     generated_html = source_html.replace('<!--REPLACEME-->', generated_html_pretty)
     with open('changelogs.html', 'w') as changelog_file:
         changelog_file.write(generated_html)
 
-    print(f"\nDone (finished at {datetime.datetime.now().strftime('%I:%M:%S %p')})\nGithub API requests made: {requests_made}")
+    print(f"\nDone (finished at {datetime.datetime.now().strftime('%I:%M:%S %p')})")
 
 
-# runs bs4's pretty method, but with a custom indent width
+# runs bs4's prettify method, but with a custom indent width
 # modified from https://stackoverflow.com/questions/15509397/custom-indent-width-for-beautifulsoup-prettify
 def prettify_custom(soup):
     r = re.compile(r'^(\s*)', re.MULTILINE)
