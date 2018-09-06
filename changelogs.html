@@ -1,614 +1,626 @@
 <!DOCTYPE html>
 <html lang="en-us">
- <head>
-  <title>
-   TF2 Rich Presence changelogs
-  </title>
-  <meta charset="utf-8">
-  <link href="https://github.com/Kataiser/tf2-rich-presence/raw/master/TF2%20Rich%20Presence/tf2_logo_blurple.ico" rel="shortcut icon" type="image/x-icon">
-  <style>
-   body {
-                    text-align: center;
-                    font-family: sans-serif;
-                    background: #111314;
-                }
-                div {
-                    background: white;
-                    width: 1000px;
-                    margin: 0 auto;
-                    text-align: left;
-                    padding: 0 20px;
-                    border: 4px solid #7289DA;
-                }
-                h4 {
-                    font-weight: normal;
-                    border-bottom: 1px solid #99AAB5;
-                    padding-top: 10px;
-                    font-size: 1.5em;
-                    color: rgba(0, 0, 0, 0.8);
-                }
-                a {
-                    text-decoration: none;
-                }
-                h3 {
-                    padding-left: 20px;
-                }
-                ul {
-                    padding-left: 60px;
-                }
-                p {
-                    padding-left: 20px;
-                    padding-bottom: 20px;
-                }
-                .version_a {
-                    font-size: 1.25em;
-                    vertical-align: middle;
-                }
-                img {
-                    width: 1em;
-                    height: 1em;
-                    vertical-align: middle;
-                    padding-bottom: 0.3em;
-                }
-  </style>
- </head>
- <body>
-  <div>
-   <h1>
-    <a href="https://github.com/Kataiser/tf2-rich-presence">
-     <img src="https://github.com/Kataiser/tf2-rich-presence/raw/master/TF2%20Rich%20Presence/tf2_logo_blurple.ico">
-     TF2 Rich Presence
-    </a>
-    changelogs
-   </h1>
-   <h4>
-    <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.5.9">
-     v1.5.9
-    </a>
-    (2018-08-21)
-   </h4>
-   <h3>
-    <a aria-hidden="true" class="anchor" href="#changes" id="user-content-changes">
-     <span aria-hidden="true" class="octicon octicon-link">
-     </span>
-    </a>
-    Changes
-   </h3>
-   <ul>
-    <li>
-     Refresh interval increases over 5 seconds when the user is idle
-    </li>
-    <li>
-     Improved speed when CPU usage is low
-    </li>
-    <li>
-     Improved filesize by a few MBs
-    </li>
-   </ul>
-   <h3>
-    <a aria-hidden="true" class="anchor" href="#fixes" id="user-content-fixes">
-     <span aria-hidden="true" class="octicon octicon-link">
-     </span>
-    </a>
-    Fixes
-   </h3>
-   <ul>
-    <li>
-     Fixed a crash when playing on a custom map teamwork.tf doesn't recognize
-    </li>
-    <li>
-     Fixed a crash when failing to connect to Discord
-    </li>
-    <li>
-     Improved updater stability and error display
-    </li>
-    <li>
-     Fixed (and slightly reworded) readme launching instructions
-    </li>
-   </ul>
-   <h4>
-    <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.5.8">
-     v1.5.8
-    </a>
-    (2018-08-09)
-   </h4>
-   <h3>
-    <a aria-hidden="true" class="anchor" href="#changes" id="user-content-changes">
-     <span aria-hidden="true" class="octicon octicon-link">
-     </span>
-    </a>
-    Changes
-   </h3>
-   <ul>
-    <li>
-     Replaced the batch launcher with an executable
-    </li>
-    <li>
-     Launching TF2 no longer uses a browser
-    </li>
-   </ul>
-   <h4>
-    <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.5.7">
-     v1.5.7
-    </a>
-    (2018-08-04)
-   </h4>
-   <h3>
-    <a aria-hidden="true" class="anchor" href="#changes" id="user-content-changes">
-     <span aria-hidden="true" class="octicon octicon-link">
-     </span>
-    </a>
-    Changes
-   </h3>
-   <ul>
-    <li>
-     Update checking now only happens once, at startup
-    </li>
-    <li>
-     Added a hint when out of date
-    </li>
-    <li>
-     Crashes are now displayed to the user
-    </li>
-    <li>
-     Improved error handling in general
-    </li>
-    <li>
-     Removed telemetry
-    </li>
-   </ul>
-   <h3>
-    <a aria-hidden="true" class="anchor" href="#fixes" id="user-content-fixes">
-     <span aria-hidden="true" class="octicon octicon-link">
-     </span>
-    </a>
-    Fixes
-   </h3>
-   <ul>
-    <li>
-     Fixed a possible crash when connecting to Discord
-    </li>
-   </ul>
-   <h4>
-    <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.5.6">
-     v1.5.6
-    </a>
-    (2018-08-04)
-   </h4>
-   <h3>
-    <a aria-hidden="true" class="anchor" href="#fixes" id="user-content-fixes">
-     <span aria-hidden="true" class="octicon octicon-link">
-     </span>
-    </a>
-    Fixes
-   </h3>
-   <ul>
-    <li>
-     Fixed queue state detection
-    </li>
-   </ul>
-   <h4>
-    <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.5.5">
-     v1.5.5
-    </a>
-    (2018-08-03)
-   </h4>
-   <h3>
-    <a aria-hidden="true" class="anchor" href="#changes" id="user-content-changes">
-     <span aria-hidden="true" class="octicon octicon-link">
-     </span>
-    </a>
-    Changes
-   </h3>
-   <ul>
-    <li>
-     Custom map gamemodes now get rechecked after 1 day (was 5 days)
-    </li>
-    <li>
-     Improved handling of old logs
-    </li>
-   </ul>
-   <h3>
-    <a aria-hidden="true" class="anchor" href="#fixes" id="user-content-fixes">
-     <span aria-hidden="true" class="octicon octicon-link">
-     </span>
-    </a>
-    Fixes
-   </h3>
-   <ul>
-    <li>
-     Fixed a crash when unable to connect to Github to check for updates
-    </li>
-   </ul>
-   <h4>
-    <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.5.4">
-     v1.5.4
-    </a>
-    (2018-07-25)
-   </h4>
-   <h3>
-    <a aria-hidden="true" class="anchor" href="#changes" id="user-content-changes">
-     <span aria-hidden="true" class="octicon octicon-link">
-     </span>
-    </a>
-    Changes
-   </h3>
-   <ul>
-    <li>
-     Added support for itemtest and cp_cloak
-    </li>
-    <li>
-     Improved detection of custom map gamemode
-    </li>
-    <li>
-     Made readme launching instructions more accurate
-    </li>
-    <li>
-     The changelog of the newest version is displayed when out of date
-    </li>
-   </ul>
-   <h3>
-    <a aria-hidden="true" class="anchor" href="#fixes" id="user-content-fixes">
-     <span aria-hidden="true" class="octicon octicon-link">
-     </span>
-    </a>
-    Fixes
-   </h3>
-   <ul>
-    <li>
-     Fixed a crash when checking for updates
-    </li>
-   </ul>
-   <h4>
-    <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.5.3">
-     v1.5.3
-    </a>
-    (2018-07-23)
-   </h4>
-   <h3>
-    <a aria-hidden="true" class="anchor" href="#changes" id="user-content-changes">
-     <span aria-hidden="true" class="octicon octicon-link">
-     </span>
-    </a>
-    Changes
-   </h3>
-   <ul>
-    <li>
-     Added an extra step to the setup instructions
-    </li>
-    <li>
-     Renamed "Control Point (Domination)" to "Control Point"
-    </li>
-    <li>
-     Slightly improved memory usage
-    </li>
-    <li>
-     Replaced hyphens in log filename with underscores
-    </li>
-   </ul>
-   <h3>
-    <a aria-hidden="true" class="anchor" href="#fixes" id="user-content-fixes">
-     <span aria-hidden="true" class="octicon octicon-link">
-     </span>
-    </a>
-    Fixes
-   </h3>
-   <ul>
-    <li>
-     Fixed a crash when reading certain console logs
-    </li>
-   </ul>
-   <h4>
-    <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.5.2">
-     v1.5.2
-    </a>
-    (2018-07-22)
-   </h4>
-   <h3>
-    <a aria-hidden="true" class="anchor" href="#fixes" id="user-content-fixes">
-     <span aria-hidden="true" class="octicon octicon-link">
-     </span>
-    </a>
-    Fixes
-   </h3>
-   <ul>
-    <li>
-     Improved handling of multiple Steam accounts
-    </li>
-    <li>
-     Fixed log reporting becoming truncated by using Pastebin
-    </li>
-   </ul>
-   <h4>
-    <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.5.1">
-     v1.5.1
-    </a>
-    (2018-07-20)
-   </h4>
-   <h3>
-    <a aria-hidden="true" class="anchor" href="#changes" id="user-content-changes">
-     <span aria-hidden="true" class="octicon octicon-link">
-     </span>
-    </a>
-    Changes
-   </h3>
-   <ul>
-    <li>
-     Added update checking
-    </li>
-    <li>
-     Log reporting now includes less of the log file and some of console.log
-    </li>
-   </ul>
-   <h3>
-    <a aria-hidden="true" class="anchor" href="#fixes" id="user-content-fixes">
-     <span aria-hidden="true" class="octicon octicon-link">
-     </span>
-    </a>
-    Fixes
-   </h3>
-   <ul>
-    <li>
-     Fixed a bug that caused many more log reports than necessary
-    </li>
-   </ul>
-   <h4>
-    <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.5">
-     v1.5
-    </a>
-    (2018-07-20)
-   </h4>
-   <h3>
-    <a aria-hidden="true" class="anchor" href="#changes" id="user-content-changes">
-     <span aria-hidden="true" class="octicon octicon-link">
-     </span>
-    </a>
-    Changes
-   </h3>
-   <ul>
-    <li>
-     Now automatically launches TF2
-    </li>
-    <li>
-     Added support for many custom gamemodes
-     <ul>
-      <li>
-       Surfing, Trading, Jumping, Deathmatch, Orange, Versus Saxton Hale, Deathrun, Achievement, Jail Breakout, Slender, Dodgeball, and Mario Kart
-      </li>
-     </ul>
-    </li>
-    <li>
-     Renamed the installer file
-    </li>
-    <li>
-     Custom maps will have their gamemodes rechecked after 5 days
-    </li>
-    <li>
-     Some performance increases
-    </li>
-    <li>
-     Added logging and error reporting via
-     <a href="https://sentry.io/welcome/" rel="nofollow">
-      Sentry
-     </a>
-    </li>
-    <li>
-     Updated to Python 3.7, updated third-party packages, and reduced filesize
-    </li>
-   </ul>
-   <h3>
-    <a aria-hidden="true" class="anchor" href="#fixes" id="user-content-fixes">
-     <span aria-hidden="true" class="octicon octicon-link">
-     </span>
-    </a>
-    Fixes
-   </h3>
-   <ul>
-    <li>
-     Fixed the launch text appearing again when closing TF2
-    </li>
-    <li>
-     Fixed a crash when playing on custom maps that have a listing on teamwork.tf but no gamemode
-    </li>
-    <li>
-     Fixed a false disconnect detection when another user disconnects
-    </li>
-   </ul>
-   <h4>
-    <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.4.2">
-     v1.4.2
-    </a>
-    (2018-06-29)
-   </h4>
-   <h3>
-    <a aria-hidden="true" class="anchor" href="#changes" id="user-content-changes">
-     <span aria-hidden="true" class="octicon octicon-link">
-     </span>
-    </a>
-    Changes
-   </h3>
-   <ul>
-    <li>
-     Renamed the installer file
-    </li>
-    <li>
-     Better elapsed time formatting
-    </li>
-   </ul>
-   <h3>
-    <a aria-hidden="true" class="anchor" href="#fixes" id="user-content-fixes">
-     <span aria-hidden="true" class="octicon octicon-link">
-     </span>
-    </a>
-    Fixes
-   </h3>
-   <ul>
-    <li>
-     Fixed other user's disconnects causing a false detection
-    </li>
-   </ul>
-   <h4>
-    <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.4.1">
-     v1.4.1
-    </a>
-    (2018-04-19)
-   </h4>
-   <h3>
-    <a aria-hidden="true" class="anchor" href="#changes" id="user-content-changes">
-     <span aria-hidden="true" class="octicon octicon-link">
-     </span>
-    </a>
-    Changes
-   </h3>
-   <ul>
-    <li>
-     Added a welcome message
-    </li>
-   </ul>
-   <h3>
-    <a aria-hidden="true" class="anchor" href="#fixes" id="user-content-fixes">
-     <span aria-hidden="true" class="octicon octicon-link">
-     </span>
-    </a>
-    Fixes
-   </h3>
-   <ul>
-    <li>
-     Improved CPU usage by not scanning unnecessary processes
-    </li>
-    <li>
-     Fixed a few maps having incorrect gamemodes
-    </li>
-    <li>
-     Reduced background internet usage
-    </li>
-   </ul>
-   <h4>
-    <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.4">
-     v1.4
-    </a>
-    (2018-04-18)
-   </h4>
-   <ul>
-    <li>
-     Added support for arena and training maps
-    </li>
-    <li>
-     Added gamemode lookup for custom maps
-    </li>
-    <li>
-     Screwed up the file size (sorry)
-    </li>
-   </ul>
-   <h4>
-    <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.3">
-     v1.3
-    </a>
-    (2018-04-17)
-   </h4>
-   <ul>
-    <li>
-     Improved performance and reduced CPU usage
-    </li>
-    <li>
-     More accurate elapsed time
-    </li>
-    <li>
-     Fixed a bug that causes a crash on any computer that isn't mine (whoops)
-    </li>
-   </ul>
-   <h4>
-    <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.2">
-     v1.2
-    </a>
-    (2018-04-12)
-   </h4>
-   <ul>
-    <li>
-     Reduced download file size
-    </li>
-    <li>
-     Added a readme
-    </li>
-   </ul>
-   <h4>
-    <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.1">
-     v1.1
-    </a>
-    (2018-04-11)
-   </h4>
-   <ul>
-    <li>
-     Detects party queue
-    </li>
-    <li>
-     Shortened match types
-    </li>
-    <li>
-     No longer exits when TF2 is closed
-    </li>
-    <li>
-     Significantly reduced download size
-    </li>
-    <li>
-     Fixed unrecognized maps
-    </li>
-    <li>
-     Renamed batch file
-    </li>
-   </ul>
-   <h4>
-    <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.0">
-     v1.0
-    </a>
-    (2018-04-08)
-   </h4>
-   <ul>
-    <li>
-     Shows map name instead of filename
-    </li>
-    <li>
-     Shows match type being queued for (Casual, Competitive, MvM)
-    </li>
-    <li>
-     Removed party state display (couldn't keep accurate over game restarts)
-    </li>
-    <li>
-     Added zero padding to current time display
-    </li>
-    <li>
-     Added license to download
-    </li>
-    <li>
-     Bug fixes
-    </li>
-   </ul>
-   <h4>
-    <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v0.2">
-     v0.2
-    </a>
-    (2018-04-03)
-   </h4>
-   <ul>
-    <li>
-     Shows party state
-    </li>
-    <li>
-     Better looking terminal output
-    </li>
-    <li>
-     Better unknown map thumb
-    </li>
-   </ul>
-   <h4>
-    <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v0.1">
-     v0.1
-    </a>
-    (2018-04-02)
-   </h4>
-   <p>
-    Feature incomplete. Works well enough for anyone to use, though some unexpected behavior might occur. Once it's done it'll become v1.0.
-   </p>
-  </div>
- </body>
+<head>
+    <title>
+        TF2 Rich Presence changelogs
+    </title>
+    <meta charset="utf-8">
+    <link href="https://github.com/Kataiser/tf2-rich-presence/raw/master/TF2%20Rich%20Presence/tf2_logo_blurple.ico" rel="shortcut icon" type="image/x-icon">
+    <style>
+        body {
+            text-align: center;
+            font-family: sans-serif;
+            background: #111314;
+        }
+        .column {
+            background: white;
+            width: 1000px;
+            margin: 0 auto;
+            text-align: left;
+            padding: 0 20px;
+            border: 4px solid #7289DA;
+        }
+        h4 {
+            font-weight: normal;
+            border-bottom: 1px solid #99AAB5;
+            padding-top: 40px;
+            font-size: 1.5em;
+            color: rgba(0, 0, 0, 0.8);
+            -webkit-margin-before: 0;
+        }
+        a {
+            text-decoration: none;
+        }
+        h3 {
+            padding-left: 20px;
+        }
+        ul {
+            padding-left: 60px;
+        }
+        p {
+            padding-left: 20px;
+            padding-bottom: 20px;
+        }
+        .version_a {
+            font-size: 1.25em;
+            vertical-align: middle;
+        }
+        img {
+            width: 1em;
+            height: 1em;
+            vertical-align: middle;
+            padding-bottom: 0.3em;
+        }
+        h1 {
+            -webkit-margin-after: 0;
+        }
+        .underlined_link {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="column">
+    <h1>
+        <a href="https://github.com/Kataiser/tf2-rich-presence">
+            <img src="https://github.com/Kataiser/tf2-rich-presence/raw/master/TF2%20Rich%20Presence/tf2_logo_blurple.ico">
+            TF2 Rich Presence
+        </a>
+        changelogs
+    </h1>
+    <div>Generated from <a class="underlined_link" href="https://github.com/Kataiser/tf2-rich-presence/releases">releases</a></div>
+    <html>
+    <body>
+        <h4>
+            <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.5.9">
+                v1.5.9
+            </a>
+            (2018-08-21)
+        </h4>
+        <h3>
+            <a aria-hidden="true" class="anchor" href="#changes" id="user-content-changes">
+                <span aria-hidden="true" class="octicon octicon-link">
+                </span>
+            </a>
+            Changes
+        </h3>
+        <ul>
+            <li>
+                Refresh interval increases over 5 seconds when the user is idle
+            </li>
+            <li>
+                Improved speed when CPU usage is low
+            </li>
+            <li>
+                Improved filesize by a few MBs
+            </li>
+        </ul>
+        <h3>
+            <a aria-hidden="true" class="anchor" href="#fixes" id="user-content-fixes">
+                <span aria-hidden="true" class="octicon octicon-link">
+                </span>
+            </a>
+            Fixes
+        </h3>
+        <ul>
+            <li>
+                Fixed a crash when playing on a custom map teamwork.tf doesn't recognize
+            </li>
+            <li>
+                Fixed a crash when failing to connect to Discord
+            </li>
+            <li>
+                Improved updater stability and error display
+            </li>
+            <li>
+                Fixed (and slightly reworded) readme launching instructions
+            </li>
+        </ul>
+        <h4>
+            <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.5.8">
+                v1.5.8
+            </a>
+            (2018-08-09)
+        </h4>
+        <h3>
+            <a aria-hidden="true" class="anchor" href="#changes" id="user-content-changes">
+                <span aria-hidden="true" class="octicon octicon-link">
+                </span>
+            </a>
+            Changes
+        </h3>
+        <ul>
+            <li>
+                Replaced the batch launcher with an executable
+            </li>
+            <li>
+                Launching TF2 no longer uses a browser
+            </li>
+        </ul>
+        <h4>
+            <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.5.7">
+                v1.5.7
+            </a>
+            (2018-08-04)
+        </h4>
+        <h3>
+            <a aria-hidden="true" class="anchor" href="#changes" id="user-content-changes">
+                <span aria-hidden="true" class="octicon octicon-link">
+                </span>
+            </a>
+            Changes
+        </h3>
+        <ul>
+            <li>
+                Update checking now only happens once, at startup
+            </li>
+            <li>
+                Added a hint when out of date
+            </li>
+            <li>
+                Crashes are now displayed to the user
+            </li>
+            <li>
+                Improved error handling in general
+            </li>
+            <li>
+                Removed telemetry
+            </li>
+        </ul>
+        <h3>
+            <a aria-hidden="true" class="anchor" href="#fixes" id="user-content-fixes">
+                <span aria-hidden="true" class="octicon octicon-link">
+                </span>
+            </a>
+            Fixes
+        </h3>
+        <ul>
+            <li>
+                Fixed a possible crash when connecting to Discord
+            </li>
+        </ul>
+        <h4>
+            <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.5.6">
+                v1.5.6
+            </a>
+            (2018-08-04)
+        </h4>
+        <h3>
+            <a aria-hidden="true" class="anchor" href="#fixes" id="user-content-fixes">
+                <span aria-hidden="true" class="octicon octicon-link">
+                </span>
+            </a>
+            Fixes
+        </h3>
+        <ul>
+            <li>
+                Fixed queue state detection
+            </li>
+        </ul>
+        <h4>
+            <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.5.5">
+                v1.5.5
+            </a>
+            (2018-08-03)
+        </h4>
+        <h3>
+            <a aria-hidden="true" class="anchor" href="#changes" id="user-content-changes">
+                <span aria-hidden="true" class="octicon octicon-link">
+                </span>
+            </a>
+            Changes
+        </h3>
+        <ul>
+            <li>
+                Custom map gamemodes now get rechecked after 1 day (was 5 days)
+            </li>
+            <li>
+                Improved handling of old logs
+            </li>
+        </ul>
+        <h3>
+            <a aria-hidden="true" class="anchor" href="#fixes" id="user-content-fixes">
+                <span aria-hidden="true" class="octicon octicon-link">
+                </span>
+            </a>
+            Fixes
+        </h3>
+        <ul>
+            <li>
+                Fixed a crash when unable to connect to Github to check for updates
+            </li>
+        </ul>
+        <h4>
+            <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.5.4">
+                v1.5.4
+            </a>
+            (2018-07-25)
+        </h4>
+        <h3>
+            <a aria-hidden="true" class="anchor" href="#changes" id="user-content-changes">
+                <span aria-hidden="true" class="octicon octicon-link">
+                </span>
+            </a>
+            Changes
+        </h3>
+        <ul>
+            <li>
+                Added support for itemtest and cp_cloak
+            </li>
+            <li>
+                Improved detection of custom map gamemode
+            </li>
+            <li>
+                Made readme launching instructions more accurate
+            </li>
+            <li>
+                The changelog of the newest version is displayed when out of date
+            </li>
+        </ul>
+        <h3>
+            <a aria-hidden="true" class="anchor" href="#fixes" id="user-content-fixes">
+                <span aria-hidden="true" class="octicon octicon-link">
+                </span>
+            </a>
+            Fixes
+        </h3>
+        <ul>
+            <li>
+                Fixed a crash when checking for updates
+            </li>
+        </ul>
+        <h4>
+            <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.5.3">
+                v1.5.3
+            </a>
+            (2018-07-23)
+        </h4>
+        <h3>
+            <a aria-hidden="true" class="anchor" href="#changes" id="user-content-changes">
+                <span aria-hidden="true" class="octicon octicon-link">
+                </span>
+            </a>
+            Changes
+        </h3>
+        <ul>
+            <li>
+                Added an extra step to the setup instructions
+            </li>
+            <li>
+                Renamed "Control Point (Domination)" to "Control Point"
+            </li>
+            <li>
+                Slightly improved memory usage
+            </li>
+            <li>
+                Replaced hyphens in log filename with underscores
+            </li>
+        </ul>
+        <h3>
+            <a aria-hidden="true" class="anchor" href="#fixes" id="user-content-fixes">
+                <span aria-hidden="true" class="octicon octicon-link">
+                </span>
+            </a>
+            Fixes
+        </h3>
+        <ul>
+            <li>
+                Fixed a crash when reading certain console logs
+            </li>
+        </ul>
+        <h4>
+            <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.5.2">
+                v1.5.2
+            </a>
+            (2018-07-22)
+        </h4>
+        <h3>
+            <a aria-hidden="true" class="anchor" href="#fixes" id="user-content-fixes">
+                <span aria-hidden="true" class="octicon octicon-link">
+                </span>
+            </a>
+            Fixes
+        </h3>
+        <ul>
+            <li>
+                Improved handling of multiple Steam accounts
+            </li>
+            <li>
+                Fixed log reporting becoming truncated by using Pastebin
+            </li>
+        </ul>
+        <h4>
+            <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.5.1">
+                v1.5.1
+            </a>
+            (2018-07-20)
+        </h4>
+        <h3>
+            <a aria-hidden="true" class="anchor" href="#changes" id="user-content-changes">
+                <span aria-hidden="true" class="octicon octicon-link">
+                </span>
+            </a>
+            Changes
+        </h3>
+        <ul>
+            <li>
+                Added update checking
+            </li>
+            <li>
+                Log reporting now includes less of the log file and some of console.log
+            </li>
+        </ul>
+        <h3>
+            <a aria-hidden="true" class="anchor" href="#fixes" id="user-content-fixes">
+                <span aria-hidden="true" class="octicon octicon-link">
+                </span>
+            </a>
+            Fixes
+        </h3>
+        <ul>
+            <li>
+                Fixed a bug that caused many more log reports than necessary
+            </li>
+        </ul>
+        <h4>
+            <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.5">
+                v1.5
+            </a>
+            (2018-07-20)
+        </h4>
+        <h3>
+            <a aria-hidden="true" class="anchor" href="#changes" id="user-content-changes">
+                <span aria-hidden="true" class="octicon octicon-link">
+                </span>
+            </a>
+            Changes
+        </h3>
+        <ul>
+            <li>
+                Now automatically launches TF2
+            </li>
+            <li>
+                Added support for many custom gamemodes
+                <ul>
+                    <li>
+                        Surfing, Trading, Jumping, Deathmatch, Orange, Versus Saxton Hale, Deathrun, Achievement, Jail Breakout, Slender, Dodgeball, and Mario Kart
+                    </li>
+                </ul>
+            </li>
+            <li>
+                Renamed the installer file
+            </li>
+            <li>
+                Custom maps will have their gamemodes rechecked after 5 days
+            </li>
+            <li>
+                Some performance increases
+            </li>
+            <li>
+                Added logging and error reporting via
+                <a href="https://sentry.io/welcome/" rel="nofollow">
+                    Sentry
+                </a>
+            </li>
+            <li>
+                Updated to Python 3.7, updated third-party packages, and reduced filesize
+            </li>
+        </ul>
+        <h3>
+            <a aria-hidden="true" class="anchor" href="#fixes" id="user-content-fixes">
+                <span aria-hidden="true" class="octicon octicon-link">
+                </span>
+            </a>
+            Fixes
+        </h3>
+        <ul>
+            <li>
+                Fixed the launch text appearing again when closing TF2
+            </li>
+            <li>
+                Fixed a crash when playing on custom maps that have a listing on teamwork.tf but no gamemode
+            </li>
+            <li>
+                Fixed a false disconnect detection when another user disconnects
+            </li>
+        </ul>
+        <h4>
+            <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.4.2">
+                v1.4.2
+            </a>
+            (2018-06-29)
+        </h4>
+        <h3>
+            <a aria-hidden="true" class="anchor" href="#changes" id="user-content-changes">
+                <span aria-hidden="true" class="octicon octicon-link">
+                </span>
+            </a>
+            Changes
+        </h3>
+        <ul>
+            <li>
+                Renamed the installer file
+            </li>
+            <li>
+                Better elapsed time formatting
+            </li>
+        </ul>
+        <h3>
+            <a aria-hidden="true" class="anchor" href="#fixes" id="user-content-fixes">
+                <span aria-hidden="true" class="octicon octicon-link">
+                </span>
+            </a>
+            Fixes
+        </h3>
+        <ul>
+            <li>
+                Fixed other user's disconnects causing a false detection
+            </li>
+        </ul>
+        <h4>
+            <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.4.1">
+                v1.4.1
+            </a>
+            (2018-04-19)
+        </h4>
+        <h3>
+            <a aria-hidden="true" class="anchor" href="#changes" id="user-content-changes">
+                <span aria-hidden="true" class="octicon octicon-link">
+                </span>
+            </a>
+            Changes
+        </h3>
+        <ul>
+            <li>
+                Added a welcome message
+            </li>
+        </ul>
+        <h3>
+            <a aria-hidden="true" class="anchor" href="#fixes" id="user-content-fixes">
+                <span aria-hidden="true" class="octicon octicon-link">
+                </span>
+            </a>
+            Fixes
+        </h3>
+        <ul>
+            <li>
+                Improved CPU usage by not scanning unnecessary processes
+            </li>
+            <li>
+                Fixed a few maps having incorrect gamemodes
+            </li>
+            <li>
+                Reduced background internet usage
+            </li>
+        </ul>
+        <h4>
+            <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.4">
+                v1.4
+            </a>
+            (2018-04-18)
+        </h4>
+        <ul>
+            <li>
+                Added support for arena and training maps
+            </li>
+            <li>
+                Added gamemode lookup for custom maps
+            </li>
+            <li>
+                Screwed up the file size (sorry)
+            </li>
+        </ul>
+        <h4>
+            <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.3">
+                v1.3
+            </a>
+            (2018-04-17)
+        </h4>
+        <ul>
+            <li>
+                Improved performance and reduced CPU usage
+            </li>
+            <li>
+                More accurate elapsed time
+            </li>
+            <li>
+                Fixed a bug that causes a crash on any computer that isn't mine (whoops)
+            </li>
+        </ul>
+        <h4>
+            <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.2">
+                v1.2
+            </a>
+            (2018-04-12)
+        </h4>
+        <ul>
+            <li>
+                Reduced download file size
+            </li>
+            <li>
+                Added a readme
+            </li>
+        </ul>
+        <h4>
+            <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.1">
+                v1.1
+            </a>
+            (2018-04-11)
+        </h4>
+        <ul>
+            <li>
+                Detects party queue
+            </li>
+            <li>
+                Shortened match types
+            </li>
+            <li>
+                No longer exits when TF2 is closed
+            </li>
+            <li>
+                Significantly reduced download size
+            </li>
+            <li>
+                Fixed unrecognized maps
+            </li>
+            <li>
+                Renamed batch file
+            </li>
+        </ul>
+        <h4>
+            <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.0">
+                v1.0
+            </a>
+            (2018-04-08)
+        </h4>
+        <ul>
+            <li>
+                Shows map name instead of filename
+            </li>
+            <li>
+                Shows match type being queued for (Casual, Competitive, MvM)
+            </li>
+            <li>
+                Removed party state display (couldn't keep accurate over game restarts)
+            </li>
+            <li>
+                Added zero padding to current time display
+            </li>
+            <li>
+                Added license to download
+            </li>
+            <li>
+                Bug fixes
+            </li>
+        </ul>
+        <h4>
+            <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v0.2">
+                v0.2
+            </a>
+            (2018-04-03)
+        </h4>
+        <ul>
+            <li>
+                Shows party state
+            </li>
+            <li>
+                Better looking terminal output
+            </li>
+            <li>
+                Better unknown map thumb
+            </li>
+        </ul>
+        <h4>
+            <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v0.1">
+                v0.1
+            </a>
+            (2018-04-02)
+        </h4>
+        <p>
+            Feature incomplete. Works well enough for anyone to use, though some unexpected behavior might occur. Once it's done it'll become v1.0.
+        </p>
+    </body>
+</html>
+</div>
+</body>
 </html>
