@@ -6,6 +6,7 @@ from typing import TextIO, Dict, KeysView, List, Tuple, Union
 import requests
 from requests import Response
 
+import logger
 import settings
 
 
@@ -104,4 +105,4 @@ def access_custom_maps_cache(dict_input: Union[dict, None] = None) -> dict:
 
 
 if __name__ == '__main__':
-    print(find_custom_map_gamemode('cp_catwalk_a5c'))
+    print(find_custom_map_gamemode(logger.Log(), 'cp_catwalk_a5c'))
