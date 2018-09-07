@@ -23,6 +23,9 @@ class TestTF2RichPresense(unittest.TestCase):
 
         self.console_lines = 200000  # way more than normal
 
+    def tearDown(self):
+        self.log.log_file.close()
+
     def test_get_idle_duration(self):
         idle_duration = main.get_idle_duration()
         self.assertTrue(10.0 > idle_duration >= 0.0)
@@ -46,7 +49,7 @@ class TestTF2RichPresense(unittest.TestCase):
         self.log.log_file.close()
         try:
             os.remove(self.log.filename)
-        except FileNotFoundError:
+        except (FileNotFoundError, PermissionError):
             pass
 
         self.log.enabled = True
@@ -54,7 +57,7 @@ class TestTF2RichPresense(unittest.TestCase):
 
         try:
             os.remove(self.log.filename)
-        except FileNotFoundError:
+        except (FileNotFoundError, PermissionError):
             pass
 
         self.log.log_file = open(self.log.filename, 'a')
