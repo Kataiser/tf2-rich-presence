@@ -266,7 +266,7 @@ class TF2RichPresense:
         return self.client_connected, self.client
 
     # reads a console.log and returns current map, class, and server ip
-    def interpret_console_log(self, console_log_path: str, user_usernames: list, line_limit=settings.get('console_scan_lines')) -> tuple:
+    def interpret_console_log(self, console_log_path: str, user_usernames: list, byte_limit=settings.get('console_scan_kb')) -> tuple:
         # defaults
         current_map: str = ''
         current_class: str = ''
@@ -291,67 +291,72 @@ class TF2RichPresense:
 
         with open(consolelog_filename, 'r', errors='replace') as consolelog_file:
             consolelog_file_size: int = os.stat(consolelog_filename).st_size
-            lines: List[str] = consolelog_file.readlines()
-            self.log.debug(f"console.log: {consolelog_file_size} bytes, {len(lines)} lines")
 
-            if len(lines) > line_limit * 1.1:
-                lines = lines[-line_limit:]
-                self.log.debug(f"Limited to reading {len(lines)} lines")
+            line_limit_bytes = byte_limit * 1000
+            if consolelog_file_size > line_limit_bytes:
+                skip_to_byte = consolelog_file_size - line_limit_bytes
+                consolelog_file.seek(skip_to_byte, 0)  # skip to last few KBs
 
-            # iterates though every line in the log (I KNOW) and learns everything from it
-            line_used: str = ''
-            for line in lines:
-                if 'Map:' in line:
-                    current_map = line[5:-1]
-                    current_class = 'unselected'  # this variable is poorly named
+                lines: List[str] = consolelog_file.readlines()
+                self.log.debug(f"console.log: {consolelog_file_size} bytes, skipped to {skip_to_byte}, {len(lines)} lines read")
+            else:
+                lines: List[str] = consolelog_file.readlines()
+                self.log.debug(f"console.log: {consolelog_file_size} bytes, {len(lines)} lines")
+
+        # iterates though every line in the log (I KNOW) and learns everything from it
+        line_used: str = ''
+        for line in lines:
+            if 'Map:' in line:
+                current_map = line[5:-1]
+                current_class = 'unselected'  # this variable is poorly named
+                line_used = line
+
+            if 'selected' in line:
+                current_class_possibly = line[:-11]
+
+                if current_class_possibly in tf2_classes:
+                    current_class = current_class_possibly
                     line_used = line
 
-                if 'selected' in line:
-                    current_class_possibly = line[:-11]
+            if 'Disconnect by user' in line and [i for i in user_usernames if i in line]:
+                current_map = 'In menus'  # so is this one
+                current_class = 'Not queued'
+                current_ip = ''
+                line_used = line
 
-                    if current_class_possibly in tf2_classes:
-                        current_class = current_class_possibly
-                        line_used = line
-
-                if 'Disconnect by user' in line and [i for i in user_usernames if i in line]:
-                    current_map = 'In menus'  # so is this one
+            for disconnect_message in disconnect_messages:
+                if disconnect_message in line:
+                    current_map = 'In menus'
                     current_class = 'Not queued'
                     current_ip = ''
                     line_used = line
+                    break
 
-                for disconnect_message in disconnect_messages:
-                    if disconnect_message in line:
-                        current_map = 'In menus'
-                        current_class = 'Not queued'
-                        current_ip = ''
-                        line_used = line
-                        break
+            if '[PartyClient] Entering queue ' in line:
+                current_map = 'In menus'
+                current_ip = ''
+                line_used = line
 
-                if '[PartyClient] Entering queue ' in line:
-                    current_map = 'In menus'
-                    current_ip = ''
-                    line_used = line
+                if hide_queued_gamemode:
+                    current_class = "Queued"
+                else:
+                    current_class = f"Queued for {match_types[line[33:-1]]}"
 
-                    if hide_queued_gamemode:
-                        current_class = "Queued"
-                    else:
-                        current_class = f"Queued for {match_types[line[33:-1]]}"
+            if '[PartyClient] Entering s' in line:  # full line: [PartyClient] Entering standby queue
+                current_map = 'In menus'
+                current_class = 'Queued for a party\'s match'
+                current_ip = ''
+                line_used = line
 
-                if '[PartyClient] Entering s' in line:  # full line: [PartyClient] Entering standby queue
-                    current_map = 'In menus'
-                    current_class = 'Queued for a party\'s match'
-                    current_ip = ''
-                    line_used = line
+            if '[PartyClient] L' in line:  # full line: [PartyClient] Leaving queue
+                current_class = 'Not queued'
+                line_used = line
 
-                if '[PartyClient] L' in line:  # full line: [PartyClient] Leaving queue
-                    current_class = 'Not queued'
-                    line_used = line
+            if 'Build:' in line:
+                build_number = line[7:-1]
 
-                if 'Build:' in line:
-                    build_number = line[7:-1]
-
-                if 'Connected to' in line:
-                    current_ip = line[13:-1]
+            if 'Connected to' in line:
+                current_ip = line[13:-1]
 
         self.log.debug(f"TF2 build number: {build_number}")
         self.log.debug(f"Got '{current_map}', '{current_class}', and {current_ip} from this line: '{line_used[:-1]}'")

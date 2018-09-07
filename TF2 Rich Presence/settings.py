@@ -42,7 +42,7 @@ class GUI(tk.Frame):
         self.scale_wait_time = tk.BooleanVar()
         self.hide_queued_gamemode = tk.BooleanVar()
         self.log_level = tk.StringVar()
-        self.console_scan_lines = tk.IntVar()
+        self.console_scan_kb = tk.IntVar()
         self.hide_provider = tk.BooleanVar()
 
         try:
@@ -58,7 +58,7 @@ class GUI(tk.Frame):
             self.scale_wait_time.set(self.settings_loaded['scale_wait_time'])
             self.hide_queued_gamemode.set(self.settings_loaded['hide_queued_gamemode'])
             self.log_level.set(self.settings_loaded['log_level'])
-            self.console_scan_lines.set(self.settings_loaded['console_scan_lines'])
+            self.console_scan_kb.set(self.settings_loaded['console_scan_kb'])
             self.hide_provider.set(self.settings_loaded['hide_provider'])
         except Exception:
             # probably a json decode error
@@ -75,7 +75,7 @@ class GUI(tk.Frame):
             self.scale_wait_time.set(get_setting_default('scale_wait_time'))
             self.hide_queued_gamemode.set(get_setting_default('hide_queued_gamemode'))
             self.log_level.set(get_setting_default('log_level'))
-            self.console_scan_lines.set(get_setting_default('console_scan_lines'))
+            self.console_scan_kb.set(get_setting_default('console_scan_kb'))
             self.hide_provider.set(get_setting_default('hide_provider'))
 
         check_int_command = self.register(check_int)
@@ -109,8 +109,8 @@ class GUI(tk.Frame):
             setting9_radiobuttons.append(ttk.Radiobutton(setting9_frame, variable=self.log_level, text=log_level_text, value=log_level_text))
         setting10_frame = ttk.Frame()
         setting10_text = ttk.Label(setting10_frame, text="{}".format(
-            "Max lines of console.log to scan: "))
-        setting10_option = ttk.Spinbox(setting10_frame, textvariable=self.console_scan_lines, width=8, from_=0, to=float('inf'), validate='all',
+            "Max kilobytes of console.log to scan: "))
+        setting10_option = ttk.Spinbox(setting10_frame, textvariable=self.console_scan_kb, width=8, from_=0, to=float('inf'), validate='all',
                                        validatecommand=(check_int_command, '%P', float('inf')))
         setting11 = ttk.Checkbutton(master, variable=self.hide_provider, text="{}".format(
             "Hide community server provider"))
@@ -149,7 +149,7 @@ class GUI(tk.Frame):
     # saves settings to file and closes window
     def save_and_close(self):
         # spinboxes can be set to blank, so if the user saves while blank, they try to default or be set to 0
-        int_settings = self.wait_time, self.map_invalidation_hours, self.request_timeout, self.console_scan_lines
+        int_settings = self.wait_time, self.map_invalidation_hours, self.request_timeout, self.console_scan_kb
         for int_setting in int_settings:
             try:
                 int_setting.get()
@@ -164,7 +164,7 @@ class GUI(tk.Frame):
                             'scale_wait_time': self.scale_wait_time.get(),
                             'hide_queued_gamemode': self.hide_queued_gamemode.get(),
                             'log_level': self.log_level.get(),
-                            'console_scan_lines': self.console_scan_lines.get(),
+                            'console_scan_kb': self.console_scan_kb.get(),
                             'hide_provider': self.hide_provider.get()}
 
         settings_changed = {k: settings_to_save[k] for k in settings_to_save if k in self.settings_loaded and settings_to_save[k] != self.settings_loaded[k]}  # haha what
@@ -239,7 +239,7 @@ def get_setting_default(setting: str = '', return_dict: bool = False) -> Any:
                 'scale_wait_time': True,
                 'hide_queued_gamemode': False,
                 'log_level': 'Debug',
-                'console_scan_lines': 10000,
+                'console_scan_kb': 1000,
                 'hide_provider': False}
 
     if return_dict:
