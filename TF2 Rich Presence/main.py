@@ -79,7 +79,8 @@ class TF2RichPresense:
 
     def run(self):
         while True:
-            self.log.debug(f"Current settings: {settings.access_settings_file()}")
+            current_settings = settings.access_settings_file()
+            self.log.debug(f"Current settings (default: {current_settings == settings.get_setting_default(return_all=True)}): {current_settings}")
             self.loop_body()
             self.log.debug(f"Settings cache stats: {settings.get.cache_info()}")
 
@@ -185,6 +186,9 @@ class TF2RichPresense:
 
             if top_line == 'In menus':
                 # in menus displays the main menu
+                self.activity['assets']['small_image'] = 'tf2_icon_small'
+                self.activity['assets']['small_text'] = 'Team Fortress 2'
+
                 if bottom_line == 'Queued for Casual':
                     self.activity['assets']['large_image'] = 'casual'
                     self.activity['assets']['large_text'] = bottom_line
@@ -199,6 +203,10 @@ class TF2RichPresense:
                     self.activity['assets']['large_text'] = 'Main menu'
             else:
                 # not in menus = in a game
+                if bottom_line != 'unselected':
+                    self.activity['assets']['small_image'] = bottom_line.lower()
+                    self.activity['assets']['small_text'] = bottom_line
+
                 bottom_line = f"Class: {bottom_line}"
 
                 try:

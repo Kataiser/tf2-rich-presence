@@ -28,9 +28,12 @@ def check_for_update(current_version: str, timeout: float):
     except requests.exceptions.Timeout:
         log.error(f"Update check timed out")
         failure_message(current_version, f"timed out after {int(timeout)} seconds")
+    except requests.exceptions.ConnectionError:
+        log.error(f"Connection error in updater: {traceback.format_exc()}")
+        failure_message(current_version)
     except Exception:
-        log.error(f"Non-timout update error: {traceback.format_exc()}")
-        failure_message(current_version, sys.exc_info()[1])
+        log.error(f"Non-timeout update error: {traceback.format_exc()}")
+        failure_message(current_version, 'unknown error')
     else:
         if current_version == newest_version:
             log.debug(f"Up to date ({current_version})")
@@ -51,8 +54,11 @@ def access_github_api(time_limit: float) -> Tuple[str, str, str]:
 
 
 # either timed out or some other exception
-def failure_message(current_version: str, error_message: str):
-    line1 = f"Couldn't connect to GitHub to check for updates ({error_message}).\n"
+def failure_message(current_version: str, error_message: str = None):
+    if error_message:
+        line1 = f"Couldn't connect to GitHub to check for updates ({error_message}).\n"
+    else:
+        line1 = "Couldn't connect to GitHub to check for updates.\n"
     line2 = "To check for updates yourself, go to https://github.com/Kataiser/tf2-rich-presence/releases\n"
     line3 = f"(you are currently running {current_version}).\n"
     print(f"{line1}{line2}{line3}")

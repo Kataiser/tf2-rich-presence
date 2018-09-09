@@ -222,7 +222,7 @@ def access_settings_file(save_dict: Union[dict, None] = None) -> dict:
                 return json.load(settings_json_read)
     except FileNotFoundError:
         # saves with defualt settings
-        default_settings: dict = get_setting_default(return_dict=True)
+        default_settings: dict = get_setting_default(return_all=True)
         with open(settings_path, 'w') as settings_json_create:
             json.dump(default_settings, settings_json_create, indent=4)
 
@@ -230,7 +230,7 @@ def access_settings_file(save_dict: Union[dict, None] = None) -> dict:
 
 
 # either gets a settings default, or if return_dict, returns all defaults as a dict
-def get_setting_default(setting: str = '', return_dict: bool = False) -> Any:
+def get_setting_default(setting: str = '', return_all: bool = False) -> Any:
     defaults = {'enable_sentry': True,
                 'wait_time': 5,
                 'map_invalidation_hours': 24,
@@ -242,7 +242,7 @@ def get_setting_default(setting: str = '', return_dict: bool = False) -> Any:
                 'console_scan_kb': 1000,
                 'hide_provider': False}
 
-    if return_dict:
+    if return_all:
         return defaults
     else:
         return defaults[setting]

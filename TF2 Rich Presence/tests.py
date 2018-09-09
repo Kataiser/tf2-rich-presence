@@ -149,7 +149,7 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertFalse(settings.check_int('abc123qwe098', 1000))
 
     def test_settings_access(self):
-        default_settings = settings.get_setting_default(return_dict=True)
+        default_settings = settings.get_setting_default(return_all=True)
 
         for setting in default_settings:
             self.assertEqual(type(default_settings[setting]), type(settings.get(setting)))
