@@ -26,8 +26,6 @@ class TestTF2RichPresense(unittest.TestCase):
         self.log.sentry_enabled = False
         self.log.log_levels_allowed = self.log.log_levels
 
-        self.console_lines = 200000  # way more than normal
-
     def tearDown(self):
         self.log.log_file.close()
         settings.access_settings_file(save_dict=self.old_settings)
@@ -38,10 +36,10 @@ class TestTF2RichPresense(unittest.TestCase):
 
     def test_interpret_console_log(self):
         app = main.TF2RichPresense(self.log)
-        self.assertEqual(app.interpret_console_log('test_resources\\console_in_menus.log', ['Kataiser'], self.console_lines), ('In menus', 'Not queued', ''))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_queued_casual.log', ['Kataiser'], self.console_lines), ('In menus', 'Queued for Casual', ''))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', ['Kataiser'], self.console_lines), ('pl_badwater', 'Pyro', ''))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_custom_map.log', ['Kataiser'], self.console_lines), ('cp_catwalk_a5c', 'Soldier', ''))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_in_menus.log', ['Kataiser'], float('inf')), ('In menus', 'Not queued', ''))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_queued_casual.log', ['Kataiser'], float('inf')), ('In menus', 'Queued for Casual', ''))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', ['Kataiser'], float('inf')), ('pl_badwater', 'Pyro', ''))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_custom_map.log', ['Kataiser'], float('inf')), ('cp_catwalk_a5c', 'Soldier', ''))
 
     def test_steam_config_file(self):
         self.assertEqual(configs.steam_config_file(self.log, 'test_resources\\'), ['Kataiser'])

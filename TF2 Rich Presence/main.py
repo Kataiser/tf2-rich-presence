@@ -274,7 +274,7 @@ class TF2RichPresense:
         return self.client_connected, self.client
 
     # reads a console.log and returns current map, class, and server ip
-    def interpret_console_log(self, console_log_path: str, user_usernames: list, byte_limit=settings.get('console_scan_kb')) -> tuple:
+    def interpret_console_log(self, console_log_path: str, user_usernames: list, kb_limit=settings.get('console_scan_kb')) -> tuple:
         # defaults
         current_map: str = ''
         current_class: str = ''
@@ -300,9 +300,9 @@ class TF2RichPresense:
         with open(consolelog_filename, 'r', errors='replace') as consolelog_file:
             consolelog_file_size: int = os.stat(consolelog_filename).st_size
 
-            line_limit_bytes = byte_limit * 1000
-            if consolelog_file_size > line_limit_bytes:
-                skip_to_byte = consolelog_file_size - line_limit_bytes
+            byte_limit = kb_limit * 1000
+            if consolelog_file_size > byte_limit:
+                skip_to_byte = consolelog_file_size - byte_limit
                 consolelog_file.seek(skip_to_byte, 0)  # skip to last few KBs
 
                 lines: List[str] = consolelog_file.readlines()
