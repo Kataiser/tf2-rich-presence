@@ -15,6 +15,11 @@ import updater
 
 class TestTF2RichPresense(unittest.TestCase):
     def setUp(self):
+        self.old_settings = settings.access_settings_file()
+        if self.old_settings != settings.get_setting_default(return_all=True):
+            print("Settings aren't default, reverting")
+            settings.access_settings_file(save_dict=settings.get_setting_default(return_all=True))
+
         self.log = logger.Log()
         self.log.enabled = False
         self.log.to_stderr = False
@@ -25,6 +30,7 @@ class TestTF2RichPresense(unittest.TestCase):
 
     def tearDown(self):
         self.log.log_file.close()
+        settings.access_settings_file(save_dict=self.old_settings)
 
     def test_get_idle_duration(self):
         idle_duration = main.get_idle_duration()
