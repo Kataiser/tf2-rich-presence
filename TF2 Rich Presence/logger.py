@@ -53,7 +53,12 @@ class Log:
             old_filename = os.path.join('logs', old_filename)
 
             if old_filename != self.filename and 'gzip' not in old_filename:
-                compress_file(old_filename)
+                if self.enabled:
+                    self.log_file.close()
+                    compress_file(old_filename)
+                    self.log_file = open(self.filename, 'a')
+                else:
+                    compress_file(old_filename)
 
     # adds a line to the current log file
     def write_log(self, level: str, message_out: str):
@@ -199,4 +204,3 @@ def decompress_file(path: str):
 if __name__ == '__main__':
     log = Log()
     log.debug(f"Current log: {log.filename}")
-    log.debug('plz')
