@@ -1,9 +1,14 @@
+import datetime
 import json
 import os
 import shutil
 import subprocess
 import tempfile
 import time
+
+import requests
+
+import logger
 
 
 def main(version_num):
@@ -89,6 +94,19 @@ def main(version_num):
                     print(f"Copied (and possibly modified) {file_dest_pair[0]}")
         except UnicodeDecodeError:
             print("Copied", shutil.copy2(*file_dest_pair))
+
+    # creates INFO.txt
+    old_dir = os.getcwd()
+    os.chdir(f'{new_build_folder_name}\\resources')
+    commits_info = json.loads(requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/commits').text)
+    with open('INFO.txt', 'w') as info_file:
+        info_file.write(f"TF2 Rich Presence by Kataiser"
+                        "\nhttps://github.com/Kataiser/tf2-rich-presence"
+                        f"\n\nVersion: {version_num}"
+                        f"\nBuilt: {datetime.datetime.utcnow().strftime('%c')} UTC"
+                        f"\nHash: {logger.generate_hash()}"
+                        f"\nLatest commit: \"{commits_info[0]['commit']['message']}\" @ {commits_info[0]['html_url']}")
+    os.chdir(old_dir)
 
     # creates README.md from README-source.md
     with open('README-source.md', 'r') as readme_md_source:
