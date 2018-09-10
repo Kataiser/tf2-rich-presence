@@ -155,7 +155,7 @@ def read_truncated_file(path: str, limit: int = 200000) -> str:
 
 # generates a short hash string from several source files
 def generate_hash() -> str:
-    files_to_hash: List[str] = ['main.py', 'configs.py', 'custom_maps.py', 'logger.py', 'updater.py', 'launcher.py']
+    files_to_hash: List[str] = ['main.py', 'configs.py', 'custom_maps.py', 'logger.py', 'updater.py', 'launcher.py', 'settings.py']
     files_to_hash_text: List = []
 
     for file_to_hash in files_to_hash:
