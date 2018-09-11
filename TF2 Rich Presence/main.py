@@ -201,10 +201,17 @@ class TF2RichPresense:
                 else:
                     self.activity['assets']['large_image'] = 'main_menu'
                     self.activity['assets']['large_text'] = 'Main menu'
-            else:
-                # not in menus = in a game
-                if bottom_line != 'unselected':
-                    self.activity['assets']['small_image'] = bottom_line.lower()
+            else:  # not in menus = in a game
+                class_pic_type: str = settings.get('class_pic_type').lower()
+
+                if class_pic_type == 'none, use tf2 logo' or bottom_line == 'unselected':
+                    self.activity['assets']['small_image'] = 'tf2_icon_small'
+                    self.activity['assets']['small_text'] = 'Team Fortress 2'
+                else:
+                    small_class_image = f'{bottom_line.lower()}_{class_pic_type}'
+                    self.log.debug(f"Setting class small image to {small_class_image}")
+
+                    self.activity['assets']['small_image'] = small_class_image
                     self.activity['assets']['small_text'] = bottom_line
 
                 bottom_line = f"Class: {bottom_line}"

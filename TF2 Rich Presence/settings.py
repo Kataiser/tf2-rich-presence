@@ -32,6 +32,7 @@ class GUI(tk.Frame):
             master.iconbitmap(default=os.path.join('resources', 'tf2_logo_blurple_wrench.ico'))
 
         self.log_levels = ['Debug', 'Info', 'Error', 'Critical', 'Off']
+        self.class_pic_types = ['Icon', 'Emblem', 'Portrait', 'None, use TF2 logo']
 
         # create every setting variable without values
         self.enable_sentry = tk.BooleanVar()
@@ -44,6 +45,7 @@ class GUI(tk.Frame):
         self.log_level = tk.StringVar()
         self.console_scan_kb = tk.IntVar()
         self.hide_provider = tk.BooleanVar()
+        self.class_pic_type = tk.StringVar()
 
         try:
             # load settings from settings.json
@@ -60,6 +62,7 @@ class GUI(tk.Frame):
             self.log_level.set(self.settings_loaded['log_level'])
             self.console_scan_kb.set(self.settings_loaded['console_scan_kb'])
             self.hide_provider.set(self.settings_loaded['hide_provider'])
+            self.class_pic_type.set(self.settings_loaded['class_pic_type'])
         except Exception:
             # probably a json decode error
             formatted_exception = traceback.format_exc()
@@ -77,6 +80,7 @@ class GUI(tk.Frame):
             self.log_level.set(get_setting_default('log_level'))
             self.console_scan_kb.set(get_setting_default('console_scan_kb'))
             self.hide_provider.set(get_setting_default('hide_provider'))
+            self.class_pic_type.set(get_setting_default('class_pic_type'))
 
         check_int_command = self.register(check_int)
 
@@ -114,19 +118,25 @@ class GUI(tk.Frame):
                                        validatecommand=(check_int_command, '%P', float('inf')))
         setting11 = ttk.Checkbutton(master, variable=self.hide_provider, text="{}".format(
             "Hide community server provider"))
+        setting12_frame = ttk.Frame()
+        setting12_text = ttk.Label(setting12_frame, text="{}".format(
+            "Selected class small image type: "))
+        setting12_radiobuttons = []
+        for class_pic_type_text in self.class_pic_types:
+            setting12_radiobuttons.append(ttk.Radiobutton(setting12_frame, variable=self.class_pic_type, text=class_pic_type_text, value=class_pic_type_text))
 
         # add widgets to the main window
-        setting1.grid(row=8, sticky=tk.W, columnspan=2, padx=(15, 15), pady=(2, 0))
+        setting1.grid(row=9, sticky=tk.W, columnspan=2, padx=(15, 15), pady=(2, 0))
         setting3_text.pack(side='left', fill=None, expand=False)
         setting3_option.pack(side='left', fill=None, expand=False)
         setting3_frame.grid(row=0, columnspan=2, sticky=tk.W, padx=(15, 15), pady=(15, 0))
         setting4_text.pack(side='left', fill=None, expand=False)
         setting4_option.pack(side='left', fill=None, expand=False)
         setting4_frame.grid(row=2, columnspan=2, sticky=tk.W, padx=(15, 15), pady=(2, 0))
-        setting5.grid(row=6, sticky=tk.W, columnspan=2, padx=(15, 15), pady=(2, 0))
+        setting5.grid(row=7, sticky=tk.W, columnspan=2, padx=(15, 15), pady=(2, 0))
         setting6_text.pack(side='left', fill=None, expand=False)
         setting6_option.pack(side='left', fill=None, expand=False)
-        setting6_frame.grid(row=7, columnspan=2, sticky=tk.W, padx=(15, 15), pady=(2, 0))
+        setting6_frame.grid(row=8, columnspan=2, sticky=tk.W, padx=(15, 15), pady=(2, 0))
         setting7.grid(row=1, sticky=tk.W, columnspan=2, padx=(15, 15), pady=(2, 0))
         setting8.grid(row=4, sticky=tk.W, columnspan=2, padx=(15, 15), pady=(2, 0))
         setting9_text.pack(side='left', fill=None, expand=False)
@@ -137,6 +147,10 @@ class GUI(tk.Frame):
         setting10_option.pack(side='left', fill=None, expand=False)
         setting10_frame.grid(row=3, columnspan=2, sticky=tk.W, padx=(15, 15), pady=(2, 0))
         setting11.grid(row=5, sticky=tk.W, columnspan=2, padx=(15, 15), pady=(2, 0))
+        setting12_text.pack(side='left', fill=None, expand=False)
+        for setting12_radiobutton in setting12_radiobuttons:
+            setting12_radiobutton.pack(side='left', fill=None, expand=False)
+        setting12_frame.grid(row=6, columnspan=2, sticky=tk.W, padx=(15, 15), pady=(2, 0))
 
         cancel_button = ttk.Button(master, text="Close without saving", command=self.close_without_saving)
         cancel_button.grid(row=100, column=0, sticky=tk.E, padx=0, pady=(15, 15))
@@ -165,7 +179,8 @@ class GUI(tk.Frame):
                             'hide_queued_gamemode': self.hide_queued_gamemode.get(),
                             'log_level': self.log_level.get(),
                             'console_scan_kb': self.console_scan_kb.get(),
-                            'hide_provider': self.hide_provider.get()}
+                            'hide_provider': self.hide_provider.get(),
+                            'class_pic_type': self.class_pic_type.get()}
 
         settings_changed = {k: settings_to_save[k] for k in settings_to_save if k in self.settings_loaded and settings_to_save[k] != self.settings_loaded[k]}  # haha what
         self.log.debug(f"Setting(s) changed: {settings_changed}")
@@ -240,7 +255,8 @@ def get_setting_default(setting: str = '', return_all: bool = False) -> Any:
                 'hide_queued_gamemode': False,
                 'log_level': 'Debug',
                 'console_scan_kb': 1000,
-                'hide_provider': False}
+                'hide_provider': False,
+                'class_pic_type': 'Icon'}
 
     if return_all:
         return defaults
