@@ -39,7 +39,6 @@ def main():
         for platform_part in platform_info.keys():
             try:
                 if platform_part == 'platform':
-                    print()
                     platform_info[platform_part] = platform_info[platform_part](aliased=True)
                 else:
                     platform_info[platform_part] = platform_info[platform_part]()
