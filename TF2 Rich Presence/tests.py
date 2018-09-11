@@ -1,9 +1,12 @@
+import io
 import os
 import random
 import shutil
+import time
 import unittest
 
 import requests
+from discoIPC import ipc
 
 import configs
 import custom_maps
@@ -165,6 +168,23 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual(app.find_provider_for_ip('192.223.30.133:27015'), 'TF2Maps')
         self.assertEqual(app.find_provider_for_ip('192.223.30.133:2701'), None)
         self.assertEqual(app.find_provider_for_ip(''), None)
+
+    def test_discoipc(self):
+        activity = {'details': 'In menus',
+                    'timestamps': {'start': int(time.time())},
+                    'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2', 'large_image': 'main_menu',
+                               'large_text': 'In menus'},
+                    'state': ''}
+
+        client = ipc.DiscordIPC('429389143756374017')
+        client.connect()
+        client.update_activity(activity)
+        client_state = (client.client_id, client.connected, client.ipc_path, type(client.pid), client.platform, type(client.socket) == io.BufferedRandom, client.socket.name)
+        self.assertEqual(client_state, ('429389143756374017', True, '\\\\?\\pipe\\discord-ipc-0', int, 'windows', True, '\\\\?\\pipe\\discord-ipc-0'))
+
+        client.disconnect()
+        client_state = (client.client_id, client.connected, client.ipc_path, type(client.pid), client.platform, client.socket)
+        self.assertEqual(client_state, ('429389143756374017', False, '\\\\?\\pipe\\discord-ipc-0', int, 'windows', None))
 
 
 if __name__ == '__main__':
