@@ -1,6 +1,7 @@
 import json
 import os
 import time
+import traceback
 from typing import TextIO, Dict, KeysView, List, Tuple, Union
 
 import requests
@@ -51,6 +52,9 @@ def find_custom_map_gamemode(log, map_filename: str, timeout: float = settings.g
             first_gamemode: str = 'unknown_map'
             first_gamemode_fancy: str = 'Unknown gamemode'
             return first_gamemode, first_gamemode_fancy
+        except Exception:
+            log.error(f"Error connecting to teamwork.tf: {traceback.format_exc()}")
+            return 'unknown_map', 'Unknown gamemode'
 
         # parses the api result
         try:

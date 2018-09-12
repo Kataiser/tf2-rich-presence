@@ -207,7 +207,7 @@ def main(version_num):
         try:
             os.remove(old_package)
             print(f"Deleted old package: {old_package}")
-        except FileExistsError:
+        except FileNotFoundError:
             pass
 
     # generates zip package and an "installer" (a self extracting .7z as an exe), both with 7zip
