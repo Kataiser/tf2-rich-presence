@@ -33,25 +33,24 @@ def main(version_num):
     print()
 
     # starts from scratch each time
-    try:
-        root_folders = [f.path for f in os.scandir('.') if f.is_dir()]
-        for folder in root_folders:
-            if folder.startswith('.\\tf2_rich_presence'):
-                shutil.rmtree(folder)
-                print(f"Removed old build folder: {folder}")
-    except FileNotFoundError:
+    old_build_folders = [f.path for f in os.scandir('.') if f.is_dir() if f.path.startswith('.\\TF2 Rich Presence ')]
+    if old_build_folders:
+        for folder in old_build_folders:
+            shutil.rmtree(folder)
+            print(f"Removed old build folder: {folder}")
+    else:
         print("No old build folder found")
 
     files_in_cwd = os.listdir('.')
     for file in files_in_cwd:
-        if file.startswith('tf2_rich_presence_'):
+        if file.startswith('TF2 Rich Presence '):
             if file.endswith('.exe') or file.endswith('.zip'):
                 os.remove(file)
                 print(f"Removed old package: {file}")
 
     # creates folders again
     time.sleep(0.25)  # because windows is slow sometimes
-    new_build_folder_name = f'tf2_rich_presence_{version_num}'
+    new_build_folder_name = f'TF2 Rich Presence {version_num}'
     os.mkdir(new_build_folder_name)
     os.mkdir(f'{new_build_folder_name}\\resources')
     os.mkdir(f'{new_build_folder_name}\\logs')
@@ -204,10 +203,17 @@ def main(version_num):
     convert_bat_to_exe(os.path.abspath(f'{new_build_folder_name}\\Launch TF2 with Rich Presence.bat'), version_num, 'tf2_logo_blurple.ico')
     convert_bat_to_exe(os.path.abspath(f'{new_build_folder_name}\\Change settings.bat'), version_num, 'tf2_logo_blurple_wrench.ico')
 
+    for old_package in [f'tf2_rich_presence_{version_num}.zip', f'tf2_rich_presence_{version_num}_installer.exe']:
+        try:
+            os.remove(old_package)
+            print(f"Deleted old package: {old_package}")
+        except FileExistsError:
+            pass
+
     # generates zip package and an "installer" (a self extracting .7z as an exe), both with 7zip
-    package7zip_command_exe_1 = f'build_tools\\7za.exe a tf2_rich_presence_{version_num}_installer.exe tf2_rich_presence_{version_num}\\'
+    package7zip_command_exe_1 = f'build_tools\\7za.exe a tf2_rich_presence_{version_num}_installer.exe "{new_build_folder_name}\\"'
     package7zip_command_exe_2 = f'-sfx7z.sfx -ssw -mx=9 -myx=9 -mmt=2 -m0=LZMA2:d=8m'
-    package7zip_command_zip = f'build_tools\\7za.exe a tf2_rich_presence_{version_num}.zip tf2_rich_presence_{version_num}\\ -ssw -mx=9 -m0=LZMA:d=8m -mmt=2'
+    package7zip_command_zip = f'build_tools\\7za.exe a tf2_rich_presence_{version_num}.zip "{new_build_folder_name}\\" -ssw -mx=9 -m0=LZMA:d=8m -mmt=2'
     with tempfile.TemporaryFile() as nowhere:  # 7zip creates too much output
         print(f"Creating tf2_rich_presence_{version_num}_installer.exe...")
         subprocess.run(f'{package7zip_command_exe_1} {package7zip_command_exe_2}', stdout=nowhere)
