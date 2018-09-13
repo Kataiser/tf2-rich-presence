@@ -121,10 +121,11 @@ class TestTF2RichPresense(unittest.TestCase):
         os.remove(test_file)
 
     def test_access_github_api(self):
-        newest_version, downloads_url, changelog = updater.access_github_api(10)
+        newest_version, downloads_url, changelog, prerelease = updater.access_github_api(10)
         self.assertTrue(newest_version.startswith('v') and '.' in newest_version)
         self.assertTrue(downloads_url.startswith('https://github.com/Kataiser/tf2-rich-presence/releases/tag/v'))
         self.assertTrue(len(changelog) > 0)
+        self.assertTrue(isinstance(prerelease, bool))
 
         with self.assertRaises(requests.exceptions.Timeout):
             updater.access_github_api(0.01)

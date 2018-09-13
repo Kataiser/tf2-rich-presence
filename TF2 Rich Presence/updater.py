@@ -24,7 +24,7 @@ def check_for_update(current_version: str, timeout: float):
     log.debug(f"Checking for updates, timeout: {timeout} secs")
 
     try:
-        newest_version, downloads_url, changelog = access_github_api(timeout)
+        newest_version, downloads_url, changelog, prerelease = access_github_api(timeout)
     except requests.exceptions.Timeout:
         log.error(f"Update check timed out")
         failure_message(current_version, f"timed out after {int(timeout)} seconds")
@@ -35,7 +35,7 @@ def check_for_update(current_version: str, timeout: float):
         log.error(f"Non-timeout update error: {traceback.format_exc()}")
         failure_message(current_version, 'unknown error')
     else:
-        if current_version == newest_version:
+        if current_version == newest_version and not prerelease:
             log.debug(f"Up to date ({current_version})")
         else:  # out of date
             log.error(f"Out of date, newest version is {newest_version}")
@@ -44,13 +44,14 @@ def check_for_update(current_version: str, timeout: float):
 
 
 # actually accesses the Github api, in a seperate function for tests
-def access_github_api(time_limit: float) -> Tuple[str, str, str]:
+def access_github_api(time_limit: float) -> Tuple[str, str, str, bool]:
     r: Response = requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/releases/latest', timeout=time_limit)
     response: dict = r.json()
     newest_version_api: str = response['tag_name']
     downloads_url_api: str = response['html_url']
     changelog_api: str = response['body'].replace('## ', '')
-    return newest_version_api, downloads_url_api, changelog_api
+    prerelease_api = response['prerelease']
+    return newest_version_api, downloads_url_api, changelog_api, prerelease_api
 
 
 # either timed out or some other exception
@@ -71,4 +72,5 @@ if __name__ == '__main__':
     except (KeyboardInterrupt, SystemExit):
         raise SystemExit
     except Exception as error:
-        main.handle_crash(error, silent=True)
+        app_for_crash_handling = main.TF2RichPresense()
+        app_for_crash_handling.handle_crash(error, silent=True)
