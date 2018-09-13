@@ -175,7 +175,6 @@ def main(version_num):
     print('Deleting unnecessary files from python...')
     pycaches_deleted = 0
     tests_deleted = 0
-    pdbs_deleted = 0
 
     # looks at every file and folder in python
     for root, dirs, files in os.walk(f'{new_build_folder_name}\\resources\\python'):
@@ -189,16 +188,8 @@ def main(version_num):
             shutil.rmtree(root)
             tests_deleted += 1
 
-        # deletes .pdb files (debugger stuff I think, also not runtime)
-        for file in files:
-            if file.endswith('.pdb'):
-                pdb_path = os.path.join(root, file)
-                os.remove(pdb_path)
-                pdbs_deleted += 1
-
     print(f"pycaches deleted: {pycaches_deleted}")
     print(f"tests deleted: {tests_deleted}")
-    print(f"pdbs deleted: {pdbs_deleted}")
 
     convert_bat_to_exe(os.path.abspath(f'{new_build_folder_name}\\Launch TF2 with Rich Presence.bat'), version_num, 'tf2_logo_blurple.ico')
     convert_bat_to_exe(os.path.abspath(f'{new_build_folder_name}\\Change settings.bat'), version_num, 'tf2_logo_blurple_wrench.ico')
