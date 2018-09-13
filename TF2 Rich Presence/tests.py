@@ -181,12 +181,12 @@ class TestTF2RichPresense(unittest.TestCase):
         client = ipc.DiscordIPC('429389143756374017')
         client.connect()
         client.update_activity(activity)
-        client_state = (client.client_id, client.connected, client.ipc_path, type(client.pid), client.platform, type(client.socket) == io.BufferedRandom, client.socket.name)
-        self.assertEqual(client_state, ('429389143756374017', True, '\\\\?\\pipe\\discord-ipc-0', int, 'windows', True, '\\\\?\\pipe\\discord-ipc-0'))
+        client_state = (client.client_id, client.connected, client.ipc_path, isinstance(client.pid, int), client.platform, isinstance(client.socket, io.BufferedRandom), client.socket.name)
+        self.assertEqual(client_state, ('429389143756374017', True, '\\\\?\\pipe\\discord-ipc-0', True, 'windows', True, '\\\\?\\pipe\\discord-ipc-0'))
 
         client.disconnect()
-        client_state = (client.client_id, client.connected, client.ipc_path, type(client.pid), client.platform, client.socket)
-        self.assertEqual(client_state, ('429389143756374017', False, '\\\\?\\pipe\\discord-ipc-0', int, 'windows', None))
+        client_state = (client.client_id, client.connected, client.ipc_path, isinstance(client.pid, int), client.platform, client.socket)
+        self.assertEqual(client_state, ('429389143756374017', False, '\\\\?\\pipe\\discord-ipc-0', True, 'windows', None))
 
 
 if __name__ == '__main__':
