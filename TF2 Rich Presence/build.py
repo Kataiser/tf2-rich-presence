@@ -43,8 +43,8 @@ def main(version_num):
 
     files_in_cwd = os.listdir('.')
     for file in files_in_cwd:
-        if file.startswith('TF2 Rich Presence '):
-            if file.endswith('.exe') or file.endswith('.zip'):
+        if file.startswith('tf2_rich_presence_'):
+            if file.endswith('_installer.exe') or file.endswith('.zip'):
                 os.remove(file)
                 print(f"Removed old package: {file}")
 
@@ -193,13 +193,6 @@ def main(version_num):
 
     convert_bat_to_exe(os.path.abspath(f'{new_build_folder_name}\\Launch TF2 with Rich Presence.bat'), version_num, 'tf2_logo_blurple.ico')
     convert_bat_to_exe(os.path.abspath(f'{new_build_folder_name}\\Change settings.bat'), version_num, 'tf2_logo_blurple_wrench.ico')
-
-    for old_package in [f'tf2_rich_presence_{version_num}.zip', f'tf2_rich_presence_{version_num}_installer.exe']:
-        try:
-            os.remove(old_package)
-            print(f"Deleted old package: {old_package}")
-        except FileNotFoundError:
-            pass
 
     # generates zip package and an "installer" (a self extracting .7z as an exe), both with 7zip
     package7zip_command_exe_1 = f'build_tools\\7za.exe a tf2_rich_presence_{version_num}_installer.exe "{new_build_folder_name}\\"'
