@@ -429,7 +429,7 @@ class TF2RichPresense:
         return None
 
 
-# https://www.bself.log.pythonlibrary.org/2010/05/05/python-how-to-tell-how-long-windows-has-been-idle/
+# https://www.blog.pythonlibrary.org/2010/05/05/python-how-to-tell-how-long-windows-has-been-idle/
 # http://stackoverflow.com/questions/911856/detecting-idle-time-in-python
 class LASTINPUTINFO(Structure):
     _fields_ = [
