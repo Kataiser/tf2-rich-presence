@@ -70,8 +70,12 @@ class Log:
             self.log_file.write(full_line)
 
             self.unsaved_lines += 1
-            if self.unsaved_lines >= 100 and level not in ['Error', 'Critical'] and message_out != "Closing and re-opening log":
-                self.debug("Closing and re-opening log")
+            if (self.unsaved_lines >= 100 or level in ['Error', 'Critical']) and message_out != "Closing and re-opening log":
+                try:
+                    self.debug("Closing and re-opening log")
+                except Exception:
+                    pass
+
                 self.log_file.close()
                 self.log_file = open(self.filename, 'a')
                 self.unsaved_lines = 0
