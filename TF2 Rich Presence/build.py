@@ -211,7 +211,7 @@ def main(version_num):
 def convert_bat_to_exe(batch_location: str, vnum: str, icon_path: str):
     exe_location = batch_location.replace('.bat', '.exe')
     icon_location = os.path.abspath(icon_path)
-    version_num_windows = vnum[1:].replace('.', ',') + ',0'
+    version_num_windows = vnum[1:].replace('.', ',') + ',0' * (3 - vnum.count('.'))
     bat2exe_command_1 = f'build_tools\\Bat_To_Exe_Converter.exe -bat "{batch_location}" -save "{exe_location}" -icon "{icon_location}" -x64 -fileversion "{version_num_windows}"'
     bat2exe_command_2 = f'-productversion "{version_num_windows}" -company "Kataiser" -productname "TF2 Rich Presence" -description "Discord Rich Presence for Team Fortress 2"'
     print(f"Creating {exe_location}...")
