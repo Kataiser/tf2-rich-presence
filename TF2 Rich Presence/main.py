@@ -249,14 +249,15 @@ class TF2RichPresense:
 
             # send everything to discord
             self.client.update_activity(self.activity)
-            self.log.debug(f"Sent over RPC: {self.activity}")
+            self.log.info(f"Sent over RPC: {self.activity}")
             client_state = (self.client.client_id, self.client.connected, self.client.ipc_path, self.client.pid, self.client.platform, self.client.socket)
             self.log.debug(f"client state: {client_state}")
+
             if not self.client_connected:
                 self.log.critical('self.client is disconnected')
                 self.log.report_log("self.client disconnect")
         elif not discord_is_running:
-            self.log.debug("Discord isn't running")
+            self.log.info("Discord isn't running")
             print(f"{current_time_formatted}\nDiscord isn't running\n")
         else:  # tf2 isn't running
             if self.client_connected:
@@ -268,10 +269,10 @@ class TF2RichPresense:
                 except Exception as err:
                     self.log.error(f"client error while disconnecting: {err}")
 
-                self.log.debug("Restarting")
+                self.log.info("Restarting")
                 raise SystemExit  # ...but this does
             else:
-                self.log.debug("TF2 isn't running")
+                self.log.info("TF2 isn't running")
                 print(f"{current_time_formatted}\nTF2 isn't running\n")
 
             # to prevent connecting when already connected
