@@ -172,6 +172,7 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual(app.find_provider_for_ip(''), None)
 
     def test_discoipc(self):
+        # this test fails if Discord isn't running
         activity = {'details': 'In menus',
                     'timestamps': {'start': int(time.time())},
                     'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2', 'large_image': 'main_menu',
