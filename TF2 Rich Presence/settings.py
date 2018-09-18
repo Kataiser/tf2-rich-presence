@@ -69,61 +69,55 @@ class GUI(tk.Frame):
             self.log.error(f"Error in loading settings, defaulting: \n{formatted_exception}")
             messagebox.showerror("Error", f"Couldn't load settings, reverting to defaults.\n\n{formatted_exception}")
 
-            # set all settings to defaults
-            self.enable_sentry.set(get_setting_default('enable_sentry'))
-            self.wait_time.set(get_setting_default('wait_time'))
-            self.map_invalidation_hours.set(get_setting_default('map_invalidation_hours'))
-            self.check_updates.set(get_setting_default('check_updates'))
-            self.request_timeout.set(get_setting_default('request_timeout'))
-            self.scale_wait_time.set(get_setting_default('scale_wait_time'))
-            self.hide_queued_gamemode.set(get_setting_default('hide_queued_gamemode'))
-            self.log_level.set(get_setting_default('log_level'))
-            self.console_scan_kb.set(get_setting_default('console_scan_kb'))
-            self.hide_provider.set(get_setting_default('hide_provider'))
-            self.class_pic_type.set(get_setting_default('class_pic_type'))
+            self.restore_defaults()
+            self.settings_loaded = get_setting_default(return_all=True)
 
         check_int_command = self.register(check_int)
 
         # create settings widgets
-        setting1 = ttk.Checkbutton(master, variable=self.enable_sentry, text="{}".format(
+        setting1 = ttk.Checkbutton(master, variable=self.enable_sentry, command=self.update_default_button_state, text="{}".format(
             "Report error logs to the developer, via Sentry (https://sentry.io/)"))
         setting3_frame = ttk.Frame()
         setting3_text = ttk.Label(setting3_frame, text="{}".format(
             "Base delay, in seconds, between refreshes (will increase after some AFK time): "))
-        setting3_option = ttk.Spinbox(setting3_frame, textvariable=self.wait_time, width=6, from_=0, to=1000, validate='all', validatecommand=(check_int_command, '%P', 1000))
+        setting3_option = ttk.Spinbox(setting3_frame, textvariable=self.wait_time, width=6, from_=0, to=1000, validate='all', validatecommand=(check_int_command, '%P', 1000),
+                                      command=self.update_default_button_state)
         setting4_frame = ttk.Frame()
         setting4_text = ttk.Label(setting4_frame, text="{}".format(
             "Hours before re-checking custom map gamemode: "))
-        setting4_option = ttk.Spinbox(setting4_frame, textvariable=self.map_invalidation_hours, width=6, from_=0, to=1000, validate='all', validatecommand=(check_int_command, '%P', 1000))
-        setting5 = ttk.Checkbutton(master, variable=self.check_updates, text="{}".format(
+        setting4_option = ttk.Spinbox(setting4_frame, textvariable=self.map_invalidation_hours, width=6, from_=0, to=1000, validate='all', validatecommand=(check_int_command, '%P', 1000),
+                                      command=self.update_default_button_state)
+        setting5 = ttk.Checkbutton(master, variable=self.check_updates, command=self.update_default_button_state, text="{}".format(
             "Check for program updates when launching"))
         setting6_frame = ttk.Frame()
         setting6_text = ttk.Label(setting6_frame, text="{}".format(
             "Internet connection (for updater and custom maps) timeout, in seconds: "))
-        setting6_option = ttk.Spinbox(setting6_frame, textvariable=self.request_timeout, width=6, from_=0, to=60, validate='all', validatecommand=(check_int_command, '%P', 60))
-        setting7 = ttk.Checkbutton(master, variable=self.scale_wait_time, text="{}".format(
+        setting6_option = ttk.Spinbox(setting6_frame, textvariable=self.request_timeout, width=6, from_=0, to=60, validate='all', validatecommand=(check_int_command, '%P', 60),
+                                      command=self.update_default_button_state)
+        setting7 = ttk.Checkbutton(master, variable=self.scale_wait_time, command=self.update_default_button_state, text="{}".format(
             "Increase refresh delay when AFK"))
-        setting8 = ttk.Checkbutton(master, variable=self.hide_queued_gamemode, text="{}".format(
+        setting8 = ttk.Checkbutton(master, variable=self.hide_queued_gamemode, command=self.update_default_button_state, text="{}".format(
             "Hide game type (Casual, Comp, MvM) queued for"))
         setting9_frame = ttk.Frame()
         setting9_text = ttk.Label(setting9_frame, text="{}".format(
             "Max log level: "))
         setting9_radiobuttons = []
         for log_level_text in self.log_levels:
-            setting9_radiobuttons.append(ttk.Radiobutton(setting9_frame, variable=self.log_level, text=log_level_text, value=log_level_text))
+            setting9_radiobuttons.append(ttk.Radiobutton(setting9_frame, variable=self.log_level, text=log_level_text, value=log_level_text, command=self.update_default_button_state))
         setting10_frame = ttk.Frame()
         setting10_text = ttk.Label(setting10_frame, text="{}".format(
             "Max kilobytes of console.log to scan: "))
         setting10_option = ttk.Spinbox(setting10_frame, textvariable=self.console_scan_kb, width=8, from_=0, to=float('inf'), validate='all',
-                                       validatecommand=(check_int_command, '%P', float('inf')))
-        setting11 = ttk.Checkbutton(master, variable=self.hide_provider, text="{}".format(
+                                       validatecommand=(check_int_command, '%P', float('inf')), command=self.update_default_button_state)
+        setting11 = ttk.Checkbutton(master, variable=self.hide_provider, command=self.update_default_button_state, text="{}".format(
             "Hide community server provider"))
         setting12_frame = ttk.Frame()
         setting12_text = ttk.Label(setting12_frame, text="{}".format(
             "Selected class small image type: "))
         setting12_radiobuttons = []
         for class_pic_type_text in self.class_pic_types:
-            setting12_radiobuttons.append(ttk.Radiobutton(setting12_frame, variable=self.class_pic_type, text=class_pic_type_text, value=class_pic_type_text))
+            setting12_radiobuttons.append(ttk.Radiobutton(setting12_frame, variable=self.class_pic_type, text=class_pic_type_text, value=class_pic_type_text,
+                                                          command=self.update_default_button_state))
 
         # add widgets to the main window
         setting1.grid(row=9, sticky=tk.W, columnspan=2, padx=(15, 15), pady=(2, 0))
@@ -152,13 +146,55 @@ class GUI(tk.Frame):
             setting12_radiobutton.pack(side='left', fill=None, expand=False)
         setting12_frame.grid(row=6, columnspan=2, sticky=tk.W, padx=(15, 15), pady=(2, 0))
 
-        cancel_button = ttk.Button(master, text="Close without saving", command=self.close_without_saving)
-        cancel_button.grid(row=100, column=0, sticky=tk.E, padx=0, pady=(15, 15))
-        ok_button = ttk.Button(master, text="Save and close", command=self.save_and_close, default=tk.ACTIVE)
-        ok_button.grid(row=100, column=1, sticky=tk.W, padx=15, pady=(15, 15))
+        buttons_frame = ttk.Frame()
+        self.restore_button = ttk.Button(buttons_frame, text="Restore defaults", command=self.restore_defaults)
+        self.restore_button.grid(row=0, column=0, sticky=tk.E, padx=0, pady=(15, 15))
+        cancel_button = ttk.Button(buttons_frame, text="Close without saving", command=self.close_without_saving)
+        cancel_button.grid(row=0, column=1, padx=15, pady=(15, 15))
+        ok_button = ttk.Button(buttons_frame, text="Save and close", command=self.save_and_close, default=tk.ACTIVE)
+        ok_button.grid(row=0, column=2, sticky=tk.W, padx=0, pady=(15, 15))
+        buttons_frame.grid(row=100, columnspan=3)
 
+        self.update_default_button_state()
         master.update()
         self.log.debug(f"Window size: {master.winfo_width()}x{master.winfo_height()}")
+
+    # runs every time a setting is changed, updates "restore defaults" button's state
+    def update_default_button_state(self):
+        if self.get_working_settings() == get_setting_default(return_all=True):  # if settings are default, disable button
+            self.restore_button.state(['disabled'])
+            self.log.debug("Disabled restore defaults button")
+        else:
+            self.restore_button.state(['!disabled'])
+            self.log.debug("Enabled restore defaults button")
+
+    # return the settings as a dict, as they currently are in the GUI
+    def get_working_settings(self) -> dict:
+        return {'enable_sentry': self.enable_sentry.get(),
+                'wait_time': self.wait_time.get(),
+                'map_invalidation_hours': self.map_invalidation_hours.get(),
+                'check_updates': self.check_updates.get(),
+                'request_timeout': max(self.request_timeout.get(), 1),
+                'scale_wait_time': self.scale_wait_time.get(),
+                'hide_queued_gamemode': self.hide_queued_gamemode.get(),
+                'log_level': self.log_level.get(),
+                'console_scan_kb': self.console_scan_kb.get(),
+                'hide_provider': self.hide_provider.get(),
+                'class_pic_type': self.class_pic_type.get()}
+
+    # set all settings to defaults
+    def restore_defaults(self):
+        self.enable_sentry.set(get_setting_default('enable_sentry'))
+        self.wait_time.set(get_setting_default('wait_time'))
+        self.map_invalidation_hours.set(get_setting_default('map_invalidation_hours'))
+        self.check_updates.set(get_setting_default('check_updates'))
+        self.request_timeout.set(get_setting_default('request_timeout'))
+        self.scale_wait_time.set(get_setting_default('scale_wait_time'))
+        self.hide_queued_gamemode.set(get_setting_default('hide_queued_gamemode'))
+        self.log_level.set(get_setting_default('log_level'))
+        self.console_scan_kb.set(get_setting_default('console_scan_kb'))
+        self.hide_provider.set(get_setting_default('hide_provider'))
+        self.class_pic_type.set(get_setting_default('class_pic_type'))
 
     # saves settings to file and closes window
     def save_and_close(self):
