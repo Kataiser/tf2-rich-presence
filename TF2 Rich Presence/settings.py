@@ -249,7 +249,12 @@ def get(setting: str) -> Any:
 
 
 def get_api_key(service):
-    with gzip.open('APIs', 'r') as api_keys_file:
+    if os.path.isdir('resources'):
+        apis_path = os.path.join('resources', 'APIs')
+    else:
+        apis_path = 'APIs'
+
+    with gzip.open(apis_path, 'r') as api_keys_file:
         return json.load(api_keys_file)[service]
 
 
