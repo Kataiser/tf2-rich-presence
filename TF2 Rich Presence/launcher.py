@@ -4,6 +4,8 @@ import time
 import traceback
 from typing import Union
 
+import settings
+
 sys.path.append(os.path.abspath(os.path.join('resources', 'python', 'packages')))
 sys.path.append(os.path.abspath(os.path.join('resources')))
 import raven
@@ -39,7 +41,7 @@ sentry_enabled: bool = False
 
 if sentry_enabled:
     # the raven client for Sentry (https://sentry.io/)
-    sentry_client = raven.Client(dsn='https://de781ce2454f458eafab1992630bc100:ce637f5993b14663a0840cd9f98a714a@sentry.io/1245944',
+    sentry_client = raven.Client(dsn=settings.get_api_key('sentry'),
                                  release='{tf2rpvnum}',
                                  string_max_length=512,
                                  processors=('raven.processors.SanitizePasswordsProcessor',))

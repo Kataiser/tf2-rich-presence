@@ -72,6 +72,7 @@ def main(version_num):
                      ('tf2_logo_blurple.ico', f'{new_build_folder_name}\\resources\\'),
                      ('tf2_logo_blurple_wrench.ico', f'{new_build_folder_name}\\resources\\'),
                      ('community_server_ips.json', f'{new_build_folder_name}\\resources\\'),
+                     ('APIs', f'{new_build_folder_name}\\resources\\'),
                      ('changelogs.html', f'{new_build_folder_name}\\')]
 
     # copies files, adding any version numbers
@@ -133,6 +134,7 @@ def main(version_num):
         print("Copied", shutil.copy2('changelogs_source.html', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('maps.json', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('community_server_ips.json', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy2('APIs', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('main menu.png', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('casual.png', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy2('comp.png', f'{github_repo_path}\\TF2 Rich Presence'))

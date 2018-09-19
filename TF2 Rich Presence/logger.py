@@ -144,7 +144,7 @@ class Log:
     # sends log contents (or any other text) to pastebin and returns the paste's URL
     def pastebin(self, text: str) -> str:
         try:
-            pb: Pastebin = Pastebin('909483860965ed941bff77e61c962ac2')
+            pb: Pastebin = Pastebin(settings.get_api_key('pastebin'))
             return pb.create_paste(text, api_paste_private=1, api_paste_name=self.filename, api_paste_expire_date='1M')
         except Exception as err:
             self.error(f"Couldn't create paste: {err}")
