@@ -207,17 +207,7 @@ class GUI(tk.Frame):
             except tk.TclError:
                 int_setting.set(0)
 
-        settings_to_save = {'enable_sentry': self.enable_sentry.get(),
-                            'wait_time': self.wait_time.get(),
-                            'map_invalidation_hours': self.map_invalidation_hours.get(),
-                            'check_updates': self.check_updates.get(),
-                            'request_timeout': max(self.request_timeout.get(), 1),
-                            'scale_wait_time': self.scale_wait_time.get(),
-                            'hide_queued_gamemode': self.hide_queued_gamemode.get(),
-                            'log_level': self.log_level.get(),
-                            'console_scan_kb': self.console_scan_kb.get(),
-                            'hide_provider': self.hide_provider.get(),
-                            'class_pic_type': self.class_pic_type.get()}
+        settings_to_save = self.get_working_settings()
 
         settings_changed = {k: settings_to_save[k] for k in settings_to_save if k in self.settings_loaded and settings_to_save[k] != self.settings_loaded[k]}  # haha what
         self.log.debug(f"Setting(s) changed: {settings_changed}")
