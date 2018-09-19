@@ -163,6 +163,12 @@ class TestTF2RichPresense(unittest.TestCase):
         for setting in default_settings:
             self.assertEqual(type(default_settings[setting]), type(settings.get(setting)))
 
+    def test_get_api_key(self):
+        self.assertEqual(len(settings.get_api_key('discord')), 18)
+        self.assertEqual(len(settings.get_api_key('teamwork')), 32)
+        self.assertEqual(len(settings.get_api_key('pastebin')), 32)
+        self.assertEqual(len(settings.get_api_key('sentry')), 91)
+
     def test_find_provider_for_ip(self):
         app = main.TF2RichPresense(self.log)
         self.assertEqual(app.find_provider_for_ip('104.243.38.50:27026'), 'Wonderland.TF')
