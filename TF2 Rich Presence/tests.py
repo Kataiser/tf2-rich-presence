@@ -2,6 +2,7 @@ import io
 import os
 import random
 import shutil
+import string
 import time
 import unittest
 
@@ -119,6 +120,11 @@ class TestTF2RichPresense(unittest.TestCase):
         with open(test_file, 'r') as random_data_txt:
             self.assertEqual(random_data_txt.read(), random_data)
         os.remove(test_file)
+
+    def test_pastebin(self):
+        pastebin_response = self.log.pastebin('test')
+        self.assertEqual(pastebin_response[:21], 'https://pastebin.com/')
+        self.assertEqual([char for char in pastebin_response[21:] if char not in string.ascii_letters + string.digits], [])
 
     def test_access_github_api(self):
         newest_version, downloads_url, changelog, prerelease = updater.access_github_api(10)

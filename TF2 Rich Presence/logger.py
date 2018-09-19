@@ -207,4 +207,6 @@ def decompress_file(path: str):
 
 if __name__ == '__main__':
     log = Log()
-    log.debug(f"Current log: {log.filename}")
+    # log.debug(f"Current log: {log.filename}")
+    print(log.pastebin('test'))
+
