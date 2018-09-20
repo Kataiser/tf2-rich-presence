@@ -7,6 +7,7 @@ from typing import TextIO, Dict, KeysView, List, Tuple, Union
 import requests
 from requests import Response
 
+import launcher
 import logger
 import settings
 
@@ -44,7 +45,7 @@ def find_custom_map_gamemode(log, map_filename: str, timeout: float = settings.g
 
         before_request_time: float = time.perf_counter()
         try:
-            r: Response = requests.get(f'https://teamwork.tf/api/v1/map-stats/map/{map_filename}?key={settings.get_api_key("teamwork")}', timeout=timeout)
+            r: Response = requests.get(f'https://teamwork.tf/api/v1/map-stats/map/{map_filename}?key={launcher.get_api_key("teamwork")}', timeout=timeout)
             map_info: dict = r.json()
             log.debug(f"API lookup took {time.perf_counter() - before_request_time} secs")
         except requests.ConnectTimeout:

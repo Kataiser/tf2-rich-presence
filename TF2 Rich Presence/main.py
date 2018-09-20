@@ -13,6 +13,7 @@ from discoIPC import ipc
 
 import configs
 import custom_maps
+import launcher
 import logger
 import settings
 
@@ -164,7 +165,7 @@ class TF2RichPresense:
             if not self.client_connected:
                 try:
                     # connects to Discord
-                    self.client = ipc.DiscordIPC(settings.get_api_key('discord'))
+                    self.client = ipc.DiscordIPC(launcher.get_api_key('discord'))
                     self.client.connect()
                     client_state: Tuple[Any, bool, str, int, str, Any] = (
                         self.client.client_id, self.client.connected, self.client.ipc_path, self.client.pid, self.client.platform, self.client.socket)

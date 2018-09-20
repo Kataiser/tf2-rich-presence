@@ -1,10 +1,10 @@
+import gzip
+import json
 import os
 import sys
 import time
 import traceback
 from typing import Union
-
-import settings
 
 sys.path.append(os.path.abspath(os.path.join('resources', 'python', 'packages')))
 sys.path.append(os.path.abspath(os.path.join('resources')))
@@ -37,11 +37,21 @@ def handle_crash_without_log(exception: Exception, client: Union[Client, None] =
     time.sleep(2)
 
 
+def get_api_key(service):
+    if os.path.isdir('resources'):
+        apis_path = os.path.join('resources', 'APIs')
+    else:
+        apis_path = 'APIs'
+
+    with gzip.open(apis_path, 'r') as api_keys_file:
+        return json.load(api_keys_file)[service]
+
+
 sentry_enabled: bool = False
 
 if sentry_enabled:
     # the raven client for Sentry (https://sentry.io/)
-    sentry_client = raven.Client(dsn=settings.get_api_key('sentry'),
+    sentry_client = raven.Client(dsn=get_api_key('sentry'),
                                  release='{tf2rpvnum}',
                                  string_max_length=512,
                                  processors=('raven.processors.SanitizePasswordsProcessor',))

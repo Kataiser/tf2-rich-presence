@@ -1,5 +1,4 @@
 import functools
-import gzip
 import json
 import os
 import sys
@@ -246,16 +245,6 @@ def get(setting: str) -> Any:
         return get_setting_default(setting)
     except Exception:
         return get_setting_default(setting)
-
-
-def get_api_key(service):
-    if os.path.isdir('resources'):
-        apis_path = os.path.join('resources', 'APIs')
-    else:
-        apis_path = 'APIs'
-
-    with gzip.open(apis_path, 'r') as api_keys_file:
-        return json.load(api_keys_file)[service]
 
 
 # either reads the settings file and returns it a a dict, or if a dict is provided, saves it as a json
