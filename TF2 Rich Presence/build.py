@@ -95,18 +95,20 @@ def main(version_num):
         except UnicodeDecodeError:
             print("Copied", shutil.copy2(*file_dest_pair))
 
-    # creates INFO.txt
-    old_dir = os.getcwd()
-    os.chdir(f'{new_build_folder_name}\\resources')
-    commits_info = json.loads(requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/commits').text)
-    with open('INFO.txt', 'w') as info_file:
+    # creates build_info.txt
+    try:
+        commits_info = json.loads(requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/commits', timeout=10).text)
+        latest_commit_message = commits_info[0]['commit']['message'].split('\n')[0]
+        latest_commit = f"\"{latest_commit_message}\" @ {commits_info[0]['html_url']}"
+    except Exception as error:
+        latest_commit = f"Couldn't get commit: {error}"
+    with open(f'{new_build_folder_name}\\resources\\build_info.txt', 'w') as info_file:
         info_file.write(f"TF2 Rich Presence by Kataiser"
                         "\nhttps://github.com/Kataiser/tf2-rich-presence"
                         f"\n\nVersion: {version_num}"
                         f"\nBuilt: {datetime.datetime.utcnow().strftime('%c')} UTC"
                         f"\nHash: {logger.generate_hash()}"
-                        f"\nLatest commit: \"{commits_info[0]['commit']['message']}\" @ {commits_info[0]['html_url']}")
-    os.chdir(old_dir)
+                        f"\nLatest commit: {latest_commit}")
 
     # creates README.md from README-source.md
     with open('README-source.md', 'r') as readme_md_source:
