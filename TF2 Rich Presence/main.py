@@ -65,6 +65,7 @@ class TF2RichPresense:
                                                                                 'state': ''}
         self.client_connected: bool = False
         self.client = None
+        self.test_state = 'init'
 
         # load maps database
         try:
@@ -186,6 +187,7 @@ class TF2RichPresense:
 
             if top_line == 'In menus':
                 # in menus displays the main menu
+                self.test_state = 'menus'
                 self.activity['assets']['small_image'] = 'tf2_icon_small'
                 self.activity['assets']['small_text'] = 'Team Fortress 2'
 
@@ -202,6 +204,7 @@ class TF2RichPresense:
                     self.activity['assets']['large_image'] = 'main_menu'
                     self.activity['assets']['large_text'] = 'Main menu'
             else:  # not in menus = in a game
+                self.test_state = 'in game'
                 class_pic_type: str = settings.get('class_pic_type').lower()
 
                 if class_pic_type == 'none, use tf2 logo' or bottom_line == 'unselected':
@@ -258,9 +261,12 @@ class TF2RichPresense:
                 self.log.critical('self.client is disconnected')
                 self.log.report_log("self.client disconnect")
         elif not discord_is_running:
+            self.test_state = 'no discord'
             self.log.info("Discord isn't running")
             print(f"{current_time_formatted}\nDiscord isn't running\n")
         else:  # tf2 isn't running
+            self.test_state = 'no tf2'
+
             if self.client_connected:
                 try:
                     self.log.debug("Disconnecting client")
