@@ -207,7 +207,7 @@ class TestTF2RichPresense(unittest.TestCase):
 
 class TestTF2RichPresenseMain(unittest.TestCase):
     def test_main(self):
-        # this one is seperate due to the long run time (about 75 seconds for me)
+        # this one is seperate due to the long run time (about 85 seconds for me)
         # this opens TF2 and simulates keypresses, so it needs Steam and Discord to be running
         # requires the custom map cp_catwalk_a5c to be installed (https://tf2maps.net/downloads/catwalk.1393/)
 
@@ -224,7 +224,7 @@ class TestTF2RichPresenseMain(unittest.TestCase):
                                                                                         'large_image': 'main_menu', 'large_text': 'In menus'}, 'state': ''})
 
         webbrowser.open('steam://rungameid/440')
-        time.sleep(23)  # this might need to be adjusted depending on your PC
+        time.sleep(25)  # this might need to be adjusted depending on your PC
 
         app.loop_body()
         self.assertEqual(app.test_state, 'menus')
@@ -237,7 +237,7 @@ class TestTF2RichPresenseMain(unittest.TestCase):
         keyboard.write('map itemtest')
         time.sleep(0.2)
         keyboard.press_and_release('enter')
-        time.sleep(15)  # this might need to be adjusted depending on your PC
+        time.sleep(18)  # this might need to be adjusted depending on your PC
         for i in range(3):
             keyboard.press_and_release('d')
             time.sleep(0.2)
@@ -254,7 +254,7 @@ class TestTF2RichPresenseMain(unittest.TestCase):
         keyboard.write('map cp_catwalk_a5c')
         time.sleep(0.2)
         keyboard.press_and_release('enter')
-        time.sleep(15)  # this might need to be adjusted depending on your PC
+        time.sleep(18)  # this might need to be adjusted depending on your PC
         for i in range(3):
             keyboard.press_and_release('d')
             time.sleep(0.2)
