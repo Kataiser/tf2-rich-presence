@@ -20,7 +20,7 @@ import settings
 import updater
 
 
-class TestTF2RichPresense(unittest.TestCase):
+class TestTF2RichPresenseFunctions(unittest.TestCase):
     def setUp(self):
         self.old_settings = settings.access_settings_file()
         if self.old_settings != settings.get_setting_default(return_all=True):
@@ -205,9 +205,9 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual(client_state, ('429389143756374017', False, '\\\\?\\pipe\\discord-ipc-0', True, 'windows', None))
 
 
-class TestTF2RichPresenseMain(unittest.TestCase):
+class TestTF2RichPresenseSimulated(unittest.TestCase):
     def test_main(self):
-        # this one is seperate due to the long run time (about 85 seconds for me)
+        # this one is seperate due to the long run time (about 85-90 seconds for me)
         # this opens TF2 and simulates keypresses, so it needs Steam and Discord to be running
         # requires the custom map cp_catwalk_a5c to be installed (https://tf2maps.net/downloads/catwalk.1393/)
 
@@ -224,7 +224,10 @@ class TestTF2RichPresenseMain(unittest.TestCase):
                                                                                         'large_image': 'main_menu', 'large_text': 'In menus'}, 'state': ''})
 
         webbrowser.open('steam://rungameid/440')
-        time.sleep(25)  # this might need to be adjusted depending on your PC
+        input("Press enter when TF2 has finished loading (will send an alt-tab)")
+        keyboard.press('alt')
+        keyboard.press_and_release('tab')
+        keyboard.release('alt')
 
         app.loop_body()
         self.assertEqual(app.test_state, 'menus')
@@ -237,7 +240,7 @@ class TestTF2RichPresenseMain(unittest.TestCase):
         keyboard.write('map itemtest')
         time.sleep(0.2)
         keyboard.press_and_release('enter')
-        time.sleep(18)  # this might need to be adjusted depending on your PC
+        time.sleep(20)  # this might need to be adjusted depending on your PC
         for i in range(3):
             keyboard.press_and_release('d')
             time.sleep(0.2)
@@ -254,7 +257,7 @@ class TestTF2RichPresenseMain(unittest.TestCase):
         keyboard.write('map cp_catwalk_a5c')
         time.sleep(0.2)
         keyboard.press_and_release('enter')
-        time.sleep(18)  # this might need to be adjusted depending on your PC
+        time.sleep(20)  # this might need to be adjusted depending on your PC
         for i in range(3):
             keyboard.press_and_release('d')
             time.sleep(0.2)
