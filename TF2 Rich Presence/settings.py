@@ -76,7 +76,7 @@ class GUI(tk.Frame):
 
         # create settings widgets
         setting1 = ttk.Checkbutton(master, variable=self.enable_sentry, command=self.update_default_button_state, text="{}".format(
-            "Report error logs to the developer, via Sentry (https://sentry.io/)"))
+            "Report crash logs"))
         setting3_frame = ttk.Frame()
         setting3_text = ttk.Label(setting3_frame, text="{}".format(
             "Base delay, in seconds, between refreshes (will increase after some AFK time): "))
