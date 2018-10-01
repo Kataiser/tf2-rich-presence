@@ -36,7 +36,11 @@ def main(version_num):
     old_build_folders = [f.path for f in os.scandir('.') if f.is_dir() if f.path.startswith('.\\TF2 Rich Presence ')]
     if old_build_folders:
         for folder in old_build_folders:
-            shutil.rmtree(folder)
+            try:
+                shutil.rmtree(folder)
+            except (OSError, PermissionError):
+                shutil.rmtree(folder)  # beautiful
+
             print(f"Removed old build folder: {folder}")
     else:
         print("No old build folder found")
@@ -207,6 +211,14 @@ def main(version_num):
         subprocess.run(f'{package7zip_command_exe_1} {package7zip_command_exe_2}', stdout=nowhere)
         print(f"Creating tf2_rich_presence_{version_num}.zip...")
         subprocess.run(package7zip_command_zip, stdout=nowhere)
+
+    # disables Sentry, for testing
+    with open(f'{new_build_folder_name}\\resources\\launcher.py', 'r') as launcher_py_read:
+        old_data = launcher_py_read.read()
+    with open(f'{new_build_folder_name}\\resources\\launcher.py', 'w') as launcher_py_write:
+        new_data = old_data.replace('sentry_enabled: bool = True', 'sentry_enabled: bool = False')
+        launcher_py_write.write(new_data)
+    print("Disabled Sentry in launcher")
 
     print(f"\nFinished building TF2 Rich Presence {version_num} (took {int(time.perf_counter() - build_start_time)} seconds)")
 
