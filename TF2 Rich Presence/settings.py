@@ -230,7 +230,7 @@ class GUI(tk.Frame):
 
 
 # main entry point
-def open_settings_menu():
+def launch():
     root = tk.Tk()
     settings_gui = GUI(root)  # only set to a variable to prevent garbage collection? idk
     root.mainloop()
@@ -302,4 +302,4 @@ def check_int(text_in_entry: str, maximum: int) -> bool:
 
 
 if __name__ == '__main__':
-    open_settings_menu()
+    launch()

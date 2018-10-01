@@ -65,7 +65,7 @@ def failure_message(current_version: str, error_message: str = None):
     print(f"{line1}{line2}{line3}")
 
 
-if __name__ == '__main__':
+def launch():
     # this gets run by the batch file, before the restart loop and main.py
     try:
         check_for_update('{tf2rpvnum}', settings.get('request_timeout'))
@@ -74,3 +74,7 @@ if __name__ == '__main__':
     except Exception as error:
         app_for_crash_handling = main.TF2RichPresense()
         app_for_crash_handling.handle_crash(error, silent=True)
+
+
+if __name__ == '__main__':
+    launch()

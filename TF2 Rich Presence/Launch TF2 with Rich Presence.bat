@@ -6,9 +6,9 @@ echo Launching Team Fortress 2 with Rich Presence enabled...
 echo.
 
 start steam://rungameid/440
-"%~dp0\resources\python\python.exe" "%~dp0\resources\updater.py"
+"%~dp0\resources\python\python.exe" "%~dp0\resources\launcher.py" updater
 
 :start
-"%~dp0\resources\python\python.exe" "%~dp0\resources\launcher.py"
+"%~dp0\resources\python\python.exe" "%~dp0\resources\launcher.py" main
 
 goto start

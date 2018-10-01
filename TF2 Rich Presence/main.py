@@ -18,7 +18,7 @@ import logger
 import settings
 
 
-def main():
+def launch():
     # TF2 rich presence by Kataiser
     # {tf2rpvnum}
     # https://github.com/Kataiser/tf2-rich-presence
@@ -466,4 +466,4 @@ def calculate_wait_time(base: int, afk: float) -> float:
 
 if __name__ == '__main__':
     # self.log.sentry_enabled = False
-    main()
+    launch()

@@ -1,4 +1,6 @@
+import argparse
 import gzip
+import importlib
 import json
 import os
 import sys
@@ -14,8 +16,16 @@ from raven import Client
 
 def launch():
     try:
-        import main
-        main.main()
+        parser = argparse.ArgumentParser()
+        parser.add_argument('module')
+        args = parser.parse_args()
+
+        old_dir = os.getcwd()
+        os.chdir('resources')
+        loaded_module = importlib.import_module(args.module)
+        os.chdir(old_dir)
+
+        loaded_module.launch()
     except (KeyboardInterrupt, SystemExit):
         raise SystemExit
     except Exception as error:
