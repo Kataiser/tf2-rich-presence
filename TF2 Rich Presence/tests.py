@@ -1,6 +1,5 @@
 import io
 import os
-import random
 import shutil
 import string
 import time
@@ -110,19 +109,6 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
             correct_file_ending_text = correct_file_ending_file.read()
 
         self.assertTrue(logger.read_truncated_file('test_resources\\console_queued_casual.log', limit=1000) == correct_file_ending_text)
-
-    def test_gzip_compression(self):
-        random_data = str(bytearray(random.getrandbits(8) for _ in range(10000)))
-        test_file = 'test_resources\\random_data.txt'
-        with open(test_file, 'w') as random_data_txt:
-            random_data_txt.write(random_data)
-
-        logger.compress_file(test_file)
-        logger.decompress_file(f'{test_file}.gzip')
-
-        with open(test_file, 'r') as random_data_txt:
-            self.assertEqual(random_data_txt.read(), random_data)
-        os.remove(test_file)
 
     def test_pastebin(self):
         pastebin_response = self.log.pastebin('test')

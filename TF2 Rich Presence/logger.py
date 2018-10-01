@@ -1,8 +1,6 @@
-import gzip
 import hashlib
 import os
 import random
-import shutil
 import socket
 import sys
 import time
@@ -55,10 +53,7 @@ class Log:
             if old_filename != self.filename and 'gzip' not in old_filename:
                 if self.enabled:
                     self.log_file.close()
-                    compress_file(old_filename)
                     self.log_file = open(self.filename, 'a')
-                else:
-                    compress_file(old_filename)
 
     # adds a line to the current log file
     def write_log(self, level: str, message_out: str):
@@ -180,29 +175,6 @@ def generate_hash() -> str:
     hasher.update(b'\n'.join(files_to_hash_text))
     main_hash: str = hasher.hexdigest()
     return main_hash[:8]
-
-
-# compress a file with gzip
-def compress_file(path: str):
-    with open(path, 'rb') as f_in:
-        with gzip.open(f'{path}.gzip', 'wb') as f_out:
-            shutil.copyfileobj(f_in, f_out)
-
-    os.remove(path)
-
-
-# uncompress a file with gzip (not used, but could be useful)
-def decompress_file(path: str):
-    path_modified = path.replace('.gzip', '')
-
-    with gzip.open(path, 'rb') as f_in:
-        with open(path_modified, 'wb') as f_out:
-            if os.path.exists(path_modified):
-                f_out.seek(0)  # put uncompressed at the beginning of the file
-
-            shutil.copyfileobj(f_in, f_out)
-
-    os.remove(path)
 
 
 if __name__ == '__main__':
