@@ -72,7 +72,8 @@ def launch():
     except (KeyboardInterrupt, SystemExit):
         raise SystemExit
     except Exception as error:
-        app_for_crash_handling = main.TF2RichPresense()
+        crash_logger = logger.Log()
+        app_for_crash_handling = main.TF2RichPresense(crash_logger)
         app_for_crash_handling.handle_crash(error, silent=True)
 
 
