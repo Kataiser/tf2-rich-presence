@@ -193,7 +193,7 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
 
 class TestTF2RichPresenseSimulated(unittest.TestCase):
     def test_main(self):
-        # this one is seperate due to the long run time (about 85-90 seconds for me)
+        # this one is seperate due to the long run time (over 1.5 minutes)
         # this opens TF2 and simulates keypresses, so it needs Steam and Discord to be running
         # requires the custom map cp_catwalk_a5c to be installed (https://tf2maps.net/downloads/catwalk.1393/)
 
@@ -209,6 +209,7 @@ class TestTF2RichPresenseSimulated(unittest.TestCase):
                          {'details': 'In menus', 'timestamps': {'start': 0}, 'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2',
                                                                                         'large_image': 'main_menu', 'large_text': 'In menus'}, 'state': ''})
 
+        print("Launching TF2 via default browser")
         webbrowser.open('steam://rungameid/440')
         input("Press enter when TF2 has finished loading (will send an alt-tab)")
         keyboard.press('alt')
@@ -221,12 +222,13 @@ class TestTF2RichPresenseSimulated(unittest.TestCase):
                          {'details': 'In menus', 'timestamps': {'start': 0}, 'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2',
                                                                                         'large_image': 'main_menu', 'large_text': 'Main menu'}, 'state': 'Not queued'})
 
+        print("Loading in to map \"itemtest\"")
         keyboard.press_and_release('~')
         time.sleep(0.5)
         keyboard.write('map itemtest')
         time.sleep(0.2)
         keyboard.press_and_release('enter')
-        time.sleep(20)  # this might need to be adjusted depending on your PC
+        time.sleep(25)  # this might need to be adjusted depending on your PC
         for i in range(3):
             keyboard.press_and_release('d')
             time.sleep(0.2)
@@ -238,6 +240,7 @@ class TestTF2RichPresenseSimulated(unittest.TestCase):
                          {'details': 'Map: Itemtest', 'timestamps': {'start': 0}, 'assets': {'small_image': 'scout_icon', 'small_text': 'Scout',
                                                                                              'large_image': 'unknown_map', 'large_text': 'No gamemode'}, 'state': 'Class: Scout'})
 
+        print("Changing map to \"cp_catwalk_a5c\"")
         keyboard.press_and_release('~')
         time.sleep(0.5)
         keyboard.write('map cp_catwalk_a5c')
@@ -256,6 +259,7 @@ class TestTF2RichPresenseSimulated(unittest.TestCase):
                           'assets': {'small_image': 'soldier_icon', 'small_text': 'Soldier',
                                      'large_image': 'control-point', 'large_text': 'Control Point [custom/community map]'}, 'state': 'Class: Soldier'})
 
+        print("Quitting to main menu")
         keyboard.press_and_release('~')
         time.sleep(0.5)
         keyboard.write('disconnect')
@@ -271,7 +275,8 @@ class TestTF2RichPresenseSimulated(unittest.TestCase):
         keyboard.write('quit')
         time.sleep(0.2)
         keyboard.press_and_release('enter')
-        time.sleep(10)  # TF2's process takes forever to finally end after the game is closed
+        print("Waiting 15 seconds for TF2 to fully close")
+        time.sleep(15)  # TF2's process takes forever to finally end after the game is closed
 
         try:
             app.loop_body()
