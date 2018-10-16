@@ -203,7 +203,7 @@ class TF2RichPresense:
                 else:
                     self.activity['assets']['large_image'] = 'main_menu'
                     self.activity['assets']['large_text'] = 'Main menu'
-            else:  # not in menus = in a game
+            elif top_line != '':  # not in menus = in a game
                 self.test_state = 'in game'
                 class_pic_type: str = settings.get('class_pic_type').lower()
 
@@ -239,6 +239,8 @@ class TF2RichPresense:
                         top_line = f'Map: {map_out}'
                     else:
                         top_line = f'Map: {map_out} ({server_provider} server)'
+            else:  # console.log is empty or close to empty
+                pass
 
             self.activity['details'] = top_line
             self.activity['state'] = bottom_line
