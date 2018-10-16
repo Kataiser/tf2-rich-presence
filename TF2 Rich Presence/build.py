@@ -39,6 +39,7 @@ def main(version_num):
             try:
                 shutil.rmtree(folder)
             except (OSError, PermissionError):
+                time.sleep(0.2)
                 shutil.rmtree(folder)  # beautiful
 
             print(f"Removed old build folder: {folder}")
