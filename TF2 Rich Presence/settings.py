@@ -184,17 +184,31 @@ class GUI(tk.Frame):
 
     # set all settings to defaults
     def restore_defaults(self):
-        self.enable_sentry.set(get_setting_default('enable_sentry'))
-        self.wait_time.set(get_setting_default('wait_time'))
-        self.map_invalidation_hours.set(get_setting_default('map_invalidation_hours'))
-        self.check_updates.set(get_setting_default('check_updates'))
-        self.request_timeout.set(get_setting_default('request_timeout'))
-        self.scale_wait_time.set(get_setting_default('scale_wait_time'))
-        self.hide_queued_gamemode.set(get_setting_default('hide_queued_gamemode'))
-        self.log_level.set(get_setting_default('log_level'))
-        self.console_scan_kb.set(get_setting_default('console_scan_kb'))
-        self.hide_provider.set(get_setting_default('hide_provider'))
-        self.class_pic_type.set(get_setting_default('class_pic_type'))
+        settings_to_save = self.get_working_settings()
+        settings_changed = {k: settings_to_save[k] for k in settings_to_save if k in self.settings_loaded and settings_to_save[k] != self.settings_loaded[k]}  # haha what
+
+        settings_changed_num = len(settings_changed)
+        allowed_reset = "yes"
+        if settings_changed_num == 1:
+            allowed_reset = messagebox.askquestion("Restore defaults", "Restore 1 changed setting to default?")
+        elif settings_changed_num > 1:
+            allowed_reset = messagebox.askquestion("Restore defaults", f"Restore {settings_changed_num} changed settings to defaults?")
+
+        if allowed_reset == "yes":
+            self.enable_sentry.set(get_setting_default('enable_sentry'))
+            self.wait_time.set(get_setting_default('wait_time'))
+            self.map_invalidation_hours.set(get_setting_default('map_invalidation_hours'))
+            self.check_updates.set(get_setting_default('check_updates'))
+            self.request_timeout.set(get_setting_default('request_timeout'))
+            self.scale_wait_time.set(get_setting_default('scale_wait_time'))
+            self.hide_queued_gamemode.set(get_setting_default('hide_queued_gamemode'))
+            self.log_level.set(get_setting_default('log_level'))
+            self.console_scan_kb.set(get_setting_default('console_scan_kb'))
+            self.hide_provider.set(get_setting_default('hide_provider'))
+            self.class_pic_type.set(get_setting_default('class_pic_type'))
+
+            self.log.debug("Restored defaults")
+            self.restore_button.state(['disabled'])
 
     # saves settings to file and closes window
     def save_and_close(self):
@@ -225,8 +239,6 @@ class GUI(tk.Frame):
 
     # closes window without saving
     def close_without_saving(self):
-        self.log.info("Closing settings menu without saving")
-
         settings_to_save = self.get_working_settings()
         settings_changed = {k: settings_to_save[k] for k in settings_to_save if k in self.settings_loaded and settings_to_save[k] != self.settings_loaded[k]}  # haha what
         self.log.debug(f"Setting(s) changed (but not saved): {settings_changed}")
@@ -235,11 +247,12 @@ class GUI(tk.Frame):
         settings_changed_num = len(settings_changed)
         allowed_close = "yes"
         if settings_changed_num == 1:
-            allowed_close = messagebox.askquestion("Saved", f"1 setting has been changed. {close_question}")
+            allowed_close = messagebox.askquestion("Close without saving", f"1 setting has been changed. {close_question}")
         elif settings_changed_num > 1:
-            allowed_close = messagebox.askquestion("Saved", f"{settings_changed_num} settings have been changed. {close_question}")
+            allowed_close = messagebox.askquestion("Close without saving", f"{settings_changed_num} settings have been changed. {close_question}")
 
         if allowed_close == "yes":
+            self.log.info("Closing settings menu without saving")
             self.master.destroy()
 
 
