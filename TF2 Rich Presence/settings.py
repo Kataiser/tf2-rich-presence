@@ -226,7 +226,21 @@ class GUI(tk.Frame):
     # closes window without saving
     def close_without_saving(self):
         self.log.info("Closing settings menu without saving")
-        self.master.destroy()
+
+        settings_to_save = self.get_working_settings()
+        settings_changed = {k: settings_to_save[k] for k in settings_to_save if k in self.settings_loaded and settings_to_save[k] != self.settings_loaded[k]}  # haha what
+        self.log.debug(f"Setting(s) changed (but not saved): {settings_changed}")
+
+        close_question = "Close without saving?"
+        settings_changed_num = len(settings_changed)
+        allowed_close = "yes"
+        if settings_changed_num == 1:
+            allowed_close = messagebox.askquestion("Saved", f"1 setting has been changed. {close_question}")
+        elif settings_changed_num > 1:
+            allowed_close = messagebox.askquestion("Saved", f"{settings_changed_num} settings have been changed. {close_question}")
+
+        if allowed_close == "yes":
+            self.master.destroy()
 
 
 # main entry point
