@@ -11,7 +11,7 @@ def main():
     except FileNotFoundError:
         out = {}
 
-    providers_page = requests.get('https://teamwork.tf/community/providers').text
+    providers_page = get_with_retries('https://teamwork.tf/community/providers').text
     providers_page_soup = BeautifulSoup(providers_page, 'lxml')
 
     for outer_div in providers_page_soup.find_all('div'):
@@ -29,7 +29,7 @@ def main():
             except KeyError:
                 ips = []
 
-            provider_page = requests.get(provider_page_url).text
+            provider_page = get_with_retries(provider_page_url).text
             provider_page_soup = BeautifulSoup(provider_page, 'lxml')
 
             for kbd in provider_page_soup.find_all('kbd'):
@@ -46,6 +46,14 @@ def main():
 
     with open('community_server_ips.json', 'w') as community_server_ips_json:
         json.dump(out, community_server_ips_json, indent=4)
+
+
+def get_with_retries(url):
+    while True:
+        try:
+            return requests.get(url)
+        except Exception as error:
+            print(f"Error while accessing URL {url}: ({error}). Retrying...")
 
 
 if __name__ == '__main__':
