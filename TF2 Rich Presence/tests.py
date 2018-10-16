@@ -212,7 +212,7 @@ class TestTF2RichPresenseSimulated(unittest.TestCase):
 
         print("Launching TF2 via default browser")
         webbrowser.open('steam://rungameid/440')
-        input("Press enter when TF2 has finished loading (will send an alt-tab)")
+        input("Press enter when TF2 has finished loading")
         keyboard.press('alt')
         keyboard.press_and_release('tab')
         keyboard.release('alt')
@@ -229,7 +229,7 @@ class TestTF2RichPresenseSimulated(unittest.TestCase):
         keyboard.write('map itemtest')
         time.sleep(0.2)
         keyboard.press_and_release('enter')
-        time.sleep(25)  # this might need to be adjusted depending on your PC
+        input("Press enter when itemtest has finished loading")
         for i in range(3):
             keyboard.press_and_release('d')
             time.sleep(0.2)
@@ -247,7 +247,7 @@ class TestTF2RichPresenseSimulated(unittest.TestCase):
         keyboard.write('map cp_catwalk_a5c')
         time.sleep(0.2)
         keyboard.press_and_release('enter')
-        time.sleep(20)  # this might need to be adjusted depending on your PC
+        input("Press enter when cp_catwalk has finished loading")
         for i in range(3):
             keyboard.press_and_release('d')
             time.sleep(0.2)
