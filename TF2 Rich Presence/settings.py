@@ -21,7 +21,7 @@ class GUI(tk.Frame):
         self.log = logger.Log()
         self.log.info("Opening settings menu for TF2 Rich Presence {tf2rpvnum}")
 
-        master.title("TF2 Rich Presence settings")
+        master.title("TF2 Rich Presence ({tf2rpvnum}) settings")
         master.resizable(0, 0)  # disables resizing
         master.geometry("+710+362")  # positions the window kinda near the center of the screen (or perfectly centered if monitor is 1920x1080)
 
