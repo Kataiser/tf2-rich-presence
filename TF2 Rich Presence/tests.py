@@ -212,11 +212,10 @@ class TestTF2RichPresenseSimulated(unittest.TestCase):
 
         print("Launching TF2 via default browser")
         webbrowser.open('steam://rungameid/440')
-        input("Press enter when TF2 has finished loading")
+        input("Press enter when TF2 has finished loading (will send an alt-tab)")
         keyboard.press('alt')
         keyboard.press_and_release('tab')
         keyboard.release('alt')
-
         app.loop_body()
         self.assertEqual(app.test_state, 'menus')
         self.assertEqual(fix_activity_dict(app.activity),
@@ -229,7 +228,11 @@ class TestTF2RichPresenseSimulated(unittest.TestCase):
         keyboard.write('map itemtest')
         time.sleep(0.2)
         keyboard.press_and_release('enter')
-        input("Press enter when itemtest has finished loading")
+        input("Press enter when itemtest has finished loading (will send an alt-tab)")
+        keyboard.press('alt')
+        keyboard.press_and_release('tab')
+        keyboard.release('alt')
+        time.sleep(0.2)
         for i in range(3):
             keyboard.press_and_release('d')
             time.sleep(0.2)
@@ -247,7 +250,11 @@ class TestTF2RichPresenseSimulated(unittest.TestCase):
         keyboard.write('map cp_catwalk_a5c')
         time.sleep(0.2)
         keyboard.press_and_release('enter')
-        input("Press enter when cp_catwalk has finished loading")
+        input("Press enter when cp_catwalk has finished loading (will send an alt-tab)")
+        keyboard.press('alt')
+        keyboard.press_and_release('tab')
+        keyboard.release('alt')
+        time.sleep(0.2)
         for i in range(3):
             keyboard.press_and_release('d')
             time.sleep(0.2)
