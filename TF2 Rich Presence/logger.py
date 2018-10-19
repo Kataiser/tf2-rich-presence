@@ -1,6 +1,5 @@
 import hashlib
 import os
-import random
 import socket
 import sys
 import time
@@ -39,13 +38,6 @@ class Log:
             self.log_file = open(self.filename, 'a')
         else:
             self.log_levels_allowed = self.log_levels
-
-        # gzip compress old logs and current log every 1 MB
-        if os.path.exists(self.filename) and os.stat(self.filename).st_size >= 1000000:
-            while True:
-                self.filename = f'{self.filename[:-4]}_{str(random.randrange(10000)).zfill(4)}.log'
-                if not os.path.exists(self.filename):
-                    break
 
         for old_filename in os.listdir('logs'):
             old_filename = os.path.join('logs', old_filename)
