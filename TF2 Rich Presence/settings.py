@@ -231,9 +231,9 @@ class GUI(tk.Frame):
         restart_message = "If TF2 Rich Presence is currently running, it may need to be restarted for changes to take effect."
         settings_changed_num = len(settings_changed)
         if settings_changed_num == 1:
-            messagebox.showinfo("Saved", f"1 setting has been changed. {restart_message}")
+            messagebox.showinfo("Save and close", f"1 setting has been changed. {restart_message}")
         elif settings_changed_num > 1:
-            messagebox.showinfo("Saved", f"{settings_changed_num} settings have been changed. {restart_message}")
+            messagebox.showinfo("Save and close", f"{settings_changed_num} settings have been changed. {restart_message}")
 
         self.master.destroy()  # closes window
 
