@@ -63,9 +63,7 @@ class Log:
                 except Exception:
                     pass
 
-                self.log_file.close()
-                self.log_file = open(self.filename, 'a')
-                self.unsaved_lines = 0
+                self.save_log()
 
             if self.to_stderr:
                 print(full_line.rstrip('\n'), file=sys.stderr)
@@ -89,6 +87,12 @@ class Log:
     def critical(self, message_in):
         if 'Critical' in self.log_levels_allowed:
             self.write_log('CRITICAL', message_in)
+
+    # write unsaved log lines to file
+    def save_log(self):
+        self.log_file.close()
+        self.log_file = open(self.filename, 'a')
+        self.unsaved_lines = 0
 
     # deletes older log files
     def cleanup(self, max_logs: int):
@@ -130,6 +134,8 @@ class Log:
 
     # sends log contents (or any other text) to pastebin and returns the paste's URL
     def pastebin(self, text: str) -> str:
+        self.save_log()
+
         try:
             pb: Pastebin = Pastebin(launcher.get_api_key('pastebin'))
             return pb.create_paste(text, api_paste_private=1, api_paste_name=self.filename, api_paste_expire_date='1M')
