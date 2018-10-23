@@ -386,20 +386,6 @@ class TF2RichPresense:
         self.log.debug(f"Got '{current_map}', '{current_class}', and {current_ip} from this line: '{line_used[:-1]}'")
         return current_map, current_class, current_ip
 
-    # alerts the user that they don't seem to have -condebug
-    def no_condebug_warning(self):
-        print("\nYour TF2 installation doesn't yet seem to be set up properly. To fix:"
-              "\n1. Right click on Team Fortress 2 in your Steam library"
-              "\n2. Open properties (very bottom)"
-              "\n3. Click \"Set launch options...\""
-              "\n4. Add -condebug"
-              "\n5. OK and Close"
-              "\n6. Restart TF2\n")
-        # -condebug is kinda necessary so just wait to restart if it's not there
-        input("Press enter to retry\n")
-        self.log.debug("Restarting")
-        raise SystemExit
-
     # displays and reports current traceback
     def handle_crash(self, exception: Exception, silent=False):
         formatted_exception = traceback.format_exc()
@@ -437,6 +423,20 @@ class TF2RichPresense:
 
         self.log.debug(f"IP {ip} is not run by a known provider")
         return None
+
+
+# alerts the user that they don't seem to have -condebug
+def no_condebug_warning():
+    print("\nYour TF2 installation doesn't yet seem to be set up properly. To fix:"
+          "\n1. Right click on Team Fortress 2 in your Steam library"
+          "\n2. Open properties (very bottom)"
+          "\n3. Click \"Set launch options...\""
+          "\n4. Add -condebug"
+          "\n5. OK and Close"
+          "\n6. Restart TF2\n")
+    # -condebug is kinda necessary so just wait to restart if it's not there
+    input("Press enter to retry\n")
+    raise SystemExit
 
 
 # https://www.blog.pythonlibrary.org/2010/05/05/python-how-to-tell-how-long-windows-has-been-idle/

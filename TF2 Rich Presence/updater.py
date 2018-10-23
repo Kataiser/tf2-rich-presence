@@ -35,10 +35,13 @@ def check_for_update(current_version: str, timeout: float):
         log.error(f"Non-timeout update error: {traceback.format_exc()}")
         failure_message(current_version, 'unknown error')
     else:
-        if current_version == newest_version and not prerelease:
-            log.debug(f"Up to date ({current_version})")
+        if current_version == newest_version:
+            if prerelease:
+                log.debug(f"Up to date ({current_version}) (prerelease {newest_version} is available)")
+            else:
+                log.debug(f"Up to date ({current_version})")
         else:  # out of date
-            log.error(f"Out of date, newest version is {newest_version}")
+            log.error(f"Out of date, newest version is {newest_version} (this is {current_version})")
             print(f"This version ({current_version}) is out of date (newest version is {newest_version}).\nGet the update at {downloads_url}")
             print(f"\n{newest_version} changelog:\n{changelog}\n(If you're more than one version out of date, there may have been more changes and fixes than this.)\n")
 
