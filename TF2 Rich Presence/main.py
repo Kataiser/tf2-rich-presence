@@ -311,7 +311,7 @@ class TF2RichPresense:
 
         if not os.path.exists(consolelog_filename):
             self.log.error(f"console.log doesn't exist, issuing warning (files/dirs in /tf/: {os.listdir(os.path.dirname(console_log_path))})")
-            self.no_condebug_warning()
+            no_condebug_warning()
 
         with open(consolelog_filename, 'r', errors='replace') as consolelog_file:
             consolelog_file_size: int = os.stat(consolelog_filename).st_size
