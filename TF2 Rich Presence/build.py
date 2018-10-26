@@ -238,4 +238,4 @@ def convert_bat_to_exe(batch_location: str, vnum: str, icon_path: str):
 
 
 if __name__ == '__main__':
-    main('v1.6.1')
+    main('v1.6.2')
