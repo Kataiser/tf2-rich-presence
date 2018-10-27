@@ -1,4 +1,5 @@
 import json
+import sys
 
 import requests
 from bs4 import BeautifulSoup
@@ -51,9 +52,9 @@ def main():
 def get_with_retries(url):
     while True:
         try:
-            return requests.get(url)
+            return requests.get(url, timeout=15)
         except Exception as error:
-            print(f"Error while accessing URL {url}: ({error}). Retrying...")
+            print(f"Error while accessing URL {url}: ({error}). Retrying...", file=sys.stderr)
 
 
 if __name__ == '__main__':
