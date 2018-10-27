@@ -1,4 +1,29 @@
 {
+    "koth_bagel_event": [
+        "Cauldron",
+        "koth",
+        "King of the Hill"
+    ],
+    "pd_cursed_cove_event": [
+        "Cursed Cove",
+        "player-destruction",
+        "Player Destruction"
+    ],
+    "pl_rumble_event": [
+        "Gravestone",
+        "payload",
+        "Payload"
+    ],
+    "pd_monster_bash": [
+        "Monster Bash",
+        "player-destruction",
+        "Player Destruction"
+    ],
+    "koth_slasher": [
+        "Slasher",
+        "koth",
+        "King of the Hill"
+    ],
     "ctf_2fort": [
         "2Fort",
         "ctf",
