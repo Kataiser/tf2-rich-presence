@@ -110,7 +110,7 @@ class GUI(tk.Frame):
         setting10_option = ttk.Spinbox(setting10_frame, textvariable=self.console_scan_kb, width=8, from_=0, to=float('inf'), validate='all',
                                        validatecommand=(check_int_command, '%P', float('inf')), command=self.update_default_button_state)
         setting11 = ttk.Checkbutton(master, variable=self.hide_provider, command=self.update_default_button_state, text="{}".format(
-            "Hide community server provider"))
+            "Hide community server name and provider"))
         setting12_frame = ttk.Frame()
         setting12_text = ttk.Label(setting12_frame, text="{}".format(
             "Selected class small image type: "))
