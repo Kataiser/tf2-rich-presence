@@ -1,4 +1,5 @@
 import datetime
+import functools
 import gc
 import json
 import os
@@ -234,11 +235,11 @@ class TF2RichPresense:
                 if settings.get('hide_provider'):
                     top_line = f'Map: {map_out}'
                 else:
-                    server_provider = self.find_provider_for_ip(server_ip)
-                    if not server_provider:
+                    server_info = self.find_provider_for_ip(server_ip)
+                    if not server_info:
                         top_line = f'Map: {map_out}'
                     else:
-                        top_line = f'Map: {map_out} ({server_provider} server)'
+                        top_line = f'Map: {map_out} (Server: "{server_info[1]}", provided by {server_info[0]})'
             else:  # console.log is empty or close to empty
                 pass
 
@@ -403,27 +404,23 @@ class TF2RichPresense:
         raise SystemExit
 
     # find what server provider an IP belongs to
-    def find_provider_for_ip(self, ip):
+    @functools.lru_cache(maxsize=None)
+    def find_provider_for_ip(self, ip: str) -> Union[Tuple[str, str], None]:
         try:
-            community_server_ips_json = open('community_server_ips.json', 'r')
+            community_server_ips_json = open('community_server_ips.json', 'r', encoding='utf-8')
         except FileNotFoundError:
-            community_server_ips_json = open(os.path.join('resources', 'community_server_ips.json'), 'r')
+            community_server_ips_json = open(os.path.join('resources', 'community_server_ips.json'), 'r', encoding='utf-8')
 
         community_server_ips_dict = json.load(community_server_ips_json)
         community_server_ips_json.close()
 
-        community_server_ips_list = []
-        for ip_list in community_server_ips_dict.values():
-            community_server_ips_list.extend([ip for ip in ip_list])
-
-        if ip != '' and ip in community_server_ips_list:
-            for provider_name in community_server_ips_dict.keys():
-                if ip in community_server_ips_dict[provider_name]:
-                    self.log.debug(f"IP {ip} is run by {provider_name}")
-                    return provider_name
-
-        self.log.debug(f"IP {ip} is not run by a known provider")
-        return None
+        try:
+            server_info = community_server_ips_dict[ip]
+            self.log.debug(f"IP {ip} is run by {server_info}")
+            return server_info
+        except KeyError:
+            self.log.debug(f"IP {ip} is not run by a known provider")
+            return None
 
 
 # alerts the user that they don't seem to have -condebug

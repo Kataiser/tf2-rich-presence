@@ -167,10 +167,11 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
 
     def test_find_provider_for_ip(self):
         app = main.TF2RichPresense(self.log)
-        self.assertEqual(app.find_provider_for_ip('104.243.38.50:27026'), 'Wonderland.TF')
-        self.assertEqual(app.find_provider_for_ip('74.91.116.5:27015'), 'Skial')
-        self.assertEqual(app.find_provider_for_ip('192.223.30.133:27015'), 'TF2Maps')
-        self.assertEqual(app.find_provider_for_ip('192.223.30.133:2701'), None)
+        self.assertEqual(app.find_provider_for_ip('104.243.38.50:27026'), ['Wonderland.TF', '★ WonderLand NY | Highertower x1000 - FREE ITEMS!'])
+        self.assertEqual(app.find_provider_for_ip('74.91.116.5:27015'), ['Skial', 'skial.com | 2FORT+ | NY'])
+        self.assertEqual(app.find_provider_for_ip('192.223.30.133:27015'), ['TF2Maps', 'Unknown server name'])
+        self.assertEqual(app.find_provider_for_ip('31.186.251.51:27015'), ['TF2Maps', 'TF2Maps.net | Frankfurt'])
+        self.assertEqual(app.find_provider_for_ip('31.186.251.51:2701'), None)
         self.assertEqual(app.find_provider_for_ip(''), None)
 
     def test_discoipc(self):
