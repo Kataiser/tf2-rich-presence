@@ -2,6 +2,7 @@ import functools
 import json
 import os
 import sys
+import time
 import tkinter as tk
 import tkinter.ttk as ttk
 import traceback
@@ -10,6 +11,8 @@ from typing import Any, Union
 
 sys.path.append(os.path.abspath(os.path.join('resources', 'python', 'packages')))
 sys.path.append(os.path.abspath(os.path.join('resources')))
+import requests
+
 import logger
 
 
@@ -19,6 +22,7 @@ class GUI(tk.Frame):
         self.master = master
 
         self.log = logger.Log()
+        self.log.to_stderr = True
         self.log.info("Opening settings menu for TF2 Rich Presence {tf2rpvnum}")
 
         master.title("TF2 Rich Presence ({tf2rpvnum}) settings")
@@ -147,12 +151,14 @@ class GUI(tk.Frame):
         setting12_frame.grid(row=6, columnspan=2, sticky=tk.W, padx=(20, 20), pady=(4, 0))
 
         buttons_frame = ttk.Frame()
+        servers_button = ttk.Button(buttons_frame, text="Update server database", command=self.download_servers_database)
+        servers_button.grid(row=0, column=0, sticky=tk.E, padx=0, pady=(20, 20))
         self.restore_button = ttk.Button(buttons_frame, text="Restore defaults", command=self.restore_defaults)
-        self.restore_button.grid(row=0, column=0, sticky=tk.E, padx=0, pady=(20, 20))
+        self.restore_button.grid(row=0, column=1, padx=(10, 0), pady=(20, 20))
         cancel_button = ttk.Button(buttons_frame, text="Close without saving", command=self.close_without_saving)
-        cancel_button.grid(row=0, column=1, padx=20, pady=(20, 20))
+        cancel_button.grid(row=0, column=2, padx=10, pady=(20, 20))
         ok_button = ttk.Button(buttons_frame, text="Save and close", command=self.save_and_close, default=tk.ACTIVE)
-        ok_button.grid(row=0, column=2, sticky=tk.W, padx=0, pady=(20, 20))
+        ok_button.grid(row=0, column=3, sticky=tk.W, padx=0, pady=(20, 20))
         buttons_frame.grid(row=100, columnspan=3)
 
         self.update_default_button_state()
@@ -254,6 +260,29 @@ class GUI(tk.Frame):
         if allowed_close == "yes":
             self.log.info("Closing settings menu without saving")
             self.master.destroy()
+
+    def download_servers_database(self):
+        if os.path.isdir('resources'):
+            servers_json_path = os.path.join('resources', 'community_server_ips.json')
+        else:
+            servers_json_path = 'community_server_ips.json'
+        old_servers_json_size = os.stat(servers_json_path).st_size
+
+        try:
+            before_download_time = time.perf_counter()
+            servers_json_response = requests.get('https://raw.githubusercontent.com/Kataiser/tf2-rich-presence/master/TF2%20Rich%20Presence/community_server_ips.json', timeout=2, stream=True)
+            self.log.debug(f"Downloading community_server_ips.json from Github ({servers_json_response.headers['content-length']} bytes)")
+
+            servers_json_data = servers_json_response.content
+            json.loads(servers_json_data)
+            with open(servers_json_path, 'wb') as servers_json:
+                servers_json.write(servers_json_data)
+
+            new_servers_json_size = os.stat(servers_json_path).st_size
+            self.log.debug(f"Download took {format(time.perf_counter() - before_download_time, '.2f')} seconds, file is now {new_servers_json_size} bytes (was {old_servers_json_size} bytes)")
+        except (requests.exceptions.ConnectionError, requests.exceptions.Timeout, json.decoder.JSONDecodeError):
+            messagebox.showerror("Error", "Failed to download updated server database, try again later.")
+            self.log.error(f"Error downloading community_server_ips.json: {traceback.format_exc()}")
 
 
 # main entry point
