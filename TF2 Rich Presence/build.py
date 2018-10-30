@@ -176,7 +176,7 @@ def main(version_num):
         json.dump({}, maps_db, indent=4)
 
     # copies the python interpreter
-    python_source = os.path.abspath('python-3.7.0-embed-win32')
+    python_source = os.path.abspath('python-3.7.1-embed-win32')
     python_target = os.path.abspath(f'{new_build_folder_name}\\resources\\python')
     print(f"Copying from {python_source} to {python_target}: ", end='')
     subprocess.run(f'xcopy \"{python_source}\" \"{python_target}\\\" /E /Q')
