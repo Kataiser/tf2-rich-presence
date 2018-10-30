@@ -13,7 +13,7 @@ import settings
 
 
 # uses teamwork.tf's API to find the gamemode of a custom map
-def find_custom_map_gamemode(log, map_filename: str, timeout: float = settings.get('request_timeout')) -> Tuple[str, str]:
+def find_custom_map_gamemode(log, map_filename: str, timeout: float = settings.get('request_timeout'), ignore_cache=True) -> Tuple[str, str]:
     if map_filename == '':
         log.error("Map filename is blank")
         return 'unknown_map', 'Unknown gamemode'
@@ -27,6 +27,9 @@ def find_custom_map_gamemode(log, map_filename: str, timeout: float = settings.g
 
     # look for map in loaded cache
     try:
+        if ignore_cache:
+            raise KeyError  # if it works, it ain't stupid
+
         cached_data: list = custom_map_gamemodes[map_filename]
         if seconds_since_epoch_now - cached_data[2] <= settings.get('map_invalidation_hours') * 3600:  # custom map cache expiration
             log.debug(f"{map_filename}'s gamemode is {list(cached_data[:-1])} (from cache)")
