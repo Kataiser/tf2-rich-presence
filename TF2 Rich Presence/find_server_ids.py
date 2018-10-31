@@ -9,7 +9,7 @@ def main():
     save_file_name = 'community_server_ips.json'
 
     try:
-        with open(save_file_name, 'r', errors='ignore') as community_server_ips_json:
+        with open(save_file_name, 'rb') as community_server_ips_json:
             out = json.load(community_server_ips_json)
     except FileNotFoundError:
         out = {}
