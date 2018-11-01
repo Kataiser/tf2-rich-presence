@@ -261,6 +261,7 @@ class GUI(tk.Frame):
             self.log.info("Closing settings menu without saving")
             self.master.destroy()
 
+    # downloads the most recent community_server_ips.json from Github
     def download_servers_database(self):
         if os.path.isdir('resources'):
             servers_json_path = os.path.join('resources', 'community_server_ips.json')
@@ -280,6 +281,7 @@ class GUI(tk.Frame):
 
             new_servers_json_size = os.stat(servers_json_path).st_size
             self.log.debug(f"Download took {format(time.perf_counter() - before_download_time, '.2f')} seconds, file is now {new_servers_json_size} bytes (was {old_servers_json_size} bytes)")
+            messagebox.showinfo("Update downloaded", "Successfully updated the community server database.")
         except (requests.exceptions.ConnectionError, requests.exceptions.Timeout, json.decoder.JSONDecodeError):
             messagebox.showerror("Error", "Failed to download updated server database, try again later.")
             self.log.error(f"Error downloading community_server_ips.json: {traceback.format_exc()}")
