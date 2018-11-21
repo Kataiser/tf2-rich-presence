@@ -104,7 +104,7 @@ def main(version_num):
 
     # creates build_info.txt
     try:
-        commits_info = json.loads(requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/commits', timeout=10).text)
+        commits_info = json.loads(requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/commits', timeout=5).text)
         latest_commit_message = commits_info[0]['commit']['message'].split('\n')[0]
         latest_commit = f"\"{latest_commit_message}\" @ {commits_info[0]['html_url']}"
     except Exception as error:
