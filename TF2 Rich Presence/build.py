@@ -47,9 +47,11 @@ def main(version_num):
         print("No old build folder found")
 
     files_in_cwd = os.listdir('.')
+    last_build_time = None
     for file in files_in_cwd:
         if file.startswith('tf2_rich_presence_'):
             if file.endswith('_installer.exe') or file.endswith('.zip'):
+                last_build_time = os.stat(file).st_ctime
                 os.remove(file)
                 print(f"Removed old package: {file}")
 
@@ -221,7 +223,19 @@ def main(version_num):
         launcher_py_write.write(new_data)
     print("Disabled Sentry in launcher")
 
-    print(f"\nFinished building TF2 Rich Presence {version_num} (took {int(time.perf_counter() - build_start_time)} seconds)")
+    # finishing output
+    if last_build_time:
+        last_build_time = round(time.time() - last_build_time)
+
+        if last_build_time > 3600:
+            last_build_time_text = f"{round(last_build_time / 3600, 1)} hours"
+        elif last_build_time > 60:
+            last_build_time_text = f"{round(last_build_time / 60, 1)} minutes"
+        else:
+            last_build_time_text = f"{last_build_time} seconds"
+
+    time_since_last_build_text = f", {last_build_time_text} since last finished build"
+    print(f"\nFinished building TF2 Rich Presence {version_num} (took {int(time.perf_counter() - build_start_time)} seconds{time_since_last_build_text})")
 
 
 # converts a batch file to an exe with Bat To Exe Converter (http://www.f2ko.de/en/b2e.php)
