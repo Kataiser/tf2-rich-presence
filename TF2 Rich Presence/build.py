@@ -223,7 +223,7 @@ def main(version_num):
         launcher_py_write.write(new_data)
     print("Disabled Sentry in launcher")
 
-    # finishing output
+    # prepares display of time since last build
     if last_build_time:
         last_build_time = round(time.time() - last_build_time)
 
@@ -236,7 +236,11 @@ def main(version_num):
         else:
             last_build_time_text = f"{last_build_time} seconds"
 
-    time_since_last_build_text = f", {last_build_time_text} since last finished build"
+        time_since_last_build_text = f", {last_build_time_text} since last finished build"
+    else:
+        time_since_last_build_text = ""
+
+    # finishing output
     print(f"\nFinished building TF2 Rich Presence {version_num} (took {int(time.perf_counter() - build_start_time)} seconds{time_since_last_build_text})")
 
 
