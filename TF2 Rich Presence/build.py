@@ -227,7 +227,9 @@ def main(version_num):
     if last_build_time:
         last_build_time = round(time.time() - last_build_time)
 
-        if last_build_time > 3600:
+        if last_build_time > 86400:
+            last_build_time_text = f"{round(last_build_time / 86400, 1)} days"
+        elif last_build_time > 3600:
             last_build_time_text = f"{round(last_build_time / 3600, 1)} hours"
         elif last_build_time > 60:
             last_build_time_text = f"{round(last_build_time / 60, 1)} minutes"
