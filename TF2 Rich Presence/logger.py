@@ -54,7 +54,11 @@ class Log:
             time_since_start: str = format(time.perf_counter() - self.start_time, '.4f')  # the format() adds trailing zeroes
 
             full_line: str = f"[{current_time} +{time_since_start}] {level}: {message_out}\n"
-            self.log_file.write(full_line)
+
+            try:
+                self.log_file.write(full_line)
+            except UnicodeEncodeError as error:
+                self.error(f"Couldn't write log due to UnicodeEncodeError: {error}")
 
             self.unsaved_lines += 1
             if (self.unsaved_lines >= 100 or level in ['Error', 'Critical']) and message_out != "Closing and re-opening log":
