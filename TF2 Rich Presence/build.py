@@ -243,6 +243,9 @@ def main(version_num):
     # finishing output
     print(f"\nFinished building TF2 Rich Presence {version_num} (took {int(time.perf_counter() - build_start_time)} seconds{time_since_last_build_text})")
 
+    if input("Open build path? ('y' for yes, enter for no) ") == 'y':
+        subprocess.Popen(f'explorer "{new_build_folder_name}"')
+
 
 # converts a batch file to an exe with Bat To Exe Converter (http://www.f2ko.de/en/b2e.php)
 def convert_bat_to_exe(batch_location: str, vnum: str, icon_path: str):
