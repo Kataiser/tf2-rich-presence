@@ -32,98 +32,6 @@ def main(version_num):
     build_start_time = time.perf_counter()
     print()
 
-    # starts from scratch each time
-    old_build_folders = [f.path for f in os.scandir('.') if f.is_dir() if f.path.startswith('.\\TF2 Rich Presence ')]
-    if old_build_folders:
-        for folder in old_build_folders:
-            try:
-                shutil.rmtree(folder)
-            except (OSError, PermissionError):
-                time.sleep(0.2)
-                shutil.rmtree(folder)  # beautiful
-
-            print(f"Removed old build folder: {folder}")
-    else:
-        print("No old build folder found")
-
-    files_in_cwd = os.listdir('.')
-    last_build_time = None
-    for file in files_in_cwd:
-        if file.startswith('tf2_rich_presence_'):
-            if file.endswith('_installer.exe') or file.endswith('.zip'):
-                last_build_time = os.stat(file).st_ctime
-                os.remove(file)
-                print(f"Removed old package: {file}")
-
-    # creates folders again
-    time.sleep(0.25)  # because windows is slow sometimes
-    new_build_folder_name = f'TF2 Rich Presence {version_num}'
-    os.mkdir(new_build_folder_name)
-    os.mkdir(f'{new_build_folder_name}\\resources')
-    os.mkdir(f'{new_build_folder_name}\\logs')
-    print(f"Created new build folder: {new_build_folder_name}")
-
-    files_to_copy = [('maps.json', f'{new_build_folder_name}\\resources\\'),
-                     ('custom_maps.json', f'{new_build_folder_name}\\resources\\'),
-                     ('LICENSE', f'{new_build_folder_name}\\resources\\'),
-                     ('main.py', f'{new_build_folder_name}\\resources\\'),
-                     ('launcher.py', f'{new_build_folder_name}\\resources\\'),
-                     ('readme.txt', f'{new_build_folder_name}\\'),
-                     ('Launch TF2 with Rich Presence.bat', f'{new_build_folder_name}\\'),
-                     ('Change settings.bat', f'{new_build_folder_name}\\'),
-                     ('logger.py', f'{new_build_folder_name}\\resources\\'),
-                     ('updater.py', f'{new_build_folder_name}\\resources\\'),
-                     ('configs.py', f'{new_build_folder_name}\\resources\\'),
-                     ('custom_maps.py', f'{new_build_folder_name}\\resources\\'),
-                     ('settings.py', f'{new_build_folder_name}\\resources\\'),
-                     ('tf2_logo_blurple.ico', f'{new_build_folder_name}\\resources\\'),
-                     ('tf2_logo_blurple_wrench.ico', f'{new_build_folder_name}\\resources\\'),
-                     ('community_server_ips.json', f'{new_build_folder_name}\\resources\\'),
-                     ('APIs', f'{new_build_folder_name}\\resources\\'),
-                     ('changelogs.html', f'{new_build_folder_name}\\')]
-
-    # copies files, adding any version numbers
-    for file_dest_pair in files_to_copy:
-        try:
-            with open(file_dest_pair[0], 'r') as file_source:
-                with open(f'{file_dest_pair[1]}{file_dest_pair[0]}', 'w') as file_target:
-                    modified_file = file_source.read().replace('{tf2rpvnum}', version_num)
-
-                    if file_dest_pair[0] == 'main.py':
-                        modified_file = modified_file.replace('log.cleanup(20)', 'log.cleanup(5)')
-                        modified_file = modified_file.replace('to_stderr = True', 'to_stderr = False')
-                    if file_dest_pair[0] == 'launcher.py':
-                        modified_file = modified_file.replace('sentry_enabled: bool = False', 'sentry_enabled: bool = True')
-                    if file_dest_pair[0] == 'logger.py':
-                        modified_file = modified_file.replace('to_stderr: bool = True', 'to_stderr: bool = False')
-
-                    file_target.write(modified_file)
-                    print(f"Copied (and possibly modified) {file_dest_pair[0]}")
-        except UnicodeDecodeError:
-            print("Copied", shutil.copy(*file_dest_pair))
-
-    # creates build_info.txt
-    try:
-        commits_info = json.loads(requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/commits', timeout=5).text)
-        latest_commit_message = commits_info[0]['commit']['message'].split('\n')[0]
-        latest_commit = f"\"{latest_commit_message}\" @ {commits_info[0]['html_url']}"
-    except Exception as error:
-        latest_commit = f"Couldn't get commit: {error}"
-    with open(f'{new_build_folder_name}\\resources\\build_info.txt', 'w') as info_file:
-        info_file.write(f"TF2 Rich Presence by Kataiser"
-                        "\nhttps://github.com/Kataiser/tf2-rich-presence"
-                        f"\n\nVersion: {version_num}"
-                        f"\nBuilt: {datetime.datetime.utcnow().strftime('%c')} UTC"
-                        f"\nHash: {logger.generate_hash()}"
-                        f"\nLatest commit: {latest_commit}")
-
-    # creates README.md from README-source.md
-    with open('README-source.md', 'r') as readme_md_source:
-        modified_readme_md = readme_md_source.read().replace('{tf2rpvnum}', version_num)
-    with open('README.md', 'w') as readme_md_target:
-        readme_md_target.write(modified_readme_md)
-    print("Created README.md from modified README-source.md")
-
     # copies stuff to the Github repo
     if github_repo_path != 'n':
         print("Copied", shutil.copy('main.py', f'{github_repo_path}\\TF2 Rich Presence'))
@@ -172,6 +80,99 @@ def main(version_num):
         shutil.rmtree(build_tools_target)
         print(f"Copying from {build_tools_source} to {build_tools_target}: ", end='')
         subprocess.run(f'xcopy \"{build_tools_source}\" \"{build_tools_target}\\\" /E /Q')
+
+    # starts from scratch each time
+    old_build_folders = [f.path for f in os.scandir('.') if f.is_dir() if f.path.startswith('.\\TF2 Rich Presence ')]
+    if old_build_folders:
+        for folder in old_build_folders:
+            try:
+                shutil.rmtree(folder)
+            except (OSError, PermissionError):
+                time.sleep(0.2)
+                shutil.rmtree(folder)  # beautiful
+
+            print(f"Removed old build folder: {folder}")
+    else:
+        print("No old build folder found")
+
+    files_in_cwd = os.listdir('.')
+    last_build_time = None
+    for file in files_in_cwd:
+        if file.startswith('tf2_rich_presence_'):
+            if file.endswith('_installer.exe') or file.endswith('.zip'):
+                last_build_time = os.stat(file).st_ctime
+                os.remove(file)
+                print(f"Removed old package: {file}")
+
+    # creates folders again
+    time.sleep(0.25)  # because windows is slow sometimes
+    new_build_folder_name = f'TF2 Rich Presence {version_num}'
+    os.mkdir(new_build_folder_name)
+    os.mkdir(f'{new_build_folder_name}\\resources')
+    os.mkdir(f'{new_build_folder_name}\\logs')
+    print(f"Created new build folder: {new_build_folder_name}")
+
+    files_to_copy = [('maps.json', f'{new_build_folder_name}\\resources\\'),
+                     ('custom_maps.json', f'{new_build_folder_name}\\resources\\'),
+                     ('LICENSE', f'{new_build_folder_name}\\resources\\'),
+                     ('main.py', f'{new_build_folder_name}\\resources\\'),
+                     ('launcher.py', f'{new_build_folder_name}\\resources\\'),
+                     ('readme.txt', f'{new_build_folder_name}\\'),
+                     ('Launch TF2 with Rich Presence.bat', f'{new_build_folder_name}\\'),
+                     ('Change settings.bat', f'{new_build_folder_name}\\'),
+                     ('logger.py', f'{new_build_folder_name}\\resources\\'),
+                     ('updater.py', f'{new_build_folder_name}\\resources\\'),
+                     ('configs.py', f'{new_build_folder_name}\\resources\\'),
+                     ('custom_maps.py', f'{new_build_folder_name}\\resources\\'),
+                     ('find_server_ids.py', f'{new_build_folder_name}\\resources\\'),
+                     ('settings.py', f'{new_build_folder_name}\\resources\\'),
+                     ('tf2_logo_blurple.ico', f'{new_build_folder_name}\\resources\\'),
+                     ('tf2_logo_blurple_wrench.ico', f'{new_build_folder_name}\\resources\\'),
+                     ('community_server_ips.json', f'{new_build_folder_name}\\resources\\'),
+                     ('APIs', f'{new_build_folder_name}\\resources\\'),
+                     ('changelogs.html', f'{new_build_folder_name}\\')]
+
+    # copies files, adding any version numbers
+    for file_dest_pair in files_to_copy:
+        try:
+            with open(file_dest_pair[0], 'r') as file_source:
+                with open(f'{file_dest_pair[1]}{file_dest_pair[0]}', 'w') as file_target:
+                    modified_file = file_source.read().replace('{tf2rpvnum}', version_num)
+
+                    if file_dest_pair[0] == 'main.py':
+                        modified_file = modified_file.replace('log.cleanup(20)', 'log.cleanup(5)')
+                        modified_file = modified_file.replace('to_stderr = True', 'to_stderr = False')
+                    if file_dest_pair[0] == 'launcher.py':
+                        modified_file = modified_file.replace('sentry_enabled: bool = False', 'sentry_enabled: bool = True')
+                    if file_dest_pair[0] == 'logger.py':
+                        modified_file = modified_file.replace('to_stderr: bool = True', 'to_stderr: bool = False')
+
+                    file_target.write(modified_file)
+                    print(f"Copied (and possibly modified) {file_dest_pair[0]}")
+        except UnicodeDecodeError:
+            print("Copied", shutil.copy(*file_dest_pair))
+
+    # creates build_info.txt
+    try:
+        commits_info = json.loads(requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/commits', timeout=5).text)
+        latest_commit_message = commits_info[0]['commit']['message'].split('\n')[0]
+        latest_commit = f"\"{latest_commit_message}\" @ {commits_info[0]['html_url']}"
+    except Exception as error:
+        latest_commit = f"Couldn't get commit: {error}"
+    with open(f'{new_build_folder_name}\\resources\\build_info.txt', 'w') as info_file:
+        info_file.write(f"TF2 Rich Presence by Kataiser"
+                        "\nhttps://github.com/Kataiser/tf2-rich-presence"
+                        f"\n\nVersion: {version_num}"
+                        f"\nBuilt: {datetime.datetime.utcnow().strftime('%c')} UTC"
+                        f"\nHash: {logger.generate_hash()}"
+                        f"\nLatest commit: {latest_commit}")
+
+    # creates README.md from README-source.md
+    with open('README-source.md', 'r') as readme_md_source:
+        modified_readme_md = readme_md_source.read().replace('{tf2rpvnum}', version_num)
+    with open('README.md', 'w') as readme_md_target:
+        readme_md_target.write(modified_readme_md)
+    print("Created README.md from modified README-source.md")
 
     # clears custom map cache
     with open(f'{new_build_folder_name}\\resources\\custom_maps.json', 'w') as maps_db:
