@@ -36,11 +36,6 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
         self.log.log_file.close()
         settings.access_settings_file(save_dict=self.old_settings)
 
-    def test_get_idle_duration(self):
-        idle_duration = main.get_idle_duration()
-        self.assertLess(idle_duration, 10.0)
-        self.assertGreaterEqual(idle_duration, 0.0)
-
     def test_interpret_console_log(self):
         app = main.TF2RichPresense(self.log)
         self.assertEqual(app.interpret_console_log('test_resources\\console_in_menus.log', ['Kataiser'], float('inf')), ('In menus', 'Not queued', ''))
@@ -168,8 +163,8 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
 
     def test_find_provider_for_ip(self):
         app = main.TF2RichPresense(self.log)
-        self.assertEqual(app.find_provider_for_ip('104.243.38.50:27026'), ['Wonderland.TF', '★ WonderLand | DM DUEL! - FREE ITEMS! - !givemeall'])
-        self.assertEqual(app.find_provider_for_ip('74.91.116.5:27015'), ['Skial', 'skial.com | FREAK FORTRESS | NY'])
+        self.assertEqual(app.find_provider_for_ip('104.243.38.50:27026'), ['Wonderland.TF', '★ WonderLand IL | Achievement Engineer #3'])
+        self.assertEqual(app.find_provider_for_ip('74.91.116.5:27015'), ['Skial', 'skial.com | DEATHMATCH | LA'])
         self.assertEqual(app.find_provider_for_ip('192.223.30.133:27015'), ['TF2Maps', 'Unknown server name'])
         self.assertEqual(app.find_provider_for_ip('31.186.251.51:27015'), ['TF2Maps', 'TF2Maps.net | Frankfurt'])
         self.assertEqual(app.find_provider_for_ip('31.186.251.51:2701'), None)

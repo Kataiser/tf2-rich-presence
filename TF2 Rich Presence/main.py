@@ -6,7 +6,6 @@ import os
 import platform
 import time
 import traceback
-from ctypes import Structure, windll, c_uint, sizeof, byref
 from typing import Dict, Union, TextIO, Any, List, Tuple
 
 import psutil
@@ -87,17 +86,11 @@ class TF2RichPresense:
             self.log.debug(f"Settings cache stats: {settings.get.cache_info()}")
 
             # rich presence only updates every 15 seconds, but it listens constantly so sending every 5 (by default) seconds is fine
-            if settings.get('scale_wait_time'):
-                idle_duration = get_idle_duration()
-                sleep_time: float = calculate_wait_time(settings.get('wait_time'), idle_duration)
-                self.log.debug(f"Sleeping for {sleep_time} secs, user has been idle for {idle_duration} secs")
-            else:
-                sleep_time = settings.get('wait_time')
-                self.log.debug(f"Sleeping for {sleep_time} secs, scaling is disabled")
-
+            sleep_time = settings.get('wait_time')
+            self.log.debug(f"Sleeping for {sleep_time} seconds")
             time.sleep(sleep_time)
 
-            # runs garbage collection after waiting
+            # runs garbage collection after waiting. for some reason?
             self.log.debug(f"This GC: {gc.collect()}")
             self.log.debug(f"Total GC: {gc.get_stats()}")
 
@@ -435,24 +428,6 @@ def no_condebug_warning():
     # -condebug is kinda necessary so just wait to restart if it's not there
     input("Press enter to retry\n")
     raise SystemExit
-
-
-# https://www.blog.pythonlibrary.org/2010/05/05/python-how-to-tell-how-long-windows-has-been-idle/
-# http://stackoverflow.com/questions/911856/detecting-idle-time-in-python
-class LASTINPUTINFO(Structure):
-    _fields_ = [
-        ('cbSize', c_uint),
-        ('dwTime', c_uint),
-    ]
-
-
-# how long the user has been idle for, in seconds
-def get_idle_duration() -> float:
-    last_input_info = LASTINPUTINFO()
-    last_input_info.cbSize = sizeof(last_input_info)
-    windll.user32.GetLastInputInfo(byref(last_input_info))
-    millis = windll.kernel32.GetTickCount() - last_input_info.dwTime
-    return millis / 1000.0
 
 
 # calculates delay, in seconds, between updates

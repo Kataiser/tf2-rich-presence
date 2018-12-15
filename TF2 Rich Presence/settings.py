@@ -14,6 +14,7 @@ sys.path.append(os.path.abspath(os.path.join('resources')))
 import requests
 
 import logger
+import find_server_ids
 
 
 class GUI(tk.Frame):
@@ -44,7 +45,6 @@ class GUI(tk.Frame):
         self.map_invalidation_hours = tk.IntVar()
         self.check_updates = tk.BooleanVar()
         self.request_timeout = tk.IntVar()
-        self.scale_wait_time = tk.BooleanVar()
         self.hide_queued_gamemode = tk.BooleanVar()
         self.log_level = tk.StringVar()
         self.console_scan_kb = tk.IntVar()
@@ -61,7 +61,6 @@ class GUI(tk.Frame):
             self.map_invalidation_hours.set(self.settings_loaded['map_invalidation_hours'])
             self.check_updates.set(self.settings_loaded['check_updates'])
             self.request_timeout.set(self.settings_loaded['request_timeout'])
-            self.scale_wait_time.set(self.settings_loaded['scale_wait_time'])
             self.hide_queued_gamemode.set(self.settings_loaded['hide_queued_gamemode'])
             self.log_level.set(self.settings_loaded['log_level'])
             self.console_scan_kb.set(self.settings_loaded['console_scan_kb'])
@@ -83,7 +82,7 @@ class GUI(tk.Frame):
             "Report crash logs"))
         setting3_frame = ttk.Frame()
         setting3_text = ttk.Label(setting3_frame, text="{}".format(
-            "Base delay, in seconds, between refreshes (will increase after some AFK time): "))
+            "Delay between refreshes, in seconds: "))
         setting3_option = ttk.Spinbox(setting3_frame, textvariable=self.wait_time, width=6, from_=0, to=1000, validate='all', validatecommand=(check_int_command, '%P', 1000),
                                       command=self.update_default_button_state)
         setting4_frame = ttk.Frame()
@@ -98,8 +97,6 @@ class GUI(tk.Frame):
             "Internet connection (for updater and custom maps) timeout, in seconds: "))
         setting6_option = ttk.Spinbox(setting6_frame, textvariable=self.request_timeout, width=6, from_=0, to=60, validate='all', validatecommand=(check_int_command, '%P', 60),
                                       command=self.update_default_button_state)
-        setting7 = ttk.Checkbutton(master, variable=self.scale_wait_time, command=self.update_default_button_state, text="{}".format(
-            "Increase refresh delay when AFK"))
         setting8 = ttk.Checkbutton(master, variable=self.hide_queued_gamemode, command=self.update_default_button_state, text="{}".format(
             "Hide game type (Casual, Comp, MvM) queued for"))
         setting9_frame = ttk.Frame()
@@ -135,7 +132,6 @@ class GUI(tk.Frame):
         setting6_text.pack(side='left', fill=None, expand=False)
         setting6_option.pack(side='left', fill=None, expand=False)
         setting6_frame.grid(row=8, columnspan=2, sticky=tk.W, padx=(20, 20), pady=(4, 0))
-        setting7.grid(row=1, sticky=tk.W, columnspan=2, padx=(20, 20), pady=(4, 0))
         setting8.grid(row=4, sticky=tk.W, columnspan=2, padx=(20, 20), pady=(4, 0))
         setting9_text.pack(side='left', fill=None, expand=False)
         for setting9_radiobutton in setting9_radiobuttons:
@@ -181,7 +177,6 @@ class GUI(tk.Frame):
                 'map_invalidation_hours': self.map_invalidation_hours.get(),
                 'check_updates': self.check_updates.get(),
                 'request_timeout': max(self.request_timeout.get(), 1),
-                'scale_wait_time': self.scale_wait_time.get(),
                 'hide_queued_gamemode': self.hide_queued_gamemode.get(),
                 'log_level': self.log_level.get(),
                 'console_scan_kb': self.console_scan_kb.get(),
@@ -206,7 +201,6 @@ class GUI(tk.Frame):
             self.map_invalidation_hours.set(get_setting_default('map_invalidation_hours'))
             self.check_updates.set(get_setting_default('check_updates'))
             self.request_timeout.set(get_setting_default('request_timeout'))
-            self.scale_wait_time.set(get_setting_default('scale_wait_time'))
             self.hide_queued_gamemode.set(get_setting_default('hide_queued_gamemode'))
             self.log_level.set(get_setting_default('log_level'))
             self.console_scan_kb.set(get_setting_default('console_scan_kb'))
@@ -286,6 +280,8 @@ class GUI(tk.Frame):
             messagebox.showerror("Error", "Failed to download updated server database, try again later.")
             self.log.error(f"Error downloading community_server_ips.json: {traceback.format_exc()}")
 
+        # find_server_ids.main()
+
 
 # main entry point
 def launch():
@@ -335,7 +331,6 @@ def get_setting_default(setting: str = '', return_all: bool = False) -> Any:
                 'map_invalidation_hours': 24,
                 'check_updates': True,
                 'request_timeout': 5,
-                'scale_wait_time': True,
                 'hide_queued_gamemode': False,
                 'log_level': 'Debug',
                 'console_scan_kb': 1000,
