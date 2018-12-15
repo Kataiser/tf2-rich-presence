@@ -7,6 +7,11 @@ from bs4 import BeautifulSoup
 
 # downloads server information (IPs and names) from teamwork.tf
 def main():
+    with open('maps.json', 'r') as maps_json:
+        maps_db = json.load(maps_json)
+
+    official_maps = [maps_db[map_filename][0].lower().replace(' ', '') for map_filename in maps_db]
+
     save_file_name = 'community_server_ips.json'
 
     # finds out loads the old database
@@ -46,9 +51,6 @@ def main():
                         server_name: str = div_in_server_div.string
                         server_name = server_name.lstrip().rstrip()  # remove leading and trailing whitespace
 
-                        if 'TF2Maps.net | Frankfurt' in server_name:
-                            pass
-
                 for kbd in server_div.find_all('kbd'):  # kbd tag = keyboard. means monospace font in HTML
                     kbd_string = str(kbd.string)
 
@@ -58,6 +60,22 @@ def main():
                         out[kbd_string] = (provider_name, server_name)
 
             print(ip_pairs)
+
+    # make sure no map names are in server names
+    ips_to_delete = []
+
+    for out_ip in out:
+        server_name_check = out[out_ip][1].lower().replace(' ', '')
+
+        if "24/7" not in server_name_check:
+            for map_name in official_maps:
+                if map_name in server_name_check:
+                    ips_to_delete.append(out_ip)
+                    break
+
+    for ip_to_delete in ips_to_delete:
+        del out[ip_to_delete]
+    print(f"\nRemoved {len(ips_to_delete)} servers with map names")
 
     with open(save_file_name, 'wb') as community_server_ips_json:
         community_server_ips_json.write(json.dumps(out, indent=4, ensure_ascii=False).encode('utf8'))  # the encoding stuff is because the json library hates unicode
