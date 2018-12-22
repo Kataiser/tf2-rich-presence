@@ -387,7 +387,7 @@ class TF2RichPresense:
         self.log.critical(formatted_exception)
 
         if not silent:
-            print(f"\n{formatted_exception}\nTF2 Rich Presence has crashed, the error should now be reported to the developer."
+            print(f"\n{formatted_exception}\nTF2 Rich Presence has crashed, and the error has been reported to the developer."
                   f"\n(Consider opening an issue at https://github.com/Kataiser/tf2-rich-presence/issues)"
                   f"\nRestarting in 2 seconds...")
 
