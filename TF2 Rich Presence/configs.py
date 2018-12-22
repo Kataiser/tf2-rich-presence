@@ -53,8 +53,8 @@ def steam_config_file(log, exe_location: str) -> list:
                 tf2_line_num: int = 0
 
                 for line in enumerate(lines):
-                    if line[1].startswith('\t\t"PersonaName"\t\t'):
-                        possible_username: str = line[1].replace('\t', '')[14:-2]
+                    if "PersonaName" in line[1]:
+                        possible_username: str = line[1].split('"')[-2]
                         log.debug(f"Possible username: {possible_username}")
 
                     if line[1] == '\t\t\t\t\t"440"\n':  # looks for tf2's ID and finds the line number
