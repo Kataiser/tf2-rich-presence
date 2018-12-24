@@ -28,21 +28,21 @@ def launch():
         loaded_module.launch()
     except (KeyboardInterrupt, SystemExit):
         raise SystemExit
-    except Exception as error:
+    except Exception:
         if sentry_enabled:
-            handle_crash_without_log(error, client=sentry_client)
+            handle_crash_without_log(client=sentry_client)
         else:
-            handle_crash_without_log(error)
+            handle_crash_without_log()
 
 
 # displays and reports current traceback
-def handle_crash_without_log(exception: Exception, client: Union[Client, None] = None):
+def handle_crash_without_log(client: Union[Client, None] = None):
     if client:
         formatted_exception = traceback.format_exc()
         print(f"\n{formatted_exception}\nTF2 Rich Presence has crashed, and the error has been reported to the developer."
               f"\n(Consider opening an issue at https://github.com/Kataiser/tf2-rich-presence/issues)"
               f"\nRestarting in 2 seconds...")
-        client.captureMessage(str(exception))
+        client.captureMessage(formatted_exception)
 
     time.sleep(2)
 
