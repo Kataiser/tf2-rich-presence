@@ -122,22 +122,6 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
         with self.assertRaises(requests.exceptions.Timeout):
             updater.access_github_api(0.01)
 
-    def test_calculate_wait_time(self):
-        afk_times = [0.0, 3.703, 10.783, 32.019, 19.366, 42.835, 3.424, 73.215, 3.578, 113.263, 73.688, 121.583]
-        base_times = range(13)
-        correct_results = [0, 0, 0.12, 3.3, 1.4, 4.93, 0, 9.48, 0, 15.49, 9.55, 16.74, 1, 1, 1, 4.0, 2.1, 5.63, 1, 10.18, 1, 16.19, 10.25, 17.44, 2, 2, 2, 4.7, 2.8, 6.33, 2, 10.88, 2, 16.89,
-                           10.95, 18.14, 3, 3, 3, 5.4, 3.5, 7.03, 3, 11.58, 3, 17.59, 11.65, 18.84, 4, 4, 4, 6.1, 4.2, 7.73, 4, 12.28, 4, 18.29, 12.35, 19.54, 5, 5, 5, 6.8, 5, 8.43, 5, 12.98,
-                           5, 18.99, 13.05, 20.24, 6, 6, 6, 7.5, 6, 9.13, 6, 13.68, 6, 19.69, 13.75, 20.94, 7, 7, 7, 8.2, 7, 9.83, 7, 14.38, 7, 20.39, 14.45, 21.64, 8, 8, 8, 8.9, 8, 10.53, 8,
-                           15.08, 8, 21.09, 15.15, 22.34, 9, 9, 9, 9.6, 9, 11.23, 9, 15.78, 9, 21.79, 15.85, 23.04, 10, 10, 10, 10.3, 10, 11.93, 10, 16.48, 10, 22.49, 16.55, 23.74, 11, 11, 11,
-                           11.0, 11, 12.63, 11, 17.18, 11, 23.19, 17.25, 24.44, 12, 12, 12, 12, 12, 13.33, 12, 17.88, 12, 23.89, 17.95, 25.14]
-        results = []
-
-        for base_time in base_times:
-            for afk_time in afk_times:
-                results.append(main.calculate_wait_time(base_time, afk_time))
-
-        self.assertEqual(results, correct_results)
-
     def test_settings_check_int(self):
         self.assertTrue(settings.check_int('', 1000))
         self.assertTrue(settings.check_int('1', 1000))
@@ -163,8 +147,8 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
 
     def test_find_provider_for_ip(self):
         app = main.TF2RichPresense(self.log)
-        self.assertEqual(app.find_provider_for_ip('104.243.38.50:27026'), ['Wonderland.TF', '★ WonderLand IL | Achievement Engineer #3'])
-        self.assertEqual(app.find_provider_for_ip('74.91.116.5:27015'), ['Skial', 'skial.com | DEATHMATCH | LA'])
+        self.assertEqual(app.find_provider_for_ip('104.243.38.50:27026')[0], 'Wonderland.TF')
+        self.assertEqual(app.find_provider_for_ip('164.132.200.205:27062')[0], 'Skial')
         self.assertEqual(app.find_provider_for_ip('192.223.30.133:27015'), ['TF2Maps', 'Unknown server name'])
         self.assertEqual(app.find_provider_for_ip('31.186.251.51:27015'), ['TF2Maps', 'TF2Maps.net | Frankfurt'])
         self.assertEqual(app.find_provider_for_ip('31.186.251.51:2701'), None)
