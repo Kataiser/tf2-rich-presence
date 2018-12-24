@@ -50,8 +50,8 @@ def launch():
         app.run()
     except (KeyboardInterrupt, SystemExit):
         raise SystemExit
-    except Exception as error:
-        app.handle_crash(error)
+    except Exception:
+        app.handle_crash()
 
 
 class TF2RichPresense:
@@ -382,7 +382,7 @@ class TF2RichPresense:
         return current_map, current_class, current_ip
 
     # displays and reports current traceback
-    def handle_crash(self, exception: Exception, silent=False):
+    def handle_crash(self, silent=False):
         formatted_exception = traceback.format_exc()
         self.log.critical(formatted_exception)
 
@@ -391,7 +391,7 @@ class TF2RichPresense:
                   f"\n(Consider opening an issue at https://github.com/Kataiser/tf2-rich-presence/issues)"
                   f"\nRestarting in 2 seconds...")
 
-        self.log.report_log(str(exception))
+        self.log.report_log(formatted_exception)
         if not silent:
             time.sleep(2)
         raise SystemExit

@@ -73,10 +73,10 @@ def launch():
         check_for_update('{tf2rpvnum}', settings.get('request_timeout'))
     except (KeyboardInterrupt, SystemExit):
         raise SystemExit
-    except Exception as error:
+    except Exception:
         crash_logger = logger.Log()
         app_for_crash_handling = main.TF2RichPresense(crash_logger)
-        app_for_crash_handling.handle_crash(error, silent=True)
+        app_for_crash_handling.handle_crash(silent=True)
 
 
 if __name__ == '__main__':

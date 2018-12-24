@@ -120,7 +120,7 @@ class Log:
         self.debug(f"Deleted {len(deleted)} log(s): {deleted}")
 
     # uses raven (https://github.com/getsentry/raven-python) to report the current log and hopefully some of the current console.log to Sentry (https://sentry.io/)
-    def report_log(self, reason: str):
+    def report_log(self, tb: str):
         if self.sentry_enabled and launcher.sentry_enabled:
             self.info(f"Reporting {self.filename} ({os.stat(self.filename).st_size} bytes) to Sentry")
 
@@ -132,7 +132,7 @@ class Log:
             paste_url: str = self.pastebin(paste_text)
 
             try:
-                launcher.sentry_client.captureMessage(f'{reason}\n{self.filename}\n{paste_url}')
+                launcher.sentry_client.captureMessage(f'{self.filename}\n{paste_url}\n{tb}')
             except Exception as err:
                 self.error(f"Couldn't report crash to Sentry: {err}")
 
