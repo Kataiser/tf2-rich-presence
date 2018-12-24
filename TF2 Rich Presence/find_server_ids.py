@@ -74,7 +74,7 @@ def main():
                     break
 
     for ip_to_delete in ips_to_delete:
-        out[ip_to_delete][1] = "Unknown server name"
+        out[ip_to_delete][1] = "DELETED"
     print(f"\nRemoved {len(ips_to_delete)} servers with map names")
 
     with open(save_file_name, 'wb') as community_server_ips_json:
@@ -83,7 +83,6 @@ def main():
 
 # a requests.get with error handling in an infinite loop
 def get_with_retries(url):
-    retries_made = 0
     is_providers_page = 'providers' in url
 
     while True:
@@ -101,11 +100,6 @@ def get_with_retries(url):
                 raise ConnectionError("Response text is None")
         except Exception as error:
             print(f"Error while accessing URL {url}: ({error}). Retrying...", file=sys.stderr)
-
-            retries_made += 1
-            if retries_made == 10 and not is_providers_page:
-                print(f"Skipping {url}", file=sys.stderr)
-                break
 
 
 if __name__ == '__main__':

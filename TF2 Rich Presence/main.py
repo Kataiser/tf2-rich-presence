@@ -231,6 +231,8 @@ class TF2RichPresense:
                     server_info = self.find_provider_for_ip(server_ip)
                     if not server_info:
                         top_line = f'Map: {map_out}'
+                    elif server_info[1] == "DELETED":
+                        top_line = f'Map: {map_out} (Server provided by {server_info[0]})'
                     else:
                         top_line = f'Map: {map_out} (Server: "{server_info[1]}", provided by {server_info[0]})'
             else:  # console.log is empty or close to empty
