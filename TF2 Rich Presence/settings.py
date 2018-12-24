@@ -161,6 +161,11 @@ class GUI(tk.Frame):
         master.update()
         self.log.debug(f"Window size: {master.winfo_width()}x{master.winfo_height()}")
 
+        # move window to the top (but don't keep it there)
+        master.lift()
+        master.attributes('-topmost', True)
+        master.after_idle(master.attributes, '-topmost', False)
+
     # runs every time a setting is changed, updates "restore defaults" button's state
     def update_default_button_state(self):
         if self.get_working_settings() == get_setting_default(return_all=True):  # if settings are default, disable button
@@ -257,30 +262,31 @@ class GUI(tk.Frame):
 
     # downloads the most recent community_server_ips.json from Github
     def download_servers_database(self):
-        if os.path.isdir('resources'):
-            servers_json_path = os.path.join('resources', 'community_server_ips.json')
-        else:
-            servers_json_path = 'community_server_ips.json'
-        old_servers_json_size = os.stat(servers_json_path).st_size
+        # if os.path.isdir('resources'):
+        #     servers_json_path = os.path.join('resources', 'community_server_ips.json')
+        # else:
+        #     servers_json_path = 'community_server_ips.json'
+        # old_servers_json_size = os.stat(servers_json_path).st_size
+        #
+        # try:
+        #     before_download_time = time.perf_counter()
+        #     servers_json_response = requests.get('https://raw.githubusercontent.com/Kataiser/tf2-rich-presence/master/TF2%20Rich%20Presence/community_server_ips.json', timeout=2, stream=True)
+        #     self.log.debug(f"Downloading community_server_ips.json from Github ({servers_json_response.headers['content-length']} bytes)")
+        #
+        #     servers_json_data = servers_json_response.content
+        #     num_servers_downloaded = len(json.loads(servers_json_data))
+        #     with open(servers_json_path, 'wb') as servers_json:
+        #         servers_json.write(servers_json_data)
+        #
+        #     new_servers_json_size = os.stat(servers_json_path).st_size
+        #     self.log.debug(f"Download took {format(time.perf_counter() - before_download_time, '.2f')} seconds for {num_servers_downloaded} servers, "
+        #                    f"file is now {new_servers_json_size} bytes (was {old_servers_json_size} bytes)")
+        #     messagebox.showinfo("Update downloaded", f"Successfully updated the community server database with {num_servers_downloaded} community servers.")
+        # except (requests.exceptions.ConnectionError, requests.exceptions.Timeout, json.decoder.JSONDecodeError):
+        #     messagebox.showerror("Error", "Failed to download updated server database, try again later.")
+        #     self.log.error(f"Error downloading community_server_ips.json: {traceback.format_exc()}")
 
-        try:
-            before_download_time = time.perf_counter()
-            servers_json_response = requests.get('https://raw.githubusercontent.com/Kataiser/tf2-rich-presence/master/TF2%20Rich%20Presence/community_server_ips.json', timeout=2, stream=True)
-            self.log.debug(f"Downloading community_server_ips.json from Github ({servers_json_response.headers['content-length']} bytes)")
-
-            servers_json_data = servers_json_response.content
-            json.loads(servers_json_data)
-            with open(servers_json_path, 'wb') as servers_json:
-                servers_json.write(servers_json_data)
-
-            new_servers_json_size = os.stat(servers_json_path).st_size
-            self.log.debug(f"Download took {format(time.perf_counter() - before_download_time, '.2f')} seconds, file is now {new_servers_json_size} bytes (was {old_servers_json_size} bytes)")
-            messagebox.showinfo("Update downloaded", "Successfully updated the community server database.")
-        except (requests.exceptions.ConnectionError, requests.exceptions.Timeout, json.decoder.JSONDecodeError):
-            messagebox.showerror("Error", "Failed to download updated server database, try again later.")
-            self.log.error(f"Error downloading community_server_ips.json: {traceback.format_exc()}")
-
-        # find_server_ids.main()
+        find_server_ids.main()
 
 
 # main entry point
