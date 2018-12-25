@@ -57,11 +57,11 @@ def steam_config_file(log, exe_location: str) -> list:
                         possible_username: str = line[1].split('"')[-2]
                         log.debug(f"Possible username: {possible_username}")
 
-                    if line[1] == '\t\t\t\t\t"440"\n':  # looks for tf2's ID and finds the line number
+                    if '"440"' in line[1]:  # looks for tf2's ID and finds the line number
                         log.debug(f"Found TF2's ID at line {line[0]}")
                         tf2_line_num = line[0]
 
-                for line_offset in range(1, 21):
+                for line_offset in range(1, 41):
                     launchoptions_line: str = lines[tf2_line_num + line_offset]
                     if 'LaunchOptions' in launchoptions_line and'-condebug' in launchoptions_line:
                         # oh also this might be slow to update
