@@ -60,6 +60,7 @@ def steam_config_file(log, exe_location: str) -> list:
                     if '"440"' in line[1]:  # looks for tf2's ID and finds the line number
                         log.debug(f"Found TF2's ID at line {line[0]}")
                         tf2_line_num = line[0]
+                        break
 
                 for line_offset in range(1, 41):
                     launchoptions_line: str = lines[tf2_line_num + line_offset]
