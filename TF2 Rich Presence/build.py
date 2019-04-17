@@ -45,12 +45,10 @@ def main(version_num):
         print("Copied", shutil.copy('settings.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('map list generator.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('thumb formatter.py', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('find_server_ids.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('changelog generator.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('changelogs.html', f'{github_repo_path}\\'))
         print("Copied", shutil.copy('changelogs_source.html', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('maps.json', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('community_server_ips.json', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('APIs', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('main menu.png', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('casual.png', f'{github_repo_path}\\TF2 Rich Presence'))
@@ -124,11 +122,9 @@ def main(version_num):
                      ('updater.py', f'{new_build_folder_name}\\resources\\'),
                      ('configs.py', f'{new_build_folder_name}\\resources\\'),
                      ('custom_maps.py', f'{new_build_folder_name}\\resources\\'),
-                     ('find_server_ids.py', f'{new_build_folder_name}\\resources\\'),
                      ('settings.py', f'{new_build_folder_name}\\resources\\'),
                      ('tf2_logo_blurple.ico', f'{new_build_folder_name}\\resources\\'),
                      ('tf2_logo_blurple_wrench.ico', f'{new_build_folder_name}\\resources\\'),
-                     ('community_server_ips.json', f'{new_build_folder_name}\\resources\\'),
                      ('APIs', f'{new_build_folder_name}\\resources\\'),
                      ('changelogs.html', f'{new_build_folder_name}\\')]
 
@@ -243,9 +239,6 @@ def main(version_num):
 
     # finishing output
     print(f"\nFinished building TF2 Rich Presence {version_num} (took {int(time.perf_counter() - build_start_time)} seconds{time_since_last_build_text})")
-
-    if input("Open build path? ('y' for yes, enter for no) ") == 'y':
-        subprocess.Popen(f'explorer "{new_build_folder_name}"')
 
 
 # converts a batch file to an exe with Bat To Exe Converter (http://www.f2ko.de/en/b2e.php)

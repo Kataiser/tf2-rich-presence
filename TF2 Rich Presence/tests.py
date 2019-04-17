@@ -38,11 +38,11 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
 
     def test_interpret_console_log(self):
         app = main.TF2RichPresense(self.log)
-        self.assertEqual(app.interpret_console_log('test_resources\\console_in_menus.log', ['Kataiser'], float('inf')), ('In menus', 'Not queued', ''))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_queued_casual.log', ['Kataiser'], float('inf')), ('In menus', 'Queued for Casual', ''))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', ['Kataiser'], float('inf')), ('pl_badwater', 'Pyro', ''))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_custom_map.log', ['Kataiser'], float('inf')), ('cp_catwalk_a5c', 'Soldier', ''))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_empty.log', ['Kataiser'], float('inf')), ('', '', ''))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_in_menus.log', ['Kataiser'], float('inf')), ('In menus', 'Not queued'))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_queued_casual.log', ['Kataiser'], float('inf')), ('In menus', 'Queued for Casual'))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', ['Kataiser'], float('inf')), ('pl_badwater', 'Pyro'))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_custom_map.log', ['Kataiser'], float('inf')), ('cp_catwalk_a5c', 'Soldier'))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_empty.log', ['Kataiser'], float('inf')), ('', ''))
 
     def test_steam_config_file(self):
         self.assertEqual(configs.steam_config_file(self.log, 'test_resources\\'), ['Kataiser'])
@@ -144,15 +144,6 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
         self.assertEqual(len(launcher.get_api_key('teamwork')), 32)
         self.assertEqual(len(launcher.get_api_key('pastebin')), 32)
         self.assertEqual(len(launcher.get_api_key('sentry')), 91)
-
-    def test_find_provider_for_ip(self):
-        app = main.TF2RichPresense(self.log)
-        self.assertEqual(app.find_provider_for_ip('104.243.38.50:27026')[0], 'Wonderland.TF')
-        self.assertEqual(app.find_provider_for_ip('164.132.200.205:27062')[0], 'Skial')
-        self.assertEqual(app.find_provider_for_ip('192.223.30.133:27015'), ['TF2Maps', 'Unknown server name'])
-        self.assertEqual(app.find_provider_for_ip('31.186.251.51:27015'), ['TF2Maps', 'TF2Maps.net | Frankfurt'])
-        self.assertEqual(app.find_provider_for_ip('31.186.251.51:2701'), None)
-        self.assertEqual(app.find_provider_for_ip(''), None)
 
     def test_discoipc(self):
         # this test fails if Discord isn't running

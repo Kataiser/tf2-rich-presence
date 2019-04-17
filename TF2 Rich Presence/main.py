@@ -155,7 +155,7 @@ class TF2RichPresense:
             # modifies a few tf2 config files
             configs.class_config_files(self.log, tf2_location)
 
-            top_line, bottom_line, server_ip = self.interpret_console_log(os.path.join(tf2_location, 'tf', 'console.log'), valid_usernames)
+            top_line, bottom_line = self.interpret_console_log(os.path.join(tf2_location, 'tf', 'console.log'), valid_usernames)
 
             if not self.client_connected:
                 try:
@@ -225,16 +225,7 @@ class TF2RichPresense:
                     self.activity['assets']['large_image'] = custom_gamemode
                     self.activity['assets']['large_text'] = f'{custom_gamemode_fancy} [custom/community map]'
 
-                if settings.get('hide_provider'):
-                    top_line = f'Map: {map_out}'
-                else:
-                    server_info = self.find_provider_for_ip(server_ip)
-                    if not server_info:
-                        top_line = f'Map: {map_out}'
-                    elif server_info[1] == "DELETED":
-                        top_line = f'Map: {map_out} (Server provided by {server_info[0]})'
-                    else:
-                        top_line = f'Map: {map_out} (Server: "{server_info[1]}", provided by {server_info[0]})'
+                top_line = f'Map: {map_out}'
             else:  # console.log is empty or close to empty
                 pass
 
@@ -285,7 +276,7 @@ class TF2RichPresense:
 
         return self.client_connected, self.client
 
-    # reads a console.log and returns current map, class, and server ip
+    # reads a console.log and returns current map and class
     def interpret_console_log(self, console_log_path: str, user_usernames: list, kb_limit=settings.get('console_scan_kb')) -> tuple:
         # defaults
         current_map: str = ''
@@ -342,20 +333,17 @@ class TF2RichPresense:
             if 'Disconnect by user' in line and [i for i in user_usernames if i in line]:
                 current_map = 'In menus'  # so is this one
                 current_class = 'Not queued'
-                current_ip = ''
                 line_used = line
 
             for disconnect_message in disconnect_messages:
                 if disconnect_message in line:
                     current_map = 'In menus'
                     current_class = 'Not queued'
-                    current_ip = ''
                     line_used = line
                     break
 
             if '[PartyClient] Entering queue ' in line:
                 current_map = 'In menus'
-                current_ip = ''
                 line_used = line
 
                 if hide_queued_gamemode:
@@ -366,7 +354,6 @@ class TF2RichPresense:
             if '[PartyClient] Entering s' in line:  # full line: [PartyClient] Entering standby queue
                 current_map = 'In menus'
                 current_class = 'Queued for a party\'s match'
-                current_ip = ''
                 line_used = line
 
             if '[PartyClient] L' in line:  # full line: [PartyClient] Leaving queue
@@ -376,12 +363,9 @@ class TF2RichPresense:
             if 'Build:' in line:
                 build_number = line[7:-1]
 
-            if 'Connected to' in line:
-                current_ip = line[13:-1]
-
         self.log.debug(f"TF2 build number: {build_number}")
-        self.log.debug(f"Got '{current_map}', '{current_class}', and {current_ip} from this line: '{line_used[:-1]}'")
-        return current_map, current_class, current_ip
+        self.log.debug(f"Got '{current_map}' and '{current_class}' from this line: '{line_used[:-1]}'")
+        return current_map, current_class
 
     # displays and reports current traceback
     def handle_crash(self, silent=False):
@@ -398,25 +382,6 @@ class TF2RichPresense:
             time.sleep(2)
         raise SystemExit
 
-    # find what server provider an IP belongs to
-    @functools.lru_cache(maxsize=None)
-    def find_provider_for_ip(self, ip: str) -> Union[Tuple[str, str], None]:
-        try:
-            community_server_ips_json = open('community_server_ips.json', 'r', encoding='utf-8')
-        except FileNotFoundError:
-            community_server_ips_json = open(os.path.join('resources', 'community_server_ips.json'), 'r', encoding='utf-8')
-
-        community_server_ips_dict = json.load(community_server_ips_json)
-        community_server_ips_json.close()
-
-        try:
-            server_info = community_server_ips_dict[ip]
-            self.log.debug(f"IP {ip} is run by {server_info}")
-            return server_info
-        except KeyError:
-            self.log.debug(f"IP {ip} is not run by a known provider")
-            return None
-
 
 # alerts the user that they don't seem to have -condebug
 def no_condebug_warning():
@@ -430,15 +395,6 @@ def no_condebug_warning():
     # -condebug is kinda necessary so just wait to restart if it's not there
     input("Press enter to retry\n")
     raise SystemExit
-
-
-# calculates delay, in seconds, between updates
-def calculate_wait_time(base: int, afk: float) -> float:
-    # https://www.desmos.com/calculator/hliplhcd8q
-    max_time: int = (2 * base) + 20
-    scaled: float = 0.15 * (afk - 2 * base - 10) + base
-    wait_time: float = max(min(max_time, scaled), base)
-    return round(wait_time, 2)
 
 
 if __name__ == '__main__':

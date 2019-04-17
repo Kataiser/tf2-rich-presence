@@ -1,20 +1,13 @@
 import functools
 import json
 import os
-import sys
-import time
 import tkinter as tk
 import tkinter.ttk as ttk
 import traceback
 from tkinter import messagebox
 from typing import Any, Union
 
-sys.path.append(os.path.abspath(os.path.join('resources', 'python', 'packages')))
-sys.path.append(os.path.abspath(os.path.join('resources')))
-import requests
-
 import logger
-import find_server_ids
 
 
 class GUI(tk.Frame):
@@ -48,7 +41,6 @@ class GUI(tk.Frame):
         self.hide_queued_gamemode = tk.BooleanVar()
         self.log_level = tk.StringVar()
         self.console_scan_kb = tk.IntVar()
-        self.hide_provider = tk.BooleanVar()
         self.class_pic_type = tk.StringVar()
 
         try:
@@ -64,7 +56,6 @@ class GUI(tk.Frame):
             self.hide_queued_gamemode.set(self.settings_loaded['hide_queued_gamemode'])
             self.log_level.set(self.settings_loaded['log_level'])
             self.console_scan_kb.set(self.settings_loaded['console_scan_kb'])
-            self.hide_provider.set(self.settings_loaded['hide_provider'])
             self.class_pic_type.set(self.settings_loaded['class_pic_type'])
         except Exception:
             # probably a json decode error
@@ -110,8 +101,6 @@ class GUI(tk.Frame):
             "Max kilobytes of console.log to scan: "))
         setting10_option = ttk.Spinbox(setting10_frame, textvariable=self.console_scan_kb, width=8, from_=0, to=float('inf'), validate='all',
                                        validatecommand=(check_int_command, '%P', float('inf')), command=self.update_default_button_state)
-        setting11 = ttk.Checkbutton(master, variable=self.hide_provider, command=self.update_default_button_state, text="{}".format(
-            "Hide community server name and provider"))
         setting12_frame = ttk.Frame()
         setting12_text = ttk.Label(setting12_frame, text="{}".format(
             "Selected class small image type: "))
@@ -185,7 +174,6 @@ class GUI(tk.Frame):
                 'hide_queued_gamemode': self.hide_queued_gamemode.get(),
                 'log_level': self.log_level.get(),
                 'console_scan_kb': self.console_scan_kb.get(),
-                'hide_provider': self.hide_provider.get(),
                 'class_pic_type': self.class_pic_type.get()}
 
     # set all settings to defaults
@@ -209,7 +197,6 @@ class GUI(tk.Frame):
             self.hide_queued_gamemode.set(get_setting_default('hide_queued_gamemode'))
             self.log_level.set(get_setting_default('log_level'))
             self.console_scan_kb.set(get_setting_default('console_scan_kb'))
-            self.hide_provider.set(get_setting_default('hide_provider'))
             self.class_pic_type.set(get_setting_default('class_pic_type'))
 
             self.log.debug("Restored defaults")
@@ -259,34 +246,6 @@ class GUI(tk.Frame):
         if allowed_close == "yes":
             self.log.info("Closing settings menu without saving")
             self.master.destroy()
-
-    # downloads the most recent community_server_ips.json from Github
-    def download_servers_database(self):
-        # if os.path.isdir('resources'):
-        #     servers_json_path = os.path.join('resources', 'community_server_ips.json')
-        # else:
-        #     servers_json_path = 'community_server_ips.json'
-        # old_servers_json_size = os.stat(servers_json_path).st_size
-        #
-        # try:
-        #     before_download_time = time.perf_counter()
-        #     servers_json_response = requests.get('https://raw.githubusercontent.com/Kataiser/tf2-rich-presence/master/TF2%20Rich%20Presence/community_server_ips.json', timeout=2, stream=True)
-        #     self.log.debug(f"Downloading community_server_ips.json from Github ({servers_json_response.headers['content-length']} bytes)")
-        #
-        #     servers_json_data = servers_json_response.content
-        #     num_servers_downloaded = len(json.loads(servers_json_data))
-        #     with open(servers_json_path, 'wb') as servers_json:
-        #         servers_json.write(servers_json_data)
-        #
-        #     new_servers_json_size = os.stat(servers_json_path).st_size
-        #     self.log.debug(f"Download took {format(time.perf_counter() - before_download_time, '.2f')} seconds for {num_servers_downloaded} servers, "
-        #                    f"file is now {new_servers_json_size} bytes (was {old_servers_json_size} bytes)")
-        #     messagebox.showinfo("Update downloaded", f"Successfully updated the community server database with {num_servers_downloaded} community servers.")
-        # except (requests.exceptions.ConnectionError, requests.exceptions.Timeout, json.decoder.JSONDecodeError):
-        #     messagebox.showerror("Error", "Failed to download updated server database, try again later.")
-        #     self.log.error(f"Error downloading community_server_ips.json: {traceback.format_exc()}")
-
-        find_server_ids.main()
 
 
 # main entry point
@@ -340,7 +299,6 @@ def get_setting_default(setting: str = '', return_all: bool = False) -> Any:
                 'hide_queued_gamemode': False,
                 'log_level': 'Debug',
                 'console_scan_kb': 1000,
-                'hide_provider': False,
                 'class_pic_type': 'Icon'}
 
     if return_all:

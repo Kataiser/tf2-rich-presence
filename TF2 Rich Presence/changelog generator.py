@@ -44,8 +44,9 @@ def main():
 
     generated_html_logs = ''.join(extended_htmls)
     generated_html_pretty = prettify_custom(BeautifulSoup(generated_html_logs, 'lxml')).replace('<html>\n    <body>', '').replace('</body>\n</html>', '')
+    generated_html_with_items = source_html.replace('<!--REPLACEME-->', generated_html_pretty)
+    generated_html = re.compile(r' aria-hidden="true" class="anchor" href="#(.+)" id="(.+)"').sub('', generated_html_with_items)
 
-    generated_html = source_html.replace('<!--REPLACEME-->', generated_html_pretty)
     with open('changelogs.html', 'w') as changelog_file:
         changelog_file.write(generated_html)
 
