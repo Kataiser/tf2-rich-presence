@@ -1,5 +1,4 @@
 import datetime
-import functools
 import gc
 import json
 import os

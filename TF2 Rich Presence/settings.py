@@ -129,15 +129,12 @@ class GUI(tk.Frame):
         setting10_text.pack(side='left', fill=None, expand=False)
         setting10_option.pack(side='left', fill=None, expand=False)
         setting10_frame.grid(row=3, columnspan=2, sticky=tk.W, padx=(20, 20), pady=(4, 0))
-        setting11.grid(row=5, sticky=tk.W, columnspan=2, padx=(20, 20), pady=(4, 0))
         setting12_text.pack(side='left', fill=None, expand=False)
         for setting12_radiobutton in setting12_radiobuttons:
             setting12_radiobutton.pack(side='left', fill=None, expand=False)
         setting12_frame.grid(row=6, columnspan=2, sticky=tk.W, padx=(20, 20), pady=(4, 0))
 
         buttons_frame = ttk.Frame()
-        servers_button = ttk.Button(buttons_frame, text="Update server database", command=self.download_servers_database)
-        servers_button.grid(row=0, column=0, sticky=tk.E, padx=0, pady=(20, 20))
         self.restore_button = ttk.Button(buttons_frame, text="Restore defaults", command=self.restore_defaults)
         self.restore_button.grid(row=0, column=1, padx=(10, 0), pady=(20, 20))
         cancel_button = ttk.Button(buttons_frame, text="Close without saving", command=self.close_without_saving)

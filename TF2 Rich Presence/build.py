@@ -98,7 +98,7 @@ def main(version_num):
     for file in files_in_cwd:
         if file.startswith('tf2_rich_presence_'):
             if file.endswith('_installer.exe') or file.endswith('.zip'):
-                last_build_time = os.stat(file).st_ctime
+                last_build_time = os.stat(file).st_mtime
                 os.remove(file)
                 print(f"Removed old package: {file}")
 
@@ -175,7 +175,7 @@ def main(version_num):
         json.dump({}, maps_db, indent=4)
 
     # copies the python interpreter
-    python_source = os.path.abspath('python-3.7.1-embed-win32')
+    python_source = os.path.abspath('python-3.7.3-embed-win32')
     python_target = os.path.abspath(f'{new_build_folder_name}\\resources\\python')
     print(f"Copying from {python_source} to {python_target}: ", end='')
     subprocess.run(f'xcopy \"{python_source}\" \"{python_target}\\\" /E /Q')
