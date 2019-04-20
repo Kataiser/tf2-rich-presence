@@ -2,7 +2,6 @@ import datetime
 import json
 import os
 import platform
-import subprocess
 import time
 import traceback
 from typing import Dict, Union, TextIO, Any, List, Tuple
@@ -316,7 +315,8 @@ class TF2RichPresense:
                 self.log.debug(f"console.log: {consolelog_file_size} bytes, {len(lines)} lines")
 
         if not self.has_compacted_console_log:
-            self.compact_file(consolelog_filename)
+            self.log.debug(logger.compact_file(consolelog_filename))
+            self.has_compacted_console_log = True
 
         # iterates though every line in the log (I KNOW) and learns everything from it
         line_used: str = ''
@@ -369,11 +369,6 @@ class TF2RichPresense:
         self.log.debug(f"TF2 build number: {build_number}")
         self.log.debug(f"Got '{current_map}' and '{current_class}' from this line: '{line_used[:-1]}'")
         return current_map, current_class
-
-    # runs Windows' "compact" command on a file.
-    def compact_file(self, target_file_path):
-        compact_out: str = subprocess.run(f'compact /c /f /i "{target_file_path}"', stdout=subprocess.PIPE).stdout.decode('utf-8')
-        self.log.debug("Compacted file {}: {}".format(target_file_path, " ".join(compact_out.split())))
 
     # displays and reports current traceback
     def handle_crash(self, silent=False):

@@ -1,6 +1,7 @@
 import hashlib
 import os
 import socket
+import subprocess
 import sys
 import time
 import traceback
@@ -61,8 +62,9 @@ class Log:
                 self.error(f"Couldn't write log due to UnicodeEncodeError: {error}")
 
             self.unsaved_lines += 1
-            if (self.unsaved_lines >= 100 or level in ['Error', 'Critical']) and message_out != "Closing and re-opening log":
+            if (self.unsaved_lines >= 100 or level in ['Error', 'Critical']) and (message_out != "Closing and re-opening log" and "Compact" not in message_out):
                 try:
+                    self.debug(compact_file(self.filename))
                     self.debug("Closing and re-opening log")
                 except Exception:
                     pass
@@ -177,6 +179,12 @@ def generate_hash() -> str:
     hasher.update(b'\n'.join(files_to_hash_text))
     main_hash: str = hasher.hexdigest()
     return main_hash[:8]
+
+
+# runs Windows' "compact" command on a file.
+def compact_file(target_file_path):
+    compact_out: str = subprocess.run(f'compact /c /f /i "{target_file_path}"', stdout=subprocess.PIPE).stdout.decode('utf-8')
+    return "Compacted file {}: {}".format(target_file_path, " ".join(compact_out.split()))
 
 
 if __name__ == '__main__':
