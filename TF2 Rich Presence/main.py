@@ -1,12 +1,13 @@
 import datetime
-import gc
 import json
 import os
 import platform
+import subprocess
 import time
 import traceback
 from typing import Dict, Union, TextIO, Any, List, Tuple
 
+import gc
 import psutil
 from discoIPC import ipc
 
@@ -65,6 +66,7 @@ class TF2RichPresense:
         self.client_connected: bool = False
         self.client = None
         self.test_state = 'init'
+        self.has_compacted_console_log = False
 
         # load maps database
         try:
@@ -280,7 +282,6 @@ class TF2RichPresense:
         # defaults
         current_map: str = ''
         current_class: str = ''
-        current_ip: str = ''
         build_number: Union[str, None] = None
 
         match_types: Dict[str, str] = {'match group 12v12 Casual Match': 'Casual', 'match group MvM Practice': 'MvM (Boot Camp)', 'match group MvM MannUp': 'MvM (Mann Up)',
@@ -313,6 +314,9 @@ class TF2RichPresense:
             else:
                 lines: List[str] = consolelog_file.readlines()
                 self.log.debug(f"console.log: {consolelog_file_size} bytes, {len(lines)} lines")
+
+        if not self.has_compacted_console_log:
+            self.compact_file(consolelog_filename)
 
         # iterates though every line in the log (I KNOW) and learns everything from it
         line_used: str = ''
@@ -365,6 +369,11 @@ class TF2RichPresense:
         self.log.debug(f"TF2 build number: {build_number}")
         self.log.debug(f"Got '{current_map}' and '{current_class}' from this line: '{line_used[:-1]}'")
         return current_map, current_class
+
+    # runs Windows' "compact" command on a file.
+    def compact_file(self, target_file_path):
+        compact_out: str = subprocess.run(f'compact /c /f /i "{target_file_path}"', stdout=subprocess.PIPE).stdout.decode('utf-8')
+        self.log.debug("Compacted file {}: {}".format(target_file_path, " ".join(compact_out.split())))
 
     # displays and reports current traceback
     def handle_crash(self, silent=False):
