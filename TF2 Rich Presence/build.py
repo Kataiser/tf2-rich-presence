@@ -165,13 +165,6 @@ def main(version_num):
                         f"\nHash: {logger.generate_hash()}"
                         f"\nLatest commit: {latest_commit}")
 
-    # creates README.md from README-source.md
-    with open('README-source.md', 'r') as readme_md_source:
-        modified_readme_md = readme_md_source.read().replace('{tf2rpvnum}', version_num)
-    with open('README.md', 'w') as readme_md_target:
-        readme_md_target.write(modified_readme_md)
-    print("Created README.md from modified README-source.md")
-
     # clears custom map cache
     with open(f'{new_build_folder_name}\\resources\\custom_maps.json', 'w') as maps_db:
         json.dump({}, maps_db, indent=4)
@@ -206,14 +199,25 @@ def main(version_num):
     convert_bat_to_exe(os.path.abspath(f'{new_build_folder_name}\\Change settings.bat'), version_num, 'tf2_logo_blurple_wrench.ico')
 
     # generates zip package and an "installer" (a self extracting .7z as an exe), both with 7zip
-    package7zip_command_exe_1 = f'build_tools\\7za.exe a tf2_rich_presence_{version_num}_installer.exe "{new_build_folder_name}\\"'
+    exe_path = f'tf2_rich_presence_{version_num}_installer.exe'
+    zip_path = f'tf2_rich_presence_{version_num}.zip'
+    package7zip_command_exe_1 = f'build_tools\\7za.exe a {exe_path} "{new_build_folder_name}\\"'
     package7zip_command_exe_2 = f'-sfx7z.sfx -ssw -mx=9 -myx=9 -mmt=2 -m0=LZMA2:d=8m'
-    package7zip_command_zip = f'build_tools\\7za.exe a tf2_rich_presence_{version_num}.zip "{new_build_folder_name}\\" -ssw -mx=9 -m0=LZMA:d=8m -mmt=2'
+    package7zip_command_zip = f'build_tools\\7za.exe a {zip_path} "{new_build_folder_name}\\" -ssw -mx=9 -m0=LZMA:d=8m -mmt=2'
     with tempfile.TemporaryFile() as nowhere:  # 7zip creates too much output
         print(f"Creating tf2_rich_presence_{version_num}_installer.exe...")
         subprocess.run(f'{package7zip_command_exe_1} {package7zip_command_exe_2}', stdout=nowhere)
         print(f"Creating tf2_rich_presence_{version_num}.zip...")
         subprocess.run(package7zip_command_zip, stdout=nowhere)
+
+    # creates README.md from README-source.md
+    exe_size_mb = round(os.stat(exe_path).st_size / 1048576, 2)  # 1048576 is 1024^2
+    zip_size_mb = round(os.stat(zip_path).st_size / 1048576, 2)
+    with open('README-source.md', 'r') as readme_md_source:
+        modified_readme_md = readme_md_source.read().replace('{tf2rpvnum}', version_num).replace('{installer_size}', str(exe_size_mb)).replace('{zip_size}', str(zip_size_mb))
+    with open('README.md', 'w') as readme_md_target:
+        readme_md_target.write(modified_readme_md)
+    print("Created README.md from modified README-source.md")
 
     # disables Sentry, for testing
     with open(f'{new_build_folder_name}\\resources\\launcher.py', 'r') as launcher_py_read:
