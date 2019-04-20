@@ -166,7 +166,12 @@ def generate_hash() -> str:
     files_to_hash: List[str] = ['main.py', 'configs.py', 'custom_maps.py', 'logger.py', 'updater.py', 'launcher.py', 'settings.py']
     files_to_hash_text: List = []
 
+    build_folder = [item for item in os.listdir('.') if item.startswith('TF2 Rich Presence v') and os.path.isdir(item)]
+
     for file_to_hash in files_to_hash:
+        if build_folder:
+            file_to_hash = f'{build_folder[0]}\\resources\\{file_to_hash}'
+
         try:
             file: BinaryIO = open(os.path.join('resources', file_to_hash), 'rb')
         except FileNotFoundError:
@@ -175,6 +180,9 @@ def generate_hash() -> str:
         files_to_hash_text.append(file.read())
         file.close()
 
+    with open('hashdebug.txt', 'w') as hashdebug:
+        hashdebug.write(str(files_to_hash_text))
+
     hasher = hashlib.md5()
     hasher.update(b'\n'.join(files_to_hash_text))
     main_hash: str = hasher.hexdigest()
@@ -182,7 +190,7 @@ def generate_hash() -> str:
 
 
 # runs Windows' "compact" command on a file.
-def compact_file(target_file_path):
+def compact_file(target_file_path: str) -> str:
     compact_out: str = subprocess.run(f'compact /c /f /i "{target_file_path}"', stdout=subprocess.PIPE).stdout.decode('utf-8')
     return "Compacted file {}: {}".format(target_file_path, " ".join(compact_out.split()))
 
