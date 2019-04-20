@@ -47,6 +47,7 @@ class GUI(tk.Frame):
             # load settings from settings.json
             self.settings_loaded = access_settings_file()
             self.log.debug(f"Current settings: {self.settings_loaded}")
+            self.log.debug(f"Are default: {self.settings_loaded == get_setting_default(return_all=True)}")
 
             self.enable_sentry.set(self.settings_loaded['enable_sentry'])
             self.wait_time.set(self.settings_loaded['wait_time'])
