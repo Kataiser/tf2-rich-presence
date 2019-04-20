@@ -180,9 +180,6 @@ def generate_hash() -> str:
         files_to_hash_text.append(file.read())
         file.close()
 
-    with open('hashdebug.txt', 'w') as hashdebug:
-        hashdebug.write(str(files_to_hash_text))
-
     hasher = hashlib.md5()
     hasher.update(b'\n'.join(files_to_hash_text))
     main_hash: str = hasher.hexdigest()
