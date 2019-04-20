@@ -62,6 +62,7 @@ def main(version_num):
         print("Copied", shutil.copy('tf2_logo_blurple.ico', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('tf2_logo_blurple_wrench.ico', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('Launch TF2 with Rich Presence.bat', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy('Launch Rich Presence alongside TF2.bat', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('README-source.MD', github_repo_path))
         print("Copied", shutil.copy('README.MD', github_repo_path))
 
@@ -117,6 +118,7 @@ def main(version_num):
                      ('launcher.py', f'{new_build_folder_name}\\resources\\'),
                      ('readme.txt', f'{new_build_folder_name}\\'),
                      ('Launch TF2 with Rich Presence.bat', f'{new_build_folder_name}\\'),
+                     ('Launch Rich Presence alongside TF2.bat', f'{new_build_folder_name}\\'),
                      ('Change settings.bat', f'{new_build_folder_name}\\'),
                      ('logger.py', f'{new_build_folder_name}\\resources\\'),
                      ('updater.py', f'{new_build_folder_name}\\resources\\'),
@@ -200,6 +202,7 @@ def main(version_num):
     print(f"tests deleted: {tests_deleted}")
 
     convert_bat_to_exe(os.path.abspath(f'{new_build_folder_name}\\Launch TF2 with Rich Presence.bat'), version_num, 'tf2_logo_blurple.ico')
+    convert_bat_to_exe(os.path.abspath(f'{new_build_folder_name}\\Launch Rich Presence alongside TF2.bat'), version_num, 'tf2_logo_blurple.ico')
     convert_bat_to_exe(os.path.abspath(f'{new_build_folder_name}\\Change settings.bat'), version_num, 'tf2_logo_blurple_wrench.ico')
 
     # generates zip package and an "installer" (a self extracting .7z as an exe), both with 7zip
