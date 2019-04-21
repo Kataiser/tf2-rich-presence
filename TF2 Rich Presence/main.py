@@ -1,3 +1,4 @@
+import copy
 import datetime
 import json
 import os
@@ -57,6 +58,7 @@ class TF2RichPresense:
     def __init__(self, log):
         self.log = log
         self.start_time: int = int(time.time())
+        self.old_activity: Dict = {}
         self.activity: Dict[str, Union[str, Dict[str, int], Dict[str, str]]] = {'details': 'In menus',  # this is what gets modified and sent to Discord via discoIPC
                                                                                 'timestamps': {'start': self.start_time},
                                                                                 'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2', 'large_image': 'main_menu',
@@ -66,6 +68,8 @@ class TF2RichPresense:
         self.client = None
         self.test_state = 'init'
         self.has_compacted_console_log = False
+        self.should_mention_discord = True
+        self.should_mention_tf2 = True
 
         # load maps database
         try:
@@ -98,6 +102,7 @@ class TF2RichPresense:
     def loop_body(self):
         self.loop_iteration += 1
         self.log.debug(f"Loop iteration this app session: {self.loop_iteration}")
+        self.old_activity = copy.copy(self.activity)
 
         tf2_is_running: bool = False
         steam_is_running: bool = False
@@ -232,13 +237,18 @@ class TF2RichPresense:
             self.activity['details'] = top_line
             self.activity['state'] = bottom_line
 
-            # output to terminal, just for monitoring
-            print(current_time_formatted)
-            print(f"{self.activity['details']} ({self.activity['assets']['large_text']})")
-            print(self.activity['state'])
-            time_elapsed = int(time.time() - self.start_time)
-            print(f"{datetime.timedelta(seconds=time_elapsed)} elapsed")
-            print()
+            if self.activity != self.old_activity:
+                # output to terminal, just for monitoring
+                print(current_time_formatted)
+                print(f"{self.activity['details']} ({self.activity['assets']['large_text']})")
+                print(self.activity['state'])
+                time_elapsed = int(time.time() - self.start_time)
+                print(f"{datetime.timedelta(seconds=time_elapsed)} elapsed")
+                print()
+
+                self.log.debug(f"Activity changed, outputting (old: {self.old_activity}, new: {self.activity})")
+            else:
+                self.log.debug("Activity hasn't changed, not outputting")
 
             # send everything to discord
             self.client.update_activity(self.activity)
@@ -251,8 +261,12 @@ class TF2RichPresense:
                 self.log.report_log("self.client disconnect")
         elif not discord_is_running:
             self.test_state = 'no discord'
-            self.log.info("Discord isn't running")
-            print(f"{current_time_formatted}\nDiscord isn't running\n")
+            self.log.info(f"Discord isn't running (mentioning to user: {self.should_mention_discord})")
+
+            if self.should_mention_discord:
+                print(f"{current_time_formatted}\nDiscord isn't running\n")
+                self.should_mention_discord = False
+                self.should_mention_tf2 = True
         else:  # tf2 isn't running
             self.test_state = 'no tf2'
 
@@ -268,8 +282,12 @@ class TF2RichPresense:
                 self.log.info("Restarting")
                 raise SystemExit  # ...but this does
             else:
-                self.log.info("TF2 isn't running")
-                print(f"{current_time_formatted}\nTF2 isn't running\n")
+                self.log.info(f"TF2 isn't running (mentioning to user: {self.should_mention_tf2})")
+
+                if self.should_mention_tf2:
+                    print(f"{current_time_formatted}\nTF2 isn't running\n")
+                    self.should_mention_discord = True
+                    self.should_mention_tf2 = False
 
             # to prevent connecting when already connected
             self.client_connected = False
