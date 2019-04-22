@@ -1,6 +1,8 @@
 import os
 from typing import List, TextIO, Union
 
+import vdf
+
 import main
 
 
@@ -47,31 +49,30 @@ def steam_config_file(log, exe_location: str) -> list:
         try:
             # 'C:\Program Files (x86)\Steam\userdata\*user id number*\config\localconfig.vdf'
             global_config_file_path: Union[bytes, str] = os.path.join(exe_location, 'userdata', user_id_folder, 'config', 'localconfig.vdf')
+
             with open(global_config_file_path, 'r+', errors='replace') as global_config_file:
-                lines: List[str] = global_config_file.readlines()
-                log.debug(f"Reading {global_config_file_path} ({len(lines)} lines) for -condebug")
-                tf2_line_num: int = 0
+                parsed = vdf.parse(global_config_file)
+                log.debug(f"Parsing {global_config_file_path} for -condebug")
 
-                for line in enumerate(lines):
-                    if "PersonaName" in line[1]:
-                        possible_username: str = line[1].split('"')[-2]
-                        log.debug(f"Possible username: {possible_username}")
+            try:
+                possible_username = parsed['UserLocalConfigStore']['friends']['PersonaName']
+                log.debug(f"Possible username: {possible_username}")
+            except KeyError:
+                log.error("Couldn't find PersonaName in config")
+                possible_username = None
 
-                    if '"440"' in line[1]:  # looks for tf2's ID and finds the line number
-                        log.debug(f"Found TF2's ID at line {line[0]}")
-                        tf2_line_num = line[0]
-                        break
+            try:
+                tf2_launch_options = parsed['UserLocalConfigStore']['Software']['Valve']['Steam']['Apps']['440']['LaunchOptions']
 
-                for line_offset in range(1, 41):
-                    launchoptions_line: str = lines[tf2_line_num + line_offset]
-                    if 'LaunchOptions' in launchoptions_line and'-condebug' in launchoptions_line:
-                        # oh also this might be slow to update
-                        found_condebug = True
-                        log.debug(f"Found -condebug with offset {line_offset} in line: {launchoptions_line[:-1]}")
+                if '-condebug' in tf2_launch_options:  # runs if no KeyError in above line
+                    found_condebug = True
+                    log.debug(f"Found -condebug in launch options ({tf2_launch_options})")
+
+                    if possible_username:
                         found_usernames.append(possible_username)
+            except KeyError:
+                pass
         except FileNotFoundError:
-            pass
-        except IndexError:
             pass
 
     if not found_condebug:
