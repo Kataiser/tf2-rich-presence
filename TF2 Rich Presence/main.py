@@ -70,6 +70,7 @@ class TF2RichPresense:
         self.has_compacted_console_log = False
         self.should_mention_discord = True
         self.should_mention_tf2 = True
+        self.last_notify_time = None
 
         # load maps database
         try:
@@ -239,7 +240,7 @@ class TF2RichPresense:
 
             if self.activity != self.old_activity:
                 # output to terminal, just for monitoring
-                print(current_time_formatted)
+                print(f"{current_time_formatted}{generate_delta(self.last_notify_time)}")
                 print(f"{self.activity['details']} ({self.activity['assets']['large_text']})")
                 print(self.activity['state'])
                 time_elapsed = int(time.time() - self.start_time)
@@ -247,6 +248,7 @@ class TF2RichPresense:
                 print()
 
                 self.log.debug(f"Activity changed, outputting (old: {self.old_activity}, new: {self.activity})")
+                self.last_notify_time = time.time()
             else:
                 self.log.debug("Activity hasn't changed, not outputting")
 
@@ -264,9 +266,10 @@ class TF2RichPresense:
             self.log.info(f"Discord isn't running (mentioning to user: {self.should_mention_discord})")
 
             if self.should_mention_discord:
-                print(f"{current_time_formatted}\nDiscord isn't running\n")
+                print(f"{current_time_formatted}{generate_delta(self.last_notify_time)}\nDiscord isn't running\n")
                 self.should_mention_discord = False
                 self.should_mention_tf2 = True
+                self.last_notify_time = time.time()
         else:  # tf2 isn't running
             self.test_state = 'no tf2'
 
@@ -285,9 +288,10 @@ class TF2RichPresense:
                 self.log.info(f"TF2 isn't running (mentioning to user: {self.should_mention_tf2})")
 
                 if self.should_mention_tf2:
-                    print(f"{current_time_formatted}\nTF2 isn't running\n")
+                    print(f"{current_time_formatted}{generate_delta(self.last_notify_time)}\nTF2 isn't running\n")
                     self.should_mention_discord = True
                     self.should_mention_tf2 = False
+                    self.last_notify_time = time.time()
 
             # to prevent connecting when already connected
             self.client_connected = False
@@ -416,6 +420,38 @@ def no_condebug_warning():
     # -condebug is kinda necessary so just wait to restart if it's not there
     input("Press enter to retry\n")
     raise SystemExit
+
+
+# generate text that displays the difference between now and old_time
+def generate_delta(old_time: float) -> str:
+    if old_time:
+        time_diff = round(time.time() - old_time)
+
+        if time_diff > 86400:
+            divided_diff = round(time_diff / 86400, 1)
+            if divided_diff == 1:
+                return f" (+{divided_diff} day)"
+            else:
+                return f" (+{divided_diff} days)"
+        elif time_diff > 3600:
+            divided_diff = round(time_diff / 3600, 1)
+            if divided_diff == 1:
+                return f" (+{divided_diff} hour)"
+            else:
+                return f" (+{divided_diff} hours)"
+        elif time_diff > 60:
+            divided_diff = round(time_diff / 60, 1)
+            if divided_diff == 1:
+                return f" (+{divided_diff} minute)"
+            else:
+                return f" (+{divided_diff} minutes)"
+        else:
+            if time_diff == 1:
+                return f" (+{time_diff} second)"
+            else:
+                return f" (+{time_diff} seconds)"
+    else:
+        return ""
 
 
 if __name__ == '__main__':

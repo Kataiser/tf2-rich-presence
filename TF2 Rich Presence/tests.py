@@ -169,6 +169,14 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
         self.assertTrue(compact_file_out.endswith("console_badwater.log 9309970 : 2490368 = 3.7 to 1 [OK] 1 files within 1 directories were compressed. 9,309,970 total bytes of data are "
                                                   "stored in 2,490,368 bytes. The compression ratio is 3.7 to 1."))
 
+    def test_generate_delta(self):
+        self.assertEqual(main.generate_delta(time.time() - 1), ' (+1 second)')
+        self.assertEqual(main.generate_delta(time.time() - 10), ' (+10 seconds)')
+        self.assertEqual(main.generate_delta(time.time() - 100), ' (+1.7 minutes)')
+        self.assertEqual(main.generate_delta(time.time() - 1000), ' (+16.7 minutes)')
+        self.assertEqual(main.generate_delta(time.time() - 10000), ' (+2.8 hours)')
+        self.assertEqual(main.generate_delta(time.time() - 100000), ' (+1.2 days)')
+
 
 class TestTF2RichPresenseSimulated(unittest.TestCase):
     def test_main(self):
