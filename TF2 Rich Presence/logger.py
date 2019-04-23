@@ -191,8 +191,9 @@ def generate_hash() -> str:
 
 # runs Windows' "compact" command on a file.
 def compact_file(target_file_path: str) -> str:
+    before_compact_time = time.perf_counter()
     compact_out: str = subprocess.run(f'compact /c /f /i "{target_file_path}"', stdout=subprocess.PIPE).stdout.decode('utf-8')
-    return "Compacted file {}: {}".format(target_file_path, " ".join(compact_out.split()))
+    return "Compacted file {} (took {} seconds): {}".format(target_file_path, round(time.perf_counter() - before_compact_time, 4), " ".join(compact_out.split()))
 
 
 if __name__ == '__main__':
