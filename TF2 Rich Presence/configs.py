@@ -49,20 +49,20 @@ def steam_config_file(log, exe_location: str) -> list:
         try:
             # 'C:\Program Files (x86)\Steam\userdata\*user id number*\config\localconfig.vdf'
             global_config_file_path: Union[bytes, str] = os.path.join(exe_location, 'userdata', user_id_folder, 'config', 'localconfig.vdf')
+            log.debug(f"Parsing {global_config_file_path} for -condebug")
 
             with open(global_config_file_path, 'r+', errors='replace') as global_config_file:
-                parsed = vdf.parse(global_config_file)
-                log.debug(f"Parsing {global_config_file_path} for -condebug")
+                parsed = lowercase_keys(vdf.parse(global_config_file))
 
             try:
-                possible_username = parsed['UserLocalConfigStore']['friends']['PersonaName']
+                possible_username = parsed['userlocalconfigstore']['friends']['personaname']
                 log.debug(f"Possible username: {possible_username}")
             except KeyError:
                 log.error("Couldn't find PersonaName in config")
                 possible_username = None
 
             try:
-                tf2_launch_options = parsed['UserLocalConfigStore']['Software']['Valve']['Steam']['Apps']['440']['LaunchOptions']
+                tf2_launch_options = parsed['userlocalconfigstore']['software']['valve']['steam']['apps']['440']['launchoptions']
 
                 if '-condebug' in tf2_launch_options:  # runs if no KeyError in above line
                     found_condebug = True
@@ -71,7 +71,7 @@ def steam_config_file(log, exe_location: str) -> list:
                     if possible_username:
                         found_usernames.append(possible_username)
             except KeyError:
-                pass
+                log.debug(f"No TF2 launch options found (\"440\" in file: {'440' in parsed}, \"-condebug\" in file: {'-condebug' in parsed})")
         except FileNotFoundError:
             pass
 
@@ -82,3 +82,14 @@ def steam_config_file(log, exe_location: str) -> list:
     else:
         log.debug(f"Usernames with -condebug: {found_usernames}")
         return found_usernames
+
+
+# adapted from https://www.popmartian.com/tipsntricks/2014/11/20/how-to-lower-case-all-dictionary-keys-in-a-complex-python-dictionary/
+def lowercase_keys(dictionary):
+    for key in dictionary.keys():
+        dictionary[key.lower()] = dictionary.pop(key)
+
+        if type(dictionary[key.lower()]) is dict or type(dictionary[key.lower()]) is list:
+            dictionary[key.lower()] = lowercase_keys(dictionary[key.lower()])
+
+    return dictionary
