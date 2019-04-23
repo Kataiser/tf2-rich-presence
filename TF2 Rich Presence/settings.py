@@ -30,10 +30,11 @@ class GUI(tk.Frame):
             master.iconbitmap(default=os.path.join('resources', 'tf2_logo_blurple_wrench.ico'))
 
         self.log_levels = ['Debug', 'Info', 'Error', 'Critical', 'Off']
+        self.sentry_levels = ['Error', 'Critical', 'Never']
         self.class_pic_types = ['Icon', 'Emblem', 'Portrait', 'None, use TF2 logo']
 
         # create every setting variable without values
-        self.enable_sentry = tk.BooleanVar()
+        self.sentry_level = tk.StringVar()
         self.wait_time = tk.IntVar()
         self.map_invalidation_hours = tk.IntVar()
         self.check_updates = tk.BooleanVar()
@@ -49,7 +50,7 @@ class GUI(tk.Frame):
             self.log.debug(f"Current settings: {self.settings_loaded}")
             self.log.debug(f"Are default: {self.settings_loaded == get_setting_default(return_all=True)}")
 
-            self.enable_sentry.set(self.settings_loaded['enable_sentry'])
+            self.sentry_level.set(self.settings_loaded['sentry_level'])
             self.wait_time.set(self.settings_loaded['wait_time'])
             self.map_invalidation_hours.set(self.settings_loaded['map_invalidation_hours'])
             self.check_updates.set(self.settings_loaded['check_updates'])
@@ -70,8 +71,13 @@ class GUI(tk.Frame):
         check_int_command = self.register(check_int)
 
         # create settings widgets
-        setting1 = ttk.Checkbutton(master, variable=self.enable_sentry, command=self.update_default_button_state, text="{}".format(
-            "Report crash logs"))
+        setting1_frame = ttk.Frame()
+        setting1_text = ttk.Label(setting1_frame, text="{}".format(
+            "Crash log reporting level: "))
+        setting1_radiobuttons = []
+        for sentry_level_text in self.sentry_levels:
+            setting1_radiobuttons.append(ttk.Radiobutton(setting1_frame, variable=self.sentry_level, text=sentry_level_text, value=sentry_level_text, command=self.update_default_button_state))
+
         setting3_frame = ttk.Frame()
         setting3_text = ttk.Label(setting3_frame, text="{}".format(
             "Delay between refreshes, in seconds: "))
@@ -111,7 +117,10 @@ class GUI(tk.Frame):
                                                           command=self.update_default_button_state))
 
         # add widgets to the main window
-        setting1.grid(row=9, sticky=tk.W, columnspan=2, padx=(20, 20), pady=(4, 0))
+        setting1_frame.grid(row=9, columnspan=2, sticky=tk.W, padx=(20, 20), pady=(4, 0))
+        setting1_text.pack(side='left', fill=None, expand=False)
+        for setting1_radiobutton in setting1_radiobuttons:
+            setting1_radiobutton.pack(side='left', fill=None, expand=False)
         setting3_text.pack(side='left', fill=None, expand=False)
         setting3_option.pack(side='left', fill=None, expand=False)
         setting3_frame.grid(row=0, columnspan=2, sticky=tk.W, padx=(20, 20), pady=(20, 0))
@@ -164,7 +173,7 @@ class GUI(tk.Frame):
 
     # return the settings as a dict, as they currently are in the GUI
     def get_working_settings(self) -> dict:
-        return {'enable_sentry': self.enable_sentry.get(),
+        return {'sentry_level': self.sentry_level.get(),
                 'wait_time': self.wait_time.get(),
                 'map_invalidation_hours': self.map_invalidation_hours.get(),
                 'check_updates': self.check_updates.get(),
@@ -187,7 +196,7 @@ class GUI(tk.Frame):
             allowed_reset = messagebox.askquestion("Restore defaults", f"Restore {settings_changed_num} changed settings to defaults?")
 
         if allowed_reset == "yes":
-            self.enable_sentry.set(get_setting_default('enable_sentry'))
+            self.sentry_level.set(get_setting_default('sentry_level'))
             self.wait_time.set(get_setting_default('wait_time'))
             self.map_invalidation_hours.set(get_setting_default('map_invalidation_hours'))
             self.check_updates.set(get_setting_default('check_updates'))
@@ -289,7 +298,7 @@ def access_settings_file(save_dict: Union[dict, None] = None) -> dict:
 
 # either gets a settings default, or if return_dict, returns all defaults as a dict
 def get_setting_default(setting: str = '', return_all: bool = False) -> Any:
-    defaults = {'enable_sentry': True,
+    defaults = {'sentry_level': 'Critical',
                 'wait_time': 5,
                 'map_invalidation_hours': 24,
                 'check_updates': True,

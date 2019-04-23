@@ -28,7 +28,7 @@ class Log:
         self.filename: Union[bytes, str] = os.path.join('logs', f'{user_pc_name}_{user_identifier}_{"{tf2rpvnum}"}_{generate_hash()}.log')
         self.console_log_path: Union[str, None] = None
         self.to_stderr: bool = False
-        self.sentry_enabled: bool = settings.get('enable_sentry')
+        self.sentry_level: str = settings.get('sentry_level')
         self.enabled: bool = settings.get('log_level') != 'Off'
         self.log_levels: list = ['Debug', 'Info', 'Error', 'Critical', 'Off']
         self.log_level: str = settings.get('log_level')
@@ -89,6 +89,9 @@ class Log:
         if 'Error' in self.log_levels_allowed:
             self.write_log('ERROR', message_in)
 
+        if self.sentry_level == 'Error':
+            self.report_log(f'Reporting non-critical ERROR: {message_in}')
+
     # a log with a level of CRITICAL (uncaught, fatal errors, probably sent to Sentry)
     def critical(self, message_in):
         if 'Critical' in self.log_levels_allowed:
@@ -123,7 +126,7 @@ class Log:
 
     # uses raven (https://github.com/getsentry/raven-python) to report the current log and hopefully some of the current console.log to Sentry (https://sentry.io/)
     def report_log(self, tb: str):
-        if self.sentry_enabled and launcher.sentry_enabled:
+        if self.sentry_level != 'Never' and launcher.sentry_enabled:
             self.info(f"Reporting {self.filename} ({os.stat(self.filename).st_size} bytes) to Sentry")
 
             if not self.console_log_path:
