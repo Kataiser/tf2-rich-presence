@@ -14,7 +14,7 @@ Discord Rich Presence for Team Fortress 2
 
 ## Download
 With installer: [tf2_rich_presence_v1.7.2_installer.exe](https://github.com/Kataiser/tf2-rich-presence/releases/download/v1.7.2/tf2_rich_presence_v1.7.2_installer.exe) (7.45 MB)  
-Without installer: [tf2_rich_presence_v1.7.2.zip](https://github.com/Kataiser/tf2-rich-presence/releases/download/v1.7.2/tf2_rich_presence_v1.7.2.zip) (8.93 MB)
+Without installer: [tf2_rich_presence_v1.7.2.zip](https://github.com/Kataiser/tf2-rich-presence/releases/download/v1.7.2/tf2_rich_presence_v1.7.2.zip) (8.94 MB)
 
 ## Installation and running
 1. Extract tf2_rich_presence_v1.7.2.zip OR run tf2_rich_presence_v1.7.2_installer.exe, whichever you download.
