@@ -30,7 +30,7 @@ class GUI(tk.Frame):
             master.iconbitmap(default=os.path.join('resources', 'tf2_logo_blurple_wrench.ico'))
 
         self.log_levels = ['Debug', 'Info', 'Error', 'Critical', 'Off']
-        self.sentry_levels = ['Error', 'Critical', 'Never']
+        self.sentry_levels = ['All errors', 'Crashes', 'Never']
         self.class_pic_types = ['Icon', 'Emblem', 'Portrait', 'None, use TF2 logo']
 
         # create every setting variable without values
@@ -73,7 +73,7 @@ class GUI(tk.Frame):
         # create settings widgets
         setting1_frame = ttk.Frame()
         setting1_text = ttk.Label(setting1_frame, text="{}".format(
-            "Crash log reporting level: "))
+            "Log reporting frequency: "))
         setting1_radiobuttons = []
         for sentry_level_text in self.sentry_levels:
             setting1_radiobuttons.append(ttk.Radiobutton(setting1_frame, variable=self.sentry_level, text=sentry_level_text, value=sentry_level_text, command=self.update_default_button_state))
@@ -298,7 +298,7 @@ def access_settings_file(save_dict: Union[dict, None] = None) -> dict:
 
 # either gets a settings default, or if return_dict, returns all defaults as a dict
 def get_setting_default(setting: str = '', return_all: bool = False) -> Any:
-    defaults = {'sentry_level': 'Critical',
+    defaults = {'sentry_level': 'Crashes',
                 'wait_time': 5,
                 'map_invalidation_hours': 24,
                 'check_updates': True,

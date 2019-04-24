@@ -136,7 +136,7 @@ class TF2RichPresense:
                         self.log.debug(f"Steam.exe path: {steam_location}")
                         steam_is_running = True
                     elif 'Discord' in p_name and '.exe' in p_name:
-                        self.log.debug(f"Discord is running at {p_name}")
+                        self.log.debug(f"Discord is running at {p_name} (PID: {process.pid})")
                         discord_is_running = True
             except Exception:
                 self.log.error(f"psutil error for {process}: {traceback.format_exc()}")
@@ -147,7 +147,7 @@ class TF2RichPresense:
 
             if cpu_usage > 25 or cpu_usage == 0.0:
                 time.sleep(0.001)
-        self.log.debug(f"Process loop took {time.perf_counter() - before_process_time} sec for {processes_searched} processes")
+        self.log.debug(f"Process loop took {round(time.perf_counter() - before_process_time, 2)} seconds for {processes_searched} processes")
 
         if steam_is_running:
             # reads a steam config file
@@ -170,7 +170,7 @@ class TF2RichPresense:
                     self.client.connect()
                     client_state: Tuple[Any, bool, str, int, str, Any] = (
                         self.client.client_id, self.client.connected, self.client.ipc_path, self.client.pid, self.client.platform, self.client.socket)
-                    self.log.debug(f"Initial client state: {client_state}")
+                    self.log.debug(f"Initial RPC client state: {client_state}")
                 except Exception as client_connect_error:
                     if str(client_connect_error) == "Can't connect to Discord Client.":  # Discord is still running but an RPC client can't be established
                         self.log.error("Can't connect to RPC")
@@ -334,7 +334,7 @@ class TF2RichPresense:
                 self.log.debug(f"console.log: {consolelog_file_size} bytes, skipped to {skip_to_byte}, {len(lines)} lines read")
             else:
                 lines: List[str] = consolelog_file.readlines()
-                self.log.debug(f"console.log: {consolelog_file_size} bytes, {len(lines)} lines")
+                self.log.debug(f"console.log: {consolelog_file_size} bytes, {len(lines)} lines (didn't skip lines)")
 
         if not self.has_compacted_console_log:
             self.log.debug(logger.compact_file(consolelog_filename))

@@ -10,6 +10,8 @@ import main
 def class_config_files(log, exe_location: str):
     log.debug(f"Reading (and possibly modifying) class configs at {exe_location}")
     tf2_classes: List[str] = ['Scout', 'Soldier', 'Pyro', 'Demoman', 'Heavy', 'Engineer', 'Medic', 'Sniper', 'Spy']
+    classes_found = []
+    classes_not_found = []
 
     for tf2_class in tf2_classes:
         # 'echo' means 'output to console' in source-speak
@@ -23,10 +25,10 @@ def class_config_files(log, exe_location: str):
             class_config_file: TextIO = open(os.path.join(exe_location, 'tf', 'cfg', f'{config_filename}.cfg'), 'r+', errors='replace')
             if selected_line not in class_config_file.read():
                 # if it doesn't already have the echo line, add it
-                log.debug(f"'{selected_line}' not found in {class_config_file.name}, adding it")
                 class_config_file.write('\n\n' + selected_line)
+                classes_not_found.append((class_config_file.name, selected_line))
             else:
-                log.debug(f"{selected_line} found in {class_config_file.name}")
+                classes_found.append((class_config_file.name, selected_line))
         except FileNotFoundError:
             # the config file doesn't exist, so create it and add the echo line
             class_config_file = open(os.path.join(exe_location, 'tf', 'cfg', f'{config_filename}.cfg'), 'w')
@@ -35,6 +37,9 @@ def class_config_files(log, exe_location: str):
 
         # I know a 'with open()' is better but eh
         class_config_file.close()
+
+    log.debug(f"Classes found: {classes_found}")
+    log.debug(f"Classes not found: {classes_found}")
 
 
 # reads steams launch options save file to find -condebug
