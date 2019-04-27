@@ -54,7 +54,7 @@ class Log:
             current_time: str = str(time.strftime('%c'))
             time_since_start: str = format(time.perf_counter() - self.start_time, '.4f')  # the format() adds trailing zeroes
 
-            full_line: str = f"[{{tf2rpvnum}} {current_time} +{time_since_start}] {level}: {message_out}\n"
+            full_line: str = f"[{current_time} +{time_since_start}] {level}: {message_out}\n"
 
             try:
                 self.log_file.write(full_line)
