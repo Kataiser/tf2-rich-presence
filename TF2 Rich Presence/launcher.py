@@ -6,7 +6,10 @@ import os
 import sys
 import time
 import traceback
+import warnings
 from typing import Union
+
+warnings.filterwarnings('ignore')
 
 sys.path.append(os.path.abspath(os.path.join('resources', 'python', 'packages')))
 sys.path.append(os.path.abspath(os.path.join('resources')))
