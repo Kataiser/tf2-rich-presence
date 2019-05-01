@@ -65,7 +65,7 @@ def failure_message(current_version: str, error_message: str = None):
         line1 = f"Couldn't connect to GitHub to check for updates ({error_message}).\n"
     else:
         line1 = "Couldn't connect to GitHub to check for updates.\n"
-        
+
     line2 = "To check for updates yourself, go to https://github.com/Kataiser/tf2-rich-presence/releases\n"
     line3 = f"(you are currently running {current_version}).\n"
     print(f"{line1}{line2}{line3}")
