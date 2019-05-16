@@ -26,7 +26,7 @@ def class_config_files(log, exe_location: str):
             if selected_line not in class_config_file.read():
                 # if it doesn't already have the echo line, add it
                 class_config_file.write('\n\n' + selected_line)
-                classes_not_found.append((class_config_file.name, selected_line))
+                classes_not_found.append((f'{config_filename}.cfg', selected_line))
             else:
                 classes_found.append((class_config_file.name, selected_line))
         except FileNotFoundError:
