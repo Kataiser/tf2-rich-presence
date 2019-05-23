@@ -24,5 +24,5 @@ Without installer: [tf2_rich_presence_{tf2rpvnum}.zip](https://github.com/Katais
 For faster launching, you can add the first .exe to your taskbar or start menu, or to Steam as a non-Steam game.
 
 ## Changelogs
-- [changelogs.html](https://htmlpreview.github.io/?https://github.com/Kataiser/tf2-rich-presence/blob/master/changelogs.html)
+- [changelogs.html](https://htmlpreview.github.io/?https://github.com/Kataiser/tf2-rich-presence/blob/master/Changelogs.html)
 - [Releases](https://github.com/Kataiser/tf2-rich-presence/releases)
