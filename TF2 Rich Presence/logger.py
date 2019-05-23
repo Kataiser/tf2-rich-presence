@@ -24,7 +24,7 @@ class Log:
             user_pc_name: str = socket.gethostbyaddr(socket.gethostname())[0]
 
         # setup
-        self.start_time: float = time.perf_counter()
+        self.last_log_time = None
         self.filename: Union[bytes, str] = os.path.join('logs', f'{user_pc_name}_{user_identifier}_{"{tf2rpvnum}"}_{generate_hash()}.log')
         self.console_log_path: Union[str, None] = None
         self.to_stderr: bool = False
@@ -51,10 +51,15 @@ class Log:
     # adds a line to the current log file
     def write_log(self, level: str, message_out: str):
         if self.enabled:
-            current_time: str = str(time.strftime('%c'))
-            time_since_start: str = format(time.perf_counter() - self.start_time, '.4f')  # the format() adds trailing zeroes
+            current_time = time.perf_counter()
+            current_time_formatted: str = str(time.strftime('%c'))
 
-            full_line: str = f"[{current_time} +{time_since_start}] {level}: {message_out}\n"
+            if self.last_log_time:
+                time_since_last: str = format(current_time - self.last_log_time, '.4f')  # the format() adds trailing zeroes
+            else:
+                time_since_last: str = '0.0000'
+
+            full_line: str = f"[{current_time_formatted} +{time_since_last}] {level}: {message_out}\n"
 
             try:
                 self.log_file.write(full_line)
@@ -73,6 +78,8 @@ class Log:
 
             if self.to_stderr:
                 print(full_line.rstrip('\n'), file=sys.stderr)
+
+            self.last_log_time = current_time
 
     # a log with a level of INFO (rarely used)
     def info(self, message_in):
