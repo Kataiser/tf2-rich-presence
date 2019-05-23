@@ -56,10 +56,16 @@ def steam_config_file(log, exe_location: str) -> list:
         try:
             # 'C:\Program Files (x86)\Steam\userdata\*user id number*\config\localconfig.vdf'
             global_config_file_path: Union[bytes, str] = os.path.join(exe_location, 'userdata', user_id_folder, 'config', 'localconfig.vdf')
-            log.debug(f"Parsing {global_config_file_path} for -condebug")
+            log.debug(f"Reading {global_config_file_path}")
 
             with open(global_config_file_path, 'r+', errors='replace') as global_config_file:
-                parsed = lowercase_keys(vdf.parse(global_config_file))
+                global_config_file_read = global_config_file.read()
+
+                if '-condebug' in global_config_file_read:
+                    log.debug("-condebug found, parsing file")
+                    parsed = lowercase_keys(vdf.loads(global_config_file_read))
+                else:
+                    continue
 
             try:
                 possible_username = parsed['userlocalconfigstore']['friends']['personaname']
@@ -78,7 +84,7 @@ def steam_config_file(log, exe_location: str) -> list:
                     if possible_username:
                         found_usernames.append(possible_username)
             except KeyError:
-                log.debug(f"No TF2 launch options found (\"440\" in file: {'440' in parsed}, \"-condebug\" in file: {'-condebug' in parsed})")
+                pass  # looks like -condebug was in some other game
         except FileNotFoundError:
             pass
 
