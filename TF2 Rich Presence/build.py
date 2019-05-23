@@ -65,7 +65,6 @@ def main(version_num):
         print("Copied", shutil.copy('Launch TF2 with Rich Presence.bat', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('Launch Rich Presence alongside TF2.bat', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('README-source.MD', github_repo_path))
-        print("Copied", shutil.copy('README.MD', github_repo_path))
 
         # copies test resources
         test_resources_source = os.path.abspath('test_resources')
@@ -212,13 +211,15 @@ def main(version_num):
         subprocess.run(package7zip_command_zip, stdout=nowhere)
 
     # creates README.md from README-source.md
-    exe_size_mb = round(os.stat(exe_path).st_size / 1048576, 2)  # 1048576 is 1024^2
-    zip_size_mb = round(os.stat(zip_path).st_size / 1048576, 2)
+    exe_size_mb = round(os.stat(exe_path).st_size / 1048576, 1)  # 1048576 is 1024^2
+    zip_size_mb = round(os.stat(zip_path).st_size / 1048576, 1)
     with open('README-source.md', 'r') as readme_md_source:
         modified_readme_md = readme_md_source.read().replace('{tf2rpvnum}', version_num).replace('{installer_size}', str(exe_size_mb)).replace('{zip_size}', str(zip_size_mb))
     with open('README.md', 'w') as readme_md_target:
         readme_md_target.write(modified_readme_md)
     print("Created README.md from modified README-source.md")
+    if github_repo_path != 'n':
+        print("Copied", shutil.copy('README.MD', github_repo_path))
 
     # disables Sentry, for testing
     with open(f'{new_build_folder_name}\\resources\\launcher.py', 'r') as launcher_py_read:
