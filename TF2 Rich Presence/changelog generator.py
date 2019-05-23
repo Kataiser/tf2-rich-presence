@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 def main():
     # watch out for rate limiting (60 requests per hour, this uses 2 per run)
 
-    with open('changelogs_source.html', 'r') as changelogs_source_html:
+    with open('Changelogs_source.html', 'r') as changelogs_source_html:
         source_html = changelogs_source_html.read()
 
     api_response = requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/releases').json()
@@ -47,7 +47,7 @@ def main():
     generated_html_with_items = source_html.replace('<!--REPLACEME-->', generated_html_pretty)
     generated_html = re.compile(r' aria-hidden="true" class="anchor" href="#(.+)" id="(.+)"').sub('', generated_html_with_items)
 
-    with open('changelogs.html', 'w') as changelog_file:
+    with open('Changelogs.html', 'w') as changelog_file:
         changelog_file.write(generated_html)
 
     print(f"\nDone (finished at {datetime.datetime.now().strftime('%I:%M:%S %p')})")

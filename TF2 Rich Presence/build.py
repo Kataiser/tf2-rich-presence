@@ -47,8 +47,8 @@ def main(version_num):
         print("Copied", shutil.copy('map list generator.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('thumb formatter.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('changelog generator.py', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('changelogs.html', f'{github_repo_path}\\'))
-        print("Copied", shutil.copy('changelogs_source.html', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy('Changelogs.html', f'{github_repo_path}\\'))
+        print("Copied", shutil.copy('Changelogs_source.html', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('maps.json', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('APIs', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('main menu.png', f'{github_repo_path}\\TF2 Rich Presence'))
@@ -58,7 +58,7 @@ def main(version_num):
         print("Copied", shutil.copy('preview.png', github_repo_path))
         print("Copied", shutil.copy('Tf2-logo.png', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('unknown_map.png', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('readme.txt', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy('Readme.txt', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('requirements.txt', github_repo_path))
         print("Copied", shutil.copy('tf2_logo_blurple.ico', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('tf2_logo_blurple_wrench.ico', f'{github_repo_path}\\TF2 Rich Presence'))
@@ -116,7 +116,7 @@ def main(version_num):
                      ('LICENSE', f'{new_build_folder_name}\\resources\\'),
                      ('main.py', f'{new_build_folder_name}\\resources\\'),
                      ('launcher.py', f'{new_build_folder_name}\\resources\\'),
-                     ('readme.txt', f'{new_build_folder_name}\\'),
+                     ('Readme.txt', f'{new_build_folder_name}\\'),
                      ('Launch TF2 with Rich Presence.bat', f'{new_build_folder_name}\\'),
                      ('Launch Rich Presence alongside TF2.bat', f'{new_build_folder_name}\\'),
                      ('Change settings.bat', f'{new_build_folder_name}\\'),
@@ -128,7 +128,7 @@ def main(version_num):
                      ('tf2_logo_blurple.ico', f'{new_build_folder_name}\\resources\\'),
                      ('tf2_logo_blurple_wrench.ico', f'{new_build_folder_name}\\resources\\'),
                      ('APIs', f'{new_build_folder_name}\\resources\\'),
-                     ('changelogs.html', f'{new_build_folder_name}\\')]
+                     ('Changelogs.html', f'{new_build_folder_name}\\')]
 
     # copies files, adding any version numbers
     for file_dest_pair in files_to_copy:
