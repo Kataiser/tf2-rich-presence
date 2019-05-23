@@ -249,6 +249,7 @@ def main(version_num):
     # finishing output
     print(f"\nFinished building TF2 Rich Presence {version_num} (took {int(time.perf_counter() - build_start_time)} seconds{time_since_last_build_text})")
     if '@' not in latest_commit:
+        time.sleep(0.1)
         print(latest_commit, file=sys.stderr)
 
 
