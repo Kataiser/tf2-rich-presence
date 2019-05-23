@@ -110,17 +110,19 @@ class TF2RichPresense:
         steam_is_running: bool = False
         discord_is_running: bool = False
 
+        cpu_usage = psutil.cpu_percent()
+        self.log.debug(f"CPU usage: {cpu_usage}%")
+
         # looks through all running processes to look for TF2, Steam, and Discord
         before_process_time: float = time.perf_counter()
         processes_searched: int = 0
-
-        cpu_usage = psutil.cpu_percent()
-        self.log.debug(f"CPU usage: {cpu_usage}%")
 
         if self.cached_pids != (None, None, None):
             tf2_is_running, tf2_location, self.start_time = self.get_info_from_pid(self.cached_pids[0], include_start_time=True)
             steam_is_running, steam_location = self.get_info_from_pid(self.cached_pids[1])
             discord_is_running = self.get_info_from_pid(self.cached_pids[2], include_path=False)[0]
+
+            self.log.debug(f"Getting process info from cached PIDs took {round(time.perf_counter() - before_process_time, 4)} seconds")
         else:
             tf2_pid, steam_pid, discord_pid = (None, None, None)
 
@@ -429,15 +431,19 @@ class TF2RichPresense:
                 process = psutil.Process(pid=pid)
             except psutil.NoSuchProcess:
                 p_info.append(False)
+                self.log.debug(f"Cached PID {pid} is no longer running")
 
                 if include_path:
                     p_info.append(None)
                 if include_start_time:
                     p_info.append(None)
             else:
-                p_info.append(True)
-
                 with process.oneshot():
+                    p_info.append([name for name in ('hl2.exe', 'Steam.exe', 'Discord') if name in process.name()])  # *_is_running only if PID hasn't been recycled
+
+                    if not p_info[0]:
+                        self.log.error(f"PID {pid} has been recycled as {process.name()}")
+
                     if include_path:
                         p_info.append(os.path.dirname(process.cmdline()[0]))
                     if include_start_time:

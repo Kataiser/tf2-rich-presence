@@ -28,7 +28,7 @@ def class_config_files(log, exe_location: str):
                 class_config_file.write('\n\n' + selected_line)
                 classes_not_found.append((f'{config_filename}.cfg', selected_line))
             else:
-                classes_found.append((class_config_file.name, selected_line))
+                classes_found.append((f'{config_filename}.cfg', selected_line))
         except FileNotFoundError:
             # the config file doesn't exist, so create it and add the echo line
             class_config_file = open(os.path.join(exe_location, 'tf', 'cfg', f'{config_filename}.cfg'), 'w')
@@ -38,8 +38,8 @@ def class_config_files(log, exe_location: str):
         # I know a 'with open()' is better but eh
         class_config_file.close()
 
-    log.debug(f"Classes found: {classes_found}")
-    log.debug(f"Classes not found: {classes_found}")
+    log.debug(f"Classes with echo found: {classes_found}")
+    log.debug(f"Classes with echo not found: {classes_not_found}")
 
 
 # reads steams launch options save file to find -condebug
