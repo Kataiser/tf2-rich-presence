@@ -3,6 +3,7 @@ import json
 import os
 import shutil
 import subprocess
+import sys
 import tempfile
 import time
 
@@ -156,7 +157,7 @@ def main(version_num):
         latest_commit_message = commits_info[0]['commit']['message'].split('\n')[0]
         latest_commit = f"\"{latest_commit_message}\" @ {commits_info[0]['html_url']}"
     except Exception as error:
-        latest_commit = f"Couldn't get commit: {error}"
+        latest_commit = f"Couldn't get latest commit: {error}"
     with open(f'{new_build_folder_name}\\resources\\build_info.txt', 'w') as info_file:
         info_file.write(f"TF2 Rich Presence by Kataiser"
                         "\nhttps://github.com/Kataiser/tf2-rich-presence"
@@ -246,6 +247,8 @@ def main(version_num):
 
     # finishing output
     print(f"\nFinished building TF2 Rich Presence {version_num} (took {int(time.perf_counter() - build_start_time)} seconds{time_since_last_build_text})")
+    if '@' not in latest_commit:
+        print(latest_commit, file=sys.stderr)
 
 
 # converts a batch file to an exe with Bat To Exe Converter (http://www.f2ko.de/en/b2e.php)
