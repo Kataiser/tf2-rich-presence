@@ -72,6 +72,7 @@ class TF2RichPresense:
         self.should_mention_tf2 = True
         self.last_notify_time = None
         self.cached_pids = (None, None, None)  # TF2, Steam, Discord
+        self.has_checked_class_configs = False
 
         # load maps database
         try:
@@ -173,8 +174,9 @@ class TF2RichPresense:
         current_time_formatted: str = current_time.strftime('%I:%M:%S %p')
 
         if tf2_is_running and discord_is_running:
-            # modifies a few tf2 config files
-            configs.class_config_files(self.log, tf2_location)
+            if not self.has_checked_class_configs:
+                # modifies a few tf2 config files
+                configs.class_config_files(self.log, tf2_location)
 
             top_line, bottom_line = self.interpret_console_log(os.path.join(tf2_location, 'tf', 'console.log'), valid_usernames)
 

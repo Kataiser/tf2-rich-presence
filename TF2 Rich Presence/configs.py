@@ -1,3 +1,4 @@
+import functools
 import os
 from typing import List, TextIO, Union
 
@@ -43,6 +44,7 @@ def class_config_files(log, exe_location: str):
 
 
 # reads steams launch options save file to find -condebug
+@functools.lru_cache(maxsize=1)
 def steam_config_file(log, exe_location: str) -> list:
     log.debug("Looking for -condebug")
     found_condebug: bool = False
