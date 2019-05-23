@@ -177,6 +177,7 @@ class TF2RichPresense:
             if not self.has_checked_class_configs:
                 # modifies a few tf2 config files
                 configs.class_config_files(self.log, tf2_location)
+                self.has_checked_class_configs = True
 
             top_line, bottom_line = self.interpret_console_log(os.path.join(tf2_location, 'tf', 'console.log'), valid_usernames)
 
