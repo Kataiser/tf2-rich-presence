@@ -87,6 +87,8 @@ def steam_config_file(log, exe_location: str) -> list:
                 pass  # looks like -condebug was in some other game
         except FileNotFoundError:
             pass
+        except PermissionError as error:
+            log.error(error)
 
     if not found_condebug:
         log.debug("-condebug not found, telling user")

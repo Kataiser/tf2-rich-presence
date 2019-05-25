@@ -134,7 +134,7 @@ class TF2RichPresense:
                         p_name: str = process.name()
 
                         if p_name == 'hl2.exe':
-                            path_to: str = process.cmdline()[0][:-7]
+                            path_to: str = os.path.dirname(process.cmdline()[0])
                             self.log.debug(f"hl2.exe path: {path_to}")
 
                             if 'Team Fortress 2' in path_to:
@@ -144,7 +144,7 @@ class TF2RichPresense:
                                 tf2_location: str = path_to
                                 tf2_is_running = True
                         elif p_name == 'Steam.exe':
-                            steam_location: str = process.cmdline()[0][:-9]
+                            steam_location: str = os.path.dirname(process.cmdline()[0])
                             self.log.debug(f"Steam.exe path: {steam_location}")
                             steam_pid = process.pid
                             steam_is_running = True
