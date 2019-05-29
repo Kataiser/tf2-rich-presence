@@ -178,6 +178,14 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
         self.assertEqual(main.generate_delta(time.time() - 10000), ' (+2.8 hours)')
         self.assertEqual(main.generate_delta(time.time() - 100000), ' (+1.2 days)')
 
+    def test_get_info_from_pid(self):
+        app = main.TF2RichPresense(self.log)
+        p_info = app.get_info_from_pid(os.getpid(), include_start_time=True)
+
+        self.assertEqual(p_info[0], False)
+        self.assertTrue('python' in p_info[1].lower())  # hope your Python installation is sane
+        self.assertTrue(isinstance(p_info[2], float))
+
 
 class TestTF2RichPresenseSimulated(unittest.TestCase):
     def test_main(self):

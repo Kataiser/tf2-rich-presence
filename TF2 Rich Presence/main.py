@@ -442,7 +442,7 @@ class TF2RichPresense:
                     p_info.append(None)
             else:
                 with process.oneshot():
-                    p_info.append([name for name in ('hl2.exe', 'Steam.exe', 'Discord') if name in process.name()])  # *_is_running only if PID hasn't been recycled
+                    p_info.append([name for name in ('hl2.exe', 'Steam.exe', 'Discord') if name in process.name()] != [])  # *_is_running only if PID hasn't been recycled
 
                     if not p_info[0]:
                         self.log.error(f"PID {pid} has been recycled as {process.name()}")
