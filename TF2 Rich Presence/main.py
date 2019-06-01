@@ -125,6 +125,9 @@ class TF2RichPresense:
             steam_is_running, steam_location = self.get_info_from_pid(self.cached_pids[1])
             discord_is_running = self.get_info_from_pid(self.cached_pids[2], include_path=False)[0]
 
+            if (tf2_is_running, steam_is_running, discord_is_running) != (True, True, True):
+                self.cached_pids = (None, None, None)
+
             self.log.debug(f"Getting process info from cached PIDs took {round(time.perf_counter() - before_process_time, 4)} seconds")
         elif len(useful_processes) >= 3:
             # looks through all running processes to look for TF2, Steam, and Discord
