@@ -3,6 +3,7 @@ import datetime
 import json
 import os
 import platform
+import subprocess
 import time
 import traceback
 from typing import Dict, Union, TextIO, Any, List, Tuple
@@ -107,6 +108,7 @@ class TF2RichPresense:
         self.log.debug(f"Loop iteration this app session: {self.loop_iteration}")
         self.old_activity = copy.copy(self.activity)
 
+        # tasklist = str(subprocess.check_output('tasklist'))
         tf2_is_running: bool = False
         steam_is_running: bool = False
         discord_is_running: bool = False
@@ -114,9 +116,9 @@ class TF2RichPresense:
         cpu_usage = psutil.cpu_percent()
         self.log.debug(f"CPU usage: {cpu_usage}%")
 
-        # looks through all running processes to look for TF2, Steam, and Discord
         before_process_time: float = time.perf_counter()
-        processes_searched: int = 0
+        tasklist = str(subprocess.check_output('tasklist'))  # tasklist only takes like 0.3 seconds
+        useful_processes = [name for name in ('hl2.exe', 'Steam.exe', 'Discord') if name in tasklist]
 
         if self.cached_pids != (None, None, None):
             tf2_is_running, tf2_location, self.start_time = self.get_info_from_pid(self.cached_pids[0], include_start_time=True)
@@ -124,7 +126,9 @@ class TF2RichPresense:
             discord_is_running = self.get_info_from_pid(self.cached_pids[2], include_path=False)[0]
 
             self.log.debug(f"Getting process info from cached PIDs took {round(time.perf_counter() - before_process_time, 4)} seconds")
-        else:
+        elif len(useful_processes) >= 3:
+            # looks through all running processes to look for TF2, Steam, and Discord
+            processes_searched: int = 0
             tf2_pid, steam_pid, discord_pid = (None, None, None)
 
             for process in psutil.process_iter():
@@ -164,6 +168,8 @@ class TF2RichPresense:
                 if cpu_usage > 25 or cpu_usage == 0.0:
                     time.sleep(0.001)
             self.log.debug(f"Process loop took {round(time.perf_counter() - before_process_time, 2)} seconds for {processes_searched} processes")
+        else:
+            self.log.debug(f"Skipping process searching (useful_processes: {useful_processes})")
 
         if steam_is_running:
             # reads a steam config file
