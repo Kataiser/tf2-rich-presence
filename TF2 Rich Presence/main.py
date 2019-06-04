@@ -121,9 +121,9 @@ class TF2RichPresense:
         useful_processes = [name for name in ('hl2.exe', 'Steam.exe', 'Discord') if name in tasklist]
 
         if self.cached_pids != (None, None, None):
-            tf2_is_running, tf2_location, self.start_time = self.get_info_from_pid(self.cached_pids[0], include_start_time=True)
-            steam_is_running, steam_location = self.get_info_from_pid(self.cached_pids[1])
-            discord_is_running = self.get_info_from_pid(self.cached_pids[2], include_path=False)[0]
+            tf2_is_running, tf2_location, self.start_time = self.get_info_from_pid(self.cached_pids[0])
+            steam_is_running, steam_location, _ = self.get_info_from_pid(self.cached_pids[1])
+            discord_is_running, _, _ = self.get_info_from_pid(self.cached_pids[2])[0]
 
             if (tf2_is_running, steam_is_running, discord_is_running) != (True, True, True):
                 self.cached_pids = (None, None, None)
@@ -435,20 +435,15 @@ class TF2RichPresense:
         raise SystemExit
 
     # a mess of logic that gives process info from a PID
-    def get_info_from_pid(self, pid, include_start_time=False, include_path=True):
+    def get_info_from_pid(self, pid: object) -> list:
         p_info = []
 
         try:
             try:
                 process = psutil.Process(pid=pid)
             except psutil.NoSuchProcess:
-                p_info.append(False)
                 self.log.debug(f"Cached PID {pid} is no longer running")
-
-                if include_path:
-                    p_info.append(None)
-                if include_start_time:
-                    p_info.append(None)
+                p_info = [False, None, None]
             else:
                 with process.oneshot():
                     p_info.append([name for name in ('hl2.exe', 'Steam.exe', 'Discord') if name in process.name()] != [])  # *_is_running only if PID hasn't been recycled
@@ -456,17 +451,17 @@ class TF2RichPresense:
                     if not p_info[0]:
                         self.log.error(f"PID {pid} has been recycled as {process.name()}")
 
-                    if include_path:
-                        p_info.append(os.path.dirname(process.cmdline()[0]))
-                    if include_start_time:
-                        p_info.append(process.create_time())
-
-            return p_info
+                    p_info.append(os.path.dirname(process.cmdline()[0]))
+                    p_info.append(process.create_time())
         except Exception:
             try:
                 self.log.error(f"psutil error for {process}: {traceback.format_exc()}")
+                p_info = [False, None, None]
             except Exception:
                 self.log.error(f"psutil error: {traceback.format_exc()}")
+                p_info = [False, None, None]
+
+        return p_info
 
 
 # alerts the user that they don't seem to have -condebug

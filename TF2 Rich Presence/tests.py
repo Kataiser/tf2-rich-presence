@@ -180,7 +180,7 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
 
     def test_get_info_from_pid(self):
         app = main.TF2RichPresense(self.log)
-        p_info = app.get_info_from_pid(os.getpid(), include_start_time=True)
+        p_info = app.get_info_from_pid(os.getpid())
 
         self.assertEqual(p_info[0], False)
         self.assertTrue('python' in p_info[1].lower())  # hope your Python installation is sane
