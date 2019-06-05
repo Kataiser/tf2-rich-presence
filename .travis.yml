@@ -1,0 +1,10 @@
+language: python
+matrix:
+  include:
+    - name: "Python 3.7.1 on Windows"
+      os: windows
+      language: shell
+      before_install: choco install python
+      env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
+install: pip3 install --upgrade pip
+script: python "TF2 Rich Presence/tests.py"
