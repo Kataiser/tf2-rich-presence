@@ -9,7 +9,11 @@ matrix:
     - name: "Python 3.7.1 on Xenial Linux"
       python: 3.7
       dist: xenial
-install: pip install --user -r requirements.txt
+    - name: "Python 3.7.2 on macOS"
+      os: osx
+      osx_image: xcode10.2
+      language: shell
+install: pip3 install -r requirements.txt
 script: 
   - cd "TF2 Rich Presence"
-  - python ci_test_runner.py
+  - python python3 ci_test_runner.py || python ci_test_runner.py
