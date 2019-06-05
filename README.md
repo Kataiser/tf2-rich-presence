@@ -4,6 +4,7 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/Kataiser/tf2-rich-presence.svg)](https://github.com/Kataiser/tf2-rich-presence/commits/master)
 [![Updates](https://pyup.io/repos/github/Kataiser/tf2-rich-presence/shield.svg)](https://pyup.io/repos/github/Kataiser/tf2-rich-presence/)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/18a048d3a05e4815b247d886abef575f)](https://www.codacy.com/app/Kataiser/tf2-rich-presence?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Kataiser/tf2-rich-presence&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://travis-ci.org/Kataiser/tf2-rich-presence.svg?branch=master)](https://travis-ci.org/Kataiser/tf2-rich-presence)
 
 # TF2 Rich Presence
 Discord Rich Presence for Team Fortress 2
