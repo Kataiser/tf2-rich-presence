@@ -4,6 +4,7 @@ import shutil
 import string
 import sys
 import time
+import tkinter as tk
 import unittest
 import webbrowser
 
@@ -190,6 +191,11 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
         self.assertEqual(p_info[0], False)
         self.assertTrue('python' in p_info[1].lower())  # hope your Python installation is sane
         self.assertTrue(isinstance(p_info[2], float))
+
+    def test_settings_gui(self):
+        root = tk.Tk()
+        settings_gui = settings.GUI(root)
+        self.assertEqual(settings_gui.window_dimensions, '515x302')
 
 
 class TestTF2RichPresenseSimulated(unittest.TestCase):
