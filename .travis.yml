@@ -9,4 +9,4 @@ matrix:
 install: pip install --user -r requirements.txt
 script: 
   - cd "TF2 Rich Presence"
-  - python tests.py
+  - python ci_test_runner.py
