@@ -169,7 +169,7 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
 
         try:
             self.assertTrue(compact_file_out.startswith("Compacted file test_resources\\console_badwater.log (took "))
-            self.assertTrue(compact_file_out.endswith("console_badwater.lo 9309970 : 2490368 = 3.7 to 1 [OK] 1 files within 1 directories were compressed. 9,309,970 total bytes of data are "
+            self.assertTrue(compact_file_out.endswith("console_badwater.log 9309970 : 2490368 = 3.7 to 1 [OK] 1 files within 1 directories were compressed. 9,309,970 total bytes of data are "
                                                       "stored in 2,490,368 bytes. The compression ratio is 3.7 to 1."))
         except self.failureException:
             print(compact_file_out, file=sys.stderr)
