@@ -1,11 +1,14 @@
 language: python
 matrix:
   include:
-    - name: "Python 3.7 on Windows"
+    - name: "Python 3.7.3 on Windows"
       os: windows
       language: shell
       before_install: choco install python
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
+    - name: "Python 3.7.1 on Xenial Linux"
+      python: 3.7
+      dist: xenial
 install: pip install --user -r requirements.txt
 script: 
   - cd "TF2 Rich Presence"
