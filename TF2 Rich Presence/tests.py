@@ -195,7 +195,10 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
     def test_settings_gui(self):
         root = tk.Tk()
         settings_gui = settings.GUI(root)
-        self.assertEqual(settings_gui.window_dimensions, '515x302')
+        dimensions = settings_gui.window_dimensions
+
+        self.assertEqual(len(str(dimensions[0])), 3)  # beautiful
+        self.assertEqual(len(str(dimensions[1])), 3)
 
 
 class TestTF2RichPresenseSimulated(unittest.TestCase):

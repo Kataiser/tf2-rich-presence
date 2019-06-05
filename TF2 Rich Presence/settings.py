@@ -155,7 +155,7 @@ class GUI(tk.Frame):
 
         self.update_default_button_state()
         master.update()
-        self.window_dimensions = f'{master.winfo_width()}x{master.winfo_height()}'
+        self.window_dimensions = master.winfo_width(), master.winfo_height()
         self.log.debug(f"Window size: {self.window_dimensions}")
 
         # move window to the top (but don't keep it there)
