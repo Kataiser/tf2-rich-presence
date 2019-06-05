@@ -35,6 +35,9 @@ class Log:
         self.unsaved_lines = 0
 
         if self.enabled:
+            if not os.path.isdir('logs'):
+                os.mkdir('logs')
+
             self.log_levels_allowed = [level for level in self.log_levels if self.log_levels.index(level) >= self.log_levels.index(self.log_level)]
             self.log_file = open(self.filename, 'a')
         else:

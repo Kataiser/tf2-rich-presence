@@ -39,6 +39,7 @@ def main(version_num):
         print("Copied", shutil.copy('launcher.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('build.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('tests.py', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy('ci_test_runner.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('logger.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('configs.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('custom_maps.py', f'{github_repo_path}\\TF2 Rich Presence'))
@@ -65,6 +66,7 @@ def main(version_num):
         print("Copied", shutil.copy('Launch TF2 with Rich Presence.bat', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('Launch Rich Presence alongside TF2.bat', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('README-source.MD', github_repo_path))
+        print("Copied", shutil.copy('.travis.yml', github_repo_path))
 
         # copies test resources
         test_resources_source = os.path.abspath('test_resources')
