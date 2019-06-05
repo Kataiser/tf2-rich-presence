@@ -6,5 +6,5 @@ matrix:
       language: shell
       before_install: choco install python
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
-install: pip3 install --upgrade pip
+install: pip install --user -r requirements.txt
 script: python "TF2 Rich Presence/tests.py"
