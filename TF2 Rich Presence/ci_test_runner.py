@@ -1,5 +1,6 @@
-import tests
 import os
+
+import tests
 
 # for https://travis-ci.org/Kataiser/tf2-rich-presence
 if __name__ == '__main__':
