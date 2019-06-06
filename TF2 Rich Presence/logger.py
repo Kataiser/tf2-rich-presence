@@ -9,6 +9,7 @@ from operator import itemgetter
 from typing import Union, List, BinaryIO
 
 from pbwrap import Pastebin
+from raven import breadcrumbs
 
 import launcher
 import settings
@@ -63,6 +64,9 @@ class Log:
                 time_since_last: str = '0.0000'
 
             full_line: str = f"[{current_time_formatted} +{time_since_last}] {level}: {message_out}\n"
+
+            # log breadcrumb to Sentry
+            breadcrumbs.record(message=full_line, level=level.lower().replace('critical', 'fatal'))
 
             try:
                 self.log_file.write(full_line)
