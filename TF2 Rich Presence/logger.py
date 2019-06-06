@@ -141,17 +141,13 @@ class Log:
     # uses raven (https://github.com/getsentry/raven-python) to report the current log and hopefully some of the current console.log to Sentry (https://sentry.io/)
     def report_log(self, tb: str):
         if self.sentry_level != 'Never' and launcher.sentry_enabled:
-            self.info(f"Reporting {self.filename} ({os.stat(self.filename).st_size} bytes) to Sentry")
+            self.info(f"Reporting crash to Sentry from logger")
 
-            if not self.console_log_path:
-                paste_text = f"{self.filename}\n{read_truncated_file(self.filename)}"
-            else:
-                paste_text = f"{self.filename}\n{read_truncated_file(self.filename)}\n{read_truncated_file(self.console_log_path)}"
-
-            paste_url: str = self.pastebin(paste_text)
+            if self.console_log_path:
+                breadcrumbs.record(message="console.log for debugging", level='fatal', data=read_truncated_file(self.console_log_path))
 
             try:
-                launcher.sentry_client.captureMessage(f'{self.filename}\n{paste_url}\n{tb}')
+                launcher.sentry_client.captureMessage(f'{self.filename}\n{tb}')
             except Exception as err:
                 self.error(f"Couldn't report crash to Sentry: {err}")
 
@@ -180,7 +176,7 @@ def read_truncated_file(path: str, limit: int = 200000) -> str:
 
 # generates a short hash string from several source files
 def generate_hash() -> str:
-    files_to_hash: List[str] = ['main.py', 'configs.py', 'custom_maps.py', 'logger.py', 'updater.py', 'launcher.py', 'settings.py']
+    files_to_hash: List[str] = ['main.py', 'configs.py', 'custom_maps.py', 'logger.py', 'updater.py', 'settings.py']
     files_to_hash_text: List = []
 
     build_folder = [item for item in os.listdir('.') if item.startswith('TF2 Rich Presence v') and os.path.isdir(item)]

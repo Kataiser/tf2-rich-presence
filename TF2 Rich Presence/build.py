@@ -160,11 +160,13 @@ def main(version_num):
     except Exception as error:
         latest_commit = f"Couldn't get latest commit: {error}"
     with open(f'{new_build_folder_name}\\resources\\build_info.txt', 'w') as info_file:
+        version_hashes = {'v1.7.4': 'a56ec211'}
         info_file.write(f"TF2 Rich Presence by Kataiser"
                         "\nhttps://github.com/Kataiser/tf2-rich-presence"
                         f"\n\nVersion: {version_num}"
                         f"\nBuilt: {datetime.datetime.utcnow().strftime('%c')} UTC"
                         f"\nHash: {logger.generate_hash()}"
+                        f"\nVersion hashes: {version_hashes}"
                         f"\nLatest commit: {latest_commit}")
 
     # clears custom map cache
@@ -253,6 +255,9 @@ def main(version_num):
     if '@' not in latest_commit:
         time.sleep(0.1)
         print(latest_commit, file=sys.stderr)
+    if version_num not in version_hashes.keys():
+        time.sleep(0.1)
+        print("version_hashes doesn't include this version", file=sys.stderr)
 
 
 # converts a batch file to an exe with Bat To Exe Converter (http://www.f2ko.de/en/b2e.php)

@@ -57,7 +57,7 @@ def get_api_key(service):
         return json.load(api_keys_file)[service]
 
 
-sentry_enabled: bool = False
+sentry_enabled: bool = True
 
 if sentry_enabled:
     # the raven client for Sentry (https://sentry.io/)
