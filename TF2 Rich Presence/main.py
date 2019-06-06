@@ -122,8 +122,8 @@ class TF2RichPresense:
 
         if self.cached_pids != (None, None, None):
             tf2_is_running, tf2_location, self.start_time = self.get_info_from_pid(self.cached_pids[0])
-            steam_is_running, steam_location, _ = self.get_info_from_pid(self.cached_pids[1])
-            discord_is_running, _, _ = self.get_info_from_pid(self.cached_pids[2])[0]
+            steam_is_running, steam_location = self.get_info_from_pid(self.cached_pids[1])[:2]
+            discord_is_running = self.get_info_from_pid(self.cached_pids[2])[0]
 
             if (tf2_is_running, steam_is_running, discord_is_running) != (True, True, True):
                 self.cached_pids = (None, None, None)
@@ -174,7 +174,11 @@ class TF2RichPresense:
         else:
             self.log.debug(f"Skipping process searching (useful_processes: {useful_processes})")
 
-        if steam_is_running:
+            tf2_is_running = 'hl2.exe' in useful_processes
+            steam_is_running = 'Steam.exe' in useful_processes
+            discord_is_running = 'Discord' in useful_processes
+
+        if steam_is_running and len(useful_processes) >= 3:
             # reads a steam config file
             valid_usernames: List[str] = configs.steam_config_file(self.log, steam_location)
 
@@ -315,7 +319,7 @@ class TF2RichPresense:
                 self.log.info(f"TF2 isn't running (mentioning to user: {self.should_mention_tf2})")
 
                 if self.should_mention_tf2:
-                    print(f"{current_time_formatted}{generate_delta(self.last_notify_time)}\nTF2 isn't running\n")
+                    print(f"{current_time_formatted}{generate_delta(self.last_notify_time)}\nTeam Fortress 2 isn't running\n")
                     self.should_mention_discord = True
                     self.should_mention_tf2 = False
                     self.last_notify_time = time.time()
