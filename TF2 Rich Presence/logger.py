@@ -56,14 +56,13 @@ class Log:
     def write_log(self, level: str, message_out: str):
         if self.enabled:
             current_time = time.perf_counter()
-            current_time_formatted: str = str(time.strftime('%c'))
 
             if self.last_log_time:
                 time_since_last: str = format(current_time - self.last_log_time, '.4f')  # the format() adds trailing zeroes
             else:
                 time_since_last: str = '0.0000'
 
-            full_line: str = f"[{current_time_formatted} +{time_since_last}] {level}: {message_out}\n"
+            full_line: str = f"[{int(time.time())} +{time_since_last}] {level}: {message_out}\n"
 
             # log breadcrumb to Sentry
             breadcrumbs.record(message=full_line, level=level.lower().replace('critical', 'fatal'))
