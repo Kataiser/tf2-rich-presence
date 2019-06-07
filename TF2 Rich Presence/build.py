@@ -4,7 +4,6 @@ import os
 import shutil
 import subprocess
 import sys
-import tempfile
 import time
 
 import requests
@@ -211,11 +210,10 @@ def main(version_num):
     package7zip_command_exe_1 = f'build_tools\\7za.exe a {exe_path} "{new_build_folder_name}\\"'
     package7zip_command_exe_2 = f'-sfx7z.sfx -ssw -mx=9 -myx=9 -mmt=2 -m0=LZMA2:d=8m'
     package7zip_command_zip = f'build_tools\\7za.exe a {zip_path} "{new_build_folder_name}\\" -ssw -mx=9 -m0=LZMA:d=8m -mmt=2'
-    with tempfile.TemporaryFile() as nowhere:  # 7zip creates too much output
-        print(f"Creating tf2_rich_presence_{version_num}_installer.exe...")
-        subprocess.run(f'{package7zip_command_exe_1} {package7zip_command_exe_2}', stdout=nowhere)
-        print(f"Creating tf2_rich_presence_{version_num}.zip...")
-        subprocess.run(package7zip_command_zip, stdout=nowhere)
+    print(f"Creating tf2_rich_presence_{version_num}_installer.exe...")
+    subprocess.run(f'{package7zip_command_exe_1} {package7zip_command_exe_2}', stdout=subprocess.DEVNULL)
+    print(f"Creating tf2_rich_presence_{version_num}.zip...")
+    subprocess.run(package7zip_command_zip, stdout=subprocess.DEVNULL)
 
     # creates README.md from README-source.md
     exe_size_mb = round(os.stat(exe_path).st_size / 1048576, 1)  # 1048576 is 1024^2
