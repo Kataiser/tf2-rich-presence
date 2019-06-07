@@ -161,11 +161,13 @@ def main(version_num):
         latest_commit = f"Couldn't get latest commit: {error}"
     with open(f'{new_build_folder_name}\\resources\\build_info.txt', 'w') as info_file:
         version_hashes = {'v1.7.4': 'a56ec211'}
+        this_hash = logger.generate_hash()
+
         info_file.write(f"TF2 Rich Presence by Kataiser"
                         "\nhttps://github.com/Kataiser/tf2-rich-presence"
                         f"\n\nVersion: {version_num}"
                         f"\nBuilt: {datetime.datetime.utcnow().strftime('%c')} UTC"
-                        f"\nHash: {logger.generate_hash()}"
+                        f"\nHash: {this_hash}"
                         f"\nVersion hashes: {version_hashes}"
                         f"\nLatest commit: {latest_commit}")
 
@@ -198,6 +200,7 @@ def main(version_num):
     print(f"pycaches deleted: {pycaches_deleted}")
     print(f"tests deleted: {tests_deleted}")
 
+    time.sleep(0.2)  # just to make sure everything is updated
     convert_bat_to_exe(os.path.abspath(f'{new_build_folder_name}\\Launch TF2 with Rich Presence.bat'), version_num, 'tf2_logo_blurple.ico')
     convert_bat_to_exe(os.path.abspath(f'{new_build_folder_name}\\Launch Rich Presence alongside TF2.bat'), version_num, 'tf2_logo_blurple.ico')
     convert_bat_to_exe(os.path.abspath(f'{new_build_folder_name}\\Change settings.bat'), version_num, 'tf2_logo_blurple_wrench.ico')
@@ -257,7 +260,7 @@ def main(version_num):
         print(latest_commit, file=sys.stderr)
     if version_num not in version_hashes.keys():
         time.sleep(0.1)
-        print("version_hashes doesn't include this version", file=sys.stderr)
+        print(f"version_hashes doesn't include this version, add ('{version_num}': '{this_hash}')", file=sys.stderr)
 
 
 # converts a batch file to an exe with Bat To Exe Converter (http://www.f2ko.de/en/b2e.php)
