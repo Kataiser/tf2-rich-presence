@@ -1,7 +1,6 @@
 import io
 import os
 import shutil
-import string
 import sys
 import time
 import tkinter as tk
@@ -108,11 +107,6 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
             correct_file_ending_text = correct_file_ending_file.read()
 
         self.assertTrue(logger.read_truncated_file('test_resources\\console_queued_casual.log', limit=1000) == correct_file_ending_text)
-
-    def test_pastebin(self):
-        pastebin_response = self.log.pastebin('test')
-        self.assertEqual(pastebin_response[:21], 'https://pastebin.com/')
-        self.assertEqual([char for char in pastebin_response[21:] if char not in string.ascii_letters + string.digits], [])
 
     def test_access_github_api(self):
         newest_version, downloads_url, changelog, prerelease = updater.access_github_api(10)

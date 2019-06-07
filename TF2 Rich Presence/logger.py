@@ -8,7 +8,6 @@ import traceback
 from operator import itemgetter
 from typing import Union, List, BinaryIO
 
-from pbwrap import Pastebin
 from raven import breadcrumbs
 
 import launcher
@@ -150,17 +149,6 @@ class Log:
             except Exception as err:
                 self.error(f"Couldn't report crash to Sentry: {err}")
 
-    # sends log contents (or any other text) to pastebin and returns the paste's URL
-    def pastebin(self, text: str) -> str:
-        self.save_log()
-
-        try:
-            pb: Pastebin = Pastebin(launcher.get_api_key('pastebin'))
-            return pb.create_paste(text, api_paste_private=1, api_paste_name=self.filename, api_paste_expire_date='1M')
-        except Exception as err:
-            self.error(f"Couldn't create paste: {err}")
-            return f"Couldn't create paste: {err}"
-
 
 # reads a text file, truncating it to the last 'limit' bytes (default: 200KB) if it's over that size
 def read_truncated_file(path: str, limit: int = 200000) -> str:
@@ -208,5 +196,3 @@ def compact_file(target_file_path: str) -> str:
 if __name__ == '__main__':
     log = Log()
     # log.debug(f"Current log: {log.filename}")
-    print(log.pastebin('test'))
-
