@@ -99,7 +99,7 @@ def main(version_num):
     last_build_time = None
     for file in files_in_cwd:
         if file.startswith('tf2_rich_presence_'):
-            if file.endswith('_installer.exe') or file.endswith('.zip'):
+            if file.endswith('_self_extracting.exe') or file.endswith('.zip'):
                 last_build_time = os.stat(file).st_mtime
                 os.remove(file)
                 print(f"Removed old package: {file}")
@@ -205,12 +205,12 @@ def main(version_num):
     convert_bat_to_exe(os.path.abspath(f'{new_build_folder_name}\\Change settings.bat'), version_num, 'tf2_logo_blurple_wrench.ico')
 
     # generates zip package and an "installer" (a self extracting .7z as an exe), both with 7zip
-    exe_path = f'tf2_rich_presence_{version_num}_installer.exe'
+    exe_path = f'tf2_rich_presence_{version_num}_self_extracting.exe'
     zip_path = f'tf2_rich_presence_{version_num}.zip'
     package7zip_command_exe_1 = f'build_tools\\7za.exe a {exe_path} "{new_build_folder_name}\\"'
     package7zip_command_exe_2 = f'-sfx7z.sfx -ssw -mx=9 -myx=9 -mmt=2 -m0=LZMA2:d=8m'
     package7zip_command_zip = f'build_tools\\7za.exe a {zip_path} "{new_build_folder_name}\\" -ssw -mx=9 -m0=LZMA:d=8m -mmt=2'
-    print(f"Creating tf2_rich_presence_{version_num}_installer.exe...")
+    print(f"Creating tf2_rich_presence_{version_num}_self_extracting.exe...")
     subprocess.run(f'{package7zip_command_exe_1} {package7zip_command_exe_2}', stdout=subprocess.DEVNULL)
     print(f"Creating tf2_rich_presence_{version_num}.zip...")
     subprocess.run(package7zip_command_zip, stdout=subprocess.DEVNULL)

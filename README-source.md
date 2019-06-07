@@ -14,11 +14,11 @@ Discord Rich Presence for Team Fortress 2
 (The actual program is nowhere near as nice looking as this)
 
 ## Download
-With installer: [tf2_rich_presence_{tf2rpvnum}_installer.exe](https://github.com/Kataiser/tf2-rich-presence/releases/download/{tf2rpvnum}/tf2_rich_presence_{tf2rpvnum}_installer.exe) ({installer_size} MB)  
-Without installer: [tf2_rich_presence_{tf2rpvnum}.zip](https://github.com/Kataiser/tf2-rich-presence/releases/download/{tf2rpvnum}/tf2_rich_presence_{tf2rpvnum}.zip) ({zip_size} MB)
+With self-extractor: [tf2_rich_presence_{tf2rpvnum}_self_extracting.exe](https://github.com/Kataiser/tf2-rich-presence/releases/download/{tf2rpvnum}/tf2_rich_presence_{tf2rpvnum}_self_extracting.exe) ({installer_size} MB)  
+Extract it yourself: [tf2_rich_presence_{tf2rpvnum}.zip](https://github.com/Kataiser/tf2-rich-presence/releases/download/{tf2rpvnum}/tf2_rich_presence_{tf2rpvnum}.zip) ({zip_size} MB)
 
 ## Installation and running
-1. Extract tf2_rich_presence_{tf2rpvnum}.zip OR run tf2_rich_presence_{tf2rpvnum}_installer.exe, whichever you download.
+1. Extract tf2_rich_presence_{tf2rpvnum}.zip OR run tf2_rich_presence_{tf2rpvnum}_self_extracting.exe, whichever you download.
 2. Run `Launch TF2 with Rich Presence.exe`. Requires Steam and Discord to be running as well.
 	- OR run `Launch Rich Presence alongside TF2.exe`. This doesn't automatically start Team Fortress 2.
 
