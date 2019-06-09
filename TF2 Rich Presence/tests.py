@@ -74,7 +74,7 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
         self.log.log_file.close()
 
         with open(self.log.filename, 'r') as current_log_file:
-            self.assertTrue(current_log_file.read().endswith('] INFO: Test.\n'))
+            self.assertTrue(' +0.0000] INFO: Test.\n' in current_log_file.read())
 
         os.remove(self.log.filename)
 
@@ -191,8 +191,8 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
         settings_gui = settings.GUI(root)
         dimensions = settings_gui.window_dimensions
 
-        self.assertEqual(len(str(dimensions[0])), 3)  # beautiful
-        self.assertEqual(len(str(dimensions[1])), 3)
+        self.assertGreaterEqual(dimensions[0], 200)
+        self.assertGreaterEqual(dimensions[1], 200)
 
 
 class TestTF2RichPresenseSimulated(unittest.TestCase):
