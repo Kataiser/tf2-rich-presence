@@ -1,6 +1,7 @@
 import functools
 import json
 import os
+import time
 import tkinter as tk
 import tkinter.ttk as ttk
 import traceback
@@ -12,12 +13,13 @@ import logger
 
 class GUI(tk.Frame):
     def __init__(self, master):
-        tk.Frame.__init__(self, master)
-        self.master = master
-
         self.log = logger.Log()
         self.log.to_stderr = True
         self.log.info("Opening settings menu for TF2 Rich Presence {tf2rpvnum}")
+
+        tk.Frame.__init__(self, master)
+        self.master = master
+        check_int_command = self.register(check_int)
 
         master.title("TF2 Rich Presence ({tf2rpvnum}) settings")
         master.resizable(0, 0)  # disables resizing
@@ -68,47 +70,48 @@ class GUI(tk.Frame):
             self.restore_defaults()
             self.settings_loaded = get_setting_default(return_all=True)
 
-        check_int_command = self.register(check_int)
+        # create label frames
+        lf_main = ttk.Labelframe(master, text='Main')
+        lf_advanced = ttk.Labelframe(master, text='Advanced')
 
         # create settings widgets
-        setting1_frame = ttk.Frame()
+        setting1_frame = ttk.Frame(lf_advanced)
         setting1_text = ttk.Label(setting1_frame, text="{}".format(
             "Log reporting frequency: "))
         setting1_radiobuttons = []
         for sentry_level_text in self.sentry_levels:
             setting1_radiobuttons.append(ttk.Radiobutton(setting1_frame, variable=self.sentry_level, text=sentry_level_text, value=sentry_level_text, command=self.update_default_button_state))
-
-        setting3_frame = ttk.Frame()
+        setting3_frame = ttk.Frame(lf_main)
         setting3_text = ttk.Label(setting3_frame, text="{}".format(
             "Delay between refreshes, in seconds: "))
         setting3_option = ttk.Spinbox(setting3_frame, textvariable=self.wait_time, width=6, from_=0, to=1000, validate='all', validatecommand=(check_int_command, '%P', 1000),
                                       command=self.update_default_button_state)
-        setting4_frame = ttk.Frame()
+        setting4_frame = ttk.Frame(lf_main)
         setting4_text = ttk.Label(setting4_frame, text="{}".format(
             "Hours before re-checking custom map gamemode: "))
         setting4_option = ttk.Spinbox(setting4_frame, textvariable=self.map_invalidation_hours, width=6, from_=0, to=1000, validate='all', validatecommand=(check_int_command, '%P', 1000),
                                       command=self.update_default_button_state)
-        setting5 = ttk.Checkbutton(master, variable=self.check_updates, command=self.update_default_button_state, text="{}".format(
+        setting5 = ttk.Checkbutton(lf_main, variable=self.check_updates, command=self.update_default_button_state, text="{}".format(
             "Check for program updates when launching"))
-        setting6_frame = ttk.Frame()
+        setting6_frame = ttk.Frame(lf_advanced)
         setting6_text = ttk.Label(setting6_frame, text="{}".format(
-            "Internet connection (for updater and custom maps) timeout, in seconds: "))
+            "Internet connection timeout (for updater and custom maps), in seconds: "))
         setting6_option = ttk.Spinbox(setting6_frame, textvariable=self.request_timeout, width=6, from_=0, to=60, validate='all', validatecommand=(check_int_command, '%P', 60),
                                       command=self.update_default_button_state)
-        setting8 = ttk.Checkbutton(master, variable=self.hide_queued_gamemode, command=self.update_default_button_state, text="{}".format(
+        setting8 = ttk.Checkbutton(lf_main, variable=self.hide_queued_gamemode, command=self.update_default_button_state, text="{}".format(
             "Hide game type (Casual, Comp, MvM) queued for"))
-        setting9_frame = ttk.Frame()
+        setting9_frame = ttk.Frame(lf_advanced)
         setting9_text = ttk.Label(setting9_frame, text="{}".format(
             "Max log level: "))
         setting9_radiobuttons = []
         for log_level_text in self.log_levels:
             setting9_radiobuttons.append(ttk.Radiobutton(setting9_frame, variable=self.log_level, text=log_level_text, value=log_level_text, command=self.update_default_button_state))
-        setting10_frame = ttk.Frame()
+        setting10_frame = ttk.Frame(lf_advanced)
         setting10_text = ttk.Label(setting10_frame, text="{}".format(
             "Max kilobytes of console.log to scan: "))
         setting10_option = ttk.Spinbox(setting10_frame, textvariable=self.console_scan_kb, width=8, from_=0, to=float('inf'), validate='all',
                                        validatecommand=(check_int_command, '%P', float('inf')), command=self.update_default_button_state)
-        setting12_frame = ttk.Frame()
+        setting12_frame = ttk.Frame(lf_main)
         setting12_text = ttk.Label(setting12_frame, text="{}".format(
             "Selected class small image type: "))
         setting12_radiobuttons = []
@@ -116,41 +119,50 @@ class GUI(tk.Frame):
             setting12_radiobuttons.append(ttk.Radiobutton(setting12_frame, variable=self.class_pic_type, text=class_pic_type_text, value=class_pic_type_text,
                                                           command=self.update_default_button_state))
 
-        # add widgets to the main window
-        setting1_frame.grid(row=9, columnspan=2, sticky=tk.W, padx=(20, 20), pady=(4, 0))
+        # create the report button
+        current_log_size = round(os.stat(self.log.filename).st_size / 1024)
+        self.report_button_text = tk.StringVar(value=f"Report logs to developer ({current_log_size if current_log_size != 0 else '1'} KB)")
+        self.report_button = ttk.Button(lf_advanced, textvariable=self.report_button_text, command=self.report_log)
+
+        # add widgets to the labelframes or main window
+        setting1_frame.grid(row=9, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
         setting1_text.pack(side='left', fill=None, expand=False)
         for setting1_radiobutton in setting1_radiobuttons:
             setting1_radiobutton.pack(side='left', fill=None, expand=False)
         setting3_text.pack(side='left', fill=None, expand=False)
         setting3_option.pack(side='left', fill=None, expand=False)
-        setting3_frame.grid(row=0, columnspan=2, sticky=tk.W, padx=(20, 20), pady=(20, 0))
+        setting3_frame.grid(row=0, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(8, 0))
         setting4_text.pack(side='left', fill=None, expand=False)
         setting4_option.pack(side='left', fill=None, expand=False)
-        setting4_frame.grid(row=2, columnspan=2, sticky=tk.W, padx=(20, 20), pady=(4, 0))
-        setting5.grid(row=7, sticky=tk.W, columnspan=2, padx=(20, 20), pady=(4, 0))
+        setting4_frame.grid(row=2, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
+        setting5.grid(row=7, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 10))
         setting6_text.pack(side='left', fill=None, expand=False)
         setting6_option.pack(side='left', fill=None, expand=False)
-        setting6_frame.grid(row=8, columnspan=2, sticky=tk.W, padx=(20, 20), pady=(4, 0))
-        setting8.grid(row=4, sticky=tk.W, columnspan=2, padx=(20, 20), pady=(4, 0))
+        setting6_frame.grid(row=8, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
+        setting8.grid(row=4, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
         setting9_text.pack(side='left', fill=None, expand=False)
         for setting9_radiobutton in setting9_radiobuttons:
             setting9_radiobutton.pack(side='left', fill=None, expand=False)
-        setting9_frame.grid(row=10, columnspan=2, sticky=tk.W, padx=(20, 20), pady=(4, 0))
+        setting9_frame.grid(row=10, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
         setting10_text.pack(side='left', fill=None, expand=False)
         setting10_option.pack(side='left', fill=None, expand=False)
-        setting10_frame.grid(row=3, columnspan=2, sticky=tk.W, padx=(20, 20), pady=(4, 0))
+        setting10_frame.grid(row=3, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(8, 0))
         setting12_text.pack(side='left', fill=None, expand=False)
         for setting12_radiobutton in setting12_radiobuttons:
             setting12_radiobutton.pack(side='left', fill=None, expand=False)
-        setting12_frame.grid(row=6, columnspan=2, sticky=tk.W, padx=(20, 20), pady=(4, 0))
+        setting12_frame.grid(row=6, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
+        self.report_button.grid(row=11, sticky=tk.W, padx=(20, 40), pady=(4, 12))
+
+        lf_main.grid(row=0, padx=30, pady=15)
+        lf_advanced.grid(row=1, padx=30, pady=0, sticky=tk.W + tk.E)
 
         buttons_frame = ttk.Frame()
         self.restore_button = ttk.Button(buttons_frame, text="Restore defaults", command=self.restore_defaults)
         self.restore_button.grid(row=0, column=1, padx=(10, 0), pady=(20, 20))
         cancel_button = ttk.Button(buttons_frame, text="Close without saving", command=self.close_without_saving)
         cancel_button.grid(row=0, column=2, padx=10, pady=(20, 20))
-        ok_button = ttk.Button(buttons_frame, text="Save and close", command=self.save_and_close, default=tk.ACTIVE)
-        ok_button.grid(row=0, column=3, sticky=tk.W, padx=0, pady=(20, 20))
+        self.ok_button = ttk.Button(buttons_frame, text="Save and close", command=self.save_and_close, default=tk.ACTIVE)
+        self.ok_button.grid(row=0, column=3, sticky=tk.W, padx=0, pady=(20, 20))
         buttons_frame.grid(row=100, columnspan=3)
 
         self.update_default_button_state()
@@ -254,6 +266,28 @@ class GUI(tk.Frame):
         if allowed_close == "yes":
             self.log.info("Closing settings menu without saving")
             self.master.destroy()
+
+    # report the current log file to the dev via Sentry
+    def report_log(self):
+        self.log.info("Manually reporting log to Sentry")
+        before_report_time = time.perf_counter()
+
+        import raven
+        import launcher
+
+        with open(self.log.filename, 'r') as log_to_report:
+            log_data = log_to_report.read()
+            temp_sentry_client = raven.Client(dsn=launcher.get_api_key('sentry'),
+                                              release='{tf2rpvnum}',
+                                              string_max_length=len(log_data),
+                                              processors=('raven.processors.SanitizePasswordsProcessor',))
+            temp_sentry_client.captureMessage(f"MANUALLY REPORTED LOG: {self.log.filename}", level='info', extra={'log': log_data})
+
+        report_elapsed = round(time.perf_counter() - before_report_time, 1)
+        self.log.debug(f"Successfully reported log (took {report_elapsed} seconds)")
+        self.report_button_text.set("Successfully reported logs")
+        self.report_button.state(['disabled'])
+        self.ok_button.focus_set()
 
 
 # main entry point
