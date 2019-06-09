@@ -277,11 +277,12 @@ class GUI(tk.Frame):
 
         with open(self.log.filename, 'r') as log_to_report:
             log_data = log_to_report.read()
-            temp_sentry_client = raven.Client(dsn=launcher.get_api_key('sentry'),
-                                              release='{tf2rpvnum}',
-                                              string_max_length=len(log_data),
-                                              processors=('raven.processors.SanitizePasswordsProcessor',))
-            temp_sentry_client.captureMessage(f"MANUALLY REPORTED LOG: {self.log.filename}", level='info', extra={'log': log_data})
+
+        temp_sentry_client = raven.Client(dsn=launcher.get_api_key('sentry'),
+                                          release='{tf2rpvnum}',
+                                          string_max_length=len(log_data),
+                                          processors=('raven.processors.SanitizePasswordsProcessor',))
+        temp_sentry_client.captureMessage(f"MANUALLY REPORTED LOG: {self.log.filename}", level='info', extra={'log': log_data})
 
         report_elapsed = round(time.perf_counter() - before_report_time, 1)
         self.log.debug(f"Successfully reported log (took {report_elapsed} seconds)")
