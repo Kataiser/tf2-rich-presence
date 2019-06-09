@@ -184,7 +184,7 @@ class TF2RichPresense:
 
         # used for display only
         current_time = datetime.datetime.now()
-        current_time_formatted: str = current_time.strftime('%I:%M:%S %p')
+        current_time_formatted: str = current_time.strftime('%I:%M:%S %p').lstrip('0')
 
         if tf2_is_running and discord_is_running:
             if not self.has_checked_class_configs:
@@ -274,8 +274,8 @@ class TF2RichPresense:
                 print(f"{current_time_formatted}{generate_delta(self.last_notify_time)}")
                 print(f"{self.activity['details']} ({self.activity['assets']['large_text']})")
                 print(self.activity['state'])
-                time_elapsed = int(time.time() - self.start_time)
-                print(f"{datetime.timedelta(seconds=time_elapsed)} elapsed")
+                time_elapsed = datetime.timedelta(seconds=int(time.time() - self.start_time))
+                print(f"{str(time_elapsed).lstrip('0:')} elapsed")
                 print()
 
                 self.log.debug(f"Activity changed, outputting (old: {self.old_activity}, new: {self.activity})")
