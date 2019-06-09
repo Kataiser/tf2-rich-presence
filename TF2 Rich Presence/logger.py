@@ -72,7 +72,7 @@ class Log:
                 self.error(f"Couldn't write log due to UnicodeEncodeError: {error}")
 
             self.unsaved_lines += 1
-            if (self.unsaved_lines >= 100 or level in ['Error', 'Critical']) and (message_out != "Closing and re-opening log" and "Compact" not in message_out):
+            if (self.unsaved_lines >= 100 or level != 'DEBUG') and (message_out != "Closing and re-opening log" and "Compact" not in message_out):
                 try:
                     self.debug(compact_file(self.filename))
                     self.debug("Closing and re-opening log")
