@@ -8,6 +8,7 @@ import traceback
 from operator import itemgetter
 from typing import Union, List, BinaryIO
 
+import raven
 from raven import breadcrumbs
 
 import launcher
@@ -136,16 +137,25 @@ class Log:
 
         self.debug(f"Deleted {len(deleted)} log(s): {deleted}")
 
-    # uses raven (https://github.com/getsentry/raven-python) to report the current log and hopefully some of the current console.log to Sentry (https://sentry.io/)
+    # uses raven (https://github.com/getsentry/raven-python) to report the current log and some of the current console.log to Sentry (https://sentry.io/)
     def report_log(self, tb: str):
         if self.sentry_level != 'Never' and launcher.sentry_enabled:
             self.info(f"Reporting crash to Sentry from logger")
 
-            if self.console_log_path:
-                breadcrumbs.record(message="console.log for debugging", level='fatal', data=read_truncated_file(self.console_log_path))
-
             try:
-                launcher.sentry_client.captureMessage(f'{self.filename}\n{tb}')
+                console_log_to_report = read_truncated_file(self.console_log_path)
+                console_log_len = len(console_log_to_report)
+
+                with open(self.filename, 'r') as log_to_report:
+                    log_data = log_to_report.read()
+                    log_data_len = len(log_data)
+
+                temp_sentry_client = raven.Client(dsn=launcher.get_api_key('sentry'),
+                                                  release='{tf2rpvnum}',
+                                                  string_max_length=log_data_len if log_data_len > console_log_len else console_log_len,
+                                                  processors=('raven.processors.SanitizePasswordsProcessor',))
+
+                temp_sentry_client.captureMessage(f'{self.filename}\n{tb}', level='fatal', extra={'1-log': log_data, '2-console.log': console_log_to_report})
             except Exception as err:
                 self.error(f"Couldn't report crash to Sentry: {err}")
 
