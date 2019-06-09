@@ -42,7 +42,7 @@ def check_for_update(current_version: str, timeout: float):
             log.error(f"Out of date, newest version is {newest_version} (this is {current_version}, second newest: {current_version == second_newest_version})")
             print(f"This version ({current_version}) is out of date (newest version is {newest_version}).\nGet the update at {downloads_url}")
 
-            more_changes_warning = "\n(You're more than one version out of date, so there have been more changes and/or fixes than this.)" if current_version == second_newest_version else ""
+            more_changes_warning = "\n(You're more than one version out of date, so there have been more changes and/or fixes than this.)" if current_version != second_newest_version else ""
             print(f"\n{newest_version} changelog:\n{changelog}{more_changes_warning}\n")
 
 
