@@ -64,6 +64,7 @@ def main(version_num):
         print("Copied", shutil.copy('tf2_logo_blurple_wrench.ico', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('Launch TF2 with Rich Presence.bat', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('Launch Rich Presence alongside TF2.bat', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy('Change settings.bat', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('README-source.MD', github_repo_path))
         print("Copied", shutil.copy('.travis.yml', github_repo_path))
 
