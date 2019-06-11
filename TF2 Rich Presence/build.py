@@ -276,4 +276,4 @@ def convert_bat_to_exe(batch_location: str, vnum: str, icon_path: str):
 
 
 if __name__ == '__main__':
-    main('v1.7.5')
+    main('v1.8')
