@@ -6,6 +6,7 @@ from typing import Tuple
 sys.path.append(os.path.abspath(os.path.join('resources', 'python', 'packages')))
 sys.path.append(os.path.abspath(os.path.join('resources')))
 import requests
+from requests import Response
 
 import logger
 import main
@@ -23,7 +24,7 @@ def check_for_update(current_version: str, timeout: float):
     log.debug(f"Checking for updates, timeout: {timeout} secs")
 
     try:
-        newest_version, downloads_url, changelog, prerelease, second_newest_version = access_github_api(timeout)
+        newest_version, downloads_url, changelog = access_github_api(timeout)
     except requests.exceptions.Timeout:
         log.error(f"Update check timed out")
         failure_message(current_version, f"timed out after {int(timeout)} seconds")
@@ -36,29 +37,23 @@ def check_for_update(current_version: str, timeout: float):
     else:
         if current_version == newest_version:
             log.debug(f"Up to date ({current_version})")
-        elif prerelease:
-            log.debug(f"Up to date ({current_version}) (prerelease {newest_version} is available)")
         else:  # out of date
-            log.error(f"Out of date, newest version is {newest_version} (this is {current_version}, second newest: {current_version == second_newest_version})")
+            log.error(f"Out of date, newest version is {newest_version} (this is {current_version})")
             print(f"This version ({current_version}) is out of date (newest version is {newest_version}).\nGet the update at {downloads_url}")
-
-            more_changes_warning = "\n(You're more than one version out of date, so there have been more changes and/or fixes than this.)" if current_version != second_newest_version else ""
-            print(f"\n{newest_version} changelog:\n{changelog}{more_changes_warning}\n")
+            print(f"\n{newest_version} changelog:\n{changelog}\n(If you're more than one version out of date, there may have been more changes and fixes than this.)\n")
 
 
 # actually accesses the Github api, in a seperate function for tests
-def access_github_api(time_limit: float) -> Tuple[str, str, str, bool, str]:
-    api_latest_release = requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/releases/latest', timeout=time_limit).json()
-    api_tags = requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/tags', timeout=time_limit).json()
+def access_github_api(time_limit: float) -> Tuple[str, str, str]:
+    r: Response = requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/releases/latest', timeout=time_limit)
 
-    newest_version_api: str = api_latest_release['tag_name']
-    downloads_url_api: str = api_latest_release['html_url']
-    changelog_api: str = api_latest_release['body']
-    prerelease_api = api_latest_release['prerelease']
-    second_newest_version_api = api_tags[1]['name']
+    response: dict = r.json()
+    newest_version_api: str = response['tag_name']
+    downloads_url_api: str = response['html_url']
+    changelog_api: str = response['body']
 
     changelog_formatted: str = f'  {changelog_api}'.replace('## ', '').replace('\n-', '\n -').replace('\n', '\n  ')
-    return newest_version_api, downloads_url_api, changelog_formatted, prerelease_api, second_newest_version_api
+    return newest_version_api, downloads_url_api, changelog_formatted
 
 
 # either timed out or some other exception
