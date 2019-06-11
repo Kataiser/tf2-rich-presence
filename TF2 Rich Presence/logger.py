@@ -143,16 +143,12 @@ class Log:
             self.info(f"Reporting crash to Sentry from logger")
 
             try:
-                console_log_to_report = read_truncated_file(self.console_log_path)
-                console_log_len = len(console_log_to_report)
-
-                with open(self.filename, 'r') as log_to_report:
-                    log_data = log_to_report.read()
-                    log_data_len = len(log_data)
+                console_log_to_report = read_truncated_file(self.console_log_path, limit=2000)
+                log_data = read_truncated_file(self.filename, limit=13000)
 
                 temp_sentry_client = raven.Client(dsn=launcher.get_api_key('sentry'),
                                                   release='{tf2rpvnum}',
-                                                  string_max_length=log_data_len if log_data_len > console_log_len else console_log_len,
+                                                  string_max_length=16000,
                                                   processors=('raven.processors.SanitizePasswordsProcessor',))
 
                 temp_sentry_client.captureMessage(f'{self.filename}\n{tb}', level='fatal', extra={'1-log': log_data, '2-console.log': console_log_to_report})

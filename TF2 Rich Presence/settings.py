@@ -275,12 +275,11 @@ class GUI(tk.Frame):
         import raven
         import launcher
 
-        with open(self.log.filename, 'r') as log_to_report:
-            log_data = log_to_report.read()
+        log_data = logger.read_truncated_file(self.log.filename, limit=15000)  # max data length seems to be about 16KB
 
         temp_sentry_client = raven.Client(dsn=launcher.get_api_key('sentry'),
                                           release='{tf2rpvnum}',
-                                          string_max_length=len(log_data),
+                                          string_max_length=16000,
                                           processors=('raven.processors.SanitizePasswordsProcessor',))
         temp_sentry_client.captureMessage(f"MANUALLY REPORTED LOG: {self.log.filename}", level='info', extra={'log': log_data})
 
