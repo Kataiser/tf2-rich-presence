@@ -16,7 +16,14 @@ def main():
         canvas = Image.new('RGBA', (out_size, out_size), color=(0, 0, 0, 0))
         new_height = round((size_y / size_x) * out_size)
         image_scaled = image_loaded.resize((out_size, new_height), Image.LANCZOS)
-        canvas.paste(image_scaled, (0, 32 if out_size == 512 else 64))
+
+        if out_size == 512:
+            paste_y = 32
+        elif image_filename == 'beta-map':
+            paste_y = 0
+        else:
+            paste_y = 64
+        canvas.paste(image_scaled, (0, paste_y))
         canvas.save('map_thumbs/' + image_filename + '.png')
 
 
