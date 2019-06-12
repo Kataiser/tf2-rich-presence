@@ -228,7 +228,7 @@ class TF2RichPresense:
                 elif bottom_line == 'Queued for Competitive':
                     self.activity['assets']['large_image'] = 'comp'
                     self.activity['assets']['large_text'] = bottom_line
-                elif bottom_line == 'Queued for MvM':
+                elif 'Queued for MvM' in bottom_line:
                     self.activity['assets']['large_image'] = 'mvm_queued'
                     self.activity['assets']['large_text'] = bottom_line
                 else:
