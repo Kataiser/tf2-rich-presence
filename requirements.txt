@@ -1,4 +1,4 @@
-certifi==2019.3.9
+certifi==2019.6.16
 chardet==3.0.4
 discoIPC==1.0.0
 idna==2.8
