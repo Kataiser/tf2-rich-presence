@@ -67,6 +67,7 @@ def main(version_num):
         print("Copied", shutil.copy('Change settings.bat', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('README-source.MD', github_repo_path))
         print("Copied", shutil.copy('.travis.yml', github_repo_path))
+        print("Copied", shutil.copy('requirements.txt', github_repo_path))
 
         # copies test resources
         test_resources_source = os.path.abspath('test_resources')
