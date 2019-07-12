@@ -99,7 +99,7 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
         old_dir = os.getcwd()
         os.chdir(os.path.abspath('test_resources\\hash_targets'))
 
-        self.assertEqual(logger.generate_hash(), 'a163cfb4')
+        self.assertEqual(logger.generate_hash(), '80cf9c96')
 
         os.chdir(old_dir)
 
@@ -160,7 +160,7 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
         self.assertEqual(client_state, ('429389143756374017', False, '\\\\?\\pipe\\discord-ipc-0', True, 'windows', None))
 
     def test_compact_file(self):
-        compact_file_out = logger.compact_file('test_resources\\console_badwater.log')
+        compact_file_out = logger.compact_file('test_resources\\console_badwater.log', guarantee=True)
 
         try:
             self.assertTrue(compact_file_out.startswith("Compacted file test_resources\\console_badwater.log (took "))

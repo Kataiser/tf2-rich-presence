@@ -97,7 +97,7 @@ sentry_enabled: bool = True
 if sentry_enabled:
     # the raven client for Sentry (https://sentry.io/)
     sentry_client_launcher = raven.Client(dsn=get_api_key('sentry'),
-                                          release='{tf2rpvnum}',
+                                          release='v1.8',
                                           string_max_length=512,
                                           processors=('raven.processors.SanitizePasswordsProcessor',))
 

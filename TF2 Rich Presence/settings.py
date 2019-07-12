@@ -121,7 +121,9 @@ class GUI(tk.Frame):
 
         # create the report button
         current_log_size = round(os.stat(self.log.filename).st_size / 1024)
-        self.report_button_text = tk.StringVar(value=f"Report logs to developer ({current_log_size if current_log_size != 0 else '1'} KB)")
+        current_log_size_display = max(min(16, current_log_size), 1)
+        self.log.debug(f"Log file size: {current_log_size}, displayed as {current_log_size_display}")
+        self.report_button_text = tk.StringVar(value=f"Report logs to developer ({current_log_size_display} KB)")
         self.report_button = ttk.Button(lf_advanced, textvariable=self.report_button_text, command=self.report_log)
 
         # add widgets to the labelframes or main window
@@ -238,7 +240,7 @@ class GUI(tk.Frame):
         self.log.debug(f"Setting(s) changed: {settings_changed}")
         self.log.info("Saving and closing settings menu")
         access_settings_file(save_dict=settings_to_save)
-        self.log.debug(f"Settings have been saved as: {settings_to_save}")
+        self.log.info(f"Settings have been saved as: {settings_to_save}")
 
         restart_message = "If TF2 Rich Presence is currently running, it may need to be restarted for changes to take effect."
         settings_changed_num = len(settings_changed)
@@ -277,11 +279,11 @@ class GUI(tk.Frame):
 
         log_data = logger.read_truncated_file(self.log.filename, limit=15000)  # max data length seems to be about 16KB
 
-        temp_sentry_client = raven.Client(dsn=launcher.get_api_key('sentry'),
-                                          release='{tf2rpvnum}',
-                                          string_max_length=16000,
-                                          processors=('raven.processors.SanitizePasswordsProcessor',))
-        temp_sentry_client.captureMessage(f"MANUALLY REPORTED LOG: {self.log.filename}", level='info', extra={'log': log_data})
+        sentry_client_manual = raven.Client(dsn=launcher.get_api_key('sentry'),
+                                            release='{tf2rpvnum}',
+                                            string_max_length=16000,
+                                            processors=('raven.processors.SanitizePasswordsProcessor',))
+        sentry_client_manual.captureMessage(f"MANUALLY REPORTED LOG: {self.log.filename}", level='info', extra={'log': log_data})
 
         report_elapsed = round(time.perf_counter() - before_report_time, 1)
         self.log.debug(f"Successfully reported log (took {report_elapsed} seconds)")

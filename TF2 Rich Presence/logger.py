@@ -1,5 +1,6 @@
 import hashlib
 import os
+import random
 import socket
 import subprocess
 import sys
@@ -73,10 +74,11 @@ class Log:
                 self.error(f"Couldn't write log due to UnicodeEncodeError: {error}")
 
             self.unsaved_lines += 1
-            if (self.unsaved_lines >= 100 or level != 'DEBUG') and (message_out != "Closing and re-opening log" and "Compact" not in message_out):
+            if (self.unsaved_lines >= 100 or level != 'DEBUG') and "Compact" not in message_out:
                 try:
-                    self.debug(compact_file(self.filename))
-                    self.debug("Closing and re-opening log")
+                    compacted_log = compact_file(self.filename)
+                    if compacted_log:
+                        self.debug(compacted_log)
                 except Exception:
                     pass
 
@@ -87,7 +89,7 @@ class Log:
 
             self.last_log_time = current_time
 
-    # a log with a level of INFO (rarely used)
+    # a log with a level of INFO (not commonly used)
     def info(self, message_in):
         if 'Info' in self.log_levels_allowed:
             self.write_log('INFO', message_in)
@@ -102,8 +104,8 @@ class Log:
         if 'Error' in self.log_levels_allowed:
             self.write_log('ERROR', message_in)
 
-        if self.sentry_level == 'Error':
-            self.report_log(f'Reporting non-critical ERROR: {message_in}')
+        if self.sentry_level == 'All errors':
+            self.report_to_sentry(f"Reporting non-critical ERROR: {message_in}")
 
     # a log with a level of CRITICAL (uncaught, fatal errors, probably sent to Sentry)
     def critical(self, message_in):
@@ -137,23 +139,31 @@ class Log:
 
         self.debug(f"Deleted {len(deleted)} log(s): {deleted}")
 
-    # uses raven (https://github.com/getsentry/raven-python) to report the current log and some of the current console.log to Sentry (https://sentry.io/)
-    def report_log(self, tb: str):
-        if self.sentry_level != 'Never' and launcher.sentry_enabled:
+    # uses raven (https://github.com/getsentry/raven-python) to report the current exception to Sentry (https://sentry.io/)
+    def report_to_sentry(self, tb: str):
+        already_reported = launcher.exc_already_reported(tb)
+
+        if self.sentry_level != 'Never' and launcher.sentry_enabled and not already_reported:
             self.info(f"Reporting crash to Sentry from logger")
 
             try:
-                console_log_to_report = read_truncated_file(self.console_log_path, limit=2000)
-                log_data = read_truncated_file(self.filename, limit=13000)
+                if self.console_log_path:
+                    console_log_to_report = read_truncated_file(self.console_log_path, limit=4000)
+                else:
+                    console_log_to_report = str(None)
 
-                temp_sentry_client = raven.Client(dsn=launcher.get_api_key('sentry'),
-                                                  release='{tf2rpvnum}',
-                                                  string_max_length=16000,
-                                                  processors=('raven.processors.SanitizePasswordsProcessor',))
+                sentry_client = raven.Client(dsn=launcher.get_api_key('sentry'),
+                                             release='{tf2rpvnum}',
+                                             string_max_length=4100,
+                                             processors=('raven.processors.SanitizePasswordsProcessor',))
 
-                temp_sentry_client.captureMessage(f'{self.filename}\n{tb}', level='fatal', extra={'1-log': log_data, '2-console.log': console_log_to_report})
+                sentry_client.captureMessage(f'{self.filename}\n{tb}', level='fatal', extra={'console.log': console_log_to_report})
             except Exception as err:
                 self.error(f"Couldn't report crash to Sentry: {err}")
+        else:
+            self.debug("Not reporting to Sentry, reason(s): {}".format({'sentry_level': self.sentry_level,
+                                                                        'sentry_enabled': launcher.sentry_enabled,
+                                                                        'already_reported': already_reported}))
 
 
 # reads a text file, truncating it to the last 'limit' bytes (default: 200KB) if it's over that size
@@ -169,7 +179,7 @@ def read_truncated_file(path: str, limit: int = 200000) -> str:
 
 # generates a short hash string from several source files
 def generate_hash() -> str:
-    files_to_hash: List[str] = ['main.py', 'configs.py', 'custom_maps.py', 'logger.py', 'updater.py', 'settings.py', 'maps.json', 'APIs']
+    files_to_hash: List[str] = ['main.py', 'configs.py', 'custom_maps.py', 'logger.py', 'updater.py', 'launcher.py', 'settings.py', 'maps.json', 'APIs']
     files_to_hash_text: List = []
 
     build_folder = [item for item in os.listdir('.') if item.startswith('TF2 Rich Presence v') and os.path.isdir(item)]
@@ -183,7 +193,12 @@ def generate_hash() -> str:
         except FileNotFoundError:
             file: BinaryIO = open(file_to_hash, 'rb')
 
-        files_to_hash_text.append(file.read())
+        file_read = file.read()
+
+        if 'launcher' in file_to_hash:
+            file_read = file_read.replace(b'sentry_enabled: bool = True', b'').replace(b'sentry_enabled: bool = False', b'')
+
+        files_to_hash_text.append(file_read)
         file.close()
 
     hasher = hashlib.md5()
@@ -193,10 +208,13 @@ def generate_hash() -> str:
 
 
 # runs Windows' "compact" command on a file.
-def compact_file(target_file_path: str) -> str:
-    before_compact_time = time.perf_counter()
-    compact_out: str = subprocess.run(f'compact /c /f /i "{target_file_path}"', stdout=subprocess.PIPE).stdout.decode('utf-8', 'replace')
-    return "Compacted file {} (took {} seconds): {}".format(target_file_path, round(time.perf_counter() - before_compact_time, 4), " ".join(compact_out.split()))
+def compact_file(target_file_path: str, guarantee: bool = False) -> str:
+    if guarantee or random.random() < 0.25:
+        before_compact_time = time.perf_counter()
+        compact_out: str = subprocess.run(f'compact /c /f /i "{target_file_path}"', stdout=subprocess.PIPE).stdout.decode('utf-8', 'replace')
+        return "Compacted file {} (took {} seconds): {}".format(target_file_path, round(time.perf_counter() - before_compact_time, 4), " ".join(compact_out.split()))
+    else:
+        return None
 
 
 if __name__ == '__main__':

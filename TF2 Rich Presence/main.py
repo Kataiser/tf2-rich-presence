@@ -20,7 +20,7 @@ import settings
 
 
 def launch():
-    # TF2 rich presence by Kataiser
+    # TF2 Rich Presence by Kataiser
     # {tf2rpvnum}
     # https://github.com/Kataiser/tf2-rich-presence
 
@@ -74,6 +74,7 @@ class TF2RichPresense:
         self.last_notify_time = None
         self.cached_pids = (None, None, None)  # TF2, Steam, Discord
         self.has_checked_class_configs = False
+        self.this_process = psutil.Process(os.getpid())
 
         # load maps database
         try:
@@ -108,17 +109,21 @@ class TF2RichPresense:
         self.log.debug(f"Loop iteration this app session: {self.loop_iteration}")
         self.old_activity = copy.copy(self.activity)
 
-        # tasklist = str(subprocess.check_output('tasklist'))
         tf2_is_running: bool = False
         steam_is_running: bool = False
         discord_is_running: bool = False
 
-        cpu_usage = psutil.cpu_percent()
-        self.log.debug(f"CPU usage: {cpu_usage}%")
+        total_cpu_usage = psutil.cpu_percent(interval=1)
+        self.log.debug(f"CPU usage: {self.this_process.cpu_percent(interval=1)}% (total: {total_cpu_usage}%)")
 
         before_process_time: float = time.perf_counter()
         tasklist = str(subprocess.check_output('tasklist'))  # tasklist only takes like 0.3 seconds
-        useful_processes = [name for name in ('hl2.exe', 'Steam.exe', 'Discord') if name in tasklist]
+
+        useful_processes = []
+        for name in ('hl2.exe', 'Steam.exe', 'Discord'):
+            if name in tasklist:
+                if not ('Discord' in name and [other_name for other_name in tasklist if 'Discord' in other_name]):
+                    useful_processes.append(name)
 
         if self.cached_pids != (None, None, None):
             tf2_is_running, tf2_location, self.start_time = self.get_info_from_pid(self.cached_pids[0])
@@ -129,7 +134,7 @@ class TF2RichPresense:
                 self.cached_pids = (None, None, None)
 
             self.log.debug(f"Getting process info from cached PIDs took {round(time.perf_counter() - before_process_time, 4)} seconds")
-        elif len(useful_processes) >= 3:
+        elif len(useful_processes) == 3:
             # looks through all running processes to look for TF2, Steam, and Discord
             processes_searched: int = 0
             tf2_pid, steam_pid, discord_pid = (None, None, None)
@@ -168,7 +173,7 @@ class TF2RichPresense:
                     print()
                     break
 
-                if cpu_usage > 25 or cpu_usage == 0.0:
+                if total_cpu_usage > 25 or total_cpu_usage == 0.0:
                     time.sleep(0.001)
             self.log.debug(f"Process loop took {round(time.perf_counter() - before_process_time, 2)} seconds for {processes_searched} processes")
         else:
@@ -178,13 +183,13 @@ class TF2RichPresense:
             steam_is_running = 'Steam.exe' in useful_processes
             discord_is_running = 'Discord' in useful_processes
 
-        if steam_is_running and len(useful_processes) >= 3:
+        if steam_is_running and len(useful_processes) == 3:
             # reads a steam config file
             valid_usernames: List[str] = configs.steam_config_file(self.log, steam_location)
 
         # used for display only
-        current_time = datetime.datetime.now()
-        current_time_formatted: str = current_time.strftime('%I:%M:%S %p').lstrip('0')
+        current_time = datetime.datetime.now().strftime('%I:%M:%S %p')
+        current_time_formatted = current_time[1:] if current_time.startswith('0') else current_time
 
         if tf2_is_running and discord_is_running:
             if not self.has_checked_class_configs:
@@ -202,19 +207,19 @@ class TF2RichPresense:
                     client_state: Tuple[Any, bool, str, int, str, Any] = (
                         self.client.client_id, self.client.connected, self.client.ipc_path, self.client.pid, self.client.platform, self.client.socket)
                     self.log.debug(f"Initial RPC client state: {client_state}")
+
+                    # sends first status, starts on main menu
+                    self.activity['timestamps']['start'] = self.start_time
+                    self.client.update_activity(self.activity)
+                    self.log.debug(f"Sent over RPC: {self.activity}")
+                    self.client_connected = True
                 except Exception as client_connect_error:
                     if str(client_connect_error) == "Can't connect to Discord Client.":  # Discord is still running but an RPC client can't be established
                         self.log.error("Can't connect to RPC")
-                        print(f"{current_time_formatted}\nCan't connect to Discord for Rich Presence.\n")
+                        print(f"{current_time_formatted}\nCan't connect to Discord for Rich Presence.")
                         raise SystemExit
                     else:  # some other error
                         raise
-
-                # sends first status, starts on main menu
-                self.activity['timestamps']['start'] = self.start_time
-                self.client.update_activity(self.activity)
-                self.log.debug(f"Sent over RPC: {self.activity}")
-                self.client_connected = True
 
             if top_line == 'In menus':
                 # in menus displays the main menu
@@ -275,7 +280,7 @@ class TF2RichPresense:
                 print(f"{self.activity['details']} ({self.activity['assets']['large_text']})")
                 print(self.activity['state'])
                 time_elapsed = datetime.timedelta(seconds=int(time.time() - self.start_time))
-                print(f"{str(time_elapsed).lstrip('0:')} elapsed")
+                print(f"{str(time_elapsed).replace('0:', '', 1)} elapsed")
                 print()
 
                 self.log.debug(f"Activity changed, outputting (old: {self.old_activity}, new: {self.activity})")
@@ -284,20 +289,28 @@ class TF2RichPresense:
                 self.log.debug("Activity hasn't changed, not outputting")
 
             # send everything to discord
-            self.client.update_activity(self.activity)
-            self.log.info(f"Sent over RPC: {self.activity}")
-            client_state = (self.client.client_id, self.client.connected, self.client.ipc_path, self.client.pid, self.client.platform, self.client.socket)
-            self.log.debug(f"client state: {client_state}")
+            try:
+                self.client.update_activity(self.activity)
+                self.log.info(f"Sent over RPC: {self.activity}")
+                client_state = (self.client.client_id, self.client.connected, self.client.ipc_path, self.client.pid, self.client.platform, self.client.socket)
+                self.log.debug(f"client state: {client_state}")
+            except Exception as error:
+                if str(error) == "Can't send data to Discord via IPC.":
+                    self.log.error(str(error))
+                    print(f"{current_time_formatted}\nCan't connect to Discord for Rich Presence.")
+                    raise SystemExit
+                else:
+                    raise
 
             if not self.client_connected:
-                self.log.critical('self.client is disconnected')
-                self.log.report_log("self.client disconnect")
+                self.log.critical("self.client is disconnected when it shouldn't be")
+                self.log.report_to_sentry("self.client disconnect")
         elif not discord_is_running:
             self.test_state = 'no discord'
             self.log.info(f"Discord isn't running (mentioning to user: {self.should_mention_discord})")
 
             if self.should_mention_discord:
-                print(f"{current_time_formatted}{generate_delta(self.last_notify_time)}\nDiscord isn't running\n")
+                print(f"{current_time_formatted}{generate_delta(self.last_notify_time)}\nDiscord isn't running")
                 self.should_mention_discord = False
                 self.should_mention_tf2 = True
                 self.last_notify_time = time.time()
@@ -319,7 +332,7 @@ class TF2RichPresense:
                 self.log.info(f"TF2 isn't running (mentioning to user: {self.should_mention_tf2})")
 
                 if self.should_mention_tf2:
-                    print(f"{current_time_formatted}{generate_delta(self.last_notify_time)}\nTeam Fortress 2 isn't running\n")
+                    print(f"{current_time_formatted}{generate_delta(self.last_notify_time)}\nTeam Fortress 2 isn't running")
                     self.should_mention_discord = True
                     self.should_mention_tf2 = False
                     self.last_notify_time = time.time()
@@ -431,9 +444,9 @@ class TF2RichPresense:
         if not silent:
             print(f"\n{formatted_exception}\nTF2 Rich Presence has crashed, and the error has been reported to the developer."
                   f"\n(Consider opening an issue at https://github.com/Kataiser/tf2-rich-presence/issues)"
-                  f"\nRestarting in 2 seconds...")
+                  f"\nRestarting in 2 seconds...\n")
 
-        self.log.report_log(formatted_exception)
+        self.log.report_to_sentry(formatted_exception)
         if not silent:
             time.sleep(2)
         raise SystemExit

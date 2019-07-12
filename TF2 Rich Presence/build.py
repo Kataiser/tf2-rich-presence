@@ -65,6 +65,7 @@ def main(version_num):
         print("Copied", shutil.copy('Launch TF2 with Rich Presence.bat', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('Launch Rich Presence alongside TF2.bat', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('Change settings.bat', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy('tb_hashes.txt', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('README-source.MD', github_repo_path))
         print("Copied", shutil.copy('.travis.yml', github_repo_path))
         print("Copied", shutil.copy('requirements.txt', github_repo_path))
@@ -130,6 +131,7 @@ def main(version_num):
                      ('settings.py', f'{new_build_folder_name}\\resources\\'),
                      ('tf2_logo_blurple.ico', f'{new_build_folder_name}\\resources\\'),
                      ('tf2_logo_blurple_wrench.ico', f'{new_build_folder_name}\\resources\\'),
+                     ('tb_hashes.txt', f'{new_build_folder_name}\\resources\\'),
                      ('APIs', f'{new_build_folder_name}\\resources\\'),
                      ('Changelogs.html', f'{new_build_folder_name}\\')]
 
@@ -157,11 +159,10 @@ def main(version_num):
     try:
         commits_info = json.loads(requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/commits', timeout=5).text)
         latest_commit_message = commits_info[0]['commit']['message'].split('\n')[0]
-        latest_commit = f"\"{latest_commit_message}\" @ {commits_info[0]['html_url']}"
+        latest_commit = f"\"{latest_commit_message}\" @\n\t{commits_info[0]['html_url'][:60]}"
     except Exception as error:
         latest_commit = f"Couldn't get latest commit: {error}"
     with open(f'{new_build_folder_name}\\resources\\build_info.txt', 'w') as info_file:
-        version_hashes = {'v1.7.4': 'a56ec211'}
         this_hash = logger.generate_hash()
 
         info_file.write(f"TF2 Rich Presence by Kataiser"
@@ -254,13 +255,14 @@ def main(version_num):
         time_since_last_build_text = ""
 
     # finishing output
-    print(f"\nFinished building TF2 Rich Presence {version_num} (took {int(time.perf_counter() - build_start_time)} seconds{time_since_last_build_text})")
+    print(f"\n{datetime.datetime.now().strftime('%c')}")
+    print(f"Finished building TF2 Rich Presence {version_num} (took {int(time.perf_counter() - build_start_time)} seconds{time_since_last_build_text})")
     if '@' not in latest_commit:
         time.sleep(0.1)
         print(latest_commit, file=sys.stderr)
     if version_num not in version_hashes.keys():
         time.sleep(0.1)
-        print(f"version_hashes doesn't include this version, add ('{version_num}': '{this_hash}')", file=sys.stderr)
+        print(f"version_hashes doesn't include this version, add {{'{version_num}': '{this_hash}'}}", file=sys.stderr)
 
 
 # converts a batch file to an exe with Bat To Exe Converter (http://www.f2ko.de/en/b2e.php)
@@ -276,5 +278,8 @@ def convert_bat_to_exe(batch_location: str, vnum: str, icon_path: str):
     print(f"Deleted {batch_location}")
 
 
+version_hashes = {'v1.7.4': 'a56ec211', 'v1.8': '9ae31f1f'}
+this_version = 'v1.8'
+
 if __name__ == '__main__':
-    main('v1.8')
+    main(this_version)
