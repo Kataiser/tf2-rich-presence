@@ -74,7 +74,6 @@ class TF2RichPresense:
         self.last_notify_time = None
         self.cached_pids = (None, None, None)  # TF2, Steam, Discord
         self.has_checked_class_configs = False
-        self.this_process = psutil.Process(os.getpid())
 
         # load maps database
         try:
@@ -112,9 +111,6 @@ class TF2RichPresense:
         tf2_is_running: bool = False
         steam_is_running: bool = False
         discord_is_running: bool = False
-
-        total_cpu_usage = psutil.cpu_percent(interval=1)
-        self.log.debug(f"CPU usage: {self.this_process.cpu_percent(interval=1)}% (total: {total_cpu_usage}%)")
 
         before_process_time: float = time.perf_counter()
         tasklist = str(subprocess.check_output('tasklist'))  # tasklist only takes like 0.3 seconds
