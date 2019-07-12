@@ -63,7 +63,7 @@ class TF2RichPresense:
         self.activity: Dict[str, Union[str, Dict[str, int], Dict[str, str]]] = {'details': 'In menus',  # this is what gets modified and sent to Discord via discoIPC
                                                                                 'timestamps': {'start': self.start_time},
                                                                                 'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2', 'large_image': 'main_menu',
-                                                                                           'large_text': 'In menus'},
+                                                                                           'large_text': 'Main menu'},
                                                                                 'state': ''}
         self.client_connected: bool = False
         self.client = None
@@ -273,7 +273,12 @@ class TF2RichPresense:
             if self.activity != self.old_activity:
                 # output to terminal, just for monitoring
                 print(f"{current_time_formatted}{generate_delta(self.last_notify_time)}")
-                print(f"{self.activity['details']} ({self.activity['assets']['large_text']})")
+
+                if [d for d in ('Queued', 'Main menu') if d in self.activity['assets']['large_text']]:
+                    print(self.activity['details'])
+                else:
+                    print(f"{self.activity['details']} ({self.activity['assets']['large_text']})")
+
                 print(self.activity['state'])
                 time_elapsed = datetime.timedelta(seconds=int(time.time() - self.start_time))
                 print(f"{str(time_elapsed).replace('0:', '', 1)} elapsed")
