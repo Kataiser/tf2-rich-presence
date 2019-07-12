@@ -1,4 +1,4 @@
-[![Github all releases](https://img.shields.io/github/downloads/Kataiser/tf2-rich-presence/total.svg)](https://GitHub.com/Kataiser/tf2-rich-presence/releases/)
+[![Github all releases](https://img.shields.io/github/downloads/Kataiser/tf2-rich-presence/total.svg)](https://www.somsubhra.com/github-release-stats/?username=Kataiser&repository=tf2-rich-presence)
 [![GitHub release](https://img.shields.io/github/release/Kataiser/tf2-rich-presence.svg)](https://GitHub.com/Kataiser/tf2-rich-presence/releases/)
 [![GitHub Release Date](https://img.shields.io/github/release-date/Kataiser/tf2-rich-presence.svg)](https://GitHub.com/Kataiser/tf2-rich-presence/releases/)
 [![GitHub last commit](https://img.shields.io/github/last-commit/Kataiser/tf2-rich-presence.svg)](https://github.com/Kataiser/tf2-rich-presence/commits/master)
@@ -14,11 +14,11 @@ Discord Rich Presence for Team Fortress 2
 (The actual program is nowhere near as nice looking as this)
 
 ## Download
-With installer: [tf2_rich_presence_v1.7.4_installer.exe](https://github.com/Kataiser/tf2-rich-presence/releases/download/v1.7.4/tf2_rich_presence_v1.7.4_installer.exe) (7.5 MB)  
-Without installer: [tf2_rich_presence_v1.7.4.zip](https://github.com/Kataiser/tf2-rich-presence/releases/download/v1.7.4/tf2_rich_presence_v1.7.4.zip) (9.0 MB)
+With self-extractor: [tf2_rich_presence_v1.8_self_extracting.exe](https://github.com/Kataiser/tf2-rich-presence/releases/download/v1.8/tf2_rich_presence_v1.8_self_extracting.exe) (7.4 MB)  
+Extract it yourself: [tf2_rich_presence_v1.8.zip](https://github.com/Kataiser/tf2-rich-presence/releases/download/v1.8/tf2_rich_presence_v1.8.zip) (8.9 MB)
 
 ## Installation and running
-1. Extract tf2_rich_presence_v1.7.4.zip OR run tf2_rich_presence_v1.7.4_installer.exe, whichever you download.
+1. Extract tf2_rich_presence_v1.8.zip OR run tf2_rich_presence_v1.8_self_extracting.exe, whichever you download.
 2. Run `Launch TF2 with Rich Presence.exe`. Requires Steam and Discord to be running as well.
 	- OR run `Launch Rich Presence alongside TF2.exe`. This doesn't automatically start Team Fortress 2.
 
