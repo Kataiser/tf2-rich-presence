@@ -265,6 +265,9 @@ def main(version_num):
     if version_num not in build_version.version_hashes.keys():
         time.sleep(0.1)
         print(f"version_hashes doesn't include this version, add {{'{version_num}': '{this_hash}'}}", file=sys.stderr)
+    elif build_version.version_hashes[version_num] != this_hash:
+        time.sleep(0.1)
+        print(f"version_hashes for this version has {build_version.version_hashes[version_num]}, should be {this_hash}", file=sys.stderr)
 
 
 # converts a batch file to an exe with Bat To Exe Converter (http://www.f2ko.de/en/b2e.php)
