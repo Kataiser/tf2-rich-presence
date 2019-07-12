@@ -169,6 +169,7 @@ class TF2RichPresense:
                     print()
                     break
 
+                total_cpu_usage = psutil.cpu_percent(interval=0.25)
                 if total_cpu_usage > 25 or total_cpu_usage == 0.0:
                     time.sleep(0.001)
             self.log.debug(f"Process loop took {round(time.perf_counter() - before_process_time, 2)} seconds for {processes_searched} processes")
