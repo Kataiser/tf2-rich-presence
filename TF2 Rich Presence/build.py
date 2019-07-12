@@ -9,6 +9,7 @@ import time
 import requests
 
 import logger
+import build_version
 
 
 def main(version_num):
@@ -66,6 +67,7 @@ def main(version_num):
         print("Copied", shutil.copy('Launch Rich Presence alongside TF2.bat', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('Change settings.bat', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('tb_hashes.txt', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy('build_version.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('README-source.MD', github_repo_path))
         print("Copied", shutil.copy('.travis.yml', github_repo_path))
         print("Copied", shutil.copy('requirements.txt', github_repo_path))
@@ -170,7 +172,7 @@ def main(version_num):
                         f"\n\nVersion: {version_num}"
                         f"\nBuilt: {datetime.datetime.utcnow().strftime('%c')} UTC"
                         f"\nHash: {this_hash}"
-                        f"\nVersion hashes: {version_hashes}"
+                        f"\nVersion hashes: {build_version.version_hashes}"
                         f"\nLatest commit: {latest_commit}")
 
     # clears custom map cache
@@ -260,7 +262,7 @@ def main(version_num):
     if '@' not in latest_commit:
         time.sleep(0.1)
         print(latest_commit, file=sys.stderr)
-    if version_num not in version_hashes.keys():
+    if version_num not in build_version.version_hashes.keys():
         time.sleep(0.1)
         print(f"version_hashes doesn't include this version, add {{'{version_num}': '{this_hash}'}}", file=sys.stderr)
 
@@ -278,8 +280,5 @@ def convert_bat_to_exe(batch_location: str, vnum: str, icon_path: str):
     print(f"Deleted {batch_location}")
 
 
-version_hashes = {'v1.7.4': 'a56ec211', 'v1.8': '9ae31f1f'}
-this_version = 'v1.8'
-
 if __name__ == '__main__':
-    main(this_version)
+    main(build_version.this_version)
