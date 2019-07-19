@@ -1,3 +1,4 @@
+import compileall
 import datetime
 import json
 import os
@@ -8,8 +9,8 @@ import time
 
 import requests
 
-import logger
 import build_version
+import logger
 
 
 def main(version_num):
@@ -185,24 +186,12 @@ def main(version_num):
     print(f"Copying from {python_source} to {python_target}: ", end='')
     subprocess.run(f'xcopy \"{python_source}\" \"{python_target}\\\" /E /Q')
 
-    print('Deleting unnecessary files from python...')
-    pycaches_deleted = 0
-    tests_deleted = 0
+    print("Deleting psutil and tkinter tests")
+    shutil.rmtree(f'{new_build_folder_name}\\resources\\python\\packages\\psutil\\tests')
+    shutil.rmtree(f'{new_build_folder_name}\\resources\\python\\tkinter\\test')
 
-    # looks at every file and folder in python
-    for root, dirs, files in os.walk(f'{new_build_folder_name}\\resources\\python'):
-        # deletes cache files (will get regenerated anyway)
-        if '__pycache__' in root:
-            shutil.rmtree(root)
-            pycaches_deleted += 1
-
-        # deletes tests (not used during runtime hopefully)
-        if 'test' in root:
-            shutil.rmtree(root)
-            tests_deleted += 1
-
-    print(f"pycaches deleted: {pycaches_deleted}")
-    print(f"tests deleted: {tests_deleted}")
+    print("Compiling PYCs")
+    compileall.compile_dir(f'{new_build_folder_name}\\resources', quiet=True)
 
     time.sleep(0.2)  # just to make sure everything is updated
     convert_bat_to_exe(os.path.abspath(f'{new_build_folder_name}\\Launch TF2 with Rich Presence.bat'), version_num, 'tf2_logo_blurple.ico')
@@ -214,7 +203,7 @@ def main(version_num):
     zip_path = f'tf2_rich_presence_{version_num}.zip'
     package7zip_command_exe_1 = f'build_tools\\7za.exe a {exe_path} "{new_build_folder_name}\\"'
     package7zip_command_exe_2 = f'-sfx7z.sfx -ssw -mx=9 -myx=9 -mmt=2 -m0=LZMA2:d=8m'
-    package7zip_command_zip = f'build_tools\\7za.exe a {zip_path} "{new_build_folder_name}\\" -ssw -mx=9 -m0=LZMA:d=8m -mmt=2'
+    package7zip_command_zip = f'build_tools\\7za.exe a {zip_path} "{new_build_folder_name}\\" -ssw -mx=9 -m0=Deflate64 -mmt=2'
     print(f"Creating tf2_rich_presence_{version_num}_self_extracting.exe...")
     subprocess.run(f'{package7zip_command_exe_1} {package7zip_command_exe_2}', stdout=subprocess.DEVNULL)
     print(f"Creating tf2_rich_presence_{version_num}.zip...")
