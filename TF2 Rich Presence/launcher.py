@@ -16,6 +16,7 @@ try:
     from raven import Client
 except Exception:
     raven = None
+    Client = None
 
 
 def launch():
