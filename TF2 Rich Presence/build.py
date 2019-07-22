@@ -153,6 +153,8 @@ def main(version_num):
                         modified_file = modified_file.replace('sentry_enabled: bool = False', 'sentry_enabled: bool = True')
                     if file_dest_pair[0] == 'logger.py':
                         modified_file = modified_file.replace('to_stderr: bool = True', 'to_stderr: bool = False')
+                    if file_dest_pair[0] == 'Readme.txt':
+                        modified_file = modified_file.replace('{built}', f"{datetime.datetime.utcnow().strftime('%c')} UTC")
 
                     file_target.write(modified_file)
                     print(f"Copied (and possibly modified) {file_dest_pair[0]}")
