@@ -39,4 +39,4 @@ for tr in soup.find_all('tr'):
 print(map_gamemodes)
 
 with open('maps.json', 'w') as maps_db:
-    json.dump(map_gamemodes, maps_db, indent=4)
+    maps_db.write(json.dumps(map_gamemodes, sort_keys=True).replace('], ', '],\n'))
