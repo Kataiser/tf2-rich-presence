@@ -5,7 +5,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def main():
+def main(silent=False):
     # watch out for rate limiting (60 requests per hour, this uses 2 per run)
 
     with open('Changelogs_source.html', 'r') as changelogs_source_html:
@@ -23,10 +23,11 @@ def main():
         releases.append({'version_num': version_num, 'published': published})
         bodies.append(body)
 
-        print(version_num)
-        print(published)
-        print(body)
-        print()
+        if not silent:
+            print(version_num)
+            print(published)
+            print(body)
+            print()
 
     bodies_combined = '\n\nSPLITTER\n\n'.join(bodies)
 
@@ -50,7 +51,8 @@ def main():
     with open('Changelogs.html', 'w') as changelog_file:
         changelog_file.write(generated_html)
 
-    print(f"\nDone (finished at {datetime.datetime.now().strftime('%I:%M:%S %p')})")
+    if not silent:
+        print(f"\nDone (finished at {datetime.datetime.now().strftime('%I:%M:%S %p')})")
 
 
 # runs bs4's prettify method, but with a custom indent width

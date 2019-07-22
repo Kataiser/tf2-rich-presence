@@ -10,6 +10,7 @@ import time
 import requests
 
 import build_version
+import changelog_generator
 import logger
 
 
@@ -48,7 +49,7 @@ def main(version_num):
         print("Copied", shutil.copy('settings.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('map list generator.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('thumb formatter.py', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('changelog generator.py', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy('changelog_generator.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('Changelogs.html', f'{github_repo_path}\\'))
         print("Copied", shutil.copy('Changelogs_source.html', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('maps.json', f'{github_repo_path}\\TF2 Rich Presence'))
@@ -197,6 +198,9 @@ def main(version_num):
     convert_bat_to_exe(os.path.abspath(f'{new_build_folder_name}\\Launch TF2 with Rich Presence.bat'), version_num, 'tf2_logo_blurple.ico')
     convert_bat_to_exe(os.path.abspath(f'{new_build_folder_name}\\Launch Rich Presence alongside TF2.bat'), version_num, 'tf2_logo_blurple.ico')
     convert_bat_to_exe(os.path.abspath(f'{new_build_folder_name}\\Change settings.bat'), version_num, 'tf2_logo_blurple_wrench.ico')
+
+    print("Generating changelog")
+    changelog_generator.main(silent=True)
 
     # generates zip package and an "installer" (a self extracting .7z as an exe), both with 7zip
     exe_path = f'tf2_rich_presence_{version_num}_self_extracting.exe'
