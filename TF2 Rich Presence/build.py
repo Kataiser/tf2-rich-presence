@@ -183,7 +183,7 @@ def main(version_num):
     # copies the python interpreter
     python_source = os.path.abspath('python-3.7.1-embed-win32')
     python_target = os.path.abspath(f'{new_build_folder_name}\\resources\\python')
-    print(f"Copying from {python_source} to {python_target}: ", end='')
+    print(f"Copying from {python_source}\n\tto {python_target}: ", end='')
     subprocess.run(f'xcopy \"{python_source}\" \"{python_target}\\\" /E /Q')
 
     print("Deleting psutil and tkinter tests")
@@ -191,7 +191,7 @@ def main(version_num):
     shutil.rmtree(f'{new_build_folder_name}\\resources\\python\\tkinter\\test')
 
     print("Compiling PYCs")
-    compileall.compile_dir(f'{new_build_folder_name}\\resources', quiet=True)
+    compileall.compile_dir(f'{new_build_folder_name}\\resources', optimize=2, quiet=True)
 
     time.sleep(0.2)  # just to make sure everything is updated
     convert_bat_to_exe(os.path.abspath(f'{new_build_folder_name}\\Launch TF2 with Rich Presence.bat'), version_num, 'tf2_logo_blurple.ico')

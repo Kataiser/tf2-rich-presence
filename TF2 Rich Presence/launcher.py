@@ -21,12 +21,13 @@ except Exception:
 def launch():
     try:
         parser = argparse.ArgumentParser()
-        parser.add_argument('module')
+        parser.add_argument('--m', default='main', help="The module to launch (main, settings, or updater)")
         args = parser.parse_args()
 
         old_dir = os.getcwd()
-        os.chdir('resources')
-        loaded_module = importlib.import_module(args.module)
+        if os.path.exists('resources\\'):
+            os.chdir('resources')
+        loaded_module = importlib.import_module(args.m)
         os.chdir(old_dir)
 
         loaded_module.launch()
@@ -92,14 +93,14 @@ def exc_already_reported(tb: str):
         return False
 
 
-sentry_enabled: bool = True
-
-if sentry_enabled:
-    # the raven client for Sentry (https://sentry.io/)
-    sentry_client_launcher = raven.Client(dsn=get_api_key('sentry'),
-                                          release='{tf2rpvnum}',
-                                          string_max_length=512,
-                                          processors=('raven.processors.SanitizePasswordsProcessor',))
-
 if __name__ == '__main__':
+    sentry_enabled: bool = True
+
+    if sentry_enabled:
+        # the raven client for Sentry (https://sentry.io/)
+        sentry_client_launcher = raven.Client(dsn=get_api_key('sentry'),
+                                              release='{tf2rpvnum}',
+                                              string_max_length=512,
+                                              processors=('raven.processors.SanitizePasswordsProcessor',))
+
     launch()

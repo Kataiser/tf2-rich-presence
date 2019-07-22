@@ -1,2 +1,2 @@
 @echo off
-start "" "%~dp0\resources\python\pythonw.exe" "%~dp0\resources\launcher.py" settings
+start "" "%~dp0\resources\python\pythonw.exe" -OO "%~dp0\resources\launcher.py" --m settings
