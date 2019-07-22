@@ -35,6 +35,9 @@ def main(version_num):
     build_start_time = time.perf_counter()
     print()
 
+    print("Generating changelog")
+    changelog_generator.main(silent=True)
+
     # copies stuff to the Github repo
     if github_repo_path != 'n':
         print("Copied", shutil.copy('main.py', f'{github_repo_path}\\TF2 Rich Presence'))
@@ -201,9 +204,6 @@ def main(version_num):
     convert_bat_to_exe(os.path.abspath(f'{new_build_folder_name}\\Launch Rich Presence alongside TF2.bat'), version_num, 'tf2_logo_blurple.ico')
     convert_bat_to_exe(os.path.abspath(f'{new_build_folder_name}\\Change settings.bat'), version_num, 'tf2_logo_blurple_wrench.ico')
 
-    print("Generating changelog")
-    changelog_generator.main(silent=True)
-
     # generates zip package and an "installer" (a self extracting .7z as an exe), both with 7zip
     exe_path = f'tf2_rich_presence_{version_num}_self_extracting.exe'
     zip_path = f'tf2_rich_presence_{version_num}.zip'
@@ -254,15 +254,18 @@ def main(version_num):
     # finishing output
     print(f"\n{datetime.datetime.now().strftime('%c')}")
     print(f"Finished building TF2 Rich Presence {version_num} (took {int(time.perf_counter() - build_start_time)} seconds{time_since_last_build_text})")
+    time.sleep(0.1)
+
     if '@' not in latest_commit:
-        time.sleep(0.1)
         print(latest_commit, file=sys.stderr)
     if version_num not in build_version.version_hashes.keys():
-        time.sleep(0.1)
         print(f"version_hashes doesn't include this version, add {{'{version_num}': '{this_hash}'}}", file=sys.stderr)
     elif build_version.version_hashes[version_num] != this_hash:
-        time.sleep(0.1)
         print(f"version_hashes for this version has {build_version.version_hashes[version_num]}, should be {this_hash}", file=sys.stderr)
+
+    with open('Changelogs.html') as changelogs_html:
+        if version_num not in changelogs_html.read():
+            print(f"'{version_num}' not in Changelogs.html", file=sys.stderr)
 
 
 # converts a batch file to an exe with Bat To Exe Converter (http://www.f2ko.de/en/b2e.php)
