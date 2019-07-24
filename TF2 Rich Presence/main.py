@@ -117,9 +117,13 @@ class TF2RichPresense:
                     useful_processes.append(name)
 
         if self.cached_pids != (None, None, None):
-            tf2_is_running, tf2_location, self.start_time = self.get_info_from_pid(self.cached_pids[0])
-            steam_is_running, steam_location = self.get_info_from_pid(self.cached_pids[1])[:2]
-            discord_is_running = self.get_info_from_pid(self.cached_pids[2])[0]
+            tf2_process = self.get_info_from_pid(self.cached_pids[0], ('path', 'time'))
+            steam_process = self.get_info_from_pid(self.cached_pids[1], ('path',))
+            discord_process = self.get_info_from_pid(self.cached_pids[2], ())
+
+            tf2_is_running, tf2_location, self.start_time = (tf2_process['running'], tf2_process['path'], tf2_process['time'])
+            steam_is_running, steam_location = (steam_process['running'], steam_process['path'])
+            discord_is_running = discord_process['running']
 
             if (tf2_is_running, steam_is_running, discord_is_running) != (True, True, True):
                 self.cached_pids = (None, None, None)
@@ -449,31 +453,29 @@ class TF2RichPresense:
         raise SystemExit
 
     # a mess of logic that gives process info from a PID
-    def get_info_from_pid(self, pid: object) -> list:
-        p_info = []
+    def get_info_from_pid(self, pid: object, return_data: tuple = ('path', 'time')) -> dict:
+        p_info = {'running': False, 'path': None, 'time': None}
 
         try:
             try:
                 process = psutil.Process(pid=pid)
             except psutil.NoSuchProcess:
                 self.log.debug(f"Cached PID {pid} is no longer running")
-                p_info = [False, None, None]
             else:
-                with process.oneshot():
-                    p_info.append([name for name in ('hl2.exe', 'Steam.exe', 'Discord') if name in process.name()] != [])  # *_is_running only if PID hasn't been recycled
+                p_info['running'] = [name for name in ('hl2.exe', 'Steam.exe', 'Discord') if name in process.name()] != []  # *_is_running only if PID hasn't been recycled
 
-                    if not p_info[0]:
-                        self.log.error(f"PID {pid} has been recycled as {process.name()}")
+                if not p_info['running']:
+                    self.log.error(f"PID {pid} has been recycled as {process.name()}")
 
-                    p_info.append(os.path.dirname(process.cmdline()[0]))
-                    p_info.append(process.create_time())
+                if 'path' in return_data:
+                    p_info['path'] = os.path.dirname(process.cmdline()[0])
+                if 'time' in return_data:
+                    p_info['time'] = process.create_time()
         except Exception:
             try:
                 self.log.error(f"psutil error for {process}: {traceback.format_exc()}")
-                p_info = [False, None, None]
             except Exception:
                 self.log.error(f"psutil error: {traceback.format_exc()}")
-                p_info = [False, None, None]
 
         return p_info
 
