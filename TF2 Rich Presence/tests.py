@@ -180,11 +180,11 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
 
     def test_get_info_from_pid(self):
         app = main.TF2RichPresense(self.log)
-        p_info = app.get_info_from_pid(os.getpid())
+        p_info = app.get_info_from_pid(os.getpid(), ('path', 'time'))
 
-        self.assertEqual(p_info[0], False)
-        self.assertTrue('python' in p_info[1].lower())  # hope your Python installation is sane
-        self.assertTrue(isinstance(p_info[2], float))
+        self.assertEqual(p_info['running'], False)
+        self.assertTrue('python' in p_info['path'].lower())  # hope your Python installation is sane
+        self.assertTrue(isinstance(p_info['time'], float))
 
     def test_settings_gui(self):
         root = tk.Tk()
