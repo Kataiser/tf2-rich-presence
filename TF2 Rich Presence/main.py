@@ -8,7 +8,6 @@ import time
 import traceback
 from typing import Dict, Union, TextIO, Any, List, Tuple
 
-import gc
 import psutil
 from discoIPC import ipc
 
@@ -97,10 +96,6 @@ class TF2RichPresense:
             sleep_time = settings.get('wait_time')
             self.log.debug(f"Sleeping for {sleep_time} seconds")
             time.sleep(sleep_time)
-
-            # runs garbage collection after waiting. for some reason?
-            self.log.debug(f"This GC: {gc.collect()}")
-            self.log.debug(f"Total GC: {gc.get_stats()}")
 
     # the main logic. runs every 5 seconds
     def loop_body(self):
