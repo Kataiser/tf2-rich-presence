@@ -50,6 +50,7 @@ def main(version_num):
         print("Copied", shutil.copy('custom_maps.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('updater.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('settings.py', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy('localization.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('map list generator.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('thumb formatter.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('changelog_generator.py', f'{github_repo_path}\\TF2 Rich Presence'))
@@ -77,19 +78,9 @@ def main(version_num):
         print("Copied", shutil.copy('.travis.yml', github_repo_path))
         print("Copied", shutil.copy('requirements.txt', github_repo_path))
 
-        # copies test resources
-        test_resources_source = os.path.abspath('test_resources')
-        test_resources_target = os.path.abspath(f'{github_repo_path}\\TF2 Rich Presence\\test_resources')
-        shutil.rmtree(test_resources_target)
-        print(f"Copying from {test_resources_source} to {test_resources_target}: ", end='')
-        subprocess.run(f'xcopy \"{test_resources_source}\" \"{test_resources_target}\\\" /E /Q')
-
-        # copies build tools
-        build_tools_source = os.path.abspath('build_tools')
-        build_tools_target = os.path.abspath(f'{github_repo_path}\\TF2 Rich Presence\\build_tools')
-        shutil.rmtree(build_tools_target)
-        print(f"Copying from {build_tools_source} to {build_tools_target}: ", end='')
-        subprocess.run(f'xcopy \"{build_tools_source}\" \"{build_tools_target}\\\" /E /Q')
+        copy_dir_to_git('test_resources', f'{github_repo_path}\\TF2 Rich Presence\\test_resources')
+        copy_dir_to_git('build_tools', f'{github_repo_path}\\TF2 Rich Presence\\build_tools')
+        copy_dir_to_git('localization', f'{github_repo_path}\\TF2 Rich Presence\\localization')
 
     # starts from scratch each time
     old_build_folders = [f.path for f in os.scandir('.') if f.is_dir() if f.path.startswith('.\\TF2 Rich Presence ')]
@@ -119,6 +110,7 @@ def main(version_num):
     new_build_folder_name = f'TF2 Rich Presence {version_num}'
     os.mkdir(new_build_folder_name)
     os.mkdir(f'{new_build_folder_name}\\resources')
+    os.mkdir(f'{new_build_folder_name}\\resources\\localization')
     os.mkdir(f'{new_build_folder_name}\\logs')
     print(f"Created new build folder: {new_build_folder_name}")
 
@@ -136,17 +128,23 @@ def main(version_num):
                      ('configs.py', f'{new_build_folder_name}\\resources\\'),
                      ('custom_maps.py', f'{new_build_folder_name}\\resources\\'),
                      ('settings.py', f'{new_build_folder_name}\\resources\\'),
+                     ('localization.py', f'{new_build_folder_name}\\resources\\'),
                      ('tf2_logo_blurple.ico', f'{new_build_folder_name}\\resources\\'),
                      ('tf2_logo_blurple_wrench.ico', f'{new_build_folder_name}\\resources\\'),
                      ('tb_hashes.txt', f'{new_build_folder_name}\\resources\\'),
                      ('APIs', f'{new_build_folder_name}\\resources\\'),
                      ('Changelogs.html', f'{new_build_folder_name}\\')]
 
+    # add languages
+    languages = ['English', 'German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian', 'English_modified']
+    languages_to_copy = [(f'localization\\{lang}.json', f'{new_build_folder_name}\\resources\\') for lang in languages]
+    files_to_copy.extend(languages_to_copy)
+
     # copies files, adding any version numbers
     for file_dest_pair in files_to_copy:
         try:
-            with open(file_dest_pair[0], 'r') as file_source:
-                with open(f'{file_dest_pair[1]}{file_dest_pair[0]}', 'w') as file_target:
+            with open(file_dest_pair[0], 'r', encoding='utf-8') as file_source:
+                with open(f'{file_dest_pair[1]}{file_dest_pair[0]}', 'w', encoding='utf-8') as file_target:
                     modified_file = file_source.read().replace('{tf2rpvnum}', version_num)
 
                     if file_dest_pair[0] == 'main.py':
@@ -279,6 +277,17 @@ def convert_bat_to_exe(batch_location: str, vnum: str, icon_path: str):
     subprocess.run(f'{bat2exe_command_1} {bat2exe_command_2}')
     os.remove(batch_location)
     print(f"Deleted {batch_location}")
+
+
+# copy a directory to the git repo
+def copy_dir_to_git(source, target):
+    try:
+        shutil.rmtree(target)
+    except FileNotFoundError:
+        pass
+
+    print(f"Copying from {source} to {target}: ", end='')
+    subprocess.run(f'xcopy \"{source}\" \"{target}\\\" /E /Q')
 
 
 if __name__ == '__main__':

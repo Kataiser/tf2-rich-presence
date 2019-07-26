@@ -14,6 +14,7 @@ from discoIPC import ipc
 import configs
 import custom_maps
 import launcher
+import localization
 import logger
 import main
 import settings
@@ -193,6 +194,11 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
 
         self.assertGreaterEqual(dimensions[0], 200)
         self.assertGreaterEqual(dimensions[1], 200)
+
+    def test_localization(self):
+        for language in ['English', 'German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian']:
+            localizer = localization.Localizer(language_override=language)
+            self.assertNotEqual(localizer.text("Save and close"), "")
 
 
 class TestTF2RichPresenseSimulated(unittest.TestCase):

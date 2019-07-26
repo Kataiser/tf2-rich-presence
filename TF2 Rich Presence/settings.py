@@ -8,6 +8,7 @@ import traceback
 from tkinter import messagebox
 from typing import Any, Union
 
+import localization
 import logger
 
 
@@ -16,12 +17,13 @@ class GUI(tk.Frame):
         self.log = logger.Log()
         self.log.to_stderr = True
         self.log.info("Opening settings menu for TF2 Rich Presence {tf2rpvnum}")
+        self.loc = localization.Localizer(self.log)
 
         tk.Frame.__init__(self, master)
         self.master = master
         check_int_command = self.register(check_int)
 
-        master.title("TF2 Rich Presence ({tf2rpvnum}) settings")
+        master.title(self.loc.text("TF2 Rich Presence ({tf2rpvnum}) settings"))
         master.resizable(0, 0)  # disables resizing
         master.geometry("+710+362")  # positions the window kinda near the center of the screen (or perfectly centered if monitor is 1920x1080)
 
@@ -34,6 +36,7 @@ class GUI(tk.Frame):
         self.log_levels = ['Debug', 'Info', 'Error', 'Critical', 'Off']
         self.sentry_levels = ['All errors', 'Crashes', 'Never']
         self.class_pic_types = ['Icon', 'Emblem', 'Portrait', 'None, use TF2 logo']
+        self.languages = ['English', 'German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian']
 
         # create every setting variable without values
         self.sentry_level = tk.StringVar()
@@ -45,6 +48,7 @@ class GUI(tk.Frame):
         self.log_level = tk.StringVar()
         self.console_scan_kb = tk.IntVar()
         self.class_pic_type = tk.StringVar()
+        self.language = tk.StringVar()
 
         try:
             # load settings from settings.json
@@ -61,109 +65,119 @@ class GUI(tk.Frame):
             self.log_level.set(self.settings_loaded['log_level'])
             self.console_scan_kb.set(self.settings_loaded['console_scan_kb'])
             self.class_pic_type.set(self.settings_loaded['class_pic_type'])
+            self.language.set(self.settings_loaded['language'])
         except Exception:
             # probably a json decode error
             formatted_exception = traceback.format_exc()
             self.log.error(f"Error in loading settings, defaulting: \n{formatted_exception}")
-            messagebox.showerror("Error", f"Couldn't load settings, reverting to defaults.\n\n{formatted_exception}")
+            messagebox.showerror(self.loc.text("Error"), self.loc.text("Couldn't load settings, reverting to defaults.\n\n{0}").format(formatted_exception))
 
             self.restore_defaults()
             self.settings_loaded = get_setting_default(return_all=True)
 
         # create label frames
-        lf_main = ttk.Labelframe(master, text='Main')
-        lf_advanced = ttk.Labelframe(master, text='Advanced')
+        lf_main = ttk.Labelframe(master, text=self.loc.text("Main"))
+        lf_advanced = ttk.Labelframe(master, text=self.loc.text("Advanced"))
 
         # create settings widgets
         setting1_frame = ttk.Frame(lf_advanced)
         setting1_text = ttk.Label(setting1_frame, text="{}".format(
-            "Log reporting frequency: "))
+            self.loc.text("Log reporting frequency: ")))
         setting1_radiobuttons = []
         for sentry_level_text in self.sentry_levels:
             setting1_radiobuttons.append(ttk.Radiobutton(setting1_frame, variable=self.sentry_level, text=sentry_level_text, value=sentry_level_text, command=self.update_default_button_state))
         setting3_frame = ttk.Frame(lf_main)
         setting3_text = ttk.Label(setting3_frame, text="{}".format(
-            "Delay between refreshes, in seconds: "))
+            self.loc.text("Delay between refreshes, in seconds: ")))
         setting3_option = ttk.Spinbox(setting3_frame, textvariable=self.wait_time, width=6, from_=0, to=1000, validate='all', validatecommand=(check_int_command, '%P', 1000),
                                       command=self.update_default_button_state)
         setting4_frame = ttk.Frame(lf_main)
         setting4_text = ttk.Label(setting4_frame, text="{}".format(
-            "Hours before re-checking custom map gamemode: "))
+            self.loc.text("Hours before re-checking custom map gamemode: ")))
         setting4_option = ttk.Spinbox(setting4_frame, textvariable=self.map_invalidation_hours, width=6, from_=0, to=1000, validate='all', validatecommand=(check_int_command, '%P', 1000),
                                       command=self.update_default_button_state)
         setting5 = ttk.Checkbutton(lf_main, variable=self.check_updates, command=self.update_default_button_state, text="{}".format(
-            "Check for program updates when launching"))
+            self.loc.text("Check for program updates when launching")))
         setting6_frame = ttk.Frame(lf_advanced)
         setting6_text = ttk.Label(setting6_frame, text="{}".format(
-            "Internet connection timeout (for updater and custom maps), in seconds: "))
+            self.loc.text("Internet connection timeout (for updater and custom maps), in seconds: ")))
         setting6_option = ttk.Spinbox(setting6_frame, textvariable=self.request_timeout, width=6, from_=0, to=60, validate='all', validatecommand=(check_int_command, '%P', 60),
                                       command=self.update_default_button_state)
         setting8 = ttk.Checkbutton(lf_main, variable=self.hide_queued_gamemode, command=self.update_default_button_state, text="{}".format(
-            "Hide game type (Casual, Comp, MvM) queued for"))
+            self.loc.text("Hide game type (Casual, Comp, MvM) queued for")))
         setting9_frame = ttk.Frame(lf_advanced)
         setting9_text = ttk.Label(setting9_frame, text="{}".format(
-            "Max log level: "))
+            self.loc.text("Max log level: ")))
         setting9_radiobuttons = []
         for log_level_text in self.log_levels:
             setting9_radiobuttons.append(ttk.Radiobutton(setting9_frame, variable=self.log_level, text=log_level_text, value=log_level_text, command=self.update_default_button_state))
         setting10_frame = ttk.Frame(lf_advanced)
         setting10_text = ttk.Label(setting10_frame, text="{}".format(
-            "Max kilobytes of console.log to scan: "))
+            self.loc.text("Max kilobytes of console.log to scan: ")))
         setting10_option = ttk.Spinbox(setting10_frame, textvariable=self.console_scan_kb, width=8, from_=0, to=float('inf'), validate='all',
                                        validatecommand=(check_int_command, '%P', float('inf')), command=self.update_default_button_state)
         setting12_frame = ttk.Frame(lf_main)
         setting12_text = ttk.Label(setting12_frame, text="{}".format(
-            "Selected class small image type: "))
+            self.loc.text("Selected class small image type: ")))
         setting12_radiobuttons = []
         for class_pic_type_text in self.class_pic_types:
             setting12_radiobuttons.append(ttk.Radiobutton(setting12_frame, variable=self.class_pic_type, text=class_pic_type_text, value=class_pic_type_text,
                                                           command=self.update_default_button_state))
+        setting13_frame = ttk.Frame(lf_main)
+        setting13_text = ttk.Label(setting13_frame, text="{}".format(
+            self.loc.text("Language: ")))
+        actual_language = self.language.get()
+        setting13_options = ttk.OptionMenu(setting13_frame, self.language, self.languages[0], *self.languages, command=self.update_default_button_state)
+        self.language.set(actual_language)
 
         # create the report button
         current_log_size = round(os.stat(self.log.filename).st_size / 1024)
         current_log_size_display = max(min(16, current_log_size), 1)
         self.log.debug(f"Log file size: {current_log_size}, displayed as {current_log_size_display}")
-        self.report_button_text = tk.StringVar(value=f"Report logs to developer ({current_log_size_display} KB)")
+        self.report_button_text = tk.StringVar(value=self.loc.text("Report logs to developer ({0} KB)").format(current_log_size_display))
         self.report_button = ttk.Button(lf_advanced, textvariable=self.report_button_text, command=self.report_log)
 
         # add widgets to the labelframes or main window
-        setting1_frame.grid(row=9, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
+        setting1_frame.grid(row=10, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
         setting1_text.pack(side='left', fill=None, expand=False)
         for setting1_radiobutton in setting1_radiobuttons:
             setting1_radiobutton.pack(side='left', fill=None, expand=False)
         setting3_text.pack(side='left', fill=None, expand=False)
         setting3_option.pack(side='left', fill=None, expand=False)
-        setting3_frame.grid(row=0, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(8, 0))
+        setting3_frame.grid(row=1, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(3, 0))
         setting4_text.pack(side='left', fill=None, expand=False)
         setting4_option.pack(side='left', fill=None, expand=False)
-        setting4_frame.grid(row=2, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
-        setting5.grid(row=7, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 10))
+        setting4_frame.grid(row=3, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
+        setting5.grid(row=8, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 10))
         setting6_text.pack(side='left', fill=None, expand=False)
         setting6_option.pack(side='left', fill=None, expand=False)
-        setting6_frame.grid(row=8, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
-        setting8.grid(row=4, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
+        setting6_frame.grid(row=9, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
+        setting8.grid(row=5, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
         setting9_text.pack(side='left', fill=None, expand=False)
         for setting9_radiobutton in setting9_radiobuttons:
             setting9_radiobutton.pack(side='left', fill=None, expand=False)
-        setting9_frame.grid(row=10, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
+        setting9_frame.grid(row=11, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
         setting10_text.pack(side='left', fill=None, expand=False)
         setting10_option.pack(side='left', fill=None, expand=False)
-        setting10_frame.grid(row=3, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(8, 0))
+        setting10_frame.grid(row=4, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(8, 0))
         setting12_text.pack(side='left', fill=None, expand=False)
         for setting12_radiobutton in setting12_radiobuttons:
             setting12_radiobutton.pack(side='left', fill=None, expand=False)
-        setting12_frame.grid(row=6, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
-        self.report_button.grid(row=11, sticky=tk.W, padx=(20, 40), pady=(4, 12))
+        setting12_frame.grid(row=7, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
+        self.report_button.grid(row=12, sticky=tk.W, padx=(20, 40), pady=(4, 12))
+        setting13_text.pack(side='left', fill=None, expand=False)
+        setting13_options.pack(side='left', fill=None, expand=False)
+        setting13_frame.grid(row=0, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(8, 0))
 
         lf_main.grid(row=0, padx=30, pady=15)
         lf_advanced.grid(row=1, padx=30, pady=0, sticky=tk.W + tk.E)
 
         buttons_frame = ttk.Frame()
-        self.restore_button = ttk.Button(buttons_frame, text="Restore defaults", command=self.restore_defaults)
+        self.restore_button = ttk.Button(buttons_frame, text=self.loc.text("Restore defaults"), command=self.restore_defaults)
         self.restore_button.grid(row=0, column=1, padx=(10, 0), pady=(20, 20))
-        cancel_button = ttk.Button(buttons_frame, text="Close without saving", command=self.close_without_saving)
+        cancel_button = ttk.Button(buttons_frame, text=self.loc.text("Close without saving"), command=self.close_without_saving)
         cancel_button.grid(row=0, column=2, padx=10, pady=(20, 20))
-        self.ok_button = ttk.Button(buttons_frame, text="Save and close", command=self.save_and_close, default=tk.ACTIVE)
+        self.ok_button = ttk.Button(buttons_frame, text=self.loc.text("Save and close"), command=self.save_and_close, default=tk.ACTIVE)
         self.ok_button.grid(row=0, column=3, sticky=tk.W, padx=0, pady=(20, 20))
         buttons_frame.grid(row=100, columnspan=3)
 
@@ -178,7 +192,7 @@ class GUI(tk.Frame):
         master.after_idle(master.attributes, '-topmost', False)
 
     # runs every time a setting is changed, updates "restore defaults" button's state
-    def update_default_button_state(self):
+    def update_default_button_state(self, passthrough=None):
         if self.get_working_settings() == get_setting_default(return_all=True):  # if settings are default, disable button
             self.restore_button.state(['disabled'])
             self.log.debug("Disabled restore defaults button")
@@ -196,7 +210,8 @@ class GUI(tk.Frame):
                 'hide_queued_gamemode': self.hide_queued_gamemode.get(),
                 'log_level': self.log_level.get(),
                 'console_scan_kb': self.console_scan_kb.get(),
-                'class_pic_type': self.class_pic_type.get()}
+                'class_pic_type': self.class_pic_type.get(),
+                'language': self.language.get()}
 
     # set all settings to defaults
     def restore_defaults(self):
@@ -206,9 +221,9 @@ class GUI(tk.Frame):
         settings_changed_num = len(settings_changed)
         allowed_reset = "yes"
         if settings_changed_num == 1:
-            allowed_reset = messagebox.askquestion("Restore defaults", "Restore 1 changed setting to default?")
+            allowed_reset = messagebox.askquestion(self.loc.text("Restore defaults"), self.loc.text("Restore 1 changed setting to default?"))
         elif settings_changed_num > 1:
-            allowed_reset = messagebox.askquestion("Restore defaults", f"Restore {settings_changed_num} changed settings to defaults?")
+            allowed_reset = messagebox.askquestion(self.loc.text("Restore defaults"), self.loc.text("Restore {} changed settings to defaults?".format(settings_changed_num)))
 
         if allowed_reset == "yes":
             self.sentry_level.set(get_setting_default('sentry_level'))
@@ -220,6 +235,7 @@ class GUI(tk.Frame):
             self.log_level.set(get_setting_default('log_level'))
             self.console_scan_kb.set(get_setting_default('console_scan_kb'))
             self.class_pic_type.set(get_setting_default('class_pic_type'))
+            self.language.set(get_setting_default('language'))
 
             self.log.debug("Restored defaults")
             self.restore_button.state(['disabled'])
@@ -242,12 +258,12 @@ class GUI(tk.Frame):
         access_settings_file(save_dict=settings_to_save)
         self.log.info(f"Settings have been saved as: {settings_to_save}")
 
-        restart_message = "If TF2 Rich Presence is currently running, it may need to be restarted for changes to take effect."
+        restart_message = self.loc.text("If TF2 Rich Presence is currently running, it may need to be restarted for changes to take effect.")
         settings_changed_num = len(settings_changed)
         if settings_changed_num == 1:
-            messagebox.showinfo("Save and close", f"1 setting has been changed. {restart_message}")
+            messagebox.showinfo(self.loc.text("Save and close"), f"1 setting has been changed. {restart_message}")
         elif settings_changed_num > 1:
-            messagebox.showinfo("Save and close", f"{settings_changed_num} settings have been changed. {restart_message}")
+            messagebox.showinfo(self.loc.text("Save and close"), self.loc.text("{0} settings have been changed. {1}").format(settings_changed_num, restart_message))
 
         self.master.destroy()  # closes window
 
@@ -257,13 +273,13 @@ class GUI(tk.Frame):
         settings_changed = {k: settings_to_save[k] for k in settings_to_save if k in self.settings_loaded and settings_to_save[k] != self.settings_loaded[k]}  # haha what
         self.log.debug(f"Setting(s) changed (but not saved): {settings_changed}")
 
-        close_question = "Close without saving?"
+        close_question = self.loc.text("Close without saving?")
         settings_changed_num = len(settings_changed)
         allowed_close = "yes"
         if settings_changed_num == 1:
-            allowed_close = messagebox.askquestion("Close without saving", f"1 setting has been changed. {close_question}")
+            allowed_close = messagebox.askquestion(self.loc.text("Close without saving"), f"1 setting has been changed. {close_question}")
         elif settings_changed_num > 1:
-            allowed_close = messagebox.askquestion("Close without saving", f"{settings_changed_num} settings have been changed. {close_question}")
+            allowed_close = messagebox.askquestion(self.loc.text("Close without saving"), self.loc.text("{0} settings have been changed. {1}").format(settings_changed_num, close_question))
 
         if allowed_close == "yes":
             self.log.info("Closing settings menu without saving")
@@ -287,7 +303,7 @@ class GUI(tk.Frame):
 
         report_elapsed = round(time.perf_counter() - before_report_time, 1)
         self.log.debug(f"Successfully reported log (took {report_elapsed} seconds)")
-        self.report_button_text.set("Successfully reported logs")
+        self.report_button_text.set(self.loc.text("Successfully reported logs"))
         self.report_button.state(['disabled'])
         self.ok_button.focus_set()
 
@@ -343,7 +359,8 @@ def get_setting_default(setting: str = '', return_all: bool = False) -> Any:
                 'hide_queued_gamemode': False,
                 'log_level': 'Debug',
                 'console_scan_kb': 1000,
-                'class_pic_type': 'Icon'}
+                'class_pic_type': 'Icon',
+                'language': 'English'}
 
     if return_all:
         return defaults
