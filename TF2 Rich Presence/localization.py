@@ -15,12 +15,15 @@ class Localizer:
     def text(self, english_text):
         english_text_adler32 = str(zlib.adler32(english_text.replace('{tf2rpvnum}', '').encode('utf-8'))).ljust(10, '0')
 
-        if english_text_adler32 not in load_language_file('English_modified').keys():
-            english_to_modify = load_language_file('English_modified')
+        if english_text_adler32 not in load_language_file('English').keys():
+            english_to_modify = load_language_file('English')
             english_to_modify[english_text_adler32] = english_text
 
-            with open(get_language_file_path('English_modified'), 'w') as english_json:
-                json.dump(english_to_modify, english_json, indent=4, sort_keys=True)
+            with open(get_language_file_path('English'), 'w') as english_json:
+                english_dump = json.dumps(english_to_modify, sort_keys=True)
+                english_json.write(english_dump.replace('": "', '": "\n')
+                                                        .replace('", "', '\n", "')
+                                                        .replace('"}', '\n"}'))
 
         if self.language == 'English':
             return english_text
@@ -31,11 +34,14 @@ class Localizer:
                 if self.log:
                     self.log.error(f"\"{english_text}\" not in {self.language}")
 
+                return english_text
+
 
 @functools.lru_cache(maxsize=None)
 def load_language_file(language):
     with open(get_language_file_path(language), 'r', encoding='utf-8') as language_file:
-        return json.load(language_file)
+        language_file_read = language_file.read().replace('\n', '')
+        return json.loads(language_file_read)
 
 
 @functools.lru_cache(maxsize=None)

@@ -136,7 +136,7 @@ def main(version_num):
                      ('Changelogs.html', f'{new_build_folder_name}\\')]
 
     # add languages
-    languages = ['English', 'German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian', 'English_modified']
+    languages = ['English', 'German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian']
     languages_to_copy = [(f'localization\\{lang}.json', f'{new_build_folder_name}\\resources\\') for lang in languages]
     files_to_copy.extend(languages_to_copy)
 
@@ -264,6 +264,17 @@ def main(version_num):
     with open('Changelogs.html') as changelogs_html:
         if version_num not in changelogs_html.read():
             print(f"'{version_num}' not in Changelogs.html", file=sys.stderr)
+
+    language_lines_missing = {}
+    with open('localization\\English.json', 'r', encoding='utf-8') as english_file:
+        english_len = len(english_file.readlines())
+    for language in languages[:-1]:
+        with open(f'localization\\{language}.json', 'r', encoding='utf-8') as language_file:
+            language_len = len(language_file.readlines())
+        if language_len != english_len:
+            language_lines_missing[language] = english_len - language_len
+    if len(language_lines_missing) > 0:
+        print(f"Languages missing lines: {language_lines_missing}", file=sys.stderr)
 
 
 # converts a batch file to an exe with Bat To Exe Converter (http://www.f2ko.de/en/b2e.php)

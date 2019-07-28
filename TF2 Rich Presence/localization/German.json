@@ -1,22 +1,71 @@
-{
-    "1351878611": "Schließen ohne zu speichern",
-    "1487276050": "Schließen ohne zu speichern?",
-    "1528106792": "Spielart ausblenden (Casual, Comp, MvM) in der Warteschlange für",
-    "2083457385": "Protokollieren Sie die Häufigkeit der Meldungen: ",
-    "2267553510": "Fortgeschritten",
-    "2366704224": "Erfolgreich gemeldete Protokolle",
-    "2452164823": "Stunden, bevor Sie den benutzerdefinierten Kartenspielmodus erneut überprüfen. ",
-    "2673222339": "Wenn TF2 Rich Presence gerade läuft, muss es möglicherweise neu gestartet werden, damit Änderungen wirksam werden.",
-    "3295840550": "Max. Kilobyte der console.log zum Scannen. ",
-    "3314620921": "Timeout der Internetverbindung (für Updater und benutzerdefinierte Karten) in Sekundenschnelle. ",
-    "3469484790": "Sprache: ",
-    "3488942977": "Protokolle an den Entwickler melden ({0} KB)",
-    "3509849080": "Ausgewählte Klasse kleiner Bildtyp. ",
-    "2320894410": "TF2 Rich Presence ({tf2rpvnum}) Einstellungen",
-    "6049011800": "Main",
-    "6239040250": "Speichern und schließen",
-    "7065449230": "Maximale Protokollierungsstufe: ",
-    "8011814710": "Beim Start nach Programm-Updates suchen",
-    "8054718100": "Verzögerung zwischen den Aktualisierungen, in Sekunden. ",
-    "8905047970": "Standardwerte wiederherstellen"
-}
+{"1099829090": "
+{0} geänderte Einstellungen auf die Standardeinstellungen zurücksetzen?
+", "1305483070": "
+Emblem
+", "1351878611": "
+Schließen ohne zu speichern
+", "1487276050": "
+Schließen ohne zu speichern?
+", "1528106792": "
+Verbergen Sie den Spieltyp (casual, competitive, MvM), der in der Warteschlange steht für
+", "1791761380": "
+Abstürze
+", "2083457385": "
+Protokollieren Sie die Häufigkeit der Berichterstattung: 
+", "2267553510": "
+Fortgeschritten
+", "2320894410": "
+TF2 Rich Presence ({tf2rpvnum}) Einstellungen
+", "2340298680": "
+Kritisch
+", "2366704224": "
+Erfolgreich gemeldete Protokolle
+", "2452164823": "
+Stunden, bevor Sie den benutzerdefinierten Kartenspielmodus erneut überprüfen: 
+", "2465472860": "
+Porträt
+", "2673222339": "
+Wenn TF2 Rich Presence gerade läuft, muss es möglicherweise neu gestartet werden, damit Änderungen wirksam werden.
+", "3295159910": "
+Alle Fehler
+", "3295840550": "
+Max. Kilobyte der console.log zum Scannen: 
+", "3314620921": "
+Zeitüberschreitung der Internetverbindung (für Updater und benutzerdefinierte Karten) in Sekunden: 
+", "3469484790": "
+Sprache: 
+", "3488942977": "
+Protokolle an den Entwickler melden ({0} KB)
+", "3509849080": "
+Ausgewählte Klasse kleiner Bildtyp: 
+", "3578294000": "
+Aus
+", "3892841625": "
+{0} Einstellungen wurden geändert. {1}
+", "4273081733": "
+1 geänderte Einstellung auf den Standardwert zurücksetzen?
+", "6049011800": "
+Haupt
+", "6062119400": "
+Icon
+", "6166977300": "
+Info
+", "6239040250": "
+Speichern und schließen
+", "7065449230": "
+Maximale Protokollierungsstufe: 
+", "8011814710": "
+Überprüfen Sie beim Start auf Programm-Updates.
+", "8054718100": "
+Verzögerung zwischen den Aktualisierungen, in Sekunden: 
+", "8905047970": "
+Standardwerte wiederherstellen
+", "9044016800": "
+Debuggen
+", "9363143430": "
+Keine, verwenden Sie das TF2-Logo.
+", "9627289700": "
+Niemals
+", "9725594700": "
+Fehler
+"}

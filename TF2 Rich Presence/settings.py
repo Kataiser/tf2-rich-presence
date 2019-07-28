@@ -25,7 +25,7 @@ class GUI(tk.Frame):
 
         master.title(self.loc.text("TF2 Rich Presence ({tf2rpvnum}) settings"))
         master.resizable(0, 0)  # disables resizing
-        master.geometry("+710+362")  # positions the window kinda near the center of the screen (or perfectly centered if monitor is 1920x1080)
+        master.geometry("+659+302")  # positions the window kinda near the center of the screen (or perfectly centered if monitor is 1920x1080)
 
         # set window icon, doesn't work if launching from Pycharm for some reason
         try:
@@ -37,6 +37,11 @@ class GUI(tk.Frame):
         self.sentry_levels = ['All errors', 'Crashes', 'Never']
         self.class_pic_types = ['Icon', 'Emblem', 'Portrait', 'None, use TF2 logo']
         self.languages = ['English', 'German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian']
+
+        self.log_levels_display = [self.loc.text(item) for item in self.log_levels]
+        self.sentry_levels_display = [self.loc.text(item) for item in self.sentry_levels]
+        self.class_pic_types_display = [self.loc.text(item) for item in self.class_pic_types]
+        self.languages_display = ['English', 'Deutsch', 'Français', 'Español', 'Português', 'Italiano', 'Nederlands', 'Polski', 'русский язык']
 
         # create every setting variable without values
         self.sentry_level = tk.StringVar()
@@ -75,6 +80,11 @@ class GUI(tk.Frame):
             self.restore_defaults()
             self.settings_loaded = get_setting_default(return_all=True)
 
+        self.log_level.set(self.log_levels_display[self.log_levels.index(self.log_level.get())])
+        self.sentry_level.set(self.sentry_levels_display[self.sentry_levels.index(self.sentry_level.get())])
+        self.class_pic_type.set(self.class_pic_types_display[self.class_pic_types.index(self.class_pic_type.get())])
+        self.language.set(self.languages_display[self.languages.index(self.language.get())])
+
         # create label frames
         lf_main = ttk.Labelframe(master, text=self.loc.text("Main"))
         lf_advanced = ttk.Labelframe(master, text=self.loc.text("Advanced"))
@@ -84,7 +94,7 @@ class GUI(tk.Frame):
         setting1_text = ttk.Label(setting1_frame, text="{}".format(
             self.loc.text("Log reporting frequency: ")))
         setting1_radiobuttons = []
-        for sentry_level_text in self.sentry_levels:
+        for sentry_level_text in self.sentry_levels_display:
             setting1_radiobuttons.append(ttk.Radiobutton(setting1_frame, variable=self.sentry_level, text=sentry_level_text, value=sentry_level_text, command=self.update_default_button_state))
         setting3_frame = ttk.Frame(lf_main)
         setting3_text = ttk.Label(setting3_frame, text="{}".format(
@@ -109,7 +119,7 @@ class GUI(tk.Frame):
         setting9_text = ttk.Label(setting9_frame, text="{}".format(
             self.loc.text("Max log level: ")))
         setting9_radiobuttons = []
-        for log_level_text in self.log_levels:
+        for log_level_text in self.log_levels_display:
             setting9_radiobuttons.append(ttk.Radiobutton(setting9_frame, variable=self.log_level, text=log_level_text, value=log_level_text, command=self.update_default_button_state))
         setting10_frame = ttk.Frame(lf_advanced)
         setting10_text = ttk.Label(setting10_frame, text="{}".format(
@@ -120,14 +130,14 @@ class GUI(tk.Frame):
         setting12_text = ttk.Label(setting12_frame, text="{}".format(
             self.loc.text("Selected class small image type: ")))
         setting12_radiobuttons = []
-        for class_pic_type_text in self.class_pic_types:
+        for class_pic_type_text in self.class_pic_types_display:
             setting12_radiobuttons.append(ttk.Radiobutton(setting12_frame, variable=self.class_pic_type, text=class_pic_type_text, value=class_pic_type_text,
                                                           command=self.update_default_button_state))
         setting13_frame = ttk.Frame(lf_main)
         setting13_text = ttk.Label(setting13_frame, text="{}".format(
             self.loc.text("Language: ")))
         actual_language = self.language.get()
-        setting13_options = ttk.OptionMenu(setting13_frame, self.language, self.languages[0], *self.languages, command=self.update_default_button_state)
+        setting13_options = ttk.OptionMenu(setting13_frame, self.language, self.languages[0], *self.languages_display, command=self.update_default_button_state)
         self.language.set(actual_language)
 
         # create the report button
@@ -159,7 +169,7 @@ class GUI(tk.Frame):
         setting9_frame.grid(row=11, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
         setting10_text.pack(side='left', fill=None, expand=False)
         setting10_option.pack(side='left', fill=None, expand=False)
-        setting10_frame.grid(row=4, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(8, 0))
+        setting10_frame.grid(row=4, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(11, 0))
         setting12_text.pack(side='left', fill=None, expand=False)
         for setting12_radiobutton in setting12_radiobuttons:
             setting12_radiobutton.pack(side='left', fill=None, expand=False)
@@ -167,7 +177,7 @@ class GUI(tk.Frame):
         self.report_button.grid(row=12, sticky=tk.W, padx=(20, 40), pady=(4, 12))
         setting13_text.pack(side='left', fill=None, expand=False)
         setting13_options.pack(side='left', fill=None, expand=False)
-        setting13_frame.grid(row=0, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(8, 0))
+        setting13_frame.grid(row=0, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(9, 0))
 
         lf_main.grid(row=0, padx=30, pady=15)
         lf_advanced.grid(row=1, padx=30, pady=0, sticky=tk.W + tk.E)
@@ -202,16 +212,16 @@ class GUI(tk.Frame):
 
     # return the settings as a dict, as they currently are in the GUI
     def get_working_settings(self) -> dict:
-        return {'sentry_level': self.sentry_level.get(),
+        return {'sentry_level': self.sentry_levels[self.sentry_levels_display.index(self.sentry_level.get())],
                 'wait_time': self.wait_time.get(),
                 'map_invalidation_hours': self.map_invalidation_hours.get(),
                 'check_updates': self.check_updates.get(),
                 'request_timeout': max(self.request_timeout.get(), 1),
                 'hide_queued_gamemode': self.hide_queued_gamemode.get(),
-                'log_level': self.log_level.get(),
+                'log_level': self.log_levels[self.log_levels_display.index(self.log_level.get())],
                 'console_scan_kb': self.console_scan_kb.get(),
-                'class_pic_type': self.class_pic_type.get(),
-                'language': self.language.get()}
+                'class_pic_type': self.class_pic_types[self.class_pic_types_display.index(self.class_pic_type.get())],
+                'language': self.languages[self.languages_display.index(self.language.get())]}
 
     # set all settings to defaults
     def restore_defaults(self):
@@ -223,7 +233,7 @@ class GUI(tk.Frame):
         if settings_changed_num == 1:
             allowed_reset = messagebox.askquestion(self.loc.text("Restore defaults"), self.loc.text("Restore 1 changed setting to default?"))
         elif settings_changed_num > 1:
-            allowed_reset = messagebox.askquestion(self.loc.text("Restore defaults"), self.loc.text("Restore {} changed settings to defaults?".format(settings_changed_num)))
+            allowed_reset = messagebox.askquestion(self.loc.text("Restore defaults"), self.loc.text("Restore {0} changed settings to defaults?").format(settings_changed_num))
 
         if allowed_reset == "yes":
             self.sentry_level.set(get_setting_default('sentry_level'))
@@ -249,6 +259,11 @@ class GUI(tk.Frame):
                 int_setting.get()
             except tk.TclError:
                 int_setting.set(0)
+
+        # self.log_level.set(self.log_levels[self.log_levels_display.index(self.log_level.get())])
+        # self.sentry_level.set(self.sentry_levels[self.sentry_levels_display.index(self.sentry_level.get())])
+        # self.class_pic_type.set(self.class_pic_types[self.class_pic_types_display.index(self.class_pic_type.get())])
+        # self.language.set(self.languages[self.languages_display.index(self.language.get())])
 
         settings_to_save = self.get_working_settings()
 

@@ -1,22 +1,71 @@
-{
-    "1351878611": "Chiudi senza salvare",
-    "1487276050": "Chiudere senza salvare?",
-    "1528106792": "Nascondi tipo di gioco (Casual, Comp, MvM) in coda per",
-    "2083457385": "Frequenza di segnalazione dei log: ",
-    "2267553510": "Avanzato",
-    "2366704224": "Registri segnalati con successo",
-    "2452164823": "Ore prima di ricontrollare la modalità di gioco di mappe personalizzate: ",
-    "2673222339": "Se TF2 Rich Presence è attualmente in esecuzione, potrebbe essere necessario riavviarlo per rendere effettive le modifiche.",
-    "3295840550": "Max kilobyte di console.log per la scansione: ",
-    "3314620921": "Timeout della connessione Internet (per l'aggiornamento e le mappe personalizzate), in pochi secondi: ",
-    "3469484790": "Lingua: ",
-    "3488942977": "Segnala i log allo sviluppatore ({0} KB)",
-    "3509849080": "Tipo di immagine di classe piccola selezionata: ",
-    "2320894410": "Impostazioni TF2 Rich Presence ({tf2rpvnum})",
-    "6049011800": "Principale",
-    "6239040250": "Salva e chiudi",
-    "7065449230": "Livello massimo di log: ",
-    "8011814710": "Verificare la presenza di aggiornamenti del programma al momento del lancio",
-    "8054718100": "Ritardo tra un aggiornamento, in pochi secondi: ",
-    "8905047970": "Ripristina i valori predefiniti"
-}
+{"1099829090": "
+Ripristinare {0} le impostazioni modificate ai valori predefiniti?
+", "1305483070": "
+Emblema
+", "1351878611": "
+Chiudere senza salvare
+", "1487276050": "
+Chiudere senza salvare?
+", "1528106792": "
+Nascondi tipo di gioco (casual, competitivo, MvM) in coda per
+", "1791761380": "
+Incidenti
+", "2083457385": "
+Frequenza di segnalazione dei log: 
+", "2267553510": "
+Avanzate
+", "2320894410": "
+Impostazioni TF2 Rich Presence ({tf2rpvnum})
+", "2340298680": "
+Critico
+", "2366704224": "
+Registri segnalati con successo
+", "2452164823": "
+Ore prima di ricontrollare la modalità di gioco personalizzata della mappa: 
+", "2465472860": "
+Ritratto
+", "2673222339": "
+Se TF2 Rich Presence è attualmente in esecuzione, potrebbe essere necessario riavviare TF2 Rich Presence affinché le modifiche abbiano effetto.
+", "3295159910": "
+Tutti gli errori
+", "3295840550": "
+Max kilobyte di console.log per la scansione: 
+", "3314620921": "
+Timeout della connessione Internet (per l'aggiornamento e le mappe personalizzate), in pochi secondi: 
+", "3469484790": "
+La lingua: 
+", "3488942977": "
+Segnala i log allo sviluppatore ({0} KB)
+", "3509849080": "
+Tipo di immagine piccola classe selezionata: 
+", "3578294000": "
+Spento
+", "3892841625": "
+0} le impostazioni sono state modificate. {1}
+", "4273081733": "
+Ripristinare l'impostazione predefinita di Restore 1 modificata?
+", "6049011800": "
+Principale
+", "6062119400": "
+Icona
+", "6166977300": "
+Info
+", "6239040250": "
+Salva e chiudi
+", "7065449230": "
+Livello massimo di log: 
+", "8011814710": "
+Verificare la presenza di aggiornamenti del programma al momento del lancio
+", "8054718100": "
+Ritardo tra un rinfresco e l'altro, in secondi: 
+", "8905047970": "
+Ripristina le impostazioni predefinite
+", "9044016800": "
+Debug
+", "9363143430": "
+Nessuno, utilizzare il logo TF2
+", "9627289700": "
+Mai
+", "9725594700": "
+Errore
+"}
