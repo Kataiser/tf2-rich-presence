@@ -197,7 +197,7 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
 
     def test_localization(self):
         for language in ['English', 'German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian']:
-            localizer = localization.Localizer(language_override=language)
+            localizer = localization.Localizer(language=language)
             self.assertNotEqual(localizer.text("Save and close"), "")
 
 

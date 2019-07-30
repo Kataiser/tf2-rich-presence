@@ -17,7 +17,7 @@ class GUI(tk.Frame):
         self.log = logger.Log()
         self.log.to_stderr = True
         self.log.info("Opening settings menu for TF2 Rich Presence {tf2rpvnum}")
-        self.loc = localization.Localizer(self.log)
+        self.loc = localization.Localizer(self.log, get('language'))
 
         tk.Frame.__init__(self, master)
         self.master = master
@@ -36,12 +36,12 @@ class GUI(tk.Frame):
         self.log_levels = ['Debug', 'Info', 'Error', 'Critical', 'Off']
         self.sentry_levels = ['All errors', 'Crashes', 'Never']
         self.class_pic_types = ['Icon', 'Emblem', 'Portrait', 'None, use TF2 logo']
-        self.languages = ['English', 'German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian']
+        self.languages = ['English', 'German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian', 'Korean', 'Chinese', 'Japanese']
 
         self.log_levels_display = [self.loc.text(item) for item in self.log_levels]
         self.sentry_levels_display = [self.loc.text(item) for item in self.sentry_levels]
         self.class_pic_types_display = [self.loc.text(item) for item in self.class_pic_types]
-        self.languages_display = ['English', 'Deutsch', 'Français', 'Español', 'Português', 'Italiano', 'Nederlands', 'Polski', 'русский язык']
+        self.languages_display = ['English', 'Deutsch', 'Français', 'Español', 'Português', 'Italiano', 'Nederlands', 'Polski', 'русский язык', '한국어', '汉语', '日本語']
 
         # create every setting variable without values
         self.sentry_level = tk.StringVar()
@@ -276,7 +276,7 @@ class GUI(tk.Frame):
         restart_message = self.loc.text("If TF2 Rich Presence is currently running, it may need to be restarted for changes to take effect.")
         settings_changed_num = len(settings_changed)
         if settings_changed_num == 1:
-            messagebox.showinfo(self.loc.text("Save and close"), f"1 setting has been changed. {restart_message}")
+            messagebox.showinfo(self.loc.text("Save and close"), self.loc.text("1 setting has been changed. {0}").format(restart_message))
         elif settings_changed_num > 1:
             messagebox.showinfo(self.loc.text("Save and close"), self.loc.text("{0} settings have been changed. {1}").format(settings_changed_num, restart_message))
 

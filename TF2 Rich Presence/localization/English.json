@@ -21,11 +21,17 @@ Critical
 ", "2366704224": "
 Successfully reported logs
 ", "2452164823": "
-Hours before re-checking custom map gamemode: 
+Hours before re-checking custom map game mode: 
 ", "2465472860": "
 Portrait
+", "2667713838": "
+Launching TF2 with Rich Presence alongside Team Fortress 2...
 ", "2673222339": "
 If TF2 Rich Presence is currently running, it may need to be restarted for changes to take effect.
+", "2780826248": "
+TF2 Rich Presence ({tf2rpvnum}) by Kataiser
+", "2894596806": "
+1 setting has been changed. {0}
 ", "3295159910": "
 All errors
 ", "3295840550": "
@@ -35,7 +41,7 @@ Internet connection timeout (for updater and custom maps), in seconds:
 ", "3469484790": "
 Language: 
 ", "3488942977": "
-Report logs to developer ({0} KB)
+Report logs to developer ({0} kilobytes)
 ", "3509849080": "
 Selected class small image type: 
 ", "3578294000": "
@@ -54,6 +60,8 @@ Info
 Save and close
 ", "7065449230": "
 Max log level: 
+", "7204421990": "
+Launching Team Fortress 2 with Rich Presence enabled...
 ", "8011814710": "
 Check for program updates when launching
 ", "8054718100": "

@@ -12,6 +12,7 @@ import requests
 import build_version
 import changelog_generator
 import logger
+import settings
 
 
 def main(version_num):
@@ -35,8 +36,11 @@ def main(version_num):
     build_start_time = time.perf_counter()
     print()
 
-    print("Generating changelog")
-    changelog_generator.main(silent=True)
+    print("Generating Changelogs.html")
+    try:
+        changelog_generator.main(silent=True)
+    except Exception as error:
+        print(f"Couldn't generate Changelogs.html: {error}")
 
     # copies stuff to the Github repo
     if github_repo_path != 'n':
@@ -51,6 +55,7 @@ def main(version_num):
         print("Copied", shutil.copy('updater.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('settings.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('localization.py', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy('welcomer.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('map list generator.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('thumb formatter.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('changelog_generator.py', f'{github_repo_path}\\TF2 Rich Presence'))
@@ -72,7 +77,6 @@ def main(version_num):
         print("Copied", shutil.copy('Launch TF2 with Rich Presence.bat', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('Launch Rich Presence alongside TF2.bat', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('Change settings.bat', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('tb_hashes.txt', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('build_version.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('README-source.MD', github_repo_path))
         print("Copied", shutil.copy('.travis.yml', github_repo_path))
@@ -129,6 +133,7 @@ def main(version_num):
                      ('custom_maps.py', f'{new_build_folder_name}\\resources\\'),
                      ('settings.py', f'{new_build_folder_name}\\resources\\'),
                      ('localization.py', f'{new_build_folder_name}\\resources\\'),
+                     ('welcomer.py', f'{new_build_folder_name}\\resources\\'),
                      ('tf2_logo_blurple.ico', f'{new_build_folder_name}\\resources\\'),
                      ('tf2_logo_blurple_wrench.ico', f'{new_build_folder_name}\\resources\\'),
                      ('tb_hashes.txt', f'{new_build_folder_name}\\resources\\'),
@@ -136,7 +141,7 @@ def main(version_num):
                      ('Changelogs.html', f'{new_build_folder_name}\\')]
 
     # add languages
-    languages = ['English', 'German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian']
+    languages = ['English', 'German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian', 'Korean', 'Chinese', 'Japanese']
     languages_to_copy = [(f'localization\\{lang}.json', f'{new_build_folder_name}\\resources\\') for lang in languages]
     files_to_copy.extend(languages_to_copy)
 
@@ -161,6 +166,13 @@ def main(version_num):
                     print(f"Copied (and possibly modified) {file_dest_pair[0]}")
         except UnicodeDecodeError:
             print("Copied", shutil.copy(*file_dest_pair))
+
+    # create settings.json with default settings
+    print('Creating default settings.json')
+    old_dir = os.getcwd()
+    os.chdir(f'{new_build_folder_name}\\resources')
+    settings.access_settings_file(save_dict=settings.get_setting_default(return_all=True))
+    os.chdir(old_dir)
 
     # creates build_info.txt
     try:

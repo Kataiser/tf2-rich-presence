@@ -1,9 +1,5 @@
 @echo off
-echo TF2 Rich Presence ({tf2rpvnum}) by Kataiser
-echo https://github.com/Kataiser/tf2-rich-presence
-echo.
-echo Launching Team Fortress 2 with Rich Presence enabled...
-echo.
+"%~dp0\resources\python\python.exe" -OO "%~dp0\resources\welcomer.py" --v 1
 
 start steam://rungameid/440
 "%~dp0\resources\python\python.exe" -OO "%~dp0\resources\launcher.py" --m updater
