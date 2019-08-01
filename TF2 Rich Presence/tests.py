@@ -180,6 +180,7 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
         self.assertEqual(main.generate_delta(time.time() - 100000), ' (+1.2 days)')
 
     def test_get_info_from_pid(self):
+        # TODO: make this target processes.py instead of main.py
         app = main.TF2RichPresense(self.log)
         p_info = app.get_info_from_pid(os.getpid(), ('path', 'time'))
 

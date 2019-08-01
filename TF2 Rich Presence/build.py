@@ -52,6 +52,7 @@ def main(version_num):
         print("Copied", shutil.copy('logger.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('configs.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('custom_maps.py', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy('processes.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('updater.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('settings.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('localization.py', f'{github_repo_path}\\TF2 Rich Presence'))
@@ -131,12 +132,12 @@ def main(version_num):
                      ('updater.py', f'{new_build_folder_name}\\resources\\'),
                      ('configs.py', f'{new_build_folder_name}\\resources\\'),
                      ('custom_maps.py', f'{new_build_folder_name}\\resources\\'),
+                     ('processes.py', f'{new_build_folder_name}\\resources\\'),
                      ('settings.py', f'{new_build_folder_name}\\resources\\'),
                      ('localization.py', f'{new_build_folder_name}\\resources\\'),
                      ('welcomer.py', f'{new_build_folder_name}\\resources\\'),
                      ('tf2_logo_blurple.ico', f'{new_build_folder_name}\\resources\\'),
                      ('tf2_logo_blurple_wrench.ico', f'{new_build_folder_name}\\resources\\'),
-                     ('tb_hashes.txt', f'{new_build_folder_name}\\resources\\'),
                      ('APIs', f'{new_build_folder_name}\\resources\\'),
                      ('Changelogs.html', f'{new_build_folder_name}\\')]
 
@@ -166,6 +167,9 @@ def main(version_num):
                     print(f"Copied (and possibly modified) {file_dest_pair[0]}")
         except UnicodeDecodeError:
             print("Copied", shutil.copy(*file_dest_pair))
+
+    print("Creating tb_hashes.txt")
+    open(f'{new_build_folder_name}\\resources\\tb_hashes.txt', 'w').close()
 
     # create settings.json with default settings
     print('Creating default settings.json')
@@ -279,10 +283,10 @@ def main(version_num):
 
     language_lines_missing = {}
     with open('localization\\English.json', 'r', encoding='utf-8') as english_file:
-        english_len = len(english_file.readlines())
+        english_len = int(len(english_file.readlines()) / 2)
     for language in languages[:-1]:
         with open(f'localization\\{language}.json', 'r', encoding='utf-8') as language_file:
-            language_len = len(language_file.readlines())
+            language_len = int(len(language_file.readlines()) / 2)
         if language_len != english_len:
             language_lines_missing[language] = english_len - language_len
     if len(language_lines_missing) > 0:
