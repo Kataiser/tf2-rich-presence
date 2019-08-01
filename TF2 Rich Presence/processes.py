@@ -3,6 +3,7 @@ import os
 import subprocess
 import time
 import traceback
+from typing import Dict, Union
 
 import psutil
 
@@ -14,13 +15,13 @@ class ProcessScanner:
         self.log = log
         self.has_cached_all_pids = False
         self.parsed_tasklist = {}
-        self.p_data = {'TF2': {'running': False, 'pid': None, 'path': None, 'time': None},
-                       'Steam': {'running': False, 'pid': None, 'path': None},
-                       'Discord': {'running': False, 'pid': None}}
-        self.p_data_default = copy.deepcopy(self.p_data)
+        self.process_data = {'TF2': {'running': False, 'pid': None, 'path': None, 'time': None},
+                             'Steam': {'running': False, 'pid': None, 'path': None},
+                             'Discord': {'running': False, 'pid': None}}
+        self.p_data_default = copy.deepcopy(self.process_data)
 
     # basically psutil.process_iter(attrs=['pid', 'cmdline', 'create_time']) but WAY faster (and also highly specialized)
-    def scan(self) -> dict:
+    def scan(self) -> Dict[str, Dict[str, Union[bool, str, int, None]]]:
         before_scan_time = time.perf_counter()
         used_tasklist = False
 
@@ -32,41 +33,42 @@ class ProcessScanner:
                 self.has_cached_all_pids = True
 
             if 'hl2.exe' in self.parsed_tasklist:
-                self.p_data['TF2']['pid'] = self.parsed_tasklist['hl2.exe']
+                self.process_data['TF2']['pid'] = self.parsed_tasklist['hl2.exe']
             if 'Steam.exe' in self.parsed_tasklist:
-                self.p_data['Steam']['pid'] = self.parsed_tasklist['Steam.exe']
+                self.process_data['Steam']['pid'] = self.parsed_tasklist['Steam.exe']
             if 'Discord' in self.parsed_tasklist:
-                self.p_data['Discord']['pid'] = self.parsed_tasklist['Discord']
+                self.process_data['Discord']['pid'] = self.parsed_tasklist['Discord']
 
-                self.get_all_extended_info()
-        else:  # all the PIDs are known, so don't use tasklist, saves 0.2 seconds :)
+            self.get_all_extended_info()
+        else:
+            # all the PIDs are known, so don't use tasklist, saves 0.2 - 0.3 seconds :)
             self.get_all_extended_info()
 
-            p_data_old = copy.deepcopy(self.p_data)
+            p_data_old = copy.deepcopy(self.process_data)
 
-            if not self.p_data['TF2']['running']:
-                self.p_data['TF2'] = self.p_data_default['TF2']
-            if not self.p_data['Steam']['running']:
-                self.p_data['Steam'] = self.p_data_default['Steam']
-            if not self.p_data['Discord']['running']:
-                self.p_data['Discord'] = self.p_data_default['Discord']
+            if not self.process_data['TF2']['running']:
+                self.process_data['TF2'] = self.p_data_default['TF2']
+            if not self.process_data['Steam']['running']:
+                self.process_data['Steam'] = self.p_data_default['Steam']
+            if not self.process_data['Discord']['running']:
+                self.process_data['Discord'] = self.p_data_default['Discord']
 
-            if self.p_data != p_data_old:
+            if self.process_data != p_data_old:
                 self.has_cached_all_pids = False
 
         self.log.debug(f"Process scanning took {format(time.perf_counter() - before_scan_time, '.2f')} seconds (used tasklist: {used_tasklist})")
-        return self.p_data
+        return self.process_data
 
     # get only the needed info (exe path and process start time) for each, and then apply it to self.p_data
     def get_all_extended_info(self):
-        tf2_data = self.get_info_from_pid(self.p_data['TF2']['pid'], ('path', 'time'))
-        steam_data = self.get_info_from_pid(self.p_data['Steam']['pid'], ('path',))
-        discord_data = self.get_info_from_pid(self.p_data['Discord']['pid'], ())
+        tf2_data = self.get_info_from_pid(self.process_data['TF2']['pid'], ('path', 'time'))
+        steam_data = self.get_info_from_pid(self.process_data['Steam']['pid'], ('path',))
+        discord_data = self.get_info_from_pid(self.process_data['Discord']['pid'], ())
 
         # ugly
-        self.p_data['TF2']['running'], self.p_data['TF2']['path'], self.p_data['TF2']['time'] = tf2_data['running'], tf2_data['path'], tf2_data['time']
-        self.p_data['Steam']['running'], self.p_data['Steam']['path'] = steam_data['running'], steam_data['path']
-        self.p_data['Discord']['running'] = discord_data['running']
+        self.process_data['TF2']['running'], self.process_data['TF2']['path'], self.process_data['TF2']['time'] = tf2_data['running'], tf2_data['path'], tf2_data['time']
+        self.process_data['Steam']['running'], self.process_data['Steam']['path'] = steam_data['running'], steam_data['path']
+        self.process_data['Discord']['running'] = discord_data['running']
 
     # a mess of logic that gives process info from a PID
     def get_info_from_pid(self, pid: int, return_data: tuple = ('path', 'time')) -> dict:
@@ -111,9 +113,9 @@ class ProcessScanner:
                     self.parsed_tasklist[ref_name] = int(process[1])
 
         parsed_tasklist_keys = self.parsed_tasklist.keys()
-        self.p_data['TF2']['running'] = 'hl2.exe' in parsed_tasklist_keys
-        self.p_data['Steam']['running'] = 'Steam.exe' in parsed_tasklist_keys
-        self.p_data['Discord']['running'] = 'Discord' in parsed_tasklist_keys
+        self.process_data['TF2']['running'] = 'hl2.exe' in parsed_tasklist_keys
+        self.process_data['Steam']['running'] = 'Steam.exe' in parsed_tasklist_keys
+        self.process_data['Discord']['running'] = 'Discord' in parsed_tasklist_keys
 
 
 if __name__ == '__main__':

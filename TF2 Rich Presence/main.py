@@ -3,7 +3,6 @@ import datetime
 import json
 import os
 import platform
-import subprocess
 import time
 import traceback
 from typing import Dict, Union, TextIO, Any, List, Tuple
@@ -15,6 +14,7 @@ import configs
 import custom_maps
 import launcher
 import logger
+import processes
 import settings
 
 
@@ -71,8 +71,8 @@ class TF2RichPresense:
         self.should_mention_discord = True
         self.should_mention_tf2 = True
         self.last_notify_time = None
-        self.cached_pids = (None, None, None)  # TF2, Steam, Discord
         self.has_checked_class_configs = False
+        self.process_scanner = processes.ProcessScanner(self.log)
 
         # load maps database
         try:
@@ -103,97 +103,24 @@ class TF2RichPresense:
         self.log.debug(f"Loop iteration this app session: {self.loop_iteration}")
         self.old_activity = copy.copy(self.activity)
 
-        tf2_is_running: bool = False
-        steam_is_running: bool = False
-        discord_is_running: bool = False
+        # this is a one-liner is beautiful :)
+        p_data = self.process_scanner.scan()
 
-        before_process_time: float = time.perf_counter()
-        tasklist = str(subprocess.check_output('tasklist'))  # tasklist only takes like 0.3 seconds
-
-        useful_processes = []
-        for name in ('hl2.exe', 'Steam.exe', 'Discord'):
-            if name in tasklist:
-                if not ('Discord' in name and [other_name for other_name in tasklist if 'Discord' in other_name]):
-                    useful_processes.append(name)
-
-        if self.cached_pids != (None, None, None):
-            tf2_process = self.get_info_from_pid(self.cached_pids[0], ('path', 'time'))
-            steam_process = self.get_info_from_pid(self.cached_pids[1], ('path',))
-            discord_process = self.get_info_from_pid(self.cached_pids[2], ())
-
-            tf2_is_running, tf2_location, self.start_time = (tf2_process['running'], tf2_process['path'], tf2_process['time'])
-            steam_is_running, steam_location = (steam_process['running'], steam_process['path'])
-            discord_is_running = discord_process['running']
-
-            if (tf2_is_running, steam_is_running, discord_is_running) != (True, True, True):
-                self.cached_pids = (None, None, None)
-
-            self.log.debug(f"Getting process info from cached PIDs took {round(time.perf_counter() - before_process_time, 4)} seconds")
-        elif len(useful_processes) == 3:
-            # looks through all running processes to look for TF2, Steam, and Discord
-            processes_searched: int = 0
-            tf2_pid, steam_pid, discord_pid = (None, None, None)
-
-            for process in psutil.process_iter():
-                try:
-                    with process.oneshot():
-                        processes_searched += 1
-                        p_name: str = process.name()
-
-                        if p_name == 'hl2.exe':
-                            path_to: str = os.path.dirname(process.cmdline()[0])
-                            self.log.debug(f"hl2.exe path: {path_to}")
-
-                            if 'Team Fortress 2' in path_to:
-                                self.start_time = process.create_time()
-                                self.log.debug(f"TF2 start time: {self.start_time}")
-                                tf2_pid = process.pid
-                                tf2_location: str = path_to
-                                tf2_is_running = True
-                        elif p_name == 'Steam.exe':
-                            steam_location: str = os.path.dirname(process.cmdline()[0])
-                            self.log.debug(f"Steam.exe path: {steam_location}")
-                            steam_pid = process.pid
-                            steam_is_running = True
-                        elif 'Discord' in p_name and '.exe' in p_name:
-                            self.log.debug(f"Discord is running at {p_name} (PID: {process.pid})")
-                            discord_pid = process.pid
-                            discord_is_running = True
-                except Exception:
-                    self.log.error(f"psutil error for {process} (not from cached PID): {traceback.format_exc()}")
-
-                if tf2_is_running and steam_is_running and discord_is_running:
-                    self.cached_pids = (tf2_pid, steam_pid, discord_pid)
-                    self.log.debug(f"Broke from process loop, cached PIDs: {self.cached_pids}")
-                    print()
-                    break
-
-                total_cpu_usage = psutil.cpu_percent(interval=0.25)
-                if total_cpu_usage > 25 or total_cpu_usage == 0.0:
-                    time.sleep(0.001)
-            self.log.debug(f"Process loop took {round(time.perf_counter() - before_process_time, 2)} seconds for {processes_searched} processes")
-        else:
-            self.log.debug(f"Skipping process searching (useful_processes: {useful_processes})")
-
-            tf2_is_running = 'hl2.exe' in useful_processes
-            steam_is_running = 'Steam.exe' in useful_processes
-            discord_is_running = 'Discord' in useful_processes
-
-        if steam_is_running and len(useful_processes) == 3:
+        if p_data['Steam']['running'] and len(p_data) == 3:
             # reads a steam config file
-            valid_usernames: List[str] = configs.steam_config_file(self.log, steam_location)
+            valid_usernames: List[str] = configs.steam_config_file(self.log, p_data['Steam']['path'])
 
         # used for display only
         current_time = datetime.datetime.now().strftime('%I:%M:%S %p')
         current_time_formatted = current_time[1:] if current_time.startswith('0') else current_time
 
-        if tf2_is_running and discord_is_running:
+        if p_data['TF2']['running'] and p_data['Discord']['running']:
             if not self.has_checked_class_configs:
                 # modifies a few tf2 config files
-                configs.class_config_files(self.log, tf2_location)
+                configs.class_config_files(self.log, p_data['TF2']['path'])
                 self.has_checked_class_configs = True
 
-            top_line, bottom_line = self.interpret_console_log(os.path.join(tf2_location, 'tf', 'console.log'), valid_usernames)
+            top_line, bottom_line = self.interpret_console_log(os.path.join(p_data['TF2']['path'], 'tf', 'console.log'), valid_usernames)
 
             if not self.client_connected:
                 try:
@@ -306,7 +233,7 @@ class TF2RichPresense:
             if not self.client_connected:
                 self.log.critical("self.client is disconnected when it shouldn't be")
                 self.log.report_to_sentry("self.client disconnect")
-        elif not discord_is_running:
+        elif not p_data['Discord']['running']:
             self.test_state = 'no discord'
             self.log.info(f"Discord isn't running (mentioning to user: {self.should_mention_discord})")
 
@@ -451,33 +378,6 @@ class TF2RichPresense:
         if not silent:
             time.sleep(2)
         raise SystemExit
-
-    # a mess of logic that gives process info from a PID
-    def get_info_from_pid(self, pid: object, return_data: tuple = ('path', 'time')) -> dict:
-        p_info = {'running': False, 'path': None, 'time': None}
-
-        try:
-            try:
-                process = psutil.Process(pid=pid)
-            except psutil.NoSuchProcess:
-                self.log.debug(f"Cached PID {pid} is no longer running")
-            else:
-                p_info['running'] = [name for name in ('hl2.exe', 'Steam.exe', 'Discord') if name in process.name()] != []  # *_is_running only if PID hasn't been recycled
-
-                if not p_info['running']:
-                    self.log.error(f"PID {pid} has been recycled as {process.name()}")
-
-                if 'path' in return_data:
-                    p_info['path'] = os.path.dirname(process.cmdline()[0])
-                if 'time' in return_data:
-                    p_info['time'] = process.create_time()
-        except Exception:
-            try:
-                self.log.error(f"psutil error for {process}: {traceback.format_exc()}")
-            except Exception:
-                self.log.error(f"psutil error: {traceback.format_exc()}")
-
-        return p_info
 
 
 # alerts the user that they don't seem to have -condebug
