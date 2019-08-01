@@ -17,6 +17,7 @@ import launcher
 import localization
 import logger
 import main
+import processes
 import settings
 import updater
 
@@ -179,14 +180,15 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
         self.assertEqual(main.generate_delta(time.time() - 10000), ' (+2.8 hours)')
         self.assertEqual(main.generate_delta(time.time() - 100000), ' (+1.2 days)')
 
-    def test_get_info_from_pid(self):
-        # TODO: make this target processes.py instead of main.py
-        app = main.TF2RichPresense(self.log)
-        p_info = app.get_info_from_pid(os.getpid(), ('path', 'time'))
+    def test_process_scanning(self):
+        process_scanner = processes.ProcessScanner(self.log)
+
+        self.assertEqual(len(process_scanner.scan()), 3)
+        p_info = process_scanner.get_info_from_pid(os.getpid(), ('path', 'time'))
 
         self.assertEqual(p_info['running'], False)
         self.assertTrue('python' in p_info['path'].lower())  # hope your Python installation is sane
-        self.assertTrue(isinstance(p_info['time'], float))
+        self.assertTrue(isinstance(p_info['time'], int))
 
     def test_settings_gui(self):
         root = tk.Tk()
