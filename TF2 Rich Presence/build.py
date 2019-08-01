@@ -2,6 +2,7 @@ import compileall
 import datetime
 import json
 import os
+import pprint
 import shutil
 import subprocess
 import sys
@@ -11,6 +12,7 @@ import requests
 
 import build_version
 import changelog_generator
+import localization
 import logger
 import settings
 
@@ -292,13 +294,22 @@ def main(version_num):
     language_lines_missing = {}
     with open('localization\\English.json', 'r', encoding='utf-8') as english_file:
         english_len = int(len(english_file.readlines()) / 2)
-    for language in languages[:-1]:
+    for language in languages:
         with open(f'localization\\{language}.json', 'r', encoding='utf-8') as language_file:
             language_len = int(len(language_file.readlines()) / 2)
         if language_len != english_len:
             language_lines_missing[language] = english_len - language_len
     if len(language_lines_missing) > 0:
         print(f"Languages missing lines: {language_lines_missing}", file=sys.stderr)
+
+    language_parse_errors = {}
+    for language in languages:
+        try:
+            localization.load_language_file(language)
+        except json.decoder.JSONDecodeError as json_error:
+            language_parse_errors[language] = json_error
+    if len(language_parse_errors) > 0:
+        print(f"Languages with parsing errors:\n{pprint.pformat(language_parse_errors)}", file=sys.stderr)
 
 
 # converts a batch file to an exe with Bat To Exe Converter (http://www.f2ko.de/en/b2e.php)

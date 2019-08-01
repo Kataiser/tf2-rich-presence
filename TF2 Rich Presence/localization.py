@@ -21,7 +21,8 @@ class Localizer:
                 english_dump = json.dumps(english_to_modify, sort_keys=True)
                 english_json.write(english_dump.replace('": "', '": "\n')
                                                .replace('", "', '\n", "')
-                                               .replace('"}', '\n"}'))
+                                               .replace('"}', '\n"}')
+                                               .replace('\\"', '"'))
 
         if self.language == 'English':
             return english_text
@@ -38,7 +39,12 @@ class Localizer:
 @functools.lru_cache(maxsize=None)
 def load_language_file(language):
     with open(get_language_file_path(language), 'r', encoding='utf-8') as language_file:
-        language_file_read = language_file.read().replace('\n', '').replace('、', ',')
+        language_file_lines = language_file.readlines()
+
+        for text_line_num in range(1, len(language_file_lines), 2):
+            language_file_lines[text_line_num] = language_file_lines[text_line_num].replace('"', '\\"')
+
+        language_file_read = ''.join(language_file_lines).replace('\n', '').replace('、', ',')
         return json.loads(language_file_read)
 
 
@@ -51,4 +57,8 @@ def get_language_file_path(language):
 
 
 if __name__ == '__main__':
-    pass
+    # manually add text
+    manual_localizer = Localizer(language='English')
+
+    while True:
+        manual_localizer.text(input(": "))
