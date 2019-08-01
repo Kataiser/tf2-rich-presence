@@ -39,8 +39,10 @@ def main(version_num):
     print("Generating Changelogs.html")
     try:
         changelog_generator.main(silent=True)
+        generated_changelogs = True
     except Exception as error:
-        print(f"Couldn't generate Changelogs.html: {error}")
+        changelog_generation_error = error
+        generated_changelogs = False
 
     # copies stuff to the Github repo
     if github_repo_path != 'n':
@@ -183,8 +185,10 @@ def main(version_num):
         commits_info = json.loads(requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/commits', timeout=5).text)
         latest_commit_message = commits_info[0]['commit']['message'].split('\n')[0]
         latest_commit = f"\"{latest_commit_message}\" @\n\t{commits_info[0]['html_url'][:60]}"
+        got_latest_commit = True
     except Exception as error:
-        latest_commit = f"Couldn't get latest commit: {error}"
+        got_latest_commit = False
+        get_latest_commit_error = error
     with open(f'{new_build_folder_name}\\resources\\build_info.txt', 'w') as info_file:
         this_hash = logger.generate_hash()
 
@@ -276,6 +280,10 @@ def main(version_num):
         print(f"version_hashes doesn't include this version, add {{'{version_num}': '{this_hash}'}}", file=sys.stderr)
     elif build_version.version_hashes[version_num] != this_hash:
         print(f"version_hashes for this version has {build_version.version_hashes[version_num]}, should be {this_hash}", file=sys.stderr)
+    if not generated_changelogs:
+        print(f"Couldn't generate Changelogs.html: {changelog_generation_error}", file=sys.stderr)
+    if not got_latest_commit:
+        print(f"Couldn't get latest commit: {get_latest_commit_error}", file=sys.stderr)
 
     with open('Changelogs.html') as changelogs_html:
         if version_num not in changelogs_html.read():
