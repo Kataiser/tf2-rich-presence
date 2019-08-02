@@ -37,7 +37,7 @@ class Localizer:
 
 
 @functools.lru_cache(maxsize=None)
-def load_language_file(language):
+def load_language_file(language: str) -> dict:
     with open(get_language_file_path(language), 'r', encoding='utf-8') as language_file:
         language_file_lines = language_file.readlines()
 

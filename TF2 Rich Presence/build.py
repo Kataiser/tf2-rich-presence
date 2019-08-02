@@ -191,6 +191,7 @@ def main(version_num):
     except Exception as error:
         got_latest_commit = False
         get_latest_commit_error = error
+        latest_commit = ''
     with open(f'{new_build_folder_name}\\resources\\build_info.txt', 'w') as info_file:
         this_hash = logger.generate_hash()
 

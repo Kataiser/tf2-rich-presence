@@ -1,4 +1,5 @@
 import io
+import json
 import os
 import shutil
 import sys
@@ -173,12 +174,14 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
             raise
 
     def test_generate_delta(self):
-        self.assertEqual(main.generate_delta(time.time() - 1), ' (+1 second)')
-        self.assertEqual(main.generate_delta(time.time() - 10), ' (+10 seconds)')
-        self.assertEqual(main.generate_delta(time.time() - 100), ' (+1.7 minutes)')
-        self.assertEqual(main.generate_delta(time.time() - 1000), ' (+16.7 minutes)')
-        self.assertEqual(main.generate_delta(time.time() - 10000), ' (+2.8 hours)')
-        self.assertEqual(main.generate_delta(time.time() - 100000), ' (+1.2 days)')
+        app = main.TF2RichPresense(self.log)
+
+        self.assertEqual(app.generate_delta(time.time() - 1), ' (+1 second)')
+        self.assertEqual(app.generate_delta(time.time() - 10), ' (+10 seconds)')
+        self.assertEqual(app.generate_delta(time.time() - 100), ' (+1.7 minutes)')
+        self.assertEqual(app.generate_delta(time.time() - 1000), ' (+16.7 minutes)')
+        self.assertEqual(app.generate_delta(time.time() - 10000), ' (+2.8 hours)')
+        self.assertEqual(app.generate_delta(time.time() - 100000), ' (+1.2 days)')
 
     def test_process_scanning(self):
         process_scanner = processes.ProcessScanner(self.log)
@@ -199,9 +202,14 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
         self.assertGreaterEqual(dimensions[1], 200)
 
     def test_localization(self):
+        all_lines = localization.load_language_file('English').values()
+
         for language in ['English', 'German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian']:
             localizer = localization.Localizer(language=language)
-            self.assertNotEqual(localizer.text("Save and close"), "")
+
+            for line in all_lines:
+                self.assertNotEqual(localizer.text(line), "")
+                self.assertNotEqual(localizer.text(line), line)
 
 
 class TestTF2RichPresenseSimulated(unittest.TestCase):

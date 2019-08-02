@@ -16,6 +16,7 @@ import launcher
 import logger
 import processes
 import settings
+import localization
 
 
 def launch():
@@ -73,6 +74,7 @@ class TF2RichPresense:
         self.last_notify_time = None
         self.has_checked_class_configs = False
         self.process_scanner = processes.ProcessScanner(self.log)
+        self.loc = localization.Localizer(self.log, settings.get('language'))
 
         # load maps database
         try:
@@ -139,7 +141,7 @@ class TF2RichPresense:
                 except Exception as client_connect_error:
                     if str(client_connect_error) == "Can't connect to Discord Client.":  # Discord is still running but an RPC client can't be established
                         self.log.error("Can't connect to RPC")
-                        print(f"{current_time_formatted}\nCan't connect to Discord for Rich Presence.")
+                        print('{0}\n{1}'.format(current_time_formatted, self.loc.text("Can't connect to Discord for Rich Presence.")))
                         raise SystemExit
                     else:  # some other error
                         raise
@@ -176,7 +178,7 @@ class TF2RichPresense:
                     self.activity['assets']['small_image'] = small_class_image
                     self.activity['assets']['small_text'] = bottom_line
 
-                bottom_line = f"Class: {bottom_line}"
+                bottom_line = self.loc.text("Class: {0}").format(self.loc.text(bottom_line))
 
                 try:
                     map_fancy, current_gamemode, gamemode_fancy = self.map_gamemodes[top_line]
@@ -188,9 +190,9 @@ class TF2RichPresense:
                     custom_gamemode, custom_gamemode_fancy = custom_maps.find_custom_map_gamemode(self.log, top_line, ignore_cache=False)
                     map_out = top_line
                     self.activity['assets']['large_image'] = custom_gamemode
-                    self.activity['assets']['large_text'] = f'{custom_gamemode_fancy} [custom/community map]'
+                    self.activity['assets']['large_text'] = "{0} {1}".format(custom_gamemode_fancy, self.loc.text("[custom/community map]"))
 
-                top_line = f'Map: {map_out}'
+                top_line = self.loc.text("Map: {0}").format(map_out)
             else:  # console.log is empty or close to empty
                 pass
 
@@ -199,16 +201,16 @@ class TF2RichPresense:
 
             if self.activity != self.old_activity:
                 # output to terminal, just for monitoring
-                print(f"{current_time_formatted}{generate_delta(self.last_notify_time)}")
+                print(f"{current_time_formatted}{self.generate_delta(self.last_notify_time)}")
 
                 if [d for d in ('Queued', 'Main menu') if d in self.activity['assets']['large_text']]:
-                    print(self.activity['details'])
+                    print(self.loc.text(self.activity['details']))
                 else:
-                    print(f"{self.activity['details']} ({self.activity['assets']['large_text']})")
+                    print(f"{self.loc.text(self.activity['details'])} ({self.loc.text(self.activity['assets']['large_text'])})")
 
-                print(self.activity['state'])
+                print(self.loc.text(self.activity['state']))
                 time_elapsed = datetime.timedelta(seconds=int(time.time() - self.start_time))
-                print(f"{str(time_elapsed).replace('0:', '', 1)} elapsed")
+                print(self.loc.text("{0} elapsed").format(str(time_elapsed).replace('0:', '', 1)))
                 print()
 
                 self.log.debug(f"Activity changed, outputting (old: {self.old_activity}, new: {self.activity})")
@@ -225,7 +227,7 @@ class TF2RichPresense:
             except Exception as error:
                 if str(error) == "Can't send data to Discord via IPC.":
                     self.log.error(str(error))
-                    print(f"{current_time_formatted}\nCan't connect to Discord for Rich Presence.")
+                    print('{0}\n{1}'.format(current_time_formatted, self.loc.text("Can't connect to Discord for Rich Presence.")))
                     raise SystemExit
                 else:
                     raise
@@ -238,7 +240,7 @@ class TF2RichPresense:
             self.log.info(f"Discord isn't running (mentioning to user: {self.should_mention_discord})")
 
             if self.should_mention_discord:
-                print(f"{current_time_formatted}{generate_delta(self.last_notify_time)}\nDiscord isn't running")
+                print("{0}{1}\n{2}\n".format(current_time_formatted, self.generate_delta(self.last_notify_time), self.loc.text("Discord isn't running")))
                 self.should_mention_discord = False
                 self.should_mention_tf2 = True
                 self.last_notify_time = time.time()
@@ -260,7 +262,7 @@ class TF2RichPresense:
                 self.log.info(f"TF2 isn't running (mentioning to user: {self.should_mention_tf2})")
 
                 if self.should_mention_tf2:
-                    print(f"{current_time_formatted}{generate_delta(self.last_notify_time)}\nTeam Fortress 2 isn't running")
+                    print("{0}{1}\n{2}\n".format(current_time_formatted, self.generate_delta(self.last_notify_time), self.loc.text("Team Fortress 2 isn't running")))
                     self.should_mention_discord = True
                     self.should_mention_tf2 = False
                     self.last_notify_time = time.time()
@@ -364,15 +366,46 @@ class TF2RichPresense:
         self.log.debug(f"Got '{current_map}' and '{current_class}' from this line: '{line_used[:-1]}'")
         return current_map, current_class
 
+    # generate text that displays the difference between now and old_time
+    def generate_delta(self, old_time: float) -> str:
+        if old_time:
+            time_diff = round(time.time() - old_time)
+
+            if time_diff > 86400:
+                divided_diff = round(time_diff / 86400, 1)
+                if divided_diff == 1:
+                    return f" (+{divided_diff} {self.loc.text('day')})"
+                else:
+                    return f" (+{divided_diff} {self.loc.text('days')})"
+            elif time_diff > 3600:
+                divided_diff = round(time_diff / 3600, 1)
+                if divided_diff == 1:
+                    return f" (+{divided_diff} {self.loc.text('hour')})"
+                else:
+                    return f" (+{divided_diff} {self.loc.text('hours')})"
+            elif time_diff > 60:
+                divided_diff = round(time_diff / 60, 1)
+                if divided_diff == 1:
+                    return f" (+{divided_diff} {self.loc.text('minute')})"
+                else:
+                    return f" (+{divided_diff} {self.loc.text('minutes')})"
+            else:
+                if time_diff == 1:
+                    return f" (+{time_diff} {self.loc.text('second')})"
+                else:
+                    return f" (+{time_diff} {self.loc.text('seconds')})"
+        else:
+            return ""
+
     # displays and reports current traceback
     def handle_crash(self, silent=False):
         formatted_exception = traceback.format_exc()
         self.log.critical(formatted_exception)
 
         if not silent:
-            print(f"\n{formatted_exception}\nTF2 Rich Presence has crashed, and the error has been reported to the developer."
-                  f"\n(Consider opening an issue at https://github.com/Kataiser/tf2-rich-presence/issues)"
-                  f"\nRestarting in 2 seconds...\n")
+            print('\n{0}\n{1}'.format(formatted_exception, self.loc.text("TF2 Rich Presence has crashed, and the error has been reported to the developer.")))
+            print(self.loc.text("Consider opening an issue at {0})").format("https://github.com/Kataiser/tf2-rich-presence/issues"))
+            print('{0}\n'.format(self.loc.text("Restarting in 2 seconds...")))
 
         self.log.report_to_sentry(formatted_exception)
         if not silent:
@@ -382,48 +415,19 @@ class TF2RichPresense:
 
 # alerts the user that they don't seem to have -condebug
 def no_condebug_warning():
-    print("\nYour TF2 installation doesn't yet seem to be set up properly. To fix:"
-          "\n1. Right click on Team Fortress 2 in your Steam library"
-          "\n2. Open properties (very bottom)"
-          "\n3. Click \"Set launch options...\""
-          "\n4. Add -condebug"
-          "\n5. OK and Close"
-          "\n6. Restart TF2\n")
+    loc = localization.Localizer(language=settings.get('language'))
+
+    print('\n{0}'.format(loc.text("Your TF2 installation doesn't yet seem to be set up properly. To fix:")))
+    print(loc.text("1. Right click on Team Fortress 2 in your Steam library"))
+    print(loc.text("2. Open properties (very bottom)"))
+    print(loc.text("3. Click \"Set launch options...\""))
+    print(loc.text("4. Add {0}").format("-condebug"))
+    print(loc.text("5. OK and Close"))
+    print('{0}\n'.format(loc.text("6. Restart TF2")))
+
     # -condebug is kinda necessary so just wait to restart if it's not there
-    input("Press enter to retry\n")
+    input('{0}\n'.format(loc.text("Press enter to retry")))
     raise SystemExit
-
-
-# generate text that displays the difference between now and old_time
-def generate_delta(old_time: float) -> str:
-    if old_time:
-        time_diff = round(time.time() - old_time)
-
-        if time_diff > 86400:
-            divided_diff = round(time_diff / 86400, 1)
-            if divided_diff == 1:
-                return f" (+{divided_diff} day)"
-            else:
-                return f" (+{divided_diff} days)"
-        elif time_diff > 3600:
-            divided_diff = round(time_diff / 3600, 1)
-            if divided_diff == 1:
-                return f" (+{divided_diff} hour)"
-            else:
-                return f" (+{divided_diff} hours)"
-        elif time_diff > 60:
-            divided_diff = round(time_diff / 60, 1)
-            if divided_diff == 1:
-                return f" (+{divided_diff} minute)"
-            else:
-                return f" (+{divided_diff} minutes)"
-        else:
-            if time_diff == 1:
-                return f" (+{time_diff} second)"
-            else:
-                return f" (+{time_diff} seconds)"
-    else:
-        return ""
 
 
 if __name__ == '__main__':

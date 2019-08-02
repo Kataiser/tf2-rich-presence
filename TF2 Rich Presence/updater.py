@@ -3,19 +3,21 @@ import sys
 import traceback
 from typing import Tuple
 
-sys.path.append(os.path.abspath(os.path.join('resources', 'python', 'packages')))
-sys.path.append(os.path.abspath(os.path.join('resources')))
+# sys.path.append(os.path.abspath(os.path.join('resources', 'python', 'packages')))
+# sys.path.append(os.path.abspath(os.path.join('resources')))
 import requests
 from requests import Response
 
 import logger
 import main
 import settings
+import localization
 
 
 # uses Github api to get the tag of the newest public release and compare it to the current version number, alerting the user if out of date
 def check_for_update(current_version: str, timeout: float):
     log = logger.Log()
+    loc = localization.Localizer(language=settings.get('language'))
 
     if '{' in '{tf2rpvnum}' or not settings.get('check_updates'):
         log.debug("Updater is disabled, skipping")
@@ -39,8 +41,12 @@ def check_for_update(current_version: str, timeout: float):
             log.debug(f"Up to date ({current_version})")
         else:  # out of date
             log.error(f"Out of date, newest version is {newest_version} (this is {current_version})")
-            print(f"This version ({current_version}) is out of date (newest version is {newest_version}).\nGet the update at {downloads_url}")
-            print(f"\n{newest_version} changelog:\n{changelog}\n(If you're more than one version out of date, there may have been more changes and fixes than this.)\n")
+
+            print(loc.text("This version ({0}) is out of date (newest version is {1}).").format(current_version, newest_version))
+            print(loc.text("Get the update at {0}").format(downloads_url), end='\n\n')
+            print(loc.text("{0} changelog:").format(newest_version))
+            print(changelog)
+            print(loc.text("(If you're more than one version out of date, there may have been more changes and fixes than this.)"), end='\n\n')
 
 
 # actually accesses the Github api, in a seperate function for tests
@@ -58,14 +64,16 @@ def access_github_api(time_limit: float) -> Tuple[str, str, str]:
 
 # either timed out or some other exception
 def failure_message(current_version: str, error_message: str = None):
-    if error_message:
-        line1 = f"Couldn't connect to GitHub to check for updates ({error_message}).\n"
-    else:
-        line1 = "Couldn't connect to GitHub to check for updates.\n"
+    loc = localization.Localizer(language=settings.get('language'))
 
-    line2 = "To check for updates yourself, go to https://github.com/Kataiser/tf2-rich-presence/releases\n"
-    line3 = f"(you are currently running {current_version}).\n"
-    print(f"{line1}{line2}{line3}")
+    if error_message:
+        line1 = loc.text("Couldn't connect to GitHub to check for updates ({0}).").format(error_message)
+    else:
+        line1 = loc.text("Couldn't connect to GitHub to check for updates.")
+
+    line2 = loc.text("To check for updates yourself, go to {0}").format("https://github.com/Kataiser/tf2-rich-presence/releases")
+    line3 = "(you are currently running {0}).".format(current_version)
+    print(f"{line1}\n{line2}\n{line3}\n")
 
 
 def launch():
