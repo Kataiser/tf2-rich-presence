@@ -260,11 +260,6 @@ class GUI(tk.Frame):
             except tk.TclError:
                 int_setting.set(0)
 
-        # self.log_level.set(self.log_levels[self.log_levels_display.index(self.log_level.get())])
-        # self.sentry_level.set(self.sentry_levels[self.sentry_levels_display.index(self.sentry_level.get())])
-        # self.class_pic_type.set(self.class_pic_types[self.class_pic_types_display.index(self.class_pic_type.get())])
-        # self.language.set(self.languages[self.languages_display.index(self.language.get())])
-
         settings_to_save = self.get_working_settings()
 
         settings_changed = {k: settings_to_save[k] for k in settings_to_save if k in self.settings_loaded and settings_to_save[k] != self.settings_loaded[k]}  # haha what

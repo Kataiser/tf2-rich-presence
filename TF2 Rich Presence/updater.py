@@ -1,15 +1,13 @@
-import os
-import sys
 import traceback
 from typing import Tuple
 
 import requests
 from requests import Response
 
+import localization
 import logger
 import main
 import settings
-import localization
 
 
 # uses Github api to get the tag of the newest public release and compare it to the current version number, alerting the user if out of date
