@@ -6,6 +6,7 @@ import locale
 import os
 import platform
 import time
+import tkinter as tk
 import traceback
 from tkinter import messagebox
 from typing import Dict, Union, TextIO, Any, List, Tuple
@@ -410,18 +411,29 @@ class TF2RichPresense:
         system_locale = locale.windows_locale[ctypes.windll.kernel32.GetUserDefaultUILanguage()]
         system_language_code = system_locale.split('_')[0]
         system_language = language_codes[system_language_code]
-        self.log.debug(f"System locale: {system_locale} ({system_language})")
 
         if settings.get('language') != system_language:
-            self.log.info(f"System language != settings language ({settings.get('language')}), asking to change")
+            self.log.info(f"System language ({system_locale}, {system_language}) != settings language ({settings.get('language')}), asking to change")
+            changed_language = 'no'
 
-            change_language_allowed = 'yes'
-            change_language_allowed = messagebox.askquestion("Change language", f"Change language to your system's default ({system_language})?")
+            root = tk.Tk()
+            root.overrideredirect(1)
+            root.withdraw()
+            root.lift()
+            root.attributes('-topmost', True)
+            try:
+                root.iconbitmap(default='tf2_logo_blurple_wrench.ico')
+            except tk.TclError:
+                root.iconbitmap(default=os.path.join('resources', 'tf2_logo_blurple_wrench.ico'))
 
-            if change_language_allowed == 'yes':
+            changed_language = messagebox.askquestion("TF2 Rich Presence {tf2rpvnum}", f"Change language to your system's default ({system_language})?")
+            self.log.debug(f"Changed language: {changed_language}")
+
+            if changed_language == 'yes':
                 temp_settings = settings.access_settings_file()
                 temp_settings['language'] = system_language
                 settings.access_settings_file(save_dict=temp_settings)
+                raise SystemExit
 
     # displays and reports current traceback
     def handle_crash(self, silent=False):
