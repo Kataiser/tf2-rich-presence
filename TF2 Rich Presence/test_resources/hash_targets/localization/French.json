@@ -1,0 +1,273 @@
+{"1089869300" : "
+horaires
+", "1096615616" : "
+Par rapport à Saxton Hale
+", "1098909474" : "
+Destruction du joueur
+", "1099829090" : "
+Restaurer {0} les paramètres modifiés aux valeurs par défaut ?
+", "1141642225" : "
+Cette version ({0}) est obsolète (la dernière version est {1})
+", "1270024083" : "
+Contrôle territorial
+", "1278873395" : "
+Impossible de se connecter à Discord for Rich Presence.
+", "1305483070" : "
+Emblème
+", "1314658180" : "
+Décontracté
+", "1325270949" : "
+Appuyez sur Entrée pour réessayer
+", "1351878611" : "
+Fermer sans enregistrer
+", "1359878050" : "
+Orange
+", "1363281762" : "
+Obtenez la mise à jour à {0}
+", "1393301620" : "
+Tireur d'élite
+", "1438386159" : "
+La discorde ne coule pas
+", "1440487620" : "
+décontracté
+", "1474566370" : "
+second
+", "1479218207" : "
+Cette version ({0}) est obsolète (la dernière version est {1}).
+", "1487276050" : "
+Fermer sans sauvegarder ?
+", "1513232830" : "
+minuscule
+", "1528106792" : "
+Cacher le type de jeu (casual, compétitif, MvM) mis en file d'attente pour
+", "1589381242" : "
+En file d'attente pour des raisons de compétitivité
+", "1595153499" : "
+TF2 Rich Presence s'est planté et l'erreur a été signalée au développeur.
+", "1638865032" : "
+Votre installation TF2 ne semble pas encore être correctement configurée. Pour réparer :
+", "1730628000" : "
+Impossible de se connecter à GitHub pour vérifier les mises à jour ({0})
+", "1775377300" : "
+Demoman
+", "1791761380" : "
+Accidents de la circulation
+", "1833049100" : "
+Mince
+", "1836325860" : "
+Négoce
+", "1843534830" : "
+Charge utile
+", "1851399230" : "
+Soldat
+", "1873026190" : "
+Sauter
+", "1904483510" : "
+Surfant
+", "1954945610" : "
+Carte : {0}
+", "1967398240" : "
+secondes
+", "2020482620" : "
+minutes
+", "2083457385" : "
+Enregistrer la fréquence des rapports : 
+", "2085363200" : "
+Dans les menus
+", "2176059654" : "
+Redémarrage dans 2 secondes....
+", "2266242310" : "
+PASS Temps
+", "2267553510" : "
+Avancé
+", "2276072520" : "
+4. Ajouter {0}
+", "2308841560" : "
+Deathrun
+", "2314739660" : "
+Ingénieur d'études
+", "2320894410" : "
+TF2 Rich Presence ({tf2rpvnum}) réglages
+", "2340298680" : "
+Critique
+", "2366704224" : "
+Journaux de bord ayant fait l'objet d'un rapport avec succès
+", "2400591970" : "
+Formation
+", "2452164823" : "
+Quelques heures avant de revérifier le mode de jeu de cartes personnalisées : 
+", "2465472860" : "
+Portrait
+", "2570455563" : "
+Attaque/Défense (Mode Médiéval)
+", "2584087160" : "
+L'équipe Fortress 2 ne court pas
+", "2667713838" : "
+Lancement de TF2 avec une présence riche aux côtés de Team Fortress 2.....
+", "2669678758" : "
+Désuète, la dernière version est {0} (ceci est {1})
+", "2673222339" : "
+Si TF2 Rich Presence est en cours d'exécution, il peut être nécessaire de le redémarrer pour que les modifications prennent effet.
+", "2692882830" : "
+Menu principal
+", "2715881719" : "
+Quelques heures avant de revérifier le mode de jeu de cartes personnalisées : 
+", "2768904650" : "
+Chasse à l'hélice
+", "2780826248" : "
+TF2 Rich Presence ({tf2rpvnum}) par Kataiser
+", "2781874761" : "
+3. Cliquez sur "Définir les options de lancement..."
+", "2796884285" : "
+Impossible de se connecter à GitHub pour vérifier les mises à jour.
+", "2843615990" : "
+Balle au prisonnier
+", "2894596806" : "
+1 réglage a été modifié. {0}
+", "3004835120" : "
+Puissance de l'homme
+", "3034581868" : "
+2. Propriétés ouvertes (très bas)
+", "3231589050" : "
+Classe : {0}
+", "3289189286" : "
+(vous exécutez actuellement {0}).
+", "3295159910" : "
+Toutes les erreurs
+", "3295840550" : "
+Max kilo-octets de console.log à scanner : 
+", "3314620921" : "
+Délai d'attente de la connexion Internet (pour les mises à jour et les cartes personnalisées), en secondes : 
+", "3316786350" : "
+Mario Kart
+", "3319407880" : "
+Guerres de classes
+", "3333209180" : "
+Impossible de se connecter à GitHub pour vérifier les mises à jour ({0}).
+", "3336272700" : "
+1. Cliquez avec le bouton droit de la souris sur Team Fortress 2 dans votre bibliothèque Steam.
+", "3447858830" : "
+Pas de file d'attente
+", "3469484790" : "
+Langue : 
+", "3488942977" : "
+Signaler les journaux au développeur ({0} kilo-octets)
+", "3509849080" : "
+Type d'image de petite taille de la classe sélectionnée : 
+", "3535021960" : "
+Deathmatch
+", "3578294000" : "
+Désactivé
+", "3615624206" : "
+(Envisagez d'ouvrir un numéro à {0})
+", "3835171426" : "
+Cacher le type de jeu (casual, compétitif, MvM) mis en file d'attente pour
+", "3892841625" : "
+{0} ont été modifiés. {1}
+", "3912530900" : "
+Espion
+", "3929549250" : "
+non sélectionné
+", "3931515170" : "
+Pas de mode jeu
+", "4021625669" : "
+(Si vous avez plus d'une version périmée, il se peut qu'il y ait eu plus de changements et de corrections que cela.)
+", "4037028230" : "
+{0} écoulée
+", "4050156700" : "
+journée
+", "4251331620" : "
+Réalisation
+", "4273081733" : "
+Rétablir le réglage par défaut d'un paramètre modifié ?
+", "4442697060" : "
+Compétitif
+", "4659619690" : "
+MvM (Mann Up)
+", "4673384100" : "
+compétitif
+", "4890307050" : "
+MvM (mann up)
+", "4892929020" : "
+Course de charge utile
+", "5268450630" : "
+5. OK et Fermer
+", "5334641500" : "
+6. Redémarrer TF2
+", "5367410860" : "
+Évasion en prison
+", "5581058060" : "
+Attaquer/Défendre
+", "5860897400" : "
+Point de contrôle
+", "6049011800" : "
+Principale
+", "6062119400" : "
+Icône
+", "6166977300" : "
+Info
+", "6234451750" : "
+MvM (Boot Camp)
+", "6239040250" : "
+Sauvegarder et fermer
+", "6446134190" : "
+{0} journal des modifications :
+", "6524776970" : "
+En attente pour MvM
+", "6549025190" : "
+MvM (camp d'entraînement)
+", "6554923770" : "
+En file d'attente pour {0}
+", "6724036300" : "
+Pyro
+", "6890491890" : "
+Pour vérifier vous-même les mises à jour, allez à {0}.
+", "6894430600" : "
+jours
+", "7065449230" : "
+Niveau maxi des bûches : 
+", "7204421990" : "
+Lancement de Team Fortress 2 avec Rich Presence activé....
+", "7215558300" : "
+heure
+", "7301379380" : "
+Équipe Forteresse 2
+", "7395095750" : "
+Arrêtez ce tank !
+", "7761442790" : "
+Mann vs. machine
+", "7819769690" : "
+Roi de la Colline
+", "8011814710" : "
+Vérifier les mises à jour du programme lors du lancement
+", "8054718100" : "
+Délai entre les rafraîchissements, en secondes : 
+", "8222184420" : "
+Signaler les journaux au développeur ({0} kilo-octets)
+", "8452848160" : "
+Capturez le drapeau
+", "8498724220" : "
+Livraison spéciale
+", "8905047970" : "
+Restaurer les valeurs par défaut
+", "9044016800" : "
+Déboguer
+", "9194749100" : "
+Médecin
+", "9214410400" : "
+Aréna
+", "9286502200" : "
+Lourd
+", "9363143430" : "
+Aucun, utiliser le logo TF2
+", "9462759140" : "
+En file d'attente pour Occasionnel
+", "9627289700" : "
+Jamais
+", "9725594700" : "
+Erreur
+", "9784542030" : "
+Destruction du robot
+", "9823899100" : "
+Éclaireur
+"}
