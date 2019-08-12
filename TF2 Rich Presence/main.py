@@ -1,10 +1,13 @@
 import copy
+import ctypes
 import datetime
 import json
+import locale
 import os
 import platform
 import time
 import traceback
+from tkinter import messagebox
 from typing import Dict, Union, TextIO, Any, List, Tuple
 
 import psutil
@@ -13,10 +16,10 @@ from discoIPC import ipc
 import configs
 import custom_maps
 import launcher
+import localization
 import logger
 import processes
 import settings
-import localization
 
 
 def launch():
@@ -88,6 +91,8 @@ class TF2RichPresense:
         self.loop_iteration: int = 0
 
     def run(self):
+        self.detect_system_language()
+
         while True:
             current_settings = settings.access_settings_file()
             self.log.debug(f"Current settings (default: {current_settings == settings.get_setting_default(return_all=True)}): {current_settings}")
@@ -396,6 +401,27 @@ class TF2RichPresense:
                     return f" (+{time_diff} {self.loc.text('seconds')})"
         else:
             return ""
+
+    # if the system (OS) language doesn't match the current settings, ask to change language
+    def detect_system_language(self):
+        language_codes = {'en': 'English', 'de': 'German', 'fr': 'French', 'es': 'Spanish', 'pt': 'Portuguese', 'it': 'Italian', 'nl': 'Dutch', 'pl': 'Polish', 'ru': 'Russian',
+                          'ko': 'Korean', 'zh': 'Chinese', 'ja': 'Japanese'}
+
+        system_locale = locale.windows_locale[ctypes.windll.kernel32.GetUserDefaultUILanguage()]
+        system_language_code = system_locale.split('_')[0]
+        system_language = language_codes[system_language_code]
+        self.log.debug(f"System locale: {system_locale} ({system_language})")
+
+        if settings.get('language') != system_language:
+            self.log.info(f"System language != settings language ({settings.get('language')}), asking to change")
+
+            change_language_allowed = 'yes'
+            change_language_allowed = messagebox.askquestion("Change language", f"Change language to your system's default ({system_language})?")
+
+            if change_language_allowed == 'yes':
+                temp_settings = settings.access_settings_file()
+                temp_settings['language'] = system_language
+                settings.access_settings_file(save_dict=temp_settings)
 
     # displays and reports current traceback
     def handle_crash(self, silent=False):
