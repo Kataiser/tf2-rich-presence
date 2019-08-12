@@ -3,8 +3,6 @@ import sys
 import traceback
 from typing import Tuple
 
-# sys.path.append(os.path.abspath(os.path.join('resources', 'python', 'packages')))
-# sys.path.append(os.path.abspath(os.path.join('resources')))
 import requests
 from requests import Response
 
