@@ -1,4 +1,9 @@
+import ctypes
+import locale
+import os
+import tkinter as tk
 import traceback
+from tkinter import messagebox
 from typing import Tuple
 
 import requests
@@ -14,6 +19,8 @@ import settings
 def check_for_update(current_version: str, timeout: float):
     log = logger.Log()
     loc = localization.Localizer(language=settings.get('language'))
+
+    detect_system_language(log)
 
     if '{' in '{tf2rpvnum}' or not settings.get('check_updates'):
         log.debug("Updater is disabled, skipping")
@@ -70,6 +77,38 @@ def failure_message(current_version: str, error_message: str = None):
     line2 = loc.text("To check for updates yourself, go to {0}").format("https://github.com/Kataiser/tf2-rich-presence/releases")
     line3 = "(you are currently running {0}).".format(current_version)
     print(f"{line1}\n{line2}\n{line3}\n")
+
+
+# if the system (OS) language doesn't match the current settings, ask to change language
+def detect_system_language(log):
+    language_codes = {'en': 'English', 'de': 'German', 'fr': 'French', 'es': 'Spanish', 'pt': 'Portuguese', 'it': 'Italian', 'nl': 'Dutch', 'pl': 'Polish', 'ru': 'Russian',
+                      'ko': 'Korean', 'zh': 'Chinese', 'ja': 'Japanese'}
+
+    system_locale = locale.windows_locale[ctypes.windll.kernel32.GetUserDefaultUILanguage()]
+    system_language_code = system_locale.split('_')[0]
+    system_language = language_codes[system_language_code]
+
+    if settings.get('language') != system_language:
+        log.info(f"System language ({system_locale}, {system_language}) != settings language ({settings.get('language')}), asking to change")
+
+        root = tk.Tk()
+        root.overrideredirect(1)
+        root.withdraw()
+        root.lift()
+        root.attributes('-topmost', True)
+        try:
+            root.iconbitmap(default='tf2_logo_blurple_wrench.ico')
+        except tk.TclError:
+            root.iconbitmap(default=os.path.join('resources', 'tf2_logo_blurple_wrench.ico'))
+
+        changed_language = messagebox.askquestion("TF2 Rich Presence {tf2rpvnum}", f"Change language to your system's default ({system_language})?")
+        log.debug(f"Changed language: {changed_language}")
+
+        if changed_language == 'yes':
+            temp_settings = settings.access_settings_file()
+            temp_settings['language'] = system_language
+            settings.access_settings_file(save_dict=temp_settings)
+            raise SystemExit
 
 
 def launch():
