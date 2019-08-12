@@ -19,7 +19,7 @@ def main():
     print("https://github.com/Kataiser/tf2-rich-presence\n")
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--v', default='version', help="Which version of the message to use (1 or 2)")
+    parser.add_argument('--v', default='1', help="Which version of the message to use (1 or 2)")
     message_version = parser.parse_args().v
 
     if message_version == '1':
