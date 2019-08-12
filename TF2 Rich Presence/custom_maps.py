@@ -8,12 +8,16 @@ import requests
 from requests import Response
 
 import launcher
+import localization
 import logger
 import settings
 
 
 # uses teamwork.tf's API to find the gamemode of a custom map
 def find_custom_map_gamemode(log, map_filename: str, timeout: float = settings.get('request_timeout'), ignore_cache=True) -> Tuple[str, str]:
+    loc = localization.Localizer(log, settings.get('language'))
+    gamemodes = {gm: loc.text(gamemodes_english[gm]) for gm in gamemodes_english}
+
     if map_filename == '':
         log.error("Map filename is blank")
         return 'unknown_map', 'Unknown gamemode'
@@ -106,13 +110,13 @@ def access_custom_maps_cache(dict_input: Union[dict, None] = None) -> dict:
         custom_maps_cache_file.close()
 
 
-gamemodes: Dict[str, str] = {'ctf': 'Capture the Flag', 'control-point': 'Control Point', 'attack-defend': 'Attack/Defend', 'medieval-mode': 'Attack/Defend (Medieval Mode)',
-                             'territorial-control': 'Territorial Control', 'payload': 'Payload', 'payload-race': 'Payload Race', 'koth': 'King of the Hill',
-                             'special-delivery': 'Special Delivery', 'mvm': 'Mann vs. Machine', 'beta-map': 'Robot Destruction', 'mannpower': 'Mannpower', 'passtime': 'PASS Time',
-                             'player-destruction': 'Player Destruction', 'arena': 'Arena', 'training': 'Training', 'surfing': 'Surfing', 'trading': 'Trading', 'jumping': 'Jumping',
-                             'deathmatch': 'Deathmatch', 'cp-orange': 'Orange', 'versus-saxton-hale': 'Versus Saxton Hale', 'deathrun': 'Deathrun', 'achievement': 'Achievement',
-                             'breakout': 'Jail Breakout', 'slender': 'Slender', 'dodgeball': 'Dodgeball', 'mario-kart': 'Mario Kart', 'prophunt': 'Prop Hunt',
-                             'class-wars': 'Class Wars', 'stop-that-tank': 'Stop that Tank!'}
+gamemodes_english: Dict[str, str] = {'ctf': 'Capture the Flag', 'control-point': 'Control Point', 'attack-defend': 'Attack/Defend', 'medieval-mode': 'Attack/Defend (Medieval Mode)',
+                                     'territorial-control': 'Territorial Control', 'payload': 'Payload', 'payload-race': 'Payload Race', 'koth': 'King of the Hill',
+                                     'special-delivery': 'Special Delivery', 'mvm': 'Mann vs. Machine', 'beta-map': 'Robot Destruction', 'mannpower': 'Mannpower', 'passtime': 'PASS Time',
+                                     'player-destruction': 'Player Destruction', 'arena': 'Arena', 'training': 'Training', 'surfing': 'Surfing', 'trading': 'Trading', 'jumping': 'Jumping',
+                                     'deathmatch': 'Deathmatch', 'cp-orange': 'Orange', 'versus-saxton-hale': 'Versus Saxton Hale', 'deathrun': 'Deathrun', 'achievement': 'Achievement',
+                                     'breakout': 'Jail Breakout', 'slender': 'Slender', 'dodgeball': 'Dodgeball', 'mario-kart': 'Mario Kart', 'prophunt': 'Prop Hunt',
+                                     'class-wars': 'Class Wars', 'stop-that-tank': 'Stop that Tank!'}
 
 if __name__ == '__main__':
     print(find_custom_map_gamemode(logger.Log(), 'cp_catwalk_a5c'))
