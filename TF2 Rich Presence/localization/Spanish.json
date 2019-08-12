@@ -6,6 +6,8 @@ Versus Saxton Hale
 Destrucción de jugadores
 ", "1099829090": "
 Restaurar {0} ¿cambió la configuración a los valores predeterminados?
+", "1141642225": "
+Esta versión ({0}) está desactualizada (la última versión es {1})
 ", "1270024083": "
 Control Territorial
 ", "1278873395": "
@@ -20,26 +22,32 @@ Presione enter para volver a intentarlo
 Cerrar sin grabar
 ", "1359878050": "
 Naranja
+", "1363281762": "
+Obtenga la actualización en {0}
 ", "1393301620": "
 Francotirador
 ", "1438386159": "
 La discordia no está corriendo
 ", "1440487620": "
 esporádico
-", "1466244121": "
-TF2 Rich Presence se ha estrellado, y el error no puede ser reportado al desarrollador.
 ", "1474566370": "
 segundo
+", "1479218207": "
+Esta versión ({0}) está desactualizada (la última versión es {1}).
 ", "1487276050": "
 ¿Cerrar sin ahorrar?
 ", "1513232830": "
 minúsculo
 ", "1528106792": "
 Ocultar tipo de juego (casual, competitivo, MvM) en cola para
+", "1589381242": "
+En cola para el concurso
 ", "1595153499": "
 TF2 Rich Presence se ha estrellado, y el error ha sido reportado al desarrollador.
 ", "1638865032": "
 Su instalación de TF2 aún no parece estar configurada correctamente. Para arreglar:
+", "1730628000": "
+No se pudo conectar a GitHub para buscar actualizaciones ({0})
 ", "1775377300": "
 Demoman
 ", "1791761380": "
@@ -96,16 +104,22 @@ Ataque/Defensa (Modo Medieval)
 El Equipo Fortaleza 2 no está corriendo
 ", "2667713838": "
 Lanzamiento de TF2 con Rich Presence junto a Team Fortress 2....
+", "2669678758": "
+Anticuada, la versión más reciente es {0} (esta es {1})
 ", "2673222339": "
 Si TF2 Rich Presence se está ejecutando actualmente, es posible que sea necesario reiniciarlo para que los cambios surtan efecto.
 ", "2692882830": "
 Menú principal
+", "2715881719": "
+Horas antes de volver a comprobar el modo de juego de mapa personalizado: 
 ", "2768904650": "
 Caza de objetos
 ", "2780826248": "
 TF2 Rich Presence ({tf2rpvnum}) de Kataiser
 ", "2781874761": "
 3. Haga clic en "Establecer opciones de lanzamiento..."
+", "2796884285": "
+No pude conectarme a GitHub para buscar actualizaciones.
 ", "2843615990": "
 Balón prisionero
 ", "2894596806": "
@@ -116,6 +130,8 @@ Mano de obra
 2. Propiedades abiertas (muy abajo)
 ", "3231589050": "
 Clase: {0}
+", "3289189286": "
+(actualmente está ejecutando {0}).
 ", "3295159910": "
 Todos los errores
 ", "3295840550": "
@@ -126,6 +142,8 @@ Tiempo de espera para la conexión a Internet (para actualizaciones y mapas pers
 Mario Kart
 ", "3319407880": "
 Guerras de clase
+", "3333209180": "
+No se pudo conectar a GitHub para buscar actualizaciones ({0}).
 ", "3336272700": "
 1. Haz clic con el botón derecho del ratón en Team Fortress 2 en tu biblioteca de Steam
 ", "3447858830": "
@@ -142,6 +160,8 @@ Partido de la muerte
 Apagado
 ", "3615624206": "
 (Considere la posibilidad de abrir una edición en {0})
+", "3835171426": "
+Ocultar tipo de juego (casual, competitivo, MvM) en cola para
 ", "3892841625": "
 {0} se han cambiado los ajustes. {1}
 ", "3912530900": "
@@ -150,6 +170,8 @@ Espía
 no seleccionado
 ", "3931515170": "
 No hay modo de juego
+", "4021625669": "
+(Si tiene más de una versión desactualizada, es posible que haya habido más cambios y correcciones que ésta.)
 ", "4037028230": "
 {0} transcurrido
 ", "4050156700": "
@@ -188,12 +210,18 @@ Información
 MvM (Boot Camp)
 ", "6239040250": "
 Guardar y cerrar
+", "6446134190": "
+changelog:
+", "6524776970": "
+En cola para MvM
 ", "6549025190": "
 MvM (campo de entrenamiento)
 ", "6554923770": "
 En cola por {0}
 ", "6724036300": "
 Pyro
+", "6890491890": "
+Para buscar actualizaciones usted mismo, vaya a {0}.
 ", "6894430600": "
 días
 ", "7065449230": "
@@ -214,6 +242,8 @@ Rey de la colina
 Compruebe si hay actualizaciones del programa al iniciar
 ", "8054718100": "
 Retraso entre refrescos, en segundos: 
+", "8222184420": "
+Registros de informes al desarrollador ({0} kilobytes)
 ", "8452848160": "
 Capturar la bandera
 ", "8498724220": "
@@ -230,12 +260,14 @@ Arena
 Pesado
 ", "9363143430": "
 Ninguno, utilice el logotipo TF2
+", "9462759140": "
+En cola para Casual
 ", "9627289700": "
 Nunca
 ", "9725594700": "
 Error
 ", "9784542030": "
-Destrucción de robots
+Robot de destrucción
 ", "9823899100": "
 Scout
 "}

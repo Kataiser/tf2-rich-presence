@@ -40,6 +40,8 @@ Close without saving?
 minute
 ", "1528106792": "
 Hide game type (casual, competitive, MvM) queued for
+", "1589381242": "
+Queued for Competitive
 ", "1595153499": "
 TF2 Rich Presence has crashed, and the error has been reported to the developer.
 ", "1638865032": "
@@ -108,6 +110,8 @@ Out of date, newest version is {0} (this is {1})
 If TF2 Rich Presence is currently running, it may need to be restarted for changes to take effect.
 ", "2692882830": "
 Main menu
+", "2715881719": "
+Hours before re-checking custom map game mode: 
 ", "2768904650": "
 Prop Hunt
 ", "2780826248": "
@@ -156,6 +160,8 @@ Deathmatch
 Off
 ", "3615624206": "
 (Consider opening an issue at {0})
+", "3835171426": "
+Hide game type (casual, competitive, MvM) queued for
 ", "3892841625": "
 {0} settings have been changed. {1}
 ", "3912530900": "
@@ -206,6 +212,8 @@ MvM (Boot Camp)
 Save and close
 ", "6446134190": "
 {0} changelog:
+", "6524776970": "
+Queued for MvM
 ", "6549025190": "
 MvM (boot camp)
 ", "6554923770": "
@@ -234,6 +242,8 @@ King of the Hill
 Check for program updates when launching
 ", "8054718100": "
 Delay between refreshes, in seconds: 
+", "8222184420": "
+Report logs to developer ({0} kilobytes)
 ", "8452848160": "
 Capture the Flag
 ", "8498724220": "
@@ -250,6 +260,8 @@ Arena
 Heavy
 ", "9363143430": "
 None, use TF2 logo
+", "9462759140": "
+Queued for Casual
 ", "9627289700": "
 Never
 ", "9725594700": "
