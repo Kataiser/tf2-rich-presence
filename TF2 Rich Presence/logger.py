@@ -183,9 +183,13 @@ def generate_hash() -> str:
     files_to_hash_text: List = []
 
     if os.path.isdir('localization'):
-        files_to_hash.extend([os.path.join('localization', lang) for lang in os.listdir('localization')])
+        localization_folder = 'localization'
     else:
-        files_to_hash.extend([os.path.join('localization', lang) for lang in os.listdir(os.path.join('resources', 'localization'))])
+        localization_folder = os.path.join('resources', 'localization')
+
+    for lang in os.listdir(localization_folder):
+        if 'English' not in lang:
+            files_to_hash.append(os.path.join('localization', lang))
 
     build_folder = [item for item in os.listdir('.') if item.startswith('TF2 Rich Presence v') and os.path.isdir(item)]
 

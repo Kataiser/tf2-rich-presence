@@ -101,7 +101,7 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
         old_dir = os.getcwd()
         os.chdir(os.path.abspath('test_resources\\hash_targets'))
 
-        self.assertEqual(logger.generate_hash(), 'b9b256aa')
+        self.assertEqual(logger.generate_hash(), '810286cc')
 
         os.chdir(old_dir)
 
