@@ -92,7 +92,6 @@ class TF2RichPresense:
             current_settings = settings.access_settings_file()
             self.log.debug(f"Current settings (default: {current_settings == settings.get_setting_default(return_all=True)}): {current_settings}")
             self.loop_body()
-            self.log.debug(f"Settings cache stats: {settings.get.cache_info()}")
 
             # rich presence only updates every 15 seconds, but it listens constantly so sending every 5 (by default) seconds is fine
             sleep_time = settings.get('wait_time')
