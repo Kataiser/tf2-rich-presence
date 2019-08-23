@@ -104,7 +104,7 @@ class TF2RichPresense:
         self.log.debug(f"Loop iteration this app session: {self.loop_iteration}")
         self.old_activity = copy.copy(self.activity)
 
-        # this is a one-liner is beautiful :)
+        # this as a one-liner is beautiful :)
         p_data = self.process_scanner.scan()
 
         if p_data['Steam']['running'] and len(p_data) == 3:
