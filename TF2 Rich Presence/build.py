@@ -38,14 +38,6 @@ def main(version_num):
     build_start_time = time.perf_counter()
     print()
 
-    print("Generating Changelogs.html")
-    try:
-        changelog_generator.main(silent=True)
-        generated_changelogs = True
-    except Exception as error:
-        changelog_generation_error = error
-        generated_changelogs = False
-
     # copies stuff to the Github repo
     if github_repo_path != 'n':
         print("Copied", shutil.copy('main.py', f'{github_repo_path}\\TF2 Rich Presence'))
@@ -64,7 +56,6 @@ def main(version_num):
         print("Copied", shutil.copy('map list generator.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('thumb formatter.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('changelog_generator.py', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('Changelogs.html', f'{github_repo_path}\\'))
         print("Copied", shutil.copy('Changelogs_source.html', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('maps.json', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('APIs', f'{github_repo_path}\\TF2 Rich Presence'))
@@ -90,6 +81,18 @@ def main(version_num):
         copy_dir_to_git('test_resources', f'{github_repo_path}\\TF2 Rich Presence\\test_resources')
         copy_dir_to_git('build_tools', f'{github_repo_path}\\TF2 Rich Presence\\build_tools')
         copy_dir_to_git('localization', f'{github_repo_path}\\TF2 Rich Presence\\localization')
+
+    print("Generating Changelogs.html")
+    ratelimit_remaining = 100
+    try:
+        ratelimit_remaining = changelog_generator.main(silent=True)
+        print(f"Github requests remaining: {ratelimit_remaining}")
+        generated_changelogs = True
+    except Exception as error:
+        changelog_generation_error = error
+        generated_changelogs = False
+    if github_repo_path != 'n':
+        print("Copied", shutil.copy('Changelogs.html', f'{github_repo_path}\\'))
 
     # starts from scratch each time
     old_build_folders = [f.path for f in os.scandir('.') if f.is_dir() if f.path.startswith('.\\TF2 Rich Presence ')]
@@ -287,6 +290,8 @@ def main(version_num):
         print(f"Couldn't generate Changelogs.html: {changelog_generation_error}", file=sys.stderr)
     if not got_latest_commit:
         print(f"Couldn't get latest commit: {get_latest_commit_error}", file=sys.stderr)
+    if ratelimit_remaining <= 10:
+        print(f"Github requests remaining for changelog: {ratelimit_remaining}", file=sys.stderr)
 
     with open('Changelogs.html') as changelogs_html:
         if version_num not in changelogs_html.read():

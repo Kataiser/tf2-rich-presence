@@ -11,12 +11,14 @@ def main(silent=False):
     with open('Changelogs_source.html', 'r') as changelogs_source_html:
         source_html = changelogs_source_html.read()
 
-    api_response = requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/releases').json()
-    check_rate_limited(str(api_response))
+    api_response = requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/releases')
+    ratelimit_remaining = int(api_response.headers['X-RateLimit-Remaining']) - 1
+    api_response_json = api_response.json()
+    check_rate_limited(str(api_response_json))
     releases = []
     bodies = []
 
-    for found_release in api_response:
+    for found_release in api_response_json:
         version_num = found_release['tag_name']
         body = found_release['body']
         published = found_release['published_at'][:10]
@@ -53,6 +55,9 @@ def main(silent=False):
 
     if not silent:
         print(f"\nDone (finished at {datetime.datetime.now().strftime('%I:%M:%S %p')})")
+        print(f"Github requests remaining: {ratelimit_remaining}")
+
+    return ratelimit_remaining
 
 
 # runs bs4's prettify method, but with a custom indent width
