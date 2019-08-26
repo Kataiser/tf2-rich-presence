@@ -8,6 +8,7 @@ class Localizer:
     def __init__(self, log=None, language=None):
         self.log = log
         self.language = language
+        self.missing_lines = {}
 
     @functools.lru_cache(maxsize=None)
     def text(self, english_text: str) -> str:
@@ -31,7 +32,13 @@ class Localizer:
                 return load_language_file(self.language)[english_text_adler32]
             except KeyError:
                 if self.log:
-                    self.log.error(f"\"{english_text}\" not in {self.language}")
+                    if self.language not in self.missing_lines.keys():
+                        self.missing_lines[self.language] = []
+
+                    # don't do the same missing text error log than once
+                    if english_text not in self.missing_lines[self.language]:
+                        self.log.error(f"\"{english_text}\" not in {self.language}")
+                        self.missing_lines[self.language].append(english_text)
 
                 return english_text
 
