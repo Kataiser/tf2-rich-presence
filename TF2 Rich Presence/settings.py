@@ -5,7 +5,7 @@ import time
 import tkinter as tk
 import tkinter.ttk as ttk
 import traceback
-from tkinter import messagebox
+from tkinter import messagebox, simpledialog
 from typing import Any, Union
 
 import localization
@@ -297,25 +297,28 @@ class GUI(tk.Frame):
 
     # report the current log file to the dev via Sentry
     def report_log(self):
-        self.log.info("Manually reporting log to Sentry")
-        before_report_time = time.perf_counter()
+        reason = simpledialog.askstring("Report reason", "Reason for submitting logs:", parent=self.master)
 
-        import raven
-        import launcher
+        if reason is not None:
+            self.log.info(f"Manually reporting log to Sentry (reason: \"{reason}\")")
+            before_report_time = time.perf_counter()
 
-        log_data = logger.read_truncated_file(self.log.filename, limit=15000)  # max data length seems to be about 16KB
+            import raven
+            import launcher
 
-        sentry_client_manual = raven.Client(dsn=launcher.get_api_key('sentry'),
-                                            release='{tf2rpvnum}',
-                                            string_max_length=16000,
-                                            processors=('raven.processors.SanitizePasswordsProcessor',))
-        sentry_client_manual.captureMessage(f"MANUALLY REPORTED LOG: {self.log.filename}", level='info', extra={'log': log_data})
+            log_data = logger.read_truncated_file(self.log.filename, limit=15000)  # max data length seems to be about 16KB
 
-        report_elapsed = round(time.perf_counter() - before_report_time, 1)
-        self.log.debug(f"Successfully reported log (took {report_elapsed} seconds)")
-        self.report_button_text.set(self.loc.text("Successfully reported logs"))
-        self.report_button.state(['disabled'])
-        self.ok_button.focus_set()
+            sentry_client_manual = raven.Client(dsn=launcher.get_api_key('sentry'),
+                                                release='{tf2rpvnum}',
+                                                string_max_length=16000,
+                                                processors=('raven.processors.SanitizePasswordsProcessor',))
+            sentry_client_manual.captureMessage(f"MANUALLY REPORTED LOG: {self.log.filename}", level='info', extra={'reason': reason, 'log': log_data})
+
+            report_elapsed = round(time.perf_counter() - before_report_time, 1)
+            self.log.debug(f"Successfully reported log (took {report_elapsed} seconds)")
+            self.report_button_text.set(self.loc.text("Successfully reported logs"))
+            self.report_button.state(['disabled'])
+            self.ok_button.focus_set()
 
 
 # main entry point
