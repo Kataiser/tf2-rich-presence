@@ -94,9 +94,9 @@ def exc_already_reported(tb: str):
         return False
 
 
-if __name__ == '__main__':
-    sentry_enabled: bool = True
+sentry_enabled: bool = True
 
+if __name__ == '__main__':
     if sentry_enabled:
         # the raven client for Sentry (https://sentry.io/)
         sentry_client_launcher = raven.Client(dsn=get_api_key('sentry'),
