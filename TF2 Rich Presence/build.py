@@ -314,16 +314,31 @@ def main(version_num):
         if version_num not in changelogs_html.read():
             print(f"'{version_num}' not in Changelogs.html", file=sys.stderr)
 
+    # warnings for localization
     language_lines_missing = {}
     with open('localization\\English.json', 'r', encoding='utf-8') as english_file:
-        english_len = int(len(english_file.readlines()) / 2)
+        english_data = english_file.readlines()
+        english_len = int(len(english_data) / 2)
     for language in languages:
         with open(f'localization\\{language}.json', 'r', encoding='utf-8') as language_file:
             language_len = int(len(language_file.readlines()) / 2)
         if language_len != english_len:
             language_lines_missing[language] = english_len - language_len
-    if len(language_lines_missing) > 0:
+    if language_lines_missing:
         print(f"Languages missing lines: {language_lines_missing}", file=sys.stderr)
+
+    if not language_lines_missing:  # because missing lines would throw off the line numbers
+        language_incorrect_parameters = {}
+        for language in languages:
+            with open(f'localization\\{language}.json', 'r', encoding='utf-8') as language_file:
+                language_data = language_file.readlines()
+            for line_num in range(len(english_data)):
+                if english_data[line_num].count('{0}') != language_data[line_num].count('{0}') or english_data[line_num].count('{1}') != language_data[line_num].count('{1}'):
+                    if language not in language_incorrect_parameters:
+                        language_incorrect_parameters[language] = []
+                    language_incorrect_parameters[language].append(line_num + 1)
+        if language_incorrect_parameters:
+            print(f"Languages lines with an incorrect number of parameters: {pprint.pformat(language_incorrect_parameters)}", file=sys.stderr)
 
     language_parse_errors = {}
     for language in languages:
