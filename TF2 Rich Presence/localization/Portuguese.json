@@ -165,7 +165,7 @@ Desligado
 ", "3835171426": "
 Ocultar tipo de jogo (casual, competitivo, MvM) enfileirado para
 ", "3892841625": "
-As definições foram alteradas. {1}
+{0} ajustes foram alterados. {1}
 ", "3912530900": "
 Espião
 ", "3929549250": "
@@ -175,7 +175,7 @@ Nenhum modo de jogo
 ", "4021625669": "
 (Se você é mais de uma versão desatualizada, pode ter havido mais mudanças e correções do que isso.)
 ", "4037028230": "
-Decorrido
+{0} decorrido
 ", "4050156700": "
 dia
 ", "4251331620": "
@@ -213,7 +213,7 @@ MvM (Boot Camp)
 ", "6239040250": "
 Guardar e fechar
 ", "6446134190": "
-changelog:
+{0} log de modificações:
 ", "6524776970": "
 Fila de espera para MvM
 ", "6549025190": "
@@ -221,7 +221,7 @@ MvM (campo de treino)
 ", "6554923770": "
 Enfileirado para {0}
 ", "6724036300": "
-Pyro
+Piromaníaco
 ", "6890491890": "
 Para verificar se há atualizações você mesmo, vá para {0}
 ", "6894430600": "

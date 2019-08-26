@@ -3,9 +3,9 @@ horario
 ", "1096615616": "
 Versus Saxton Hale
 ", "1098909474": "
-Destrucción de jugadores
+Destrucción de Jugadores
 ", "1099829090": "
-Restaurar {0} ¿cambió la configuración a los valores predeterminados?
+¿Restaurar {0} cambió la configuración a los valores predeterminados?
 ", "1141642225": "
 Esta versión ({0}) está desactualizada (la última versión es {1})
 ", "1270024083": "
@@ -43,7 +43,7 @@ Ocultar tipo de juego (casual, competitivo, MvM) en cola para
 ", "1589381242": "
 En cola para el concurso
 ", "1595153499": "
-TF2 Rich Presence se ha estrellado, y el error ha sido reportado al desarrollador.
+TF2 Presencia Rica se ha estrellado, y el error ha sido reportado al desarrollador.
 ", "1638865032": "
 Su instalación de TF2 aún no parece estar configurada correctamente. Para arreglar:
 ", "1712457926": "
@@ -51,13 +51,13 @@ Su instalación de TF2 aún no parece estar configurada correctamente. Para arre
 ", "1730628000": "
 No se pudo conectar a GitHub para buscar actualizaciones ({0})
 ", "1775377300": "
-Demoman
+Hombre de Demoliciones
 ", "1791761380": "
 Accidentes
 ", "1833049100": "
 Esbelto
 ", "1836325860": "
-Trading
+Comercial
 ", "1843534830": "
 Carga útil
 ", "1851399230": "
@@ -65,7 +65,7 @@ Soldado
 ", "1873026190": "
 Salto
 ", "1904483510": "
-Surf
+Surfeo
 ", "1954945610": "
 Mapa: {0}
 ", "1967398240": "
@@ -79,17 +79,17 @@ En los menús
 ", "2176059654": "
 Reinicio en 2 segundos....
 ", "2266242310": "
-Tiempo PASS
+Tiempo de PASO
 ", "2267553510": "
 Avanzado
 ", "2276072520": "
 4. Añadir {0}
 ", "2308841560": "
-Deathrun
+Carrera de Muerte
 ", "2314739660": "
 Ingeniero
 ", "2320894410": "
-Configuración de TF2 Rich Presence ({tf2rpvnum})
+Configuración de TF2 Presencia Rica ({tf2rpvnum})
 ", "2340298680": "
 Crítico
 ", "2366704224": "
@@ -105,11 +105,11 @@ Ataque/Defensa (Modo Medieval)
 ", "2584087160": "
 El Equipo Fortaleza 2 no está corriendo
 ", "2667713838": "
-Lanzamiento de TF2 con Rich Presence junto a Team Fortress 2....
+Lanzamiento de TF2 con Presencia Rica junto a Team Fortress 2....
 ", "2669678758": "
 Anticuada, la versión más reciente es {0} (esta es {1})
 ", "2673222339": "
-Si TF2 Rich Presence se está ejecutando actualmente, es posible que sea necesario reiniciarlo para que los cambios surtan efecto.
+Si TF2 Presencia Rica se está ejecutando actualmente, es posible que sea necesario reiniciarlo para que los cambios surtan efecto.
 ", "2692882830": "
 Menú principal
 ", "2715881719": "
@@ -117,7 +117,7 @@ Horas antes de volver a comprobar el modo de juego de mapa personalizado:
 ", "2768904650": "
 Caza de objetos
 ", "2780826248": "
-TF2 Rich Presence ({tf2rpvnum}) de Kataiser
+TF2 Presencia Rica ({tf2rpvnum}) de Kataiser
 ", "2781874761": "
 3. Haga clic en "Establecer opciones de lanzamiento..."
 ", "2796884285": "
@@ -209,11 +209,11 @@ Icono
 ", "6166977300": "
 Información
 ", "6234451750": "
-MvM (Boot Camp)
+MvM (Campo de Entrenamiento)
 ", "6239040250": "
 Guardar y cerrar
 ", "6446134190": "
-changelog:
+{0} registro de cambios:
 ", "6524776970": "
 En cola para MvM
 ", "6549025190": "
@@ -221,7 +221,7 @@ MvM (campo de entrenamiento)
 ", "6554923770": "
 En cola por {0}
 ", "6724036300": "
-Pyro
+Pirómano
 ", "6890491890": "
 Para buscar actualizaciones usted mismo, vaya a {0}.
 ", "6894430600": "
@@ -229,7 +229,7 @@ días
 ", "7065449230": "
 Nivel máximo de registro: 
 ", "7204421990": "
-Lanzamiento de Team Fortress 2 con Rich Presence habilitado....
+Lanzamiento de Team Fortress 2 con Presencia Rica habilitado....
 ", "7215558300": "
 hora
 ", "7301379380": "
@@ -237,7 +237,7 @@ Equipo Fortaleza 2
 ", "7395095750": "
 ¡Detengan ese tanque!
 ", "7761442790": "
-Mann vs. Machine
+Mann vs. Máquina
 ", "7819769690": "
 Rey de la colina
 ", "8011814710": "

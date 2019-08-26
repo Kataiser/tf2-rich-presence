@@ -47,7 +47,7 @@ TF2 Rich Presence si è arrestato e l'errore è stato segnalato allo sviluppator
 ", "1638865032": "
 L'installazione di TF2 non sembra essere ancora configurata correttamente. Da correggere:
 ", "1712457926": "
-[Personalizzato / mappa della comunita']
+[Personalizzato / mappa della comunita]
 ", "1730628000": "
 Impossibile connettersi a GitHub per controllare la presenza di aggiornamenti ({0})
 ", "1775377300": "
@@ -77,7 +77,7 @@ Frequenza di segnalazione dei log:
 ", "2085363200": "
 Nei menu
 ", "2176059654": "
-Riavvio in 2 secondi......
+Riavvio in 2 secondi...
 ", "2266242310": "
 Tempo PASS
 ", "2267553510": "
@@ -105,7 +105,7 @@ Attacco / Difendere (modalità medievale)
 ", "2584087160": "
 Il Team Fortress 2 non è in esecuzione
 ", "2667713838": "
-Lancio di TF2 con Rich Presence a fianco di Team Fortress 2.....
+Lancio di TF2 con Rich Presence a fianco di Team Fortress 2...
 ", "2669678758": "
 Non aggiornato, la versione più recente è {0} (questo è {1})
 ", "2673222339": "
@@ -119,7 +119,7 @@ Caccia all'elica
 ", "2780826248": "
 TF2 Rich Presence ({tf2rpvnum}) di Kataiser
 ", "2781874761": "
-3. 3. Fare clic su "Imposta opzioni di avvio....".
+3. Fare clic su "Imposta opzioni di avvio...".
 ", "2796884285": "
 Non sono riuscito a connettersi a GitHub per controllare la presenza di aggiornamenti.
 ", "2843615990": "
@@ -157,7 +157,7 @@ Segnala i log allo sviluppatore ({0} kilobyte)
 ", "3509849080": "
 Tipo di immagine piccola classe selezionata: 
 ", "3535021960": "
-Deathmatch
+Morte Match
 ", "3578294000": "
 Spento
 ", "3615624206": "
@@ -165,7 +165,7 @@ Spento
 ", "3835171426": "
 Nascondi tipo di gioco (casual, competitivo, MvM) in coda per
 ", "3892841625": "
-0} le impostazioni sono state modificate. {1}
+{0} le impostazioni sono state modificate. {1}
 ", "3912530900": "
 Spia
 ", "3929549250": "
@@ -213,7 +213,7 @@ MvM (Campo Stivale)
 ", "6239040250": "
 Salva e chiudi
 ", "6446134190": "
-Changelog:
+{0} registro delle modifiche:
 ", "6524776970": "
 In coda per MvM
 ", "6549025190": "
@@ -229,7 +229,7 @@ giornate
 ", "7065449230": "
 Livello massimo di log: 
 ", "7204421990": "
-Lancio di Team Fortress 2 con Rich Presence abilitato.....
+Lancio di Team Fortress 2 con Rich Presence abilitato...
 ", "7215558300": "
 ora
 ", "7301379380": "

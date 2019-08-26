@@ -47,7 +47,7 @@ TF2 Rich Presence is gecrasht en de fout is gemeld aan de ontwikkelaar.
 ", "1638865032": "
 Uw TF2-installatie lijkt nog niet goed te zijn opgezet. Te repareren:
 ", "1712457926": "
-[aangepaste/gemeenschappelijke kaart]....
+[aangepaste/gemeenschappelijke kaart]
 ", "1730628000": "
 Kon geen verbinding maken met GitHub om te controleren op updates ({0})
 ", "1775377300": "
@@ -77,13 +77,13 @@ Frequentie van de logboekrapportage:
 ", "2085363200": "
 In menu's
 ", "2176059654": "
-Herstart over twee seconden....
+Herstart over twee seconden...
 ", "2266242310": "
 PASS tijd
 ", "2267553510": "
 Gevorderd
 ", "2276072520": "
-4. 4. Voeg {0} toe.
+4. Voeg {0} toe.
 ", "2308841560": "
 Deathrun
 ", "2314739660": "
@@ -105,7 +105,7 @@ Aanval/Verdedigen (Middeleeuwse modus)
 ", "2584087160": "
 Team Fortress 2 loopt niet...
 ", "2667713838": "
-Lancering van TF2 met Rich Presence naast Team Fortress 2....
+Lancering van TF2 met Rich Presence naast Team Fortress 2...
 ", "2669678758": "
 Achterhaald, nieuwste versie is {0} (dit is {1}).
 ", "2673222339": "
@@ -119,7 +119,7 @@ Prop Hunt
 ", "2780826248": "
 TF2 Rich Presence ({tf2rpvnum}) door Kataiser.
 ", "2781874761": "
-3. 3. Klik op "Startopties instellen....".
+3. Klik op "Startopties instellen...".
 ", "2796884285": "
 Kon geen verbinding maken met GitHub om te controleren op updates.
 ", "2843615990": "
@@ -129,7 +129,7 @@ Trefbal
 ", "3004835120": "
 Mankracht
 ", "3034581868": "
-2. 2. Open eigenschappen (zeer bodem)
+2. Open eigenschappen (zeer bodem)
 ", "3231589050": "
 Klasse: {0}
 ", "3289189286": "
@@ -147,7 +147,7 @@ Klassenoorlogen
 ", "3333209180": "
 Kon geen verbinding maken met GitHub om te controleren op updates ({0}).
 ", "3336272700": "
-1. 1. Klik met de rechtermuisknop op Team Fort 2 in uw Stoombibliotheek.
+1. Klik met de rechtermuisknop op Team Fort 2 in uw Stoombibliotheek.
 ", "3447858830": "
 Niet in de rij
 ", "3469484790": "
@@ -165,7 +165,7 @@ Uit
 ", "3835171426": "
 Verberg het type spel (casual, competitief, MvM) in de rij voor
 ", "3892841625": "
-instellingen zijn gewijzigd. {1}
+{0} instellingen zijn gewijzigd. {1}
 ", "3912530900": "
 Spion
 ", "3929549250": "
@@ -175,7 +175,7 @@ Geen gamemode
 ", "4021625669": "
 (Als je meer dan één versie achterhaald bent, kunnen er meer veranderingen en oplossingen zijn geweest dan dit.)
 ", "4037028230": "
-is verstreken....
+{0} uur verstreken
 ", "4050156700": "
 dag
 ", "4251331620": "
@@ -193,9 +193,9 @@ MvM (mannelijk omhoog)
 ", "4892929020": "
 Laadvermogen Race
 ", "5268450630": "
-5. 5. OK en sluiten
+5. OK en sluiten
 ", "5334641500": "
-6. 6. Herstart TF2
+6. Herstart TF2
 ", "5367410860": "
 Gevangenis Breakout
 ", "5581058060": "
@@ -213,7 +213,7 @@ MvM (Laarzenkamp)
 ", "6239040250": "
 Opslaan en sluiten
 ", "6446134190": "
-wisselkind:
+{0} wijzig logboek:
 ", "6524776970": "
 In de rij staan voor MvM
 ", "6549025190": "
@@ -221,7 +221,7 @@ MvM (boot camp)
 ", "6554923770": "
 In de rij voor {0}
 ", "6724036300": "
-Pyro
+Pyromaan
 ", "6890491890": "
 Om zelf te controleren of er updates zijn, ga naar {0}.
 ", "6894430600": "
@@ -229,7 +229,7 @@ dagen
 ", "7065449230": "
 Maximaal logboekniveau: 
 ", "7204421990": "
-Lancering van Team Fort 2 met Rich Presence ingeschakeld....
+Lancering van Team Fort 2 met Rich Presence ingeschakeld...
 ", "7215558300": "
 uur
 ", "7301379380": "
