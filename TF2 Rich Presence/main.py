@@ -60,11 +60,12 @@ class TF2RichPresense:
         self.log = log
         self.start_time: int = int(time.time())
         self.old_activity: Dict = {}
-        self.activity: Dict[str, Union[str, Dict[str, int], Dict[str, str]]] = {'details': 'In menus',  # this is what gets modified and sent to Discord via discoIPC
-                                                                                'timestamps': {'start': self.start_time},
-                                                                                'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2', 'large_image': 'main_menu',
-                                                                                           'large_text': 'Main menu'},
-                                                                                'state': ''}
+        self.activity: Dict[str, Union[str, Dict[str, int], Dict[str, str]]] = \
+            {'details': 'In menus',  # this is what gets modified and sent to Discord via discoIPC
+             'timestamps': {'start': self.start_time},
+             'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2', 'large_image': 'main_menu', 'large_text': 'Main menu'},
+             'state': ''}
+        self.activity_translated = {}
         self.client_connected: bool = False
         self.client = None
         self.test_state = 'init'
@@ -219,8 +220,14 @@ class TF2RichPresense:
 
             # send everything to discord
             try:
-                self.client.update_activity(self.activity)
-                self.log.info(f"Sent over RPC: {self.activity}")
+                self.activity_translated = copy.deepcopy(self.activity)
+                self.activity_translated['details'] = self.loc.text(self.activity['details'])
+                self.activity_translated['state'] = self.loc.text(self.activity['state'])
+                self.activity_translated['assets']['small_text'] = self.loc.text(self.activity['assets']['small_text'])
+                self.activity_translated['assets']['large_text'] = self.loc.text(self.activity['assets']['large_text'])
+
+                self.client.update_activity(self.activity_translated)
+                self.log.info(f"Sent over RPC: {self.activity_translated}")
                 client_state = (self.client.client_id, self.client.connected, self.client.ipc_path, self.client.pid, self.client.platform, self.client.socket)
                 self.log.debug(f"client state: {client_state}")
             except Exception as error:
