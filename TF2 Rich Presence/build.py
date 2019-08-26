@@ -58,6 +58,7 @@ def main(version_num):
         print("Copied", shutil.copy('changelog_generator.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('Changelogs_source.html', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('maps.json', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy('custom_maps.json', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('APIs', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('main menu.png', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('casual.png', f'{github_repo_path}\\TF2 Rich Presence'))
@@ -126,6 +127,13 @@ def main(version_num):
     os.mkdir(f'{new_build_folder_name}\\logs')
     print(f"Created new build folder: {new_build_folder_name}")
 
+    # clears custom map cache. early up because it copies to Github
+    with open(f'{new_build_folder_name}\\resources\\custom_maps.json', 'w') as maps_db:
+        json.dump({}, maps_db, indent=4)
+    if github_repo_path != 'n':
+        print("Copied", shutil.copy(f'{new_build_folder_name}\\resources\\custom_maps.json', f'{github_repo_path}\\TF2 Rich Presence'))
+
+    missing_files = []
     files_to_copy = [('maps.json', f'{new_build_folder_name}\\resources\\'),
                      ('custom_maps.json', f'{new_build_folder_name}\\resources\\'),
                      ('LICENSE', f'{new_build_folder_name}\\resources\\'),
@@ -155,6 +163,10 @@ def main(version_num):
 
     # copies files, adding any version numbers
     for file_dest_pair in files_to_copy:
+        if not os.path.exists(file_dest_pair[0]):
+            missing_files.append(file_dest_pair[0])
+            continue
+
         try:
             with open(file_dest_pair[0], 'r', encoding='utf-8') as file_source:
                 with open(f'{file_dest_pair[1]}{file_dest_pair[0]}', 'w', encoding='utf-8') as file_target:
@@ -206,10 +218,6 @@ def main(version_num):
                         f"\nVersion hashes: {build_version.version_hashes}"
                         f"\nLatest commit: {latest_commit}")
 
-    # clears custom map cache
-    with open(f'{new_build_folder_name}\\resources\\custom_maps.json', 'w') as maps_db:
-        json.dump({}, maps_db, indent=4)
-
     # copies the python interpreter
     python_source = os.path.abspath('python-3.7.1-embed-win32')
     python_target = os.path.abspath(f'{new_build_folder_name}\\resources\\python')
@@ -240,15 +248,19 @@ def main(version_num):
     subprocess.run(package7zip_command_zip, stdout=subprocess.DEVNULL)
 
     # creates README.md from README-source.md
-    exe_size_mb = round(os.stat(exe_path).st_size / 1048576, 1)  # 1048576 is 1024^2
-    zip_size_mb = round(os.stat(zip_path).st_size / 1048576, 1)
-    with open('README-source.md', 'r') as readme_md_source:
-        modified_readme_md = readme_md_source.read().replace('{tf2rpvnum}', version_num).replace('{installer_size}', str(exe_size_mb)).replace('{zip_size}', str(zip_size_mb))
-    with open('README.md', 'w') as readme_md_target:
-        readme_md_target.write(modified_readme_md)
-    print("Created README.md from modified README-source.md")
-    if github_repo_path != 'n':
-        print("Copied", shutil.copy('README.MD', github_repo_path))
+    if os.path.exists('README-source.md'):
+        readme_source_exists = True
+        exe_size_mb = round(os.stat(exe_path).st_size / 1048576, 1)  # 1048576 is 1024^2
+        zip_size_mb = round(os.stat(zip_path).st_size / 1048576, 1)
+        with open('README-source.md', 'r') as readme_md_source:
+            modified_readme_md = readme_md_source.read().replace('{tf2rpvnum}', version_num).replace('{installer_size}', str(exe_size_mb)).replace('{zip_size}', str(zip_size_mb))
+        with open('README.md', 'w') as readme_md_target:
+            readme_md_target.write(modified_readme_md)
+        print("Created README.md from modified README-source.md")
+        if github_repo_path != 'n':
+            print("Copied", shutil.copy('README.MD', github_repo_path))
+    else:
+        readme_source_exists = False
 
     # disables Sentry, for testing
     with open(f'{new_build_folder_name}\\resources\\launcher.py', 'r') as launcher_py_read:
@@ -280,6 +292,7 @@ def main(version_num):
     print(f"Finished building TF2 Rich Presence {version_num} (took {int(time.perf_counter() - build_start_time)} seconds{time_since_last_build_text})")
     time.sleep(0.1)
 
+    # warnings from here on out
     if '@' not in latest_commit:
         print(latest_commit, file=sys.stderr)
     if version_num not in build_version.version_hashes.keys():
@@ -292,6 +305,10 @@ def main(version_num):
         print(f"Couldn't get latest commit: {get_latest_commit_error}", file=sys.stderr)
     if ratelimit_remaining <= 10:
         print(f"Github requests remaining for changelog: {ratelimit_remaining}", file=sys.stderr)
+    if missing_files:
+        print(f"Missing files: {missing_files}", file=sys.stderr)
+    if not readme_source_exists:
+        print("README-source doesn't exist, didn't build README.md", file=sys.stderr)
 
     with open('Changelogs.html') as changelogs_html:
         if version_num not in changelogs_html.read():
