@@ -102,7 +102,11 @@ class ProcessScanner:
 
     # https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/tasklist
     def parse_tasklist(self):
-        processes = str(subprocess.check_output('tasklist /fi "STATUS eq running"')).split(r'\r\n')
+        try:
+            processes = str(subprocess.check_output('tasklist /fi "STATUS eq running"')).split(r'\r\n')
+        except subprocess.CalledProcessError:
+            processes = []
+
         self.parsed_tasklist = {}
 
         for process_line in processes:
