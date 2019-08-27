@@ -29,7 +29,7 @@ class Localizer:
             return english_text
         else:
             try:
-                return load_language_file(self.language)[english_text_adler32]
+                return load_language_file(self.language)[english_text_adler32].lstrip().rstrip()
             except KeyError:
                 if self.log:
                     if self.language not in self.missing_lines.keys():
