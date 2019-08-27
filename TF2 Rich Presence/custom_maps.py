@@ -8,15 +8,13 @@ import requests
 from requests import Response
 
 import launcher
-import localization
 import logger
 import settings
 
 
 # uses teamwork.tf's API to find the gamemode of a custom map
 def find_custom_map_gamemode(log, map_filename: str, timeout: float = settings.get('request_timeout'), ignore_cache=True) -> Tuple[str, str]:
-    loc = localization.Localizer(log, settings.get('language'))
-    gamemodes = {gm: loc.text(gamemodes_english[gm]) for gm in gamemodes_english}
+    gamemodes = {gm: gamemodes_english[gm] for gm in gamemodes_english}
 
     if map_filename == '':
         log.error("Map filename is blank")
