@@ -45,6 +45,9 @@ def check_for_update(current_version: str, timeout: float):
         else:  # out of date
             log.error(f"Out of date, newest version is {newest_version} (this is {current_version})")
 
+            with open('resources\\available_version.txt', 'w') as available_version_txt:
+                available_version_txt.write(f'{newest_version}\n{downloads_url}')
+
             print(loc.text("This version ({0}) is out of date (newest version is {1}).").format(current_version, newest_version))
             print(loc.text("Get the update at {0}").format(downloads_url), end='\n\n')
             print(loc.text("{0} changelog:").format(newest_version))

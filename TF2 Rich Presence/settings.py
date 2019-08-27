@@ -5,6 +5,7 @@ import time
 import tkinter as tk
 import tkinter.ttk as ttk
 import traceback
+import webbrowser
 from tkinter import messagebox, simpledialog
 from typing import Any, Union
 
@@ -140,6 +141,15 @@ class GUI(tk.Frame):
         setting13_options = ttk.OptionMenu(setting13_frame, self.language, self.languages[0], *self.languages_display, command=self.update_default_button_state)
         self.language.set(actual_language)
 
+        # download page button, but only if a new version is available
+        if os.path.exists('resources\\available_version.txt'):
+            with open('resources\\available_version.txt', 'r') as available_version_txt:
+                new_version_name = available_version_txt.readline().rstrip('\n')
+                self.new_version_url = available_version_txt.readline()
+            self.update_button_text = tk.StringVar(value=self.loc.text("Download newest version ({0})").format(new_version_name))
+            self.update_button = ttk.Button(lf_main, textvariable=self.update_button_text, command=self.open_update_page)
+            self.update_button.grid(row=9, sticky=tk.W, padx=(20, 40), pady=(0, 12))
+
         # create the report button
         current_log_size = round(os.stat(self.log.filename).st_size / 1024)
         current_log_size_display = max(min(16, current_log_size), 1)
@@ -174,7 +184,7 @@ class GUI(tk.Frame):
         for setting12_radiobutton in setting12_radiobuttons:
             setting12_radiobutton.pack(side='left', fill=None, expand=False)
         setting12_frame.grid(row=7, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
-        self.report_button.grid(row=12, sticky=tk.W, padx=(20, 40), pady=(4, 12))
+        self.report_button.grid(row=12, sticky=tk.W, padx=(20, 40), pady=(10, 12))
         setting13_text.pack(side='left', fill=None, expand=False)
         setting13_options.pack(side='left', fill=None, expand=False)
         setting13_frame.grid(row=0, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(9, 0))
@@ -319,6 +329,9 @@ class GUI(tk.Frame):
             self.report_button_text.set(self.loc.text("Successfully reported logs"))
             self.report_button.state(['disabled'])
             self.ok_button.focus_set()
+
+    def open_update_page(self):
+        webbrowser.open(self.new_version_url)
 
 
 # main entry point
