@@ -10,14 +10,19 @@ import time
 
 import requests
 
-import build_version
 import changelog_generator
 import localization
 import logger
 import settings
 
 
-def main(version_num):
+def main(version_num=None):
+    # get build version info
+    with open('build_version.json', 'r') as build_version_json:
+        build_version_data = json.load(build_version_json)
+    if not version_num:
+        version_num = build_version_data['this_version']
+
     print(f"Building TF2 Rich Presence {version_num}")
 
     if os.path.exists('last_repo_path.txt'):
@@ -37,6 +42,17 @@ def main(version_num):
 
     build_start_time = time.perf_counter()
     print()
+
+    # modify build_version.json, if need be
+    this_hash = logger.generate_hash()
+    if this_hash not in build_version_data['version_hashes']:
+        build_version_data['version_hashes'][version_num] = this_hash
+        with open('build_version.json', 'w') as build_version_json_write:
+            json.dump(build_version_data, build_version_json_write, indent=4)
+    elif build_version_data['version_hashes'][version_num] != this_hash:
+        build_version_data['version_hashes'][version_num] = this_hash
+        with open('build_version.json', 'w') as build_version_json_write:
+            json.dump(build_version_data, build_version_json_write, indent=4)
 
     # copies stuff to the Github repo
     if github_repo_path != 'n':
@@ -74,7 +90,7 @@ def main(version_num):
         print("Copied", shutil.copy('Launch TF2 with Rich Presence.bat', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('Launch Rich Presence alongside TF2.bat', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('Change settings.bat', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('build_version.py', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy('build_version.json', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('README-source.MD', github_repo_path))
         print("Copied", shutil.copy('.travis.yml', github_repo_path))
         print("Copied", shutil.copy('requirements.txt', github_repo_path))
@@ -208,14 +224,12 @@ def main(version_num):
         get_latest_commit_error = error
         latest_commit = ''
     with open(f'{new_build_folder_name}\\resources\\build_info.txt', 'w') as info_file:
-        this_hash = logger.generate_hash()
-
         info_file.write(f"TF2 Rich Presence by Kataiser"
                         "\nhttps://github.com/Kataiser/tf2-rich-presence"
                         f"\n\nVersion: {version_num}"
                         f"\nBuilt: {datetime.datetime.utcnow().strftime('%c')} UTC"
                         f"\nHash: {this_hash}"
-                        f"\nVersion hashes: {build_version.version_hashes}"
+                        f"\nVersion hashes: {build_version_data['version_hashes']}"
                         f"\nLatest commit: {latest_commit}")
 
     # copies the python interpreter
@@ -295,10 +309,6 @@ def main(version_num):
     # warnings from here on out
     if '@' not in latest_commit:
         print(latest_commit, file=sys.stderr)
-    if version_num not in build_version.version_hashes.keys():
-        print(f"version_hashes doesn't include this version, add {{'{version_num}': '{this_hash}'}}", file=sys.stderr)
-    elif build_version.version_hashes[version_num] != this_hash:
-        print(f"version_hashes for this version has {build_version.version_hashes[version_num]}, should be {this_hash}", file=sys.stderr)
     if not generated_changelogs:
         print(f"Couldn't generate Changelogs.html: {changelog_generation_error}", file=sys.stderr)
     if not got_latest_commit:
@@ -375,4 +385,4 @@ def copy_dir_to_git(source, target):
 
 
 if __name__ == '__main__':
-    main(build_version.this_version)
+    main()
