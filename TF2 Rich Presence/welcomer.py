@@ -9,10 +9,11 @@ import localization
 
 
 def main():
-    with open(os.path.join('resources', 'settings.json'), 'r') as settings_file:
-        settings = json.load(settings_file)
+    db_path = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
+    with open(db_path, 'r+') as db_json:
+        db_data = json.load(db_json)
 
-    language = settings['language']
+    language = db_data['settings']['language']
     loc = localization.Localizer(language=language)
 
     print(loc.text("TF2 Rich Presence ({tf2rpvnum}) by Kataiser"))

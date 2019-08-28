@@ -76,20 +76,18 @@ def exc_already_reported(tb: str):
     try:
         tb_hash = str(zlib.crc32(tb.encode('utf-8', errors='replace')))  # technically not a hash but w/e
 
-        if os.path.exists('tb_hashes.txt'):
-            tb_hashes_path = 'tb_hashes.txt'
-        else:
-            tb_hashes_path = os.path.join('resources', 'tb_hashes.txt')
+        db_path = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
+        with open(db_path, 'r+') as db_json:
+            db_data = json.load(db_json)
 
-        with open(tb_hashes_path, 'r') as tb_hashes_txt:
-            reported_hashes = tb_hashes_txt.readlines()
-
-        if tb_hash in reported_hashes:
-            return True
-        else:
-            with open(tb_hashes_path, 'a') as tb_hashes_txt_a:
-                tb_hashes_txt_a.write(f'{tb_hash}\n')
-            return False
+            if tb_hash in db_data['tb_hashes']:
+                return True
+            else:
+                db_data['tb_hashes'].append(tb_hash)
+                db_json.seek(0)
+                db_json.truncate(0)
+                json.dump(db_data, db_json, indent=4)
+                return False
     except Exception:
         return False
 

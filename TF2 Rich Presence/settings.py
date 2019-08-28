@@ -57,7 +57,7 @@ class GUI(tk.Frame):
         self.language = tk.StringVar()
 
         try:
-            # load settings from settings.json
+            # load settings from DB.json
             self.settings_loaded = access_settings_file()
             self.log.debug(f"Current settings: {self.settings_loaded}")
             self.log.debug(f"Are default: {self.settings_loaded == get_setting_default(return_all=True)}")
@@ -142,10 +142,13 @@ class GUI(tk.Frame):
         self.language.set(actual_language)
 
         # download page button, but only if a new version is available
-        if os.path.exists('resources\\available_version.txt'):
-            with open('resources\\available_version.txt', 'r') as available_version_txt:
-                new_version_name = available_version_txt.readline().rstrip('\n')
-                self.new_version_url = available_version_txt.readline()
+        db_path = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
+        with open(db_path, 'r+') as db_json:
+            db_data = json.load(db_json)
+        if db_data['available_version']['exists']:
+            new_version_name = db_data['available_version']['tag']
+            self.new_version_url = db_data['available_version']['url']
+
             self.update_button_text = tk.StringVar(value=self.loc.text("Download newest version ({0})").format(new_version_name))
             self.update_button = ttk.Button(lf_main, textvariable=self.update_button_text, command=self.open_update_page)
             self.update_button.grid(row=9, sticky=tk.W, padx=(20, 40), pady=(0, 12))
@@ -354,25 +357,17 @@ def get(setting: str) -> Any:
 
 # either reads the settings file and returns it a a dict, or if a dict is provided, saves it as a json
 def access_settings_file(save_dict: Union[dict, None] = None) -> dict:
-    if os.path.isdir('resources'):
-        settings_path = os.path.join('resources', 'settings.json')
-    else:
-        settings_path = 'settings.json'
+    db_path = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
+    with open(db_path, 'r+') as db_json:
+        db_data = json.load(db_json)
 
-    try:
         if save_dict:
-            with open(settings_path, 'w') as settings_json_write:
-                json.dump(save_dict, settings_json_write, indent=4)
+            db_data['settings'] = save_dict
+            db_json.seek(0)
+            db_json.truncate(0)
+            json.dump(db_data, db_json, indent=4)
         else:
-            with open(settings_path, 'r') as settings_json_read:
-                return json.load(settings_json_read)
-    except FileNotFoundError:
-        # saves with defualt settings
-        default_settings: dict = get_setting_default(return_all=True)
-        with open(settings_path, 'w') as settings_json_create:
-            json.dump(default_settings, settings_json_create, indent=4)
-
-        return default_settings
+            return db_data['settings']
 
 
 # either gets a settings default, or if return_dict, returns all defaults as a dict

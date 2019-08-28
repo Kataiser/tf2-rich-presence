@@ -74,7 +74,7 @@ def main(version_num=None):
         print("Copied", shutil.copy('changelog_generator.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('Changelogs_source.html', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('maps.json', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('custom_maps.json', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy('DB_default.json', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('APIs', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('main menu.png', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('casual.png', f'{github_repo_path}\\TF2 Rich Presence'))
@@ -143,15 +143,9 @@ def main(version_num=None):
     os.mkdir(f'{new_build_folder_name}\\logs')
     print(f"Created new build folder: {new_build_folder_name}")
 
-    # clears custom map cache. early up because it copies to Github
-    with open(f'{new_build_folder_name}\\resources\\custom_maps.json', 'w') as maps_db:
-        json.dump({}, maps_db, indent=4)
-    if github_repo_path != 'n':
-        print("Copied", shutil.copy(f'{new_build_folder_name}\\resources\\custom_maps.json', f'{github_repo_path}\\TF2 Rich Presence'))
-
     missing_files = []
     files_to_copy = [('maps.json', f'{new_build_folder_name}\\resources\\'),
-                     ('custom_maps.json', f'{new_build_folder_name}\\resources\\'),
+                     ('DB_default.json', f'{new_build_folder_name}\\resources\\'),
                      ('LICENSE', f'{new_build_folder_name}\\resources\\'),
                      ('main.py', f'{new_build_folder_name}\\resources\\'),
                      ('launcher.py', f'{new_build_folder_name}\\resources\\'),
@@ -203,15 +197,7 @@ def main(version_num=None):
         except UnicodeDecodeError:
             print("Copied", shutil.copy(*file_dest_pair))
 
-    print("Creating tb_hashes.txt")
-    open(f'{new_build_folder_name}\\resources\\tb_hashes.txt', 'w').close()
-
-    # create settings.json with default settings
-    print('Creating default settings.json')
-    old_dir = os.getcwd()
-    os.chdir(f'{new_build_folder_name}\\resources')
-    settings.access_settings_file(save_dict=settings.get_setting_default(return_all=True))
-    os.chdir(old_dir)
+    os.rename(f'{new_build_folder_name}\\resources\\DB_default.json', f'{new_build_folder_name}\\resources\\DB.json')
 
     # creates build_info.txt
     try:

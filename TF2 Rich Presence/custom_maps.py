@@ -23,7 +23,7 @@ def find_custom_map_gamemode(log, map_filename: str, timeout: float = settings.g
     log.debug(f"Finding gamemode for custom map: {map_filename}")
     seconds_since_epoch_now: int = int(time.time())
 
-    # to avoid constantly using internet, each map is cached to custom_maps.json
+    # to avoid constantly using internet, each map is cached to DB.json
     custom_map_gamemodes = access_custom_maps_cache()
     log.debug(f"{len(custom_map_gamemodes)} maps cached: {list(custom_map_gamemodes.keys())}")
 
@@ -87,25 +87,19 @@ def find_custom_map_gamemode(log, map_filename: str, timeout: float = settings.g
         return first_gamemode, first_gamemode_fancy
 
 
-# reads or writes custom_maps.json, the cache of custom maps
+# reads or writes the cache of custom maps in DB.json
 def access_custom_maps_cache(dict_input: Union[dict, None] = None) -> dict:
-    if dict_input is None:
-        file_mode: str = 'r'
-    else:
-        file_mode: str = 'w'
+    db_path = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
+    with open(db_path, 'r+') as db_json:
+        db_data = json.load(db_json)
 
-    try:
-        custom_maps_cache_file: TextIO = open(os.path.join('resources', 'custom_maps.json'), file_mode)
-    except FileNotFoundError:
-        custom_maps_cache_file: TextIO = open('custom_maps.json', file_mode)
-
-    if dict_input is None:
-        loaded_cache: dict = json.load(custom_maps_cache_file)
-        custom_maps_cache_file.close()
-        return loaded_cache
-    else:
-        json.dump(dict_input, custom_maps_cache_file, indent=4)
-        custom_maps_cache_file.close()
+        if dict_input is None:
+            return db_data['custom_maps']
+        else:
+            db_data['custom_maps'] = dict_input
+            db_json.seek(0)
+            db_json.truncate(0)
+            json.dump(db_data, db_json, indent=4)
 
 
 gamemodes_english: Dict[str, str] = {'ctf': 'Capture the Flag', 'control-point': 'Control Point', 'attack-defend': 'Attack/Defend', 'medieval-mode': 'Attack/Defend (Medieval Mode)',

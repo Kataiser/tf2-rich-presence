@@ -1,4 +1,5 @@
 import ctypes
+import json
 import locale
 import os
 import tkinter as tk
@@ -20,7 +21,17 @@ def check_for_update(current_version: str, timeout: float):
     log = logger.Log()
     loc = localization.Localizer(language=settings.get('language'))
 
-    detect_system_language(log)
+    # ask to change language only once
+    db_path = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
+    with open(db_path, 'r+') as db_json:
+        db_data = json.load(db_json)
+
+        if not db_data['has_asked_language']:
+            db_data['has_asked_language'] = True
+            db_json.seek(0)
+            db_json.truncate(0)
+            json.dump(db_data, db_json, indent=4)
+            detect_system_language(log)
 
     if '{' in '{tf2rpvnum}' or not settings.get('check_updates'):
         log.debug("Updater is disabled, skipping")
@@ -45,8 +56,15 @@ def check_for_update(current_version: str, timeout: float):
         else:  # out of date
             log.error(f"Out of date, newest version is {newest_version} (this is {current_version})")
 
-            with open('resources\\available_version.txt', 'w') as available_version_txt:
-                available_version_txt.write(f'{newest_version}\n{downloads_url}')
+            # save available version for the settings button
+            with open(db_path, 'r+') as db_json:
+                db_data = json.load(db_json)
+                db_data['available_version']['exists'] = True
+                db_data['available_version']['tag'] = newest_version
+                db_data['available_version']['url'] = downloads_url
+                db_json.seek(0)
+                db_json.truncate(0)
+                json.dump(db_data, db_json, indent=4)
 
             print(loc.text("This version ({0}) is out of date (newest version is {1}).").format(current_version, newest_version))
             print(loc.text("Get the update at {0}").format(downloads_url), end='\n\n')

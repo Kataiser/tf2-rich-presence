@@ -1,0 +1,22 @@
+{
+    "settings": {
+        "sentry_level": "Crashes",
+        "wait_time": 5,
+        "map_invalidation_hours": 24,
+        "check_updates": true,
+        "request_timeout": 5,
+        "hide_queued_gamemode": false,
+        "log_level": "Debug",
+        "console_scan_kb": 1000,
+        "class_pic_type": "Icon",
+        "language": "English"
+    },
+    "custom_maps": {},
+    "tb_hashes": [],
+    "has_asked_language": false,
+    "available_version": {
+        "exists": false,
+        "tag": "",
+        "url": ""
+    }
+}
