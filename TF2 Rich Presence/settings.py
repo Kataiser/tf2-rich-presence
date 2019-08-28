@@ -1,6 +1,7 @@
 import functools
 import json
 import os
+import subprocess
 import time
 import tkinter as tk
 import tkinter.ttk as ttk
@@ -281,7 +282,12 @@ class GUI(tk.Frame):
         access_settings_file(save_dict=settings_to_save)
         self.log.info(f"Settings have been saved as: {settings_to_save}")
 
-        restart_message = self.loc.text("If TF2 Rich Presence is currently running, it may need to be restarted for changes to take effect.")
+        processes = str(subprocess.check_output('tasklist /fi "STATUS eq running"', creationflags=0x08000000))  # the creation flag disables a cmd window flash
+        if 'Launch Rich Presence' in processes or 'Launch TF2 with Rich' in processes:
+            restart_message = self.loc.text("TF2 Rich Presence is currently running, so it needs to be restarted for changes to take effect.")
+        else:
+            restart_message = ""
+
         settings_changed_num = len(settings_changed)
         if settings_changed_num == 1:
             messagebox.showinfo(self.loc.text("Save and close"), self.loc.text("1 setting has been changed. {0}").format(restart_message))
