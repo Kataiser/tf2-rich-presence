@@ -94,6 +94,7 @@ def main(version_num=None):
         print("Copied", shutil.copy('README-source.MD', github_repo_path))
         print("Copied", shutil.copy('.travis.yml', github_repo_path))
         print("Copied", shutil.copy('requirements.txt', github_repo_path))
+        print("Copied", shutil.copyfile(f'{github_repo_path}\\TF2 Rich Presence\\DB_default.json', f'{github_repo_path}\\TF2 Rich Presence\\DB.json'))
 
         copy_dir_to_git('test_resources', f'{github_repo_path}\\TF2 Rich Presence\\test_resources')
         copy_dir_to_git('build_tools', f'{github_repo_path}\\TF2 Rich Presence\\build_tools')
