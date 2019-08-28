@@ -149,7 +149,7 @@ class GUI(tk.Frame):
             new_version_name = db_data['available_version']['tag']
             self.new_version_url = db_data['available_version']['url']
 
-            self.update_button_text = tk.StringVar(value=self.loc.text("Download newest version ({0})").format(new_version_name))
+            self.update_button_text = tk.StringVar(value=self.loc.text("Open {0} download page").format(new_version_name))
             self.update_button = ttk.Button(lf_main, textvariable=self.update_button_text, command=self.open_update_page)
             self.update_button.grid(row=9, sticky=tk.W, padx=(20, 40), pady=(0, 12))
 

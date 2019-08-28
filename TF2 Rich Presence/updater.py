@@ -67,7 +67,7 @@ def check_for_update(current_version: str, timeout: float):
                 json.dump(db_data, db_json, indent=4)
 
             print(loc.text("This version ({0}) is out of date (newest version is {1}).").format(current_version, newest_version))
-            print(loc.text("Get the update at {0}").format(downloads_url), end='\n\n')
+            print(loc.text("Get the update with the download button in settings."), end='\n\n')
             print(loc.text("{0} changelog:").format(newest_version))
             print(changelog)
             print(loc.text("(If you're more than one version out of date, there may have been more changes and fixes than this.)"), end='\n\n')
