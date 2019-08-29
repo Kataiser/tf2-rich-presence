@@ -74,6 +74,7 @@ def main(version_num=None):
         print("Copied", shutil.copy('changelog_generator.py', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('Changelogs_source.html', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('maps.json', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy('localization.json', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('DB_default.json', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('APIs', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('main menu.png', f'{github_repo_path}\\TF2 Rich Presence'))
@@ -98,7 +99,6 @@ def main(version_num=None):
 
         copy_dir_to_git('test_resources', f'{github_repo_path}\\TF2 Rich Presence\\test_resources')
         copy_dir_to_git('build_tools', f'{github_repo_path}\\TF2 Rich Presence\\build_tools')
-        copy_dir_to_git('localization', f'{github_repo_path}\\TF2 Rich Presence\\localization')
 
     print("Generating Changelogs.html")
     ratelimit_remaining = 100
@@ -140,12 +140,12 @@ def main(version_num=None):
     new_build_folder_name = f'TF2 Rich Presence {version_num}'
     os.mkdir(new_build_folder_name)
     os.mkdir(f'{new_build_folder_name}\\resources')
-    os.mkdir(f'{new_build_folder_name}\\resources\\localization')
     os.mkdir(f'{new_build_folder_name}\\logs')
     print(f"Created new build folder: {new_build_folder_name}")
 
     missing_files = []
     files_to_copy = [('maps.json', f'{new_build_folder_name}\\resources\\'),
+                     ('localization.json', f'{new_build_folder_name}\\resources\\'),
                      ('DB_default.json', f'{new_build_folder_name}\\resources\\'),
                      ('LICENSE', f'{new_build_folder_name}\\resources\\'),
                      ('main.py', f'{new_build_folder_name}\\resources\\'),
@@ -166,11 +166,6 @@ def main(version_num=None):
                      ('tf2_logo_blurple_wrench.ico', f'{new_build_folder_name}\\resources\\'),
                      ('APIs', f'{new_build_folder_name}\\resources\\'),
                      ('Changelogs.html', f'{new_build_folder_name}\\')]
-
-    # add languages
-    languages = ['English', 'German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian', 'Korean', 'Chinese', 'Japanese']
-    languages_to_copy = [(f'localization\\{lang}.json', f'{new_build_folder_name}\\resources\\') for lang in languages]
-    files_to_copy.extend(languages_to_copy)
 
     # copies files, adding any version numbers
     for file_dest_pair in files_to_copy:
@@ -312,39 +307,39 @@ def main(version_num=None):
             print(f"'{version_num}' not in Changelogs.html", file=sys.stderr)
 
     # warnings for localization
-    language_lines_missing = {}
-    with open('localization\\English.json', 'r', encoding='utf-8') as english_file:
-        english_data = english_file.readlines()
-        english_len = int(len(english_data) / 2)
-    for language in languages:
-        with open(f'localization\\{language}.json', 'r', encoding='utf-8') as language_file:
-            language_len = int(len(language_file.readlines()) / 2)
-        if language_len != english_len:
-            language_lines_missing[language] = english_len - language_len
-    if language_lines_missing:
-        print(f"Languages missing lines: {language_lines_missing}", file=sys.stderr)
-
-    if not language_lines_missing:  # because missing lines would throw off the line numbers
-        language_incorrect_parameters = {}
-        for language in languages:
-            with open(f'localization\\{language}.json', 'r', encoding='utf-8') as language_file:
-                language_data = language_file.readlines()
-            for line_num in range(len(english_data)):
-                if english_data[line_num].count('{0}') != language_data[line_num].count('{0}') or english_data[line_num].count('{1}') != language_data[line_num].count('{1}'):
-                    if language not in language_incorrect_parameters:
-                        language_incorrect_parameters[language] = []
-                    language_incorrect_parameters[language].append(line_num + 1)
-        if language_incorrect_parameters:
-            print(f"Languages lines with an incorrect number of parameters: {pprint.pformat(language_incorrect_parameters)}", file=sys.stderr)
-
-    language_parse_errors = {}
-    for language in languages:
-        try:
-            localization.load_language_file(language)
-        except json.decoder.JSONDecodeError as json_error:
-            language_parse_errors[language] = json_error
-    if len(language_parse_errors) > 0:
-        print(f"Languages with parsing errors:\n{pprint.pformat(language_parse_errors)}", file=sys.stderr)
+    # language_lines_missing = {}
+    # with open('localization\\English.json', 'r', encoding='utf-8') as english_file:
+    #     english_data = english_file.readlines()
+    #     english_len = int(len(english_data) / 2)
+    # for language in languages:
+    #     with open(f'localization\\{language}.json', 'r', encoding='utf-8') as language_file:
+    #         language_len = int(len(language_file.readlines()) / 2)
+    #     if language_len != english_len:
+    #         language_lines_missing[language] = english_len - language_len
+    # if language_lines_missing:
+    #     print(f"Languages missing lines: {language_lines_missing}", file=sys.stderr)
+    #
+    # if not language_lines_missing:  # because missing lines would throw off the line numbers
+    #     language_incorrect_parameters = {}
+    #     for language in languages:
+    #         with open(f'localization\\{language}.json', 'r', encoding='utf-8') as language_file:
+    #             language_data = language_file.readlines()
+    #         for line_num in range(len(english_data)):
+    #             if english_data[line_num].count('{0}') != language_data[line_num].count('{0}') or english_data[line_num].count('{1}') != language_data[line_num].count('{1}'):
+    #                 if language not in language_incorrect_parameters:
+    #                     language_incorrect_parameters[language] = []
+    #                 language_incorrect_parameters[language].append(line_num + 1)
+    #     if language_incorrect_parameters:
+    #         print(f"Languages lines with an incorrect number of parameters: {pprint.pformat(language_incorrect_parameters)}", file=sys.stderr)
+    #
+    # language_parse_errors = {}
+    # for language in languages:
+    #     try:
+    #         localization.load_language_file(language)
+    #     except json.decoder.JSONDecodeError as json_error:
+    #         language_parse_errors[language] = json_error
+    # if len(language_parse_errors) > 0:
+    #     print(f"Languages with parsing errors:\n{pprint.pformat(language_parse_errors)}", file=sys.stderr)
 
 
 # converts a batch file to an exe with Bat To Exe Converter (http://www.f2ko.de/en/b2e.php)

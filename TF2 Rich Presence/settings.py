@@ -25,7 +25,7 @@ class GUI(tk.Frame):
         self.master = master
         check_int_command = self.register(check_int)
 
-        master.title(self.loc.text("TF2 Rich Presence ({tf2rpvnum}) settings"))
+        master.title(self.loc.text("TF2 Rich Presence ({0}) settings").format('{tf2rpvnum}'))
         master.resizable(0, 0)  # disables resizing
         master.geometry("+659+302")  # positions the window kinda near the center of the screen (or perfectly centered if monitor is 1920x1080)
 
