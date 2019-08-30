@@ -101,7 +101,7 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
         old_dir = os.getcwd()
         os.chdir(os.path.abspath('test_resources\\hash_targets'))
 
-        self.assertEqual(logger.generate_hash(), '810286cc')
+        self.assertEqual(logger.generate_hash(), '5d3fe24e')
 
         os.chdir(old_dir)
 
@@ -201,24 +201,26 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
         self.assertGreaterEqual(dimensions[1], 200)
 
     def test_localization(self):
-        # all_lines = copy.deepcopy(list(localization.access_localization_file('English').values()))  # copied to prevent RuntimeError
-        # num_lines_total = len(all_lines)
-        #
-        # for language in ['English', 'German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian', 'Korean', 'Chinese', 'Japanese']:
-        #     localizer = localization.Localizer(language=language)
-        #     num_equal_lines = 0
-        #
-        #     for line in all_lines:
-        #         self.assertNotEqual(localizer.text(line), "")
-        #
-        #         if localizer.text(line) == line:
-        #             num_equal_lines += 1
-        #
-        #     if language == 'English':
-        #         self.assertEqual(num_equal_lines, num_lines_total)
-        #     else:
-        #         self.assertLess(num_equal_lines, num_lines_total / 2)
-        self.assertTrue(True)
+        all_keys = localization.access_localization_file().keys()
+        english_lines = [localization.access_localization_file()[key]['English'] for key in all_keys]
+        num_lines_total = len(english_lines)
+
+        for language in ['English', 'German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian', 'Korean', 'Chinese', 'Japanese']:
+            localizer = localization.Localizer(language=language)
+            num_equal_lines = 0
+
+            for line in english_lines:
+                self.assertNotEqual(localizer.text(line), "")
+                self.assertEqual(localizer.text(line).count('{0}'), line.count('{0}'))
+                self.assertEqual(localizer.text(line).count('{1}'), line.count('{1}'))
+
+                if localizer.text(line) == line:
+                    num_equal_lines += 1
+
+            if language == 'English':
+                self.assertEqual(num_equal_lines, num_lines_total)
+            else:
+                self.assertLess(num_equal_lines, num_lines_total / 2)
 
 
 class TestTF2RichPresenseSimulated(unittest.TestCase):
