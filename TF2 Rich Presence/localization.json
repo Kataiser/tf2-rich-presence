@@ -657,20 +657,6 @@
         "Chinese": "工程师",
         "Japanese": "エンジニア"
     },
-    "2320894410": {
-        "English": "TF2 Rich Presence ({0}) settings",
-        "German": "TF2 Rich Presence ({0}) Einstellungen",
-        "French": "TF2 Rich Presence ({0}) réglages",
-        "Spanish": "Configuración de TF2 Presencia Rica ({0})",
-        "Portuguese": "TF2 Rich Presença ({0}) configurações",
-        "Italian": "Impostazioni TF2 Rich Presence ({0})",
-        "Dutch": "TF2 instellingen voor rijke aanwezigheid ({0})",
-        "Polish": "Ustawienia TF2 Rich Presence ({0})",
-        "Russian": "TF2 Богатое присутствие ({0}) Настройки TF2 Настройки",
-        "Korean": "팀포 2 부자재({0})설정",
-        "Chinese": "TF2富存在({0})设置",
-        "Japanese": "TF2リッチプレゼンス({0})の設定"
-    },
     "2340298680": {
         "English": "Critical",
         "German": "Kritisch",
@@ -1972,5 +1958,19 @@
         "Korean": "스",
         "Chinese": "童子军",
         "Japanese": "スカウト"
+    },
+    "2858683122": {
+        "English": "TF2 Rich Presence ({0}) settings",
+        "German": "TF2 Rich Presence ({0}) Einstellungen",
+        "French": "TF2 Rich Presence ({0}) réglages",
+        "Spanish": "Configuración de TF2 Presencia Rica ({0})",
+        "Portuguese": "TF2 Rich Presença ({0}) configurações",
+        "Italian": "Impostazioni TF2 Rich Presence ({0})",
+        "Dutch": "TF2 instellingen voor rijke aanwezigheid ({0})",
+        "Polish": "Ustawienia TF2 Rich Presence ({0})",
+        "Russian": "TF2 Богатое присутствие ({0}) Настройки TF2 Настройки",
+        "Korean": "팀포 2 부자재({0})설정",
+        "Chinese": "TF2富存在({0})设置",
+        "Japanese": "TF2リッチプレゼンス({0})の設定"
     }
 }

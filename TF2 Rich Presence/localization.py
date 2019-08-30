@@ -54,10 +54,14 @@ def access_localization_file(append=None) -> dict:
     if not append:
         return localization_data
     else:
-        localization_data[append[0]] = append[1]
+        localization_data[append[0]] = {}
+        localization_data[append[0]]['English'] = append[1]
+
+        for language in ['German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian', 'Korean', 'Chinese', 'Japanese']:
+            localization_data[append[0]][language] = ""
 
         with open(localization_file_path, 'w', encoding='utf-8') as localization_file:
-            json.dump(localization_file, localization_file, indent=4, ensure_ascii=False)
+            json.dump(localization_data, localization_file, indent=4, ensure_ascii=False)
 
 
 if __name__ == '__main__':
