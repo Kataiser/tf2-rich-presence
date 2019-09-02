@@ -218,7 +218,7 @@ def main(version_num=None):
                         f"\nLatest commit: {latest_commit}")
 
     # copies the python interpreter
-    python_source = os.path.abspath('python-3.7.1-embed-win32')
+    python_source = os.path.abspath('python-3.7.4-embed-win32')
     python_target = os.path.abspath(f'{new_build_folder_name}\\resources\\python')
     print(f"Copying from {python_source}\n\tto {python_target}: ", end='')
     subprocess.run(f'xcopy \"{python_source}\" \"{python_target}\\\" /E /Q')
