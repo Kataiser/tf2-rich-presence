@@ -73,6 +73,7 @@ class ProcessScanner:
     # a mess of logic that gives process info from a PID
     def get_info_from_pid(self, pid: int, return_data: tuple = ('path', 'time')) -> dict:
         p_info = {'running': False, 'path': None, 'time': None}
+        p_info_nones = {'running': False, 'path': None, 'time': None}
 
         if pid is None:
             return p_info
@@ -97,6 +98,8 @@ class ProcessScanner:
                 self.log.error(f"psutil error for {process}: {traceback.format_exc()}")
             except Exception:
                 self.log.error(f"psutil error: {traceback.format_exc()}")
+
+            return p_info_nones
 
         return p_info
 
