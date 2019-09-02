@@ -179,7 +179,8 @@ def read_truncated_file(path: str, limit: int = 200000) -> str:
 
 # generates a short hash string from several source files
 def generate_hash() -> str:
-    files_to_hash: List[str] = ['main.py', 'configs.py', 'custom_maps.py', 'logger.py', 'updater.py', 'launcher.py', 'settings.py', 'maps.json', 'localization.json', 'APIs']
+    files_to_hash: List[str] = ['main.py', 'configs.py', 'custom_maps.py', 'logger.py', 'updater.py', 'launcher.py', 'settings.py', 'detect_system_language.py', 'maps.json',
+                                'localization.json', 'APIs']
     files_to_hash_text: List = []
     build_folder = [item for item in os.listdir('.') if item.startswith('TF2 Rich Presence v') and os.path.isdir(item)]
 
