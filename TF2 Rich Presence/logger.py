@@ -41,7 +41,7 @@ class Log:
                 os.mkdir('logs')
 
             self.log_levels_allowed = [level for level in self.log_levels if self.log_levels.index(level) >= self.log_levels.index(self.log_level)]
-            self.log_file = open(self.filename, 'a')
+            self.log_file = open(self.filename, 'a', encoding='utf-8')
         else:
             self.log_levels_allowed = self.log_levels
 
@@ -51,7 +51,7 @@ class Log:
             if old_filename != self.filename and 'gzip' not in old_filename:
                 if self.enabled:
                     self.log_file.close()
-                    self.log_file = open(self.filename, 'a')
+                    self.log_file = open(self.filename, 'a', encoding='utf-8')
 
     # adds a line to the current log file
     def write_log(self, level: str, message_out: str):
@@ -115,7 +115,7 @@ class Log:
     # write unsaved log lines to file
     def save_log(self):
         self.log_file.close()
-        self.log_file = open(self.filename, 'a')
+        self.log_file = open(self.filename, 'a', encoding='utf-8')
         self.unsaved_lines = 0
 
     # deletes older log files
@@ -168,7 +168,7 @@ class Log:
 
 # reads a text file, truncating it to the last 'limit' bytes (default: 200KB) if it's over that size
 def read_truncated_file(path: str, limit: int = 200000) -> str:
-    with open(path, 'r', errors='replace') as file_to_truncate:
+    with open(path, 'r', errors='replace', encoding='utf-8') as file_to_truncate:
         file_size: int = os.stat(path).st_size
         if file_size > int(limit * 1.1):
             file_to_truncate.seek(file_size - limit)
