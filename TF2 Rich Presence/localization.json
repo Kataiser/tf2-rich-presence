@@ -1972,5 +1972,19 @@
         "Korean": "팀포 2 부자재({0})설정",
         "Chinese": "TF2富存在({0})设置",
         "Japanese": "TF2リッチプレゼンス({0})の設定"
+    },
+    "2125859177": {
+        "English": "Queued for a party's match",
+        "German": "Warteschlange für das Spiel einer Gruppe",
+        "French": "En file d'attente pour le match d'une fête",
+        "Spanish": "Cola para el partido de una fiesta",
+        "Portuguese": "Na fila para o jogo de uma festa",
+        "Italian": "In fila per la partita di una festa",
+        "Dutch": "In de rij staan voor een feestje",
+        "Polish": "Stoi w kolejce do meczu na przyjęcie",
+        "Russian": "Очередь на матч вечеринки.",
+        "Korean": "파티 경기 대기 중",
+        "Chinese": "排队等候派对的比赛",
+        "Japanese": "パーティーの試合のキューに入れられた"
     }
 }
