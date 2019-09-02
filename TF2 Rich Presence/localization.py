@@ -1,4 +1,5 @@
 import functools
+import inspect
 import json
 import os
 import zlib
@@ -28,7 +29,10 @@ class Localizer:
                     json.dump(db_data, db_json, indent=4)
 
                 if self.log:
-                    self.log.error(f"\"{english_text}\" not in localization")
+                    frame = inspect.stack()[1]
+                    module = inspect.getmodule(frame[0])
+                    caller_filename = os.path.basename(module.__file__)
+                    self.log.error(f"\"{english_text}\" not in localization (called by {caller_filename})")
 
             if self.appending:  # only used for development
                 access_localization_file(append=(english_text_adler32, english_text))
