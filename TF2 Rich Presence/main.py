@@ -411,7 +411,7 @@ class TF2RichPresense:
 
         if not silent:
             print('\n{0}\n{1}'.format(formatted_exception, self.loc.text("TF2 Rich Presence has crashed, and the error has been reported to the developer.")))
-            print(self.loc.text("Consider opening an issue at {0})").format("https://github.com/Kataiser/tf2-rich-presence/issues"))
+            print(self.loc.text("(Consider opening an issue at {0})").format("https://github.com/Kataiser/tf2-rich-presence/issues"))
             print('{0}\n'.format(self.loc.text("Restarting in 2 seconds...")))
 
         self.log.report_to_sentry(formatted_exception)
