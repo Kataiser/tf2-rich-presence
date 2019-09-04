@@ -1,8 +1,11 @@
+# Copyright (C) 2019  Kataiser
+# https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
+
 import json
 import os
 import time
 import traceback
-from typing import TextIO, Dict, KeysView, List, Tuple, Union
+from typing import Dict, KeysView, List, Tuple, Union
 
 import requests
 from requests import Response

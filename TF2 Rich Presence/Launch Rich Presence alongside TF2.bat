@@ -1,4 +1,7 @@
 @echo off
+REM Copyright (C) 2019  Kataiser
+REM https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
+
 TITLE TF2 Rich Presence {tf2rpvnum}
 
 "%~dp0\resources\python\python.exe" -OO "%~dp0\resources\welcomer.py" --v 2

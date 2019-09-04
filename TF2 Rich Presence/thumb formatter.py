@@ -1,3 +1,6 @@
+# Copyright (C) 2019  Kataiser
+# https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
+
 from PIL import Image
 
 import custom_maps

@@ -1,3 +1,6 @@
+# Copyright (C) 2019  Kataiser
+# https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
+
 import hashlib
 import os
 import random
