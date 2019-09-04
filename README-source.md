@@ -27,3 +27,9 @@ For faster launching, you can add the first .exe to your taskbar or start menu, 
 ## Changelogs
 - [Changelogs.html](https://htmlpreview.github.io/?https://github.com/Kataiser/tf2-rich-presence/blob/master/Changelogs.html)
 - [Releases](https://github.com/Kataiser/tf2-rich-presence/releases)
+
+## Building from source
+For making and testing changes, or simply always running the most up-to-date code. (Windows only)
+1. Either clone the repo or [download the source](https://github.com/Kataiser/tf2-rich-presence/archive/master.zip).
+	- Optional: copy the entire source to another location, and put the files outside of `TF2 Rich Presence` into that folder.
+2. Make sure the `python` command points to Python >= 3.7 and run `python build.py`. Enter `n` at the prompt (unless you did the optional step).
