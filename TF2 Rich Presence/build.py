@@ -5,7 +5,6 @@ import compileall
 import datetime
 import json
 import os
-import pprint
 import shutil
 import subprocess
 import sys
@@ -14,9 +13,7 @@ import time
 import requests
 
 import changelog_generator
-import localization
 import logger
-import settings
 
 
 def main(version_num=None):

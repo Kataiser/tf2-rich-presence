@@ -107,7 +107,7 @@ def lowercase_keys(dictionary):
     for key in dictionary.keys():
         dictionary[key.lower()] = dictionary.pop(key)
 
-        if type(dictionary[key.lower()]) is dict or type(dictionary[key.lower()]) is list:
+        if isinstance(dictionary[key.lower()], dict) or isinstance(dictionary[key.lower()], list):
             dictionary[key.lower()] = lowercase_keys(dictionary[key.lower()])
 
     return dictionary

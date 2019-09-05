@@ -130,7 +130,6 @@ class ProcessScanner:
 
 if __name__ == '__main__':
     import pprint
-    import logger
 
     test_log = logger.Log()
     test_log.to_stderr = True

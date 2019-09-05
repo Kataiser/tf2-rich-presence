@@ -1,7 +1,6 @@
 # Copyright (C) 2019  Kataiser
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 
-import copy
 import io
 import os
 import shutil
@@ -267,7 +266,7 @@ class TestTF2RichPresenseSimulated(unittest.TestCase):
         keyboard.press_and_release('tab')
         keyboard.release('alt')
         time.sleep(0.2)
-        for i in range(3):
+        for _ in range(3):
             keyboard.press_and_release('d')
             time.sleep(0.2)
         keyboard.press_and_release('1')
@@ -289,7 +288,7 @@ class TestTF2RichPresenseSimulated(unittest.TestCase):
         keyboard.press_and_release('tab')
         keyboard.release('alt')
         time.sleep(0.2)
-        for i in range(3):
+        for _ in range(3):
             keyboard.press_and_release('d')
             time.sleep(0.2)
         keyboard.press_and_release('2')

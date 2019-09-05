@@ -211,7 +211,7 @@ def generate_hash() -> str:
 
 
 # runs Windows' "compact" command on a file.
-def compact_file(target_file_path: str, guarantee: bool = False) -> str:
+def compact_file(target_file_path: str, guarantee: bool = False) -> Union[str, None]:
     if guarantee or random.random() < 0.25:
         before_compact_time = time.perf_counter()
         compact_out: str = subprocess.run(f'compact /c /f /i "{target_file_path}"', stdout=subprocess.PIPE).stdout.decode('utf-8', 'replace')
