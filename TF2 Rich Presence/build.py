@@ -221,6 +221,7 @@ def main(version_num=None):
     python_source = os.path.abspath('python-3.7.4-embed-win32')
     python_target = os.path.abspath(f'{new_build_folder_name}\\resources\\python')
     print(f"Copying from {python_source}\n\tto {python_target}: ", end='')
+    assert os.path.isdir(python_source) and not os.path.isdir(python_target)
     subprocess.run(f'xcopy \"{python_source}\" \"{python_target}\\\" /E /Q')
 
     print("Deleting psutil and tkinter tests")
@@ -239,9 +240,10 @@ def main(version_num=None):
     exe_path = f'tf2_rich_presence_{version_num}_self_extracting.exe'
     zip_path = f'tf2_rich_presence_{version_num}.zip'
     package7zip_command_exe_1 = f'build_tools\\7za.exe u {exe_path} -up1q0r2x1y2z1w2 "{new_build_folder_name}\\"'
-    package7zip_command_exe_2 = f'-sfx7z.sfx -ssw -mx=9 -myx=9 -mmt=2 -m0=LZMA2:d=8m'
+    package7zip_command_exe_2 = '-sfx7z.sfx -ssw -mx=9 -myx=9 -mmt=2 -m0=LZMA2:d=8m'
     package7zip_command_zip = f'build_tools\\7za.exe u {zip_path} -up1q0r2x1y2z1w2 "{new_build_folder_name}\\" -ssw -mx=9 -m0=Deflate64 -mmt=2'
     print(f"Creating tf2_rich_presence_{version_num}_self_extracting.exe...")
+    assert len(version_num) <= 10 and 'v' in version_num and '.' in version_num
     subprocess.run(f'{package7zip_command_exe_1} {package7zip_command_exe_2}', stdout=subprocess.DEVNULL)
     print(f"Creating tf2_rich_presence_{version_num}.zip...")
     subprocess.run(package7zip_command_zip, stdout=subprocess.DEVNULL)
@@ -315,9 +317,10 @@ def convert_bat_to_exe(batch_location: str, vnum: str, icon_path: str):
     exe_location = batch_location.replace('.bat', '.exe')
     icon_location = os.path.abspath(icon_path)
     version_num_windows = vnum[1:].replace('.', ',') + ',0' * (3 - vnum.count('.'))
-    bat2exe_command_1 = f'build_tools\\Bat_To_Exe_Converter.exe -bat "{batch_location}" -save "{exe_location}" -icon "{icon_location}" -x64 -fileversion "{version_num_windows}"'
+    bat2exe_command_1 = f'build_tools\\Bat_To_Exe_Converter.exe -bat "{batch_location}" -save "{exe_location}" -icon "{icon_location}" -fileversion "{version_num_windows}"'
     bat2exe_command_2 = f'-productversion "{version_num_windows}" -company "Kataiser" -productname "TF2 Rich Presence" -description "Discord Rich Presence for Team Fortress 2"'
     print(f"Creating {exe_location}...")
+    assert os.path.isfile(batch_location) and os.path.isfile(icon_path) and os.path.isfile('build_tools\\Bat_To_Exe_Converter.exe')
     subprocess.run(f'{bat2exe_command_1} {bat2exe_command_2}')
     os.remove(batch_location)
     print(f"Deleted {batch_location}")
