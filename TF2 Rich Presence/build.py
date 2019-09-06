@@ -251,15 +251,20 @@ def main(version_num=None):
     # creates README.md from README-source.md
     if os.path.exists('README-source.md'):
         readme_source_exists = True
-        exe_size_mb = round(os.stat(exe_path).st_size / 1048576, 1)  # 1048576 is 1024^2
-        zip_size_mb = round(os.stat(zip_path).st_size / 1048576, 1)
-        with open('README-source.md', 'r') as readme_md_source:
-            modified_readme_md = readme_md_source.read().replace('{tf2rpvnum}', version_num).replace('{installer_size}', str(exe_size_mb)).replace('{zip_size}', str(zip_size_mb))
-        with open('README.md', 'w') as readme_md_target:
-            readme_md_target.write(modified_readme_md)
-        print("Created README.md from modified README-source.md")
-        if github_repo_path != 'n':
-            print("Copied", shutil.copy('README.MD', github_repo_path))
+        with open('README.md', 'r') as old_readme_md:
+            old_readme_has_this_version = version_num in old_readme_md.read()
+        if old_readme_has_this_version:
+            print("Old README.md is not outdated, skipping modifying it")
+        else:
+            exe_size_mb = round(os.stat(exe_path).st_size / 1048576, 1)  # 1048576 is 1024^2
+            zip_size_mb = round(os.stat(zip_path).st_size / 1048576, 1)
+            with open('README-source.md', 'r') as readme_md_source:
+                modified_readme_md = readme_md_source.read().replace('{tf2rpvnum}', version_num).replace('{installer_size}', str(exe_size_mb)).replace('{zip_size}', str(zip_size_mb))
+            with open('README.md', 'w') as readme_md_target:
+                readme_md_target.write(modified_readme_md)
+            print("Created README.md from modified README-source.md")
+            if github_repo_path != 'n':
+                print("Copied", shutil.copy('README.MD', github_repo_path))
     else:
         readme_source_exists = False
 
