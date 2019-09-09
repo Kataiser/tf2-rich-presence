@@ -27,7 +27,12 @@ def launch():
 
         system_locale = locale.windows_locale[ctypes.windll.kernel32.GetUserDefaultUILanguage()]
         system_language_code = system_locale.split('_')[0]
-        system_language = language_codes[system_language_code]
+
+        try:
+            system_language = language_codes[system_language_code]
+        except KeyError:
+            log.error(f"System language code {system_language_code} is not a localized language, defaulting to English")
+            system_language = 'English'
 
         if settings.get('language') != system_language:
             log.info(f"System language ({system_locale}, {system_language}) != settings language ({settings.get('language')}), asking to change")
