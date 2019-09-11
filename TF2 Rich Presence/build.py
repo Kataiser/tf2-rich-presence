@@ -317,7 +317,7 @@ def main(version_num=None):
             print(f"'{version_num}' not in Changelogs.html", file=sys.stderr)
 
 
-# converts a batch file to an exe with Bat To Exe Converter (http://www.f2ko.de/en/b2e.php)
+# converts a batch file to an exe with Bat To Exe Converter (https://web.archive.org/web/20190513133413/http://www.f2ko.de/en/b2e.php)
 def convert_bat_to_exe(batch_location: str, vnum: str, icon_path: str):
     exe_location = batch_location.replace('.bat', '.exe')
     icon_location = os.path.abspath(icon_path)
