@@ -224,10 +224,6 @@ def main(version_num=None):
     assert os.path.isdir(python_source) and not os.path.isdir(python_target)
     subprocess.run(f'xcopy \"{python_source}\" \"{python_target}\\\" /E /Q')
 
-    print("Deleting psutil and tkinter tests")
-    shutil.rmtree(f'{new_build_folder_name}\\resources\\python\\packages\\psutil\\tests')
-    shutil.rmtree(f'{new_build_folder_name}\\resources\\python\\tkinter\\test')
-
     print("Compiling PYCs")
     compileall.compile_dir(f'{new_build_folder_name}\\resources', optimize=2, quiet=True)
 
