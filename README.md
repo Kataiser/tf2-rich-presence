@@ -34,4 +34,4 @@ For making and testing changes, or simply always running the most up-to-date cod
 2. Copy the entire source to another location and put the files outside of `TF2 Rich Presence` into that folder.
 3. Extract `TF2 Rich Presence\python-3.7.4-embed-win32.zip`.
 4. Make sure the `python` and `pip` commands point to Python >= 3.7.
-4. From within `TF2 Rich Presence`, run `pip install -r requirements.txt` and `python build.py`. Enter `n` at the prompt (unless you did the optional step).
+4. From within `TF2 Rich Presence`, run `pip install -r requirements.txt` and `python build.py`.
