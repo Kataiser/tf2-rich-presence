@@ -6,7 +6,6 @@ import json
 import os
 import sys
 
-sys.path.append(os.path.abspath(os.path.join('resources', 'python', 'packages')))
 sys.path.append(os.path.abspath(os.path.join('resources')))
 import localization
 

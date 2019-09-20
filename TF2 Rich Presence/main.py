@@ -37,6 +37,8 @@ import logger
 import processes
 import settings
 
+__author__ = "Kataiser"
+
 
 def launch():
     log_init = logger.Log()
