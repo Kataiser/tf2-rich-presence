@@ -9,14 +9,14 @@ from bs4 import BeautifulSoup
 
 
 def main(silent=False):
-    # watch out for rate limiting (60 requests per hour, this uses 2 per run)
+    # watch out for rate limiting (60 requests per hour, this uses 3 per run)
 
     with open('Changelogs_source.html', 'r') as changelogs_source_html:
         source_html = changelogs_source_html.read()
 
-    api_response = requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/releases')
-    ratelimit_remaining = int(api_response.headers['X-RateLimit-Remaining']) - 1
-    api_response_json = api_response.json()
+    api_response = requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/releases', headers={'User-Agent': 'Kataiser-TF2-Rich-Presence'})
+    api_response_p2 = requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/releases', headers={'User-Agent': 'Kataiser-TF2-Rich-Presence'}, params={'page': '2'})
+    api_response_json = api_response.json() + api_response_p2.json()
     check_rate_limited(str(api_response_json))
     releases = []
     bodies = []
@@ -36,7 +36,9 @@ def main(silent=False):
 
     bodies_combined = '\n\nSPLITTER\n\n'.join(bodies)
 
-    as_html = requests.post('https://api.github.com/markdown/raw', data=bodies_combined, headers={'Content-Type': 'text/plain'}).text.replace('h2', 'h3')
+    as_html_response = requests.post('https://api.github.com/markdown/raw', data=bodies_combined, headers={'User-Agent': 'Kataiser-TF2-Rich-Presence', 'Content-Type': 'text/plain'})
+    as_html = as_html_response.text.replace('h2', 'h3')
+    ratelimit_remaining = int(as_html_response.headers['X-RateLimit-Remaining']) - 1
     check_rate_limited(as_html)
 
     htmls = as_html.split('\n<p>SPLITTER</p>\n')
@@ -78,4 +80,4 @@ def check_rate_limited(text):
 
 
 if __name__ == '__main__':
-    main()
+    print(main())
