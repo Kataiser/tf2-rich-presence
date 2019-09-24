@@ -56,6 +56,9 @@ class Log:
                     self.log_file.close()
                     self.log_file = open(self.filename, 'a', encoding='utf-8')
 
+        if not os.access('DB.json', os.W_OK) and not os.access(os.path.join('resources', 'DB.json'), os.W_OK):
+            self.error("DB.json can't be written to. This could cause crashes")
+
     # adds a line to the current log file
     def write_log(self, level: str, message_out: str):
         if self.enabled:

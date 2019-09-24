@@ -64,8 +64,8 @@ def steam_config_file(log, exe_location: str) -> list:
             with open(global_config_file_path, 'r+', errors='replace') as global_config_file:
                 global_config_file_read = global_config_file.read()
 
-                if '-condebug' in global_config_file_read:
-                    log.debug("-condebug found, parsing file")
+                if '-condebug' in global_config_file_read and '"440"' in global_config_file_read:
+                    log.debug("-condebug and \"440\" found, parsing file")
                     parsed = lowercase_keys(vdf.loads(global_config_file_read))
                 else:
                     continue

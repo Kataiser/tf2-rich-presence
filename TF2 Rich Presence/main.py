@@ -51,7 +51,6 @@ def launch():
         log_init.info(f'Log level: {log_init.log_level}')
         log_init.cleanup(20)
         log_init.debug(f"CPU: {psutil.cpu_count(logical=False)} cores, {psutil.cpu_count()} threads")
-        log_init.debug(f"CPU frequency info: {psutil.cpu_freq()}")
 
         platform_info = {'architecture': platform.architecture, 'machine': platform.machine, 'system': platform.system, 'platform': platform.platform,
                          'processor': platform.processor, 'win32_ver': platform.win32_ver, 'python_version_tuple': platform.python_version_tuple}
@@ -108,7 +107,11 @@ class TF2RichPresense:
     def run(self):
         while True:
             current_settings = settings.access_settings_file()
-            self.log.debug(f"Current settings (default: {current_settings == settings.get_setting_default(return_all=True)}): {current_settings}")
+            if current_settings == settings.get_setting_default(return_all=True):
+                self.log.debug(f"Current settings: {current_settings}")
+            else:
+                self.log.debug("Current settings are default")
+
             self.loop_body()
 
             # rich presence only updates every 15 seconds, but it listens constantly so sending every 5 (by default) seconds is fine
@@ -301,7 +304,6 @@ class TF2RichPresense:
         # defaults
         current_map: str = ''
         current_class: str = ''
-        build_number: Union[str, None] = None
 
         match_types: Dict[str, str] = {'match group 12v12 Casual Match': 'Casual', 'match group MvM Practice': 'MvM (Boot Camp)', 'match group MvM MannUp': 'MvM (Mann Up)',
                                        'match group 6v6 Ladder Match': 'Competitive'}
@@ -314,7 +316,6 @@ class TF2RichPresense:
         consolelog_filename: Union[bytes, str] = console_log_path
         self.log.debug(f"Looking for console.log at {consolelog_filename}")
         self.log.console_log_path = consolelog_filename
-        self.log.debug("Set console_log_path in logger")
 
         if not os.path.exists(consolelog_filename):
             self.log.error(f"console.log doesn't exist, issuing warning (files/dirs in /tf/: {os.listdir(os.path.dirname(console_log_path))})")
@@ -383,10 +384,6 @@ class TF2RichPresense:
                 current_class = 'Not queued'
                 line_used = line
 
-            if 'Build:' in line:
-                build_number = line[7:-1]
-
-        self.log.debug(f"TF2 build number: {build_number}")
         self.log.debug(f"Got '{current_map}' and '{current_class}' from this line: '{line_used[:-1]}'")
         return current_map, current_class
 
