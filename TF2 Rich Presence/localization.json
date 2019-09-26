@@ -1986,5 +1986,19 @@
         "Korean": "파티 경기 대기 중",
         "Chinese": "排队等候派对的比赛",
         "Japanese": "パーティーの試合のキューに入れられた"
+    },
+    "2742094613": {
+        "English": "Couldn't manually report logs",
+        "German": "Manuelles Berichten von Protokollen ist nicht möglich",
+        "French": "Impossible de rapporter manuellement les journaux",
+        "Spanish": "No podía reportar manualmente los registros",
+        "Portuguese": "Não foi possível reportar manualmente os registos",
+        "Italian": "Non è stato possibile segnalare manualmente i log",
+        "Dutch": "Kon niet handmatig logs rapporteren",
+        "Polish": "Nie mogłem ręcznie raportować logów",
+        "Russian": "Невозможно было вручную сообщать журналы",
+        "Korean": "로그를 수동으로 보고할 수 없음",
+        "Chinese": "无法手动报告日志",
+        "Japanese": "手動でログを報告できなかった"
     }
 }

@@ -13,6 +13,8 @@ import webbrowser
 from tkinter import messagebox, simpledialog
 from typing import Any, Union
 
+import sentry_sdk
+
 import localization
 import logger
 
@@ -327,22 +329,19 @@ class GUI(tk.Frame):
             self.log.info(f"Manually reporting log to Sentry (reason: \"{reason}\")")
             before_report_time = time.perf_counter()
 
-            import raven
-            import launcher
-
-            log_data = logger.read_truncated_file(self.log.filename, limit=15000)  # max data length seems to be about 16KB
-
-            sentry_client_manual = raven.Client(dsn=launcher.get_api_key('sentry'),
-                                                release='{tf2rpvnum}',
-                                                string_max_length=16000,
-                                                processors=('raven.processors.SanitizePasswordsProcessor',))
-            sentry_client_manual.captureMessage(f"MANUALLY REPORTED LOG: {self.log.filename}", level='info', extra={'reason': reason, 'log': log_data})
-
-            report_elapsed = round(time.perf_counter() - before_report_time, 1)
-            self.log.debug(f"Successfully reported log (took {report_elapsed} seconds)")
-            self.report_button_text.set(self.loc.text("Successfully reported logs"))
-            self.report_button.state(['disabled'])
-            self.ok_button.focus_set()
+            try:
+                sentry_sdk.capture_message(f"MANUALLY REPORTED LOG (reason: \"{reason}\")", level='info')
+            except Exception:
+                self.log.error(f"Couldn't manually report log: {traceback.format_exc()}")
+                self.report_button_text.set(self.loc.text("Couldn't manually report logs"))
+                self.report_button.state(['disabled'])
+                self.ok_button.focus_set()
+            else:
+                report_elapsed = round(time.perf_counter() - before_report_time, 1)
+                self.log.debug(f"Successfully reported log (took {report_elapsed} seconds)")
+                self.report_button_text.set(self.loc.text("Successfully reported logs"))
+                self.report_button.state(['disabled'])
+                self.ok_button.focus_set()
 
     def open_update_page(self):
         webbrowser.open(self.new_version_url)

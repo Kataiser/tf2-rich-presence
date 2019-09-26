@@ -107,12 +107,6 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
 
         os.chdir(old_dir)
 
-    def test_read_truncated_file(self):
-        with open('test_resources\\correct_file_ending.txt', 'r') as correct_file_ending_file:
-            correct_file_ending_text = correct_file_ending_file.read()
-
-        self.assertTrue(logger.read_truncated_file('test_resources\\console_queued_casual.log', limit=1000) == correct_file_ending_text)
-
     def test_access_github_api(self):
         newest_version, downloads_url, changelog = updater.access_github_api(10)
         self.assertTrue(newest_version.startswith('v') and '.' in newest_version)

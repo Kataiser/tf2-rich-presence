@@ -24,7 +24,7 @@ import os
 import platform
 import time
 import traceback
-from typing import Dict, Union, TextIO, Any, List, Tuple
+from typing import Any, Dict, List, TextIO, Tuple, Union
 
 import psutil
 from discoIPC import ipc
@@ -67,8 +67,6 @@ def launch():
         app.run()
     except (KeyboardInterrupt, SystemExit):
         raise SystemExit
-    except Exception:
-        app.handle_crash()
 
 
 class TF2RichPresense:
@@ -261,7 +259,6 @@ class TF2RichPresense:
 
             if not self.client_connected:
                 self.log.critical("self.client is disconnected when it shouldn't be")
-                self.log.report_to_sentry("self.client disconnect")
         elif not p_data['Discord']['running']:
             self.test_state = 'no discord'
             self.log.info(f"Discord isn't running (mentioning to user: {self.should_mention_discord})")
@@ -418,21 +415,6 @@ class TF2RichPresense:
         else:
             return ""
 
-    # displays and reports current traceback
-    def handle_crash(self, silent=False):
-        formatted_exception = traceback.format_exc()
-        self.log.critical(formatted_exception)
-
-        if not silent:
-            print('\n{0}\n{1}'.format(formatted_exception, self.loc.text("TF2 Rich Presence has crashed, and the error has been reported to the developer.")))
-            print(self.loc.text("(Consider opening an issue at {0})").format("https://github.com/Kataiser/tf2-rich-presence/issues"))
-            print('{0}\n'.format(self.loc.text("Restarting in 2 seconds...")))
-
-        self.log.report_to_sentry(formatted_exception)
-        if not silent:
-            time.sleep(2)
-        raise SystemExit
-
 
 # alerts the user that they don't seem to have -condebug
 def no_condebug_warning():
@@ -452,5 +434,4 @@ def no_condebug_warning():
 
 
 if __name__ == '__main__':
-    # self.log.sentry_enabled = False
     launch()

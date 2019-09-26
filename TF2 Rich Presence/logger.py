@@ -10,12 +10,10 @@ import sys
 import time
 import traceback
 from operator import itemgetter
-from typing import Union, List, BinaryIO
+from typing import BinaryIO, List, Union
 
-import raven
-from raven import breadcrumbs
+import sentry_sdk
 
-import launcher
 import settings
 
 
@@ -38,6 +36,10 @@ class Log:
         self.log_levels: list = ['Debug', 'Info', 'Error', 'Critical', 'Off']
         self.log_level: str = settings.get('log_level')
         self.unsaved_lines = 0
+
+        # set the user in Sentry, since log filename is no longer sent
+        with sentry_sdk.configure_scope() as scope:
+            scope.user = {'username': f'{user_pc_name}_{user_identifier}'}
 
         if self.enabled:
             if not os.path.isdir('logs'):
@@ -72,7 +74,7 @@ class Log:
             full_line: str = f"[{int(time.time())} +{time_since_last}] {level}: {message_out}\n"
 
             # log breadcrumb to Sentry
-            breadcrumbs.record(message=full_line, level=level.lower().replace('critical', 'fatal'))
+            sentry_sdk.add_breadcrumb(message=full_line, level=level.lower().replace('critical', 'fatal'))
 
             try:
                 self.log_file.write(full_line)
@@ -111,7 +113,7 @@ class Log:
             self.write_log('ERROR', message_in)
 
         if self.sentry_level == 'All errors':
-            self.report_to_sentry(f"Reporting non-critical ERROR: {message_in}")
+            sentry_sdk.capture_message(f"Reporting non-critical ERROR: {message_in}")
 
     # a log with a level of CRITICAL (uncaught, fatal errors, probably sent to Sentry)
     def critical(self, message_in):
@@ -144,43 +146,6 @@ class Log:
             overshoot = max_logs - len(all_logs_sorted)
 
         self.debug(f"Deleted {len(deleted)} log(s): {deleted}")
-
-    # uses raven (https://github.com/getsentry/raven-python) to report the current exception to Sentry (https://sentry.io/)
-    def report_to_sentry(self, tb: str):
-        already_reported = launcher.exc_already_reported(tb)
-
-        if self.sentry_level != 'Never' and launcher.sentry_enabled and not already_reported:
-            self.info(f"Reporting crash to Sentry from logger")
-
-            try:
-                if self.console_log_path:
-                    console_log_to_report = read_truncated_file(self.console_log_path, limit=4000)
-                else:
-                    console_log_to_report = str(None)
-
-                sentry_client = raven.Client(dsn=launcher.get_api_key('sentry'),
-                                             release='{tf2rpvnum}',
-                                             string_max_length=4100,
-                                             processors=('raven.processors.SanitizePasswordsProcessor',))
-
-                sentry_client.captureMessage(f'{self.filename}\n{tb}', level='fatal', extra={'console.log': console_log_to_report})
-            except Exception as err:
-                self.error(f"Couldn't report crash to Sentry: {err}")
-        else:
-            self.debug("Not reporting to Sentry, reason(s): {}".format({'sentry_level': self.sentry_level,
-                                                                        'sentry_enabled': launcher.sentry_enabled,
-                                                                        'already_reported': already_reported}))
-
-
-# reads a text file, truncating it to the last 'limit' bytes (default: 200KB) if it's over that size
-def read_truncated_file(path: str, limit: int = 200000) -> str:
-    with open(path, 'r', errors='replace', encoding='utf-8') as file_to_truncate:
-        file_size: int = os.stat(path).st_size
-        if file_size > int(limit * 1.1):
-            file_to_truncate.seek(file_size - limit)
-
-        trunc_message = f'TRUNCATED "{path}" TO LAST {limit} BYTES'
-        return f'{trunc_message}\n{file_to_truncate.read()}\n{trunc_message}'
 
 
 # generates a short hash string from several source files
