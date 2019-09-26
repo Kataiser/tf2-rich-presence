@@ -54,7 +54,7 @@ def launch():
 
         platform_info = {'architecture': platform.architecture, 'machine': platform.machine, 'system': platform.system, 'platform': platform.platform,
                          'processor': platform.processor, 'win32_ver': platform.win32_ver, 'python_version_tuple': platform.python_version_tuple}
-        for platform_part in platform_info.keys():
+        for platform_part in platform_info:
             try:
                 if platform_part == 'platform':
                     platform_info[platform_part] = platform_info[platform_part](aliased=True)

@@ -223,7 +223,7 @@ class GUI(tk.Frame):
         master.after_idle(master.attributes, '-topmost', False)
 
     # runs every time a setting is changed, updates "restore defaults" button's state
-    def update_default_button_state(self, passthrough=None):
+    def update_default_button_state(self):
         if self.get_working_settings() == get_setting_default(return_all=True):  # if settings are default, disable button
             self.restore_button.state(['disabled'])
             self.log.debug("Disabled restore defaults button")
@@ -350,8 +350,8 @@ class GUI(tk.Frame):
 # main entry point
 def launch():
     root = tk.Tk()
-    settings_gui = GUI(root)  # only set to a variable to prevent garbage collection? idk
-    root.mainloop()
+    settings_gui = GUI(root)
+    settings_gui.mainloop()
 
 
 # access a setting from any file, with a string that is the same as the variable name (cached, so settings changes won't be rechecked right away)
