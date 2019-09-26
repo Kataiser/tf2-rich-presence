@@ -218,6 +218,19 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
             else:
                 self.assertLess(num_equal_lines, num_lines_total / 2)
 
+    def test_main_simple(self):
+        log = logger.Log()
+        app = main.TF2RichPresense(log)
+        self.assertEqual(app.test_state, 'init')
+        self.assertEqual(fix_activity_dict(app.activity),
+                         {'details': 'In menus', 'timestamps': {'start': 0}, 'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2',
+                                                                                        'large_image': 'main_menu', 'large_text': 'Main menu'}, 'state': ''})
+        app.loop_body()
+        self.assertEqual(app.test_state, 'no tf2')
+        self.assertEqual(fix_activity_dict(app.activity),
+                         {'details': 'In menus', 'timestamps': {'start': 0}, 'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2',
+                                                                                        'large_image': 'main_menu', 'large_text': 'Main menu'}, 'state': ''})
+
 
 class TestTF2RichPresenseSimulated(unittest.TestCase):
     def test_main(self):
