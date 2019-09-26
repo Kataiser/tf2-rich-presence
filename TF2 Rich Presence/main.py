@@ -259,16 +259,7 @@ class TF2RichPresense:
 
             if not self.client_connected:
                 self.log.critical("self.client is disconnected when it shouldn't be")
-        elif not p_data['Discord']['running']:
-            self.test_state = 'no discord'
-            self.log.info(f"Discord isn't running (mentioning to user: {self.should_mention_discord})")
-
-            if self.should_mention_discord:
-                print("{0}{1}\n{2}\n".format(current_time_formatted, self.generate_delta(self.last_notify_time), self.loc.text("Discord isn't running")))
-                self.should_mention_discord = False
-                self.should_mention_tf2 = True
-                self.last_notify_time = time.time()
-        else:  # tf2 isn't running
+        elif not p_data['TF2']['running']:
             self.test_state = 'no tf2'
 
             if self.client_connected:
@@ -293,6 +284,16 @@ class TF2RichPresense:
 
             # to prevent connecting when already connected
             self.client_connected = False
+        else:
+            # Discord isn't running
+            self.test_state = 'no discord'
+            self.log.info(f"Discord isn't running (mentioning to user: {self.should_mention_discord})")
+
+            if self.should_mention_discord:
+                print("{0}{1}\n{2}\n".format(current_time_formatted, self.generate_delta(self.last_notify_time), self.loc.text("Discord isn't running")))
+                self.should_mention_discord = False
+                self.should_mention_tf2 = True
+                self.last_notify_time = time.time()
 
         return self.client_connected, self.client
 
