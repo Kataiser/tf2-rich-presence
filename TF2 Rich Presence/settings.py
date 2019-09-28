@@ -161,13 +161,6 @@ class GUI(tk.Frame):
             self.update_button = ttk.Button(lf_main, textvariable=self.update_button_text, command=self.open_update_page)
             self.update_button.grid(row=9, sticky=tk.W, padx=(20, 40), pady=(0, 12))
 
-        # create the report button
-        current_log_size = round(os.stat(self.log.filename).st_size / 1024)
-        current_log_size_display = max(min(16, current_log_size), 1)
-        self.log.debug(f"Log file size: {current_log_size}, displayed as {current_log_size_display}")
-        self.report_button_text = tk.StringVar(value=self.loc.text("Report logs to developer ({0} KB)").format(current_log_size_display))
-        self.report_button = ttk.Button(lf_advanced, textvariable=self.report_button_text, command=self.report_log)
-
         # add widgets to the labelframes or main window
         setting1_frame.grid(row=10, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
         setting1_text.pack(side='left', fill=None, expand=False)
@@ -187,7 +180,7 @@ class GUI(tk.Frame):
         setting9_text.pack(side='left', fill=None, expand=False)
         for setting9_radiobutton in setting9_radiobuttons:
             setting9_radiobutton.pack(side='left', fill=None, expand=False)
-        setting9_frame.grid(row=11, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
+        setting9_frame.grid(row=11, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 10))
         setting10_text.pack(side='left', fill=None, expand=False)
         setting10_option.pack(side='left', fill=None, expand=False)
         setting10_frame.grid(row=4, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(11, 0))
@@ -195,7 +188,6 @@ class GUI(tk.Frame):
         for setting12_radiobutton in setting12_radiobuttons:
             setting12_radiobutton.pack(side='left', fill=None, expand=False)
         setting12_frame.grid(row=7, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
-        self.report_button.grid(row=12, sticky=tk.W, padx=(20, 40), pady=(10, 12))
         setting13_text.pack(side='left', fill=None, expand=False)
         setting13_options.pack(side='left', fill=None, expand=False)
         setting13_frame.grid(row=0, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(9, 0))
@@ -320,28 +312,6 @@ class GUI(tk.Frame):
         if allowed_close == "yes":
             self.log.info("Closing settings menu without saving")
             self.master.destroy()
-
-    # report the current log file to the dev via Sentry
-    def report_log(self):
-        reason = simpledialog.askstring("Report reason", "Reason for submitting logs:", parent=self.master)
-
-        if reason is not None:
-            self.log.info(f"Manually reporting log to Sentry (reason: \"{reason}\")")
-            before_report_time = time.perf_counter()
-
-            try:
-                sentry_sdk.capture_message(f"MANUALLY REPORTED LOG (reason: \"{reason}\")", level='info')
-            except Exception:
-                self.log.error(f"Couldn't manually report log: {traceback.format_exc()}")
-                self.report_button_text.set(self.loc.text("Couldn't manually report logs"))
-                self.report_button.state(['disabled'])
-                self.ok_button.focus_set()
-            else:
-                report_elapsed = round(time.perf_counter() - before_report_time, 1)
-                self.log.debug(f"Successfully reported log (took {report_elapsed} seconds)")
-                self.report_button_text.set(self.loc.text("Successfully reported logs"))
-                self.report_button.state(['disabled'])
-                self.ok_button.focus_set()
 
     def open_update_page(self):
         webbrowser.open(self.new_version_url)
