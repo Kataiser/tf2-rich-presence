@@ -90,6 +90,6 @@ def exc_already_reported(tb: str):
 
 if __name__ == '__main__':
     # set up Sentry (https://sentry.io/)
-    sentry_sdk.init(dsn=get_api_key('sentry'), release='{tf2rpvnum}', attach_stacktrace=True)
+    sentry_sdk.init(dsn=get_api_key('sentry'), release='{tf2rpvnum}')
 
     launch()

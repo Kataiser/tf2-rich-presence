@@ -278,7 +278,7 @@ def main(version_num=None):
     with open(f'{new_build_folder_name}\\resources\\launcher.py', 'w') as launcher_py_write:
         new_data = old_data.replace(f"release='{version_num}'", f"release='{version_num}-dev'")
         launcher_py_write.write(new_data)
-    print("Disabled Sentry in launcher")
+    print(f"Set Sentry version to {version_num}-dev")
 
     # prepares display of time since last build
     if last_build_time:
