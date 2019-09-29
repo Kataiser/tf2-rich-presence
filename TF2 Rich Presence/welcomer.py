@@ -6,7 +6,10 @@ import json
 import os
 import sys
 
+sys.path.append(os.path.abspath(os.path.join('resources', 'python', 'packages')))
 sys.path.append(os.path.abspath(os.path.join('resources')))
+import colorama
+
 import localization
 
 
@@ -18,8 +21,12 @@ def main():
     language = db_data['settings']['language']
     loc = localization.Localizer(language=language)
 
+    colorama.init()
+    print(colorama.Style.BRIGHT, end='')
     print(loc.text("TF2 Rich Presence ({tf2rpvnum}) by Kataiser"))
+    print(colorama.Style.RESET_ALL, end='')
     print("https://github.com/Kataiser/tf2-rich-presence\n")
+    print(colorama.Style.BRIGHT, end='')
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--v', default='1', help="Which version of the message to use (1 or 2)")

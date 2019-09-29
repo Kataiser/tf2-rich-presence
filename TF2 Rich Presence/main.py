@@ -26,6 +26,7 @@ import time
 import traceback
 from typing import Any, Dict, List, TextIO, Tuple, Union
 
+import colorama
 import psutil
 from discoIPC import ipc
 
@@ -159,7 +160,9 @@ class TF2RichPresense:
                 except Exception as client_connect_error:
                     if str(client_connect_error) == "Can't connect to Discord Client.":  # Discord is still running but an RPC client can't be established
                         self.log.error("Can't connect to RPC")
-                        print('{0}\n{1}'.format(current_time_formatted, self.loc.text("Can't connect to Discord for Rich Presence.")))
+                        print(f'{current_time_formatted}{colorama.Style.BRIGHT}')
+                        print(self.loc.text("Can't connect to Discord for Rich Presence."))
+                        print(colorama.Style.RESET_ALL, end='')
                         raise SystemExit
                     else:  # some other error
                         raise
@@ -220,14 +223,17 @@ class TF2RichPresense:
 
             if self.activity != self.old_activity:
                 # output to terminal, just for monitoring
-                print(f"{current_time_formatted}{self.generate_delta(self.last_notify_time)}")
+                print(f"{current_time_formatted}{self.generate_delta(self.last_notify_time)}{colorama.Style.BRIGHT}")
 
                 if [d for d in ('Queued', 'Main menu') if d in self.activity['assets']['large_text']]:
+                    # if queued or on the main menu, simplify cmd output
                     print(self.loc.text(self.activity['details']))
                 else:
                     print(f"{self.loc.text(self.activity['details'])} ({self.loc.text(self.activity['assets']['large_text'])})")
 
                 print(self.loc.text(self.activity['state']))
+                print(colorama.Style.BRIGHT, end='')
+
                 time_elapsed = datetime.timedelta(seconds=int(time.time() - self.start_time))
                 print(self.loc.text("{0} elapsed").format(str(time_elapsed).replace('0:', '', 1)))
                 print()
@@ -252,7 +258,10 @@ class TF2RichPresense:
             except Exception as error:
                 if str(error) == "Can't send data to Discord via IPC.":
                     self.log.error(str(error))
-                    print('{0}\n{1}'.format(current_time_formatted, self.loc.text("Can't connect to Discord for Rich Presence.")))
+
+                    print(f'{current_time_formatted}{colorama.Style.BRIGHT}')
+                    print(self.loc.text("Can't connect to Discord for Rich Presence."))
+                    print(colorama.Style.RESET_ALL, end='')
                     raise SystemExit
                 else:
                     raise
@@ -277,7 +286,9 @@ class TF2RichPresense:
                 self.log.info(f"TF2 isn't running (mentioning to user: {self.should_mention_tf2})")
 
                 if self.should_mention_tf2:
-                    print("{0}{1}\n{2}\n".format(current_time_formatted, self.generate_delta(self.last_notify_time), self.loc.text("Team Fortress 2 isn't running")))
+                    print(f'{current_time_formatted}{self.generate_delta(self.last_notify_time)}{colorama.Style.BRIGHT}')
+                    print(self.loc.text("Team Fortress 2 isn't running"))
+                    print(colorama.Style.RESET_ALL, end='')
                     self.should_mention_discord = True
                     self.should_mention_tf2 = False
                     self.last_notify_time = time.time()
@@ -290,7 +301,9 @@ class TF2RichPresense:
             self.log.info(f"Discord isn't running (mentioning to user: {self.should_mention_discord})")
 
             if self.should_mention_discord:
-                print("{0}{1}\n{2}\n".format(current_time_formatted, self.generate_delta(self.last_notify_time), self.loc.text("Discord isn't running")))
+                print(f'{current_time_formatted}{self.generate_delta(self.last_notify_time)}{colorama.Style.BRIGHT}')
+                print(self.loc.text("Discord isn't running"))
+                print(colorama.Style.RESET_ALL, end='')
                 self.should_mention_discord = False
                 self.should_mention_tf2 = True
                 self.last_notify_time = time.time()
@@ -421,7 +434,9 @@ class TF2RichPresense:
 def no_condebug_warning():
     loc = localization.Localizer(language=settings.get('language'))
 
+    print(colorama.Style.BRIGHT, end='')
     print('\n{0}'.format(loc.text("Your TF2 installation doesn't yet seem to be set up properly. To fix:")))
+    print(colorama.Style.RESET_ALL, end='')
     print(loc.text("1. Right click on Team Fortress 2 in your Steam library"))
     print(loc.text("2. Open properties (very bottom)"))
     print(loc.text("3. Click \"Set launch options...\""))

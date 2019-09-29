@@ -13,11 +13,14 @@ import zlib
 
 sys.path.append(os.path.abspath(os.path.join('resources', 'python', 'packages')))
 sys.path.append(os.path.abspath(os.path.join('resources')))
+import colorama
 import sentry_sdk
 
 
 def launch():
     try:
+        colorama.init()
+
         parser = argparse.ArgumentParser()
         parser.add_argument('--m', default='main', help="The module to launch (main, settings, or updater)")
         args = parser.parse_args()
@@ -37,6 +40,7 @@ def launch():
 
 # displays and reports current traceback
 def handle_crash():
+    print(colorama.Fore.LIGHTRED_EX, end='')
     formatted_exception = traceback.format_exc()
 
     try:
@@ -52,6 +56,7 @@ def handle_crash():
               f"\n(Consider opening an issue at https://github.com/Kataiser/tf2-rich-presence/issues)"
               f"\nRestarting in 2 seconds...\n")
 
+    print(colorama.Style.RESET_ALL, end='')
     time.sleep(2)
     # should restart via the bat/exe now
 
