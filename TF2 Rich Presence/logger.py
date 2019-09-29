@@ -173,7 +173,7 @@ def generate_hash() -> str:
         file.close()
 
     hash_int = zlib.adler32(b'\n'.join(files_to_hash_data))
-    hash_hex = hex(hash_int)[2:8].ljust(8, '0')
+    hash_hex = hex(hash_int)[2:10].ljust(8, '0')
     return hash_hex
 
 
