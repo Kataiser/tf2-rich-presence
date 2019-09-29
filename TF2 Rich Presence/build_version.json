@@ -1,10 +1,10 @@
 {
-    "this_version": "v1.9.1",
+    "this_version": "v1.10",
     "version_hashes": {
         "v1.7.4": "e95fce07",
         "v1.8": "3f041c52",
         "v1.8.1": "b4db39db",
         "v1.9": "025bdbed",
-        "v1.9.1": "bcf71e1a"
+        "v1.10": "2e9943fd"
     }
 }
