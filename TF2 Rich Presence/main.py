@@ -232,7 +232,7 @@ class TF2RichPresense:
                     print(f"{self.loc.text(self.activity['details'])} ({self.loc.text(self.activity['assets']['large_text'])})")
 
                 print(self.loc.text(self.activity['state']))
-                print(colorama.Style.BRIGHT, end='')
+                print(colorama.Style.RESET_ALL, end='')
 
                 time_elapsed = datetime.timedelta(seconds=int(time.time() - self.start_time))
                 print(self.loc.text("{0} elapsed").format(str(time_elapsed).replace('0:', '', 1)))
@@ -261,7 +261,7 @@ class TF2RichPresense:
 
                     print(f'{current_time_formatted}{colorama.Style.BRIGHT}')
                     print(self.loc.text("Can't connect to Discord for Rich Presence."))
-                    print(colorama.Style.RESET_ALL, end='')
+                    print(colorama.Style.RESET_ALL)
                     raise SystemExit
                 else:
                     raise
@@ -288,7 +288,7 @@ class TF2RichPresense:
                 if self.should_mention_tf2:
                     print(f'{current_time_formatted}{self.generate_delta(self.last_notify_time)}{colorama.Style.BRIGHT}')
                     print(self.loc.text("Team Fortress 2 isn't running"))
-                    print(colorama.Style.RESET_ALL, end='')
+                    print(colorama.Style.RESET_ALL)
                     self.should_mention_discord = True
                     self.should_mention_tf2 = False
                     self.last_notify_time = time.time()
@@ -303,7 +303,7 @@ class TF2RichPresense:
             if self.should_mention_discord:
                 print(f'{current_time_formatted}{self.generate_delta(self.last_notify_time)}{colorama.Style.BRIGHT}')
                 print(self.loc.text("Discord isn't running"))
-                print(colorama.Style.RESET_ALL, end='')
+                print(colorama.Style.RESET_ALL)
                 self.should_mention_discord = False
                 self.should_mention_tf2 = True
                 self.last_notify_time = time.time()
