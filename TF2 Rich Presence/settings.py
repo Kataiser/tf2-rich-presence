@@ -5,15 +5,12 @@ import functools
 import json
 import os
 import subprocess
-import time
 import tkinter as tk
 import tkinter.ttk as ttk
 import traceback
 import webbrowser
-from tkinter import messagebox, simpledialog
+from tkinter import messagebox
 from typing import Any, Union
-
-import sentry_sdk
 
 import localization
 import logger

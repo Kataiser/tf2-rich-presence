@@ -11,7 +11,6 @@ from requests import Response
 
 import localization
 import logger
-import main
 import settings
 
 
