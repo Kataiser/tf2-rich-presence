@@ -1,7 +1,6 @@
 # Copyright (C) 2019  Kataiser
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 
-import hashlib
 import os
 import random
 import socket
@@ -9,6 +8,7 @@ import subprocess
 import sys
 import time
 import traceback
+import zlib
 from operator import itemgetter
 from typing import BinaryIO, List, Union
 
@@ -152,7 +152,7 @@ class Log:
 def generate_hash() -> str:
     files_to_hash: List[str] = ['main.py', 'configs.py', 'custom_maps.py', 'logger.py', 'updater.py', 'launcher.py', 'settings.py', 'detect_system_language.py', 'maps.json',
                                 'localization.json', 'APIs']
-    files_to_hash_text: List = []
+    files_to_hash_data: List = []
     build_folder = [item for item in os.listdir('.') if item.startswith('TF2 Rich Presence v') and os.path.isdir(item)]
 
     for file_to_hash in files_to_hash:
@@ -169,13 +169,12 @@ def generate_hash() -> str:
         if 'launcher' in file_to_hash:
             file_read = file_read.replace(b'sentry_enabled: bool = True', b'').replace(b'sentry_enabled: bool = False', b'')
 
-        files_to_hash_text.append(file_read)
+        files_to_hash_data.append(file_read)
         file.close()
 
-    hasher = hashlib.md5()
-    hasher.update(b'\n'.join(files_to_hash_text))
-    main_hash: str = hasher.hexdigest()
-    return main_hash[:8]
+    hash_int = zlib.adler32(b'\n'.join(files_to_hash_data))
+    hash_hex = hex(hash_int)[2:8].ljust(8, '0')
+    return hash_hex
 
 
 # runs Windows' "compact" command on a file.
