@@ -11,7 +11,7 @@ script:
   - xcopy LICENSE "TF2 Rich Presence"
   - cd "TF2 Rich Presence"
   - python ci_test_runner.py
-  - build_tools\7za x python-3.7.4-embed-win32.zip
+  - 7z x python-3.7.4-embed-win32.zip
   - python build.py --n
   - ren.exe tf2_rich_presence_*_self_extracting.exe tf2_rich_presence_master_self_extracting.exe
   - ren.exe tf2_rich_presence_*.zip tf2_rich_presence_master.zip
