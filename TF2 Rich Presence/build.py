@@ -1,6 +1,7 @@
 # Copyright (C) 2019  Kataiser
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 
+import argparse
 import compileall
 import datetime
 import json
@@ -25,20 +26,27 @@ def main(version_num=None):
 
     print(f"Building TF2 Rich Presence {version_num}")
 
-    if os.path.exists('last_repo_path.txt'):
-        with open('last_repo_path.txt', 'r') as last_repo_path_file:
-            last_repo_path = last_repo_path_file.read()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--n', action='store_true', help="Skip copying to an repo location")
+    cli_skip_repo = parser.parse_args().n
 
-        github_repo_path = input(f"Github repo path ('n' to skip, 'h' to use \"{last_repo_path}\"): ")
-
-        if github_repo_path == 'h':
-            github_repo_path = last_repo_path
+    if cli_skip_repo:
+        github_repo_path = 'n'
     else:
-        github_repo_path = input("Github repo path ('n' to skip): ")
+        if os.path.exists('last_repo_path.txt'):
+            with open('last_repo_path.txt', 'r') as last_repo_path_file:
+                last_repo_path = last_repo_path_file.read()
 
-    if github_repo_path != 'n':
-        with open('last_repo_path.txt', 'w') as last_repo_path_file:
-            last_repo_path_file.write(github_repo_path)
+            github_repo_path = input(f"Github repo path ('n' to skip, 'h' to use \"{last_repo_path}\"): ")
+
+            if github_repo_path == 'h':
+                github_repo_path = last_repo_path
+        else:
+            github_repo_path = input("Github repo path ('n' to skip): ")
+
+        if github_repo_path != 'n':
+            with open('last_repo_path.txt', 'w') as last_repo_path_file:
+                last_repo_path_file.write(github_repo_path)
 
     build_start_time = time.perf_counter()
     print()
