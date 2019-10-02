@@ -167,7 +167,7 @@ def generate_hash() -> str:
         file_read = file.read()
 
         if 'launcher' in file_to_hash:
-            file_read = file_read.replace(b'sentry_enabled: bool = True', b'').replace(b'sentry_enabled: bool = False', b'')
+            file_read = file_read.replace(b'{tf2rpvnum}-dev', b'{tf2rpvnum}')
 
         files_to_hash_data.append(file_read)
         file.close()
