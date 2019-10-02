@@ -8,11 +8,11 @@ matrix:
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
 install: pip3 install -r requirements.txt
 script: 
-  - xcopy LICENSE "TF2 Rich Presence"
+  - xcopy *.* "TF2 Rich Presence"
   - cd "TF2 Rich Presence"
   - python ci_test_runner.py
   - 7z x python-3.7.4-embed-win32.zip
-  - python build.py --n
+  - python build.py --n --tag master
   - ren.exe tf2_rich_presence_*_self_extracting.exe tf2_rich_presence_master_self_extracting.exe
   - ren.exe tf2_rich_presence_*.zip tf2_rich_presence_master.zip
 deploy:

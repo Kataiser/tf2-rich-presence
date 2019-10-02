@@ -28,7 +28,9 @@ def main(version_num=None):
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--n', action='store_true', help="Skip copying to an repo location")
+    parser.add_argument('--tag', default=version_num, help="Name packages with this verion number")
     cli_skip_repo = parser.parse_args().n
+    cli_tag = parser.parse_args().tag
 
     if cli_skip_repo:
         github_repo_path = 'n'
@@ -90,7 +92,6 @@ def main(version_num=None):
         print("Copied", shutil.copy('Launch Rich Presence alongside TF2.bat', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('Change settings.bat', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copy('README-source.MD', github_repo_path))
-        print("Copied", shutil.copy('.travis.yml', github_repo_path))
         print("Copied", shutil.copy('requirements.txt', github_repo_path))
         print("Copied", shutil.copy('python-3.7.4-embed-win32.zip', f'{github_repo_path}\\TF2 Rich Presence'))
         print("Copied", shutil.copyfile(f'{github_repo_path}\\TF2 Rich Presence\\DB_default.json', f'{github_repo_path}\\TF2 Rich Presence\\DB.json'))
@@ -249,15 +250,16 @@ def main(version_num=None):
     convert_bat_to_exe(os.path.abspath(f'{new_build_folder_name}\\Change settings.bat'), version_num, 'tf2_logo_blurple_wrench.ico')
 
     # generates zip package and an "installer" (a self extracting .7z as an exe), both with 7zip
-    exe_path = f'tf2_rich_presence_{version_num}_self_extracting.exe'
-    zip_path = f'tf2_rich_presence_{version_num}.zip'
+    exe_path = f'tf2_rich_presence_{cli_tag}_self_extracting.exe'
+    zip_path = f'tf2_rich_presence_{cli_tag}.zip'
     package7zip_command_exe_1 = f'build_tools\\7za.exe u {exe_path} -up1q0r2x1y2z1w2 "{new_build_folder_name}\\"'
     package7zip_command_exe_2 = '-sfx7z.sfx -ssw -mx=9 -myx=9 -mmt=2 -m0=LZMA2:d=8m'
     package7zip_command_zip = f'build_tools\\7za.exe u {zip_path} -up1q0r2x1y2z1w2 "{new_build_folder_name}\\" -ssw -mx=9 -m0=Deflate64 -mmt=2'
-    print(f"Creating tf2_rich_presence_{version_num}_self_extracting.exe...")
+    print(f"Creating {exe_path}...")
     assert len(version_num) <= 10 and 'v' in version_num and '.' in version_num
     subprocess.run(f'{package7zip_command_exe_1} {package7zip_command_exe_2}', stdout=subprocess.DEVNULL)
-    print(f"Creating tf2_rich_presence_{version_num}.zip...")
+    subprocess.run(f'{package7zip_command_exe_1} {package7zip_command_exe_2}', stdout=subprocess.DEVNULL)
+    print(f"Creating {zip_path}...")
     subprocess.run(package7zip_command_zip, stdout=subprocess.DEVNULL)
 
     # creates README.md from README-source.md
