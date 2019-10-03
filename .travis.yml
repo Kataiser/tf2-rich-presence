@@ -20,6 +20,7 @@ deploy:
   name: master
   prerelease: true
   tag_name: v1.10
+  overwrite: true
   file:
     - tf2_rich_presence_master_self_extracting.exe
     - tf2_rich_presence_master.zip
