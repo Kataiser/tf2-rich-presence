@@ -16,6 +16,7 @@ script:
   - python build.py --n --tag master
 deploy:
   provider: releases
+  edge: true
   name: master
   prerelease: true
   tag_name: v1.10
