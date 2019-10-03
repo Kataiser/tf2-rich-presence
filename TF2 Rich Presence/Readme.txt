@@ -9,5 +9,5 @@ INSTALLATION AND RUNNING INSTRUCTIONS:
 
 For faster launching, you can add "Launch TF2 with Rich Presence.exe" to your taskbar or start menu, or to Steam as a non-Steam game.
 
-HELP! IT BROKE! (Or otherwise functioned incorrectly)
-Feel free to create an issue over at https://github.com/Kataiser/tf2-rich-presence/issues and/or press the "Report logs to developer" button in the settings.
+HELP! It broke! (Or otherwise functioned incorrectly)
+Feel free to create an issue over at https://github.com/Kataiser/tf2-rich-presence/issues. Be sure to copy the file in the "logs" folder.
