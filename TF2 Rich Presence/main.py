@@ -335,7 +335,7 @@ class TF2RichPresense:
         with open(consolelog_filename, 'r', errors='replace') as consolelog_file:
             consolelog_file_size: int = os.stat(consolelog_filename).st_size
 
-            byte_limit = kb_limit * 1000
+            byte_limit = kb_limit * 1024
             if consolelog_file_size > byte_limit:
                 skip_to_byte = consolelog_file_size - byte_limit
                 consolelog_file.seek(skip_to_byte, 0)  # skip to last few KBs
