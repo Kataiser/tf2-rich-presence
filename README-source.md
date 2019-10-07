@@ -18,11 +18,12 @@ With self-extractor: [tf2_rich_presence_{tf2rpvnum}_self_extracting.exe](https:/
 Extract it yourself: [tf2_rich_presence_{tf2rpvnum}.zip](https://github.com/Kataiser/tf2-rich-presence/releases/download/{tf2rpvnum}/tf2_rich_presence_{tf2rpvnum}.zip) ({zip_size} MB)
 
 ## Installation and running
-1. Extract tf2_rich_presence_{tf2rpvnum}.zip OR run tf2_rich_presence_{tf2rpvnum}_self_extracting.exe, whichever you download.
-2. Run `Launch TF2 with Rich Presence.exe`. Requires Steam and Discord to be running as well.
-	- OR run `Launch Rich Presence alongside TF2.exe`. This doesn't automatically start Team Fortress 2.
+1. Extract `tf2_rich_presence_{tf2rpvnum}.zip` OR run `tf2_rich_presence_{tf2rpvnum}_self_extracting.exe`, whichever you downloaded.
+2. Run `Launch TF2 with Rich Presence.exe`.
+	- OR run `Launch Rich Presence alongside TF2.exe`. This one doesn't automatically start Team Fortress 2.
+	- Both require Steam and Discord to be running as well.
 
-For faster launching, you can add the first .exe to your taskbar or start menu, or to Steam as a non-Steam game.
+For faster launching, you can add the first EXE to your taskbar/start menu/desktop, or to Steam as a non-Steam game.
 
 ## Changelogs
 - [Changelogs.html](https://htmlpreview.github.io/?https://github.com/Kataiser/tf2-rich-presence/blob/master/Changelogs.html)
