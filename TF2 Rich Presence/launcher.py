@@ -44,19 +44,18 @@ def handle_crash():
     formatted_exception = traceback.format_exc()
 
     try:
-        print(f"\n{formatted_exception}\nTF2 Rich Presence has crashed, and the error has been reported to the developer."
-              f"\n(Consider opening an issue at https://github.com/Kataiser/tf2-rich-presence/issues)"
-              f"\nRestarting in 2 seconds...\n")
+        print(f"\n{formatted_exception}\n{colorama.Style.BRIGHT}TF2 Rich Presence has crashed, and the error has been reported to the developer."
+              f"\n{colorama.Style.RESET_ALL}(Consider opening an issue at https://github.com/Kataiser/tf2-rich-presence/issues)"
+              f"\n{colorama.Style.BRIGHT}Restarting in 2 seconds...\n")
 
         if not exc_already_reported(formatted_exception):
             sentry_sdk.capture_exception()
     except Exception:
         # Sentry has failed us :(
-        print(f"\n{formatted_exception}\nTF2 Rich Presence has crashed, and the error can't be reported to the developer."
-              f"\n(Consider opening an issue at https://github.com/Kataiser/tf2-rich-presence/issues)"
-              f"\nRestarting in 2 seconds...\n")
+        print(f"\n{formatted_exception}\n{colorama.Style.BRIGHT}TF2 Rich Presence has crashed, and the error can't be reported to the developer."
+              f"\n{colorama.Style.RESET_ALL}(Consider opening an issue at https://github.com/Kataiser/tf2-rich-presence/issues)"
+              f"\n{colorama.Style.BRIGHT}Restarting in 2 seconds...\n")
 
-    print(colorama.Style.RESET_ALL, end='')
     time.sleep(2)
     # should restart via the bat/exe now
 
