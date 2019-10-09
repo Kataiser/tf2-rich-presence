@@ -1,8 +1,9 @@
 [![Github all releases](https://img.shields.io/github/downloads/Kataiser/tf2-rich-presence/total.svg)](https://www.somsubhra.com/github-release-stats/?username=Kataiser&repository=tf2-rich-presence)
 [![GitHub release](https://img.shields.io/github/release/Kataiser/tf2-rich-presence.svg)](https://GitHub.com/Kataiser/tf2-rich-presence/releases/)
 [![GitHub Release Date](https://img.shields.io/github/release-date/Kataiser/tf2-rich-presence.svg)](https://GitHub.com/Kataiser/tf2-rich-presence/releases/)
-[![GitHub labels](https://img.shields.io/github/labels/Kataiser/tf2-rich-presence/help%20wanted)](https://github.com/Kataiser/tf2-rich-presence/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22help+wanted%22)
-[![Kataiser on Steam](https://img.shields.io/badge/Steam-Kataiser-blue)](https://steamcommunity.com/id/mechkataiser)
+![Kataiser on Steam](https://img.shields.io/badge/Platform-Windows-lightgrey?cacheSeconds=100000)
+[![GitHub labels](https://img.shields.io/github/labels/Kataiser/tf2-rich-presence/help%20wanted?cacheSeconds=100000)](https://github.com/Kataiser/tf2-rich-presence/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22help+wanted%22)
+[![Kataiser on Steam](https://img.shields.io/badge/Steam-Kataiser-blue?cacheSeconds=100000)](https://steamcommunity.com/id/mechkataiser)
 
 [![GitHub commits since latest release](https://img.shields.io/github/commits-since/Kataiser/tf2-rich-presence/latest)](https://github.com/Kataiser/tf2-rich-presence/commits/master)
 [![GitHub last commit](https://img.shields.io/github/last-commit/Kataiser/tf2-rich-presence.svg)](https://github.com/Kataiser/tf2-rich-presence/commits/master)
