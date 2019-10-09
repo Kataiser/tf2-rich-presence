@@ -133,7 +133,7 @@ class TF2RichPresense:
 
         # used for display only
         current_time = datetime.datetime.now().strftime('%I:%M:%S %p')
-        current_time_formatted = current_time[1:] if current_time.startswith('0') else current_time
+        self.current_time_formatted = current_time[1:] if current_time.startswith('0') else current_time
 
         if p_data['TF2']['running'] and p_data['Discord']['running']:
             if not self.has_checked_class_configs:
@@ -143,29 +143,7 @@ class TF2RichPresense:
 
             top_line, bottom_line = self.interpret_console_log(os.path.join(p_data['TF2']['path'], 'tf', 'console.log'), valid_usernames)
 
-            if not self.client_connected:
-                try:
-                    # connects to Discord
-                    self.client = ipc.DiscordIPC(launcher.get_api_key('discord'))
-                    self.client.connect()
-                    client_state: Tuple[Any, bool, str, int, str, Any] = (
-                        self.client.client_id, self.client.connected, self.client.ipc_path, self.client.pid, self.client.platform, self.client.socket)
-                    self.log.debug(f"Initial RPC client state: {client_state}")
-
-                    # sends first status, starts on main menu
-                    self.activity['timestamps']['start'] = self.start_time
-                    self.client.update_activity(self.activity)
-                    self.log.debug(f"Sent over RPC: {self.activity}")
-                    self.client_connected = True
-                except Exception as client_connect_error:
-                    if str(client_connect_error) == "Can't connect to Discord Client.":  # Discord is still running but an RPC client can't be established
-                        self.log.error("Can't connect to RPC")
-                        print(f'{current_time_formatted}{colorama.Style.BRIGHT}')
-                        print(self.loc.text("Can't connect to Discord for Rich Presence."))
-                        print(colorama.Style.RESET_ALL, end='')
-                        raise SystemExit
-                    else:  # some other error
-                        raise
+            self.send_rpc_activity()
 
             if top_line == 'In menus':
                 # in menus displays the main menu
@@ -223,7 +201,7 @@ class TF2RichPresense:
 
             if self.activity != self.old_activity:
                 # output to terminal, just for monitoring
-                print(f"{current_time_formatted}{self.generate_delta(self.last_notify_time)}{colorama.Style.BRIGHT}")
+                print(f"{self.current_time_formatted}{self.generate_delta(self.last_notify_time)}{colorama.Style.BRIGHT}")
 
                 if [d for d in ('Queued', 'Main menu') if d in self.activity['assets']['large_text']]:
                     # if queued or on the main menu, simplify cmd output
@@ -244,27 +222,7 @@ class TF2RichPresense:
                 self.log.debug("Activity hasn't changed, not outputting")
 
             # send everything to discord
-            try:
-                self.activity_translated = copy.deepcopy(self.activity)
-                self.activity_translated['details'] = self.loc.text(self.activity['details'])
-                self.activity_translated['state'] = self.loc.text(self.activity['state'])
-                self.activity_translated['assets']['small_text'] = self.loc.text(self.activity['assets']['small_text'])
-                self.activity_translated['assets']['large_text'] = self.loc.text(self.activity['assets']['large_text'])
-
-                self.client.update_activity(self.activity_translated)
-                self.log.info(f"Sent over RPC: {self.activity_translated}")
-                client_state = (self.client.client_id, self.client.connected, self.client.ipc_path, self.client.pid, self.client.platform, self.client.socket)
-                self.log.debug(f"client state: {client_state}")
-            except Exception as error:
-                if str(error) == "Can't send data to Discord via IPC.":
-                    self.log.error(str(error))
-
-                    print(f'{current_time_formatted}{colorama.Style.BRIGHT}')
-                    print(self.loc.text("Can't connect to Discord for Rich Presence."))
-                    print(colorama.Style.RESET_ALL)
-                    raise SystemExit
-                else:
-                    raise
+            self.send_rpc_activity()
 
             if not self.client_connected:
                 self.log.critical("self.client is disconnected when it shouldn't be")
@@ -286,7 +244,7 @@ class TF2RichPresense:
                 self.log.info(f"TF2 isn't running (mentioning to user: {self.should_mention_tf2})")
 
                 if self.should_mention_tf2:
-                    print(f'{current_time_formatted}{self.generate_delta(self.last_notify_time)}{colorama.Style.BRIGHT}')
+                    print(f'{self.current_time_formatted}{self.generate_delta(self.last_notify_time)}{colorama.Style.BRIGHT}')
                     print(self.loc.text("Team Fortress 2 isn't running"))
                     print(colorama.Style.RESET_ALL)
                     self.should_mention_discord = True
@@ -301,7 +259,7 @@ class TF2RichPresense:
             self.log.info(f"Discord isn't running (mentioning to user: {self.should_mention_discord})")
 
             if self.should_mention_discord:
-                print(f'{current_time_formatted}{self.generate_delta(self.last_notify_time)}{colorama.Style.BRIGHT}')
+                print(f'{self.current_time_formatted}{self.generate_delta(self.last_notify_time)}{colorama.Style.BRIGHT}')
                 print(self.loc.text("Discord isn't running"))
                 print(colorama.Style.RESET_ALL)
                 self.should_mention_discord = False
@@ -428,6 +386,41 @@ class TF2RichPresense:
                     return f" (+{time_diff} {self.loc.text('seconds')})"
         else:
             return ""
+
+    # sends localized RPC data, connecting to Discord initially if need be
+    def send_rpc_activity(self):
+        try:
+            if not self.client_connected:
+                # connects to Discord and sends first status, starts on main menu
+                self.client = ipc.DiscordIPC(launcher.get_api_key('discord'))
+                self.client.connect()
+                client_state: Tuple[Any, bool, str, int, str, Any] = (
+                    self.client.client_id, self.client.connected, self.client.ipc_path, self.client.pid, self.client.platform, self.client.socket)
+                self.log.debug(f"Initial RPC client state: {client_state}")
+                self.activity['timestamps']['start'] = self.start_time
+
+            # localize activity
+            self.activity_translated = copy.deepcopy(self.activity)
+            self.activity_translated['details'] = self.loc.text(self.activity['details'])
+            self.activity_translated['state'] = self.loc.text(self.activity['state'])
+            self.activity_translated['assets']['small_text'] = self.loc.text(self.activity['assets']['small_text'])
+            self.activity_translated['assets']['large_text'] = self.loc.text(self.activity['assets']['large_text'])
+
+            self.client.update_activity(self.activity_translated)
+            self.log.info(f"Sent over RPC: {self.activity_translated}")
+            client_state = (self.client.client_id, self.client.connected, self.client.ipc_path, self.client.pid, self.client.platform, self.client.socket)
+            self.log.debug(f"client state: {client_state}")
+            self.client_connected = True
+        except Exception as client_connect_error:
+            if str(client_connect_error) == "Can't send data to Discord via IPC.":  # often happens when Discord is in the middle of starting up
+                self.log.error(str(client_connect_error))
+                print(f'{self.current_time_formatted}{colorama.Style.BRIGHT}')
+                print(self.loc.text("Can't connect to Discord for Rich Presence."))
+                print(colorama.Style.RESET_ALL)
+
+                raise SystemExit
+            else:
+                raise
 
 
 # alerts the user that they don't seem to have -condebug
