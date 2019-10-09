@@ -68,6 +68,14 @@ def launch():
         app.run()
     except (KeyboardInterrupt, SystemExit):
         raise SystemExit
+    except Exception:
+        try:
+            formatted_exception = traceback.format_exc()
+            app.log.critical(formatted_exception)
+        except NameError:
+            pass
+
+        raise
 
 
 class TF2RichPresense:
