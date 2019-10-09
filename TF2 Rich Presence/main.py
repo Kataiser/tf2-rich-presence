@@ -91,6 +91,7 @@ class TF2RichPresense:
         self.has_checked_class_configs = False
         self.process_scanner = processes.ProcessScanner(self.log)
         self.loc = localization.Localizer(self.log, settings.get('language'))
+        self.current_time_formatted = ""
 
         # load maps database
         try:
@@ -412,12 +413,13 @@ class TF2RichPresense:
             self.log.debug(f"client state: {client_state}")
             self.client_connected = True
         except Exception as client_connect_error:
-            if str(client_connect_error) == "Can't send data to Discord via IPC.":  # often happens when Discord is in the middle of starting up
+            if str(client_connect_error) in ("Can't send data to Discord via IPC.", "Can't connect to Discord Client."):
+                # often happens when Discord is in the middle of starting up
                 self.log.error(str(client_connect_error))
+
                 print(f'{self.current_time_formatted}{colorama.Style.BRIGHT}')
                 print(self.loc.text("Can't connect to Discord for Rich Presence."))
                 print(colorama.Style.RESET_ALL)
-
                 raise SystemExit
             else:
                 raise
