@@ -1,15 +1,16 @@
 [![Github all releases](https://img.shields.io/github/downloads/Kataiser/tf2-rich-presence/total.svg)](https://www.somsubhra.com/github-release-stats/?username=Kataiser&repository=tf2-rich-presence)
 [![GitHub release](https://img.shields.io/github/release/Kataiser/tf2-rich-presence.svg)](https://GitHub.com/Kataiser/tf2-rich-presence/releases/)
 [![GitHub Release Date](https://img.shields.io/github/release-date/Kataiser/tf2-rich-presence.svg)](https://GitHub.com/Kataiser/tf2-rich-presence/releases/)
-![Kataiser on Steam](https://img.shields.io/badge/Platform-Windows-lightgrey?cacheSeconds=100000)
+![Kataiser on Steam](https://img.shields.io/badge/platform-Windows-lightgrey?cacheSeconds=100000)
 [![GitHub labels](https://img.shields.io/github/labels/Kataiser/tf2-rich-presence/help%20wanted?cacheSeconds=100000)](https://github.com/Kataiser/tf2-rich-presence/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22help+wanted%22)
-[![Kataiser on Steam](https://img.shields.io/badge/Steam-Kataiser-blue?cacheSeconds=100000)](https://steamcommunity.com/id/mechkataiser)
+[![Kataiser on Steam](https://img.shields.io/badge/Steam-Kataiser-blue?logo=Steam)](https://steamcommunity.com/id/mechkataiser)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-Kataiser-29ABE0?logo=Ko-fi)](https://ko-fi.com/kataiser)
 
 [![GitHub commits since latest release](https://img.shields.io/github/commits-since/Kataiser/tf2-rich-presence/latest)](https://github.com/Kataiser/tf2-rich-presence/commits/master)
 [![GitHub last commit](https://img.shields.io/github/last-commit/Kataiser/tf2-rich-presence.svg)](https://github.com/Kataiser/tf2-rich-presence/commits/master)
 [![Updates](https://pyup.io/repos/github/Kataiser/tf2-rich-presence/shield.svg)](https://pyup.io/repos/github/Kataiser/tf2-rich-presence/)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/18a048d3a05e4815b247d886abef575f)](https://www.codacy.com/app/Kataiser/tf2-rich-presence?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Kataiser/tf2-rich-presence&amp;utm_campaign=Badge_Grade)
-[![Build Status](https://travis-ci.org/Kataiser/tf2-rich-presence.svg?branch=master)](https://travis-ci.org/Kataiser/tf2-rich-presence)
+[![Travis tests](https://img.shields.io/travis/Kataiser/tf2-rich-presence/master?label=tests&logo=Travis)](https://travis-ci.org/Kataiser/tf2-rich-presence)
 
 # TF2 Rich Presence
 Discord Rich Presence for Team Fortress 2
