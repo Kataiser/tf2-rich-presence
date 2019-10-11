@@ -1,8 +1,7 @@
 [![Github all releases](https://img.shields.io/github/downloads/Kataiser/tf2-rich-presence/total.svg)](https://www.somsubhra.com/github-release-stats/?username=Kataiser&repository=tf2-rich-presence)
 [![GitHub release](https://img.shields.io/github/release/Kataiser/tf2-rich-presence.svg)](https://GitHub.com/Kataiser/tf2-rich-presence/releases/)
 [![GitHub Release Date](https://img.shields.io/github/release-date/Kataiser/tf2-rich-presence.svg)](https://GitHub.com/Kataiser/tf2-rich-presence/releases/)
-![Kataiser on Steam](https://img.shields.io/badge/platform-Windows-lightgrey?cacheSeconds=100000)
-[![GitHub labels](https://img.shields.io/github/labels/Kataiser/tf2-rich-presence/help%20wanted?cacheSeconds=100000)](https://github.com/Kataiser/tf2-rich-presence/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22help+wanted%22)
+![Platform: Windows](https://img.shields.io/badge/platform-Windows-lightgrey?cacheSeconds=100000)
 [![Kataiser on Steam](https://img.shields.io/badge/Steam-Kataiser-blue?logo=Steam)](https://steamcommunity.com/id/mechkataiser)
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-Kataiser-29ABE0?logo=Ko-fi)](https://ko-fi.com/kataiser)
 
@@ -11,6 +10,7 @@
 [![Updates](https://pyup.io/repos/github/Kataiser/tf2-rich-presence/shield.svg)](https://pyup.io/repos/github/Kataiser/tf2-rich-presence/)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/18a048d3a05e4815b247d886abef575f)](https://www.codacy.com/app/Kataiser/tf2-rich-presence?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Kataiser/tf2-rich-presence&amp;utm_campaign=Badge_Grade)
 [![Travis tests](https://img.shields.io/travis/Kataiser/tf2-rich-presence/master?label=tests&logo=Travis)](https://travis-ci.org/Kataiser/tf2-rich-presence)
+[![Help wanted tag](https://img.shields.io/github/labels/Kataiser/tf2-rich-presence/help%20wanted?cacheSeconds=100000)](https://github.com/Kataiser/tf2-rich-presence/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22help+wanted%22)
 
 # TF2 Rich Presence
 Discord Rich Presence for Team Fortress 2
@@ -20,15 +20,16 @@ Discord Rich Presence for Team Fortress 2
 (The actual program is nowhere near as nice looking as this)
 
 ## Download
-With self-extractor: [tf2_rich_presence_v1.9_self_extracting.exe](https://github.com/Kataiser/tf2-rich-presence/releases/download/v1.9/tf2_rich_presence_v1.9_self_extracting.exe) (7.6 MB)  
-Extract it yourself: [tf2_rich_presence_v1.9.zip](https://github.com/Kataiser/tf2-rich-presence/releases/download/v1.9/tf2_rich_presence_v1.9.zip) (10.1 MB)
+With self-extractor: [tf2_rich_presence_v1.10_self_extracting.exe](https://github.com/Kataiser/tf2-rich-presence/releases/download/v1.10/tf2_rich_presence_v1.10_self_extracting.exe) (7.3 MB)  
+Extract it yourself: [tf2_rich_presence_v1.10.zip](https://github.com/Kataiser/tf2-rich-presence/releases/download/v1.10/tf2_rich_presence_v1.10.zip) (9.5 MB)
 
 ## Installation and running
-1. Extract tf2_rich_presence_v1.9.zip OR run tf2_rich_presence_v1.9_self_extracting.exe, whichever you download.
-2. Run `Launch TF2 with Rich Presence.exe`. Requires Steam and Discord to be running as well.
-	- OR run `Launch Rich Presence alongside TF2.exe`. This doesn't automatically start Team Fortress 2.
+1. Extract `tf2_rich_presence_v1.10.zip` OR run `tf2_rich_presence_v1.10_self_extracting.exe`, whichever you downloaded.
+2. Run `Launch TF2 with Rich Presence.exe`.
+	- OR run `Launch Rich Presence alongside TF2.exe`. This one doesn't automatically start Team Fortress 2.
+	- Both require Steam and Discord to be running as well.
 
-For faster launching, you can add the first .exe to your taskbar or start menu, or to Steam as a non-Steam game.
+For faster launching, you can add the first EXE to your taskbar/start menu/desktop, or to Steam as a non-Steam game.
 
 ## Changelogs
 - [Changelogs.html](https://htmlpreview.github.io/?https://github.com/Kataiser/tf2-rich-presence/blob/master/Changelogs.html)
