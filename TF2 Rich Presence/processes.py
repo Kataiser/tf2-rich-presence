@@ -17,54 +17,48 @@ class ProcessScanner:
     def __init__(self, log: logger.Log):
         self.log = log
         self.has_cached_all_pids = False
-        self.executables = {
-            "posix": 
-            [
-                "hl2_linux",
-                "steam",
-                "Discord"
-            ],
-            "nt":
-            [
-                "hl2.exe",
-                "Steam.exe",
-                "Discord"
-            ],
-            "order":
-            [
-                "TF2",
-                "Steam",
-                "Discord"
-            ]
-        }
+        self.used_tasklist = False
+        self.parsed_tasklist = {}
+        self.executables = {'posix': ['hl2_linux', 'steam', 'Discord'],
+                            'nt': ['hl2.exe', 'Steam.exe', 'Discord'],
+                            'order': ['TF2', 'Steam', 'Discord']}
         self.process_data = {'TF2': {'running': False, 'pid': None, 'path': None, 'time': None},
                              'Steam': {'running': False, 'pid': None, 'path': None},
                              'Discord': {'running': False, 'pid': None}}
         self.p_data_default = copy.deepcopy(self.process_data)
 
-    # basically psutil.process_iter(attrs=['pid', 'cmdline', 'create_time']) but WAY faster (and also highly specialized)
+    # scan all running processes to look for TF2, Steam, and Discord
     def scan(self) -> Dict[str, Dict[str, Union[bool, str, int, None]]]:
         before_scan_time = time.perf_counter()
-        used_tasklist = False
+
+        # TODO: use sys.platform everywhere instead of os.name (if possible)
+        if os.name == 'nt':
+            scanned_process_data = self.scan_windows()
+        else:
+            scanned_process_data = self.scan_posix()
+
+        self.log.debug(f"Process scanning took {format(time.perf_counter() - before_scan_time, '.2f')} seconds (used tasklist: {self.used_tasklist})")
+        return scanned_process_data
+
+    # basically psutil.process_iter(attrs=['pid', 'cmdline', 'create_time']) but WAY faster (and also highly specialized)
+    def scan_windows(self) -> Dict[str, Dict[str, Union[bool, str, int, None]]]:
+        self.used_tasklist = False
 
         if not self.has_cached_all_pids:  # guaranteed on the first run
+            self.parse_tasklist()
+            self.used_tasklist = True
 
-            for proc in psutil.process_iter():
-                try:
-                    details = proc.as_dict(attrs=['pid', 'name', 'cwd'])
-                    for pos, name in enumerate(self.executables[os.name]):
-                        if self.process_data[self.executables["order"][pos]]["pid"] is not None:
-                            continue
+            if len(self.parsed_tasklist) == 3:
+                self.has_cached_all_pids = True
 
-                        if name == details["name"]:
-                            self.process_data[self.executables["order"][pos]]['pid'] = details["pid"]
-                except psutil.NoSuchProcess:
-                    pass
-
-
+            if 'hl2.exe' in self.parsed_tasklist:
+                self.process_data['TF2']['pid'] = self.parsed_tasklist['hl2.exe']
+            if 'Steam.exe' in self.parsed_tasklist:
+                self.process_data['Steam']['pid'] = self.parsed_tasklist['Steam.exe']
+            if 'Discord' in self.parsed_tasklist:
+                self.process_data['Discord']['pid'] = self.parsed_tasklist['Discord']
 
             self.get_all_extended_info()
-            print(self.process_data)
         else:
             # all the PIDs are known, so don't use tasklist, saves 0.2 - 0.3 seconds :)
             self.get_all_extended_info()
@@ -81,7 +75,23 @@ class ProcessScanner:
             if self.process_data != p_data_old:
                 self.has_cached_all_pids = False
 
-        self.log.debug(f"Process scanning took {format(time.perf_counter() - before_scan_time, '.2f')} seconds (used tasklist: {used_tasklist})")
+        return self.process_data
+
+    # for Linux and MacOS (I think)
+    def scan_posix(self) -> Dict[str, Dict[str, Union[bool, str, int, None]]]:
+        for proc in psutil.process_iter():
+            try:
+                details = proc.as_dict(attrs=['pid', 'name', 'cwd'])
+                for pos, name in enumerate(self.executables[os.name]):
+                    if self.process_data[self.executables['order'][pos]]['pid'] is not None:
+                        continue
+
+                    if name == details['name']:
+                        self.process_data[self.executables['order'][pos]]['pid'] = details['pid']
+            except psutil.NoSuchProcess:
+                pass
+
+        self.get_all_extended_info()
         return self.process_data
 
     # get only the needed info (exe path and process start time) for each, and then apply it to self.p_data
@@ -133,6 +143,28 @@ class ProcessScanner:
             return p_info_nones
 
         return p_info
+
+    # https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/tasklist
+    def parse_tasklist(self):
+        try:
+            processes = str(subprocess.check_output('tasklist /fi "STATUS eq running"')).split(r'\r\n')
+        except subprocess.CalledProcessError:
+            processes = []
+
+        self.parsed_tasklist = {}
+
+        for process_line in processes:
+            process = process_line.split()
+
+            for ref_name in ('hl2.exe', 'Steam.exe', 'Discord'):
+                if ref_name in process[0]:
+                    self.parsed_tasklist[ref_name] = int(process[1])
+
+        parsed_tasklist_keys = self.parsed_tasklist.keys()
+        self.process_data['TF2']['running'] = 'hl2.exe' in parsed_tasklist_keys
+        self.process_data['Steam']['running'] = 'Steam.exe' in parsed_tasklist_keys
+        self.process_data['Discord']['running'] = 'Discord' in parsed_tasklist_keys
+
 
 if __name__ == '__main__':
     import pprint
