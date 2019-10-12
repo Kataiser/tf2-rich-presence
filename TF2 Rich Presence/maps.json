@@ -97,7 +97,7 @@
 "pl_goldrush": ["Gold Rush", "payload", "Payload"],
 "pl_hoodoo_final": ["Hoodoo", "payload", "Payload"],
 "pl_millstone_event": ["Hellstone", "payload", "Payload"],
-"pl_precipice_event": ["Precipice", "payload", "Payload"],
+"pl_precipice_event_final": ["Precipice", "payload", "Payload"],
 "pl_rumble_event": ["Gravestone", "payload", "Payload"],
 "pl_snowycoast": ["Snowycoast", "payload", "Payload"],
 "pl_swiftwater_final1": ["Swiftwater", "payload", "Payload"],
