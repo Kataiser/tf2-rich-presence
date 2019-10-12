@@ -10,6 +10,7 @@ import shutil
 import subprocess
 import sys
 import time
+from pathlib import Path
 
 import requests
 
@@ -53,49 +54,49 @@ def main(version_num=None):
 
     # copies stuff to the Github repo
     if github_repo_path != 'n':
-        print("Copied", shutil.copy('main.py', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('launcher.py', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('build.py', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('tests.py', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('ci_test_runner.py', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('logger.py', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('configs.py', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('custom_maps.py', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('processes.py', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('updater.py', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('settings.py', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('localization.py', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('welcomer.py', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('detect_system_language.py', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('map list generator.py', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('thumb formatter.py', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('changelog_generator.py', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('Changelogs_source.html', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('maps.json', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('localization.json', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('DB_default.json', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('APIs', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('main menu.png', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('casual.png', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('comp.png', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('mvm_queued.png', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy('main.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('launcher.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('build.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('tests.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('ci_test_runner.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('logger.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('configs.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('custom_maps.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('processes.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('updater.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('settings.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('localization.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('welcomer.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('detect_system_language.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('map list generator.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('thumb formatter.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('changelog_generator.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('Changelogs_source.html', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('maps.json', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('localization.json', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('DB_default.json', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('APIs', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('main menu.png', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('casual.png', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('comp.png', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('mvm_queued.png', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('preview.png', github_repo_path))
-        print("Copied", shutil.copy('Tf2-logo.png', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('unknown_map.png', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('Readme.txt', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy('Tf2-logo.png', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('unknown_map.png', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('Readme.txt', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('requirements.txt', github_repo_path))
-        print("Copied", shutil.copy('tf2_logo_blurple.ico', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('tf2_logo_blurple_wrench.ico', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('Launch TF2 with Rich Presence.bat', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('Launch Rich Presence alongside TF2.bat', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copy('Change settings.bat', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy('tf2_logo_blurple.ico', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('tf2_logo_blurple_wrench.ico', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('Launch TF2 with Rich Presence.bat', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('Launch Rich Presence alongside TF2.bat', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('Change settings.bat', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('README-source.MD', github_repo_path))
         print("Copied", shutil.copy('requirements.txt', github_repo_path))
-        print("Copied", shutil.copy('python-3.7.4-embed-win32.zip', f'{github_repo_path}\\TF2 Rich Presence'))
-        print("Copied", shutil.copyfile(f'{github_repo_path}\\TF2 Rich Presence\\DB_default.json', f'{github_repo_path}\\TF2 Rich Presence\\DB.json'))
+        print("Copied", shutil.copy('python-3.7.4-embed-win32.zip', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copyfile(Path(f'{github_repo_path}/TF2 Rich Presence/DB_default.json'), Path(f'{github_repo_path}/TF2 Rich Presence/DB.json')))
 
-        copy_dir_to_git('test_resources', f'{github_repo_path}\\TF2 Rich Presence\\test_resources')
-        copy_dir_to_git('build_tools', f'{github_repo_path}\\TF2 Rich Presence\\build_tools')
+        copy_dir_to_git('test_resources', Path(f'{github_repo_path}/TF2 Rich Presence/test_resources'))
+        copy_dir_to_git('build_tools', Path(f'{github_repo_path}/TF2 Rich Presence/build_tools'))
 
     print("Generating Changelogs.html")
     ratelimit_remaining = 100
@@ -107,10 +108,10 @@ def main(version_num=None):
         changelog_generation_error = error
         generated_changelogs = False
     if github_repo_path != 'n':
-        print("Copied", shutil.copy('Changelogs.html', f'{github_repo_path}\\'))
+        print("Copied", shutil.copy('Changelogs.html', Path(f'{github_repo_path}/')))
 
     # starts from scratch each time
-    old_build_folders = [f.path for f in os.scandir('.') if f.is_dir() if f.path.startswith('.\\TF2 Rich Presence ')]
+    old_build_folders = [f.path for f in os.scandir('.') if f.is_dir() and 'TF2 Rich Presence ' in f.path]
     if old_build_folders:
         for folder in old_build_folders:
             try:
@@ -135,34 +136,34 @@ def main(version_num=None):
     time.sleep(0.25)  # because windows is slow sometimes
     new_build_folder_name = f'TF2 Rich Presence {version_num}'
     os.mkdir(new_build_folder_name)
-    os.mkdir(f'{new_build_folder_name}\\resources')
-    os.mkdir(f'{new_build_folder_name}\\logs')
+    os.mkdir(Path(f'{new_build_folder_name}/resources'))
+    os.mkdir(Path(f'{new_build_folder_name}/logs'))
     print(f"Created new build folder: {new_build_folder_name}")
 
     missing_files = []
-    files_to_copy = [('maps.json', f'{new_build_folder_name}\\resources\\'),
-                     ('localization.json', f'{new_build_folder_name}\\resources\\'),
-                     ('DB_default.json', f'{new_build_folder_name}\\resources\\'),
-                     ('LICENSE', f'{new_build_folder_name}\\resources\\'),
-                     ('main.py', f'{new_build_folder_name}\\resources\\'),
-                     ('launcher.py', f'{new_build_folder_name}\\resources\\'),
-                     ('Readme.txt', f'{new_build_folder_name}\\'),
-                     ('Launch TF2 with Rich Presence.bat', f'{new_build_folder_name}\\'),
-                     ('Launch Rich Presence alongside TF2.bat', f'{new_build_folder_name}\\'),
-                     ('Change settings.bat', f'{new_build_folder_name}\\'),
-                     ('logger.py', f'{new_build_folder_name}\\resources\\'),
-                     ('updater.py', f'{new_build_folder_name}\\resources\\'),
-                     ('configs.py', f'{new_build_folder_name}\\resources\\'),
-                     ('custom_maps.py', f'{new_build_folder_name}\\resources\\'),
-                     ('processes.py', f'{new_build_folder_name}\\resources\\'),
-                     ('settings.py', f'{new_build_folder_name}\\resources\\'),
-                     ('localization.py', f'{new_build_folder_name}\\resources\\'),
-                     ('welcomer.py', f'{new_build_folder_name}\\resources\\'),
-                     ('detect_system_language.py', f'{new_build_folder_name}\\resources\\'),
-                     ('tf2_logo_blurple.ico', f'{new_build_folder_name}\\resources\\'),
-                     ('tf2_logo_blurple_wrench.ico', f'{new_build_folder_name}\\resources\\'),
-                     ('APIs', f'{new_build_folder_name}\\resources\\'),
-                     ('Changelogs.html', f'{new_build_folder_name}\\')]
+    files_to_copy = [('maps.json', Path(f'{new_build_folder_name}/resources/')),
+                     ('localization.json', Path(f'{new_build_folder_name}/resources/')),
+                     ('DB_default.json', Path(f'{new_build_folder_name}/resources/')),
+                     ('LICENSE', Path(f'{new_build_folder_name}/resources/')),
+                     ('main.py', Path(f'{new_build_folder_name}/resources/')),
+                     ('launcher.py', Path(f'{new_build_folder_name}/resources/')),
+                     ('Readme.txt', Path(f'{new_build_folder_name}/')),
+                     ('Launch TF2 with Rich Presence.bat', Path(f'{new_build_folder_name}/')),
+                     ('Launch Rich Presence alongside TF2.bat', Path(f'{new_build_folder_name}/')),
+                     ('Change settings.bat', Path(f'{new_build_folder_name}/')),
+                     ('logger.py', Path(f'{new_build_folder_name}/resources/')),
+                     ('updater.py', Path(f'{new_build_folder_name}/resources/')),
+                     ('configs.py', Path(f'{new_build_folder_name}/resources/')),
+                     ('custom_maps.py', Path(f'{new_build_folder_name}/resources/')),
+                     ('processes.py', Path(f'{new_build_folder_name}/resources/')),
+                     ('settings.py', Path(f'{new_build_folder_name}/resources/')),
+                     ('localization.py', Path(f'{new_build_folder_name}/resources/')),
+                     ('welcomer.py', Path(f'{new_build_folder_name}/resources/')),
+                     ('detect_system_language.py', Path(f'{new_build_folder_name}/resources/')),
+                     ('tf2_logo_blurple.ico', Path(f'{new_build_folder_name}/resources/')),
+                     ('tf2_logo_blurple_wrench.ico', Path(f'{new_build_folder_name}/resources/')),
+                     ('APIs', Path(f'{new_build_folder_name}/resources/')),
+                     ('Changelogs.html', Path(f'{new_build_folder_name}/'))]
 
     # copies files, adding any version numbers
     for file_dest_pair in files_to_copy:
@@ -172,7 +173,7 @@ def main(version_num=None):
 
         try:
             with open(file_dest_pair[0], 'r', encoding='utf-8') as file_source:
-                with open(f'{file_dest_pair[1]}{file_dest_pair[0]}', 'w', encoding='utf-8') as file_target:
+                with open(Path(f'{file_dest_pair[1]}/{file_dest_pair[0]}'), 'w', encoding='utf-8') as file_target:
                     modified_file = file_source.read().replace('{tf2rpvnum}', version_num)
 
                     if file_dest_pair[0] == 'main.py':
@@ -190,7 +191,7 @@ def main(version_num=None):
         except UnicodeDecodeError:
             print("Copied", shutil.copy(*file_dest_pair))
 
-    os.rename(f'{new_build_folder_name}\\resources\\DB_default.json', f'{new_build_folder_name}\\resources\\DB.json')
+    os.rename(Path(f'{new_build_folder_name}/resources/DB_default.json'), Path(f'{new_build_folder_name}/resources/DB.json'))
 
     # modify build_version.json, if need be
     this_hash = logger.generate_hash()
@@ -203,7 +204,7 @@ def main(version_num=None):
         with open('build_version.json', 'w') as build_version_json_write:
             json.dump(build_version_data, build_version_json_write, indent=4)
     if github_repo_path != 'n':
-        print("Copied", shutil.copy('build_version.json', f'{github_repo_path}\\TF2 Rich Presence'))
+        print("Copied", shutil.copy('build_version.json', Path(f'{github_repo_path}/TF2 Rich Presence')))
 
     # creates build_info.txt
     try:
@@ -215,7 +216,7 @@ def main(version_num=None):
         got_latest_commit = False
         get_latest_commit_error = error
         latest_commit = ''
-    with open(f'{new_build_folder_name}\\resources\\build_info.txt', 'w') as info_file:
+    with open(Path(f'{new_build_folder_name}/resources/build_info.txt'), 'w') as info_file:
         info_file.write(f"TF2 Rich Presence by Kataiser"
                         "\nhttps://github.com/Kataiser/tf2-rich-presence"
                         f"\n\nVersion: {version_num}"
@@ -226,33 +227,38 @@ def main(version_num=None):
 
     # copies the python interpreter
     python_source = os.path.abspath('python-3.7.4-embed-win32')
-    python_target = os.path.abspath(f'{new_build_folder_name}\\resources\\python')
+    python_target = os.path.abspath(Path(f'{new_build_folder_name}/resources/python'))
     print(f"Copying from {python_source}\n\tto {python_target}: ", end='')
     assert os.path.isdir(python_source) and not os.path.isdir(python_target)
-    subprocess.run(f'xcopy \"{python_source}\" \"{python_target}\\\" /E /Q')
+    if sys.platform == 'win32':
+        subprocess.run(f'xcopy \"{python_source}\" \"{python_target}\\\" /E /Q')
+    else:
+        raise SyntaxError("Whatever the Linux/MacOS equivalent of xcopy is")
 
     print("Compiling PYCs")
-    compileall.compile_dir(f'{new_build_folder_name}\\resources', optimize=2, quiet=True)
+    compileall.compile_dir(Path(f'{new_build_folder_name}/resources'), optimize=2, quiet=True)
     pycs_to_delete = [r'python\packages\certifi\__pycache__\__main__.cpython-37.opt-2.pyc', r'python\packages\chardet\cli\__pycache__\chardetect.cpython-37.opt-2.pyc', r'python\packages\chardet\cli\__pycache__\__init__.cpython-37.opt-2.pyc', r'python\packages\chardet\__pycache__\langhungarianmodel.cpython-37.opt-2.pyc', r'python\packages\idna\__pycache__\codec.cpython-37.opt-2.pyc', r'python\packages\idna\__pycache__\compat.cpython-37.opt-2.pyc', r'python\packages\idna\__pycache__\uts46data.cpython-37.opt-2.pyc', r'python\packages\psutil\__pycache__\_psaix.cpython-37.opt-2.pyc', r'python\packages\psutil\__pycache__\_psbsd.cpython-37.opt-2.pyc', r'python\packages\psutil\__pycache__\_pslinux.cpython-37.opt-2.pyc', r'python\packages\psutil\__pycache__\_psosx.cpython-37.opt-2.pyc', r'python\packages\psutil\__pycache__\_psposix.cpython-37.opt-2.pyc', r'python\packages\psutil\__pycache__\_pssunos.cpython-37.opt-2.pyc', r'python\packages\requests\__pycache__\help.cpython-37.opt-2.pyc', r'python\packages\sentry_sdk\integrations\django\__pycache__\middleware.cpython-37.opt-2.pyc', r'python\packages\sentry_sdk\integrations\django\__pycache__\templates.cpython-37.opt-2.pyc', r'python\packages\sentry_sdk\integrations\django\__pycache__\transactions.cpython-37.opt-2.pyc', r'python\packages\sentry_sdk\integrations\django\__pycache__\__init__.cpython-37.opt-2.pyc', r'python\packages\sentry_sdk\integrations\__pycache__\aiohttp.cpython-37.opt-2.pyc', r'python\packages\sentry_sdk\integrations\__pycache__\asgi.cpython-37.opt-2.pyc', r'python\packages\sentry_sdk\integrations\__pycache__\aws_lambda.cpython-37.opt-2.pyc', r'python\packages\sentry_sdk\integrations\__pycache__\beam.cpython-37.opt-2.pyc', r'python\packages\sentry_sdk\integrations\__pycache__\bottle.cpython-37.opt-2.pyc', r'python\packages\sentry_sdk\integrations\__pycache__\celery.cpython-37.opt-2.pyc', r'python\packages\sentry_sdk\integrations\__pycache__\falcon.cpython-37.opt-2.pyc', r'python\packages\sentry_sdk\integrations\__pycache__\flask.cpython-37.opt-2.pyc', r'python\packages\sentry_sdk\integrations\__pycache__\gnu_backtrace.cpython-37.opt-2.pyc', r'python\packages\sentry_sdk\integrations\__pycache__\pyramid.cpython-37.opt-2.pyc', r'python\packages\sentry_sdk\integrations\__pycache__\redis.cpython-37.opt-2.pyc', r'python\packages\sentry_sdk\integrations\__pycache__\rq.cpython-37.opt-2.pyc', r'python\packages\sentry_sdk\integrations\__pycache__\sanic.cpython-37.opt-2.pyc', r'python\packages\sentry_sdk\integrations\__pycache__\serverless.cpython-37.opt-2.pyc', r'python\packages\sentry_sdk\integrations\__pycache__\sqlalchemy.cpython-37.opt-2.pyc', r'python\packages\sentry_sdk\integrations\__pycache__\tornado.cpython-37.opt-2.pyc', r'python\packages\sentry_sdk\integrations\__pycache__\wsgi.cpython-37.opt-2.pyc', r'python\packages\sentry_sdk\integrations\__pycache__\_wsgi_common.cpython-37.opt-2.pyc', r'python\packages\urllib3\contrib\_securetransport\__pycache__\bindings.cpython-37.opt-2.pyc', r'python\packages\urllib3\contrib\_securetransport\__pycache__\low_level.cpython-37.opt-2.pyc', r'python\packages\urllib3\contrib\_securetransport\__pycache__\__init__.cpython-37.opt-2.pyc', r'python\packages\urllib3\contrib\__pycache__\appengine.cpython-37.opt-2.pyc', r'python\packages\urllib3\contrib\__pycache__\ntlmpool.cpython-37.opt-2.pyc', r'python\packages\urllib3\contrib\__pycache__\securetransport.cpython-37.opt-2.pyc', r'python\packages\urllib3\packages\backports\__pycache__\makefile.cpython-37.opt-2.pyc', r'python\packages\urllib3\packages\backports\__pycache__\__init__.cpython-37.opt-2.pyc', r'python\packages\urllib3\packages\ssl_match_hostname\__pycache__\_implementation.cpython-37.opt-2.pyc', r'python\tkinter\__pycache__\colorchooser.cpython-37.opt-2.pyc', r'python\tkinter\__pycache__\dialog.cpython-37.opt-2.pyc', r'python\tkinter\__pycache__\dnd.cpython-37.opt-2.pyc', r'python\tkinter\__pycache__\filedialog.cpython-37.opt-2.pyc', r'python\tkinter\__pycache__\font.cpython-37.opt-2.pyc', r'python\tkinter\__pycache__\scrolledtext.cpython-37.opt-2.pyc', r'python\tkinter\__pycache__\tix.cpython-37.opt-2.pyc', r'python\tkinter\__pycache__\__main__.cpython-37.opt-2.pyc', r'__pycache__\welcomer.cpython-37.opt-2.pyc']
     print(f"Deleting {len(pycs_to_delete)} unused PYCs")
     missing_pycs = []
     for pyc_to_delete in pycs_to_delete:
+        if sys.platform != 'win32':
+            pyc_to_delete = pyc_to_delete.replace('\\', os.path.sep)
         try:
-            os.remove(f'{new_build_folder_name}\\resources\\{pyc_to_delete}')
+            os.remove(Path(f'{new_build_folder_name}/resources/{pyc_to_delete}'))
         except FileNotFoundError:
-            missing_pycs.append(f'{new_build_folder_name}\\resources\\{pyc_to_delete}')
+            missing_pycs.append(Path(f'{new_build_folder_name}/resources/{pyc_to_delete}'))
 
     time.sleep(0.2)  # just to make sure everything is updated
-    convert_bat_to_exe(os.path.abspath(f'{new_build_folder_name}\\Launch TF2 with Rich Presence.bat'), version_num, 'tf2_logo_blurple.ico')
-    convert_bat_to_exe(os.path.abspath(f'{new_build_folder_name}\\Launch Rich Presence alongside TF2.bat'), version_num, 'tf2_logo_blurple.ico')
-    convert_bat_to_exe(os.path.abspath(f'{new_build_folder_name}\\Change settings.bat'), version_num, 'tf2_logo_blurple_wrench.ico')
+    convert_bat_to_exe(os.path.abspath(Path(f'{new_build_folder_name}/Launch TF2 with Rich Presence.bat')), version_num, 'tf2_logo_blurple.ico')
+    convert_bat_to_exe(os.path.abspath(Path(f'{new_build_folder_name}/Launch Rich Presence alongside TF2.bat')), version_num, 'tf2_logo_blurple.ico')
+    convert_bat_to_exe(os.path.abspath(Path(f'{new_build_folder_name}/Change settings.bat')), version_num, 'tf2_logo_blurple_wrench.ico')
 
     # generates zip package and an "installer" (a self extracting .7z as an exe), both with 7zip
     exe_path = f'tf2_rich_presence_{version_num}_self_extracting.exe'
     zip_path = f'tf2_rich_presence_{version_num}.zip'
-    package7zip_command_exe_1 = f'build_tools\\7za.exe u {exe_path} -up1q0r2x1y2z1w2 "{new_build_folder_name}\\"'
+    package7zip_command_exe_1 = f'build_tools{os.path.sep}7za.exe u {exe_path} -up1q0r2x1y2z1w2 "{new_build_folder_name}{os.path.sep}"'
     package7zip_command_exe_2 = '-sfx7z.sfx -ssw -mx=9 -myx=9 -mmt=2 -m0=LZMA2:d=8m'
-    package7zip_command_zip = f'build_tools\\7za.exe u {zip_path} -up1q0r2x1y2z1w2 "{new_build_folder_name}\\" -ssw -mx=9 -m0=Deflate64 -mmt=2'
+    package7zip_command_zip = f'build_tools{os.path.sep}7za.exe u {zip_path} -up1q0r2x1y2z1w2 "{new_build_folder_name}{os.path.sep}" -ssw -mx=9 -m0=Deflate64 -mmt=2'
     print(f"Creating {exe_path}...")
     assert len(version_num) <= 10 and 'v' in version_num and '.' in version_num
     subprocess.run(f'{package7zip_command_exe_1} {package7zip_command_exe_2}', stdout=subprocess.DEVNULL)
@@ -281,9 +287,9 @@ def main(version_num=None):
         readme_source_exists = False
 
     # disables Sentry, for testing
-    with open(f'{new_build_folder_name}\\resources\\launcher.py', 'r') as launcher_py_read:
+    with open(Path(f'{new_build_folder_name}/resources/launcher.py'), 'r') as launcher_py_read:
         old_data = launcher_py_read.read()
-    with open(f'{new_build_folder_name}\\resources\\launcher.py', 'w') as launcher_py_write:
+    with open(Path(f'{new_build_folder_name}/resources/launcher.py'), 'w') as launcher_py_write:
         new_data = old_data.replace(f"release='{version_num}'", f"release='{version_num}-dev'")
         launcher_py_write.write(new_data)
     print(f"Set Sentry version to {version_num}-dev")
@@ -336,10 +342,10 @@ def convert_bat_to_exe(batch_location: str, vnum: str, icon_path: str):
     exe_location = batch_location.replace('.bat', '.exe')
     icon_location = os.path.abspath(icon_path)
     version_num_windows = vnum[1:].replace('.', ',') + ',0' * (3 - vnum.count('.'))
-    bat2exe_command_1 = f'build_tools\\Bat_To_Exe_Converter.exe -bat "{batch_location}" -save "{exe_location}" -icon "{icon_location}" -fileversion "{version_num_windows}"'
+    bat2exe_command_1 = f'build_tools{os.path.sep}Bat_To_Exe_Converter.exe -bat "{batch_location}" -save "{exe_location}" -icon "{icon_location}" -fileversion "{version_num_windows}"'
     bat2exe_command_2 = f'-productversion "{version_num_windows}" -company "Kataiser" -productname "TF2 Rich Presence" -description "Discord Rich Presence for Team Fortress 2"'
     print(f"Creating {exe_location}...")
-    assert os.path.isfile(batch_location) and os.path.isfile(icon_path) and os.path.isfile('build_tools\\Bat_To_Exe_Converter.exe')
+    assert os.path.isfile(batch_location) and os.path.isfile(icon_path) and os.path.isfile(Path('build_tools/Bat_To_Exe_Converter.exe'))
     subprocess.run(f'{bat2exe_command_1} {bat2exe_command_2}')
     os.remove(batch_location)
     print(f"Deleted {batch_location}")
@@ -353,7 +359,10 @@ def copy_dir_to_git(source, target):
         pass
 
     print(f"Copying from {source} to {target}: ", end='')
-    subprocess.run(f'xcopy \"{source}\" \"{target}\\\" /E /Q')
+    if sys.platform == 'win32':
+        subprocess.run(f'xcopy \"{source}\" \"{target}{os.path.sep}\" /E /Q')
+    else:
+        raise SyntaxError("Whatever the Linux/MacOS equivalent of xcopy is")
 
 
 if __name__ == '__main__':
