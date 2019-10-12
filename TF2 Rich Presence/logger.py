@@ -181,7 +181,7 @@ def generate_hash() -> str:
 def compact_file(target_file_path: str, guarantee: bool = False) -> Union[str, None]:
     if (guarantee or random.random() < 0.25) and os.name == 'nt':
         before_compact_time = time.perf_counter()
-        compact_out: str = subprocess.run(f'compact /c /f /i "{target_file_path}"', stdout=subprocess.PIPE).stdout.decode('utf-8')
+        compact_out: str = subprocess.run(f'compact /c /f /i "{target_file_path}"', stdout=subprocess.PIPE).stdout.decode('utf-8', 'replace')
         return "Compacted file {} (took {} seconds): {}".format(target_file_path, round(time.perf_counter() - before_compact_time, 4), " ".join(compact_out.split()))
     else:
         return None

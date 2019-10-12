@@ -54,7 +54,7 @@ def launch():
         log_init.debug(f"CPU: {psutil.cpu_count(logical=False)} cores, {psutil.cpu_count()} threads")
 
         platform_info = {'architecture': platform.architecture, 'machine': platform.machine, 'system': platform.system, 'platform': platform.platform,
-                         'processor': platform.processor, 'win32_ver': platform.win32_ver, 'python_version_tuple': platform.python_version_tuple}
+                         'processor': platform.processor, 'python_version_tuple': platform.python_version_tuple}
         for platform_part in platform_info:
             try:
                 if platform_part == 'platform':
