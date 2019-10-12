@@ -1,7 +1,7 @@
 # TF2 Rich Presence {tf2rpvnum}
 # https://github.com/Kataiser/tf2-rich-presence
 #
-# Copyright (C) 2019  Kataiser
+# Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 #
 # This program is free software: you can redistribute it and/or modify
