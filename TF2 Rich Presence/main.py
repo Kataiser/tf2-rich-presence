@@ -152,8 +152,6 @@ class TF2RichPresense:
 
             top_line, bottom_line = self.interpret_console_log(os.path.join(p_data['TF2']['path'], 'tf', 'console.log'), valid_usernames)
 
-            self.send_rpc_activity()
-
             if top_line == 'In menus':
                 # in menus displays the main menu
                 self.test_state = 'menus'
