@@ -1,3 +1,5 @@
+"""Discord Rich Presence for Team Fortress 2"""
+
 # TF2 Rich Presence {tf2rpvnum}
 # https://github.com/Kataiser/tf2-rich-presence
 #
@@ -39,6 +41,9 @@ import processes
 import settings
 
 __author__ = "Kataiser"
+__copyright__ = "Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors"
+__license__ = "GPL-3.0"
+__email__ = "Mecharon1.gm@gmail.com"
 
 
 def launch():
