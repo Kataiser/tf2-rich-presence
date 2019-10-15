@@ -60,6 +60,7 @@ class GUI(tk.Frame):
         self.console_scan_kb = tk.IntVar()
         self.class_pic_type = tk.StringVar()
         self.language = tk.StringVar()
+        self.map_time = tk.BooleanVar()
 
         try:
             # load settings from DB.json
@@ -77,6 +78,7 @@ class GUI(tk.Frame):
             self.console_scan_kb.set(self.settings_loaded['console_scan_kb'])
             self.class_pic_type.set(self.settings_loaded['class_pic_type'])
             self.language.set(self.settings_loaded['language'])
+            self.map_time.set(self.settings_loaded['map_time'])
         except Exception:
             # probably a json decode error
             formatted_exception = traceback.format_exc()
@@ -86,6 +88,7 @@ class GUI(tk.Frame):
             self.restore_defaults()
             self.settings_loaded = get_setting_default(return_all=True)
 
+        # make options account for localization
         self.log_level.set(self.log_levels_display[self.log_levels.index(self.log_level.get())])
         self.sentry_level.set(self.sentry_levels_display[self.sentry_levels.index(self.sentry_level.get())])
         self.class_pic_type.set(self.class_pic_types_display[self.class_pic_types.index(self.class_pic_type.get())])
@@ -145,6 +148,8 @@ class GUI(tk.Frame):
         actual_language = self.language.get()
         setting13_options = ttk.OptionMenu(setting13_frame, self.language, self.languages[0], *self.languages_display, command=self.update_default_button_state)
         self.language.set(actual_language)
+        setting14 = ttk.Checkbutton(lf_main, variable=self.map_time, command=self.update_default_button_state, text="{}".format(
+            self.loc.text("Show time on current map instead of selected class")))
 
         # download page button, but only if a new version is available
         db_path = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
@@ -159,7 +164,7 @@ class GUI(tk.Frame):
             self.update_button.grid(row=9, sticky=tk.W, padx=(20, 40), pady=(0, 12))
 
         # add widgets to the labelframes or main window
-        setting1_frame.grid(row=10, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
+        setting1_frame.grid(row=11, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
         setting1_text.pack(side='left', fill=None, expand=False)
         for setting1_radiobutton in setting1_radiobuttons:
             setting1_radiobutton.pack(side='left', fill=None, expand=False)
@@ -168,26 +173,27 @@ class GUI(tk.Frame):
         setting3_frame.grid(row=1, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(3, 0))
         setting4_text.pack(side='left', fill=None, expand=False)
         setting4_option.pack(side='left', fill=None, expand=False)
-        setting4_frame.grid(row=3, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
-        setting5.grid(row=8, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 10))
+        setting4_frame.grid(row=4, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
+        setting5.grid(row=9, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 10))
         setting6_text.pack(side='left', fill=None, expand=False)
         setting6_option.pack(side='left', fill=None, expand=False)
-        setting6_frame.grid(row=9, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
-        setting8.grid(row=5, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
+        setting6_frame.grid(row=10, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
+        setting8.grid(row=6, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
         setting9_text.pack(side='left', fill=None, expand=False)
         for setting9_radiobutton in setting9_radiobuttons:
             setting9_radiobutton.pack(side='left', fill=None, expand=False)
-        setting9_frame.grid(row=11, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 10))
+        setting9_frame.grid(row=12, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 10))
         setting10_text.pack(side='left', fill=None, expand=False)
         setting10_option.pack(side='left', fill=None, expand=False)
-        setting10_frame.grid(row=4, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(11, 0))
+        setting10_frame.grid(row=5, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(11, 0))
         setting12_text.pack(side='left', fill=None, expand=False)
         for setting12_radiobutton in setting12_radiobuttons:
             setting12_radiobutton.pack(side='left', fill=None, expand=False)
-        setting12_frame.grid(row=7, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
+        setting12_frame.grid(row=8, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
         setting13_text.pack(side='left', fill=None, expand=False)
         setting13_options.pack(side='left', fill=None, expand=False)
         setting13_frame.grid(row=0, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(9, 0))
+        setting14.grid(row=2, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
 
         lf_main.grid(row=0, padx=30, pady=15)
         lf_advanced.grid(row=1, padx=30, pady=0, sticky=tk.W + tk.E)
@@ -231,10 +237,12 @@ class GUI(tk.Frame):
                 'log_level': self.log_levels[self.log_levels_display.index(self.log_level.get())],
                 'console_scan_kb': self.console_scan_kb.get(),
                 'class_pic_type': self.class_pic_types[self.class_pic_types_display.index(self.class_pic_type.get())],
-                'language': self.languages[self.languages_display.index(self.language.get())]}
+                'language': self.languages[self.languages_display.index(self.language.get())],
+                'map_time': self.map_time.get()}
 
     # set all settings to defaults
     def restore_defaults(self):
+        # TODO: fix unselected radio buttons when the displayed language != English
         settings_to_save = self.get_working_settings()
         settings_changed = {k: settings_to_save[k] for k in settings_to_save if k in self.settings_loaded and settings_to_save[k] != self.settings_loaded[k]}  # haha what
 
@@ -256,6 +264,7 @@ class GUI(tk.Frame):
             self.console_scan_kb.set(get_setting_default('console_scan_kb'))
             self.class_pic_type.set(get_setting_default('class_pic_type'))
             self.language.set(get_setting_default('language'))
+            self.map_time.set(get_setting_default('map_time'))
 
             self.log.debug("Restored defaults")
             self.restore_button.state(['disabled'])
@@ -310,6 +319,7 @@ class GUI(tk.Frame):
             self.log.info("Closing settings menu without saving")
             self.master.destroy()
 
+    # open the release page in the default browser
     def open_update_page(self):
         webbrowser.open(self.new_version_url)
 
@@ -358,7 +368,8 @@ def get_setting_default(setting: str = '', return_all: bool = False) -> Any:
                 'log_level': 'Debug',
                 'console_scan_kb': 1000,
                 'class_pic_type': 'Icon',
-                'language': 'English'}
+                'language': 'English',
+                'map_time': False}
 
     if return_all:
         return defaults

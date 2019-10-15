@@ -9,7 +9,8 @@
         "log_level": "Debug",
         "console_scan_kb": 1000,
         "class_pic_type": "Icon",
-        "language": "English"
+        "language": "English",
+        "map_time": false
     },
     "custom_maps": {},
     "tb_hashes": [],

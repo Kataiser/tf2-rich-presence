@@ -105,6 +105,8 @@ class TF2RichPresense:
         self.process_scanner = processes.ProcessScanner(self.log)
         self.loc = localization.Localizer(self.log, settings.get('language'))
         self.current_time_formatted = ""
+        self.current_map = None
+        self.time_changed_map = time.time()
 
         # load maps database
         try:
@@ -136,7 +138,10 @@ class TF2RichPresense:
     def loop_body(self):
         self.loop_iteration += 1
         self.log.debug(f"Loop iteration this app session: {self.loop_iteration}")
+
         self.old_activity = copy.copy(self.activity)
+        if self.loc.text("Time on map: {0}").replace('{0}', '') in self.old_activity['state']:
+            self.old_activity['state'] = ''
 
         # this as a one-liner is beautiful :)
         p_data = self.process_scanner.scan()
@@ -160,6 +165,7 @@ class TF2RichPresense:
             if top_line == 'In menus':
                 # in menus displays the main menu
                 self.test_state = 'menus'
+                self.current_map = None
                 self.activity['assets']['small_image'] = 'tf2_icon_small'
                 self.activity['assets']['small_text'] = 'Team Fortress 2'
 
@@ -189,7 +195,20 @@ class TF2RichPresense:
                     self.activity['assets']['small_image'] = small_class_image
                     self.activity['assets']['small_text'] = bottom_line
 
-                bottom_line = self.loc.text("Class: {0}").format(self.loc.text(bottom_line))
+                if settings.get('map_time'):
+                    if self.current_map != top_line:  # top_line means the current map here... I should probably refactor that
+                        self.current_map = top_line
+                        self.time_changed_map = time.time()
+
+                    # convert seconds to a pretty timestamp
+                    seconds_on_map = time.time() - self.time_changed_map
+                    time_format = '%M:%S' if seconds_on_map <= 3600 else '%H:%M:%S'
+                    map_time_formatted = time.strftime(time_format, time.gmtime(seconds_on_map))
+
+                    # I know I could just set the start time in activity, but I'd rather that always meant time with the game open
+                    bottom_line = self.loc.text("Time on map: {0}").format(map_time_formatted)
+                else:
+                    bottom_line = self.loc.text("Class: {0}").format(self.loc.text(bottom_line))
 
                 try:
                     map_fancy, current_gamemode, gamemode_fancy = self.map_gamemodes[top_line]
@@ -205,13 +224,18 @@ class TF2RichPresense:
                     self.activity['assets']['large_text'] = "{0} {1}".format(custom_gamemode_fancy, self.loc.text("[custom/community map]"))
 
                 top_line = self.loc.text("Map: {0}").format(map_out)
-            else:  # console.log is empty or close to empty
+            else:
+                # console.log is empty or close to empty
                 pass
 
             self.activity['details'] = top_line
             self.activity['state'] = bottom_line
 
-            if self.activity != self.old_activity:
+            activity_comparison = copy.copy(self.activity)
+            if self.loc.text("Time on map: {0}").replace('{0}', '') in activity_comparison['state']:
+                activity_comparison['state'] = ''
+
+            if activity_comparison != self.old_activity:
                 # output to terminal, just for monitoring
                 print(f"{self.current_time_formatted}{self.generate_delta(self.last_notify_time)}{colorama.Style.BRIGHT}")
 

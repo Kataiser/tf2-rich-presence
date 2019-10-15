@@ -2000,5 +2000,19 @@
         "Korean": "로그를 수동으로 보고할 수 없음",
         "Chinese": "无法手动报告日志",
         "Japanese": "手動でログを報告できなかった"
+    },
+    "7863023170": {
+        "English": "Time on map: {0}",
+        "German": "Zeit auf der Karte: {0}",
+        "French": "Temps sur la carte : {0}",
+        "Spanish": "El tiempo en el mapa: {0}",
+        "Portuguese": "Tempo no mapa: {0}",
+        "Italian": "Tempo sulla mappa: {0}",
+        "Dutch": "Tijd op de kaart: {0}",
+        "Polish": "Czas na mapie: {0}",
+        "Russian": "Время на карте: {0}",
+        "Korean": "지도 시간:{0}",
+        "Chinese": "时间在地图上:{0}",
+        "Japanese": "地図上の時間:{0}"
     }
 }
