@@ -161,7 +161,7 @@ class GUI(tk.Frame):
 
             self.update_button_text = tk.StringVar(value=self.loc.text("Open {0} download page").format(new_version_name))
             self.update_button = ttk.Button(lf_main, textvariable=self.update_button_text, command=self.open_update_page)
-            self.update_button.grid(row=9, sticky=tk.W, padx=(20, 40), pady=(0, 12))
+            self.update_button.grid(row=10, sticky=tk.W, padx=(20, 40), pady=(0, 12))
 
         # add widgets to the labelframes or main window
         setting1_frame.grid(row=11, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
