@@ -165,6 +165,15 @@ class ProcessScanner:
         self.process_data['Steam']['running'] = 'Steam.exe' in parsed_tasklist_keys
         self.process_data['Discord']['running'] = 'Discord' in parsed_tasklist_keys
 
+        # don't detect gmod (or any other program named hl2.exe)
+        if self.process_data['TF2']['running']:
+            hl2_exe_path = self.get_info_from_pid(self.parsed_tasklist['hl2.exe'], ('path',))
+
+            if 'Team Fortress 2' not in hl2_exe_path:
+                self.log.error(f"Found non-TF2 hl2.exe at {hl2_exe_path}")
+                self.process_data['TF2'] = copy.deepcopy(self.p_data_default['TF2'])
+                del self.parsed_tasklist['hl2.exe']
+
 
 if __name__ == '__main__':
     import pprint
