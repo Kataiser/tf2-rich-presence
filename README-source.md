@@ -39,6 +39,6 @@ For faster launching, you can add the first EXE to your taskbar/start menu/deskt
 For making and testing changes, or simply always running the most up-to-date code. (Windows only)
 1. Either clone the repo or [download the source](https://github.com/Kataiser/tf2-rich-presence/archive/master.zip).
 2. Copy the entire source to another location and put the files outside of `TF2 Rich Presence` into that folder.
-3. Extract `TF2 Rich Presence\python-3.7.4-embed-win32.zip`.
+3. Extract `TF2 Rich Presence\python-3.7.5-embed-win32.zip`.
 4. Make sure the `python` and `pip` commands point to Python >= 3.7.
 4. From within `TF2 Rich Presence`, run `pip install -r requirements.txt` and `python build.py`.

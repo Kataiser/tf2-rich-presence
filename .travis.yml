@@ -1,11 +1,11 @@
 language: python
 matrix:
   include:
-    - name: "Python 3.7.3 on Windows"
+    - name: "Python 3.7.5 on Windows"
       os: windows
       language: shell
       before_install:
-        - choco install python --version=3.7.4
+        - choco install python --version=3.7.5
         - python -m pip install --upgrade pip
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
 install: pip3 install -r requirements.txt
@@ -14,5 +14,5 @@ script:
   - xcopy Changelogs.html "TF2 Rich Presence"
   - cd "TF2 Rich Presence"
   - python ci_test_runner.py
-  - 7z x python-3.7.4-embed-win32.zip
+  - 7z x python-3.7.5-embed-win32.zip
   - python build.py --n
