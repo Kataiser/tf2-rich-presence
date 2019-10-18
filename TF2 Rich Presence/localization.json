@@ -2014,5 +2014,19 @@
         "Korean": "지도 시간:{0}",
         "Chinese": "时间在地图上:{0}",
         "Japanese": "地図上の時間:{0}"
+    },
+    "1396311933": {
+        "English": " - TF2 Rich Presence {0}",
+        "German": " - TF2 Reichhaltige Präsenz {0}",
+        "French": " - TF2 Richesse de la Présence {0}",
+        "Spanish": " - TF2 Presencia Rica {0}",
+        "Portuguese": " - Presença Rica em TF2 {0}",
+        "Italian": " - Presenza Ricca TF2 {0}",
+        "Dutch": " - TF2 Rijke Aanwezigheid {0}",
+        "Polish": " - TF2 Bogata Obecność {0}",
+        "Russian": " - TF2 Богатое присутствие {0}",
+        "Korean": "-TF2 부유한 존재{0}",
+        "Chinese": "-TF2丰富的存在{0}",
+        "Japanese": "-TF2豊富なプレゼンス{0}"
     }
 }

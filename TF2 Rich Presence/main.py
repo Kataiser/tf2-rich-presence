@@ -258,7 +258,11 @@ class TF2RichPresense:
                 self.log.debug("Activity hasn't changed, not outputting")
 
             # send everything to discord
+            large_text_base = self.activity['assets']['large_text']
+            self.activity['assets']['large_text'] += self.loc.text(" - TF2 Rich Presence {0}".format('{tf2rpvnum}'))
             self.send_rpc_activity()
+            self.activity['assets']['large_text'] = large_text_base
+            # this gets reset because self.old_activity doesn't have it
 
             if not self.client_connected:
                 self.log.critical("self.client is disconnected when it shouldn't be")
