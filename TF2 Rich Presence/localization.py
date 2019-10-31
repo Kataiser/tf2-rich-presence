@@ -19,7 +19,7 @@ class Localizer:
     def text(self, english_text: str) -> str:
         english_text_adler32 = str(zlib.adler32(english_text.replace('{tf2rpvnum}', '').encode('utf-8'))).ljust(10, '0')
 
-        if english_text_adler32 not in access_localization_file():
+        if english_text_adler32 not in access_localization_file() and "Time on map: " not in english_text:  # exclude that because it causes DB.json spam
             if english_text not in self.missing_lines:
                 self.missing_lines.append(english_text)
 
@@ -40,6 +40,7 @@ class Localizer:
             if self.appending:  # only used for development
                 access_localization_file(append=(english_text_adler32, english_text))
 
+            # no available translation, so must default to the English text
             return english_text
 
         if self.language == 'English':
