@@ -228,7 +228,7 @@ def main(version_num=None):
 
     # copies the python interpreter
     python_source = os.path.abspath('python-3.7.5-embed-win32')
-    python_target = os.path.abspath(Path(f'{new_build_folder_name}/resources/python-3.7.5-embed-win32'))
+    python_target = os.path.abspath(Path(f'{new_build_folder_name}/resources/python'))
     print(f"Copying from {python_source}\n\tto {python_target}: ", end='')
     assert os.path.isdir(python_source) and not os.path.isdir(python_target)
     if sys.platform == 'win32':
