@@ -92,7 +92,7 @@ def main(version_num=None):
         print("Copied", shutil.copy('Change settings.bat', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('README-source.MD', github_repo_path))
         print("Copied", shutil.copy('requirements.txt', github_repo_path))
-        print("Copied", shutil.copy('pycs_to_delete.txt', github_repo_path))
+        print("Copied", shutil.copy('pycs_to_delete.txt', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('python-3.7.5-embed-win32.zip', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copyfile(Path(f'{github_repo_path}/TF2 Rich Presence/DB_default.json'), Path(f'{github_repo_path}/TF2 Rich Presence/DB.json')))
 
