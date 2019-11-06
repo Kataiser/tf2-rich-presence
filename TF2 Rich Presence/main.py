@@ -121,7 +121,7 @@ class TF2RichPresense:
 
     def run(self):
         while True:
-            current_settings = settings.access_settings_file()
+            current_settings = settings.access_registry()
             if current_settings == settings.get_setting_default(return_all=True):
                 self.log.debug(f"Current settings: {current_settings}")
             else:

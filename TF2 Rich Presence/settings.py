@@ -9,6 +9,7 @@ import tkinter as tk
 import tkinter.ttk as ttk
 import traceback
 import webbrowser
+import winreg
 from tkinter import messagebox
 from typing import Any, Union
 
@@ -64,7 +65,7 @@ class GUI(tk.Frame):
 
         try:
             # load settings from DB.json
-            self.settings_loaded = access_settings_file()
+            self.settings_loaded = access_registry()
             self.log.debug(f"Current settings: {self.settings_loaded}")
             self.log.debug(f"Are default: {self.settings_loaded == get_setting_default(return_all=True)}")
 
@@ -284,7 +285,7 @@ class GUI(tk.Frame):
         settings_changed = {k: settings_to_save[k] for k in settings_to_save if k in self.settings_loaded and settings_to_save[k] != self.settings_loaded[k]}  # haha what
         self.log.debug(f"Setting(s) changed: {settings_changed}")
         self.log.info("Saving and closing settings menu")
-        access_settings_file(save_dict=settings_to_save)
+        access_registry(save_dict=settings_to_save)
         self.log.info(f"Settings have been saved as: {settings_to_save}")
 
         processes = str(subprocess.check_output('tasklist /fi "STATUS eq running"', creationflags=0x08000000))  # the creation flag disables a cmd window flash
@@ -335,26 +336,36 @@ def launch():
 @functools.lru_cache(maxsize=None)
 def get(setting: str) -> Any:
     try:
-        return access_settings_file()[setting]
+        return access_registry()[setting]
     except FileNotFoundError:
         return get_setting_default(setting)
-    except Exception:
-        return get_setting_default(setting)
 
 
-# either reads the settings file and returns it a a dict, or if a dict is provided, saves it as a json
-def access_settings_file(save_dict: Union[dict, None] = None) -> dict:
-    db_path = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
-    with open(db_path, 'r+') as db_json:
-        db_data = json.load(db_json)
+# either reads the settings key and returns it a a dict, or if a dict is provided, saves it
+# note that settings are saved a JSON in a single string key
+def access_registry(save_dict: Union[dict, None] = None) -> dict:
+    reg_key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, r'Software\TF2 Rich Presence')
 
-        if save_dict:
-            db_data['settings'] = save_dict
+    try:
+        reg_key_data = json.loads(winreg.QueryValue(reg_key, 'Settings'))
+    except FileNotFoundError:  # means that the key hasn't been initialized
+        # assume no key means default settings. might not be true but whatever
+        default_settings = get_setting_default(return_all=True)
+        winreg.SetValue(reg_key, 'Settings', winreg.REG_SZ, json.dumps(default_settings))
+        reg_key_data = default_settings
+
+    if save_dict:
+        winreg.SetValue(reg_key, 'Settings', winreg.REG_SZ, json.dumps(save_dict))
+
+        db_path = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
+        with open(db_path, 'r+') as db_json:
+            db_data = json.load(db_json)
+            db_data['welcomer_language'] = get('language')  # meta
             db_json.seek(0)
             db_json.truncate(0)
             json.dump(db_data, db_json, indent=4)
-        else:
-            return db_data['settings']
+    else:
+        return reg_key_data
 
 
 # either gets a settings default, or if return_dict, returns all defaults as a dict

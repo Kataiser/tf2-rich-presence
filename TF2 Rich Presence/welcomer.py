@@ -18,7 +18,7 @@ def main():
     with open(db_path, 'r+') as db_json:
         db_data = json.load(db_json)
 
-    language = db_data['settings']['language']
+    language = db_data['welcomer_language']
     loc = localization.Localizer(language=language)
 
     colorama.init()
