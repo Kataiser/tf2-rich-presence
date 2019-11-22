@@ -24,7 +24,10 @@ class Log:
         if socket.gethostname().find('.') >= 0:
             user_pc_name: str = socket.gethostname()
         else:
-            user_pc_name: str = socket.gethostbyaddr(socket.gethostname())[0]
+            try:
+                user_pc_name: str = socket.gethostbyaddr(socket.gethostname())[0]
+            except socket.gaierror:  # no idea what causes this but it happened to someone
+                user_pc_name: str = user_identifier
 
         # setup
         self.last_log_time = None
