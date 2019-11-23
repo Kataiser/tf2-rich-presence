@@ -2,6 +2,7 @@
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 
 import argparse
+import ctypes
 import json
 import os
 import sys
@@ -14,6 +15,9 @@ import localization
 
 
 def main():
+    # used to do this in the EXE launchers, but I'd rather not recompile the new ones too much
+    ctypes.windll.kernel32.SetConsoleTitleW('TF2 Rich Presence {tf2rpvnum}')
+
     db_path = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
     with open(db_path, 'r+') as db_json:
         db_data = json.load(db_json)

@@ -87,9 +87,13 @@ def main(version_num=None):
         print("Copied", shutil.copy('requirements.txt', github_repo_path))
         print("Copied", shutil.copy('tf2_logo_blurple.ico', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('tf2_logo_blurple_wrench.ico', Path(f'{github_repo_path}/TF2 Rich Presence')))
-        print("Copied", shutil.copy('Launch TF2 with Rich Presence.bat', Path(f'{github_repo_path}/TF2 Rich Presence')))
-        print("Copied", shutil.copy('Launch Rich Presence alongside TF2.bat', Path(f'{github_repo_path}/TF2 Rich Presence')))
-        print("Copied", shutil.copy('Change settings.bat', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('Launch TF2 with Rich Presence.cpp', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('Launch Rich Presence alongside TF2.cpp', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('Change settings.cpp', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('Launch TF2 with Rich Presence.exe', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('Launch Rich Presence alongside TF2.exe', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('Change settings.exe', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('compile launchers.bat', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('README-source.MD', github_repo_path))
         print("Copied", shutil.copy('requirements.txt', github_repo_path))
         print("Copied", shutil.copy('pycs_to_delete.txt', Path(f'{github_repo_path}/TF2 Rich Presence')))
@@ -149,9 +153,9 @@ def main(version_num=None):
                      ('main.py', Path(f'{new_build_folder_name}/resources/')),
                      ('launcher.py', Path(f'{new_build_folder_name}/resources/')),
                      ('Readme.txt', Path(f'{new_build_folder_name}/')),
-                     ('Launch TF2 with Rich Presence.bat', Path(f'{new_build_folder_name}/')),
-                     ('Launch Rich Presence alongside TF2.bat', Path(f'{new_build_folder_name}/')),
-                     ('Change settings.bat', Path(f'{new_build_folder_name}/')),
+                     ('Launch TF2 with Rich Presence.exe', Path(f'{new_build_folder_name}/')),
+                     ('Launch Rich Presence alongside TF2.exe', Path(f'{new_build_folder_name}/')),
+                     ('Change settings.exe', Path(f'{new_build_folder_name}/')),
                      ('logger.py', Path(f'{new_build_folder_name}/resources/')),
                      ('updater.py', Path(f'{new_build_folder_name}/resources/')),
                      ('configs.py', Path(f'{new_build_folder_name}/resources/')),
@@ -236,6 +240,7 @@ def main(version_num=None):
     else:
         raise SyntaxError("Whatever the Linux/MacOS equivalent of xcopy is")
 
+    # compile PYCs, for faster initial load times
     print("Compiling PYCs")
     compileall.compile_dir(Path(f'{new_build_folder_name}/resources'), optimize=2, quiet=True)
     with open('pycs_to_delete.txt', 'r') as pycs_to_delete_txt:
@@ -250,12 +255,8 @@ def main(version_num=None):
         except FileNotFoundError:
             missing_pycs.append(str(Path(f'{new_build_folder_name}/resources/{pyc_to_delete}')))
 
-    time.sleep(0.2)  # just to make sure everything is updated
-    convert_bat_to_exe(os.path.abspath(Path(f'{new_build_folder_name}/Launch TF2 with Rich Presence.bat')), version_num, 'tf2_logo_blurple.ico')
-    convert_bat_to_exe(os.path.abspath(Path(f'{new_build_folder_name}/Launch Rich Presence alongside TF2.bat')), version_num, 'tf2_logo_blurple.ico')
-    convert_bat_to_exe(os.path.abspath(Path(f'{new_build_folder_name}/Change settings.bat')), version_num, 'tf2_logo_blurple_wrench.ico')
-
     # generates zip package and an "installer" (a self extracting .7z as an exe), both with 7zip
+    time.sleep(0.2)  # just to make sure everything is updated
     exe_path = f'tf2_rich_presence_{version_num}_self_extracting.exe'
     zip_path = f'tf2_rich_presence_{version_num}.zip'
     package7zip_command_exe_1 = f'build_tools{os.path.sep}7za.exe u {exe_path} -up1q0r2x1y2z1w2 "{new_build_folder_name}{os.path.sep}"'
@@ -337,20 +338,6 @@ def main(version_num=None):
     with open('Changelogs.html') as changelogs_html:
         if version_num not in changelogs_html.read():
             print(f"'{version_num}' not in Changelogs.html", file=sys.stderr)
-
-
-# converts a batch file to an exe with Bat To Exe Converter (https://web.archive.org/web/20190513133413/http://www.f2ko.de/en/b2e.php)
-def convert_bat_to_exe(batch_location: str, vnum: str, icon_path: str):
-    exe_location = batch_location.replace('.bat', '.exe')
-    icon_location = os.path.abspath(icon_path)
-    version_num_windows = vnum[1:].replace('.', ',') + ',0' * (3 - vnum.count('.'))
-    bat2exe_command_1 = f'build_tools{os.path.sep}Bat_To_Exe_Converter.exe -bat "{batch_location}" -save "{exe_location}" -icon "{icon_location}" -fileversion "{version_num_windows}"'
-    bat2exe_command_2 = f'-productversion "{version_num_windows}" -company "Kataiser" -productname "TF2 Rich Presence" -description "Discord Rich Presence for Team Fortress 2"'
-    print(f"Creating {exe_location}...")
-    assert os.path.isfile(batch_location) and os.path.isfile(icon_path) and os.path.isfile(Path('build_tools/Bat_To_Exe_Converter.exe'))
-    subprocess.run(f'{bat2exe_command_1} {bat2exe_command_2}')
-    os.remove(batch_location)
-    print(f"Deleted {batch_location}")
 
 
 # copy a directory to the git repo
