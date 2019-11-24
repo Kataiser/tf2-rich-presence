@@ -107,6 +107,7 @@ class TF2RichPresense:
         self.current_time_formatted = ""
         self.current_map = None
         self.time_changed_map = time.time()
+        self.has_seen_kataiser = False
 
         # load maps database
         try:
@@ -313,6 +314,7 @@ class TF2RichPresense:
         # defaults
         current_map: str = ''
         current_class: str = ''
+        kataiser_seen_on: str = ''
 
         match_types: Dict[str, str] = {'match group 12v12 Casual Match': 'Casual', 'match group MvM Practice': 'MvM (Boot Camp)', 'match group MvM MannUp': 'MvM (Mann Up)',
                                        'match group 6v6 Ladder Match': 'Competitive'}
@@ -320,6 +322,7 @@ class TF2RichPresense:
         tf2_classes = ('Scout', 'Soldier', 'Pyro', 'Demoman', 'Heavy', 'Engineer', 'Medic', 'Sniper', 'Spy')
 
         hide_queued_gamemode = settings.get('hide_queued_gamemode')
+        user_is_kataiser = 'Kataiser' in user_usernames
 
         # console.log is a log of tf2's console (duh), only exists if tf2 has -condebug (see the bottom of config_files)
         consolelog_filename: Union[bytes, str] = console_log_path
@@ -392,6 +395,14 @@ class TF2RichPresense:
             if '[PartyClient] L' in line:  # full line: [PartyClient] Leaving queue
                 current_class = 'Not queued'
                 line_used = line
+
+            if not user_is_kataiser and not self.has_seen_kataiser and 'Kataiser' in line:
+                kataiser_seen_on = current_map
+
+        if not user_is_kataiser and not self.has_seen_kataiser and kataiser_seen_on == current_map and current_map not in ('', 'In menus'):
+            self.has_seen_kataiser = True
+            self.log.debug(f"Kataiser located, telling user :) (on {current_map})")
+            print(f"{colorama.Fore.LIGHTCYAN_EX}Hey, it seems that Kataiser, the developer of TF2 Rich Presence, is in your game! Say hi to me if you'd like :){colorama.Style.RESET_ALL}\n")
 
         self.log.debug(f"Got '{current_map}' and '{current_class}' from this line: '{line_used[:-1]}'")
         return current_map, current_class
