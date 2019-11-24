@@ -108,6 +108,8 @@ class TF2RichPresense:
         self.current_map = None
         self.time_changed_map = time.time()
         self.has_seen_kataiser = False
+        self.old_console_log_mtime = 0.0
+        self.old_console_log_interpretation = ('', '')
 
         # load maps database
         try:
@@ -161,7 +163,16 @@ class TF2RichPresense:
                 configs.class_config_files(self.log, p_data['TF2']['path'])
                 self.has_checked_class_configs = True
 
-            top_line, bottom_line = self.interpret_console_log(os.path.join(p_data['TF2']['path'], 'tf', 'console.log'), valid_usernames)
+            console_log_path = os.path.join(p_data['TF2']['path'], 'tf', 'console.log')
+            console_log_mtime = os.stat(console_log_path).st_mtime
+
+            # don't interpret console.log again if it hasn't been modified yet
+            if console_log_mtime == self.old_console_log_mtime:
+                top_line, bottom_line = self.interpret_console_log(console_log_path, valid_usernames)
+                self.old_console_log_interpretation = (top_line, bottom_line)
+            else:
+                self.log.debug(f"Not rescanning console.log (old mtime: {self.old_console_log_mtime}, new: {console_log_mtime}), remaining on {self.old_console_log_interpretation}")
+                top_line, bottom_line = self.old_console_log_interpretation
 
             if top_line == 'In menus':
                 # in menus displays the main menu
