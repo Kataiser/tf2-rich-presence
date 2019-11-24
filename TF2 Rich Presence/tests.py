@@ -148,6 +148,7 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
                     'state': ''}
 
         client = ipc.DiscordIPC('429389143756374017')
+        time.sleep(0.1)  # this fix works? seriously?
         client.connect()
         client.update_activity(activity)
         client_state = (client.client_id, client.connected, client.ipc_path, isinstance(client.pid, int), client.platform, isinstance(client.socket, io.BufferedRandom), client.socket.name)
