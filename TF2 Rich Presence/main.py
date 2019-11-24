@@ -166,10 +166,11 @@ class TF2RichPresense:
             console_log_path = os.path.join(p_data['TF2']['path'], 'tf', 'console.log')
             console_log_mtime = os.stat(console_log_path).st_mtime
 
-            # don't interpret console.log again if it hasn't been modified yet
-            if console_log_mtime == self.old_console_log_mtime:
+            # only interpret console.log again if it's been modified
+            if console_log_mtime != self.old_console_log_mtime:
                 top_line, bottom_line = self.interpret_console_log(console_log_path, valid_usernames)
                 self.old_console_log_interpretation = (top_line, bottom_line)
+                self.old_console_log_mtime = console_log_mtime
             else:
                 self.log.debug(f"Not rescanning console.log (old mtime: {self.old_console_log_mtime}, new: {console_log_mtime}), remaining on {self.old_console_log_interpretation}")
                 top_line, bottom_line = self.old_console_log_interpretation
