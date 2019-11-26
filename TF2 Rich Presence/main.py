@@ -172,7 +172,7 @@ class TF2RichPresense:
                 self.old_console_log_interpretation = (top_line, bottom_line)
                 self.old_console_log_mtime = console_log_mtime
             else:
-                self.log.debug(f"Not rescanning console.log (old mtime: {self.old_console_log_mtime}, new: {console_log_mtime}), remaining on {self.old_console_log_interpretation}")
+                self.log.debug(f"Not rescanning console.log, remaining on {self.old_console_log_interpretation}")
                 top_line, bottom_line = self.old_console_log_interpretation
 
             if top_line == 'In menus':
