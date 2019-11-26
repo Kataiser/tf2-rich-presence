@@ -2028,5 +2028,19 @@
         "Korean": "-TF2 부유한 존재{0}",
         "Chinese": "-TF2丰富的存在{0}",
         "Japanese": "-TF2豊富なプレゼンス{0}"
+    },
+    "1269501808": {
+        "English": " Open {0} download page in default browser ",
+        "German": " Öffnen Sie die {0} Download-Seite im Standardbrowser ",
+        "French": " Ouvrir {0} page de téléchargement dans le navigateur par défaut ",
+        "Spanish": " Abrir {0} página de descarga en el navegador predeterminado ",
+        "Portuguese": " Abra a página de download {0} no navegador padrão ",
+        "Italian": " Aprire {0} pagina di download nel browser predefinito ",
+        "Dutch": " Open {0} downloadpagina in standaardbrowser ",
+        "Polish": " Otwórz stronę pobierania {0} w domyślnej przeglądarce. ",
+        "Russian": " Открыть {0} Страницу загрузки в стандартном браузере ",
+        "Korean": " 기본 브라우저에서{0}다운로드 페이지 열기 ",
+        "Chinese": " 在默认浏览器中打开{0}下载页面 ",
+        "Japanese": " 開{0}のダウンロードページのデフォルトのブラウザ "
     }
 }
