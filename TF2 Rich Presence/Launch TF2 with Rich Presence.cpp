@@ -10,6 +10,7 @@ int main() {
     GetCurrentDirectoryA(256, buf);
     string cwd = string(buf);
     
+    run("TITLE TF2 Rich Presence");
     run("start steam://rungameid/440");
     run("\"" + cwd + "\\resources\\python\\python.exe\" -OO \"" + cwd + "\\resources\\welcomer.py\" --v 1");
     run("\"" + cwd + "\\resources\\python\\python.exe\" -OO \"" + cwd + "\\resources\\launcher.py\" --m detect_system_language");
