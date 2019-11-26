@@ -132,12 +132,12 @@ class TF2RichPresense:
 
             self.loop_body()
 
-            # rich presence only updates every 15 seconds, but it listens constantly so sending every 5 (by default) seconds is fine
+            # rich presence only updates every 15 seconds, but it listens constantly so sending every 2 seconds (by default) is fine
             sleep_time = settings.get('wait_time')
             self.log.debug(f"Sleeping for {sleep_time} seconds")
             time.sleep(sleep_time)
 
-    # the main logic. runs every 5 seconds
+    # the main logic. runs every 2 seconds (by default)
     def loop_body(self):
         self.loop_iteration += 1
         self.log.debug(f"Loop iteration this app session: {self.loop_iteration}")
