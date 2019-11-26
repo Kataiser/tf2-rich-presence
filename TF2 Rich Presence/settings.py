@@ -360,7 +360,6 @@ def access_registry(save_dict: Union[dict, None] = None) -> dict:
         db_path = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
         with open(db_path, 'r+') as db_json:
             db_data = json.load(db_json)
-            db_data['welcomer_language'] = get('language')  # meta
             db_json.seek(0)
             db_json.truncate(0)
             json.dump(db_data, db_json, indent=4)

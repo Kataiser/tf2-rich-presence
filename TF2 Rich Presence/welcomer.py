@@ -3,7 +3,6 @@
 
 import argparse
 import ctypes
-import json
 import os
 import sys
 
@@ -12,22 +11,17 @@ sys.path.append(os.path.abspath(os.path.join('resources')))
 import colorama
 
 import localization
+import settings
 
 
 def main():
-    # used to do this in the EXE launchers, but I'd rather not recompile the new ones too much
-    ctypes.windll.kernel32.SetConsoleTitleW('TF2 Rich Presence {tf2rpvnum}')
-
-    db_path = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
-    with open(db_path, 'r+') as db_json:
-        db_data = json.load(db_json)
-
-    language = db_data['welcomer_language']
-    loc = localization.Localizer(language=language)
+    ctypes.windll.kernel32.SetConsoleTitleW("TF2 Rich Presence ({tf2rpvnum})")
+    loc = localization.Localizer(language=settings.get('language'))
+    ctypes.windll.kernel32.SetConsoleTitleW(loc.text("TF2 Rich Presence ({0})").format('{tf2rpvnum}'))  # again, but localized
 
     colorama.init()
     print(colorama.Style.BRIGHT, end='')
-    print(loc.text("TF2 Rich Presence ({tf2rpvnum}) by Kataiser"))
+    print(loc.text("TF2 Rich Presence ({0}) by Kataiser").format('{tf2rpvnum}'))
     print(colorama.Style.RESET_ALL, end='')
     print("https://github.com/Kataiser/tf2-rich-presence\n")
     print(colorama.Style.BRIGHT, end='')

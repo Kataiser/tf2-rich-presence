@@ -2042,5 +2042,33 @@
         "Korean": " 기본 브라우저에서{0}다운로드 페이지 열기 ",
         "Chinese": " 在默认浏览器中打开{0}下载页面 ",
         "Japanese": " 開{0}のダウンロードページのデフォルトのブラウザ "
+    },
+    "3585020555": {
+        "English": "Show time on current map instead of selected class",
+        "German": "Zeigt die Zeit auf der aktuellen Karte anstelle der ausgewählten Klasse an.",
+        "French": "Afficher l'heure sur la carte actuelle au lieu de la classe sélectionnée",
+        "Spanish": "Mostrar la hora en el mapa actual en lugar de la clase seleccionada",
+        "Portuguese": "Mostrar a hora no mapa actual em vez da classe seleccionada",
+        "Italian": "Mostra l'ora sulla mappa corrente invece della classe selezionata",
+        "Dutch": "Toon de tijd op de huidige kaart in plaats van op de geselecteerde klasse",
+        "Polish": "Toon de tijd op de huidige kaart in plaats van op de geselecteerde klasse",
+        "Russian": "Показывать время на текущей карте вместо выбранного класса",
+        "Korean": "선택한 클래스 대신 현재 맵에 시간 보이기",
+        "Chinese": "在当前地图上显示时间，而不是选择的类",
+        "Japanese": "選択したクラスの代わりに現在のマップに時間を表示"
+    },
+    "1465190241": {
+        "English": "TF2 Rich Presence ({0})",
+        "German": "TF2 Reichhaltige Präsenz ({0})",
+        "French": "TF2 Richesse de la Présence ({0})",
+        "Spanish": "TF2 Presencia Rica ({0})",
+        "Portuguese": "Presença Rica em TF2 ({0})",
+        "Italian": "Presenza Ricca TF2 ({0})",
+        "Dutch": "TF2 Rijke Aanwezigheid ({0})",
+        "Polish": "TF2 Bogata Obecność ({0})",
+        "Russian": "TF2 Богатое присутствие ({0})",
+        "Korean": "팀포 2 부자재({0})",
+        "Chinese": "TF2富存在({0})",
+        "Japanese": "TF2Rich Presence({0})"
     }
 }
