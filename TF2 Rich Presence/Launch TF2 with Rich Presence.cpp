@@ -3,7 +3,7 @@
 #include <windows.h>
 using namespace std;
 
-void run(const string);
+void run(const string&);
 
 int main() {
     char buf[256];
@@ -22,7 +22,7 @@ int main() {
     return 0;
 }
 
-void run(const string cmd) {
+void run(const string& cmd) {
     string full_cmd = "\"" + cmd + "\"";
     system(full_cmd.c_str());
 }
