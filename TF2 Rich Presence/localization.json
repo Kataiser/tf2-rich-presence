@@ -293,20 +293,6 @@
         "Chinese": "分钟",
         "Japanese": "ちょっと"
     },
-    "1528106792": {
-        "English": "Hide game type (casual, competitive, MvM) queued for",
-        "German": "Verbergen Sie den Spieltyp (casual, competitive, MvM), der in der Warteschlange steht für",
-        "French": "Cacher le type de jeu (casual, compétitif, MvM) mis en file d'attente pour",
-        "Spanish": "Ocultar tipo de juego (casual, competitivo, MvM) en cola para",
-        "Portuguese": "Ocultar tipo de jogo (casual, competitivo, MvM) enfileirado para",
-        "Italian": "Nascondi tipo di gioco (casual, competitivo, MvM) in coda per",
-        "Dutch": "Verberg het type spel (casual, competitief, MvM) in de rij voor",
-        "Polish": "Ukryć typ gry (casual, konkurencyjny, MvM) ustawiony w kolejce do",
-        "Russian": "Скрыть тип игры (казуальная, конкурентная, MvM), поставленный в очередь для",
-        "Korean": "숨기기 게임 유형(캐주얼하고,경쟁적이고,데이터를 쉽게 마이닝하고 분석)대기",
-        "Chinese": "隐藏游戏类型（休闲，竞争，MvM）排队等候",
-        "Japanese": "非表示のゲームの種類(カジュアル,競争,MvM)のキューに入れられた"
-    },
     "1531316240": {
         "English": "Open {0} download page",
         "German": "Öffnen Sie die {0} Download-Seite",
@@ -350,18 +336,18 @@
         "Japanese": "TF2Rich Presenceがクラッシュし,エラーが開発者に報告されました。"
     },
     "1638865032": {
-        "English": "Your TF2 installation doesn't yet seem to be set up properly. To fix: ",
-        "German": "Ihre TF2-Installation scheint noch nicht richtig eingerichtet zu sein. Zu reparieren: ",
-        "French": "Votre installation TF2 ne semble pas encore être correctement configurée. Pour réparer : ",
-        "Spanish": "Su instalación de TF2 aún no parece estar configurada correctamente. Para arreglar: ",
-        "Portuguese": "Sua instalação TF2 ainda não parece estar configurada corretamente. Para corrigir: ",
-        "Italian": "L'installazione di TF2 non sembra essere ancora configurata correttamente. Da correggere: ",
-        "Dutch": "Uw TF2-installatie lijkt nog niet goed te zijn opgezet. Te repareren: ",
-        "Polish": "Twoja instalacja TF2 nie została jeszcze prawidłowo skonfigurowana. Aby naprawić: ",
-        "Russian": "Ваша установка TF2, похоже, еще не настроена должным образом. Чтобы починить: ",
-        "Korean": "귀하의 팀포 2 설치하지 않은 것이 올바르게 설정되어. 정: ",
-        "Chinese": "您的TF2安装似乎尚未正确设置。 来修复: ",
-        "Japanese": "あなたのTF2インストールはまだ正しく設定されていないようです。 修正するには: "
+        "English": "Your TF2 installation doesn't yet seem to be set up properly. To fix:",
+        "German": "Ihre TF2-Installation scheint noch nicht richtig eingerichtet zu sein. Zu reparieren:",
+        "French": "Votre installation TF2 ne semble pas encore être correctement configurée. Pour réparer :",
+        "Spanish": "Su instalación de TF2 aún no parece estar configurada correctamente. Para arreglar:",
+        "Portuguese": "Sua instalação TF2 ainda não parece estar configurada corretamente. Para corrigir:",
+        "Italian": "L'installazione di TF2 non sembra essere ancora configurata correttamente. Da correggere:",
+        "Dutch": "Uw TF2-installatie lijkt nog niet goed te zijn opgezet. Te repareren:",
+        "Polish": "Twoja instalacja TF2 nie została jeszcze prawidłowo skonfigurowana. Aby naprawić:",
+        "Russian": "Ваша установка TF2, похоже, еще не настроена должным образом. Чтобы починить:",
+        "Korean": "귀하의 팀포 2 설치하지 않은 것이 올바르게 설정되어. 정:",
+        "Chinese": "您的TF2安装似乎尚未正确设置。 来修复:",
+        "Japanese": "あなたのTF2インストールはまだ正しく設定されていないようです。 修正するには:"
     },
     "1712457926": {
         "English": "[custom/community map]",
@@ -700,7 +686,7 @@
         "Japanese": "慊つｷﾂ。"
     },
     "2452164823": {
-        "English": "Hours before re-checking custom map game mode: ",
+        "English": "Hours before re-checking custom map gamemode: ",
         "German": "Stunden, bevor Sie den benutzerdefinierten Kartenspielmodus erneut überprüfen: ",
         "French": "Quelques heures avant de revérifier le mode de jeu de cartes personnalisées : ",
         "Spanish": "Horas antes de volver a comprobar el modo de juego de mapa personalizado: ",
@@ -1091,20 +1077,6 @@
         "Chinese": "语言: ",
         "Japanese": "慊つｷﾂ。: "
     },
-    "3488942977": {
-        "English": "Report logs to developer ({0} kilobytes)",
-        "German": "Protokollierung an den Entwickler ({0} Kilobyte)",
-        "French": "Signaler les journaux au développeur ({0} kilo-octets)",
-        "Spanish": "Registros de informes al desarrollador ({0} kilobytes)",
-        "Portuguese": "Relatório de logs para o desenvolvedor ({0} kilobytes)",
-        "Italian": "Segnala i log allo sviluppatore ({0} kilobyte)",
-        "Dutch": "Rapporteer logs aan de ontwikkelaar ({0} kilobytes)",
-        "Polish": "Raportowanie logów do dewelopera ({0} kilobajtów)",
-        "Russian": "Сообщить разработчику журнал регистрации событий ({0} килобайт)",
-        "Korean": "보고 로그를 개발자({0}kb)",
-        "Chinese": "向开发人员报告日志({0}千字节)",
-        "Japanese": "開発者へのレポートログ({0}キロバイト)"
-    },
     "3509849080": {
         "English": "Selected class small image type: ",
         "German": "Ausgewählte Klasse kleiner Bildtyp: ",
@@ -1161,14 +1133,14 @@
         "Chinese": "(考虑打开一个问题{0})",
         "Japanese": "(で問題を開くことを検討{0})"
     },
-    "3835171426": {
-        "English": "Hide game type (casual, competitive, MvM) queued for",
-        "German": "Verbergen Sie den Spieltyp (casual, competitive, MvM), der in der Warteschlange steht für",
-        "French": "Cacher le type de jeu (casual, compétitif, MvM) mis en file d'attente pour",
-        "Spanish": "Ocultar tipo de juego (casual, competitivo, MvM) en cola para",
-        "Portuguese": "Ocultar tipo de jogo (casual, competitivo, MvM) enfileirado para",
-        "Italian": "Nascondi tipo di gioco (casual, competitivo, MvM) in coda per",
-        "Dutch": "Verberg het type spel (casual, competitief, MvM) in de rij voor",
+    "1632964456": {
+        "English": "Hide game type (casual, comp, MvM) queued for",
+        "German": "Verbergen Sie den Spieltyp (casual, comp, MvM), der in der Warteschlange steht für",
+        "French": "Cacher le type de jeu (casual, comp, MvM) mis en file d'attente pour",
+        "Spanish": "Ocultar tipo de juego (casual, comp, MvM) en cola para",
+        "Portuguese": "Ocultar tipo de jogo (casual, comp, MvM) enfileirado para",
+        "Italian": "Nascondi tipo di gioco (casual, comp, MvM) in coda per",
+        "Dutch": "Verberg het type spel (casual, comp, MvM) in de rij voor",
         "Polish": "Ukryć typ gry (casual, konkurencyjny, MvM) ustawiony w kolejce do",
         "Russian": "Скрыть тип игры (казуальная, конкурентная, MvM), поставленный в очередь для",
         "Korean": "숨기기 게임 유형(캐주얼하고,경쟁적이고,데이터를 쉽게 마이닝하고 분석)대기",
@@ -1526,18 +1498,18 @@
         "Japanese": "保存して閉じる"
     },
     "6446134190": {
-        "English": "{0} changelog: ",
-        "German": "{0} Changelog: ",
-        "French": "{0} journal des modifications : ",
-        "Spanish": "{0} registro de cambios: ",
-        "Portuguese": "{0} log de modificações: ",
-        "Italian": "{0} registro delle modifiche: ",
-        "Dutch": "{0} wijzig logboek: ",
-        "Polish": "{0} dziennik zmian: ",
-        "Russian": "{0} журнал изменений: ",
-        "Korean": "{0}changelog: ",
-        "Chinese": "{0}changelog: ",
-        "Japanese": "{0}変更履歴: "
+        "English": "{0} changelog:",
+        "German": "{0} Changelog:",
+        "French": "{0} journal des modifications :",
+        "Spanish": "{0} registro de cambios:",
+        "Portuguese": "{0} log de modificações:",
+        "Italian": "{0} registro delle modifiche:",
+        "Dutch": "{0} wijzig logboek:",
+        "Polish": "{0} dziennik zmian:",
+        "Russian": "{0} журнал изменений:",
+        "Korean": "{0}changelog:",
+        "Chinese": "{0}changelog:",
+        "Japanese": "{0}変更履歴:"
     },
     "6524776970": {
         "English": "Queued for MvM",

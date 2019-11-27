@@ -17,7 +17,7 @@ class Localizer:
 
     @functools.lru_cache(maxsize=None)
     def text(self, english_text: str) -> str:
-        english_text_adler32 = str(zlib.adler32(english_text.replace('{tf2rpvnum}', '').encode('utf-8'))).ljust(10, '0')
+        english_text_adler32 = hash_text(english_text)
 
         if english_text_adler32 not in access_localization_file() and "Time on map: " not in english_text:  # exclude that because it causes DB.json spam
             if english_text not in self.missing_lines:
@@ -70,6 +70,10 @@ def access_localization_file(append=None) -> dict:
 
         with open(localization_file_path, 'w', encoding='utf-8') as localization_file:
             json.dump(localization_data, localization_file, indent=4, ensure_ascii=False)
+
+
+def hash_text(text: str) -> str:
+    return str(zlib.adler32(text.replace('{tf2rpvnum}', '').encode('utf-8'))).ljust(10, '0')  # shoulda just used hash() from the start
 
 
 if __name__ == '__main__':

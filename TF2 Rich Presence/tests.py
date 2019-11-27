@@ -201,17 +201,27 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
         all_keys = localization.access_localization_file().keys()
         english_lines = [localization.access_localization_file()[key]['English'] for key in all_keys]
         num_lines_total = len(english_lines)
+        incorrect_hashes = []
+
+        for key in all_keys:
+            test_key = localization.hash_text(localization.access_localization_file()[key]['English'])
+
+            if key != test_key:
+                incorrect_hashes.append((key, test_key, localization.access_localization_file()[key]['English']))
+
+        self.assertEqual(incorrect_hashes, [])
 
         for language in ['English', 'German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian', 'Korean', 'Chinese', 'Japanese']:
             localizer = localization.Localizer(language=language)
             num_equal_lines = 0
 
-            for line in english_lines:
-                self.assertNotEqual(localizer.text(line), "")
-                self.assertEqual(localizer.text(line).count('{0}'), line.count('{0}'))
-                self.assertEqual(localizer.text(line).count('{1}'), line.count('{1}'))
+            for line_english in english_lines:
+                line_localized = localizer.text(line_english)
+                self.assertNotEqual(line_localized, "")
+                self.assertEqual(line_localized.count('{0}'), line_english.count('{0}'))
+                self.assertEqual(line_localized.count('{1}'), line_english.count('{1}'))
 
-                if localizer.text(line) == line:
+                if line_localized == line_english:
                     num_equal_lines += 1
 
             if language == 'English':
