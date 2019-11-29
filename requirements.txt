@@ -1,5 +1,5 @@
 beautifulsoup4==4.8.1
-certifi==2019.9.11
+certifi==2019.11.28
 chardet==3.0.4
 colorama==0.4.1
 discoIPC==1.0.0
