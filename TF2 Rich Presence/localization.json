@@ -11,7 +11,7 @@
         "Russian": "часы",
         "Korean": "시간",
         "Chinese": "小时",
-        "Japanese": "慊つｷﾂ。"
+        "Japanese": "時間"
     },
     "1096615616": {
         "English": "Versus Saxton Hale",
@@ -53,7 +53,7 @@
         "Russian": "Восстановить {0} измененные настройки по умолчанию?",
         "Korean": "복원{0}변경된 설정을 기본값은?",
         "Chinese": "将{0}更改的设置恢复为默认值？",
-        "Japanese": "復元{0}は設定をデフォルトに変更しましたか？"
+        "Japanese": "{0}つの変更された設定をデフォルトに復元しますか？"
     },
     "1141642225": {
         "English": "This version ({0}) is out of date (newest version is {1})",
@@ -95,7 +95,7 @@
         "Russian": "Не могу связаться с Раздором Богатого Присутствия.",
         "Korean": "에 연결할 수 없는 불화에 대한 풍부한 존재입니다.",
         "Chinese": "无法连接到不和谐丰富的存在。",
-        "Japanese": "\"\"によるレビュ"
+        "Japanese": "DiscordのRich Presenceに接続できません。"
     },
     "1305483070": {
         "English": "Emblem",
@@ -123,7 +123,7 @@
         "Russian": "Случайный",
         "Korean": "캐주얼",
         "Chinese": "休闲",
-        "Japanese": "慊つｷﾂ。"
+        "Japanese": "カジュアル"
     },
     "1325270949": {
         "English": "Press enter to retry",
@@ -179,7 +179,7 @@
         "Russian": "Получить свежие новости можно по адресу {0}",
         "Korean": "을 얻을 업데이트{0}",
         "Chinese": "获取更新at{0}",
-        "Japanese": "で更新を取得する{0}"
+        "Japanese": "{0}でアップデートを入手"
     },
     "1393301620": {
         "English": "Sniper",
@@ -221,7 +221,7 @@
         "Russian": "Разногласия не продолжаются",
         "Korean": "불 실행되지 않는",
         "Chinese": "不和谐不是运行",
-        "Japanese": "不和は実行されていません"
+        "Japanese": "Discordが実行されていません"
     },
     "1440487620": {
         "English": "casual",
@@ -235,7 +235,7 @@
         "Russian": "обыденный",
         "Korean": "캐주얼",
         "Chinese": "休闲",
-        "Japanese": "慊つｷﾂ。"
+        "Japanese": "カジュアル"
     },
     "1474566370": {
         "English": "second",
@@ -291,7 +291,7 @@
         "Russian": "минутный",
         "Korean": "분",
         "Chinese": "分钟",
-        "Japanese": "ちょっと"
+        "Japanese": "分"
     },
     "1531316240": {
         "English": "Open {0} download page",
@@ -305,7 +305,7 @@
         "Russian": "Открыть страницу загрузки {0}",
         "Korean": "{0}다운로드 페이지 열기",
         "Chinese": "打开{0}下载页面",
-        "Japanese": "開く{0}ダウンロードページ"
+        "Japanese": "{0}ダウンロードページを開く"
     },
     "1589381242": {
         "English": "Queued for Competitive",
@@ -529,7 +529,7 @@
         "Russian": "протокол",
         "Korean": "분",
         "Chinese": "分钟",
-        "Japanese": "慊つｷﾂ。"
+        "Japanese": "分"
     },
     "2083457385": {
         "English": "Log reporting frequency: ",
@@ -571,7 +571,7 @@
         "Russian": "Перезапуск через 2 секунды...",
         "Korean": "시에 2 초...",
         "Chinese": "在2秒内重新启动。..",
-        "Japanese": "2秒で再起動します。.."
+        "Japanese": "2秒で再起動します..."
     },
     "2266242310": {
         "English": "PASS Time",
@@ -585,7 +585,7 @@
         "Russian": "Время PASS",
         "Korean": "통과 시간",
         "Chinese": "消磨时间",
-        "Japanese": "時間を渡す"
+        "Japanese": "PASS Time"
     },
     "2267553510": {
         "English": "Advanced",
@@ -599,7 +599,7 @@
         "Russian": "Расширенный",
         "Korean": "고급",
         "Chinese": "进阶",
-        "Japanese": "慊つｷﾂ。"
+        "Japanese": "アドバンスド"
     },
     "2276072520": {
         "English": "4. Add {0}",
@@ -655,7 +655,7 @@
         "Russian": "Критический",
         "Korean": "중요한",
         "Chinese": "关键",
-        "Japanese": "重要な"
+        "Japanese": "クリティカル"
     },
     "2366704224": {
         "English": "Successfully reported logs",
@@ -683,7 +683,7 @@
         "Russian": "Обучение",
         "Korean": "교육",
         "Chinese": "培训",
-        "Japanese": "慊つｷﾂ。"
+        "Japanese": "トレーニング"
     },
     "2452164823": {
         "English": "Hours before re-checking custom map gamemode: ",
@@ -697,7 +697,7 @@
         "Russian": "За несколько часов до перепроверки пользовательского режима игры на карте: ",
         "Korean": "시간 전에 다시 검사용 지도한 게임 모드: ",
         "Chinese": "小时前重新检查自定义地图游戏模式: ",
-        "Japanese": "時間の前に再確認カスタムゲームモードの地図: "
+        "Japanese": "カスタムマップゲームモードを再確認するまでの時間: "
     },
     "2465472860": {
         "English": "Portrait",
@@ -711,7 +711,7 @@
         "Russian": "Портрет",
         "Korean": "세",
         "Chinese": "肖像",
-        "Japanese": "慊つｷﾂ。"
+        "Japanese": "肖像画"
     },
     "2570455563": {
         "English": "Attack/Defend (Medieval Mode)",
@@ -781,7 +781,7 @@
         "Russian": "Если TF2 Богатое присутствие работает в настоящее время, то для вступления изменений в силу может потребоваться его перезапуск.",
         "Korean": "면 팀포 2 풍부한 존재는 현재 실행하고,그것을 다시 시작해야 할 수 있습에 대한 변경 사항을 적용합니다.",
         "Chinese": "如果存在当前正在运行的丰富的TF2，则可能需要重新启动以使更改生效。",
-        "Japanese": "TF2Rich Presenceが現在実行されている場合,変更を有効にするために再起動が必要な場合があります。"
+        "Japanese": "TF2Rich Presenceが現在実行されている場合、変更を有効にするために再起動が必要な場合があります。"
     },
     "2692882830": {
         "English": "Main menu",
@@ -809,7 +809,7 @@
         "Russian": "За несколько часов до перепроверки пользовательского режима игры на карте: ",
         "Korean": "시간 전에 다시 검사용 지도한 게임 모드: ",
         "Chinese": "小时前重新检查自定义地图游戏模式: ",
-        "Japanese": "時間の前に再確認カスタムゲームモードの地図: "
+        "Japanese": "カスタムマップゲームモードを再確認するまでの時間: "
     },
     "2768904650": {
         "English": "Prop Hunt",
@@ -823,7 +823,7 @@
         "Russian": "Охота на реквизит",
         "Korean": "소품 사냥",
         "Chinese": "道具亨特",
-        "Japanese": "プロップ狩り"
+        "Japanese": "プロップハント"
     },
     "3376810928": {
         "English": "TF2 Rich Presence ({0}) by Kataiser",
@@ -851,7 +851,7 @@
         "Russian": "3. Нажмите кнопку \"Установить параметры запуска...\"",
         "Korean": "3. 설정\"을 클릭합 시작 옵션을...\"",
         "Chinese": "3. 单击\"设置启动选项。..\"",
-        "Japanese": "3. をクリックし\"設定オプションが起動します。..\""
+        "Japanese": "3. 「起動オプションを設定...」をクリックします"
     },
     "2796884285": {
         "English": "Couldn't connect to GitHub to check for updates.",
@@ -865,7 +865,7 @@
         "Russian": "Не смог подключиться к GitHub, чтобы проверить наличие обновлений.",
         "Korean": "에 연결할 수 없 GitHub 업데이트를 확인할 수 있습니다.",
         "Chinese": "无法连接到GitHub检查更新。",
-        "Japanese": "\"\"によるレビュ"
+        "Japanese": "GitHubに接続して更新を確認できませんでした。"
     },
     "2843615990": {
         "English": "Dodgeball",
@@ -921,7 +921,7 @@
         "Russian": "2. Открытые свойства (очень низкие)",
         "Korean": "2. 속성을 열고(하단)",
         "Chinese": "2. 打开属性（极底)",
-        "Japanese": "2. オープンプロパティ(非常に下)"
+        "Japanese": "2. プロパティを開く(非常に下)"
     },
     "3231589050": {
         "English": "Class: {0}",
@@ -1019,7 +1019,7 @@
         "Russian": "Войны класса",
         "Korean": "클래스 전쟁",
         "Chinese": "阶级战争",
-        "Japanese": "クラス戦争"
+        "Japanese": "クラスウォー"
     },
     "3333209180": {
         "English": "Couldn't connect to GitHub to check for updates ({0}).",
@@ -1047,7 +1047,7 @@
         "Russian": "1. Щелкните правой кнопкой мыши на Team Fortress 2 в вашей библиотеке Steam",
         "Korean": "1. 에서 오른쪽 클릭하여 Team Fortress2 에 스팀 라이브러리",
         "Chinese": "1. 右键单击团队要塞2在你的蒸汽库",
-        "Japanese": "1. あなたのスチームライブラ"
+        "Japanese": "1. SteamライブラリでTeam Fortress 2を右クリックします"
     },
     "3447858830": {
         "English": "Not queued",
@@ -1075,7 +1075,7 @@
         "Russian": "Язык: ",
         "Korean": "언어: ",
         "Chinese": "语言: ",
-        "Japanese": "慊つｷﾂ。: "
+        "Japanese": "言語: "
     },
     "3509849080": {
         "English": "Selected class small image type: ",
@@ -1131,7 +1131,7 @@
         "Russian": "(Рассмотрим возможность открытия выпуска по адресу: {0})",
         "Korean": "(여는 것을 고려하는 문제에서{0})",
         "Chinese": "(考虑打开一个问题{0})",
-        "Japanese": "(で問題を開くことを検討{0})"
+        "Japanese": "({0}で問題を開くことを検討)"
     },
     "1528106792": {
         "English": "Hide game type (Casual, Comp, MvM) queued for",
@@ -1187,7 +1187,7 @@
         "Russian": "невыбранный",
         "Korean": "선택하지 않은",
         "Chinese": "未选中",
-        "Japanese": "選択されていない"
+        "Japanese": "未選択"
     },
     "3931515170": {
         "English": "No gamemode",
@@ -1243,7 +1243,7 @@
         "Russian": "день",
         "Korean": "일",
         "Chinese": "日",
-        "Japanese": "慊つｷﾂ。"
+        "Japanese": "日"
     },
     "4175762252": {
         "English": "Get the update with the download button in settings.",
@@ -1271,7 +1271,7 @@
         "Russian": "Достижения",
         "Korean": "Achievement",
         "Chinese": "成就",
-        "Japanese": "成果"
+        "Japanese": "実績"
     },
     "4273081733": {
         "English": "Restore 1 changed setting to default?",
@@ -1285,7 +1285,7 @@
         "Russian": "Восстановить значение по умолчанию для параметра 1?",
         "Korean": "복원 1 로 변경된 설정을 기본?",
         "Chinese": "将1更改的设置恢复为默认设置？",
-        "Japanese": "デフォルトに1変更設定を復元しますか？"
+        "Japanese": "1つの変更された設定をデフォルトに復元しますか？"
     },
     "4442697060": {
         "English": "Competitive",
@@ -1299,7 +1299,7 @@
         "Russian": "Конкурентоспособность",
         "Korean": "경쟁력",
         "Chinese": "竞争力",
-        "Japanese": "競争力のある"
+        "Japanese": "Competitive"
     },
     "4659619690": {
         "English": "MvM (Mann Up)",
@@ -1327,7 +1327,7 @@
         "Russian": "соревновательный",
         "Korean": "경쟁력",
         "Chinese": "竞争力",
-        "Japanese": "競争力のある"
+        "Japanese": "competitive"
     },
     "4890307050": {
         "English": "MvM (mann up)",
@@ -1355,7 +1355,7 @@
         "Russian": "Гонка полезных грузов",
         "Korean": "페이로드 레이스",
         "Chinese": "有效载荷竞赛",
-        "Japanese": "ペイロード競争"
+        "Japanese": "ペイロードレース"
     },
     "5268450630": {
         "English": "5. OK and Close",
@@ -1369,7 +1369,7 @@
         "Russian": "5. OK и Close",
         "Korean": "5. 확인 닫기",
         "Chinese": "5. 好的，关闭",
-        "Japanese": "5. OKと閉じる"
+        "Japanese": "5. OKで閉じる"
     },
     "5334641500": {
         "English": "6. Restart TF2",
@@ -1425,7 +1425,7 @@
         "Russian": "Контрольная точка",
         "Korean": "제어점",
         "Chinese": "控制点",
-        "Japanese": "制御点"
+        "Japanese": "コントロールポイント"
     },
     "6049011800": {
         "English": "Main",
@@ -1467,7 +1467,7 @@
         "Russian": "Информация",
         "Korean": "정보",
         "Chinese": "信息",
-        "Japanese": "慊つｷﾂ。"
+        "Japanese": "情報"
     },
     "6234451750": {
         "English": "MvM (Boot Camp)",
@@ -1509,7 +1509,7 @@
         "Russian": "{0} журнал изменений:",
         "Korean": "{0}changelog:",
         "Chinese": "{0}changelog:",
-        "Japanese": "{0}変更履歴:"
+        "Japanese": "{0} 変更履歴:"
     },
     "6524776970": {
         "English": "Queued for MvM",
@@ -1593,7 +1593,7 @@
         "Russian": "дни",
         "Korean": "일",
         "Chinese": "天",
-        "Japanese": "慊つｷﾂ。"
+        "Japanese": "日"
     },
     "7065449230": {
         "English": "Max log level: ",
@@ -1621,7 +1621,7 @@
         "Russian": "Запуск второй боевой крепости с богатым присутствием...",
         "Korean": "실행 Team Fortress2 와 풍부한 존재가 사용되...",
         "Chinese": "启动团队要塞2与丰富的存在启用。..",
-        "Japanese": "新チームの要塞の2豊かな存在感を有効にします。.."
+        "Japanese": "Rich Presenceを有効にしてTeam Fortress 2を起動しています..."
     },
     "7215558300": {
         "English": "hour",
@@ -1635,7 +1635,7 @@
         "Russian": "час",
         "Korean": "시간",
         "Chinese": "小时",
-        "Japanese": "慊つｷﾂ。"
+        "Japanese": "時間"
     },
     "7301379380": {
         "English": "Team Fortress 2",
@@ -1649,7 +1649,7 @@
         "Russian": "Крепость Команды 2",
         "Korean": "Team Fortress2",
         "Chinese": "团队要塞2",
-        "Japanese": "チームの要塞2"
+        "Japanese": "Team Fortress 2"
     },
     "7395095750": {
         "English": "Stop that Tank!",
@@ -1663,7 +1663,7 @@
         "Russian": "Остановите танк!",
         "Korean": "정지되는 탱크!",
         "Chinese": "拦住那辆坦克",
-        "Japanese": "そのタンクを停止！"
+        "Japanese": "Stop that Tank!"
     },
     "7761442790": {
         "English": "Mann vs. Machine",
@@ -1677,7 +1677,7 @@
         "Russian": "Манн против машины",
         "Korean": "맨 대 기계",
         "Chinese": "曼与机器",
-        "Japanese": "マン対.マシン"
+        "Japanese": "Mann vs. Machine"
     },
     "7819769690": {
         "English": "King of the Hill",
@@ -1691,7 +1691,7 @@
         "Russian": "Король холма",
         "Korean": "왕의 언덕",
         "Chinese": "山之王",
-        "Japanese": "丘の王"
+        "Japanese": "キングオブザヒル"
     },
     "8011814710": {
         "English": "Check for program updates when launching",
@@ -1719,7 +1719,7 @@
         "Russian": "Задержка между закусками, в секундах: ",
         "Korean": "지연 사이에 새로 고침,에서 초: ",
         "Chinese": "刷新之间的延迟，以秒为单位: ",
-        "Japanese": "秒単位でのリフレッシュ間の遅延: "
+        "Japanese": "更新間の遅延（秒単位）: "
     },
     "8222184420": {
         "English": "Report logs to developer ({0} kilobytes)",
@@ -1761,7 +1761,7 @@
         "Russian": "Специальная доставка",
         "Korean": "특별한 배달",
         "Chinese": "特快专递",
-        "Japanese": "特別配送"
+        "Japanese": "スペシャル・デリバリー"
     },
     "8905047970": {
         "English": "Restore defaults",
@@ -1845,7 +1845,7 @@
         "Russian": "Тяжелый",
         "Korean": "무거운",
         "Chinese": "重",
-        "Japanese": "重い"
+        "Japanese": "ヘビー"
     },
     "9363143430": {
         "English": "None, use TF2 logo",
@@ -1901,7 +1901,7 @@
         "Russian": "Ошибка",
         "Korean": "류",
         "Chinese": "错误",
-        "Japanese": "慊つｷﾂ。"
+        "Japanese": "エラー"
     },
     "9784542030": {
         "English": "Robot Destruction",
@@ -1943,7 +1943,7 @@
         "Russian": "TF2 Богатое присутствие ({0}) Настройки TF2 Настройки",
         "Korean": "팀포 2 부자재({0})설정",
         "Chinese": "TF2富存在({0})设置",
-        "Japanese": "TF2リッチプレゼンス({0})の設定"
+        "Japanese": "TF2 Rich Presence({0})の設定"
     },
     "2125859177": {
         "English": "Queued for a party's match",
@@ -1985,7 +1985,7 @@
         "Russian": "Время на карте: {0}",
         "Korean": "지도 시간:{0}",
         "Chinese": "时间在地图上:{0}",
-        "Japanese": "地図上の時間:{0}"
+        "Japanese": "マップ上の時間:{0}"
     },
     "1396311933": {
         "English": " - TF2 Rich Presence {0}",
@@ -1999,7 +1999,7 @@
         "Russian": " - TF2 Богатое присутствие {0}",
         "Korean": "-TF2 부유한 존재{0}",
         "Chinese": "-TF2丰富的存在{0}",
-        "Japanese": "-TF2豊富なプレゼンス{0}"
+        "Japanese": " - TF2 Rich Presence {0}"
     },
     "1269501808": {
         "English": " Open {0} download page in default browser ",
@@ -2013,7 +2013,7 @@
         "Russian": " Открыть {0} Страницу загрузки в стандартном браузере ",
         "Korean": " 기본 브라우저에서{0}다운로드 페이지 열기 ",
         "Chinese": " 在默认浏览器中打开{0}下载页面 ",
-        "Japanese": " 開{0}のダウンロードページのデフォルトのブラウザ "
+        "Japanese": " デフォルトのブラウザで{0}ダウンロードページを開きます "
     },
     "3585020555": {
         "English": "Show time on current map instead of selected class",
