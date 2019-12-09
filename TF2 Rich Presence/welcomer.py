@@ -15,9 +15,9 @@ import settings
 
 
 def main():
-    ctypes.windll.kernel32.SetConsoleTitleW("TF2 Rich Presence ({tf2rpvnum})")
+    # localize the window title
     loc = localization.Localizer(language=settings.get('language'))
-    ctypes.windll.kernel32.SetConsoleTitleW(loc.text("TF2 Rich Presence ({0})").format('{tf2rpvnum}'))  # again, but localized
+    ctypes.windll.kernel32.SetConsoleTitleW(loc.text("TF2 Rich Presence ({0})").format('{tf2rpvnum}'))
 
     colorama.init()
     print(colorama.Style.BRIGHT, end='')
