@@ -16,6 +16,9 @@ python\packages\sentry_sdk\integrations\django\__pycache__\middleware.cpython-37
 python\packages\sentry_sdk\integrations\django\__pycache__\templates.cpython-37.opt-2.pyc
 python\packages\sentry_sdk\integrations\django\__pycache__\transactions.cpython-37.opt-2.pyc
 python\packages\sentry_sdk\integrations\django\__pycache__\__init__.cpython-37.opt-2.pyc
+python\packages\sentry_sdk\integrations\spark\__pycache__\spark_driver.cpython-37.opt-2.pyc
+python\packages\sentry_sdk\integrations\spark\__pycache__\spark_worker.cpython-37.opt-2.pyc
+python\packages\sentry_sdk\integrations\spark\__pycache__\__init__.cpython-37.opt-2.pyc
 python\packages\sentry_sdk\integrations\__pycache__\aiohttp.cpython-37.opt-2.pyc
 python\packages\sentry_sdk\integrations\__pycache__\asgi.cpython-37.opt-2.pyc
 python\packages\sentry_sdk\integrations\__pycache__\aws_lambda.cpython-37.opt-2.pyc
