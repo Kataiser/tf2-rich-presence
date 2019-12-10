@@ -272,7 +272,7 @@ class TF2RichPresense:
 
             # send everything to discord
             large_text_base = self.activity['assets']['large_text']
-            self.activity['assets']['large_text'] += self.loc.text(" - TF2 Rich Presence {0}".format('{tf2rpvnum}'))
+            self.activity['assets']['large_text'] += self.loc.text(" - TF2 Rich Presence {0}").format('{tf2rpvnum}')
             self.send_rpc_activity()
             self.activity['assets']['large_text'] = large_text_base
             # this gets reset because self.old_activity doesn't have it
@@ -465,9 +465,14 @@ class TF2RichPresense:
             # localize activity
             self.activity_translated = copy.deepcopy(self.activity)
             self.activity_translated['details'] = self.loc.text(self.activity['details'])
-            self.activity_translated['state'] = self.loc.text(self.activity['state'])
             self.activity_translated['assets']['small_text'] = self.loc.text(self.activity['assets']['small_text'])
             self.activity_translated['assets']['large_text'] = self.loc.text(self.activity['assets']['large_text'])
+
+            # stop DB.json spam as the map time increases
+            if settings.get('map_time') and self.test_state == 'in game':
+                self.log.debug("Not localizing activity 'state' due to map time")
+            else:
+                self.activity_translated['state'] = self.loc.text(self.activity['state'])
 
             self.client.update_activity(self.activity_translated)
             self.log.info(f"Sent over RPC: {self.activity_translated}")

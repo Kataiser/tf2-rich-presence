@@ -19,7 +19,7 @@ class Localizer:
     def text(self, english_text: str) -> str:
         english_text_adler32 = hash_text(english_text)
 
-        if english_text_adler32 not in access_localization_file() and "Time on map: " not in english_text:  # exclude that because it causes DB.json spam
+        if english_text_adler32 not in access_localization_file():  # exclude that because it causes DB.json spam
             if english_text not in self.missing_lines:
                 self.missing_lines.append(english_text)
 

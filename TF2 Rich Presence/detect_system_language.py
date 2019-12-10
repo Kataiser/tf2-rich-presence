@@ -57,9 +57,9 @@ def launch():
             log.debug(f"Changed language: {changed_language}")
 
             if changed_language == 'yes':
-                temp_settings = settings.access_settings_file()
+                temp_settings = settings.access_registry()
                 temp_settings['language'] = system_language
-                settings.access_settings_file(save_dict=temp_settings)
+                settings.access_registry(save_dict=temp_settings)
                 raise SystemExit
 
 
