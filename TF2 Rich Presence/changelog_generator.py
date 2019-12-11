@@ -51,7 +51,7 @@ def main(silent=False):
         htmls_index += 1
 
     generated_html_logs = ''.join(extended_htmls)
-    generated_html_pretty = prettify_custom(BeautifulSoup(generated_html_logs, 'lxml')).replace('<html>\n    <body>', '').replace('</body>\n</html>', '')
+    generated_html_pretty = prettify_custom(BeautifulSoup(generated_html_logs, 'lxml')).replace('<html>\n    <body>', '').replace('</body>\n</html>', '').replace('2019-11-28', '2019-12-09')
     generated_html_with_items = source_html.replace('<!--REPLACEME-->', generated_html_pretty)
     generated_html = re.compile(r' aria-hidden="true" class="anchor" href="#(.+)" id="(.+)"').sub('', generated_html_with_items)
 
