@@ -31,7 +31,8 @@ class Log:
 
         # setup
         self.last_log_time = None
-        self.filename: Union[bytes, str] = os.path.join('logs', f'{user_pc_name}_{user_identifier}_{"{tf2rpvnum}"}_{generate_hash()}.log')
+        days_since_epoch_local = int((time.time() + time.localtime().tm_gmtoff) / 86400)  # 86400 seconds in a day
+        self.filename: Union[bytes, str] = os.path.join('logs', f'{user_pc_name}_{user_identifier}_{"{tf2rpvnum}"}_{generate_hash()}_{days_since_epoch_local}.log')
         self.console_log_path: Union[str, None] = None
         self.to_stderr: bool = False
         self.sentry_level: str = settings.get('sentry_level')
