@@ -108,7 +108,7 @@ class TF2RichPresense:
         self.current_map = None
         self.time_changed_map = time.time()
         self.has_seen_kataiser = False
-        self.old_console_log_mtime = 0.0
+        self.old_console_log_mtime = None
         self.old_console_log_interpretation = ('', '')
 
         # load maps database
@@ -313,7 +313,7 @@ class TF2RichPresense:
         return self.client_connected, self.client
 
     # reads a console.log and returns current map and class
-    def interpret_console_log(self, console_log_path: str, user_usernames: list, kb_limit=settings.get('console_scan_kb')) -> tuple:
+    def interpret_console_log(self, console_log_path: str, user_usernames: list, kb_limit=settings.get('console_scan_kb'), force=False) -> tuple:
         # defaults
         current_map: str = ''
         current_class: str = ''
@@ -338,7 +338,7 @@ class TF2RichPresense:
 
         # only interpret console.log again if it's been modified
         console_log_mtime = os.stat(console_log_path).st_mtime
-        if console_log_mtime == self.old_console_log_mtime:
+        if not force and console_log_mtime == self.old_console_log_mtime:
             self.log.debug(f"Not rescanning console.log, remaining on {self.old_console_log_interpretation}")
             return self.old_console_log_interpretation
 
