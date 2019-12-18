@@ -164,16 +164,7 @@ class TF2RichPresense:
                 self.has_checked_class_configs = True
 
             console_log_path = os.path.join(p_data['TF2']['path'], 'tf', 'console.log')
-            console_log_mtime = os.stat(console_log_path).st_mtime
-
-            # only interpret console.log again if it's been modified
-            if console_log_mtime != self.old_console_log_mtime:
-                top_line, bottom_line = self.interpret_console_log(console_log_path, valid_usernames)
-                self.old_console_log_interpretation = (top_line, bottom_line)
-                self.old_console_log_mtime = console_log_mtime
-            else:
-                self.log.debug(f"Not rescanning console.log, remaining on {self.old_console_log_interpretation}")
-                top_line, bottom_line = self.old_console_log_interpretation
+            top_line, bottom_line = self.interpret_console_log(console_log_path, valid_usernames)
 
             if top_line == 'In menus':
                 # in menus displays the main menu
@@ -345,6 +336,12 @@ class TF2RichPresense:
             self.log.error(f"console.log doesn't exist, issuing warning (files/dirs in /tf/: {os.listdir(os.path.dirname(console_log_path))})")
             no_condebug_warning()
 
+        # only interpret console.log again if it's been modified
+        console_log_mtime = os.stat(console_log_path).st_mtime
+        if console_log_mtime == self.old_console_log_mtime:
+            self.log.debug(f"Not rescanning console.log, remaining on {self.old_console_log_interpretation}")
+            return self.old_console_log_interpretation
+
         with open(consolelog_filename, 'r', errors='replace') as consolelog_file:
             consolelog_file_size: int = os.stat(consolelog_filename).st_size
 
@@ -417,6 +414,8 @@ class TF2RichPresense:
             print(f"{colorama.Fore.LIGHTCYAN_EX}Hey, it seems that Kataiser, the developer of TF2 Rich Presence, is in your game! Say hi to me if you'd like :){colorama.Style.RESET_ALL}\n")
 
         self.log.debug(f"Got '{current_map}' and '{current_class}' from this line: '{line_used[:-1]}'")
+        self.old_console_log_interpretation = (current_map, current_class)
+        self.old_console_log_mtime = console_log_mtime
         return current_map, current_class
 
     # generate text that displays the difference between now and old_time
