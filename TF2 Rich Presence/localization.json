@@ -125,20 +125,6 @@
         "Chinese": "休闲",
         "Japanese": "カジュアル"
     },
-    "1325270949": {
-        "English": "Press enter to retry",
-        "German": "Drücken Sie die Eingabetaste, um es erneut zu versuchen",
-        "French": "Appuyez sur Entrée pour réessayer",
-        "Spanish": "Presione enter para volver a intentarlo",
-        "Portuguese": "Pressione enter para tentar novamente",
-        "Italian": "Premere enter per riprovare",
-        "Dutch": "Druk op enter om het opnieuw te proberen",
-        "Polish": "Naciśnij enter, aby spróbować ponownie",
-        "Russian": "Нажмите enter, чтобы повторить попытку",
-        "Korean": "Enter 키를 누르면 다시 시도",
-        "Chinese": "按enter键重试",
-        "Japanese": "Enterキーを押して再試行します"
-    },
     "1351878611": {
         "English": "Close without saving",
         "German": "Schließen ohne zu speichern",
@@ -2042,5 +2028,19 @@
         "Korean": "팀포 2 부자재({0})",
         "Chinese": "TF2富存在({0})",
         "Japanese": "TF2Rich Presence({0})"
+    },
+    "4155575659": {
+        "English": "Press enter in this window when done",
+        "German": "Drücken Sie die Eingabetaste in diesem Fenster, wenn Sie fertig sind",
+        "French": "Appuyez sur Entrée dans cette fenêtre lorsque vous avez terminé",
+        "Spanish": "Presione Enter en esta ventana cuando haya terminado",
+        "Portuguese": "Pressione enter nesta janela quando terminar",
+        "Italian": "Al termine, premere Invio in questa finestra",
+        "Dutch": "Druk op enter in dit venster wanneer u klaar bent",
+        "Polish": "Po zakończeniu naciśnij Enter w tym oknie",
+        "Russian": "Нажмите enter в этом окне, когда закончите",
+        "Korean": "이 창에 끝낼 때 입력하십시오",
+        "Chinese": "完成后在此窗口中按enter键",
+        "Japanese": "このウィンドウでenterキーを押します"
     }
 }

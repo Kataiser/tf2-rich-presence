@@ -506,7 +506,7 @@ def no_condebug_warning():
     print('{0}\n'.format(loc.text("6. Restart TF2")))
 
     # -condebug is kinda necessary so just wait to restart if it's not there
-    input('{0}\n'.format(loc.text("Press enter to retry")))
+    input('{0}\n'.format(loc.text("Press enter in this window when done")))
     raise SystemExit
 
 
