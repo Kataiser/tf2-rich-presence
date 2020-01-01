@@ -8,9 +8,7 @@ import sys
 import time
 import tkinter as tk
 import unittest
-import webbrowser
 
-import keyboard
 import requests
 from discoIPC import ipc
 
@@ -25,7 +23,7 @@ import settings
 import updater
 
 
-class TestTF2RichPresenseFunctions(unittest.TestCase):
+class TestTF2RichPresense(unittest.TestCase):
     def setUp(self):
         self.old_settings = settings.access_registry()
         if self.old_settings != settings.get_setting_default(return_all=True):
@@ -247,111 +245,6 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
         self.assertEqual(fix_activity_dict(app.activity),
                          {'details': 'In menus', 'timestamps': {'start': 0}, 'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2',
                                                                                         'large_image': 'main_menu', 'large_text': 'Main menu'}, 'state': ''})
-
-
-class TestTF2RichPresenseSimulated(unittest.TestCase):
-    def test_main(self):
-        # this one is seperate due to the long run time (over 1.5 minutes)
-        # this opens TF2 and simulates keypresses, so it needs Steam and Discord to be running
-        # requires the custom map cp_catwalk_a5c to be installed (https://tf2maps.net/downloads/catwalk.1393/)
-
-        log = logger.Log()
-        app = main.TF2RichPresense(log)
-        self.assertEqual(app.test_state, 'init')
-        self.assertEqual(fix_activity_dict(app.activity),
-                         {'details': 'In menus', 'timestamps': {'start': 0}, 'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2',
-                                                                                        'large_image': 'main_menu', 'large_text': 'In menus'}, 'state': ''})
-        app.loop_body()
-        self.assertEqual(app.test_state, 'no tf2')
-        self.assertEqual(fix_activity_dict(app.activity),
-                         {'details': 'In menus', 'timestamps': {'start': 0}, 'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2',
-                                                                                        'large_image': 'main_menu', 'large_text': 'In menus'}, 'state': ''})
-
-        print("Launching TF2 via default browser")
-        webbrowser.open('steam://rungameid/440')
-        input("Press enter when TF2 has finished loading (will send an alt-tab)")
-        keyboard.press('alt')
-        keyboard.press_and_release('tab')
-        keyboard.release('alt')
-        app.loop_body()
-        self.assertEqual(app.test_state, 'menus')
-        self.assertEqual(fix_activity_dict(app.activity),
-                         {'details': 'In menus', 'timestamps': {'start': 0}, 'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2',
-                                                                                        'large_image': 'main_menu', 'large_text': 'Main menu'}, 'state': 'Not queued'})
-
-        print("Loading in to map \"itemtest\"")
-        keyboard.press_and_release('~')
-        time.sleep(0.5)
-        keyboard.write('map itemtest')
-        time.sleep(0.2)
-        keyboard.press_and_release('enter')
-        input("Press enter when itemtest has finished loading (will send an alt-tab)")
-        keyboard.press('alt')
-        keyboard.press_and_release('tab')
-        keyboard.release('alt')
-        time.sleep(0.2)
-        for _ in range(3):
-            keyboard.press_and_release('d')
-            time.sleep(0.2)
-        keyboard.press_and_release('1')
-        time.sleep(0.5)
-        app.loop_body()
-        self.assertEqual(app.test_state, 'in game')
-        self.assertEqual(fix_activity_dict(app.activity),
-                         {'details': 'Map: Itemtest', 'timestamps': {'start': 0}, 'assets': {'small_image': 'scout_icon', 'small_text': 'Scout',
-                                                                                             'large_image': 'unknown_map', 'large_text': 'No gamemode'}, 'state': 'Class: Scout'})
-
-        print("Changing map to \"cp_catwalk_a5c\"")
-        keyboard.press_and_release('~')
-        time.sleep(0.5)
-        keyboard.write('map cp_catwalk_a5c')
-        time.sleep(0.2)
-        keyboard.press_and_release('enter')
-        input("Press enter when cp_catwalk has finished loading (will send an alt-tab)")
-        keyboard.press('alt')
-        keyboard.press_and_release('tab')
-        keyboard.release('alt')
-        time.sleep(0.2)
-        for _ in range(3):
-            keyboard.press_and_release('d')
-            time.sleep(0.2)
-        keyboard.press_and_release('2')
-        time.sleep(0.5)
-        app.loop_body()
-        self.assertEqual(app.test_state, 'in game')
-        self.assertEqual(fix_activity_dict(app.activity),
-                         {'details': 'Map: cp_catwalk_a5c', 'timestamps': {'start': 0},
-                          'assets': {'small_image': 'soldier_icon', 'small_text': 'Soldier',
-                                     'large_image': 'control-point', 'large_text': 'Control Point [custom/community map]'}, 'state': 'Class: Soldier'})
-
-        print("Quitting to main menu")
-        keyboard.press_and_release('~')
-        time.sleep(0.5)
-        keyboard.write('disconnect')
-        time.sleep(0.2)
-        keyboard.press_and_release('enter')
-        time.sleep(0.2)
-        app.loop_body()
-        self.assertEqual(app.test_state, 'menus')
-        self.assertEqual(fix_activity_dict(app.activity),
-                         {'details': 'In menus', 'timestamps': {'start': 0}, 'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2',
-                                                                                        'large_image': 'main_menu', 'large_text': 'Main menu'}, 'state': 'Not queued'})
-
-        keyboard.write('quit')
-        time.sleep(0.2)
-        keyboard.press_and_release('enter')
-        print("Waiting 15 seconds for TF2 to fully close")
-        time.sleep(15)  # TF2's process takes forever to finally end after the game is closed
-
-        try:
-            app.loop_body()
-        except SystemExit:
-            pass
-        self.assertEqual(app.test_state, 'no tf2')
-        self.assertEqual(fix_activity_dict(app.activity),
-                         {'details': 'In menus', 'timestamps': {'start': 0}, 'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2',
-                                                                                        'large_image': 'main_menu', 'large_text': 'Main menu'}, 'state': 'Not queued'})
-        log.log_file.close()
 
 
 def fix_activity_dict(activity):
