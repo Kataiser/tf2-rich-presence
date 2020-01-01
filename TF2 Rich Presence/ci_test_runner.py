@@ -2,6 +2,7 @@
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 
 import os
+import unittest
 
 import tests
 
@@ -17,6 +18,11 @@ if __name__ == '__main__':
     for ci_test in ci_tests:
         # this is probably broken in some way
         f_test_runner = tests.TestTF2RichPresense()
-        f_tests.setUp(f_test_runner)
-        ci_test(f_test_runner)
-        f_tests.tearDown(f_test_runner)
+
+        try:
+            f_tests.setUp(f_test_runner)
+            ci_test(f_test_runner)
+            f_tests.tearDown(f_test_runner)
+        except unittest.SkipTest as skipped_test:
+            print(skipped_test)
+            pass
