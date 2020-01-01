@@ -245,6 +245,7 @@ class TestTF2RichPresense(unittest.TestCase):
                 self.assertLess(num_equal_lines, num_lines_total / 2)
 
     def test_main_simple(self):
+        self.fail()
         log = logger.Log()
         app = main.TF2RichPresense(log)
         self.assertEqual(app.test_state, 'init')
