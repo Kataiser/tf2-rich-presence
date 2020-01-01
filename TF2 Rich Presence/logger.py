@@ -158,6 +158,7 @@ def generate_hash() -> str:
                                 'localization.json', 'APIs']
     files_to_hash_data: List = []
     build_folder = [item for item in os.listdir('.') if item.startswith('TF2 Rich Presence v') and os.path.isdir(item)]
+    file_lengths = {}
 
     for file_to_hash in files_to_hash:
         if build_folder:
@@ -175,7 +176,9 @@ def generate_hash() -> str:
 
         files_to_hash_data.append(file_read)
         file.close()
+        file_lengths[file_to_hash] = len(file_read)
 
+    print(file_lengths)
     hash_int = zlib.adler32(b'\n'.join(files_to_hash_data))
     hash_hex = hex(hash_int)[2:10].ljust(8, '0')
     return hash_hex
