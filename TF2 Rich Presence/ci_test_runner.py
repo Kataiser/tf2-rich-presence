@@ -4,12 +4,12 @@
 import os
 import unittest
 
+if 'TF2 Rich Presence' not in os.getcwd():
+    os.chdir('TF2 Rich Presence')
 import tests
 
 # for https://travis-ci.org/Kataiser/tf2-rich-presence
 if __name__ == '__main__':
-    if 'TF2 Rich Presence' not in os.getcwd():
-        os.chdir('TF2 Rich Presence')
     print(os.listdir(os.getcwd()))
 
     f_tests = tests.TestTF2RichPresense
