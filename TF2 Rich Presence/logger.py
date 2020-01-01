@@ -158,7 +158,6 @@ def generate_hash() -> str:
                                 'localization.json', 'APIs']
     files_to_hash_data: List = []
     build_folder = [item for item in os.listdir('.') if item.startswith('TF2 Rich Presence v') and os.path.isdir(item)]
-    file_paths = []
 
     for file_to_hash in files_to_hash:
         if build_folder:
@@ -174,11 +173,12 @@ def generate_hash() -> str:
         if 'launcher' in file_to_hash:
             file_read = file_read.replace(b'{tf2rpvnum}-dev', b'{tf2rpvnum}')
 
+        if file_to_hash == 'logger.py' and 'hash_targets' in os.path.abspath(file.name):
+            print(file_read.decode('UTF8').split('\n'))
+
         files_to_hash_data.append(file_read)
-        file_paths.append(os.path.abspath(file.name))
         file.close()
 
-    print(file_paths)
     hash_int = zlib.adler32(b'\n'.join(files_to_hash_data))
     hash_hex = hex(hash_int)[2:10].ljust(8, '0')
     return hash_hex
