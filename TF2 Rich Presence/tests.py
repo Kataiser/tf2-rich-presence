@@ -53,11 +53,17 @@ class TestTF2RichPresenseFunctions(unittest.TestCase):
         self.assertEqual(configs.steam_config_file(self.log, 'test_resources\\'), ['Kataiser'])
 
     def test_find_custom_map_gamemode(self):
-        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'cp_catwalk_a5c', 5)), ('control-point', 'Control Point'))
-        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'koth_wubwubwub_remix_vip', 5)), ('koth', 'King of the Hill'))
-        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'surf_air_arena_v4', 5)), ('surfing', 'Surfing'))
-        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'ph_kakariko_b1', 5)), ('prophunt', 'Prop Hunt'))  # Prop Hunt? Prophunt? idk
-        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'ytsb8eitybw', 5)), ('unknown_map', 'Unknown gamemode'))
+        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, False, 'cp_catwalk_a5c', 5)), ('control-point', 'Control Point'))
+        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, False, 'koth_wubwubwub_remix_vip', 5)), ('koth', 'King of the Hill'))
+        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, False, 'surf_air_arena_v4', 5)), ('surfing', 'Surfing'))
+        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, False, 'ph_kakariko_b1', 5)), ('prophunt', 'Prop Hunt'))  # Prop Hunt? Prophunt? idk
+        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, False, 'ytsb8eitybw', 5)), ('unknown_map', 'Unknown gamemode'))
+
+        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, True, 'cp_catwalk_a5c', 5)), ('control-point', 'Control Point'))
+        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, True, 'koth_wubwubwub_remix_vip', 5)), ('koth', 'King of the Hill'))
+        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, True, 'surf_air_arena_v4', 5)), ('surfing', 'Surfing'))
+        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, True, 'ph_kakariko_b1', 5)), ('prophunt', 'Prop Hunt'))
+        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, True, 'ytsb8eitybw', 5)), ('unknown_map', 'Unknown gamemode'))
 
     def test_logger(self):
         self.log.log_file.close()

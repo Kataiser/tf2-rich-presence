@@ -221,7 +221,7 @@ class TF2RichPresense:
                     self.activity['assets']['large_text'] = gamemode_fancy
                 except KeyError:
                     # is a custom map
-                    custom_gamemode, custom_gamemode_fancy_english = custom_maps.find_custom_map_gamemode(self.log, top_line, ignore_cache=False)
+                    custom_gamemode, custom_gamemode_fancy_english = custom_maps.find_custom_map_gamemode(self.log, True, top_line)
                     custom_gamemode_fancy = self.loc.text(custom_gamemode_fancy_english)
                     map_out = top_line
                     self.activity['assets']['large_image'] = custom_gamemode
