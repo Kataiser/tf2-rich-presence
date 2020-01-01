@@ -92,13 +92,20 @@ class TestTF2RichPresense(unittest.TestCase):
         os.chdir(os.path.abspath('test_resources'))
 
         try:
-            shutil.rmtree('logs')
+            shutil.rmtree('logs')  # if this test failed last run
+            time.sleep(0.1)
         except FileNotFoundError:
             pass
 
+        # make sure the modified times are actually in order
         shutil.copytree('empty_logs', 'logs')
+        empty_logs = sorted(os.listdir('logs'))
+        for file_num in range(7):
+            modified_time = time.time() - file_num
+            os.utime(os.path.join('logs', empty_logs[file_num]), times=(modified_time, modified_time))
+
         self.log.cleanup(4)
-        self.assertEqual(os.listdir('logs'), ['267d4853.log', '46b087ff.log', '898ff621.log', 'da0d028a.log'])
+        self.assertEqual(os.listdir('logs'), ['0f784a27.log', '267d4853.log', '46b087ff.log', '6cbf1447.log'])
         shutil.rmtree('logs')
 
         os.chdir(old_dir)
