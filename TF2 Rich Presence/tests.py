@@ -114,7 +114,7 @@ class TestTF2RichPresense(unittest.TestCase):
         old_dir = os.getcwd()
         os.chdir(os.path.abspath('test_resources\\hash_targets'))
 
-        self.assertEqual(logger.generate_hash(), '46e4b3f2')
+        self.assertEqual(logger.generate_hash(), 'ece9baf4')
 
         os.chdir(old_dir)
 
@@ -152,6 +152,10 @@ class TestTF2RichPresense(unittest.TestCase):
 
     def test_discoipc(self):
         # this test fails if Discord isn't running
+        test_process_scanner = processes.ProcessScanner(self.log)
+        if not test_process_scanner.scan()['Discord']['running']:
+            self.skipTest("Discord needs to be running")
+
         activity = {'details': 'In menus',
                     'timestamps': {'start': int(time.time())},
                     'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2', 'large_image': 'main_menu',

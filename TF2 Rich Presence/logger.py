@@ -173,9 +173,6 @@ def generate_hash() -> str:
         if 'launcher' in file_to_hash:
             file_read = file_read.replace(b'{tf2rpvnum}-dev', b'{tf2rpvnum}')
 
-        if file_to_hash == 'logger.py' and 'hash_targets' in os.path.abspath(file.name):
-            print(file_read.decode('UTF8').split('\n'))
-
         files_to_hash_data.append(file_read)
         file.close()
 
