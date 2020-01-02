@@ -8,15 +8,11 @@ matrix:
         - choco install python --version=3.7.5
         - python -m pip install --upgrade pip
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
-install:
-  - pip3 install -r requirements.txt
-  - pip3 install codecov
+install: pip3 install -r requirements.txt
 script: 
   - xcopy LICENSE "TF2 Rich Presence"
   - xcopy Changelogs.html "TF2 Rich Presence"
   - cd "TF2 Rich Presence"
-  - coverage run tests.py
+  - python tests.py
   - 7z x python-3.7.5-embed-win32.zip
   - python build.py --n
-after_success:
-  - codecov
