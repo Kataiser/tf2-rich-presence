@@ -268,4 +268,8 @@ def fix_activity_dict(activity):
 
 
 if __name__ == '__main__':
+    if 'TF2 Rich Presence' not in os.getcwd():
+        os.chdir('TF2 Rich Presence')
+    print(os.listdir(os.getcwd()))
+    
     unittest.main()
