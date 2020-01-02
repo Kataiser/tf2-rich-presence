@@ -12,6 +12,11 @@ import unittest
 import requests
 from discoIPC import ipc
 
+if 'TF2 Rich Presence' not in os.getcwd():
+    os.chdir('TF2 Rich Presence')
+    print(f"Changed cwd to {os.getcwd()}")
+print(os.listdir(os.getcwd()))
+
 import configs
 import custom_maps
 import launcher
@@ -268,8 +273,4 @@ def fix_activity_dict(activity):
 
 
 if __name__ == '__main__':
-    if 'TF2 Rich Presence' not in os.getcwd():
-        os.chdir('TF2 Rich Presence')
-    print(os.listdir(os.getcwd()))
-    
     unittest.main()
