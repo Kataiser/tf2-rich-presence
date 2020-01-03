@@ -13,7 +13,7 @@ import settings
 
 
 # if the system (OS) language doesn't match the current settings, ask to change language (only once)
-def launch():
+def detect():
     log = logger.Log()
 
     db_path = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
@@ -64,4 +64,4 @@ def launch():
 
 
 if __name__ == '__main__':
-    launch()
+    detect()

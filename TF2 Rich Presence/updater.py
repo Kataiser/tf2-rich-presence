@@ -87,7 +87,7 @@ def failure_message(current_version: str, error_message: str = None):
     print(f"{line1}\n{line2}\n{line3}\n")
 
 
-def launch():
+def run():
     # this gets run by the batch file, before the restart loop and main.py
     try:
         check_for_update('{tf2rpvnum}', settings.get('request_timeout'))
@@ -96,4 +96,4 @@ def launch():
 
 
 if __name__ == '__main__':
-    launch()
+    run()

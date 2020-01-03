@@ -67,6 +67,7 @@ def main(version_num=None):
         print("Copied", shutil.copy('localization.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('welcomer.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('detect_system_language.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('init.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('map list generator.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('thumb formatter.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('changelog_generator.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
@@ -160,6 +161,7 @@ def main(version_num=None):
                      ('localization.py', Path(f'{new_build_folder_name}/resources/')),
                      ('welcomer.py', Path(f'{new_build_folder_name}/resources/')),
                      ('detect_system_language.py', Path(f'{new_build_folder_name}/resources/')),
+                     ('init.py', Path(f'{new_build_folder_name}/resources/')),
                      ('tf2_logo_blurple.ico', Path(f'{new_build_folder_name}/resources/')),
                      ('tf2_logo_blurple_wrench.ico', Path(f'{new_build_folder_name}/resources/')),
                      ('APIs', Path(f'{new_build_folder_name}/resources/')),

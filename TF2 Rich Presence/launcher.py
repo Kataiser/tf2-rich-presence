@@ -23,6 +23,7 @@ def launch():
 
         parser = argparse.ArgumentParser()
         parser.add_argument('--m', default='main', help="The module to launch (main, settings, or updater)")
+        parser.add_argument('--welcome_version', default='0', help="Which version of the welcome message to use (0 or 1)")
         args = parser.parse_args()
 
         old_dir = os.getcwd()
@@ -31,7 +32,10 @@ def launch():
         loaded_module = importlib.import_module(args.m)
         os.chdir(old_dir)
 
-        loaded_module.launch()
+        if args.m == 'init':
+            loaded_module.launch(args.welcome_version)
+        else:
+            loaded_module.launch()
     except (KeyboardInterrupt, SystemExit):
         raise SystemExit
     except Exception:
