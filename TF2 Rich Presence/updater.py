@@ -19,7 +19,7 @@ def check_for_update(current_version: str, timeout: float):
     log = logger.Log()
     loc = localization.Localizer(language=settings.get('language'))
 
-    if '{' in '{tf2rpvnum}' or not settings.get('check_updates'):
+    if not settings.get('check_updates'):
         log.debug("Updater is disabled, skipping")
         raise SystemExit
 

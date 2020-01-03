@@ -12,13 +12,9 @@ import unittest
 import requests
 from discoIPC import ipc
 
-if 'TF2 Rich Presence' not in os.getcwd():
-    os.chdir('TF2 Rich Presence')
-    print(f"Changed cwd to {os.getcwd()}")
-print(os.listdir(os.getcwd()))
-
 import configs
 import custom_maps
+import init
 import launcher
 import localization
 import logger
@@ -262,6 +258,9 @@ class TestTF2RichPresense(unittest.TestCase):
                          {'details': 'In menus', 'timestamps': {'start': 0}, 'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2',
                                                                                         'large_image': 'main_menu', 'large_text': 'Main menu'}, 'state': ''})
 
+    def test_init(self):
+        init.launch(0)
+
 
 def fix_activity_dict(activity):
     try:
@@ -274,4 +273,5 @@ def fix_activity_dict(activity):
 
 if __name__ == '__main__':
     print("Started tests via __main__")
+    print(f"Files in {os.getcwd()}: {os.listdir(os.getcwd())}")
     unittest.main(verbosity=2)
