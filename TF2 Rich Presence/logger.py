@@ -15,8 +15,9 @@ import sentry_sdk
 import settings
 
 
+# TODO: replace this whole thing with a real logger
 class Log:
-    def __init__(self):
+    def __init__(self, path=None):
         # find user's pc and account name
         user_identifier: str = os.getlogin()
         if socket.gethostname().find('.') >= 0:
@@ -27,17 +28,20 @@ class Log:
             except socket.gaierror:  # no idea what causes this but it happened to someone
                 user_pc_name: str = user_identifier
 
+        if path:
+            self.filename = path
+        else:
+            days_since_epoch_local = int((time.time() + time.localtime().tm_gmtoff) / 86400)  # 86400 seconds in a day
+            self.filename: Union[bytes, str] = os.path.join('logs', f'{user_pc_name}_{user_identifier}_{"{tf2rpvnum}"}_{generate_hash()}_{days_since_epoch_local}.log')
+
         # setup
         self.last_log_time = None
-        days_since_epoch_local = int((time.time() + time.localtime().tm_gmtoff) / 86400)  # 86400 seconds in a day
-        self.filename: Union[bytes, str] = os.path.join('logs', f'{user_pc_name}_{user_identifier}_{"{tf2rpvnum}"}_{generate_hash()}_{days_since_epoch_local}.log')
         self.console_log_path: Union[str, None] = None
         self.to_stderr: bool = False
         self.sentry_level: str = settings.get('sentry_level')
         self.enabled: bool = settings.get('log_level') != 'Off'
         self.log_levels: list = ['Debug', 'Info', 'Error', 'Critical', 'Off']
         self.log_level: str = settings.get('log_level')
-        self.unsaved_lines = 0
 
         # set the user in Sentry, since log filename is no longer sent
         with sentry_sdk.configure_scope() as scope:
@@ -63,6 +67,9 @@ class Log:
         if not os.access('DB.json', os.W_OK) and not os.access(os.path.join('resources', 'DB.json'), os.W_OK):
             self.error("DB.json can't be written to. This could cause crashes")
 
+    def __repr__(self):
+        return f"{'Enabled' if self.enabled else 'Disabled'} log at {self.filename} (level: {self.log_level}, stderr: {self.to_stderr})"
+
     # adds a line to the current log file
     def write_log(self, level: str, message_out: str):
         if self.enabled:
@@ -80,12 +87,9 @@ class Log:
 
             try:
                 self.log_file.write(full_line)
+                self.log_file.flush()
             except UnicodeEncodeError as error:
                 self.error(f"Couldn't write log due to UnicodeEncodeError: {error}")
-
-            self.unsaved_lines += 1
-            if (self.unsaved_lines >= 100 or level != 'DEBUG') and "Compact" not in message_out:
-                self.save_log()
 
             if self.to_stderr:
                 print(full_line.rstrip('\n'), file=sys.stderr)
@@ -114,12 +118,6 @@ class Log:
     def critical(self, message_in):
         if 'Critical' in self.log_levels_allowed:
             self.write_log('CRITICAL', message_in)
-
-    # write unsaved log lines to file
-    def save_log(self):
-        self.log_file.close()
-        self.log_file = open(self.filename, 'a', encoding='utf-8')
-        self.unsaved_lines = 0
 
     # deletes older log files
     def cleanup(self, max_logs: int):

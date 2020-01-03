@@ -79,12 +79,12 @@ class TestTF2RichPresense(unittest.TestCase):
         except (FileNotFoundError, PermissionError):
             pass
 
-        self.log.log_file = open(self.log.filename, 'a')
-        self.log.info("Test.")
+        self.log.log_file = open(self.log.filename, 'a', encoding='UTF8')
+        self.log.info("Test 饏Ӟ򒚦R៣񘺏1ࠞͳⴺۋ")
         self.log.log_file.close()
 
-        with open(self.log.filename, 'r') as current_log_file:
-            self.assertTrue(' +0.0000] INFO: Test.\n' in current_log_file.read())
+        with open(self.log.filename, 'r', encoding='UTF8') as current_log_file:
+            self.assertTrue(' +0.0000] INFO: Test 饏Ӟ򒚦R៣񘺏1ࠞͳⴺۋ\n' in current_log_file.read())
 
         os.remove(self.log.filename)
 
