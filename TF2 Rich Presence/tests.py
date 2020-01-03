@@ -174,17 +174,6 @@ class TestTF2RichPresense(unittest.TestCase):
         client_state = (client.client_id, client.connected, client.ipc_path, isinstance(client.pid, int), client.platform, client.socket)
         self.assertEqual(client_state, ('429389143756374017', False, '\\\\?\\pipe\\discord-ipc-0', True, 'windows', None))
 
-    def test_compact_file(self):
-        compact_file_out = logger.compact_file('test_resources\\console_badwater.log', guarantee=True)
-
-        try:
-            self.assertTrue(compact_file_out.startswith("Compacted file test_resources\\console_badwater.log (took "))
-            self.assertTrue(compact_file_out.endswith("console_badwater.log 9309970 : 2490368 = 3.7 to 1 [OK] 1 files within 1 directories were compressed. 9,309,970 total bytes of data are "
-                                                      "stored in 2,490,368 bytes. The compression ratio is 3.7 to 1."))
-        except self.failureException:
-            print(compact_file_out, file=sys.stderr)
-            raise
-
     def test_generate_delta(self):
         app = main.TF2RichPresense(self.log)
 

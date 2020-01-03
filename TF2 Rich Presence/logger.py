@@ -2,9 +2,7 @@
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 
 import os
-import random
 import socket
-import subprocess
 import sys
 import time
 import traceback
@@ -87,13 +85,6 @@ class Log:
 
             self.unsaved_lines += 1
             if (self.unsaved_lines >= 100 or level != 'DEBUG') and "Compact" not in message_out:
-                try:
-                    compacted_log = compact_file(self.filename)
-                    if compacted_log:
-                        self.debug(compacted_log)
-                except Exception:
-                    pass
-
                 self.save_log()
 
             if self.to_stderr:
@@ -179,16 +170,6 @@ def generate_hash() -> str:
     hash_int = zlib.adler32(b'\n'.join(files_to_hash_data))
     hash_hex = hex(hash_int)[2:10].ljust(8, '0')
     return hash_hex
-
-
-# runs Windows' "compact" command on a file.
-def compact_file(target_file_path: str, guarantee: bool = False) -> Union[str, None]:
-    if (guarantee or random.random() < 0.25) and os.name == 'nt':
-        before_compact_time = time.perf_counter()
-        compact_out: str = subprocess.run(f'compact /c /f /i "{target_file_path}"', stdout=subprocess.PIPE).stdout.decode('utf-8', 'replace')
-        return "Compacted file {} (took {} seconds): {}".format(target_file_path, round(time.perf_counter() - before_compact_time, 4), " ".join(compact_out.split()))
-    else:
-        return None
 
 
 if __name__ == '__main__':

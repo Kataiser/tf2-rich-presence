@@ -358,7 +358,6 @@ class TF2RichPresense:
                 self.log.debug(f"console.log: {consolelog_file_size} bytes, {len(lines)} lines (didn't skip lines)")
 
         if not self.has_compacted_console_log:
-            self.log.debug(logger.compact_file(consolelog_filename))
             self.has_compacted_console_log = True
 
         # iterates though every line in the log (I KNOW) and learns everything from it
