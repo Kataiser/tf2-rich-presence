@@ -28,6 +28,7 @@ def welcome(message_version):
         print("{}\n".format(loc.text("Launching Team Fortress 2 with Rich Presence enabled...")))
     elif message_version == '1':
         print("{}\n".format(loc.text("Launching TF2 with Rich Presence alongside Team Fortress 2...")))
+    print(colorama.Style.RESET_ALL, end='')
 
 
 if __name__ == '__main__':
