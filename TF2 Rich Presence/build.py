@@ -58,7 +58,6 @@ def main(version_num=None):
         print("Copied", shutil.copy('launcher.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('build.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('tests.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
-        print("Copied", shutil.copy('ci_test_runner.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('logger.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('configs.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('custom_maps.py', Path(f'{github_repo_path}/TF2 Rich Presence')))

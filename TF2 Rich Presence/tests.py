@@ -273,4 +273,5 @@ def fix_activity_dict(activity):
 
 
 if __name__ == '__main__':
-    unittest.main()
+    print("Started tests via __main__")
+    unittest.main(verbosity=2)
