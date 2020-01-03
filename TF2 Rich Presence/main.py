@@ -124,12 +124,6 @@ class TF2RichPresense:
 
     def run(self):
         while True:
-            current_settings = settings.access_registry()
-            if current_settings == settings.get_setting_default(return_all=True):
-                self.log.debug(f"Current settings: {current_settings}")
-            else:
-                self.log.debug("Current settings are default")
-
             self.loop_body()
 
             # rich presence only updates every 15 seconds, but it listens constantly so sending every 2 seconds (by default) is fine
@@ -141,6 +135,13 @@ class TF2RichPresense:
     def loop_body(self):
         self.loop_iteration += 1
         self.log.debug(f"Loop iteration this app session: {self.loop_iteration}")
+
+        default_settings = settings.get_setting_default(return_all=True)
+        current_settings = settings.access_registry()
+        if current_settings == default_settings:
+            self.log.debug("Current settings are default")
+        else:
+            self.log.debug(f"Non-default settings: {settings.compare_settings(default_settings, current_settings)}")
 
         self.old_activity = copy.copy(self.activity)
         if self.loc.text("Time on map: {0}").replace('{0}', '') in self.old_activity['state']:

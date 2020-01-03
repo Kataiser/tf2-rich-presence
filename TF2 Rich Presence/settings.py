@@ -281,8 +281,7 @@ class GUI(tk.Frame):
                 int_setting.set(0)
 
         settings_to_save = self.get_working_settings()
-
-        settings_changed = {k: settings_to_save[k] for k in settings_to_save if k in self.settings_loaded and settings_to_save[k] != self.settings_loaded[k]}  # haha what
+        settings_changed = compare_settings(self.settings_loaded, settings_to_save)
         self.log.debug(f"Setting(s) changed: {settings_changed}")
         self.log.info("Saving and closing settings menu")
         access_registry(save_dict=settings_to_save)
@@ -305,8 +304,8 @@ class GUI(tk.Frame):
     # closes window without saving
     def close_without_saving(self):
         settings_to_save = self.get_working_settings()
-        settings_changed = {k: settings_to_save[k] for k in settings_to_save if k in self.settings_loaded and settings_to_save[k] != self.settings_loaded[k]}  # haha what
-        self.log.debug(f"Setting(s) changed (but not saved): {settings_changed}")
+        settings_changed = compare_settings(self.settings_loaded, settings_to_save)
+        self.log.debug(f"Setting(s) changed (but not yet saved): {settings_changed}")
 
         close_question = self.loc.text("Close without saving?")
         settings_changed_num = len(settings_changed)
@@ -396,6 +395,10 @@ def check_int(text_in_entry: str, maximum: int) -> bool:
         return True
 
     return False
+
+
+def compare_settings(before: dict, after: dict) -> dict:
+    return {k: after[k] for k in before if before[k] != after[k]}
 
 
 if __name__ == '__main__':

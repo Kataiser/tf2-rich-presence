@@ -66,19 +66,21 @@ def steam_config_file(log, exe_location: str) -> list:
 
                 if '-condebug' in global_config_file_read and '"440"' in global_config_file_read:
                     log.debug("-condebug and \"440\" found, parsing file")
-                    parsed = lowercase_keys(vdf.loads(global_config_file_read))
+                    parsed = vdf.loads(global_config_file_read)
+                    log.debug(f"Parse complete ({len(parsed['UserLocalConfigStore'])} keys)")
+                    parsed_lowercase = lowercase_keys(parsed)
                 else:
                     continue
 
             try:
-                possible_username = parsed['userlocalconfigstore']['friends']['personaname']
+                possible_username = parsed_lowercase['userlocalconfigstore']['friends']['personaname']
                 log.debug(f"Possible username: {possible_username}")
             except KeyError:
                 log.error("Couldn't find PersonaName in config")
                 possible_username = None
 
             try:
-                tf2_launch_options = parsed['userlocalconfigstore']['software']['valve']['steam']['apps']['440']['launchoptions']
+                tf2_launch_options = parsed_lowercase['userlocalconfigstore']['software']['valve']['steam']['apps']['440']['launchoptions']
 
                 if '-condebug' in tf2_launch_options:  # runs if no KeyError in above line
                     found_condebug = True

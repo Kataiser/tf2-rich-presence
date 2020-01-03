@@ -26,22 +26,26 @@ class ProcessScanner:
                              'Steam': {'running': False, 'pid': None, 'path': None},
                              'Discord': {'running': False, 'pid': None}}
         self.p_data_default = copy.deepcopy(self.process_data)
+        self.p_data_last = copy.deepcopy(self.process_data)
 
     # scan all running processes to look for TF2, Steam, and Discord
     def scan(self) -> Dict[str, Dict[str, Union[bool, str, int, None]]]:
-        before_scan_time = time.perf_counter()
-
         # TODO: use sys.platform everywhere instead of os.name (if possible)
         if os.name == 'nt':
-            scanned_process_data = self.scan_windows()
+            self.scan_windows()
         else:
-            scanned_process_data = self.scan_posix()
+            self.scan_posix()
 
-        self.log.debug(f"Process scanning took {format(time.perf_counter() - before_scan_time, '.2f')} seconds (used tasklist: {self.used_tasklist})")
-        return scanned_process_data
+        if self.process_data == self.p_data_last:
+            self.log.debug(f"Process scanning got same results (used tasklist: {self.used_tasklist})")
+        else:
+            self.log.debug(f"Process scanning (used tasklist: {self.used_tasklist}) results: {self.process_data}")
+
+        self.p_data_last = copy.deepcopy(self.process_data)
+        return self.process_data
 
     # basically psutil.process_iter(attrs=['pid', 'cmdline', 'create_time']) but WAY faster (and also highly specialized)
-    def scan_windows(self) -> Dict[str, Dict[str, Union[bool, str, int, None]]]:
+    def scan_windows(self):
         self.used_tasklist = False
 
         if not self.has_cached_all_pids:  # guaranteed on the first run
@@ -75,10 +79,8 @@ class ProcessScanner:
             if self.process_data != p_data_old:
                 self.has_cached_all_pids = False
 
-        return self.process_data
-
     # for Linux and MacOS (I think)
-    def scan_posix(self) -> Dict[str, Dict[str, Union[bool, str, int, None]]]:
+    def scan_posix(self):
         for proc in psutil.process_iter():
             try:
                 details = proc.as_dict(attrs=['pid', 'name', 'cwd'])
@@ -92,7 +94,6 @@ class ProcessScanner:
                 pass
 
         self.get_all_extended_info()
-        return self.process_data
 
     # get only the needed info (exe path and process start time) for each, and then apply it to self.p_data
     def get_all_extended_info(self):
