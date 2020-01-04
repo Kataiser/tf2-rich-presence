@@ -8,18 +8,10 @@ matrix:
         - choco install python --version=3.7.5
         - python -m pip install --upgrade pip
       env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
-    - name: "Python 3.7 on Xenial Linux"
-      python: 3.7
-      dist: xenial
-    - name: "Python 3.7 on macOS"
-      python: 3.7
-      os: osx
-      osx_image: xcode10.2
-      language: shell
 install: pip3 install -r requirements.txt
 script: 
-  - xcopy LICENSE "TF2 Rich Presence" || cp LICENSE "/TF2 Rich Presence"
-  - xcopy Changelogs.html "TF2 Rich Presence" || cp Changelogs.html "/TF2 Rich Presence"
+  - xcopy LICENSE "TF2 Rich Presence"
+  - xcopy Changelogs.html "TF2 Rich Presence"
   - cd "TF2 Rich Presence"
   - python tests.py
   - 7z x python-3.7.5-embed-win32.zip
