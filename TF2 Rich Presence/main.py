@@ -21,7 +21,6 @@
 
 import copy
 import datetime
-import gc
 import json
 import os
 import platform
@@ -98,7 +97,6 @@ class TF2RichPresense:
         self.client_connected: bool = False
         self.client = None
         self.test_state = 'init'
-        self.has_compacted_console_log = False
         self.should_mention_discord = True
         self.should_mention_tf2 = True
         self.last_notify_time = None
@@ -349,7 +347,6 @@ class TF2RichPresense:
         with open(consolelog_filename, 'r', errors='replace') as consolelog_file:
             consolelog_file_size: int = os.stat(consolelog_filename).st_size
             byte_limit = kb_limit * 1024
-            gc.disable()
 
             if consolelog_file_size > byte_limit:
                 skip_to_byte = consolelog_file_size - byte_limit
@@ -361,12 +358,7 @@ class TF2RichPresense:
                 lines: List[str] = consolelog_file.readlines()
                 self.log.debug(f"console.log: {consolelog_file_size} bytes, {len(lines)} lines (didn't skip lines)")
 
-            gc.enable()
-
-        if not self.has_compacted_console_log:
-            self.has_compacted_console_log = True
-
-        # iterates though every line in the log (I KNOW) and learns everything from it
+        # iterates though roughly 16000 lines from console.log and learns everything from them
         line_used: str = ''
         for line in lines:
             if 'Map:' in line:
@@ -422,6 +414,7 @@ class TF2RichPresense:
         self.log.debug(f"Got '{current_map}' and '{current_class}' from this line: '{line_used[:-1]}'")
         self.old_console_log_interpretation = (current_map, current_class)
         self.old_console_log_mtime = console_log_mtime
+
         return current_map, current_class
 
     # generate text that displays the difference between now and old_time
