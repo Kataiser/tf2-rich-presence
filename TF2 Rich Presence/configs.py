@@ -65,9 +65,9 @@ def steam_config_file(log, exe_location: str) -> list:
                 global_config_file_read = global_config_file.read()
 
                 if '-condebug' in global_config_file_read and '"440"' in global_config_file_read:
-                    log.debug("-condebug and \"440\" found, parsing file")
+                    log.debug(f"-condebug and \"440\" found, parsing file ({len(global_config_file_read)} bytes)")
                     parsed = vdf.loads(global_config_file_read)
-                    log.debug(f"Parse complete ({len(parsed['UserLocalConfigStore'])} keys)")
+                    log.debug(f"VDF parse complete ({len(parsed['UserLocalConfigStore'])} keys)")
                     parsed_lowercase = lowercase_keys(parsed)
                 else:
                     continue
@@ -108,9 +108,10 @@ def steam_config_file(log, exe_location: str) -> list:
 # adapted from https://www.popmartian.com/tipsntricks/2014/11/20/how-to-lower-case-all-dictionary-keys-in-a-complex-python-dictionary/
 def lowercase_keys(dictionary):
     for key in dictionary.keys():
-        dictionary[key.lower()] = dictionary.pop(key)
+        key_lower = key.lower()
+        dictionary[key_lower] = dictionary.pop(key)
 
-        if isinstance(dictionary[key.lower()], dict) or isinstance(dictionary[key.lower()], list):
-            dictionary[key.lower()] = lowercase_keys(dictionary[key.lower()])
+        if isinstance(dictionary[key_lower], dict) or isinstance(dictionary[key_lower], list):
+            dictionary[key_lower] = lowercase_keys(dictionary[key_lower])
 
     return dictionary
