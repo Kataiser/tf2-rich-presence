@@ -21,6 +21,7 @@
 
 import copy
 import datetime
+import gc
 import json
 import os
 import platform
@@ -347,8 +348,9 @@ class TF2RichPresense:
 
         with open(consolelog_filename, 'r', errors='replace') as consolelog_file:
             consolelog_file_size: int = os.stat(consolelog_filename).st_size
-
             byte_limit = kb_limit * 1024
+            gc.disable()
+
             if consolelog_file_size > byte_limit:
                 skip_to_byte = consolelog_file_size - byte_limit
                 consolelog_file.seek(skip_to_byte, 0)  # skip to last few KBs
@@ -358,6 +360,8 @@ class TF2RichPresense:
             else:
                 lines: List[str] = consolelog_file.readlines()
                 self.log.debug(f"console.log: {consolelog_file_size} bytes, {len(lines)} lines (didn't skip lines)")
+
+            gc.enable()
 
         if not self.has_compacted_console_log:
             self.has_compacted_console_log = True
