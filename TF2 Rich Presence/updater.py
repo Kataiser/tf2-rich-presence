@@ -21,6 +21,7 @@ def check_for_update(current_version: str, timeout: float):
 
     if not settings.get('check_updates'):
         log.debug("Updater is disabled, skipping")
+        del log
         raise SystemExit
 
     log.debug(f"Checking for updates, timeout: {timeout} secs")
@@ -58,6 +59,8 @@ def check_for_update(current_version: str, timeout: float):
             print(loc.text("{0} changelog:").format(newest_version))
             print(changelog)
             print(loc.text("(If you're more than one version out of date, there may have been more changes and fixes than this.)"), end='\n\n')
+
+    del log
 
 
 # actually accesses the Github api, in a seperate function for tests

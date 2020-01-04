@@ -98,6 +98,7 @@ def steam_config_file(log, exe_location: str) -> list:
     if not found_condebug:
         log.debug("-condebug not found, telling user")
         # yell at the user to fix their settings
+        del log
         main.no_condebug_warning()
     else:
         log.debug(f"Usernames with -condebug: {found_usernames}")

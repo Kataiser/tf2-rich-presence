@@ -70,6 +70,10 @@ class Log:
     def __repr__(self):
         return f"{'Enabled' if self.enabled else 'Disabled'} log at {self.filename} (level: {self.log_level}, stderr: {self.to_stderr})"
 
+    def __del__(self):
+        self.debug("Closing log file via destructor")
+        self.log_file.close()
+
     # adds a line to the current log file
     def write_log(self, level: str, message_out: str):
         if self.enabled:

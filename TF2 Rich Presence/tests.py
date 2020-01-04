@@ -37,7 +37,7 @@ class TestTF2RichPresense(unittest.TestCase):
         self.log.log_levels_allowed = self.log.log_levels
 
     def tearDown(self):
-        self.log.log_file.close()
+        del self.log
         settings.access_registry(save_dict=self.old_settings)
 
     def test_interpret_console_log(self):

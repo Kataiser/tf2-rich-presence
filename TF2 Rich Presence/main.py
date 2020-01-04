@@ -284,6 +284,7 @@ class TF2RichPresense:
                     self.log.error(f"client error while disconnecting: {err}")
 
                 self.log.info("Restarting")
+                del self.log
                 raise SystemExit  # ...but this does
             else:
                 self.log.info(f"TF2 isn't running (mentioning to user: {self.should_mention_tf2})")
@@ -335,6 +336,7 @@ class TF2RichPresense:
 
         if not os.path.exists(consolelog_filename):
             self.log.error(f"console.log doesn't exist, issuing warning (files/dirs in /tf/: {os.listdir(os.path.dirname(console_log_path))})")
+            del self.log
             no_condebug_warning()
 
         # only interpret console.log again if it's been modified
@@ -486,6 +488,7 @@ class TF2RichPresense:
                 print(f'{self.current_time_formatted}{colorama.Style.BRIGHT}')
                 print(self.loc.text("Can't connect to Discord for Rich Presence."))
                 print(colorama.Style.RESET_ALL)
+                del self.log
                 raise SystemExit
             else:
                 raise
