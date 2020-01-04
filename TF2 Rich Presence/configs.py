@@ -107,11 +107,21 @@ def steam_config_file(log, exe_location: str) -> list:
 
 # adapted from https://www.popmartian.com/tipsntricks/2014/11/20/how-to-lower-case-all-dictionary-keys-in-a-complex-python-dictionary/
 def lowercase_keys(dictionary):
+    allowed_keys = ('userlocalconfigstore', 'friends', 'personaname', 'userlocalconfigstore', 'software', 'valve', 'steam', 'apps', '440', 'launchoptions')
+    keys_to_remove = []
+
     for key in dictionary.keys():
         key_lower = key.lower()
-        dictionary[key_lower] = dictionary.pop(key)
 
-        if isinstance(dictionary[key_lower], dict) or isinstance(dictionary[key_lower], list):
-            dictionary[key_lower] = lowercase_keys(dictionary[key_lower])
+        if key_lower in allowed_keys:
+            dictionary[key_lower] = dictionary.pop(key)
+
+            if isinstance(dictionary[key_lower], dict) or isinstance(dictionary[key_lower], list):
+                dictionary[key_lower] = lowercase_keys(dictionary[key_lower])
+        else:
+            keys_to_remove.append(key)
+
+    for key in keys_to_remove:
+        del dictionary[key]
 
     return dictionary
