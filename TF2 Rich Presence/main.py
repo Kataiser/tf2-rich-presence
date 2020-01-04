@@ -87,12 +87,13 @@ class TF2RichPresense:
     def __init__(self, log):
         self.log = log
         self.start_time: int = int(time.time())
-        self.old_activity: Dict = {}
         self.activity: Dict[str, Union[str, Dict[str, int], Dict[str, str]]] = \
             {'details': 'In menus',  # this is what gets modified and sent to Discord via discoIPC
              'timestamps': {'start': self.start_time},
              'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2', 'large_image': 'main_menu', 'large_text': 'Main menu'},
              'state': ''}
+        self.old_activity1: Dict = {}  # for the console output
+        self.old_activity2: Dict = {}  # for sending to Discord
         self.activity_translated = {}
         self.client_connected: bool = False
         self.client = None
@@ -145,9 +146,10 @@ class TF2RichPresense:
         else:
             self.log.debug(f"Non-default settings: {settings.compare_settings(default_settings, current_settings)}")
 
-        self.old_activity = copy.copy(self.activity)
-        if self.loc.text("Time on map: {0}").replace('{0}', '') in self.old_activity['state']:
-            self.old_activity['state'] = ''
+        self.old_activity1 = copy.deepcopy(self.activity)
+        self.old_activity2 = copy.deepcopy(self.activity)
+        if self.loc.text("Time on map: {0}").replace('{0}', '') in self.old_activity1['state']:
+            self.old_activity1['state'] = ''
 
         # this as a one-liner is beautiful :)
         p_data = self.process_scanner.scan()
@@ -238,11 +240,11 @@ class TF2RichPresense:
             self.activity['details'] = top_line
             self.activity['state'] = bottom_line
 
-            activity_comparison = copy.copy(self.activity)
+            activity_comparison = copy.deepcopy(self.activity)
             if self.loc.text("Time on map: {0}").replace('{0}', '') in activity_comparison['state']:
                 activity_comparison['state'] = ''
 
-            if activity_comparison != self.old_activity:
+            if activity_comparison != self.old_activity1:
                 # output to terminal, just for monitoring
                 print(f"{self.current_time_formatted}{self.generate_delta(self.last_notify_time)}{colorama.Style.BRIGHT}")
 
@@ -259,17 +261,20 @@ class TF2RichPresense:
                 print(self.loc.text("{0} elapsed").format(str(time_elapsed).replace('0:', '', 1)))
                 print()
 
-                self.log.debug(f"Activity changed, outputting (old: {self.old_activity}, new: {self.activity})")
+                self.log.debug(f"Activity changed, outputting (old: {self.old_activity1}, new: {self.activity})")
                 self.last_notify_time = time.time()
             else:
                 self.log.debug("Activity hasn't changed, not outputting")
 
-            # send everything to discord
-            large_text_base = self.activity['assets']['large_text']
-            self.activity['assets']['large_text'] += self.loc.text(" - TF2 Rich Presence {0}").format('{tf2rpvnum}')
-            self.send_rpc_activity()
-            self.activity['assets']['large_text'] = large_text_base
-            # this gets reset because self.old_activity doesn't have it
+            if self.activity != self.old_activity2:
+                # send everything to discord
+                large_text_base = self.activity['assets']['large_text']
+                self.activity['assets']['large_text'] += self.loc.text(" - TF2 Rich Presence {0}").format('{tf2rpvnum}')
+                self.send_rpc_activity()
+                self.activity['assets']['large_text'] = large_text_base
+                # this gets reset because the old activity doesn't have it
+            else:
+                self.log.debug("Activity hasn't changed, not sending to Discord")
 
             if not self.client_connected:
                 self.log.critical("self.client is disconnected when it shouldn't be")
@@ -471,7 +476,7 @@ class TF2RichPresense:
 
             # stop DB.json spam as the map time increases
             if settings.get('map_time') and self.test_state == 'in game':
-                self.log.debug("Not localizing activity 'state' due to map time")
+                self.log.debug("Not localizing activity['state'] due to map time")
             else:
                 self.activity_translated['state'] = self.loc.text(self.activity['state'])
 
