@@ -68,11 +68,12 @@ class Log:
             self.error("DB.json can't be written to. This could cause crashes")
 
     def __repr__(self):
-        return f"{'Enabled' if self.enabled else 'Disabled'} log at {self.filename} (level: {self.log_level}, stderr: {self.to_stderr})"
+        return f"logger.Log at {self.filename} (enabled={self.enabled} level={self.log_level}, stderr={self.to_stderr})"
 
     def __del__(self):
-        self.debug("Closing log file via destructor")
-        self.log_file.close()
+        if not self.log_file.closed:
+            self.debug("Closing log file via destructor")
+            self.log_file.close()
 
     # adds a line to the current log file
     def write_log(self, level: str, message_out: str):

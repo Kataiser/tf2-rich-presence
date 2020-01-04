@@ -18,9 +18,13 @@ import logger
 
 
 class GUI(tk.Frame):
-    def __init__(self, master):
-        self.log = logger.Log()
-        self.log.to_stderr = True
+    def __init__(self, master, log=None):
+        if log:
+            self.log = log
+        else:
+            self.log = logger.Log()
+            self.log.to_stderr = True
+
         self.log.info("Opening settings menu for TF2 Rich Presence {tf2rpvnum}")
         self.loc = localization.Localizer(self.log, get('language'))
 
@@ -217,6 +221,9 @@ class GUI(tk.Frame):
         master.lift()
         master.attributes('-topmost', True)
         master.after_idle(master.attributes, '-topmost', False)
+
+    def __repr__(self):
+        return f"settings.GUI {self.window_dimensions}"
 
     # runs every time a setting is changed, updates "restore defaults" button's state
     def update_default_button_state(self):

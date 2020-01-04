@@ -15,6 +15,9 @@ class Localizer:
         self.missing_lines = []
         self.appending = appending  # if extending localization.json
 
+    def __repr__(self):
+        return f"localization.Localizer ({self.language}, appending={self.appending}, {len(self.missing_lines)} missing lines)"
+
     @functools.lru_cache(maxsize=None)
     def text(self, english_text: str) -> str:
         english_text_adler32 = hash_text(english_text)

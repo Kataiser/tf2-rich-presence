@@ -43,6 +43,7 @@ class TestTF2RichPresense(unittest.TestCase):
     def test_interpret_console_log(self):
         app = main.TF2RichPresense(self.log)
         self.assertEqual(app.interpret_console_log('test_resources\\console_in_menus.log', ['Kataiser'], float('inf'), True), ('In menus', 'Not queued'))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_in_menus.log', ['Kataiser'], 4, True), ('In menus', 'Not queued'))
         self.assertEqual(app.interpret_console_log('test_resources\\console_queued_casual.log', ['Kataiser'], float('inf'), True), ('In menus', 'Queued for Casual'))
         self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', ['Kataiser'], float('inf'), True), ('pl_badwater', 'Pyro'))
         self.assertEqual(app.interpret_console_log('test_resources\\console_custom_map.log', ['Kataiser'], float('inf'), True), ('cp_catwalk_a5c', 'Soldier'))
@@ -81,6 +82,7 @@ class TestTF2RichPresense(unittest.TestCase):
 
         self.log.log_file = open(self.log.filename, 'a', encoding='UTF8')
         self.log.info("Test 饏Ӟ򒚦R៣񘺏1ࠞͳⴺۋ")
+        self.assertEqual(repr(self.log), r'logger.Log at test_resources\test_self.log (enabled=True level=Debug, stderr=False)')
         self.log.log_file.close()
 
         with open(self.log.filename, 'r', encoding='UTF8') as current_log_file:
@@ -196,7 +198,7 @@ class TestTF2RichPresense(unittest.TestCase):
 
     def test_settings_gui(self):
         root = tk.Tk()
-        settings_gui = settings.GUI(root)
+        settings_gui = settings.GUI(root, self.log)
         dimensions = settings_gui.window_dimensions
 
         self.assertGreaterEqual(dimensions[0], 200)
@@ -218,8 +220,9 @@ class TestTF2RichPresense(unittest.TestCase):
 
         for language in ['English', 'German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian', 'Korean', 'Chinese', 'Japanese']:
             localizer = localization.Localizer(language=language)
-            num_equal_lines = 0
+            self.assertEqual(repr(localizer), f'localization.Localizer ({language}, appending=False, 0 missing lines)')
 
+            num_equal_lines = 0
             for line_english in english_lines:
                 line_localized = localizer.text(line_english)
                 self.assertNotEqual(line_localized, "")
@@ -237,12 +240,12 @@ class TestTF2RichPresense(unittest.TestCase):
     def test_main_simple(self):
         log = logger.Log()
         app = main.TF2RichPresense(log)
-        self.assertEqual(app.test_state, 'init')
+        self.assertEqual(repr(app), 'main.TF2RichPresense (state=init)')
         self.assertEqual(fix_activity_dict(app.activity),
                          {'details': 'In menus', 'timestamps': {'start': 0}, 'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2',
                                                                                         'large_image': 'main_menu', 'large_text': 'Main menu'}, 'state': ''})
         app.loop_body()
-        self.assertEqual(app.test_state, 'no tf2')
+        self.assertEqual(repr(app), 'main.TF2RichPresense (state=no tf2)')
         self.assertEqual(fix_activity_dict(app.activity),
                          {'details': 'In menus', 'timestamps': {'start': 0}, 'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2',
                                                                                         'large_image': 'main_menu', 'large_text': 'Main menu'}, 'state': ''})

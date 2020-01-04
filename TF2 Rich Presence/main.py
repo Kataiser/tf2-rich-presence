@@ -104,7 +104,7 @@ class TF2RichPresense:
         self.process_scanner = processes.ProcessScanner(self.log)
         self.loc = localization.Localizer(self.log, settings.get('language'))
         self.current_time_formatted = ""
-        self.current_map = None
+        self.current_map = None  # don't trust this variable
         self.time_changed_map = time.time()
         self.has_seen_kataiser = False
         self.old_console_log_mtime = None
@@ -120,6 +120,9 @@ class TF2RichPresense:
         maps_db.close()
 
         self.loop_iteration: int = 0
+
+    def __repr__(self):
+        return f"main.TF2RichPresense (state={self.test_state})"
 
     def run(self):
         while True:
@@ -353,7 +356,7 @@ class TF2RichPresense:
                 consolelog_file.seek(skip_to_byte, 0)  # skip to last few KBs
 
                 lines: List[str] = consolelog_file.readlines()
-                self.log.debug(f"console.log: {consolelog_file_size} bytes, skipped to {skip_to_byte}, {len(lines)} lines read")
+                self.log.debug(f"console.log: {consolelog_file_size} bytes, skipped to {skip_to_byte}, read {byte_limit} bytes and {len(lines)} lines")
             else:
                 lines: List[str] = consolelog_file.readlines()
                 self.log.debug(f"console.log: {consolelog_file_size} bytes, {len(lines)} lines (didn't skip lines)")
