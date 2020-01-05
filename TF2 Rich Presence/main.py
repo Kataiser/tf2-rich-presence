@@ -215,6 +215,7 @@ class TF2RichPresense:
                     map_time_formatted = time.strftime(time_format, time.gmtime(seconds_on_map))
 
                     # I know I could just set the start time in activity, but I'd rather that always meant time with the game open
+                    class_line = self.loc.text("Class: {0}").format(self.loc.text(bottom_line))
                     bottom_line = self.loc.text("Time on map: {0}").format(map_time_formatted)
                 else:
                     bottom_line = self.loc.text("Class: {0}").format(self.loc.text(bottom_line))
@@ -253,6 +254,9 @@ class TF2RichPresense:
                     print(self.loc.text(self.activity['details']))
                 else:
                     print(f"{self.loc.text(self.activity['details'])} ({self.loc.text(self.activity['assets']['large_text'])})")
+
+                    if settings.get('map_time'):
+                        print(class_line)  # this means the current class. god this desperately needs a refactor
 
                 print(self.loc.text(self.activity['state']))
                 print(colorama.Style.RESET_ALL, end='')
@@ -493,6 +497,8 @@ class TF2RichPresense:
                 print(f'{self.current_time_formatted}{colorama.Style.BRIGHT}')
                 print(self.loc.text("Can't connect to Discord for Rich Presence."))
                 print(colorama.Style.RESET_ALL)
+
+                time.sleep(settings.get('wait_time'))
                 del self.log
                 raise SystemExit
             else:
