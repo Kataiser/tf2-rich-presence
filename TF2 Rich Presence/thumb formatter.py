@@ -7,12 +7,11 @@ import custom_maps
 
 
 def main():
-    for image_filename in custom_maps.gamemodes.keys():
+    gamemodes = {gm: custom_maps.gamemodes_english[gm] for gm in custom_maps.gamemodes_english}
+
+    for image_filename in gamemodes.keys():
         print(image_filename)
-        try:
-            image_loaded = Image.open('map_thumbs source/' + image_filename + '.png')
-        except FileNotFoundError:
-            image_loaded = Image.open('map_thumbs source/' + image_filename + '.jpg')
+        image_loaded = Image.open('map_thumbs source/' + image_filename + '.png')
 
         size_x, size_y = image_loaded.size
         out_size = 512 if size_x <= 512 else 1024
