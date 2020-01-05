@@ -385,7 +385,7 @@ def get_setting_default(setting: str = '', return_all: bool = False) -> Any:
                 'console_scan_kb': 1000,
                 'class_pic_type': 'Icon',
                 'language': 'English',
-                'map_time': False}
+                'map_time': True}
 
     if return_all:
         return defaults
