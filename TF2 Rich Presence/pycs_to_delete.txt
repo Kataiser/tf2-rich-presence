@@ -55,4 +55,3 @@ python\tkinter\__pycache__\scrolledtext.cpython-37.opt-2.pyc
 python\tkinter\__pycache__\simpledialog.cpython-37.opt-2.pyc
 python\tkinter\__pycache__\tix.cpython-37.opt-2.pyc
 python\tkinter\__pycache__\__main__.cpython-37.opt-2.pyc
-__pycache__\welcomer.cpython-37.opt-2.pyc
