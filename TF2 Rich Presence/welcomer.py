@@ -2,11 +2,7 @@
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 
 import ctypes
-import os
-import sys
 
-sys.path.append(os.path.abspath(os.path.join('resources', 'python', 'packages')))
-sys.path.append(os.path.abspath(os.path.join('resources')))
 import colorama
 
 import localization
