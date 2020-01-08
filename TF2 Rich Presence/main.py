@@ -86,10 +86,9 @@ def launch():
 class TF2RichPresense:
     def __init__(self, log):
         self.log = log
-        self.start_time: int = int(time.time())
         self.activity: Dict[str, Union[str, Dict[str, int], Dict[str, str]]] = \
             {'details': 'In menus',  # this is what gets modified and sent to Discord via discoIPC
-             'timestamps': {'start': self.start_time},
+             'timestamps': {'start': int(time.time())},
              'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2', 'large_image': 'main_menu', 'large_text': 'Main menu'},
              'state': ''}
         self.old_activity1: Dict = {}  # for the console output
@@ -240,6 +239,7 @@ class TF2RichPresense:
 
             self.activity['details'] = top_line
             self.activity['state'] = bottom_line
+            self.activity['timestamps']['start'] = p_data['TF2']['time']
 
             activity_comparison = copy.deepcopy(self.activity)
             if self.loc.text("Time on map: {0}").replace('{0}', '') in activity_comparison['state']:
@@ -261,7 +261,7 @@ class TF2RichPresense:
                 print(self.loc.text(self.activity['state']))
                 print(colorama.Style.RESET_ALL, end='')
 
-                time_elapsed = datetime.timedelta(seconds=int(time.time() - self.start_time))
+                time_elapsed = datetime.timedelta(seconds=int(time.time() - p_data['TF2']['time']))
                 print(self.loc.text("{0} elapsed").format(str(time_elapsed).replace('0:', '', 1)))
                 print()
 
@@ -470,7 +470,6 @@ class TF2RichPresense:
                 client_state: Tuple[Any, bool, str, int, str, Any] = (
                     self.client.client_id, self.client.connected, self.client.ipc_path, self.client.pid, self.client.platform, self.client.socket)
                 self.log.debug(f"Initial RPC client state: {client_state}")
-                self.activity['timestamps']['start'] = self.start_time
 
             # localize activity
             self.activity_translated = copy.deepcopy(self.activity)
