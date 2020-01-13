@@ -56,13 +56,11 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'cp_catwalk_a5c', False, 5)), ('control-point', 'Control Point'))
         self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'koth_wubwubwub_remix_vip', False, 5)), ('koth', 'King of the Hill'))
         self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'surf_air_arena_v4', False, 5)), ('surfing', 'Surfing'))
-        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'ph_kakariko_b1', False, 5)), ('prophunt', 'Prop Hunt'))  # Prop Hunt? Prophunt? idk
         self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'ytsb8eitybw', False, 5)), ('unknown_map', 'Unknown gamemode'))
 
         self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'cp_catwalk_a5c', True, 5)), ('control-point', 'Control Point'))
         self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'koth_wubwubwub_remix_vip', True, 5)), ('koth', 'King of the Hill'))
         self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'surf_air_arena_v4', True, 5)), ('surfing', 'Surfing'))
-        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'ph_kakariko_b1', True, 5)), ('prophunt', 'Prop Hunt'))
         self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'ytsb8eitybw', True, 5)), ('unknown_map', 'Unknown gamemode'))
 
     def test_logger(self):
