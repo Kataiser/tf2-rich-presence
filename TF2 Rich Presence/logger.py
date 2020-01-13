@@ -156,7 +156,8 @@ class Log:
                     old_log_w.write(data_out)
 
             os.remove(old_log)
-            compressed.append((old_log, round(len(data_out) / len(data_in), 3)))
+            comp_ratio = round(len(data_out) / len(data_in), 3) if data_in else None  # fixes a ZeroDivisionError
+            compressed.append((old_log, comp_ratio))
 
         self.debug(f"Compressed {len(compressed)} log(s): {compressed}")
 
