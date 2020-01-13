@@ -169,6 +169,7 @@ class TF2RichPresense:
 
             console_log_path = os.path.join(p_data['TF2']['path'], 'tf', 'console.log')
             top_line, bottom_line = self.interpret_console_log(console_log_path, valid_usernames)
+            # TODO: use a state machine and much more consistent var names
 
             if top_line == 'In menus':
                 # in menus displays the main menu
