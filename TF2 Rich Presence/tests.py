@@ -4,7 +4,6 @@
 import io
 import os
 import shutil
-import sys
 import time
 import tkinter as tk
 import unittest
@@ -30,6 +29,7 @@ class TestTF2RichPresense(unittest.TestCase):
         if self.old_settings != settings.get_setting_default(return_all=True):
             settings.access_registry(save_dict=settings.get_setting_default(return_all=True))
 
+        self.dir = os.getcwd()
         self.log = logger.Log()
         self.log.enabled = False
         self.log.to_stderr = False
@@ -37,6 +37,7 @@ class TestTF2RichPresense(unittest.TestCase):
         self.log.log_levels_allowed = self.log.log_levels
 
     def tearDown(self):
+        os.chdir(self.dir)
         del self.log
         settings.access_registry(save_dict=self.old_settings)
 
