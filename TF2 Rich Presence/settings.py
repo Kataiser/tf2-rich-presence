@@ -66,9 +66,10 @@ class GUI(tk.Frame):
         self.class_pic_type = tk.StringVar()
         self.language = tk.StringVar()
         self.map_time = tk.BooleanVar()
+        self.trim_console_log = tk.BooleanVar()
 
         try:
-            # load settings from DB.json
+            # load settings from registry
             self.settings_loaded = access_registry()
             self.log.debug(f"Current settings: {self.settings_loaded}")
             self.log.debug(f"Are default: {self.settings_loaded == get_setting_default(return_all=True)}")
@@ -84,6 +85,7 @@ class GUI(tk.Frame):
             self.class_pic_type.set(self.settings_loaded['class_pic_type'])
             self.language.set(self.settings_loaded['language'])
             self.map_time.set(self.settings_loaded['map_time'])
+            self.trim_console_log.set(self.settings_loaded['trim_console_log'])
         except Exception:
             # probably a json decode error
             formatted_exception = traceback.format_exc()
@@ -155,6 +157,8 @@ class GUI(tk.Frame):
         self.language.set(actual_language)
         setting14 = ttk.Checkbutton(lf_main, variable=self.map_time, command=self.update_default_button_state, text="{}".format(
             self.loc.text("Show time on current map instead of selected class")))
+        setting15 = ttk.Checkbutton(lf_advanced, variable=self.trim_console_log, command=self.update_default_button_state, text="{}".format(
+            self.loc.text("Limit console.log's size occasionally")))
 
         # download page button, but only if a new version is available
         db_path = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
@@ -199,6 +203,7 @@ class GUI(tk.Frame):
         setting13_options.pack(side='left', fill=None, expand=False)
         setting13_frame.grid(row=0, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(9, 0))
         setting14.grid(row=2, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
+        setting15.grid(row=6, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
 
         lf_main.grid(row=0, padx=30, pady=15)
         lf_advanced.grid(row=1, padx=30, pady=0, sticky=tk.W + tk.E)
@@ -246,7 +251,8 @@ class GUI(tk.Frame):
                 'console_scan_kb': self.console_scan_kb.get(),
                 'class_pic_type': self.class_pic_types[self.class_pic_types_display.index(self.class_pic_type.get())],
                 'language': self.languages[self.languages_display.index(self.language.get())],
-                'map_time': self.map_time.get()}
+                'map_time': self.map_time.get(),
+                'trim_console_log': self.trim_console_log.get()}
 
     # set all settings to defaults
     def restore_defaults(self):
@@ -273,6 +279,7 @@ class GUI(tk.Frame):
             self.class_pic_type.set(get_setting_default('class_pic_type'))
             self.language.set(get_setting_default('language'))
             self.map_time.set(get_setting_default('map_time'))
+            self.trim_console_log.set(get_setting_default('trim_console_log'))
 
             self.log.debug("Restored defaults")
             self.restore_button.state(['disabled'])
@@ -385,7 +392,8 @@ def get_setting_default(setting: str = '', return_all: bool = False) -> Any:
                 'console_scan_kb': 1000,
                 'class_pic_type': 'Icon',
                 'language': 'English',
-                'map_time': True}
+                'map_time': True,
+                'trim_console_log': True}
 
     if return_all:
         return defaults
