@@ -131,7 +131,8 @@ class Log:
         all_logs_times = [(log_filename, os.stat(log_filename).st_mtime_ns) for log_filename in all_logs]
         all_logs_sorted = [log_pair[0] for log_pair in sorted(all_logs_times, key=itemgetter(1))]
         overshoot: int = max_logs - len(all_logs_sorted)
-        deleted: List[str] = []
+        deleted = []
+        compressed = []
 
         while overshoot < 0:
             log_to_delete: str = all_logs_sorted.pop(0)
@@ -148,10 +149,16 @@ class Log:
 
         for old_log in [log for log in all_logs if not log.endswith('.gz') and os.path.exists(log) and log != self.filename]:
             with open(old_log, 'rb') as old_log_r:
-                with gzip.open(f'{old_log}.gz', 'wb') as old_log_w:
-                    old_log_w.write(old_log_r.read())
+                data_in = old_log_r.read()
+                data_out = gzip.compress(data_in)
+
+                with open(f'{old_log}.gz', 'wb') as old_log_w:
+                    old_log_w.write(data_out)
 
             os.remove(old_log)
+            compressed.append((old_log, round(len(data_out) / len(data_in), 3)))
+
+        self.debug(f"Compressed {len(compressed)} log(s): {compressed}")
 
 
 # generates a short hash string from several source files
