@@ -1,6 +1,7 @@
 # Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 
+import gzip
 import os
 import socket
 import sys
@@ -124,10 +125,10 @@ class Log:
         if 'Critical' in self.log_levels_allowed:
             self.write_log('CRITICAL', message_in)
 
-    # deletes older log files
+    # deletes older log files and compresses the ones the rest
     def cleanup(self, max_logs: int):
-        all_logs = os.listdir('logs')
-        all_logs_times = [(log_filename, os.stat(os.path.join('logs', log_filename)).st_mtime_ns) for log_filename in all_logs]  # yeah, an ugly one liner, sorry
+        all_logs = [os.path.join('logs', log) for log in os.listdir('logs')]
+        all_logs_times = [(log_filename, os.stat(log_filename).st_mtime_ns) for log_filename in all_logs]
         all_logs_sorted = [log_pair[0] for log_pair in sorted(all_logs_times, key=itemgetter(1))]
         overshoot: int = max_logs - len(all_logs_sorted)
         deleted: List[str] = []
@@ -137,13 +138,20 @@ class Log:
             deleted.append(log_to_delete)
 
             try:
-                os.remove(os.path.join('logs/', log_to_delete))
+                os.remove(log_to_delete)
             except Exception:
                 self.error(f"Couldn't delete log file {log_to_delete}: {traceback.format_exc()}")
 
             overshoot = max_logs - len(all_logs_sorted)
 
         self.debug(f"Deleted {len(deleted)} log(s): {deleted}")
+
+        for old_log in [log for log in all_logs if not log.endswith('.gz') and os.path.exists(log) and log != self.filename]:
+            with open(old_log, 'rb') as old_log_r:
+                with gzip.open(f'{old_log}.gz', 'wb') as old_log_w:
+                    old_log_w.write(old_log_r.read())
+
+            os.remove(old_log)
 
 
 # generates a short hash string from several source files

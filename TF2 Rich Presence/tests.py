@@ -108,7 +108,9 @@ class TestTF2RichPresense(unittest.TestCase):
             os.utime(os.path.join('logs', empty_logs[file_num]), times=(modified_time, modified_time))
 
         self.log.cleanup(4)
-        self.assertEqual(os.listdir('logs'), ['0f784a27.log', '267d4853.log', '46b087ff.log', '6cbf1447.log'])
+        self.assertEqual(os.listdir('logs'), ['0f784a27.log.gz', '267d4853.log.gz', '46b087ff.log.gz', '6cbf1447.log.gz'])
+        self.log.cleanup(2)
+        self.assertEqual(os.listdir('logs'), ['46b087ff.log.gz', '6cbf1447.log.gz'])
         shutil.rmtree('logs')
 
         os.chdir(old_dir)
