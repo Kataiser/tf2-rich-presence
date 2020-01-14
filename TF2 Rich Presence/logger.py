@@ -1,6 +1,7 @@
 # Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 
+import getpass
 import gzip
 import os
 import socket
@@ -20,14 +21,8 @@ import settings
 class Log:
     def __init__(self, path=None):
         # find user's pc and account name
-        user_identifier: str = os.getlogin()
-        if socket.gethostname().find('.') >= 0:
-            user_pc_name: str = socket.gethostname()
-        else:
-            try:
-                user_pc_name: str = socket.gethostbyaddr(socket.gethostname())[0]
-            except socket.gaierror:  # no idea what causes this but it happened to someone
-                user_pc_name: str = user_identifier
+        user_identifier = getpass.getuser()
+        user_pc_name = socket.gethostname()
 
         if path:
             self.filename = path
