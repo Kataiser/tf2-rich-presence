@@ -53,7 +53,7 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit=settin
             self.log.debug(f"console.log: {consolelog_file_size} bytes, {len(lines)} lines (didn't skip lines)")
 
     # limit the file size, for readlines perf
-    if consolelog_file_size > byte_limit * 4 and settings.get('trim_console_log'):
+    if consolelog_file_size > byte_limit * 4 and settings.get('trim_console_log') and not force:
         trim_size = byte_limit * 2
         self.log.debug(f"Limiting console.log to {trim_size} bytes")
 
