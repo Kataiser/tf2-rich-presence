@@ -13,9 +13,7 @@ import settings
 
 
 # if the system (OS) language doesn't match the current settings, ask to change language (only once)
-def detect():
-    log = logger.Log()
-
+def detect(log: logger.Log):
     db_path = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
     with open(db_path, 'r') as db_json_r:
         db_data = json.load(db_json_r)
@@ -64,4 +62,5 @@ def detect():
 
 
 if __name__ == '__main__':
-    detect()
+    log = logger.Log()
+    detect(log)

@@ -7,12 +7,14 @@ import colorama
 
 import localization
 import settings
+import logger
 
 
-def welcome(message_version):
+def welcome(log: logger.Log, message_version):
     # localize the window title
     loc = localization.Localizer(language=settings.get('language'))
     ctypes.windll.kernel32.SetConsoleTitleW(loc.text("TF2 Rich Presence ({0})").format('{tf2rpvnum}'))
+    log.debug(f"Welcoming with message version {message_version}")
 
     print(colorama.Style.BRIGHT, end='')
     print(loc.text("TF2 Rich Presence ({0}) by Kataiser").format('{tf2rpvnum}'))
@@ -28,4 +30,5 @@ def welcome(message_version):
 
 
 if __name__ == '__main__':
-    welcome(0)
+    log = logger.Log()
+    welcome(log, 0)

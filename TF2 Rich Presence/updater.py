@@ -15,8 +15,7 @@ import settings
 
 
 # uses Github api to get the tag of the newest public release and compare it to the current version number, alerting the user if out of date
-def check_for_update(current_version: str, timeout: float):
-    log = logger.Log()
+def check_for_update(log: logger.Log, current_version: str, timeout: float):
     loc = localization.Localizer(language=settings.get('language'))
 
     if not settings.get('check_updates'):
@@ -90,13 +89,6 @@ def failure_message(current_version: str, error_message: str = None):
     print(f"{line1}\n{line2}\n{line3}\n")
 
 
-def run():
-    # this gets run by the batch file, before the restart loop and main.py
-    try:
-        check_for_update('{tf2rpvnum}', settings.get('request_timeout'))
-    except (KeyboardInterrupt, SystemExit):
-        raise SystemExit
-
-
 if __name__ == '__main__':
-    run()
+    log = logger.Log()
+    check_for_update(log, '{tf2rpvnum}', 10)

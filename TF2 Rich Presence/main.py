@@ -48,16 +48,14 @@ __email__ = "Mecharon1.gm@gmail.com"
 
 
 def launch():
-    log_init = logger.Log()
-    log_init.to_stderr = True
-    app = TF2RichPresense(log_init)
+    log_main = logger.Log()
+    log_main.to_stderr = True
 
     try:
-        log_init.info("Starting TF2 Rich Presence {tf2rpvnum}")
-        log_init.debug(f"Current log: {log_init.filename}")
-        log_init.info(f'Log level: {log_init.log_level}')
-        log_init.cleanup(20)
-        log_init.debug(f"CPU: {psutil.cpu_count(logical=False)} cores, {psutil.cpu_count()} threads")
+        app = TF2RichPresense(log_main)
+        log_main.info("Starting TF2 Rich Presence {tf2rpvnum}")
+        log_main.cleanup(20)
+        log_main.debug(f"CPU: {psutil.cpu_count(logical=False)} cores, {psutil.cpu_count()} threads")
 
         platform_info = {'architecture': platform.architecture, 'machine': platform.machine, 'system': platform.system, 'platform': platform.platform,
                          'processor': platform.processor, 'python_version_tuple': platform.python_version_tuple}
@@ -68,8 +66,8 @@ def launch():
                 else:
                     platform_info[platform_part] = platform_info[platform_part]()
             except Exception:
-                log_init.error(f"Exception during platform.{platform_part}(), skipping\n{traceback.format_exc()}")
-        log_init.debug(f"Platform: {platform_info}")
+                log_main.error(f"Exception during platform.{platform_part}(), skipping\n{traceback.format_exc()}")
+        log_main.debug(f"Platform: {platform_info}")
 
         app.run()
     except (KeyboardInterrupt, SystemExit):
@@ -77,7 +75,7 @@ def launch():
     except Exception:
         try:
             formatted_exception = traceback.format_exc()
-            app.log.critical(formatted_exception)
+            log_main.critical(formatted_exception)
         except NameError:
             pass
 

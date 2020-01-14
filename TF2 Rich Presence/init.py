@@ -1,13 +1,32 @@
+import traceback
+
 import detect_system_language
+import logger
+import settings
 import updater
 import welcomer
 
 
 def launch(welcome_version):
-    # TODO: have a log and pass it into each of these
-    welcomer.welcome(welcome_version)
-    detect_system_language.detect()
-    updater.run()
+    log_init = logger.Log()
+    log_init.info("Initializing TF2 Rich Presence {tf2rpvnum}")
+    log_init.debug(f"Current log: {log_init.filename}")
+    log_init.info(f'Log level: {log_init.log_level}')
+
+    try:
+        welcomer.welcome(log_init, welcome_version)
+        detect_system_language.detect(log_init)
+        updater.check_for_update(log_init, '{tf2rpvnum}', settings.get('request_timeout'))
+    except (KeyboardInterrupt, SystemExit):
+        raise SystemExit
+    except Exception:
+        try:
+            formatted_exception = traceback.format_exc()
+            log_init.critical(formatted_exception)
+        except NameError:
+            pass
+
+        raise
 
 
 if __name__ == '__main__':
