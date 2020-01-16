@@ -55,7 +55,7 @@ def main(version_num=None):
     # copies stuff to the Github repo
     if github_repo_path != 'n':
         print("Copied", shutil.copy('main.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
-        print("Copied", shutil.copy('console_log_interpreter.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('console_log.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('launcher.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('build.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('tests.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
@@ -148,7 +148,7 @@ def main(version_num=None):
                      ('DB_default.json', Path(f'{new_build_folder_name}/resources/')),
                      ('LICENSE', Path(f'{new_build_folder_name}/resources/')),
                      ('main.py', Path(f'{new_build_folder_name}/resources/')),
-                     ('console_log_interpreter.py', Path(f'{new_build_folder_name}/resources/')),
+                     ('console_log.py', Path(f'{new_build_folder_name}/resources/')),
                      ('launcher.py', Path(f'{new_build_folder_name}/resources/')),
                      ('Readme.txt', Path(f'{new_build_folder_name}/')),
                      ('Launch TF2 with Rich Presence.bat', Path(f'{new_build_folder_name}/')),

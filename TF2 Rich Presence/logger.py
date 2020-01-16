@@ -159,7 +159,7 @@ class Log:
 
 # generates a short hash string from several source files
 def generate_hash() -> str:
-    files_to_hash: List[str] = ['main.py', 'console_log_interpreter.py', 'configs.py', 'custom_maps.py', 'logger.py', 'updater.py', 'launcher.py', 'settings.py', 'detect_system_language.py',
+    files_to_hash: List[str] = ['main.py', 'console_log.py', 'configs.py', 'custom_maps.py', 'logger.py', 'updater.py', 'launcher.py', 'settings.py', 'detect_system_language.py',
                                 'maps.json', 'localization.json', 'APIs']
     files_to_hash_data: List = []
     build_folder = [item for item in os.listdir('.') if item.startswith('TF2 Rich Presence v') and os.path.isdir(item)]

@@ -34,7 +34,7 @@ from discoIPC import ipc
 
 import configs
 import custom_maps
-import console_log_interpreter
+import console_log
 import launcher
 import localization
 import logger
@@ -327,7 +327,7 @@ class TF2RichPresense:
 
     # reads a console.log and returns current map and class
     def interpret_console_log(self, *args, **kwargs) -> tuple:
-        return console_log_interpreter.interpret(self, *args, **kwargs)
+        return console_log.interpret(self, *args, **kwargs)
 
     # generate text that displays the difference between now and old_time
     def generate_delta(self, old_time: float) -> str:
