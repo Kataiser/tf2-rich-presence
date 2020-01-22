@@ -1,18 +1,19 @@
 import os
+import time
 from typing import Dict, List, Union
 
 import colorama
 
-import settings
 import main
+import settings
 
 
 # reads a console.log and returns current map and class
-def interpret(self, console_log_path: str, user_usernames: list, kb_limit=settings.get('console_scan_kb'), force=False) -> tuple:
+def interpret(self, console_log_path: str, user_usernames: list, tf2_start_time: int = 0, kb_limit=settings.get('console_scan_kb'), force=False) -> tuple:
     # defaults
-    current_map: str = ''
-    current_class: str = ''
-    kataiser_seen_on: str = ''
+    current_map: str = 'In menus'
+    current_class: str = 'Not queued'
+    kataiser_seen_on = None
 
     match_types: Dict[str, str] = {'match group 12v12 Casual Match': 'Casual', 'match group MvM Practice': 'MvM (Boot Camp)', 'match group MvM MannUp': 'MvM (Mann Up)',
                                    'match group 6v6 Ladder Match': 'Competitive'}
@@ -32,16 +33,22 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit=settin
         del self.log
         main.no_condebug_warning()
 
+    # TF2 takes some time to load the console when starting up, so wait a few seconds to avoid getting outdated information
+    tf2_uptime = round(time.time()) - tf2_start_time
+    if tf2_uptime < 15:
+        self.log.debug(f"TF2's uptime is {tf2_uptime} seconds, assuming default state")
+        return current_map, current_class
+
     # only interpret console.log again if it's been modified
     console_log_mtime = os.stat(console_log_path).st_mtime
     if not force and console_log_mtime == self.old_console_log_mtime:
         self.log.debug(f"Not rescanning console.log, remaining on {self.old_console_log_interpretation}")
         return self.old_console_log_interpretation
 
-    with open(consolelog_filename, 'r', errors='replace') as consolelog_file:
-        consolelog_file_size: int = os.stat(consolelog_filename).st_size
-        byte_limit = kb_limit * 1024
+    consolelog_file_size: int = os.stat(consolelog_filename).st_size
+    byte_limit = kb_limit * 1024
 
+    with open(consolelog_filename, 'r', errors='replace') as consolelog_file:
         if consolelog_file_size > byte_limit:
             skip_to_byte = consolelog_file_size - byte_limit
             consolelog_file.seek(skip_to_byte, 0)  # skip to last few KBs

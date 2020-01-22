@@ -42,13 +42,15 @@ class TestTF2RichPresense(unittest.TestCase):
         settings.access_registry(save_dict=self.old_settings)
 
     def test_interpret_console_log(self):
+        recent_time = int(time.time()) - 10
         app = main.TF2RichPresense(self.log)
-        self.assertEqual(app.interpret_console_log('test_resources\\console_in_menus.log', ['Kataiser'], float('inf'), True), ('In menus', 'Not queued'))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_in_menus.log', ['Kataiser'], 4, True), ('In menus', 'Not queued'))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_queued_casual.log', ['Kataiser'], float('inf'), True), ('In menus', 'Queued for Casual'))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', ['Kataiser'], float('inf'), True), ('pl_badwater', 'Pyro'))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_custom_map.log', ['Kataiser'], float('inf'), True), ('cp_catwalk_a5c', 'Soldier'))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_empty.log', ['Kataiser'], float('inf'), True), ('', ''))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_in_menus.log', ['Kataiser'], 0, float('inf'), True), ('In menus', 'Not queued'))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_in_menus.log', ['Kataiser'], 0, 4, True), ('In menus', 'Not queued'))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_queued_casual.log', ['Kataiser'], 0, float('inf'), True), ('In menus', 'Queued for Casual'))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', ['Kataiser'], 0, float('inf'), True), ('pl_badwater', 'Pyro'))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', ['Kataiser'], recent_time, float('inf'), True), ('In menus', 'Not queued'))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_custom_map.log', ['Kataiser'], 0, float('inf'), True), ('cp_catwalk_a5c', 'Soldier'))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_empty.log', ['Kataiser'], 0, float('inf'), True), ('In menus', 'Not queued'))
 
     def test_steam_config_file(self):
         self.assertEqual(configs.steam_config_file(self.log, 'test_resources\\'), ['Kataiser'])
