@@ -34,7 +34,6 @@ class GUI(tk.Frame):
 
         master.title(self.loc.text("TF2 Rich Presence ({0}) settings").format('{tf2rpvnum}'))
         master.resizable(0, 0)  # disables resizing
-        master.geometry("+659+302")  # positions the window kinda near the center of the screen (or perfectly centered if monitor is 1920x1080)
 
         # set window icon, doesn't work if launching from Pycharm for some reason
         try:
@@ -216,6 +215,12 @@ class GUI(tk.Frame):
         self.ok_button = ttk.Button(buttons_frame, text=self.loc.text("Save and close"), command=self.save_and_close, default=tk.ACTIVE)
         self.ok_button.grid(row=0, column=3, sticky=tk.W, padx=0, pady=(20, 20))
         buttons_frame.grid(row=100, columnspan=3)
+
+        target_h, target_y = (600, 500)
+        window_x = round((self.winfo_screenwidth() / 2) - (target_h / 2))
+        window_y = round((self.winfo_screenheight() / 2) - (target_y / 2)) - 40
+        master.geometry(f'+{window_x}+{window_y}')
+        self.log.debug(f"Window position: {(window_x, window_y)}")
 
         self.update_default_button_state()
         master.update()
