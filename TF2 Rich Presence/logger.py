@@ -117,6 +117,8 @@ class Log:
 
     # a log with a level of CRITICAL (uncaught, fatal errors, probably sent to Sentry)
     def critical(self, message_in):
+        # TODO: append source hash to message (for errors too)
+
         if 'Critical' in self.log_levels_allowed:
             self.write_log('CRITICAL', message_in)
 
@@ -159,6 +161,8 @@ class Log:
 
 # generates a short hash string from several source files
 def generate_hash() -> str:
+    # TODO: cached per working dir, if possible
+
     files_to_hash: List[str] = ['main.py', 'console_log.py', 'configs.py', 'custom_maps.py', 'logger.py', 'updater.py', 'launcher.py', 'settings.py', 'detect_system_language.py',
                                 'maps.json', 'localization.json', 'APIs']
     files_to_hash_data: List = []

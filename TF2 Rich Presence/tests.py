@@ -56,6 +56,8 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual(configs.steam_config_file(self.log, 'test_resources\\'), ['Kataiser'])
 
     def test_find_custom_map_gamemode(self):
+        custom_maps.access_custom_maps_cache({})  # flush cache
+
         self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'cp_catwalk_a5c', False, 5)), ('control-point', 'Control Point'))
         self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'koth_wubwubwub_remix_vip', False, 5)), ('koth', 'King of the Hill'))
         self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'surf_air_arena_v4', False, 5)), ('surfing', 'Surfing'))

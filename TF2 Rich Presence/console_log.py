@@ -67,10 +67,11 @@ def interpret(self, console_log_path: str, user_usernames: list, tf2_start_time:
         try:
             with open(consolelog_filename, 'rb+') as consolelog_file:
                 # this can probably be done faster and/or cleaner
-                consolelog_file_trim = consolelog_file.read()[-trim_size:]
+                consolelog_file.seek(trim_size, 2)
+                consolelog_file_trimmed = consolelog_file.read()
                 consolelog_file.seek(0)
                 consolelog_file.truncate()
-                consolelog_file.write(consolelog_file_trim)
+                consolelog_file.write(consolelog_file_trimmed)
         except PermissionError as error:
             self.log.error(f"Failed to trim console.log: {error}")
 
