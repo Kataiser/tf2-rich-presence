@@ -3,6 +3,7 @@
 
 import getpass
 import gzip
+import inspect
 import os
 import socket
 import sys
@@ -110,7 +111,7 @@ class Log:
     # a log with a level of ERROR (caught, non-fatal errors)
     def error(self, message_in):
         if 'Error' in self.log_levels_allowed:
-            self.write_log('ERROR', message_in)
+            self.write_log('ERROR', f"[{get_caller_filename()}] {message_in}")
 
         if self.sentry_level == 'All errors':
             sentry_sdk.capture_message(f"Reporting non-critical ERROR: {message_in}")
@@ -188,6 +189,13 @@ def generate_hash() -> str:
     hash_int = zlib.adler32(b'\n'.join(files_to_hash_data))
     hash_hex = hex(hash_int)[2:10].ljust(8, '0')
     return hash_hex
+
+
+def get_caller_filename() -> str:
+    frame = inspect.stack()[2]
+    module = inspect.getmodule(frame[0])
+    caller_filename = os.path.basename(module.__file__)
+    return caller_filename
 
 
 if __name__ == '__main__':

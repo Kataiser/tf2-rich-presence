@@ -2,11 +2,12 @@
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 
 import functools
-import inspect
 import json
 import os
 import zlib
 from typing import Union
+
+import logger
 
 
 class Localizer:
@@ -42,10 +43,7 @@ class Localizer:
                     json.dump(db_data, db_json, indent=4)
 
                 if self.log:
-                    frame = inspect.stack()[1]
-                    module = inspect.getmodule(frame[0])
-                    caller_filename = os.path.basename(module.__file__)
-                    self.log.debug(f"\"{english_text}\" not in localization (language is {self.language}, called by {caller_filename})")
+                    self.log.debug(f"\"{english_text}\" not in localization (language is {self.language}, called by {logger.get_caller_filename()})")
 
             # no available translation, so must default to the English text
             return english_text

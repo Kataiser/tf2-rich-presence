@@ -82,6 +82,7 @@ def exc_already_reported(tb: str):
     try:
         tb_hash = str(zlib.crc32(tb.encode('utf-8', errors='replace')))  # technically not a hash but w/e
 
+        # TODO: move all DB.json access to a seperate file
         db_path = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
         with open(db_path, 'r+') as db_json:
             db_data = json.load(db_json)
