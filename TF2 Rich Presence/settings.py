@@ -89,7 +89,7 @@ class GUI(tk.Frame):
             # probably a json decode error
             formatted_exception = traceback.format_exc()
             self.log.error(f"Error in loading settings, defaulting: \n{formatted_exception}")
-            messagebox.showerror(self.loc.text("Error"), self.loc.text("Couldn't load settings, reverting to defaults.\n\n{0}").format(formatted_exception))
+            messagebox.showerror(self.loc.text("Error"), self.loc.text("Couldn't load settings, reverting to defaults.{0}").format(f'\n\n{formatted_exception}'))
 
             self.restore_defaults()
             self.settings_loaded = get_setting_default(return_all=True)

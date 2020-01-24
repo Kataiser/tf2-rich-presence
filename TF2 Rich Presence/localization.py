@@ -6,6 +6,7 @@ import inspect
 import json
 import os
 import zlib
+from typing import Union
 
 
 class Localizer:
@@ -14,15 +15,21 @@ class Localizer:
         self.language = language
         self.missing_lines = []
         self.appending = appending  # if extending localization.json
+        self.localization_file_cached = access_localization_file()  # never read it again after startup
 
     def __repr__(self):
         return f"localization.Localizer ({self.language}, appending={self.appending}, {len(self.missing_lines)} missing lines)"
 
     @functools.lru_cache(maxsize=None)
     def text(self, english_text: str) -> str:
+        # TODO: use manual language keys instead of text hashes (maybe)
         english_text_adler32 = hash_text(english_text)
 
-        if english_text_adler32 not in access_localization_file():  # exclude that because it causes DB.json spam
+        if self.appending:  # only used for development
+            access_localization_file(append=(english_text_adler32, english_text))
+            return english_text
+
+        if english_text_adler32 not in self.localization_file_cached:  # exclude that because it causes DB.json spam
             if english_text not in self.missing_lines:
                 self.missing_lines.append(english_text)
 
@@ -40,20 +47,16 @@ class Localizer:
                     caller_filename = os.path.basename(module.__file__)
                     self.log.debug(f"\"{english_text}\" not in localization (language is {self.language}, called by {caller_filename})")
 
-            if self.appending:  # only used for development
-                access_localization_file(append=(english_text_adler32, english_text))
-
             # no available translation, so must default to the English text
             return english_text
 
         if self.language == 'English':
             return english_text
         else:
-            return access_localization_file()[english_text_adler32][self.language]
+            return self.localization_file_cached[english_text_adler32][self.language]
 
 
-@functools.lru_cache(maxsize=1)
-def access_localization_file(append=None) -> dict:
+def access_localization_file(append: Union[tuple, None] = None) -> dict:
     if os.path.isdir('resources'):
         localization_file_path = os.path.join('resources', 'localization.json')
     else:
@@ -65,14 +68,20 @@ def access_localization_file(append=None) -> dict:
     if not append:
         return localization_data
     else:
-        localization_data[append[0]] = {}
-        localization_data[append[0]]['English'] = append[1]
+        append_hash, append_text = append
 
-        for language in ['German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian', 'Korean', 'Chinese', 'Japanese']:
-            localization_data[append[0]][language] = ""
+        if append_hash not in localization_data:
+            localization_data[append_hash] = {}
+            localization_data[append_hash]['English'] = append_text
+            print(f"Hash: {append_hash}, element {len(localization_data)}")
 
-        with open(localization_file_path, 'w', encoding='utf-8') as localization_file:
-            json.dump(localization_data, localization_file, indent=4, ensure_ascii=False)
+            for language in ['German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian', 'Korean', 'Chinese', 'Japanese']:
+                localization_data[append_hash][language] = ""
+
+            with open(localization_file_path, 'w', encoding='utf-8') as localization_file:
+                json.dump(localization_data, localization_file, indent=4, ensure_ascii=False)
+        else:
+            print(f"Already exists with hash {append_hash}")
 
 
 def hash_text(text: str) -> str:
@@ -85,3 +94,4 @@ if __name__ == '__main__':
 
     while True:
         manual_localizer.text(input(": "))
+        manual_localizer.text.cache_clear()

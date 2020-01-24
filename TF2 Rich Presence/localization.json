@@ -2042,5 +2042,33 @@
         "Korean": "이 창에 끝낼 때 입력하십시오",
         "Chinese": "完成后在此窗口中按enter键",
         "Japanese": "このウィンドウでenterキーを押します"
+    },
+    "1125289210": {
+        "English": "Limit console.log's size occasionally",
+        "German": "Begrenzen Sie die Größe von console.log gelegentlich",
+        "French": "Limiter la taille de console.log occasionnellement",
+        "Spanish": "Limitar el tamaño de console.log ocasionalmente",
+        "Portuguese": "Tamanho limite do console.log ocasionalmente",
+        "Italian": "Limitare occasionalmente le dimensioni di console.log",
+        "Dutch": "Beperk de grootte van de console.log af en toe",
+        "Polish": "Ograniczenie rozmiaru console.log sporadycznie",
+        "Russian": "Иногда ограничивать размер console.log",
+        "Korean": "제한 콘솔.로그의 크기 가끔",
+        "Chinese": "限制控制台。日志的大小偶尔",
+        "Japanese": "制限コンソール。時折ログのサイズ"
+    },
+    "2415333661": {
+        "English": "Couldn't load settings, reverting to defaults.",
+        "German": "Konnte die Einstellungen nicht laden und auf die Standardeinstellungen zurückkehren.",
+        "French": "Impossible de charger les paramètres, retour aux valeurs par défaut.",
+        "Spanish": "No se pudieron cargar las configuraciones, volviendo a los valores por defecto.",
+        "Portuguese": "Não foi possível carregar as configurações, revertendo para os padrões.",
+        "Italian": "Non è stato possibile caricare le impostazioni, tornando ai valori predefiniti.",
+        "Dutch": "Non è stato possibile caricare le impostazioni, tornando ai valori predefiniti.",
+        "Polish": "Nie można było załadować ustawień, powracając do ustawień domyślnych.",
+        "Russian": "Не смог загрузить настройки, вернулся к настройкам по умолчанию.",
+        "Korean": "기본값으로 되돌리는 설정을로드 할 수 없습니다.",
+        "Chinese": "无法加载设置，还原为默认值。",
+        "Japanese": "デフォルトに戻す、設定を読み込めませんでした。"
     }
 }
