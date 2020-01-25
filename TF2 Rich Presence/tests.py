@@ -84,12 +84,15 @@ class TestTF2RichPresense(unittest.TestCase):
             pass
 
         self.log.log_file = open(self.log.filename, 'a', encoding='UTF8')
-        self.log.info("Test 饏Ӟ򒚦R៣񘺏1ࠞͳⴺۋ")
+        self.log.info("Test1 饏Ӟ򒚦R៣񘺏1ࠞͳⴺۋ")
+        self.log.error("Test2")
         self.assertEqual(repr(self.log), r'logger.Log at test_resources\test_self.log (enabled=True level=Debug, stderr=False)')
         self.log.log_file.close()
 
         with open(self.log.filename, 'r', encoding='UTF8') as current_log_file:
-            self.assertTrue(' +0.0000] INFO: Test 饏Ӟ򒚦R៣񘺏1ࠞͳⴺۋ\n' in current_log_file.read())
+            current_log_file_read = current_log_file.readlines()
+            self.assertTrue(current_log_file_read[0].endswith(" +0.0000] INFO: Test1 饏Ӟ򒚦R៣񘺏1ࠞͳⴺۋ\n"))
+            self.assertTrue(current_log_file_read[1].endswith(" tests.py] ERROR: Test2\n"))
 
         os.remove(self.log.filename)
 

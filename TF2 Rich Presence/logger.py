@@ -73,16 +73,19 @@ class Log:
             self.log_file.close()
 
     # adds a line to the current log file
-    def write_log(self, level: str, message_out: str):
+    def write_log(self, level: str, message_out: str, extra_header: str = None):
         if self.enabled:
             current_time = time.perf_counter()
 
             if self.last_log_time:
-                time_since_last: str = format(current_time - self.last_log_time, '.4f')  # the format() adds trailing zeroes
+                time_since_last: str = f'+{format(current_time - self.last_log_time, ".4f")}'  # the format() adds trailing zeroes
             else:
-                time_since_last: str = '0.0000'
+                time_since_last: str = '+0.0000'
 
-            full_line: str = f"[{int(time.time())} +{time_since_last}] {level}: {message_out}\n"
+            line_header = [str(int(time.time())), time_since_last]
+            if extra_header:
+                line_header.append(extra_header)
+            full_line: str = f"[{' '.join(line_header)}] {level}: {message_out}\n"
 
             # log breadcrumb to Sentry
             sentry_sdk.add_breadcrumb(message=full_line, level=level.lower().replace('critical', 'fatal'))
@@ -111,17 +114,15 @@ class Log:
     # a log with a level of ERROR (caught, non-fatal errors)
     def error(self, message_in):
         if 'Error' in self.log_levels_allowed:
-            self.write_log('ERROR', f"[{get_caller_filename()}] {message_in}")
+            self.write_log('ERROR', message_in, get_caller_filename())
 
         if self.sentry_level == 'All errors':
             sentry_sdk.capture_message(f"Reporting non-critical ERROR: {message_in}")
 
     # a log with a level of CRITICAL (uncaught, fatal errors, probably sent to Sentry)
     def critical(self, message_in):
-        # TODO: append source hash to message (for errors too)
-
         if 'Critical' in self.log_levels_allowed:
-            self.write_log('CRITICAL', message_in)
+            self.write_log('CRITICAL', message_in, generate_hash())
 
     # deletes older log files and compresses the ones the rest
     def cleanup(self, max_logs: int):
