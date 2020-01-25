@@ -16,6 +16,8 @@ sys.path.append(os.path.abspath(os.path.join('resources')))
 import colorama
 import sentry_sdk
 
+import utils
+
 
 def launch():
     try:
@@ -77,24 +79,18 @@ def get_api_key(service):
         return json.load(api_keys_file)[service]
 
 
-# don't report the same traceback twice
+# don't report the same exception twice
 def exc_already_reported(tb: str):
     try:
         tb_hash = str(zlib.crc32(tb.encode('utf-8', errors='replace')))  # technically not a hash but w/e
 
-        # TODO: move all DB.json access to a seperate file
-        db_path = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
-        with open(db_path, 'r+') as db_json:
-            db_data = json.load(db_json)
-
-            if tb_hash in db_data['tb_hashes']:
-                return True
-            else:
-                db_data['tb_hashes'].append(tb_hash)
-                db_json.seek(0)
-                db_json.truncate(0)
-                json.dump(db_data, db_json, indent=4)
-                return False
+        db = utils.access_db()
+        if tb_hash in db['tb_hashes']:
+            return True
+        else:
+            db['tb_hashes'].append(tb_hash)
+            utils.access_db(db)
+            return False
     except Exception:
         return False
 

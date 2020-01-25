@@ -15,6 +15,7 @@ from typing import Any, Union
 
 import localization
 import logger
+import utils
 
 
 class GUI(tk.Frame):
@@ -160,12 +161,10 @@ class GUI(tk.Frame):
             self.loc.text("Limit console.log's size occasionally")))
 
         # download page button, but only if a new version is available
-        db_path = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
-        with open(db_path, 'r+') as db_json:
-            db_data = json.load(db_json)
-        if db_data['available_version']['exists']:
-            new_version_name = db_data['available_version']['tag']
-            self.new_version_url = db_data['available_version']['url']
+        db = utils.access_db()
+        if db['available_version']['exists']:
+            new_version_name = db['available_version']['tag']
+            self.new_version_url = db['available_version']['url']
 
             self.update_button_text = tk.StringVar(value=self.loc.text(" Open {0} download page in default browser ").format(new_version_name))
             self.update_button = ttk.Button(lf_main, textvariable=self.update_button_text, command=self.open_update_page)
@@ -374,13 +373,6 @@ def access_registry(save_dict: Union[dict, None] = None) -> dict:
 
     if save_dict:
         winreg.SetValue(reg_key, 'Settings', winreg.REG_SZ, json.dumps(save_dict))
-
-        db_path = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
-        with open(db_path, 'r+') as db_json:
-            db_data = json.load(db_json)
-            db_json.seek(0)
-            db_json.truncate(0)
-            json.dump(db_data, db_json, indent=4)
     else:
         return reg_key_data
 

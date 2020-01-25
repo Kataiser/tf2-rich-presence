@@ -7,7 +7,7 @@ import os
 import zlib
 from typing import Union
 
-import logger
+import utils
 
 
 class Localizer:
@@ -34,16 +34,11 @@ class Localizer:
             if english_text not in self.missing_lines:
                 self.missing_lines.append(english_text)
 
-                db_path = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
-                with open(db_path, 'r+') as db_json:
-                    db_data = json.load(db_json)
-                    db_data['missing_localization'].append(english_text)
-                    db_json.seek(0)
-                    db_json.truncate(0)
-                    json.dump(db_data, db_json, indent=4)
-
+                db = utils.access_db()
+                db['missing_localization'].append(english_text)
+                utils.access_db(db)
                 if self.log:
-                    self.log.debug(f"\"{english_text}\" not in localization (language is {self.language}, called by {logger.get_caller_filename()})")
+                    self.log.debug(f"\"{english_text}\" not in localization (language is {self.language}, called by {utils.get_caller_filename()})")
 
             # no available translation, so must default to the English text
             return english_text

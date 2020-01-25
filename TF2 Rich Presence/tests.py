@@ -21,6 +21,7 @@ import main
 import processes
 import settings
 import updater
+import utils
 
 
 class TestTF2RichPresense(unittest.TestCase):
@@ -125,7 +126,7 @@ class TestTF2RichPresense(unittest.TestCase):
         old_dir = os.getcwd()
         os.chdir(os.path.abspath('test_resources\\hash_targets'))
 
-        self.assertEqual(logger.generate_hash(), '3cf1129d')
+        self.assertEqual(utils.generate_hash(), '54d4bf6a')
 
         os.chdir(old_dir)
 

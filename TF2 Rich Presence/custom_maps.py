@@ -1,8 +1,6 @@
 # Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 
-import json
-import os
 import time
 import traceback
 from typing import Dict, KeysView, List, Tuple, Union
@@ -13,6 +11,7 @@ from requests import Response
 import launcher
 import logger
 import settings
+import utils
 
 
 # uses teamwork.tf's API to find the gamemode of a custom map
@@ -92,17 +91,12 @@ def find_custom_map_gamemode(log, map_filename: str, force_cache: bool = True, t
 
 # reads or writes the cache of custom maps in DB.json
 def access_custom_maps_cache(dict_input: Union[dict, None] = None) -> dict:
-    db_path = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
-    with open(db_path, 'r+') as db_json:
-        db_data = json.load(db_json)
-
-        if dict_input is None:
-            return db_data['custom_maps']
-        else:
-            db_data['custom_maps'] = dict_input
-            db_json.seek(0)
-            db_json.truncate(0)
-            json.dump(db_data, db_json, indent=4)
+    if dict_input:
+        db = utils.access_db()
+        db['custom_maps'] = dict_input
+        utils.access_db(db)
+    else:
+        return utils.access_db()['custom_maps']
 
 
 gamemodes_english: Dict[str, str] = {'ctf': 'Capture the Flag', 'control-point': 'Control Point', 'attack-defend': 'Attack/Defend', 'medieval-mode': 'Attack/Defend (Medieval Mode)',

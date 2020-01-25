@@ -7,7 +7,7 @@ from typing import List, TextIO, Union
 
 import vdf
 
-import main
+import console_log
 
 
 # allows the console to output 'class selected' on class choose
@@ -101,7 +101,7 @@ def steam_config_file(log, exe_location: str) -> list:
         log.debug("-condebug not found, telling user")
         # yell at the user to fix their settings
         del log
-        main.no_condebug_warning()
+        console_log.no_condebug_warning()
     else:
         log.debug(f"Usernames with -condebug: {found_usernames}")
         return found_usernames

@@ -33,8 +33,8 @@ import psutil
 from discoIPC import ipc
 
 import configs
-import custom_maps
 import console_log
+import custom_maps
 import launcher
 import localization
 import logger
@@ -402,25 +402,6 @@ class TF2RichPresense:
                 raise SystemExit
             else:
                 raise
-
-
-# alerts the user that they don't seem to have -condebug
-def no_condebug_warning():
-    loc = localization.Localizer(language=settings.get('language'))
-
-    print(colorama.Style.BRIGHT, end='')
-    print('\n{0}'.format(loc.text("Your TF2 installation doesn't yet seem to be set up properly. To fix:")))
-    print(colorama.Style.RESET_ALL, end='')
-    print(loc.text("1. Right click on Team Fortress 2 in your Steam library"))
-    print(loc.text("2. Open properties (very bottom)"))
-    print(loc.text("3. Click \"Set launch options...\""))
-    print(loc.text("4. Add {0}").format("-condebug"))
-    print(loc.text("5. OK and Close"))
-    print('{0}\n'.format(loc.text("6. Restart TF2")))
-
-    # -condebug is kinda necessary so just wait to restart if it's not there
-    input('{0}\n'.format(loc.text("Press enter in this window when done")))
-    raise SystemExit
 
 
 if __name__ == '__main__':

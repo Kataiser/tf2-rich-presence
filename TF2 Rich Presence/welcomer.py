@@ -6,8 +6,8 @@ import ctypes
 import colorama
 
 import localization
-import settings
 import logger
+import settings
 
 
 def welcome(log: logger.Log, message_version):

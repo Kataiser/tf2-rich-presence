@@ -1,8 +1,6 @@
 # Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 
-import json
-import os
 import traceback
 from typing import Tuple
 
@@ -12,6 +10,7 @@ from requests import Response
 import localization
 import logger
 import settings
+import utils
 
 
 # uses Github api to get the tag of the newest public release and compare it to the current version number, alerting the user if out of date
@@ -43,15 +42,11 @@ def check_for_update(log: logger.Log, current_version: str, timeout: float):
             log.error(f"Out of date, newest version is {newest_version} (this is {current_version})")
 
             # save available version for the settings button
-            db_path = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
-            with open(db_path, 'r+') as db_json:
-                db_data = json.load(db_json)
-                db_data['available_version']['exists'] = True
-                db_data['available_version']['tag'] = newest_version
-                db_data['available_version']['url'] = downloads_url
-                db_json.seek(0)
-                db_json.truncate(0)
-                json.dump(db_data, db_json, indent=4)
+            db = utils.access_db()
+            db['available_version']['exists'] = True
+            db['available_version']['tag'] = newest_version
+            db['available_version']['url'] = downloads_url
+            utils.access_db(db)
 
             print(loc.text("This version ({0}) is out of date (newest version is {1}).").format(current_version, newest_version))
             print(loc.text("Get the update with the download button in settings."), end='\n\n')

@@ -2,7 +2,6 @@
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 
 import ctypes
-import json
 import locale
 import os
 import tkinter as tk
@@ -10,15 +9,14 @@ from tkinter import messagebox
 
 import logger
 import settings
+import utils
 
 
 # if the system (OS) language doesn't match the current settings, ask to change language (only once)
 def detect(log: logger.Log):
-    db_path = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
-    with open(db_path, 'r') as db_json_r:
-        db_data = json.load(db_json_r)
+    db = utils.access_db()
 
-    if not db_data['has_asked_language']:
+    if not db['has_asked_language']:
         # language_codes = {'en': 'English', 'de': 'German', 'fr': 'French', 'es': 'Spanish', 'pt': 'Portuguese', 'it': 'Italian', 'nl': 'Dutch', 'pl': 'Polish', 'ru': 'Russian',
         #                   'ko': 'Korean', 'zh': 'Chinese', 'ja': 'Japanese'}
         language_codes = {'en': 'English', 'de': 'German', 'fr': 'French', 'es': 'Spanish', 'pt': 'Portuguese', 'it': 'Italian', 'nl': 'Dutch', 'pl': 'Polish'}
@@ -35,11 +33,8 @@ def detect(log: logger.Log):
         if settings.get('language') != system_language:
             log.info(f"System language ({system_locale}, {system_language}) != settings language ({settings.get('language')}), asking to change")
 
-            with open(db_path, 'r+') as db_json_w:
-                db_data['has_asked_language'] = True
-                db_json_w.seek(0)
-                db_json_w.truncate(0)
-                json.dump(db_data, db_json_w, indent=4)
+            db['has_asked_language'] = True
+            utils.access_db(db)
 
             root = tk.Tk()
             root.overrideredirect(1)

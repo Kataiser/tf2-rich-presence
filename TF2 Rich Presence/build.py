@@ -15,7 +15,7 @@ from pathlib import Path
 import requests
 
 import changelog_generator
-import logger
+import utils
 
 
 def main(version_num=None):
@@ -69,6 +69,7 @@ def main(version_num=None):
         print("Copied", shutil.copy('welcomer.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('detect_system_language.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('init.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('utils.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('map list generator.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('thumb formatter.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('changelog_generator.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
@@ -164,6 +165,7 @@ def main(version_num=None):
                      ('welcomer.py', Path(f'{new_build_folder_name}/resources/')),
                      ('detect_system_language.py', Path(f'{new_build_folder_name}/resources/')),
                      ('init.py', Path(f'{new_build_folder_name}/resources/')),
+                     ('utils.py', Path(f'{new_build_folder_name}/resources/')),
                      ('tf2_logo_blurple.ico', Path(f'{new_build_folder_name}/resources/')),
                      ('tf2_logo_blurple_wrench.ico', Path(f'{new_build_folder_name}/resources/')),
                      ('APIs', Path(f'{new_build_folder_name}/resources/')),
@@ -198,7 +200,7 @@ def main(version_num=None):
     os.rename(Path(f'{new_build_folder_name}/resources/DB_default.json'), Path(f'{new_build_folder_name}/resources/DB.json'))
 
     # modify build_version.json, if need be
-    this_hash = logger.generate_hash()
+    this_hash = utils.generate_hash()
     if this_hash not in build_version_data['version_hashes']:
         build_version_data['version_hashes'][version_num] = this_hash
         with open('build_version.json', 'w') as build_version_json_write:
@@ -272,6 +274,10 @@ def main(version_num=None):
     subprocess.run(f'{package7zip_command_exe_1} {package7zip_command_exe_2}', stdout=subprocess.DEVNULL)
     print(f"Creating {zip_path}...")
     subprocess.run(package7zip_command_zip, stdout=subprocess.DEVNULL)
+    if os.path.exists(f'tf2_rich_presence_{version_num}_self_extracting.exe.tmp'):
+        os.remove(f'tf2_rich_presence_{version_num}_self_extracting.exe.tmp')
+    if os.path.exists(f'tf2_rich_presence_{version_num}.zip.tmp'):
+        os.remove(f'tf2_rich_presence_{version_num}.zip.tmp')
 
     # creates README.md from README-source.md
     if os.path.exists('README-source.md'):

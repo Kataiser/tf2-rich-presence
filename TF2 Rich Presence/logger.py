@@ -3,19 +3,18 @@
 
 import getpass
 import gzip
-import inspect
 import os
 import socket
 import sys
 import time
 import traceback
-import zlib
 from operator import itemgetter
-from typing import BinaryIO, List, Union
+from typing import Union
 
 import sentry_sdk
 
 import settings
+import utils
 
 
 # TODO: replace this whole thing with a real logger
@@ -29,7 +28,7 @@ class Log:
             self.filename = path
         else:
             days_since_epoch_local = int((time.time() + time.localtime().tm_gmtoff) / 86400)  # 86400 seconds in a day
-            self.filename: Union[bytes, str] = os.path.join('logs', f'{user_pc_name}_{user_identifier}_{"{tf2rpvnum}"}_{generate_hash()}_{days_since_epoch_local}.log')
+            self.filename: Union[bytes, str] = os.path.join('logs', f'{user_pc_name}_{user_identifier}_{"{tf2rpvnum}"}_{utils.generate_hash()}_{days_since_epoch_local}.log')
 
         # setup
         self.last_log_time = None
@@ -61,7 +60,8 @@ class Log:
                     self.log_file.close()
                     self.log_file = open(self.filename, 'a', encoding='utf-8')
 
-        if not os.access('DB.json', os.W_OK) and not os.access(os.path.join('resources', 'DB.json'), os.W_OK):
+        db_path = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
+        if not os.access(db_path, os.W_OK):
             self.error("DB.json can't be written to. This could cause crashes")
 
     def __repr__(self):
@@ -114,7 +114,7 @@ class Log:
     # a log with a level of ERROR (caught, non-fatal errors)
     def error(self, message_in):
         if 'Error' in self.log_levels_allowed:
-            self.write_log('ERROR', message_in, get_caller_filename())
+            self.write_log('ERROR', message_in, utils.get_caller_filename())
 
         if self.sentry_level == 'All errors':
             sentry_sdk.capture_message(f"Reporting non-critical ERROR: {message_in}")
@@ -122,7 +122,7 @@ class Log:
     # a log with a level of CRITICAL (uncaught, fatal errors, probably sent to Sentry)
     def critical(self, message_in):
         if 'Critical' in self.log_levels_allowed:
-            self.write_log('CRITICAL', message_in, generate_hash())
+            self.write_log('CRITICAL', message_in, utils.generate_hash())
 
     # deletes older log files and compresses the ones the rest
     def cleanup(self, max_logs: int):
@@ -159,42 +159,6 @@ class Log:
             compressed.append((old_log, comp_ratio))
 
         self.debug(f"Compressed {len(compressed)} log(s): {compressed}")
-
-
-# generates a short hash string from several source files
-def generate_hash() -> str:
-    files_to_hash: List[str] = ['main.py', 'console_log.py', 'configs.py', 'custom_maps.py', 'logger.py', 'updater.py', 'launcher.py', 'settings.py', 'detect_system_language.py',
-                                'maps.json', 'localization.json', 'APIs']
-    files_to_hash_data: List = []
-    build_folder = [item for item in os.listdir('.') if item.startswith('TF2 Rich Presence v') and os.path.isdir(item)]
-
-    for file_to_hash in files_to_hash:
-        if build_folder:
-            file_to_hash = os.path.join(build_folder[0], 'resources', file_to_hash)
-
-        try:
-            file: BinaryIO = open(os.path.join('resources', file_to_hash), 'rb')
-        except FileNotFoundError:
-            file: BinaryIO = open(file_to_hash, 'rb')
-
-        file_read = file.read()
-
-        if 'launcher' in file_to_hash:
-            file_read = file_read.replace(b'{tf2rpvnum}-dev', b'{tf2rpvnum}')
-
-        files_to_hash_data.append(file_read)
-        file.close()
-
-    hash_int = zlib.adler32(b'\n'.join(files_to_hash_data))
-    hash_hex = hex(hash_int)[2:10].ljust(8, '0')
-    return hash_hex
-
-
-def get_caller_filename() -> str:
-    frame = inspect.stack()[2]
-    module = inspect.getmodule(frame[0])
-    caller_filename = os.path.basename(module.__file__)
-    return caller_filename
 
 
 if __name__ == '__main__':
