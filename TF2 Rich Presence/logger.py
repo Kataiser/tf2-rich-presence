@@ -163,8 +163,6 @@ class Log:
 
 # generates a short hash string from several source files
 def generate_hash() -> str:
-    # TODO: cached per working dir, if possible
-
     files_to_hash: List[str] = ['main.py', 'console_log.py', 'configs.py', 'custom_maps.py', 'logger.py', 'updater.py', 'launcher.py', 'settings.py', 'detect_system_language.py',
                                 'maps.json', 'localization.json', 'APIs']
     files_to_hash_data: List = []
@@ -172,7 +170,7 @@ def generate_hash() -> str:
 
     for file_to_hash in files_to_hash:
         if build_folder:
-            file_to_hash = f'{build_folder[0]}\\resources\\{file_to_hash}'
+            file_to_hash = os.path.join(build_folder[0], 'resources', file_to_hash)
 
         try:
             file: BinaryIO = open(os.path.join('resources', file_to_hash), 'rb')
