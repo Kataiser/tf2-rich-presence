@@ -1,3 +1,4 @@
+import gzip
 import inspect
 import json
 import os
@@ -55,3 +56,14 @@ def get_caller_filename() -> str:
     module = inspect.getmodule(frame[0])
     caller_filename = os.path.basename(module.__file__)
     return caller_filename
+
+
+# get API key from the 'APIs' file
+def get_api_key(service):
+    if os.path.isdir('resources'):
+        apis_path = os.path.join('resources', 'APIs')
+    else:
+        apis_path = 'APIs'
+
+    with gzip.open(apis_path, 'r') as api_keys_file:
+        return json.load(api_keys_file)[service]

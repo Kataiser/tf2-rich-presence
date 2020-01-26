@@ -14,7 +14,6 @@ from discoIPC import ipc
 import configs
 import custom_maps
 import init
-import launcher
 import localization
 import logger
 import main
@@ -157,10 +156,10 @@ class TestTF2RichPresense(unittest.TestCase):
             self.assertEqual(type(default_settings[setting]), type(settings.get(setting)))
 
     def test_get_api_key(self):
-        self.assertEqual(len(launcher.get_api_key('discord')), 18)
-        self.assertEqual(len(launcher.get_api_key('teamwork')), 32)
-        self.assertEqual(len(launcher.get_api_key('pastebin')), 32)
-        self.assertEqual(len(launcher.get_api_key('sentry')), 91)
+        self.assertEqual(len(utils.get_api_key('discord')), 18)
+        self.assertEqual(len(utils.get_api_key('teamwork')), 32)
+        self.assertEqual(len(utils.get_api_key('pastebin')), 32)
+        self.assertEqual(len(utils.get_api_key('sentry')), 91)
 
     def test_discoipc(self):
         # this test fails if Discord isn't running

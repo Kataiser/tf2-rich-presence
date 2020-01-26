@@ -35,11 +35,11 @@ from discoIPC import ipc
 import configs
 import console_log
 import custom_maps
-import launcher
 import localization
 import logger
 import processes
 import settings
+import utils
 
 __author__ = "Kataiser"
 __copyright__ = "Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors"
@@ -365,7 +365,7 @@ class TF2RichPresense:
         try:
             if not self.client_connected:
                 # connects to Discord and sends first status, starts on main menu
-                self.client = ipc.DiscordIPC(launcher.get_api_key('discord'))
+                self.client = ipc.DiscordIPC(utils.get_api_key('discord'))
                 self.client.connect()
                 client_state: Tuple[Any, bool, str, int, str, Any] = (
                     self.client.client_id, self.client.connected, self.client.ipc_path, self.client.pid, self.client.platform, self.client.socket)

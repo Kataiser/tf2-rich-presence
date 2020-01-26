@@ -2,9 +2,7 @@
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 
 import argparse
-import gzip
 import importlib
-import json
 import os
 import sys
 import time
@@ -68,17 +66,6 @@ def handle_crash():
     # should restart via the bat/exe now
 
 
-# get API key from the 'APIs' file
-def get_api_key(service):
-    if os.path.isdir('resources'):
-        apis_path = os.path.join('resources', 'APIs')
-    else:
-        apis_path = 'APIs'
-
-    with gzip.open(apis_path, 'r') as api_keys_file:
-        return json.load(api_keys_file)[service]
-
-
 # don't report the same exception twice
 def exc_already_reported(tb: str):
     try:
@@ -97,6 +84,6 @@ def exc_already_reported(tb: str):
 
 if __name__ == '__main__':
     # set up Sentry (https://sentry.io/)
-    sentry_sdk.init(dsn=get_api_key('sentry'), release='{tf2rpvnum}')
+    sentry_sdk.init(dsn=utils.get_api_key('sentry'), release='{tf2rpvnum}')
 
     launch()
