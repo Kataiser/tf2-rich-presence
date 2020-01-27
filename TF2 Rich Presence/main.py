@@ -239,6 +239,7 @@ class TF2RichPresense:
 
             self.activity['details'] = top_line
             self.activity['state'] = bottom_line
+            self.activity['assets']['large_text'] = self.loc.text(self.activity['assets']['large_text'])
             self.activity['timestamps']['start'] = p_data['TF2']['time']
 
             activity_comparison = copy.deepcopy(self.activity)
@@ -249,11 +250,11 @@ class TF2RichPresense:
                 # output to terminal, just for monitoring
                 print(f"{self.current_time_formatted}{self.generate_delta(self.last_notify_time)}{colorama.Style.BRIGHT}")
 
-                if [d for d in ('Queued', 'Main menu') if d in self.activity['assets']['large_text']]:
+                if [d for d in (self.loc.text('Queued'), self.loc.text('Main menu')) if d in self.activity['assets']['large_text']]:
                     # if queued or on the main menu, simplify cmd output
                     print(self.loc.text(self.activity['details']))
                 else:
-                    print(f"{self.loc.text(self.activity['details'])} ({self.loc.text(self.activity['assets']['large_text'])})")
+                    print(f"{self.loc.text(self.activity['details'])} ({self.activity['assets']['large_text']})")
 
                     if settings.get('map_time'):
                         print(class_line)  # this means the current class. god this desperately needs a refactor
