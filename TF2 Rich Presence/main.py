@@ -69,6 +69,13 @@ def launch():
                 log_main.error(f"Exception during platform.{platform_part}(), skipping\n{traceback.format_exc()}")
         log_main.debug(f"Platform: {platform_info}")
 
+        default_settings = settings.get_setting_default(return_all=True)
+        current_settings = settings.access_registry()
+        if current_settings == default_settings:
+            log_main.debug("Current settings are default")
+        else:
+            log_main.debug(f"Non-default settings: {settings.compare_settings(default_settings, current_settings)}")
+
         app.run()
     except (KeyboardInterrupt, SystemExit):
         raise SystemExit
@@ -136,13 +143,6 @@ class TF2RichPresense:
     def loop_body(self):
         self.loop_iteration += 1
         self.log.debug(f"Loop iteration this app session: {self.loop_iteration}")
-
-        default_settings = settings.get_setting_default(return_all=True)
-        current_settings = settings.access_registry()
-        if current_settings == default_settings:
-            self.log.debug("Current settings are default")
-        else:
-            self.log.debug(f"Non-default settings: {settings.compare_settings(default_settings, current_settings)}")
 
         self.old_activity1 = copy.deepcopy(self.activity)
         self.old_activity2 = copy.deepcopy(self.activity)

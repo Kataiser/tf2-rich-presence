@@ -124,7 +124,7 @@ class Log:
         if 'Critical' in self.log_levels_allowed:
             self.write_log('CRITICAL', message_in, utils.generate_hash())
 
-    # deletes older log files and compresses the ones the rest
+    # deletes older log files and compresses the rest
     def cleanup(self, max_logs: int):
         all_logs = [os.path.join('logs', log) for log in os.listdir('logs')]
         all_logs_times = [(log_filename, os.stat(log_filename).st_mtime_ns) for log_filename in all_logs]
