@@ -56,6 +56,11 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual(configs.steam_config_file(self.log, 'test_resources\\'), ['Kataiser'])
 
     def test_find_custom_map_gamemode(self):
+        try:
+            requests.get(f'https://teamwork.tf/api/v1/quickplay?key={utils.get_api_key("teamwork")}', timeout=5)
+        except (requests.ConnectTimeout, requests.ReadTimeout):
+            self.skipTest("Teamwork.tf's API seems to be down")
+
         custom_maps.access_custom_maps_cache({})  # flush cache
 
         self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'cp_catwalk_a5c', True, 5)), ('control-point', 'Control Point'))
