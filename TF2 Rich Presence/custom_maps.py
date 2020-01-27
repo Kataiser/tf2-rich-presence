@@ -14,7 +14,7 @@ import utils
 
 
 # uses teamwork.tf's API to find the gamemode of a custom map
-def find_custom_map_gamemode(log, map_filename: str, force_cache: bool = True, timeout: float = settings.get('request_timeout')) -> Tuple[str, str]:
+def find_custom_map_gamemode(log, map_filename: str, force_api: bool = False, timeout: float = settings.get('request_timeout')) -> Tuple[str, str]:
     gamemodes = {gm: gamemodes_english[gm] for gm in gamemodes_english}
 
     if map_filename == '':
@@ -30,7 +30,7 @@ def find_custom_map_gamemode(log, map_filename: str, force_cache: bool = True, t
 
     # look for map in loaded cache
     try:
-        if force_cache:
+        if force_api:
             raise KeyError  # if it works, it ain't stupid
 
         cached_data: list = custom_map_gamemodes[map_filename]
