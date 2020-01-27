@@ -117,13 +117,9 @@ class TF2RichPresense:
         self.old_console_log_interpretation = ('', '')
 
         # load maps database
-        try:
-            maps_db: TextIO = open(os.path.join('resources', 'maps.json'), 'r')
-        except FileNotFoundError:
-            maps_db: TextIO = open('maps.json', 'r')
-
-        self.map_gamemodes: dict = json.load(maps_db)
-        maps_db.close()
+        maps_db_path = os.path.join('resources', 'maps.json') if os.path.isdir('resources') else 'maps.json'
+        with open(maps_db_path, 'r') as maps_db:
+            self.map_gamemodes = json.load(maps_db)
 
         self.loop_iteration: int = 0
 

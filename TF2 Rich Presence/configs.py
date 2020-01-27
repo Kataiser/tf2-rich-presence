@@ -22,25 +22,24 @@ def class_config_files(log, exe_location: str):
         selected_line: str = f'echo "{tf2_class} selected"'
 
         config_filename: str = tf2_class.lower().replace('heavy', 'heavyweapons')  # valve why
-
+        config_path = os.path.join(exe_location, 'tf', 'cfg', f'{config_filename}.cfg')
         # config files are at 'Steam\steamapps\common\Team Fortress 2\tf\cfg'
-        try:
-            # reads each existing class.cfg
-            class_config_file: TextIO = open(os.path.join(exe_location, 'tf', 'cfg', f'{config_filename}.cfg'), 'r+', errors='replace')
-            if selected_line not in class_config_file.read():
-                # if it doesn't already have the echo line, add it
-                class_config_file.write('\n\n' + selected_line)
-                classes_not_found.append((f'{config_filename}.cfg', selected_line))
-            else:
-                classes_found.append((f'{config_filename}.cfg', selected_line))
-        except FileNotFoundError:
-            # the config file doesn't exist, so create it and add the echo line
-            class_config_file = open(os.path.join(exe_location, 'tf', 'cfg', f'{config_filename}.cfg'), 'w')
-            log.debug(f"Created {class_config_file.name}")
-            class_config_file.write(selected_line)
 
-        # I know a 'with open()' is better but eh
-        class_config_file.close()
+        if os.path.isfile(config_path):
+            # reads each existing class.cfg
+            with open(config_path, 'r+', errors='ignore') as class_config_file:
+                if selected_line not in class_config_file.read():
+                    # if it doesn't already have the echo line, add it
+                    class_config_file.write('\n\n' + selected_line)
+                    classes_not_found.append((f'{config_filename}.cfg', selected_line))
+                else:
+                    classes_found.append((f'{config_filename}.cfg', selected_line))
+        else:
+            # the config file doesn't exist, so create it and add the echo line
+            with open(config_path, 'w') as class_config_file:
+                class_config_file.write(selected_line)
+
+            log.debug(f"Created {class_config_file.name}")
 
     log.debug(f"Classes with echo found: {classes_found}")
     log.debug(f"Classes with echo not found: {classes_not_found}")

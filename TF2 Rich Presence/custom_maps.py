@@ -48,7 +48,7 @@ def find_custom_map_gamemode(log, map_filename: str, force_api: bool = False, ti
             r: Response = requests.get(f'https://teamwork.tf/api/v1/map-stats/map/{map_filename}?key={utils.get_api_key("teamwork")}', timeout=timeout)
             map_info: dict = r.json()
             log.debug(f"API lookup took {round(time.perf_counter() - before_request_time, 2)} secs")
-        except requests.ConnectTimeout:
+        except (requests.ConnectTimeout, requests.ReadTimeout):
             log.debug("Timeout connecting to teamwork.tf, defaulting to \"Unknown gamemode\" and not caching")
             first_gamemode: str = 'unknown_map'
             first_gamemode_fancy: str = 'Unknown gamemode'
