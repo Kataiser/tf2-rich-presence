@@ -379,7 +379,7 @@ def access_registry(save_dict: Union[dict, None] = None) -> dict:
 
 # either gets a settings default, or if return_dict, returns all defaults as a dict
 def get_setting_default(setting: str = '', return_all: bool = False) -> Any:
-    defaults = {'sentry_level': 'Crashes',
+    defaults = {'sentry_level': 'All errors',
                 'wait_time': 2,
                 'map_invalidation_hours': 24,
                 'check_updates': True,

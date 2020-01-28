@@ -26,8 +26,10 @@ import utils
 class TestTF2RichPresense(unittest.TestCase):
     def setUp(self):
         self.old_settings = settings.access_registry()
-        if self.old_settings != settings.get_setting_default(return_all=True):
-            settings.access_registry(save_dict=settings.get_setting_default(return_all=True))
+        target_settings = settings.get_setting_default(return_all=True)
+        target_settings['sentry_level'] = 'All errors'
+        if self.old_settings != target_settings:
+            settings.access_registry(target_settings)
 
         self.dir = os.getcwd()
         self.log = logger.Log()
