@@ -1,10 +1,12 @@
 # Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
+# cython: language_level=3
 
 import ctypes
 
 import colorama
 
+import launcher
 import localization
 import logger
 import settings
@@ -13,11 +15,11 @@ import settings
 def welcome(log: logger.Log, message_version):
     # localize the window title
     loc = localization.Localizer(language=settings.get('language'))
-    ctypes.windll.kernel32.SetConsoleTitleW(loc.text("TF2 Rich Presence ({0})").format('{tf2rpvnum}'))
+    ctypes.windll.kernel32.SetConsoleTitleW(loc.text("TF2 Rich Presence ({0})").format(launcher.VERSION))
     log.debug(f"Welcoming with message version {message_version}")
 
     print(colorama.Style.BRIGHT, end='')
-    print(loc.text("TF2 Rich Presence ({0}) by Kataiser").format('{tf2rpvnum}'))
+    print(loc.text("TF2 Rich Presence ({0}) by Kataiser").format(launcher.VERSION))
     print(colorama.Style.RESET_ALL, end='')
     print("https://github.com/Kataiser/tf2-rich-presence\n")
     print(colorama.Style.BRIGHT, end='')

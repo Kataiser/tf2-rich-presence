@@ -82,8 +82,11 @@ def exc_already_reported(tb: str):
         return False
 
 
+DEBUG = True
+VERSION = '{tf2rpvnum}'
+
 if __name__ == '__main__':
     # set up Sentry (https://sentry.io/)
-    sentry_sdk.init(dsn=utils.get_api_key('sentry'), release='{tf2rpvnum}')
+    sentry_sdk.init(dsn=utils.get_api_key('sentry'), release=VERSION)
 
     launch()

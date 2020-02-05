@@ -1,5 +1,6 @@
 # Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
+# cython: language_level=3
 
 import functools
 import json
@@ -7,6 +8,7 @@ import os
 import zlib
 from typing import Union
 
+import launcher
 import utils
 
 
@@ -38,7 +40,7 @@ class Localizer:
                 db['missing_localization'].append(english_text)
                 utils.access_db(db)
                 if self.log:
-                    self.log.debug(f"\"{english_text}\" not in localization (language is {self.language}, called by {utils.get_caller_filename()})")
+                    self.log.debug(f"\"{english_text}\" not in localization (language is {self.language})")
 
             # no available translation, so must default to the English text
             return english_text
@@ -78,7 +80,7 @@ def access_localization_file(append: Union[tuple, None] = None) -> dict:
 
 
 def hash_text(text: str) -> str:
-    return str(zlib.adler32(text.replace('{tf2rpvnum}', '').encode('utf-8'))).ljust(10, '0')  # shoulda just used hash() from the start
+    return str(zlib.adler32(text.replace(launcher.VERSION, '').encode('utf-8'))).ljust(10, '0')  # shoulda just used hash() from the start
 
 
 if __name__ == '__main__':

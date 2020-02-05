@@ -1,5 +1,6 @@
 # Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
+# cython: language_level=3
 
 import ctypes
 import locale
@@ -7,6 +8,7 @@ import os
 import tkinter as tk
 from tkinter import messagebox
 
+import launcher
 import logger
 import settings
 import utils
@@ -46,7 +48,7 @@ def detect(log: logger.Log):
             except tk.TclError:
                 root.iconbitmap(default=os.path.join('resources', 'tf2_logo_blurple_wrench.ico'))
 
-            changed_language = messagebox.askquestion("TF2 Rich Presence {tf2rpvnum}", f"Change language to your system's default ({system_language})?")
+            changed_language = messagebox.askquestion(f"TF2 Rich Presence {launcher.VERSION}", f"Change language to your system's default ({system_language})?")
             log.debug(f"Changed language: {changed_language}")
 
             if changed_language == 'yes':

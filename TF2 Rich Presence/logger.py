@@ -1,5 +1,6 @@
 # Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
+# cython: language_level=3
 
 import getpass
 import gzip
@@ -13,27 +14,27 @@ from typing import Union
 
 import sentry_sdk
 
+import launcher
 import settings
-import utils
 
 
 # TODO: replace this whole thing with a real logger
 class Log:
     def __init__(self, path=None):
         # find user's pc and account name
-        user_identifier = getpass.getuser()
-        user_pc_name = socket.gethostname()
+        user_identifier: str = getpass.getuser()
+        user_pc_name: str = socket.gethostname()
 
         if path:
-            self.filename = path
+            self.filename: str = path
         else:
             days_since_epoch_local = int((time.time() + time.localtime().tm_gmtoff) / 86400)  # 86400 seconds in a day
-            self.filename: Union[bytes, str] = os.path.join('logs', f'{user_pc_name}_{user_identifier}_{"{tf2rpvnum}"}_{utils.generate_hash()}_{days_since_epoch_local}.log')
+            self.filename: str = os.path.join('logs', f'{user_pc_name}_{user_identifier}_{launcher.VERSION}_{days_since_epoch_local}.log')
 
         # setup
-        self.last_log_time = None
+        self.last_log_time: float = time.perf_counter()
         self.console_log_path: Union[str, None] = None
-        self.to_stderr: bool = False
+        self.to_stderr: bool = launcher.DEBUG
         self.sentry_level: str = settings.get('sentry_level')
         self.enabled: bool = settings.get('log_level') != 'Off'
         self.log_levels: list = ['Debug', 'Info', 'Error', 'Critical', 'Off']
@@ -64,7 +65,7 @@ class Log:
         if not os.access(db_path, os.W_OK):
             self.error("DB.json can't be written to. This could cause crashes")
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"logger.Log at {self.filename} (enabled={self.enabled} level={self.log_level}, stderr={self.to_stderr})"
 
     def __del__(self):
@@ -73,19 +74,16 @@ class Log:
             self.log_file.close()
 
     # adds a line to the current log file
-    def write_log(self, level: str, message_out: str, extra_header: str = None):
+    def write_log(self, level: str, message_out: str):
         if self.enabled:
-            current_time = time.perf_counter()
+            current_time: float = time.perf_counter()
 
             if self.last_log_time:
                 time_since_last: str = f'+{format(current_time - self.last_log_time, ".4f")}'  # the format() adds trailing zeroes
             else:
                 time_since_last: str = '+0.0000'
 
-            line_header = [str(int(time.time())), time_since_last]
-            if extra_header:
-                line_header.append(extra_header)
-            full_line: str = f"[{' '.join(line_header)}] {level}: {message_out}\n"
+            full_line: str = f"[{int(time.time())} {time_since_last}] {level}: {message_out}\n"
 
             # log breadcrumb to Sentry
             sentry_sdk.add_breadcrumb(message=full_line, level=level.lower().replace('critical', 'fatal'))
@@ -112,17 +110,17 @@ class Log:
             self.write_log('DEBUG', message_in)
 
     # a log with a level of ERROR (caught, non-fatal errors)
-    def error(self, message_in):
+    def error(self, message_in, reportable=True):
         if 'Error' in self.log_levels_allowed:
-            self.write_log('ERROR', message_in, utils.get_caller_filename())
+            self.write_log('ERROR', message_in)
 
-        if self.sentry_level == 'All errors':
+        if reportable and self.sentry_level == 'All errors':
             sentry_sdk.capture_message(f"Reporting non-critical ERROR: {message_in}")
 
     # a log with a level of CRITICAL (uncaught, fatal errors, probably sent to Sentry)
     def critical(self, message_in):
         if 'Critical' in self.log_levels_allowed:
-            self.write_log('CRITICAL', message_in, utils.generate_hash())
+            self.write_log('CRITICAL', message_in)
 
     # deletes older log files and compresses the rest
     def cleanup(self, max_logs: int):

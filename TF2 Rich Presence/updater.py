@@ -1,5 +1,6 @@
 # Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
+# cython: language_level=3
 
 import traceback
 from typing import Tuple
@@ -7,6 +8,7 @@ from typing import Tuple
 import requests
 from requests import Response
 
+import launcher
 import localization
 import logger
 import settings
@@ -39,7 +41,7 @@ def check_for_update(log: logger.Log, current_version: str, timeout: float):
         if current_version == newest_version:
             log.debug(f"Up to date ({current_version})")
         else:  # out of date
-            log.error(f"Out of date, newest version is {newest_version} (this is {current_version})")
+            log.error(f"Out of date, newest version is {newest_version} (this is {current_version})", reportable=False)
 
             # save available version for the settings button
             db = utils.access_db()
@@ -86,4 +88,4 @@ def failure_message(current_version: str, error_message: str = None):
 
 if __name__ == '__main__':
     log = logger.Log()
-    check_for_update(log, '{tf2rpvnum}', 10)
+    check_for_update(log, launcher.VERSION, 10)

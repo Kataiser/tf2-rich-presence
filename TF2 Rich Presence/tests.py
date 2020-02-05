@@ -27,7 +27,6 @@ class TestTF2RichPresense(unittest.TestCase):
     def setUp(self):
         self.old_settings = settings.access_registry()
         target_settings = settings.get_setting_default(return_all=True)
-        target_settings['sentry_level'] = 'Crashes'
         if self.old_settings != target_settings:
             settings.access_registry(target_settings)
 
@@ -92,14 +91,14 @@ class TestTF2RichPresense(unittest.TestCase):
 
         self.log.log_file = open(self.log.filename, 'a', encoding='UTF8')
         self.log.info("Test1 饏Ӟ򒚦R៣񘺏1ࠞͳⴺۋ")
-        self.log.error("Test2")
+        self.log.error("Test2", reportable=False)
         self.assertEqual(repr(self.log), r'logger.Log at test_resources\test_self.log (enabled=True level=Debug, stderr=False)')
         self.log.log_file.close()
 
         with open(self.log.filename, 'r', encoding='UTF8') as current_log_file:
             current_log_file_read = current_log_file.readlines()
-            self.assertTrue(current_log_file_read[0].endswith(" +0.0000] INFO: Test1 饏Ӟ򒚦R៣񘺏1ࠞͳⴺۋ\n"))
-            self.assertTrue(current_log_file_read[1].endswith(" tests.py] ERROR: Test2\n"))
+            self.assertTrue(current_log_file_read[0].endswith("] INFO: Test1 饏Ӟ򒚦R៣񘺏1ࠞͳⴺۋ\n"))
+            self.assertTrue(current_log_file_read[1].endswith("] ERROR: Test2\n"))
 
         os.remove(self.log.filename)
 
@@ -125,14 +124,6 @@ class TestTF2RichPresense(unittest.TestCase):
         self.log.cleanup(2)
         self.assertEqual(os.listdir('logs'), ['46b087ff.log.gz', '6cbf1447.log.gz'])
         shutil.rmtree('logs')
-
-        os.chdir(old_dir)
-
-    def test_generate_hash(self):
-        old_dir = os.getcwd()
-        os.chdir(os.path.abspath('test_resources\\hash_targets'))
-
-        self.assertEqual(utils.generate_hash(), '54d4bf6a')
 
         os.chdir(old_dir)
 

@@ -1,3 +1,7 @@
+# Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
+# https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
+# cython: language_level=3
+
 import os
 import time
 from typing import Dict, List, Union
@@ -13,15 +17,16 @@ def interpret(self, console_log_path: str, user_usernames: list, tf2_start_time:
     # defaults
     current_map: str = 'In menus'
     current_class: str = 'Not queued'
-    kataiser_seen_on = None
+    kataiser_seen_on: Union[str, None] = None
 
     match_types: Dict[str, str] = {'match group 12v12 Casual Match': 'Casual', 'match group MvM Practice': 'MvM (Boot Camp)', 'match group MvM MannUp': 'MvM (Mann Up)',
                                    'match group 6v6 Ladder Match': 'Competitive'}
-    disconnect_messages = ('Server shutting down', 'Steam config directory', 'Lobby destroyed', 'Disconnect:', 'Missing map')
-    tf2_classes = ('Scout', 'Soldier', 'Pyro', 'Demoman', 'Heavy', 'Engineer', 'Medic', 'Sniper', 'Spy')
+    disconnect_messages: tuple = ('Server shutting down', 'Steam config directory', 'Lobby destroyed', 'Disconnect:', 'Missing map')
+    disconnect_message: str
+    tf2_classes: tuple = ('Scout', 'Soldier', 'Pyro', 'Demoman', 'Heavy', 'Engineer', 'Medic', 'Sniper', 'Spy')
 
-    hide_queued_gamemode = settings.get('hide_queued_gamemode')
-    user_is_kataiser = 'Kataiser' in user_usernames
+    hide_queued_gamemode: bool = settings.get('hide_queued_gamemode')
+    user_is_kataiser: bool = 'Kataiser' in user_usernames
 
     # console.log is a log of tf2's console (duh), only exists if tf2 has -condebug (see the bottom of config_files)
     consolelog_filename: Union[bytes, str] = console_log_path
@@ -77,21 +82,22 @@ def interpret(self, console_log_path: str, user_usernames: list, tf2_start_time:
 
     # iterates though roughly 16000 lines from console.log and learns everything from them
     line_used: str = ''
+    line: str
     for line in lines:
         if 'Map:' in line:
-            current_map = line[5:-1]
-            current_class = 'unselected'  # this variable is poorly named
+            current_map = line[5:-1]  # this variable is poorly named
+            current_class = 'unselected'  # so is this one
             line_used = line
 
-        if 'selected' in line:
-            current_class_possibly = line[:-11]
+        if ' selected' in line:
+            current_class_possibly: str = line[:-11]
 
             if current_class_possibly in tf2_classes:
                 current_class = current_class_possibly
                 line_used = line
 
         if 'Disconnect by user' in line and [i for i in user_usernames if i in line]:
-            current_map = 'In menus'  # so is this one
+            current_map = 'In menus'
             current_class = 'Not queued'
             line_used = line
 
@@ -120,12 +126,12 @@ def interpret(self, console_log_path: str, user_usernames: list, tf2_start_time:
             current_class = 'Not queued'
             line_used = line
 
-        if not user_is_kataiser and not self.has_seen_kataiser and 'Kataiser' in line:
+        if not user_is_kataiser and 'Kataiser' in line and not self.has_seen_kataiser:
             kataiser_seen_on = current_map
 
     if not user_is_kataiser and not self.has_seen_kataiser and kataiser_seen_on == current_map and current_map not in ('', 'In menus'):
         self.has_seen_kataiser = True
-        self.log.debug(f"Kataiser located, telling user :) (on {current_map})")
+        self.log.debug(f"Kataiser located, telling user :D (on {current_map})")
         print(f"{colorama.Fore.LIGHTCYAN_EX}Hey, it seems that Kataiser, the developer of TF2 Rich Presence, is in your game! Say hi to me if you'd like :){colorama.Style.RESET_ALL}\n")
 
     self.log.debug(f"Got '{current_map}' and '{current_class}' from this line: '{line_used[:-1]}'")

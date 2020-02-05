@@ -1,9 +1,10 @@
 # Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
+# cython: language_level=3
 
 import functools
 import os
-from typing import List, TextIO, Union
+from typing import List, Union
 
 import vdf
 
@@ -107,18 +108,19 @@ def steam_config_file(log, exe_location: str) -> list:
 
 
 # adapted from https://www.popmartian.com/tipsntricks/2014/11/20/how-to-lower-case-all-dictionary-keys-in-a-complex-python-dictionary/
-def lowercase_keys(dictionary):
-    allowed_keys = ('userlocalconfigstore', 'friends', 'personaname', 'userlocalconfigstore', 'software', 'valve', 'steam', 'apps', '440', 'launchoptions')
-    keys_to_remove = []
+def lowercase_keys(dictionary: dict) -> dict:
+    allowed_keys: tuple = ('userlocalconfigstore', 'friends', 'personaname', 'userlocalconfigstore', 'software', 'valve', 'steam', 'apps', '440', 'launchoptions')
+    keys_to_remove: list = []
+    key: str
 
     for key in dictionary.keys():
-        key_lower = key.lower()
+        key_lower: str = key.lower()
 
         if key_lower in allowed_keys:
-            dictionary[key_lower] = dictionary.pop(key)
+            dictionary[key_lower]: Union[dict, list] = dictionary.pop(key)
 
             if isinstance(dictionary[key_lower], dict) or isinstance(dictionary[key_lower], list):
-                dictionary[key_lower] = lowercase_keys(dictionary[key_lower])
+                dictionary[key_lower]: Union[dict, list] = lowercase_keys(dictionary[key_lower])
         else:
             keys_to_remove.append(key)
 

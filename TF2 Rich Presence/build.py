@@ -15,16 +15,10 @@ from pathlib import Path
 import requests
 
 import changelog_generator
-import utils
 
 
-def main(version_num=None):
-    # get build version info
-    with open('build_version.json', 'r') as build_version_json:
-        build_version_data = json.load(build_version_json)
-    if not version_num:
-        version_num = build_version_data['this_version']
-
+# TODO: don't do this seperate locations nonsense, convert to using a repo properly
+def main(version_num='v1.12'):
     print(f"Building TF2 Rich Presence {version_num}")
 
     parser = argparse.ArgumentParser()
@@ -55,10 +49,11 @@ def main(version_num=None):
     # copies stuff to the Github repo
     if github_repo_path != 'n':
         print("Copied", shutil.copy('main.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
-        print("Copied", shutil.copy('console_log.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('launcher.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('build.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('cython_compile.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('tests.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('console_log.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('logger.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('configs.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('custom_maps.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
@@ -148,24 +143,11 @@ def main(version_num=None):
                      ('localization.json', Path(f'{new_build_folder_name}/resources/')),
                      ('DB_default.json', Path(f'{new_build_folder_name}/resources/')),
                      ('LICENSE', Path(f'{new_build_folder_name}/resources/')),
-                     ('main.py', Path(f'{new_build_folder_name}/resources/')),
-                     ('console_log.py', Path(f'{new_build_folder_name}/resources/')),
                      ('launcher.py', Path(f'{new_build_folder_name}/resources/')),
                      ('Readme.txt', Path(f'{new_build_folder_name}/')),
                      ('Launch TF2 with Rich Presence.bat', Path(f'{new_build_folder_name}/')),
                      ('Launch Rich Presence alongside TF2.bat', Path(f'{new_build_folder_name}/')),
                      ('Change settings.bat', Path(f'{new_build_folder_name}/')),
-                     ('logger.py', Path(f'{new_build_folder_name}/resources/')),
-                     ('updater.py', Path(f'{new_build_folder_name}/resources/')),
-                     ('configs.py', Path(f'{new_build_folder_name}/resources/')),
-                     ('custom_maps.py', Path(f'{new_build_folder_name}/resources/')),
-                     ('processes.py', Path(f'{new_build_folder_name}/resources/')),
-                     ('settings.py', Path(f'{new_build_folder_name}/resources/')),
-                     ('localization.py', Path(f'{new_build_folder_name}/resources/')),
-                     ('welcomer.py', Path(f'{new_build_folder_name}/resources/')),
-                     ('detect_system_language.py', Path(f'{new_build_folder_name}/resources/')),
-                     ('init.py', Path(f'{new_build_folder_name}/resources/')),
-                     ('utils.py', Path(f'{new_build_folder_name}/resources/')),
                      ('tf2_logo_blurple.ico', Path(f'{new_build_folder_name}/resources/')),
                      ('tf2_logo_blurple_wrench.ico', Path(f'{new_build_folder_name}/resources/')),
                      ('APIs', Path(f'{new_build_folder_name}/resources/')),
@@ -178,17 +160,14 @@ def main(version_num=None):
             continue
 
         try:
-            with open(file_dest_pair[0], 'r', encoding='utf-8') as file_source:
+            with open(file_dest_pair[0], 'r', encoding='UTF8') as file_source:
                 with open(Path(f'{file_dest_pair[1]}/{file_dest_pair[0]}'), 'w', encoding='utf-8') as file_target:
-                    modified_file = file_source.read().replace('{tf2rpvnum}', version_num)
+                    modified_file = file_source.read()
 
-                    if file_dest_pair[0] == 'main.py':
-                        modified_file = modified_file.replace('log.cleanup(20)', 'log.cleanup(10)')
-                        modified_file = modified_file.replace('to_stderr = True', 'to_stderr = False')
+                    if file_dest_pair[0] == 'launcher.py' or file_dest_pair[0].endswith('.bat'):
+                        modified_file = modified_file.replace('{tf2rpvnum}', version_num)
                     if file_dest_pair[0] == 'launcher.py':
-                        modified_file = modified_file.replace('sentry_enabled: bool = False', 'sentry_enabled: bool = True')
-                    if file_dest_pair[0] == 'logger.py':
-                        modified_file = modified_file.replace('to_stderr: bool = True', 'to_stderr: bool = False')
+                        modified_file = modified_file.replace('DEBUG = True', 'DEBUG = False')
                     if file_dest_pair[0] == 'Readme.txt':
                         modified_file = modified_file.replace('{built}', f"{datetime.datetime.utcnow().strftime('%c')} UTC")
 
@@ -199,18 +178,12 @@ def main(version_num=None):
 
     os.rename(Path(f'{new_build_folder_name}/resources/DB_default.json'), Path(f'{new_build_folder_name}/resources/DB.json'))
 
-    # modify build_version.json, if need be
-    this_hash = utils.generate_hash()
-    if this_hash not in build_version_data['version_hashes']:
-        build_version_data['version_hashes'][version_num] = this_hash
-        with open('build_version.json', 'w') as build_version_json_write:
-            json.dump(build_version_data, build_version_json_write, indent=4)
-    elif build_version_data['version_hashes'][version_num] != this_hash:
-        build_version_data['version_hashes'][version_num] = this_hash
-        with open('build_version.json', 'w') as build_version_json_write:
-            json.dump(build_version_data, build_version_json_write, indent=4)
-    if github_repo_path != 'n':
-        print("Copied", shutil.copy('build_version.json', Path(f'{github_repo_path}/TF2 Rich Presence')))
+    # build PYDs using Cython and copy them in
+    subprocess.run(f'{sys.executable} cython_compile.py build_ext --inplace')
+    pyds = [Path(f'pyx/{file}') for file in os.listdir('pyx') if file.endswith('.pyd')]
+    print(f"Compiled {len(pyds)} PYDs")
+    for pyd in pyds:
+        print("Copied", shutil.copy(pyd, Path(f'{new_build_folder_name}/resources/')))
 
     # creates build_info.txt
     try:
@@ -227,8 +200,6 @@ def main(version_num=None):
                         "\nhttps://github.com/Kataiser/tf2-rich-presence"
                         f"\n\nVersion: {version_num}"
                         f"\nBuilt: {datetime.datetime.utcnow().strftime('%c')} UTC"
-                        f"\nHash: {this_hash}"
-                        f"\nVersion hashes: {build_version_data['version_hashes']}"
                         f"\nLatest commit: {latest_commit}")
 
     # copies the python interpreter
@@ -246,7 +217,6 @@ def main(version_num=None):
     compileall.compile_dir(Path(f'{new_build_folder_name}/resources'), optimize=2, quiet=True)
     with open('pycs_to_delete.txt', 'r') as pycs_to_delete_txt:
         pycs_to_delete = [pyc_path.rstrip('\n') for pyc_path in pycs_to_delete_txt.readlines()]
-    print(f"Deleting {len(pycs_to_delete)} unused PYCs")
     missing_pycs = []
     for pyc_to_delete in pycs_to_delete:
         if sys.platform != 'win32':
@@ -255,6 +225,7 @@ def main(version_num=None):
             os.remove(Path(f'{new_build_folder_name}/resources/{pyc_to_delete}'))
         except FileNotFoundError:
             missing_pycs.append(str(Path(f'{new_build_folder_name}/resources/{pyc_to_delete}')))
+    print(f"Deleted {len(pycs_to_delete) - len(missing_pycs)} unused PYCs")
 
     # build the launchers
     convert_bat_to_exe(os.path.abspath(Path(f'{new_build_folder_name}/Launch TF2 with Rich Presence.bat')), version_num, 'tf2_logo_blurple.ico')
@@ -299,11 +270,11 @@ def main(version_num=None):
     else:
         readme_source_exists = False
 
-    # disables Sentry, for testing
+    # append '-dev' to Sentry version
     with open(Path(f'{new_build_folder_name}/resources/launcher.py'), 'r') as launcher_py_read:
         old_data = launcher_py_read.read()
     with open(Path(f'{new_build_folder_name}/resources/launcher.py'), 'w') as launcher_py_write:
-        new_data = old_data.replace(f"release='{version_num}'", f"release='{version_num}-dev'")
+        new_data = old_data.replace("release=VERSION", "release=f'{VERSION}-dev'")
         launcher_py_write.write(new_data)
     print(f"Set Sentry version to {version_num}-dev")
 
@@ -343,7 +314,7 @@ def main(version_num=None):
     if not readme_source_exists:
         print("README-source doesn't exist, didn't build README.md", file=sys.stderr)
     if missing_pycs:
-        print(f"PYCs that couldn't be deleted: {missing_pycs}", file=sys.stderr)
+        print(f"Couldn't delete {len(missing_pycs)}/{len(pycs_to_delete)} PYCs: {missing_pycs}", file=sys.stderr)
 
     with open('Changelogs.html') as changelogs_html:
         if version_num not in changelogs_html.read():

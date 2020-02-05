@@ -1,5 +1,6 @@
 # Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
+# cython: language_level=3
 
 import copy
 import os
@@ -148,14 +149,16 @@ class ProcessScanner:
     # https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/tasklist
     def parse_tasklist(self):
         try:
-            processes = str(subprocess.check_output('tasklist /fi "STATUS eq running"')).split(r'\r\n')
+            processes: list = str(subprocess.check_output('tasklist /fi "STATUS eq running"')).split(r'\r\n')
         except subprocess.CalledProcessError:
-            processes = []
+            processes: list = []
 
-        self.parsed_tasklist = {}
+        self.parsed_tasklist: dict = {}
 
+        process_line: str
+        ref_name: str
         for process_line in processes:
-            process = process_line.split()
+            process: list = process_line.split()
 
             for ref_name in ('hl2.exe', 'Steam.exe', 'Discord'):
                 if ref_name in process[0]:

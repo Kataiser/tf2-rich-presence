@@ -1,6 +1,7 @@
+# cython: language_level=3
 """Discord Rich Presence for Team Fortress 2"""
 
-# TF2 Rich Presence {tf2rpvnum}
+# TF2 Rich Presence
 # https://github.com/Kataiser/tf2-rich-presence
 #
 # Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
@@ -26,7 +27,7 @@ import os
 import platform
 import time
 import traceback
-from typing import Any, Dict, List, TextIO, Tuple, Union
+from typing import Any, Dict, List, Tuple, Union
 
 import colorama
 import psutil
@@ -35,6 +36,7 @@ from discoIPC import ipc
 import configs
 import console_log
 import custom_maps
+import launcher
 import localization
 import logger
 import processes
@@ -49,12 +51,12 @@ __email__ = "Mecharon1.gm@gmail.com"
 
 def launch():
     log_main = logger.Log()
-    log_main.to_stderr = True
+    log_main.to_stderr = launcher.DEBUG
 
     try:
         app = TF2RichPresense(log_main)
-        log_main.info("Starting TF2 Rich Presence {tf2rpvnum}")
-        log_main.cleanup(20)
+        log_main.info(f"Starting TF2 Rich Presence {launcher.VERSION}")
+        log_main.cleanup(20 if launcher.DEBUG else 10)
         log_main.debug(f"CPU: {psutil.cpu_count(logical=False)} cores, {psutil.cpu_count()} threads")
 
         platform_info = {'architecture': platform.architecture, 'machine': platform.machine, 'system': platform.system, 'platform': platform.platform,
@@ -91,35 +93,35 @@ def launch():
 
 class TF2RichPresense:
     def __init__(self, log):
-        self.log = log
+        self.log: logger.Log = log
         self.activity: Dict[str, Union[str, Dict[str, int], Dict[str, str]]] = \
             {'details': 'In menus',  # this is what gets modified and sent to Discord via discoIPC
              'timestamps': {'start': int(time.time())},
              'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2', 'large_image': 'main_menu', 'large_text': 'Main menu'},
              'state': ''}
-        self.old_activity1: Dict = {}  # for the console output
-        self.old_activity2: Dict = {}  # for sending to Discord
-        self.activity_translated = {}
+        self.old_activity1: dict = {}  # for the console output
+        self.old_activity2: dict = {}  # for sending to Discord
+        self.activity_translated: dict = {}
         self.client_connected: bool = False
-        self.client = None
-        self.test_state = 'init'
-        self.should_mention_discord = True
-        self.should_mention_tf2 = True
-        self.last_notify_time = None
-        self.has_checked_class_configs = False
-        self.process_scanner = processes.ProcessScanner(self.log)
-        self.loc = localization.Localizer(self.log, settings.get('language'))
-        self.current_time_formatted = ""
-        self.current_map = None  # don't trust this variable
-        self.time_changed_map = time.time()
-        self.has_seen_kataiser = False
-        self.old_console_log_mtime = None
-        self.old_console_log_interpretation = ('', '')
+        self.client: Union[ipc.DiscordIPC, None] = None
+        self.test_state: str = 'init'
+        self.should_mention_discord: bool = True
+        self.should_mention_tf2: bool = True
+        self.last_notify_time: Union[float, None] = None
+        self.has_checked_class_configs: bool = False
+        self.process_scanner: processes.ProcessScanner = processes.ProcessScanner(self.log)
+        self.loc: localization.Localizer = localization.Localizer(self.log, settings.get('language'))
+        self.current_time_formatted: str = ""
+        self.current_map: Union[str, None] = None  # don't trust this variable
+        self.time_changed_map: float = time.time()
+        self.has_seen_kataiser: bool = False
+        self.old_console_log_mtime: Union[int, None] = None
+        self.old_console_log_interpretation: tuple = ('', '')
 
         # load maps database
         maps_db_path = os.path.join('resources', 'maps.json') if os.path.isdir('resources') else 'maps.json'
         with open(maps_db_path, 'r') as maps_db:
-            self.map_gamemodes = json.load(maps_db)
+            self.map_gamemodes: Dict[str, Tuple[str]] = json.load(maps_db)
 
         self.loop_iteration: int = 0
 
@@ -138,7 +140,7 @@ class TF2RichPresense:
     # the main logic. runs every 2 seconds (by default)
     def loop_body(self):
         self.loop_iteration += 1
-        self.log.debug(f"Loop iteration this app session: {self.loop_iteration}")
+        self.log.debug(f"Main loop iteration this app session: {self.loop_iteration}")
 
         self.old_activity1 = copy.deepcopy(self.activity)
         self.old_activity2 = copy.deepcopy(self.activity)
@@ -270,7 +272,7 @@ class TF2RichPresense:
             if self.activity != self.old_activity2:
                 # send everything to discord
                 large_text_base = self.activity['assets']['large_text']
-                self.activity['assets']['large_text'] += self.loc.text(" - TF2 Rich Presence {0}").format('{tf2rpvnum}')
+                self.activity['assets']['large_text'] += self.loc.text(" - TF2 Rich Presence {0}").format(launcher.VERSION)
                 self.send_rpc_activity()
                 self.activity['assets']['large_text'] = large_text_base
                 # this gets reset because the old activity doesn't have it
@@ -327,7 +329,7 @@ class TF2RichPresense:
         return console_log.interpret(self, *args, **kwargs)
 
     # generate text that displays the difference between now and old_time
-    def generate_delta(self, old_time: float) -> str:
+    def generate_delta(self, old_time: Union[float, None]) -> str:
         if old_time:
             time_diff = round(time.time() - old_time)
 

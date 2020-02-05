@@ -1,5 +1,6 @@
 # Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
+# cython: language_level=3
 
 import functools
 import json
@@ -13,6 +14,7 @@ import winreg
 from tkinter import messagebox
 from typing import Any, Union
 
+import launcher
 import localization
 import logger
 import utils
@@ -26,14 +28,14 @@ class GUI(tk.Frame):
             self.log = logger.Log()
             self.log.to_stderr = True
 
-        self.log.info("Opening settings menu for TF2 Rich Presence {tf2rpvnum}")
+        self.log.info(f"Opening settings menu for TF2 Rich Presence {launcher.VERSION}")
         self.loc = localization.Localizer(self.log, get('language'))
 
         tk.Frame.__init__(self, master)
         self.master = master
         check_int_command = self.register(check_int)
 
-        master.title(self.loc.text("TF2 Rich Presence ({0}) settings").format('{tf2rpvnum}'))
+        master.title(self.loc.text("TF2 Rich Presence ({0}) settings").format(launcher.VERSION))
         master.resizable(0, 0)  # disables resizing
 
         # set window icon, doesn't work if launching from Pycharm for some reason
