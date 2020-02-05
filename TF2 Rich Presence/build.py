@@ -18,7 +18,7 @@ import changelog_generator
 
 
 # TODO: don't do this seperate locations nonsense, convert to using a repo properly
-def main(version_num='v1.12'):
+def main(version_num='v1.12.1'):
     print(f"Building TF2 Rich Presence {version_num}")
 
     parser = argparse.ArgumentParser()
