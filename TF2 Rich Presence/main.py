@@ -377,9 +377,7 @@ class TF2RichPresense:
             self.activity_translated['assets']['large_text'] = self.loc.text(self.activity['assets']['large_text'])
 
             # stop DB.json spam as the map time increases
-            if settings.get('map_time') and self.test_state == 'in game':
-                self.log.debug("Not localizing activity['state'] due to map time")
-            else:
+            if not (settings.get('map_time') and self.test_state == 'in game'):
                 self.activity_translated['state'] = self.loc.text(self.activity['state'])
 
             self.client.update_activity(self.activity_translated)
