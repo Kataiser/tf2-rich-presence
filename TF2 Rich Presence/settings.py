@@ -370,11 +370,11 @@ def access_registry(save_dict: Union[dict, None] = None) -> dict:
     except FileNotFoundError:  # means that the key hasn't been initialized
         # assume no key means default settings. might not be true but whatever
         default_settings = get_setting_default(return_all=True)
-        winreg.SetValue(reg_key, 'Settings', winreg.REG_SZ, json.dumps(default_settings))
+        winreg.SetValue(reg_key, 'Settings', winreg.REG_SZ, json.dumps(default_settings, separators=(',', ':')))
         reg_key_data = default_settings
 
     if save_dict:
-        winreg.SetValue(reg_key, 'Settings', winreg.REG_SZ, json.dumps(save_dict))
+        winreg.SetValue(reg_key, 'Settings', winreg.REG_SZ, json.dumps(save_dict, separators=(',', ':')))
     else:
         return reg_key_data
 
