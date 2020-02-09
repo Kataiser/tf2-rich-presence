@@ -251,13 +251,14 @@ class TF2RichPresense:
                 if [d for d in (self.loc.text('Queued'), self.loc.text('Main menu')) if d in self.activity['assets']['large_text']]:
                     # if queued or on the main menu, simplify cmd output
                     print(self.loc.text(self.activity['details']))
+                    print(self.loc.text(self.activity['state']))
                 else:
                     print(f"{self.loc.text(self.activity['details'])} ({self.activity['assets']['large_text']})")
+                    print(self.loc.text(self.activity['state']))
 
                     if settings.get('map_time'):
                         print(class_line)  # this means the current class. god this desperately needs a refactor
 
-                print(self.loc.text(self.activity['state']))
                 print(colorama.Style.RESET_ALL, end='')
 
                 time_elapsed = datetime.timedelta(seconds=int(time.time() - p_data['TF2']['time']))
