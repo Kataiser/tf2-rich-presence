@@ -7,9 +7,7 @@ import custom_maps
 
 
 def main():
-    gamemodes = {gm: custom_maps.gamemodes_english[gm] for gm in custom_maps.gamemodes_english}
-
-    for image_filename in gamemodes.keys():
+    for image_filename in custom_maps.gamemodes.keys():
         print(image_filename)
         image_loaded = Image.open('map_thumbs source/' + image_filename + '.png')
 

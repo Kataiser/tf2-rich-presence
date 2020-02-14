@@ -117,12 +117,7 @@ class TF2RichPresense:
         self.has_seen_kataiser: bool = False
         self.old_console_log_mtime: Union[int, None] = None
         self.old_console_log_interpretation: tuple = ('', '')
-
-        # load maps database
-        maps_db_path = os.path.join('resources', 'maps.json') if os.path.isdir('resources') else 'maps.json'
-        with open(maps_db_path, 'r') as maps_db:
-            self.map_gamemodes: Dict[str, Tuple[str]] = json.load(maps_db)
-
+        self.map_gamemodes: dict = utils.load_maps_db()
         self.loop_iteration: int = 0
 
     def __repr__(self):
@@ -218,7 +213,7 @@ class TF2RichPresense:
                     bottom_line = self.loc.text("Class: {0}").format(self.loc.text(bottom_line))
 
                 try:
-                    map_fancy, current_gamemode, gamemode_fancy = self.map_gamemodes[top_line]
+                    map_fancy, current_gamemode, gamemode_fancy = self.map_gamemodes['official'][top_line]
                     map_out = map_fancy
                     self.activity['assets']['large_image'] = current_gamemode
                     self.activity['assets']['large_text'] = gamemode_fancy

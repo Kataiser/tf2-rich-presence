@@ -16,14 +16,18 @@ import utils
 
 # uses teamwork.tf's API to find the gamemode of a custom map
 def find_custom_map_gamemode(log, map_filename: str, force_api: bool = False, timeout: float = settings.get('request_timeout')) -> Tuple[str, str]:
-    gamemodes = {gm: gamemodes_english[gm] for gm in gamemodes_english}
-
     if map_filename == '':
         log.error("Map filename is blank")
         return 'unknown_map', 'Unknown gamemode'
 
     log.debug(f"Finding gamemode for custom map: {map_filename}")
     seconds_since_epoch_now: int = int(time.time())
+
+    map_gamemodes: dict = utils.load_maps_db()
+    if map_filename in map_gamemodes['common_custom']:
+        gamemode = map_gamemodes['common_custom'][map_filename]
+        log.debug(f"Found it in maps.json: {gamemode}")
+        return gamemode
 
     # to avoid constantly using internet, each map is cached to DB.json
     custom_map_gamemodes = access_custom_maps_cache()
@@ -99,13 +103,13 @@ def access_custom_maps_cache(dict_input: Union[dict, None] = None) -> dict:
         return utils.access_db()['custom_maps']
 
 
-gamemodes_english: Dict[str, str] = {'ctf': 'Capture the Flag', 'control-point': 'Control Point', 'attack-defend': 'Attack/Defend', 'medieval-mode': 'Attack/Defend (Medieval Mode)',
-                                     'territorial-control': 'Territorial Control', 'payload': 'Payload', 'payload-race': 'Payload Race', 'koth': 'King of the Hill',
-                                     'special-delivery': 'Special Delivery', 'mvm': 'Mann vs. Machine', 'beta-map': 'Robot Destruction', 'mannpower': 'Mannpower', 'passtime': 'PASS Time',
-                                     'player-destruction': 'Player Destruction', 'arena': 'Arena', 'training': 'Training', 'surfing': 'Surfing', 'trading': 'Trading', 'jumping': 'Jumping',
-                                     'deathmatch': 'Deathmatch', 'cp-orange': 'Orange', 'versus-saxton-hale': 'Versus Saxton Hale', 'deathrun': 'Deathrun', 'achievement': 'Achievement',
-                                     'breakout': 'Jail Breakout', 'slender': 'Slender', 'dodgeball': 'Dodgeball', 'mario-kart': 'Mario Kart', 'prophunt': 'Prop Hunt',
-                                     'class-wars': 'Class Wars', 'stop-that-tank': 'Stop that Tank!'}
+gamemodes: Dict[str, str] = {'ctf': 'Capture the Flag', 'control-point': 'Control Point', 'attack-defend': 'Attack/Defend', 'medieval-mode': 'Attack/Defend (Medieval Mode)',
+                             'territorial-control': 'Territorial Control', 'payload': 'Payload', 'payload-race': 'Payload Race', 'koth': 'King of the Hill',
+                             'special-delivery': 'Special Delivery', 'mvm': 'Mann vs. Machine', 'beta-map': 'Robot Destruction', 'mannpower': 'Mannpower', 'passtime': 'PASS Time',
+                             'player-destruction': 'Player Destruction', 'arena': 'Arena', 'training': 'Training', 'surfing': 'Surfing', 'trading': 'Trading', 'jumping': 'Jumping',
+                             'deathmatch': 'Deathmatch', 'cp-orange': 'Orange', 'versus-saxton-hale': 'Versus Saxton Hale', 'deathrun': 'Deathrun', 'achievement': 'Achievement',
+                             'breakout': 'Jail Breakout', 'slender': 'Slender', 'dodgeball': 'Dodgeball', 'mario-kart': 'Mario Kart', 'prophunt': 'Prop Hunt',
+                             'class-wars': 'Class Wars', 'stop-that-tank': 'Stop that Tank!'}
 
 if __name__ == '__main__':
     print(find_custom_map_gamemode(logger.Log(), 'cp_catwalk_a5c', False))
