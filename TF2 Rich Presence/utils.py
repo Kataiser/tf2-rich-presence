@@ -34,12 +34,3 @@ def get_api_key(service):
 
     with gzip.open(apis_path, 'r') as api_keys_file:
         return json.load(api_keys_file)[service]
-
-
-# load maps database from maps.json
-@functools.lru_cache(maxsize=None)
-def load_maps_db() -> dict:
-    maps_db_path = os.path.join('resources', 'maps.json') if os.path.isdir('resources') else 'maps.json'
-    with open(maps_db_path, 'r') as maps_db:
-        return json.load(maps_db)
-

@@ -117,7 +117,7 @@ class TF2RichPresense:
         self.has_seen_kataiser: bool = False
         self.old_console_log_mtime: Union[int, None] = None
         self.old_console_log_interpretation: tuple = ('', '')
-        self.map_gamemodes: dict = utils.load_maps_db()
+        self.map_gamemodes: dict = custom_maps.load_maps_db()
         self.loop_iteration: int = 0
 
     def __repr__(self):

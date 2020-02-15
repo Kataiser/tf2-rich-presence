@@ -88,7 +88,7 @@ def map_stats() -> dict:
 
 def map_explorer() -> dict:
     custom_map_gamemodes = {}
-    official_maps = utils.load_maps_db()['official']
+    official_maps = custom_maps.load_maps_db()['official']
 
     r = requests.get('https://teamwork.tf/community/map-explorer')
     soup = BeautifulSoup(r.text, 'lxml')
