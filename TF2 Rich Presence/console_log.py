@@ -40,7 +40,7 @@ def interpret(self, console_log_path: str, user_usernames: list, tf2_start_time:
 
     # TF2 takes some time to load the console when starting up, so wait a few seconds to avoid getting outdated information
     tf2_uptime = round(time.time()) - tf2_start_time
-    if tf2_uptime < 15:
+    if tf2_uptime < 30:
         self.log.debug(f"TF2's uptime is {tf2_uptime} seconds, assuming default state")
         return current_map, current_class
 
