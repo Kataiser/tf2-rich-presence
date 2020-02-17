@@ -48,7 +48,7 @@ def class_config_files(log, exe_location: str):
 
 # reads steams launch options save file to find -condebug
 @functools.lru_cache(maxsize=1)
-def steam_config_file(log, exe_location: str) -> list:
+def steam_config_file(log, exe_location: str, tf2_is_running: bool = False) -> list:
     log.debug("Looking for -condebug")
     found_condebug: bool = False
     found_usernames: List[str] = []
@@ -99,9 +99,9 @@ def steam_config_file(log, exe_location: str) -> list:
 
     if not found_condebug:
         log.debug("-condebug not found, telling user")
-        # yell at the user to fix their settings
         del log
-        console_log.no_condebug_warning()
+        # yell at the user to fix their settings
+        console_log.no_condebug_warning(tf2_is_running)
     else:
         log.debug(f"Usernames with -condebug: {found_usernames}")
         return found_usernames

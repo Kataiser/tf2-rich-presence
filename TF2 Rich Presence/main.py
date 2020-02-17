@@ -147,7 +147,7 @@ class TF2RichPresense:
 
         if p_data['Steam']['running'] and len(p_data) == 3:
             # reads a steam config file
-            valid_usernames: List[str] = configs.steam_config_file(self.log, p_data['Steam']['path'])
+            valid_usernames: List[str] = configs.steam_config_file(self.log, p_data['Steam']['path'], p_data['TF2']['running'])
 
         # used for display only
         current_time = datetime.datetime.now().strftime('%I:%M:%S %p')
