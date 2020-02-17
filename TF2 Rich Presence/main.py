@@ -1,4 +1,5 @@
 # cython: language_level=3
+
 """Discord Rich Presence for Team Fortress 2"""
 
 # TF2 Rich Presence
@@ -22,7 +23,6 @@
 
 import copy
 import datetime
-import json
 import os
 import platform
 import time

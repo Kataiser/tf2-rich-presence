@@ -142,7 +142,7 @@ def main(version_num='v1.12.1'):
     files_to_copy = [('maps.json', Path(f'{new_build_folder_name}/resources/')),
                      ('localization.json', Path(f'{new_build_folder_name}/resources/')),
                      ('DB_default.json', Path(f'{new_build_folder_name}/resources/')),
-                     ('LICENSE', Path(f'{new_build_folder_name}/resources/')),
+                     ('LICENSE', new_build_folder_name),
                      ('launcher.py', Path(f'{new_build_folder_name}/resources/')),
                      ('Readme.txt', Path(f'{new_build_folder_name}/')),
                      ('Launch TF2 with Rich Presence.bat', Path(f'{new_build_folder_name}/')),
@@ -176,7 +176,9 @@ def main(version_num='v1.12.1'):
         except UnicodeDecodeError:
             print("Copied", shutil.copy(*file_dest_pair))
 
+    # rename a couple files
     os.rename(Path(f'{new_build_folder_name}/resources/DB_default.json'), Path(f'{new_build_folder_name}/resources/DB.json'))
+    os.rename(Path(f'{new_build_folder_name}/LICENSE'), Path(f'{new_build_folder_name}/License.txt'))
 
     # build PYDs using Cython and copy them in
     subprocess.run(f'{sys.executable} cython_compile.py build_ext --inplace')
