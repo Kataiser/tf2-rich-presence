@@ -18,7 +18,7 @@ import changelog_generator
 
 
 # TODO: don't do this seperate locations nonsense, convert to using a repo properly
-def main(version_num='v1.12.1'):
+def main(version_num='v1.13'):
     print(f"Building TF2 Rich Presence {version_num}")
 
     parser = argparse.ArgumentParser()
@@ -39,7 +39,7 @@ def main(version_num='v1.12.1'):
         else:
             github_repo_path = input("Github repo path ('n' to skip): ")
 
-        if github_repo_path != 'n':
+        if github_repo_path != 'n' and os.path.isdir(github_repo_path):
             with open('last_repo_path.txt', 'w') as last_repo_path_file:
                 last_repo_path_file.write(github_repo_path)
 
