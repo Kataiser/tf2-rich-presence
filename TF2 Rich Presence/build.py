@@ -90,7 +90,7 @@ def main(version_num='v1.12.1'):
         print("Copied", shutil.copy('README-source.MD', github_repo_path))
         print("Copied", shutil.copy('requirements.txt', github_repo_path))
         print("Copied", shutil.copy('pycs_to_delete.txt', Path(f'{github_repo_path}/TF2 Rich Presence')))
-        print("Copied", shutil.copy('python-3.7.5-embed-win32.zip', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('python-3.7.6-embed-win32.zip', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copyfile(Path(f'{github_repo_path}/TF2 Rich Presence/DB_default.json'), Path(f'{github_repo_path}/TF2 Rich Presence/DB.json')))
 
         copy_dir_to_git('test_resources', Path(f'{github_repo_path}/TF2 Rich Presence/test_resources'))
@@ -205,7 +205,7 @@ def main(version_num='v1.12.1'):
                         f"\nLatest commit: {latest_commit}")
 
     # copies the python interpreter
-    python_source = os.path.abspath('python-3.7.5-embed-win32')
+    python_source = os.path.abspath('python-3.7.6-embed-win32')
     python_target = os.path.abspath(Path(f'{new_build_folder_name}/resources/python'))
     print(f"Copying from {python_source}\n\tto {python_target}: ", end='')
     assert os.path.isdir(python_source) and not os.path.isdir(python_target)
