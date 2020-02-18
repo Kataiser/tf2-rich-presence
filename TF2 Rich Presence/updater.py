@@ -68,7 +68,7 @@ def access_github_api(time_limit: float) -> Tuple[str, str, str]:
     downloads_url_api: str = response['html_url']
     changelog_api: str = response['body']
 
-    changelog_formatted: str = f'  {changelog_api}'.replace('## ', '').replace('\n-', '\n -').replace('\n', '\n  ')
+    changelog_formatted: str = f'  {changelog_api}'.replace('## ', '').replace('\n- ', '\n - ').replace('\n', '\n  ')
     return newest_version_api, downloads_url_api, changelog_formatted
 
 
