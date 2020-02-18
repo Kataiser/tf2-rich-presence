@@ -21,7 +21,7 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit=settin
 
     match_types: Dict[str, str] = {'match group 12v12 Casual Match': 'Casual', 'match group MvM Practice': 'MvM (Boot Camp)', 'match group MvM MannUp': 'MvM (Mann Up)',
                                    'match group 6v6 Ladder Match': 'Competitive'}
-    menus_messages: tuple = ('Server shutting down', 'Steam config directory', 'Lobby destroyed', 'Disconnect:', 'Missing map', 'For FCVAR_REPLICATED')
+    menus_messages: tuple = ('Server shutting down', 'For FCVAR_REPLICATED', '[TF Workshop]', 'Lobby destroyed', 'Disconnect:', 'Missing map')
     menus_message: str
     tf2_classes: tuple = ('Scout', 'Soldier', 'Pyro', 'Demoman', 'Heavy', 'Engineer', 'Medic', 'Sniper', 'Spy')
 
