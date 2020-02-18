@@ -13,7 +13,7 @@ import settings
 
 
 # reads a console.log and returns current map and class
-def interpret(self, console_log_path: str, user_usernames: list, tf2_start_time: int = 0, kb_limit=settings.get('console_scan_kb'), force=False) -> tuple:
+def interpret(self, console_log_path: str, user_usernames: list, kb_limit=settings.get('console_scan_kb'), force=False, tf2_start_time: int = int(time.time())) -> tuple:
     # defaults
     current_map: str = 'In menus'
     current_class: str = 'Not queued'

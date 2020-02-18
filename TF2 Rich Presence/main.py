@@ -160,7 +160,7 @@ class TF2RichPresense:
                 self.has_checked_class_configs = True
 
             console_log_path = os.path.join(p_data['TF2']['path'], 'tf', 'console.log')
-            top_line, bottom_line = self.interpret_console_log(console_log_path, valid_usernames, p_data['TF2']['time'])
+            top_line, bottom_line = self.interpret_console_log(console_log_path, valid_usernames, tf2_start_time=p_data['TF2']['time'])
             # TODO: use a state machine and much more consistent var names
 
             if top_line == 'In menus':
