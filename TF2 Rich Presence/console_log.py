@@ -21,8 +21,8 @@ def interpret(self, console_log_path: str, user_usernames: list, tf2_start_time:
 
     match_types: Dict[str, str] = {'match group 12v12 Casual Match': 'Casual', 'match group MvM Practice': 'MvM (Boot Camp)', 'match group MvM MannUp': 'MvM (Mann Up)',
                                    'match group 6v6 Ladder Match': 'Competitive'}
-    disconnect_messages: tuple = ('Server shutting down', 'Steam config directory', 'Lobby destroyed', 'Disconnect:', 'Missing map')
-    disconnect_message: str
+    menus_messages: tuple = ('Server shutting down', 'Steam config directory', 'Lobby destroyed', 'Disconnect:', 'Missing map', 'For FCVAR_REPLICATED')
+    menus_message: str
     tf2_classes: tuple = ('Scout', 'Soldier', 'Pyro', 'Demoman', 'Heavy', 'Engineer', 'Medic', 'Sniper', 'Spy')
 
     hide_queued_gamemode: bool = settings.get('hide_queued_gamemode')
@@ -38,17 +38,17 @@ def interpret(self, console_log_path: str, user_usernames: list, tf2_start_time:
         del self.log
         no_condebug_warning(tf2_is_running=True)
 
-    # TF2 takes some time to load the console when starting up, so wait a few seconds to avoid getting outdated information
-    tf2_uptime = round(time.time()) - tf2_start_time
-    if tf2_uptime < 30:
-        self.log.debug(f"TF2's uptime is {tf2_uptime} seconds, assuming default state")
-        return current_map, current_class
-
     # only interpret console.log again if it's been modified
     console_log_mtime = os.stat(console_log_path).st_mtime
     if not force and console_log_mtime == self.old_console_log_mtime:
         self.log.debug(f"Not rescanning console.log, remaining on {self.old_console_log_interpretation}")
         return self.old_console_log_interpretation
+
+    # TF2 takes some time to load the console when starting up, so until it's been modified to avoid getting outdated information
+    console_log_mtime_relative = console_log_mtime - (round(time.time()) - tf2_start_time)
+    if console_log_mtime_relative < 0:
+        self.log.debug(f"console.log's mtime relative to TF2's start time is {console_log_mtime_relative}, assuming default state")
+        return current_map, current_class
 
     consolelog_file_size: int = os.stat(consolelog_filename).st_size
     byte_limit = kb_limit * 1024
@@ -101,8 +101,8 @@ def interpret(self, console_log_path: str, user_usernames: list, tf2_start_time:
             current_class = 'Not queued'
             line_used = line
 
-        for disconnect_message in disconnect_messages:
-            if disconnect_message in line:
+        for menus_message in menus_messages:
+            if menus_message in line:
                 current_map = 'In menus'
                 current_class = 'Not queued'
                 line_used = line
