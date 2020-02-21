@@ -11,4 +11,4 @@ INSTALLATION AND RUNNING INSTRUCTIONS:
 For faster launching, you can add the first EXE to your taskbar/start menu/desktop, or to Steam as a non-Steam game.
 
 HELP! It broke! (Or otherwise functioned incorrectly)
-Feel free to create an issue over at https://github.com/Kataiser/tf2-rich-presence/issues. Be sure to copy the file in the "logs" folder.
+Feel free to create an issue over at https://github.com/Kataiser/tf2-rich-presence/issues. Be sure to include the most recent file in the "logs" folder.
