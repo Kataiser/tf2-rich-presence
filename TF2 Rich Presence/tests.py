@@ -63,7 +63,8 @@ class TestTF2RichPresense(unittest.TestCase):
 
         custom_maps.access_custom_maps_cache({})  # flush cache
 
-        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'dr_undertale_finished_v2fix2', False, 5)), ('deathrun', 'Deathrun'))
+        # test a map in common_custom (in maps.json)
+        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'plr_highertower', False, 5)), ('payload-race', 'Payload Race'))
 
         # don't use cache, force using the API (5 second timeout)
         self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'cp_catwalk_a5c', True, 5)), ('control-point', 'Control Point'))

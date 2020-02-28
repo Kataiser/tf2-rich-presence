@@ -2,13 +2,13 @@
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 
 import json
+import sys
 
 import requests
 from bs4 import BeautifulSoup
 
 import custom_maps
 import logger
-import utils
 
 
 def main():
@@ -27,37 +27,34 @@ def main():
 
 
 def official() -> dict:
-    gamemodes_reversed = {custom_maps.gamemodes[key]: key for key in custom_maps.gamemodes}
+    gamemodes = {custom_maps.gamemodes[key]: key for key in custom_maps.gamemodes}  # reversed key/value order
+    gamemodes['Attack/Defend (Medieval)'] = 'attack-defend'
+    gamemodes['Control Point (Domination)'] = 'control-point'
+    gamemodes['No gamemode'] = 'beta-map'
+    gamemode_replacements = [('d(M', 'd (M'), ('t(D', 't (D'), (' Mode', ''), ('Developer aidTest', 'No gamemode'), ('Developer aidControl Point', 'Control Point')]
     map_gamemodes = {}
 
     r = requests.get('https://wiki.teamfortress.com/wiki/List_of_maps')
     soup = BeautifulSoup(r.text, 'lxml')
 
     for tr in soup.find_all('tr'):
-        map_file, map_name, map_mode = (None, None, None)
+        try:
+            map_file = tr.find('code').text
+            map_name = tr.find('b').text
+        except AttributeError:
+            continue
 
-        for code in tr.find_all('code'):
-            map_file = code.text
+        gamemode_fancy = tr.find_all('td')[2].text[1:-1]
 
-        for bold in tr.find_all('b'):
-            map_name = bold.text
+        for replacemment in gamemode_replacements:
+            gamemode_fancy = gamemode_fancy.replace(*replacemment)
 
-        for td in tr.find_all('td'):
-            gamemode_fancy = td.text[1:-1]
-
-            if gamemode_fancy in gamemodes_reversed:
-                map_mode = gamemodes_reversed[gamemode_fancy]
-                break
+        map_mode = gamemodes[gamemode_fancy]
 
         if map_mode and map_name:
             map_file = map_file.replace(' ', '')
-            print(map_file)
-            gamemode_replacements = [('d(M', 'd (M'), ('t(D', 't (D'), (' Mode', ''), ('Developer aidTest', 'No gamemode'), ('Developer aidControl Point', 'Control Point')]
-
-            for replacemment in gamemode_replacements:
-                gamemode_fancy = gamemode_fancy.replace(*replacemment)
-
             map_gamemodes[map_file] = (map_name, map_mode, gamemode_fancy)
+            print(f"{map_file}: {map_gamemodes[map_file]}")
 
     return map_gamemodes
 
@@ -75,13 +72,13 @@ def map_stats() -> dict:
         if div.get('id') == 'topavgplayernonofficial':
             for a in div.find_all('a'):
                 map_file = a.find('strong').text.strip()
-                print(map_file)
                 map_mode = custom_maps.find_custom_map_gamemode(log, map_file, timeout=10)
 
                 if map_mode[0] == 'unknown_map':
-                    print(f"FAILED: {map_file}")
+                    print(f"FAILED: {map_file}", file=sys.stderr)
                 else:
                     custom_map_gamemodes[map_file] = map_mode
+                    print(f"{map_file}: {custom_map_gamemodes[map_file]}")
 
     return custom_map_gamemodes
 
@@ -103,18 +100,20 @@ def map_explorer() -> dict:
 
         if map_file not in official_maps:
             map_mode = custom_maps.find_custom_map_gamemode(log, map_file, timeout=10)
-            print(map_file)
 
             if map_mode[0] == 'unknown_map':
-                print(f"FAILED: {map_file}")
-            elif map_file == 'cp_degrootkeep':
-                custom_map_gamemodes[map_file] = ('medieval-mode', 'Control Point (Medieval Mode)')
-            elif map_file == 'cp_dustbowl_forest':
-                custom_map_gamemodes[map_file] = ('control-point', 'Control Point')
-            elif map_file == 'vsh_towertop_final':
-                custom_map_gamemodes[map_file] = ('versus-saxton-hale', 'Versus Saxton Hale')
+                print(f"FAILED: {map_file}", file=sys.stderr)
             else:
-                custom_map_gamemodes[map_file] = map_mode
+                if map_file == 'cp_degrootkeep':
+                    custom_map_gamemodes[map_file] = ('medieval-mode', 'Control Point (Medieval Mode)')
+                elif map_file == 'cp_dustbowl_forest':
+                    custom_map_gamemodes[map_file] = ('control-point', 'Control Point')
+                elif map_file == 'vsh_towertop_final':
+                    custom_map_gamemodes[map_file] = ('versus-saxton-hale', 'Versus Saxton Hale')
+                else:
+                    custom_map_gamemodes[map_file] = map_mode
+
+                print(f"{map_file}: {custom_map_gamemodes[map_file]}")
 
     return custom_map_gamemodes
 
