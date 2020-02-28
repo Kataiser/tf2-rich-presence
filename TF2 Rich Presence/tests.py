@@ -187,14 +187,22 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual(client_state, ('429389143756374017', False, '\\\\?\\pipe\\discord-ipc-0', True, 'windows', None))
 
     def test_generate_delta(self):
-        app = main.TF2RichPresense(self.log)
+        localizer1 = localization.Localizer(language='English')
+        localizer2 = localization.Localizer(language='Spanish')
 
-        self.assertEqual(app.generate_delta(time.time() - 1), ' (+1 second)')
-        self.assertEqual(app.generate_delta(time.time() - 10), ' (+10 seconds)')
-        self.assertEqual(app.generate_delta(time.time() - 100), ' (+1.7 minutes)')
-        self.assertEqual(app.generate_delta(time.time() - 1000), ' (+16.7 minutes)')
-        self.assertEqual(app.generate_delta(time.time() - 10000), ' (+2.8 hours)')
-        self.assertEqual(app.generate_delta(time.time() - 100000), ' (+1.2 days)')
+        self.assertEqual(utils.generate_delta(localizer1, time.time() - 1), ' (+1 second)')
+        self.assertEqual(utils.generate_delta(localizer1, time.time() - 10), ' (+10 seconds)')
+        self.assertEqual(utils.generate_delta(localizer1, time.time() - 100), ' (+1.7 minutes)')
+        self.assertEqual(utils.generate_delta(localizer1, time.time() - 1000), ' (+16.7 minutes)')
+        self.assertEqual(utils.generate_delta(localizer1, time.time() - 10000), ' (+2.8 hours)')
+        self.assertEqual(utils.generate_delta(localizer1, time.time() - 100000), ' (+1.2 days)')
+
+        self.assertEqual(utils.generate_delta(localizer2, time.time() - 1), ' (+1 segundo)')
+        self.assertEqual(utils.generate_delta(localizer2, time.time() - 10), ' (+10 segundos)')
+        self.assertEqual(utils.generate_delta(localizer2, time.time() - 100), ' (+1.7 minutos)')
+        self.assertEqual(utils.generate_delta(localizer2, time.time() - 1000), ' (+16.7 minutos)')
+        self.assertEqual(utils.generate_delta(localizer2, time.time() - 10000), ' (+2.8 horas)')
+        self.assertEqual(utils.generate_delta(localizer2, time.time() - 100000), ' (+1.2 días)')
 
     def test_process_scanning(self):
         process_scanner = processes.ProcessScanner(self.log)

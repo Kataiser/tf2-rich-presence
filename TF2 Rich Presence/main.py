@@ -241,7 +241,7 @@ class TF2RichPresense:
 
             if activity_comparison != self.old_activity1:
                 # output to terminal, just for monitoring
-                print(f"{self.current_time_formatted}{self.generate_delta(self.last_notify_time)}{colorama.Style.BRIGHT}")
+                print(f"{self.current_time_formatted}{utils.generate_delta(self.loc, self.last_notify_time)}{colorama.Style.BRIGHT}")
 
                 if [d for d in (self.loc.text('Queued'), self.loc.text('Main menu')) if d in self.activity['assets']['large_text']]:
                     # if queued or on the main menu, simplify cmd output
@@ -296,7 +296,7 @@ class TF2RichPresense:
                 self.log.info(f"TF2 isn't running (mentioning to user: {self.should_mention_tf2})")
 
                 if self.should_mention_tf2:
-                    print(f'{self.current_time_formatted}{self.generate_delta(self.last_notify_time)}{colorama.Style.BRIGHT}')
+                    print(f'{self.current_time_formatted}{utils.generate_delta(self.loc, self.last_notify_time)}{colorama.Style.BRIGHT}')
                     print(self.loc.text("Team Fortress 2 isn't running"))
                     print(colorama.Style.RESET_ALL)
                     self.should_mention_discord = True
@@ -311,7 +311,7 @@ class TF2RichPresense:
             self.log.info(f"Discord isn't running (mentioning to user: {self.should_mention_discord})")
 
             if self.should_mention_discord:
-                print(f'{self.current_time_formatted}{self.generate_delta(self.last_notify_time)}{colorama.Style.BRIGHT}')
+                print(f'{self.current_time_formatted}{utils.generate_delta(self.loc, self.last_notify_time)}{colorama.Style.BRIGHT}')
                 print(self.loc.text("Discord isn't running"))
                 print(colorama.Style.RESET_ALL)
                 self.should_mention_discord = False
@@ -323,37 +323,6 @@ class TF2RichPresense:
     # reads a console.log and returns current map and class
     def interpret_console_log(self, *args, **kwargs) -> tuple:
         return console_log.interpret(self, *args, **kwargs)
-
-    # generate text that displays the difference between now and old_time
-    def generate_delta(self, old_time: Union[float, None]) -> str:
-        if old_time:
-            time_diff = round(time.time() - old_time)
-
-            if time_diff > 86400:
-                divided_diff = round(time_diff / 86400, 1)
-                if divided_diff == 1:
-                    return f" (+{divided_diff} {self.loc.text('day')})"
-                else:
-                    return f" (+{divided_diff} {self.loc.text('days')})"
-            elif time_diff > 3600:
-                divided_diff = round(time_diff / 3600, 1)
-                if divided_diff == 1:
-                    return f" (+{divided_diff} {self.loc.text('hour')})"
-                else:
-                    return f" (+{divided_diff} {self.loc.text('hours')})"
-            elif time_diff > 60:
-                divided_diff = round(time_diff / 60, 1)
-                if divided_diff == 1:
-                    return f" (+{divided_diff} {self.loc.text('minute')})"
-                else:
-                    return f" (+{divided_diff} {self.loc.text('minutes')})"
-            else:
-                if time_diff == 1:
-                    return f" (+{time_diff} {self.loc.text('second')})"
-                else:
-                    return f" (+{time_diff} {self.loc.text('seconds')})"
-        else:
-            return ""
 
     # sends localized RPC data, connecting to Discord initially if need be
     def send_rpc_activity(self):
