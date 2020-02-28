@@ -3,7 +3,6 @@
 # cython: language_level=3
 
 import os
-import time
 from typing import Dict, List, Union
 
 import colorama
@@ -13,7 +12,7 @@ import settings
 
 
 # reads a console.log and returns current map and class
-def interpret(self, console_log_path: str, user_usernames: list, kb_limit=settings.get('console_scan_kb'), force=False, tf2_start_time: int = int(time.time())) -> tuple:
+def interpret(self, console_log_path: str, user_usernames: list, kb_limit=settings.get('console_scan_kb'), force=False) -> tuple:
     # defaults
     current_map: str = 'In menus'
     current_class: str = 'Not queued'
@@ -28,7 +27,7 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit=settin
     hide_queued_gamemode: bool = settings.get('hide_queued_gamemode')
     user_is_kataiser: bool = 'Kataiser' in user_usernames
 
-    # console.log is a log of tf2's console (duh), only exists if tf2 has -condebug (see the bottom of config_files)
+    # console.log is a log of tf2's console (duh), only exists if tf2 has -condebug (see no_condebug_warning())
     consolelog_filename: Union[bytes, str] = console_log_path
     self.log.debug(f"Looking for console.log at {consolelog_filename}")
     self.log.console_log_path = consolelog_filename
@@ -43,12 +42,6 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit=settin
     if not force and console_log_mtime == self.old_console_log_mtime:
         self.log.debug(f"Not rescanning console.log, remaining on {self.old_console_log_interpretation}")
         return self.old_console_log_interpretation
-
-    # TF2 takes some time to load the console when starting up, so until it's been modified to avoid getting outdated information
-    console_log_mtime_relative = console_log_mtime - (round(time.time()) - tf2_start_time)
-    if console_log_mtime_relative < 0:
-        self.log.debug(f"console.log's mtime relative to TF2's start time is {console_log_mtime_relative}, assuming default state")
-        return current_map, current_class
 
     consolelog_file_size: int = os.stat(consolelog_filename).st_size
     byte_limit = kb_limit * 1024
