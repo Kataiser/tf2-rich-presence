@@ -232,6 +232,7 @@ class TF2RichPresense:
 
             self.activity['details'] = top_line
             self.activity['state'] = bottom_line
+            og_large_text = self.activity['assets']['large_text']  # why
             self.activity['assets']['large_text'] = self.loc.text(self.activity['assets']['large_text'])
             self.activity['timestamps']['start'] = p_data['TF2']['time']
 
@@ -243,7 +244,7 @@ class TF2RichPresense:
                 # output to terminal, just for monitoring
                 print(f"{self.current_time_formatted}{utils.generate_delta(self.loc, self.last_notify_time)}{colorama.Style.BRIGHT}")
 
-                if [d for d in (self.loc.text('Queued'), self.loc.text('Main menu')) if d in self.activity['assets']['large_text']]:
+                if [d for d in ('Queued', 'Main menu') if d in og_large_text]:
                     # if queued or on the main menu, simplify cmd output
                     print(self.loc.text(self.activity['details']))
                     print(self.loc.text(self.activity['state']))
