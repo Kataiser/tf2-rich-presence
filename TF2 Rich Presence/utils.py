@@ -28,7 +28,7 @@ def access_db(write: dict = None) -> dict:
 
 # get API key from the 'APIs' file
 @functools.lru_cache(maxsize=None)
-def get_api_key(service: str) -> dict:
+def get_api_key(service: str) -> str:
     if os.path.isdir('resources'):
         apis_path = os.path.join('resources', 'APIs')
     else:
