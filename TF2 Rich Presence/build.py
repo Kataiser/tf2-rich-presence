@@ -4,6 +4,7 @@
 import argparse
 import compileall
 import datetime
+import getpass
 import json
 import os
 import shutil
@@ -196,12 +197,15 @@ def main(version_num='v1.13'):
         got_latest_commit = False
         get_latest_commit_error = error
         latest_commit = ''
-    with open(Path(f'{new_build_folder_name}/resources/build_info.txt'), 'w') as info_file:
-        info_file.write(f"TF2 Rich Presence by Kataiser"
-                        "\nhttps://github.com/Kataiser/tf2-rich-presence"
-                        f"\n\nVersion: {version_num}"
-                        f"\nBuilt: {datetime.datetime.utcnow().strftime('%c')} UTC"
-                        f"\nLatest commit: {latest_commit}")
+    git_username = subprocess.run('git config user.name', capture_output=True).stdout.decode('UTF8')[:-1]
+    build_info_path = Path(f'{new_build_folder_name}/resources/build_info.txt')
+    with open(build_info_path, 'w') as build_info_txt:
+        build_info_txt.write(f"TF2 Rich Presence by Kataiser"
+                             "\nhttps://github.com/Kataiser/tf2-rich-presence"
+                             f"\n\nVersion: {version_num}"
+                             f"\nBuilt at: {datetime.datetime.utcnow().strftime('%c')} UTC"
+                             f"\nBuilt by: {git_username}"
+                             f"\nLatest commit: {latest_commit}")
 
     # copies the python interpreter
     python_source = os.path.abspath('python-3.7.6-embed-win32')
@@ -232,6 +236,15 @@ def main(version_num='v1.13'):
     convert_bat_to_exe(os.path.abspath(Path(f'{new_build_folder_name}/Launch TF2 with Rich Presence.bat')), version_num, 'tf2_logo_blurple.ico')
     convert_bat_to_exe(os.path.abspath(Path(f'{new_build_folder_name}/Launch Rich Presence alongside TF2.bat')), version_num, 'tf2_logo_blurple.ico')
     convert_bat_to_exe(os.path.abspath(Path(f'{new_build_folder_name}/Change settings.bat')), version_num, 'tf2_logo_blurple_wrench.ico')
+
+    # append build.log to build_info.txt
+    build_log_exists = os.path.isfile('build.log')
+    if build_log_exists:
+        print("Appending build.log to build_info.txt")
+        with open('build.log', 'r') as build_log_file:
+            build_log = build_log_file.read().replace(getpass.getuser(), 'USER')
+        with open(build_info_path, 'a') as build_info_txt:
+            build_info_txt.write(f'\n\nBuild log:\n{build_log}')
 
     # generates zip package and an "installer" (a self extracting .7z as an exe), both with 7zip
     time.sleep(0.2)  # just to make sure everything is updated
@@ -316,6 +329,10 @@ def main(version_num='v1.13'):
         print("README-source doesn't exist, didn't build README.md", file=sys.stderr)
     if missing_pycs:
         print(f"Couldn't delete {len(missing_pycs)}/{len(pycs_to_delete)} PYCs: {missing_pycs}", file=sys.stderr)
+    if not build_log_exists:
+        print("build.log doesn't exist, consider setting up your IDE to save the console to a file", file=sys.stderr)
+    if git_username != 'Kataiser':
+        print(f"Please note that your git username ({git_username}) has been included in {build_info_path}")
 
     with open('Changelogs.html') as changelogs_html:
         if version_num not in changelogs_html.read():
