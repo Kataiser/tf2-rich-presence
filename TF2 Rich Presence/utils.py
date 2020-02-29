@@ -17,12 +17,12 @@ def access_db(write: dict = None) -> dict:
     db_path = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
 
     if write:
-        with open(db_path, 'w') as db_json:
+        with open(db_path, 'w', encoding='UTF8') as db_json:
             db_data = write
             db_json.truncate(0)
-            json.dump(db_data, db_json, indent=4)
+            json.dump(db_data, db_json, indent=4, ensure_ascii=False)
     else:
-        with open(db_path, 'r') as db_json:
+        with open(db_path, 'r', encoding='UTF8') as db_json:
             return json.load(db_json)
 
 
