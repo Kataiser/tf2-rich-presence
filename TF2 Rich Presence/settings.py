@@ -2,6 +2,7 @@
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 # cython: language_level=3
 
+import atexit
 import functools
 import json
 import os
@@ -34,6 +35,7 @@ class GUI(tk.Frame):
         tk.Frame.__init__(self, master)
         self.master = master
         check_int_command = self.register(check_int)
+        atexit.register(self.window_close_log)
 
         master.title(self.loc.text("TF2 Rich Presence ({0}) settings").format(launcher.VERSION))
         master.resizable(0, 0)  # disables resizing
@@ -342,6 +344,10 @@ class GUI(tk.Frame):
     # open the release page in the default browser
     def open_update_page(self):
         webbrowser.open(self.new_version_url)
+
+    # called by atexit
+    def window_close_log(self):
+        self.log.info("Closing settings window")
 
 
 # main entry point
