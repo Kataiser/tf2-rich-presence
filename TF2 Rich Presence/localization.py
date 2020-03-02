@@ -18,7 +18,6 @@ class Localizer:
         self.language = language
         self.missing_lines = []
         self.appending = appending  # if extending localization.json
-        self.localization_file_cached = access_localization_file()  # never read it again after startup
 
     def __repr__(self):
         return f"localization.Localizer ({self.language}, appending={self.appending}, {len(self.missing_lines)} missing lines)"
@@ -32,7 +31,7 @@ class Localizer:
             access_localization_file(append=(english_text_adler32, english_text))
             return english_text
 
-        if english_text_adler32 not in self.localization_file_cached:  # exclude that because it causes DB.json spam
+        if english_text_adler32 not in access_localization_file():  # exclude that because it causes DB.json spam
             if english_text not in self.missing_lines:
                 self.missing_lines.append(english_text)
 
@@ -48,9 +47,10 @@ class Localizer:
         if self.language == 'English':
             return english_text
         else:
-            return self.localization_file_cached[english_text_adler32][self.language]
+            return access_localization_file()[english_text_adler32][self.language]
 
 
+@functools.lru_cache(maxsize=1)
 def access_localization_file(append: Union[tuple, None] = None) -> dict:
     if os.path.isdir('resources'):
         localization_file_path = os.path.join('resources', 'localization.json')
