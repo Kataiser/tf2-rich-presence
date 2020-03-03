@@ -14,12 +14,12 @@ def main():
     targets = ('configs', 'console_log', 'custom_maps', 'detect_system_language', 'init', 'localization', 'logger', 'main', 'processes', 'settings', 'updater', 'utils', 'welcomer')
     og_cwd = os.getcwd()
 
-    if not os.path.isdir('pyx'):
-        os.mkdir('pyx')
+    if not os.path.isdir('cython_build'):
+        os.mkdir('cython_build')
 
     for target in targets:
-        shutil.copy2(f'{target}.py', os.path.join('pyx', f'{target}.py'))
-        os.chdir('pyx')
+        shutil.copy2(f'{target}.py', os.path.join('cython_build', f'{target}.py'))
+        os.chdir('cython_build')
         setup(name=target, ext_modules=cythonize(f'{target}.py', nthreads=2, annotate=True))
         os.chdir(og_cwd)
 

@@ -182,7 +182,7 @@ def main(version_num='v1.13'):
 
     # build PYDs using Cython and copy them in
     subprocess.run(f'{sys.executable} cython_compile.py build_ext --inplace')
-    pyds = [Path(f'pyx/{file}') for file in os.listdir('pyx') if file.endswith('.pyd')]
+    pyds = [Path(f'cython_build/{file}') for file in os.listdir('cython_build') if file.endswith('.pyd')]
     print(f"Compiled {len(pyds)} PYDs")
     for pyd in pyds:
         print("Copied", shutil.copy(pyd, Path(f'{new_build_folder_name}/resources/')))
