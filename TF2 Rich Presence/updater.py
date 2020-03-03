@@ -16,7 +16,7 @@ import utils
 
 
 # uses Github api to get the tag of the newest public release and compare it to the current version number, alerting the user if out of date
-def check_for_update(log: logger.Log, current_version: str, timeout: float):
+def check_for_update(log: logger.Log, current_version: str, timeout: int):
     loc = localization.Localizer(language=settings.get('language'))
 
     if not settings.get('check_updates'):
@@ -30,7 +30,7 @@ def check_for_update(log: logger.Log, current_version: str, timeout: float):
         newest_version, downloads_url, changelog = access_github_api(timeout)
     except requests.exceptions.Timeout:
         log.error(f"Update check timed out")
-        failure_message(current_version, f"timed out after {int(timeout)} seconds")
+        failure_message(current_version, f"timed out after {timeout} seconds")
     except requests.exceptions.ConnectionError:
         log.error(f"Connection error in updater: {traceback.format_exc()}")
         failure_message(current_version)
@@ -60,7 +60,7 @@ def check_for_update(log: logger.Log, current_version: str, timeout: float):
 
 
 # actually accesses the Github api, in a seperate function for tests
-def access_github_api(time_limit: float) -> Tuple[str, str, str]:
+def access_github_api(time_limit: int) -> Tuple[str, str, str]:
     r: Response = requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/releases/latest', timeout=time_limit)
 
     response: dict = r.json()

@@ -13,7 +13,7 @@ import traceback
 import webbrowser
 import winreg
 from tkinter import messagebox
-from typing import Any, Union
+from typing import Union
 
 import launcher
 import localization
@@ -359,7 +359,7 @@ def launch():
 
 # access a setting from any file, with a string that is the same as the variable name (cached, so settings changes won't be rechecked right away)
 @functools.lru_cache(maxsize=None)
-def get(setting: str) -> Any:
+def get(setting: str) -> Union[str, int, bool]:
     try:
         return access_registry()[setting]
     except FileNotFoundError:
@@ -386,7 +386,7 @@ def access_registry(save_dict: Union[dict, None] = None) -> dict:
 
 
 # either gets a settings default, or if return_dict, returns all defaults as a dict
-def get_setting_default(setting: str = '', return_all: bool = False) -> Any:
+def get_setting_default(setting: str = '', return_all: bool = False) -> Union[str, int, bool, dict]:
     defaults = {'sentry_level': 'All errors',
                 'wait_time': 2,
                 'map_invalidation_hours': 24,

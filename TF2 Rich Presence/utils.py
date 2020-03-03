@@ -41,22 +41,25 @@ def get_api_key(service: str) -> str:
 # generate text that displays the difference between now and old_time
 def generate_delta(loc, old_time: Union[float, None]) -> str:
     if old_time:
-        time_diff = round(time.time() - old_time)
+        time_diff: int = round(time.time() - old_time)
 
         if time_diff > 86400:
-            divided_diff = round(time_diff / 86400, 1)
+            divided_diff: float = round(time_diff / 86400, 1)
+
             if divided_diff == 1:
                 return f" (+{divided_diff} {loc.text('day')})"
             else:
                 return f" (+{divided_diff} {loc.text('days')})"
         elif time_diff > 3600:
-            divided_diff = round(time_diff / 3600, 1)
+            divided_diff: float = round(time_diff / 3600, 1)
+
             if divided_diff == 1:
                 return f" (+{divided_diff} {loc.text('hour')})"
             else:
                 return f" (+{divided_diff} {loc.text('hours')})"
         elif time_diff > 60:
-            divided_diff = round(time_diff / 60, 1)
+            divided_diff: float = round(time_diff / 60, 1)
+
             if divided_diff == 1:
                 return f" (+{divided_diff} {loc.text('minute')})"
             else:
