@@ -39,13 +39,14 @@ def launch():
     try:
         colorama.init()
 
+        allowed_modules = ('init', 'main', 'settings')
         parser = argparse.ArgumentParser()
-        parser.add_argument('--m', default='main', help="The module to launch (main or init)")
+        parser.add_argument('--m', default='main', help=f"The module to launch {allowed_modules}")
         parser.add_argument('--welcome_version', default='0', help="Which version of the welcome message to use (0 or 1)")
         args = parser.parse_args()
 
-        if args.m not in ('init', 'main'):
-            raise SystemError("--m must be \"init\" or \"main\"")
+        if args.m not in allowed_modules:
+            raise SystemError(f"--m must be in {allowed_modules}")
 
         old_dir = os.getcwd()
         if os.path.exists('resources\\'):
