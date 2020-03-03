@@ -97,7 +97,7 @@ def find_custom_map_gamemode(log, map_filename: str, force_api: bool = False, ti
 
 
 # reads or writes the cache of custom maps in DB.json
-def access_custom_maps_cache(dict_input: Union[dict, None] = None) -> dict:
+def access_custom_maps_cache(dict_input: Union[dict, None] = None) -> Dict[str, Union[str, int]]:
     if dict_input:
         db = utils.access_db()
         db['custom_maps'] = dict_input
@@ -108,7 +108,7 @@ def access_custom_maps_cache(dict_input: Union[dict, None] = None) -> dict:
 
 # load maps database from maps.json
 @functools.lru_cache(maxsize=None)
-def load_maps_db() -> dict:
+def load_maps_db() -> Dict[str, List[str]]:
     maps_db_path = os.path.join('resources', 'maps.json') if os.path.isdir('resources') else 'maps.json'
     with open(maps_db_path, 'r') as maps_db:
         return json.load(maps_db)

@@ -50,17 +50,17 @@ __email__ = "Mecharon1.gm@gmail.com"
 
 
 def launch():
-    log_main = logger.Log()
+    log_main: logger.Log = logger.Log()
     log_main.to_stderr = launcher.DEBUG
 
     try:
-        app = TF2RichPresense(log_main)
+        app: TF2RichPresense = TF2RichPresense(log_main)
         log_main.info(f"Starting TF2 Rich Presence {launcher.VERSION}")
         log_main.cleanup(20 if launcher.DEBUG else 10)
         log_main.debug(f"CPU: {psutil.cpu_count(logical=False)} cores, {psutil.cpu_count()} threads")
 
-        platform_info = {'architecture': platform.architecture, 'machine': platform.machine, 'system': platform.system, 'platform': platform.platform,
-                         'processor': platform.processor, 'python_version_tuple': platform.python_version_tuple}
+        platform_info: Dict[str] = {'architecture': platform.architecture, 'machine': platform.machine, 'system': platform.system, 'platform': platform.platform,
+                                    'processor': platform.processor, 'python_version_tuple': platform.python_version_tuple}
         for platform_part in platform_info:
             try:
                 if platform_part == 'platform':
@@ -71,8 +71,8 @@ def launch():
                 log_main.error(f"Exception during platform.{platform_part}(), skipping\n{traceback.format_exc()}")
         log_main.debug(f"Platform: {platform_info}")
 
-        default_settings = settings.get_setting_default(return_all=True)
-        current_settings = settings.access_registry()
+        default_settings: dict = settings.get_setting_default(return_all=True)
+        current_settings: dict = settings.access_registry()
         if current_settings == default_settings:
             log_main.debug("Current settings are default")
         else:
@@ -92,16 +92,16 @@ def launch():
 
 
 class TF2RichPresense:
-    def __init__(self, log):
+    def __init__(self, log: logger.Log):
         self.log: logger.Log = log
         self.activity: Dict[str, Union[str, Dict[str, int], Dict[str, str]]] = \
             {'details': 'In menus',  # this is what gets modified and sent to Discord via discoIPC
              'timestamps': {'start': int(time.time())},
              'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2', 'large_image': 'main_menu', 'large_text': 'Main menu'},
              'state': ''}
-        self.old_activity1: dict = {}  # for the console output
-        self.old_activity2: dict = {}  # for sending to Discord
-        self.activity_translated: dict = {}
+        self.old_activity1: Dict[str, Union[str, Dict[str, int], Dict[str, str]]] = {}  # for the console output
+        self.old_activity2: Dict[str, Union[str, Dict[str, int], Dict[str, str]]] = {}  # for sending to Discord
+        self.activity_translated: Dict[str, Union[str, Dict[str, int], Dict[str, str]]] = {}
         self.client_connected: bool = False
         self.client: Union[ipc.DiscordIPC, None] = None
         self.test_state: str = 'init'
@@ -117,7 +117,7 @@ class TF2RichPresense:
         self.has_seen_kataiser: bool = False
         self.old_console_log_mtime: Union[int, None] = None
         self.old_console_log_interpretation: tuple = ('', '')
-        self.map_gamemodes: dict = custom_maps.load_maps_db()
+        self.map_gamemodes: Dict[str] = custom_maps.load_maps_db()
         self.loop_iteration: int = 0
 
     def __repr__(self):
@@ -143,14 +143,14 @@ class TF2RichPresense:
             self.old_activity1['state'] = ''
 
         # this as a one-liner is beautiful :)
-        p_data = self.process_scanner.scan()
+        p_data: Dict[str, Dict[str, Union[bool, str, int, None]]] = self.process_scanner.scan()
 
         if p_data['Steam']['running'] and len(p_data) == 3:
             # reads a steam config file
             valid_usernames: List[str] = configs.steam_config_file(self.log, p_data['Steam']['path'], p_data['TF2']['running'])
 
         # used for display only
-        current_time = datetime.datetime.now().strftime('%I:%M:%S %p')
+        current_time: str = datetime.datetime.now().strftime('%I:%M:%S %p')
         self.current_time_formatted = current_time[1:] if current_time.startswith('0') else current_time
 
         if p_data['TF2']['running'] and p_data['Discord']['running']:
@@ -159,7 +159,9 @@ class TF2RichPresense:
                 configs.class_config_files(self.log, p_data['TF2']['path'])
                 self.has_checked_class_configs = True
 
-            console_log_path = os.path.join(p_data['TF2']['path'], 'tf', 'console.log')
+            console_log_path: str = os.path.join(p_data['TF2']['path'], 'tf', 'console.log')
+            top_line: str
+            bottom_line: str
             top_line, bottom_line = self.interpret_console_log(console_log_path, valid_usernames)
             # TODO: use a state machine and much more consistent var names
 
@@ -182,7 +184,7 @@ class TF2RichPresense:
                 else:
                     self.activity['assets']['large_image'] = 'main_menu'
                     self.activity['assets']['large_text'] = 'Main menu'
-            elif top_line != '':  # not in menus = in a game
+            else:  # not in menus = in a game
                 self.test_state = 'in game'
                 class_pic_type: str = settings.get('class_pic_type').lower()
 
@@ -226,17 +228,14 @@ class TF2RichPresense:
                     self.activity['assets']['large_text'] = "{0} {1}".format(custom_gamemode_fancy, self.loc.text("[custom/community map]"))
 
                 top_line = self.loc.text("Map: {0}").format(map_out)
-            else:
-                # console.log is empty or close to empty
-                pass
 
             self.activity['details'] = top_line
             self.activity['state'] = bottom_line
-            og_large_text = self.activity['assets']['large_text']  # why
+            og_large_text: str = self.activity['assets']['large_text']  # why
             self.activity['assets']['large_text'] = self.loc.text(self.activity['assets']['large_text'])
             self.activity['timestamps']['start'] = p_data['TF2']['time']
 
-            activity_comparison = copy.deepcopy(self.activity)
+            activity_comparison: Dict[str, Union[str, Dict[str, int], Dict[str, str]]] = copy.deepcopy(self.activity)
             if self.loc.text("Time on map: {0}").replace('{0}', '') in activity_comparison['state']:
                 activity_comparison['state'] = ''
 
@@ -322,7 +321,7 @@ class TF2RichPresense:
         return self.client_connected, self.client
 
     # reads a console.log and returns current map and class
-    def interpret_console_log(self, *args, **kwargs) -> tuple:
+    def interpret_console_log(self, *args, **kwargs) -> Tuple[str, str]:
         return console_log.interpret(self, *args, **kwargs)
 
     # sends localized RPC data, connecting to Discord initially if need be
@@ -353,7 +352,7 @@ class TF2RichPresense:
             self.client_connected = True
         except Exception as client_connect_error:
             if str(client_connect_error) in ("Can't send data to Discord via IPC.", "Can't connect to Discord Client."):
-                # often happens when Discord is in the middle of starting up
+                # often happens when Discord is in the middle of starting up. report it anyway
                 self.log.error(str(client_connect_error))
 
                 print(f'{self.current_time_formatted}{colorama.Style.BRIGHT}')

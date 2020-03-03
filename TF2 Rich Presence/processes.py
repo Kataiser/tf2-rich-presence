@@ -108,9 +108,9 @@ class ProcessScanner:
         self.process_data['Discord']['running'] = discord_data['running']
 
     # a mess of logic that gives process info from a PID
-    def get_info_from_pid(self, pid: int, return_data: tuple = ('path', 'time')) -> Dict[str]:
-        p_info: Dict[str] = {'running': False, 'path': None, 'time': None}
-        p_info_nones: Dict[str] = {'running': False, 'path': None, 'time': None}
+    def get_info_from_pid(self, pid: int, return_data: tuple = ('path', 'time')) -> Dict[str, Union[str, bool, None, int]]:
+        p_info: Dict[str, Union[str, bool, None, int]] = {'running': False, 'path': None, 'time': None}
+        p_info_nones: Dict[str, Union[str, bool, None, int]] = {'running': False, 'path': None, 'time': None}
 
         if pid is None:
             return p_info
