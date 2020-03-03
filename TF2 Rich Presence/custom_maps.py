@@ -18,7 +18,7 @@ import utils
 
 
 # uses teamwork.tf's API to find the gamemode of a custom map
-def find_custom_map_gamemode(log, map_filename: str, force_api: bool = False, timeout: float = settings.get('request_timeout')) -> Tuple[str, str]:
+def find_custom_map_gamemode(log, map_filename: str, force_api: bool = False, timeout: int = settings.get('request_timeout')) -> Tuple[str, str]:
     if map_filename == '':
         log.error("Map filename is blank")
         return 'unknown_map', 'Unknown gamemode'
@@ -56,7 +56,7 @@ def find_custom_map_gamemode(log, map_filename: str, force_api: bool = False, ti
             r: Response = requests.get(f'https://teamwork.tf/api/v1/map-stats/map/{map_filename}?key={utils.get_api_key("teamwork")}', timeout=timeout)
             map_info: dict = r.json()
             log.debug(f"API lookup took {round(time.perf_counter() - before_request_time, 2)} secs")
-        except (requests.ConnectTimeout, requests.ReadTimeout):
+        except requests.Timeout:
             log.debug("Timeout connecting to teamwork.tf, defaulting to \"Unknown gamemode\" and not caching")
             first_gamemode: str = 'unknown_map'
             first_gamemode_fancy: str = 'Unknown gamemode'
@@ -72,7 +72,7 @@ def find_custom_map_gamemode(log, map_filename: str, force_api: bool = False, ti
             for gamemode in map_gamemode:
                 if gamemode in gamemodes_keys:
                     log.debug(f"Using gamemode {gamemode}")
-                    first_gamemode_fancy: str = gamemodes[gamemode]
+                    first_gamemode_fancy = gamemodes[gamemode]
                     # modify the cache locally
                     custom_map_gamemodes[map_filename] = [gamemode, first_gamemode_fancy, seconds_since_epoch_now]
 
@@ -86,8 +86,8 @@ def find_custom_map_gamemode(log, map_filename: str, force_api: bool = False, ti
             log.error(f"Couldn't find gamemode for that custom map (KeyError while parsing the api result). Full json response: \n{map_info}")
 
         # unrecognized gamemodes
-        first_gamemode: str = 'unknown_map'
-        first_gamemode_fancy: str = 'Unknown gamemode'
+        first_gamemode = 'unknown_map'
+        first_gamemode_fancy = 'Unknown gamemode'
         custom_map_gamemodes[map_filename] = [first_gamemode, first_gamemode_fancy, seconds_since_epoch_now]
 
         access_custom_maps_cache(dict_input=custom_map_gamemodes)
@@ -97,7 +97,7 @@ def find_custom_map_gamemode(log, map_filename: str, force_api: bool = False, ti
 
 
 # reads or writes the cache of custom maps in DB.json
-def access_custom_maps_cache(dict_input: Union[dict, None] = None) -> Dict[str, Union[str, int]]:
+def access_custom_maps_cache(dict_input: Union[dict, None] = None) -> Dict[str, List[Union[str, int]]]:
     if dict_input:
         db = utils.access_db()
         db['custom_maps'] = dict_input

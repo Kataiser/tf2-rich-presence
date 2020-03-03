@@ -58,7 +58,7 @@ def steam_config_file(log, exe_location: str, tf2_is_running: bool = False) -> l
     for user_id_folder in user_id_folders:  # possibly multiple users for the same steam install
         try:
             # 'C:\Program Files (x86)\Steam\userdata\*user id number*\config\localconfig.vdf'
-            global_config_file_path: Union[bytes, str] = os.path.join(exe_location, 'userdata', user_id_folder, 'config', 'localconfig.vdf')
+            global_config_file_path: str = os.path.join(exe_location, 'userdata', user_id_folder, 'config', 'localconfig.vdf')
             log.debug(f"Reading {global_config_file_path}")
 
             with open(global_config_file_path, 'r+', errors='replace') as global_config_file:

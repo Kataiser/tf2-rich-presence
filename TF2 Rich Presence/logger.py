@@ -29,7 +29,7 @@ class Log:
             self.filename: str = path
         else:
             days_since_epoch_local = int((time.time() + time.localtime().tm_gmtoff) / 86400)  # 86400 seconds in a day
-            self.filename: str = os.path.join('logs', f'{user_pc_name}_{user_identifier}_{launcher.VERSION}_{days_since_epoch_local}.log')
+            self.filename = os.path.join('logs', f'{user_pc_name}_{user_identifier}_{launcher.VERSION}_{days_since_epoch_local}.log')
 
         # setup
         self.last_log_time: float = time.perf_counter()
@@ -51,7 +51,7 @@ class Log:
             self.log_levels_allowed: list = [level for level in self.log_levels if self.log_levels.index(level) >= self.log_levels.index(self.log_level)]
             self.log_file: TextIO = open(self.filename, 'a', encoding='utf-8')
         else:
-            self.log_levels_allowed: list = self.log_levels
+            self.log_levels_allowed = self.log_levels
 
         for old_filename in os.listdir('logs'):
             old_filename: str = os.path.join('logs', old_filename)
@@ -59,7 +59,7 @@ class Log:
             if old_filename != self.filename and 'gzip' not in old_filename:
                 if self.enabled:
                     self.log_file.close()
-                    self.log_file: TextIO = open(self.filename, 'a', encoding='utf-8')
+                    self.log_file = open(self.filename, 'a', encoding='utf-8')
 
         db_path: str = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
         if not os.access(db_path, os.W_OK):
@@ -81,7 +81,7 @@ class Log:
             if self.last_log_time:
                 time_since_last: str = f'+{format(current_time - self.last_log_time, ".4f")}'  # the format() adds trailing zeroes
             else:
-                time_since_last: str = '+0.0000'
+                time_since_last = '+0.0000'
 
             full_line: str = f"[{int(time.time())} {time_since_last}] {level}: {message_out}\n"
 
@@ -97,7 +97,7 @@ class Log:
             if self.to_stderr:
                 print(full_line.rstrip('\n'), file=sys.stderr)
 
-            self.last_log_time: float = current_time
+            self.last_log_time = current_time
 
     # a log with a level of INFO (not commonly used)
     def info(self, message_in: str):

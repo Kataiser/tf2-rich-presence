@@ -31,7 +31,7 @@ def detect(log: logger.Log):
             system_language: str = language_codes[system_language_code]
         except KeyError:
             log.error(f"System language code {system_language_code} is not a localized language, defaulting to English")
-            system_language: str = 'English'
+            system_language = 'English'
 
         if settings.get('language') != system_language:
             log.info(f"System language ({system_locale}, {system_language}) != settings language ({settings.get('language')}), asking to change")

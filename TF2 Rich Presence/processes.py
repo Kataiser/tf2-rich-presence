@@ -20,14 +20,14 @@ class ProcessScanner:
         self.has_cached_all_pids: bool = False
         self.used_tasklist: bool = False
         self.parsed_tasklist: dict = {}
-        self.executables: Dict[str] = {'posix': ['hl2_linux', 'steam', 'Discord'],
-                                       'nt': ['hl2.exe', 'Steam.exe', 'Discord'],
-                                       'order': ['TF2', 'Steam', 'Discord']}
-        self.process_data: Dict[str] = {'TF2': {'running': False, 'pid': None, 'path': None, 'time': None},
-                                        'Steam': {'running': False, 'pid': None, 'path': None},
-                                        'Discord': {'running': False, 'pid': None}}
-        self.p_data_default: Dict[str] = copy.deepcopy(self.process_data)
-        self.p_data_last: Dict[str] = copy.deepcopy(self.process_data)
+        self.executables: Dict[str, list] = {'posix': ['hl2_linux', 'steam', 'Discord'],
+                                             'nt': ['hl2.exe', 'Steam.exe', 'Discord'],
+                                             'order': ['TF2', 'Steam', 'Discord']}
+        self.process_data: Dict[str, dict] = {'TF2': {'running': False, 'pid': None, 'path': None, 'time': None},
+                                              'Steam': {'running': False, 'pid': None, 'path': None},
+                                              'Discord': {'running': False, 'pid': None}}
+        self.p_data_default: Dict[str, dict] = copy.deepcopy(self.process_data)
+        self.p_data_last: Dict[str, dict] = copy.deepcopy(self.process_data)
 
     # scan all running processes to look for TF2, Steam, and Discord
     def scan(self) -> Dict[str, Dict[str, Union[bool, str, int, None]]]:

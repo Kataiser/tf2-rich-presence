@@ -3,7 +3,7 @@
 # cython: language_level=3
 
 import os
-from typing import Dict, List, Union
+from typing import Dict, List, Tuple, Union
 
 import colorama
 
@@ -12,7 +12,7 @@ import settings
 
 
 # reads a console.log and returns current map and class
-def interpret(self, console_log_path: str, user_usernames: list, kb_limit=settings.get('console_scan_kb'), force=False) -> tuple:
+def interpret(self, console_log_path: str, user_usernames: list, kb_limit=settings.get('console_scan_kb'), force=False) -> Tuple[str, str]:
     # defaults
     current_map: str = 'In menus'
     current_class: str = 'Not queued'
@@ -28,7 +28,7 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit=settin
     user_is_kataiser: bool = 'Kataiser' in user_usernames
 
     # console.log is a log of tf2's console (duh), only exists if tf2 has -condebug (see no_condebug_warning())
-    consolelog_filename: Union[bytes, str] = console_log_path
+    consolelog_filename: str = console_log_path
     self.log.debug(f"Looking for console.log at {consolelog_filename}")
     self.log.console_log_path = consolelog_filename
 
@@ -54,7 +54,7 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit=settin
             lines: List[str] = consolelog_file.readlines()
             self.log.debug(f"console.log: {consolelog_file_size} bytes, skipped to {skip_to_byte}, read {byte_limit} bytes and {len(lines)} lines")
         else:
-            lines: List[str] = consolelog_file.readlines()
+            lines = consolelog_file.readlines()
             self.log.debug(f"console.log: {consolelog_file_size} bytes, {len(lines)} lines (didn't skip lines)")
 
     # limit the file size, for readlines perf
@@ -63,13 +63,13 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit=settin
         self.log.debug(f"Limiting console.log to {trim_size} bytes")
 
         try:
-            with open(consolelog_filename, 'rb+') as consolelog_file:
+            with open(consolelog_filename, 'rb+') as consolelog_file_b:
                 # this can probably be done faster and/or cleaner
-                consolelog_file.seek(trim_size, 2)
-                consolelog_file_trimmed = consolelog_file.read()
-                consolelog_file.seek(0)
-                consolelog_file.truncate()
-                consolelog_file.write(consolelog_file_trimmed)
+                consolelog_file_b.seek(trim_size, 2)
+                consolelog_file_trimmed = consolelog_file_b.read()
+                consolelog_file_b.seek(0)
+                consolelog_file_b.truncate()
+                consolelog_file_b.write(consolelog_file_trimmed)
         except PermissionError as error:
             self.log.error(f"Failed to trim console.log: {error}")
 

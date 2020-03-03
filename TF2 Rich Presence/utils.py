@@ -51,14 +51,14 @@ def generate_delta(loc, old_time: Union[float, None]) -> str:
             else:
                 return f" (+{divided_diff} {loc.text('days')})"
         elif time_diff > 3600:
-            divided_diff: float = round(time_diff / 3600, 1)
+            divided_diff = round(time_diff / 3600, 1)
 
             if divided_diff == 1:
                 return f" (+{divided_diff} {loc.text('hour')})"
             else:
                 return f" (+{divided_diff} {loc.text('hours')})"
         elif time_diff > 60:
-            divided_diff: float = round(time_diff / 60, 1)
+            divided_diff = round(time_diff / 60, 1)
 
             if divided_diff == 1:
                 return f" (+{divided_diff} {loc.text('minute')})"

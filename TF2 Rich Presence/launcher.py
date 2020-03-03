@@ -91,7 +91,7 @@ def handle_crash():
 # don't report the same exception twice
 def exc_already_reported(tb: str):
     try:
-        tb_hash = str(zlib.crc32(tb.encode('utf-8', errors='replace')))  # technically not a hash but w/e
+        tb_hash: str = str(zlib.crc32(tb.encode('utf-8', errors='replace')))  # technically not a hash but w/e
 
         db = utils.access_db()
         if tb_hash in db['tb_hashes']:
