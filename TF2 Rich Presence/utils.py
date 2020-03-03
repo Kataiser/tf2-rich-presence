@@ -2,23 +2,23 @@
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 # cython: language_level=3
 
+# note: don't import anything outside of the standard library, in order to avoid unreportable crashes when running the launcher
 import functools
 import gzip
 import json
 import os
 import time
-from typing import Union
-# note: don't import anything outside of the standard library, in order to avoid unreportable crashes when running the launcher
+from typing import Dict, Union
 
 
 # read from or write to DB.json (intentionally uncached)
 # TODO: might be a good idea to make this a registry thing to avoid permissions problems
-def access_db(write: dict = None) -> dict:
-    db_path = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
+def access_db(write: dict = None) -> Dict[str, Union[dict, bool, list]]:
+    db_path: str = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
 
     if write:
         with open(db_path, 'w', encoding='UTF8') as db_json:
-            db_data = write
+            db_data: dict = write
             db_json.truncate(0)
             json.dump(db_data, db_json, indent=4, ensure_ascii=False)
     else:
