@@ -7,7 +7,7 @@ import os
 import subprocess
 import time
 import traceback
-from typing import Dict, Union
+from typing import Dict, List, Union
 
 import psutil
 
@@ -16,18 +16,18 @@ import logger
 
 class ProcessScanner:
     def __init__(self, log: logger.Log):
-        self.log = log
-        self.has_cached_all_pids = False
-        self.used_tasklist = False
-        self.parsed_tasklist = {}
-        self.executables = {'posix': ['hl2_linux', 'steam', 'Discord'],
-                            'nt': ['hl2.exe', 'Steam.exe', 'Discord'],
-                            'order': ['TF2', 'Steam', 'Discord']}
-        self.process_data = {'TF2': {'running': False, 'pid': None, 'path': None, 'time': None},
-                             'Steam': {'running': False, 'pid': None, 'path': None},
-                             'Discord': {'running': False, 'pid': None}}
-        self.p_data_default = copy.deepcopy(self.process_data)
-        self.p_data_last = copy.deepcopy(self.process_data)
+        self.log: logger.Log = log
+        self.has_cached_all_pids: bool = False
+        self.used_tasklist: bool = False
+        self.parsed_tasklist: dict = {}
+        self.executables: Dict[str] = {'posix': ['hl2_linux', 'steam', 'Discord'],
+                                       'nt': ['hl2.exe', 'Steam.exe', 'Discord'],
+                                       'order': ['TF2', 'Steam', 'Discord']}
+        self.process_data: Dict[str] = {'TF2': {'running': False, 'pid': None, 'path': None, 'time': None},
+                                        'Steam': {'running': False, 'pid': None, 'path': None},
+                                        'Discord': {'running': False, 'pid': None}}
+        self.p_data_default: Dict[str] = copy.deepcopy(self.process_data)
+        self.p_data_last: Dict[str] = copy.deepcopy(self.process_data)
 
     # scan all running processes to look for TF2, Steam, and Discord
     def scan(self) -> Dict[str, Dict[str, Union[bool, str, int, None]]]:
@@ -68,7 +68,7 @@ class ProcessScanner:
             # all the PIDs are known, so don't use tasklist, saves 0.2 - 0.3 seconds :)
             self.get_all_extended_info()
 
-            p_data_old = copy.deepcopy(self.process_data)
+            p_data_old: Dict[str] = copy.deepcopy(self.process_data)
 
             if not self.process_data['TF2']['running']:
                 self.process_data['TF2'] = self.p_data_default['TF2']
@@ -98,9 +98,9 @@ class ProcessScanner:
 
     # get only the needed info (exe path and process start time) for each, and then apply it to self.p_data
     def get_all_extended_info(self):
-        tf2_data = self.get_info_from_pid(self.process_data['TF2']['pid'], ('path', 'time'))
-        steam_data = self.get_info_from_pid(self.process_data['Steam']['pid'], ('path', 'cwd'))
-        discord_data = self.get_info_from_pid(self.process_data['Discord']['pid'], ())
+        tf2_data: Dict[str] = self.get_info_from_pid(self.process_data['TF2']['pid'], ('path', 'time'))
+        steam_data: Dict[str] = self.get_info_from_pid(self.process_data['Steam']['pid'], ('path', 'cwd'))
+        discord_data: Dict[str] = self.get_info_from_pid(self.process_data['Discord']['pid'], ())
 
         # ugly
         self.process_data['TF2']['running'], self.process_data['TF2']['path'], self.process_data['TF2']['time'] = tf2_data['running'], tf2_data['path'], tf2_data['time']
@@ -108,16 +108,16 @@ class ProcessScanner:
         self.process_data['Discord']['running'] = discord_data['running']
 
     # a mess of logic that gives process info from a PID
-    def get_info_from_pid(self, pid: int, return_data: tuple = ('path', 'time')) -> dict:
-        p_info = {'running': False, 'path': None, 'time': None}
-        p_info_nones = {'running': False, 'path': None, 'time': None}
+    def get_info_from_pid(self, pid: int, return_data: tuple = ('path', 'time')) -> Dict[str]:
+        p_info: Dict[str] = {'running': False, 'path': None, 'time': None}
+        p_info_nones: Dict[str] = {'running': False, 'path': None, 'time': None}
 
         if pid is None:
             return p_info
 
         try:
             try:
-                process = psutil.Process(pid=pid)
+                process: psutil.Process = psutil.Process(pid=pid)
             except psutil.NoSuchProcess:
                 self.log.debug(f"Cached PID {pid} is no longer running")
             else:
@@ -149,9 +149,9 @@ class ProcessScanner:
     # https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/tasklist
     def parse_tasklist(self):
         try:
-            processes: list = str(subprocess.check_output('tasklist /fi "STATUS eq running"')).split(r'\r\n')
+            processes: List[str] = str(subprocess.check_output('tasklist /fi "STATUS eq running"')).split(r'\r\n')
         except subprocess.CalledProcessError:
-            processes: list = []
+            processes: List[str] = []
 
         self.parsed_tasklist: dict = {}
 
@@ -171,7 +171,7 @@ class ProcessScanner:
 
         # don't detect gmod (or any other program named hl2.exe)
         if self.process_data['TF2']['running']:
-            hl2_exe_path = self.get_info_from_pid(self.parsed_tasklist['hl2.exe'], ('path',))['path']
+            hl2_exe_path: str = self.get_info_from_pid(self.parsed_tasklist['hl2.exe'], ('path',))['path']
 
             if 'Team Fortress 2' not in hl2_exe_path:
                 self.log.error(f"Found non-TF2 hl2.exe at {hl2_exe_path}")
