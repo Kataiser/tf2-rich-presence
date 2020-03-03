@@ -43,7 +43,6 @@ class TestTF2RichPresense(unittest.TestCase):
         settings.access_registry(save_dict=self.old_settings)
 
     def test_interpret_console_log(self):
-        recent_time = int(time.time()) - 10
         app = main.TF2RichPresense(self.log)
         self.assertEqual(app.interpret_console_log('test_resources\\console_in_menus.log', ['Kataiser'], float('inf'), True), ('In menus', 'Not queued'))
         self.assertEqual(app.interpret_console_log('test_resources\\console_in_menus.log', ['Kataiser'], 4, True), ('In menus', 'Not queued'))

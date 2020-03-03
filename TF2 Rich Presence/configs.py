@@ -108,23 +108,23 @@ def steam_config_file(log, exe_location: str, tf2_is_running: bool = False) -> l
 
 
 # adapted from https://www.popmartian.com/tipsntricks/2014/11/20/how-to-lower-case-all-dictionary-keys-in-a-complex-python-dictionary/
-def lowercase_keys(dictionary: dict) -> dict:
+def lowercase_keys(mixed_case: Union[dict, list]) -> Union[dict, list]:
     allowed_keys: tuple = ('userlocalconfigstore', 'friends', 'personaname', 'userlocalconfigstore', 'software', 'valve', 'steam', 'apps', '440', 'launchoptions')
     keys_to_remove: list = []
     key: str
 
-    for key in dictionary.keys():
+    for key in mixed_case.keys():
         key_lower: str = key.lower()
 
         if key_lower in allowed_keys:
-            dictionary[key_lower]: Union[dict, list] = dictionary.pop(key)
+            mixed_case[key_lower]: Union[dict, list] = mixed_case.pop(key)
 
-            if isinstance(dictionary[key_lower], dict) or isinstance(dictionary[key_lower], list):
-                dictionary[key_lower]: Union[dict, list] = lowercase_keys(dictionary[key_lower])
+            if isinstance(mixed_case[key_lower], dict) or isinstance(mixed_case[key_lower], list):
+                mixed_case[key_lower]: Union[dict, list] = lowercase_keys(mixed_case[key_lower])
         else:
             keys_to_remove.append(key)
 
     for key in keys_to_remove:
-        del dictionary[key]
+        del mixed_case[key]
 
-    return dictionary
+    return mixed_case
