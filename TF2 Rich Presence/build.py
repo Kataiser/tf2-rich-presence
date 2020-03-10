@@ -97,17 +97,20 @@ def main(version_num='v1.13'):
         copy_dir_to_git('test_resources', Path(f'{github_repo_path}/TF2 Rich Presence/test_resources'))
         copy_dir_to_git('build_tools', Path(f'{github_repo_path}/TF2 Rich Presence/build_tools'))
 
-    print("Generating Changelogs.html")
-    ratelimit_remaining = 100
-    try:
-        ratelimit_remaining = changelog_generator.main(silent=True)
-        print(f"Github requests remaining: {ratelimit_remaining}")
+        print("Generating Changelogs.html")
+        ratelimit_remaining = 100
+        try:
+            ratelimit_remaining = changelog_generator.main(silent=True)
+            print(f"Github requests remaining: {ratelimit_remaining}")
+            generated_changelogs = True
+        except Exception as error:
+            changelog_generation_error = error
+            generated_changelogs = False
+        if github_repo_path != 'n':
+            print("Copied", shutil.copy('Changelogs.html', Path(f'{github_repo_path}/')))
+    else:
         generated_changelogs = True
-    except Exception as error:
-        changelog_generation_error = error
-        generated_changelogs = False
-    if github_repo_path != 'n':
-        print("Copied", shutil.copy('Changelogs.html', Path(f'{github_repo_path}/')))
+        ratelimit_remaining = 100
 
     # starts from scratch each time
     old_build_folders = [f.path for f in os.scandir('.') if f.is_dir() and 'TF2 Rich Presence ' in f.path]
@@ -188,14 +191,18 @@ def main(version_num='v1.13'):
         print("Copied", shutil.copy(pyd, Path(f'{new_build_folder_name}/resources/')))
 
     # creates build_info.txt
-    try:
-        commits_info = json.loads(requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/commits', timeout=5).text)
-        latest_commit_message = commits_info[0]['commit']['message'].split('\n')[0]
-        latest_commit = f"\"{latest_commit_message}\" @\n\t{commits_info[0]['html_url'][:60]}"
+    if github_repo_path != 'n':
+        try:
+            commits_info = json.loads(requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/commits', timeout=5).text)
+            latest_commit_message = commits_info[0]['commit']['message'].split('\n')[0]
+            latest_commit = f"\"{latest_commit_message}\" @\n\t{commits_info[0]['html_url'][:60]}"
+            got_latest_commit = True
+        except Exception as error:
+            got_latest_commit = False
+            get_latest_commit_error = error
+            latest_commit = ''
+    else:
         got_latest_commit = True
-    except Exception as error:
-        got_latest_commit = False
-        get_latest_commit_error = error
         latest_commit = ''
     git_username = subprocess.run('git config user.name', capture_output=True).stdout.decode('UTF8')[:-1]
     build_info_path = Path(f'{new_build_folder_name}/resources/build_info.txt')
