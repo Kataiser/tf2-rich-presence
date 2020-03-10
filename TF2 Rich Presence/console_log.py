@@ -7,12 +7,13 @@ from typing import Dict, List, Tuple, Union
 
 import colorama
 
+import launcher
 import localization
 import settings
 
 
 # reads a console.log and returns current map and class
-def interpret(self, console_log_path: str, user_usernames: list, kb_limit=settings.get('console_scan_kb'), force=False, tf2_start_time: int = 0) -> Tuple[str, str]:
+def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float = float(settings.get('console_scan_kb')), force: bool = False, tf2_start_time: int = 0) -> Tuple[str, str]:
     # defaults
     current_map: str = 'In menus'
     current_class: str = 'Not queued'
@@ -26,6 +27,7 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit=settin
 
     hide_queued_gamemode: bool = settings.get('hide_queued_gamemode')
     user_is_kataiser: bool = 'Kataiser' in user_usernames
+    hosting_text: str = self.loc.text(' (hosting)')
 
     # console.log is a log of tf2's console (duh), only exists if tf2 has -condebug (see no_condebug_warning())
     self.log.debug(f"Looking for console.log at {console_log_path}")
@@ -49,11 +51,11 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit=settin
         return current_map, current_class
 
     consolelog_file_size: int = os.stat(console_log_path).st_size
-    byte_limit = kb_limit * 1024
+    byte_limit: float = kb_limit * 1024.0
 
     with open(console_log_path, 'r', errors='replace') as consolelog_file:
         if consolelog_file_size > byte_limit:
-            skip_to_byte = consolelog_file_size - byte_limit
+            skip_to_byte = int(consolelog_file_size - byte_limit)
             consolelog_file.seek(skip_to_byte, 0)  # skip to last few KBs
 
             lines: List[str] = consolelog_file.readlines()
@@ -63,8 +65,8 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit=settin
             self.log.debug(f"console.log: {consolelog_file_size} bytes, {len(lines)} lines (didn't skip lines)")
 
     # limit the file size, for readlines perf
-    if consolelog_file_size > byte_limit * 4 and settings.get('trim_console_log') and not force:
-        trim_size = byte_limit * 2
+    if consolelog_file_size > byte_limit * 4 and settings.get('trim_console_log') and not force and not launcher.DEBUG:
+        trim_size = int(byte_limit * 2)
         self.log.debug(f"Limiting console.log to {trim_size} bytes")
 
         try:
@@ -82,10 +84,12 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit=settin
     line_used: str = ''
     line: str
     for line in lines:
-        if 'Map:' in line:
-            current_map = line[5:-1]  # this variable is poorly named
-            current_class = 'unselected'  # so is this one
-            line_used = line
+        for menus_message in menus_messages:
+            if menus_message in line:
+                current_map = 'In menus'
+                current_class = 'Not queued'
+                line_used = line
+                break
 
         if ' selected' in line:
             current_class_possibly: str = line[:-11]
@@ -94,19 +98,16 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit=settin
                 current_class = current_class_possibly
                 line_used = line
 
-        if 'Disconnect by user' in line and [i for i in user_usernames if i in line]:
-            current_map = 'In menus'
+        elif 'Map:' in line:
+            current_map = line[5:-1]  # this variable is poorly named
+            current_class = 'unselected'  # so is this one
+            line_used = line
+
+        elif '[PartyClient] L' in line:  # full line: [PartyClient] Leaving queue
             current_class = 'Not queued'
             line_used = line
 
-        for menus_message in menus_messages:
-            if menus_message in line:
-                current_map = 'In menus'
-                current_class = 'Not queued'
-                line_used = line
-                break
-
-        if '[PartyClient] Entering queue ' in line:
+        elif '[PartyClient] Entering queue ' in line:
             current_map = 'In menus'
             line_used = line
 
@@ -115,13 +116,14 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit=settin
             else:
                 current_class = f"Queued for {match_types[line[33:-1]]}"
 
-        if '[PartyClient] Entering s' in line:  # full line: [PartyClient] Entering standby queue
+        elif 'Disconnect by user' in line and [i for i in user_usernames if i in line]:
             current_map = 'In menus'
-            current_class = 'Queued for a party\'s match'
+            current_class = 'Not queued'
             line_used = line
 
-        if '[PartyClient] L' in line:  # full line: [PartyClient] Leaving queue
-            current_class = 'Not queued'
+        elif '[PartyClient] Entering s' in line:  # full line: [PartyClient] Entering standby queue
+            current_map = 'In menus'
+            current_class = 'Queued for a party\'s match'
             line_used = line
 
         if not user_is_kataiser and 'Kataiser' in line and not self.has_seen_kataiser:
