@@ -75,13 +75,13 @@ def handle_crash():
     except Exception:
         # Sentry has failed us :(
         print(f"\n{formatted_exception}{colorama.Style.RESET_ALL}{colorama.Style.BRIGHT}")
-        print(f"TF2 Rich Presence has crashed, and the error can't be reported to the developer."
-              f"\n{colorama.Style.RESET_ALL}(Consider opening an issue at https://github.com/Kataiser/tf2-rich-presence/issues)"
+        print(f"TF2 Rich Presence {VERSION} has crashed, and the error can't be reported to the developer."
+              f"\n{colorama.Style.RESET_ALL}(Consider opening an issue at https://github.com/Kataiser/tf2-rich-presence/issues){out_of_date_warning()}"
               f"\n{colorama.Style.BRIGHT}Restarting in 5 seconds...\n")
     else:
         print(f"\n{formatted_exception}{colorama.Style.RESET_ALL}{colorama.Style.BRIGHT}")
-        print(f"TF2 Rich Presence has crashed, and the error has been reported to the developer."
-              f"\n{colorama.Style.RESET_ALL}(Consider opening an issue at https://github.com/Kataiser/tf2-rich-presence/issues)"
+        print(f"TF2 Rich Presence {VERSION} has crashed, and the error has been reported to the developer."
+              f"\n{colorama.Style.RESET_ALL}(Consider opening an issue at https://github.com/Kataiser/tf2-rich-presence/issues){out_of_date_warning()}"
               f"\n{colorama.Style.BRIGHT}Restarting in 5 seconds...\n")
 
     time.sleep(5)
@@ -89,11 +89,11 @@ def handle_crash():
 
 
 # don't report the same exception twice
-def exc_already_reported(tb: str):
+def exc_already_reported(tb: str) -> bool:
     try:
         tb_hash: str = str(zlib.crc32(tb.encode('utf-8', errors='replace')))  # technically not a hash but w/e
 
-        db = utils.access_db()
+        db: dict = utils.access_db()
         if tb_hash in db['tb_hashes']:
             return True
         else:
@@ -102,6 +102,16 @@ def exc_already_reported(tb: str):
             return False
     except Exception:
         return False
+
+
+def out_of_date_warning() -> str:
+    update_info: dict = utils.access_db()['available_version']
+
+    if update_info['exists']:
+        return f"\n{colorama.Style.RESET_ALL}BTW an newer version for TF2 Rich Presence is available ({update_info['tag']}), which may have fixed this crash." \
+               f"\nGet the update with the download button in settings."
+    else:
+        return ""
 
 
 DEBUG = True
