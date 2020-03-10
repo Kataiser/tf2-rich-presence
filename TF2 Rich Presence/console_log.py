@@ -3,7 +3,6 @@
 # cython: language_level=3
 
 import os
-import time
 from typing import Dict, List, Tuple, Union
 
 import colorama
@@ -13,7 +12,7 @@ import settings
 
 
 # reads a console.log and returns current map and class
-def interpret(self, console_log_path: str, user_usernames: list, kb_limit=settings.get('console_scan_kb'), force=False, tf2_start_time: int = int(time.time())) -> Tuple[str, str]:
+def interpret(self, console_log_path: str, user_usernames: list, kb_limit=settings.get('console_scan_kb'), force=False, tf2_start_time: int = 0) -> Tuple[str, str]:
     # defaults
     current_map: str = 'In menus'
     current_class: str = 'Not queued'
