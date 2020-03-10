@@ -9,7 +9,7 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/Kataiser/tf2-rich-presence.svg)](https://github.com/Kataiser/tf2-rich-presence/commits/master)
 [![Updates](https://pyup.io/repos/github/Kataiser/tf2-rich-presence/shield.svg)](https://pyup.io/repos/github/Kataiser/tf2-rich-presence/)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/18a048d3a05e4815b247d886abef575f)](https://www.codacy.com/app/Kataiser/tf2-rich-presence?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Kataiser/tf2-rich-presence&amp;utm_campaign=Badge_Grade)
-[![Travis tests](https://img.shields.io/travis/Kataiser/tf2-rich-presence/master?label=tests&logo=Travis)](https://travis-ci.org/Kataiser/tf2-rich-presence)
+[![Travis build](https://img.shields.io/travis/Kataiser/tf2-rich-presence/master?label=build&logo=Travis)](https://travis-ci.org/Kataiser/tf2-rich-presence)
 [![Help wanted tag](https://img.shields.io/github/labels/Kataiser/tf2-rich-presence/help%20wanted?cacheSeconds=100000)](https://github.com/Kataiser/tf2-rich-presence/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22help+wanted%22)
 
 # TF2 Rich Presence
@@ -38,7 +38,8 @@ For faster launching, you can add the first EXE to your taskbar/start menu/deskt
 ## Building from source
 For making and testing changes, or simply always running the most up-to-date code. (Windows only)
 1. Either clone the repo or [download the source](https://github.com/Kataiser/tf2-rich-presence/archive/master.zip).
-2. Copy the entire source to another location and put the files outside of `TF2 Rich Presence` into that folder.
+2. Copy the entire source to another location (sorry) and put the files outside of `TF2 Rich Presence` into that folder.
 3. Extract `TF2 Rich Presence\python-3.7.5-embed-win32.zip`.
-4. Make sure the `python` and `pip` commands point to Python >= 3.7.
-4. From within `TF2 Rich Presence`, run `pip install -r requirements.txt` and `python build.py`.
+4. Make sure the `python` and `pip` commands point to Python 3.7.x
+5. Install a C compiler (see [Installing Cython](http://docs.cython.org/en/latest/src/quickstart/install.html)). I personally use VS 2019.
+6. From within `TF2 Rich Presence`, run `pip install -r requirements.txt` and `python build.py`.
