@@ -3,6 +3,7 @@
 # cython: language_level=3
 
 import os
+import time
 from typing import Dict, List, Tuple, Union
 
 import colorama
@@ -12,7 +13,7 @@ import settings
 
 
 # reads a console.log and returns current map and class
-def interpret(self, console_log_path: str, user_usernames: list, kb_limit=settings.get('console_scan_kb'), force=False) -> Tuple[str, str]:
+def interpret(self, console_log_path: str, user_usernames: list, kb_limit=settings.get('console_scan_kb'), force=False, tf2_start_time: int = int(time.time())) -> Tuple[str, str]:
     # defaults
     current_map: str = 'In menus'
     current_class: str = 'Not queued'
@@ -28,25 +29,30 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit=settin
     user_is_kataiser: bool = 'Kataiser' in user_usernames
 
     # console.log is a log of tf2's console (duh), only exists if tf2 has -condebug (see no_condebug_warning())
-    consolelog_filename: str = console_log_path
-    self.log.debug(f"Looking for console.log at {consolelog_filename}")
-    self.log.console_log_path = consolelog_filename
+    self.log.debug(f"Looking for console.log at {console_log_path}")
+    self.log.console_log_path = console_log_path
 
-    if not os.path.exists(consolelog_filename):
+    if not os.path.exists(console_log_path):
         self.log.error(f"console.log doesn't exist, issuing warning (files/dirs in /tf/: {os.listdir(os.path.dirname(console_log_path))})")
         del self.log
         no_condebug_warning(tf2_is_running=True)
 
     # only interpret console.log again if it's been modified
-    console_log_mtime = os.stat(console_log_path).st_mtime
+    console_log_mtime: int = int(os.stat(console_log_path).st_mtime)
     if not force and console_log_mtime == self.old_console_log_mtime:
         self.log.debug(f"Not rescanning console.log, remaining on {self.old_console_log_interpretation}")
         return self.old_console_log_interpretation
 
-    consolelog_file_size: int = os.stat(consolelog_filename).st_size
+    # TF2 takes some time to load the console when starting up, so until it's been modified to avoid getting outdated information
+    console_log_mtime_relative = console_log_mtime - tf2_start_time
+    if console_log_mtime_relative < 0:
+        self.log.debug(f"console.log's mtime relative to TF2's start time is {console_log_mtime_relative}, assuming default state")
+        return current_map, current_class
+
+    consolelog_file_size: int = os.stat(console_log_path).st_size
     byte_limit = kb_limit * 1024
 
-    with open(consolelog_filename, 'r', errors='replace') as consolelog_file:
+    with open(console_log_path, 'r', errors='replace') as consolelog_file:
         if consolelog_file_size > byte_limit:
             skip_to_byte = consolelog_file_size - byte_limit
             consolelog_file.seek(skip_to_byte, 0)  # skip to last few KBs
@@ -63,7 +69,7 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit=settin
         self.log.debug(f"Limiting console.log to {trim_size} bytes")
 
         try:
-            with open(consolelog_filename, 'rb+') as consolelog_file_b:
+            with open(console_log_path, 'rb+') as consolelog_file_b:
                 # this can probably be done faster and/or cleaner
                 consolelog_file_b.seek(trim_size, 2)
                 consolelog_file_trimmed = consolelog_file_b.read()
