@@ -2070,5 +2070,19 @@
         "Korean": "기본값으로 되돌리는 설정을로드 할 수 없습니다.",
         "Chinese": "无法加载设置，还原为默认值。",
         "Japanese": "デフォルトに戻す、設定を読み込めませんでした。"
+    },
+    "2992382540": {
+        "English": " (hosting)",
+        "German": " (Hosting)",
+        "French": " (hébergement)",
+        "Spanish": " (alojamiento)",
+        "Portuguese": " (hospedagem)",
+        "Italian": " (che ospita)",
+        "Dutch": " (hosting)",
+        "Polish": " (hosting)",
+        "Russian": " (хостинг)",
+        "Korean": "(호스팅)",
+        "Chinese": " (托管)",
+        "Japanese": "(ホスト)"
     }
 }

@@ -117,7 +117,7 @@ class TF2RichPresense:
         self.has_seen_kataiser: bool = False
         self.old_console_log_mtime: Union[int, None] = None
         self.old_console_log_interpretation: tuple = ('', '')
-        self.map_gamemodes: Dict[str, List[str]] = custom_maps.load_maps_db()
+        self.map_gamemodes: Dict[str, dict] = custom_maps.load_maps_db()
         self.loop_iteration: int = 0
 
     def __repr__(self):
@@ -163,9 +163,9 @@ class TF2RichPresense:
             top_line: str
             bottom_line: str
             top_line, bottom_line = self.interpret_console_log(console_log_path, valid_usernames, tf2_start_time=p_data['TF2']['time'])
-            # TODO: use a state machine and much more consistent var names
+            # TODO: use a state machine and/or much more consistent var names
 
-            if top_line == 'In menus':
+            if 'In menus' in top_line:
                 # in menus displays the main menu
                 self.test_state = 'menus'
                 self.current_map = None
@@ -214,6 +214,10 @@ class TF2RichPresense:
                 else:
                     bottom_line = self.loc.text("Class: {0}").format(self.loc.text(bottom_line))
 
+                # good code
+                hosting: bool = ' (hosting)' in top_line
+                top_line = top_line.replace(' (hosting)', '')
+
                 try:
                     map_fancy, current_gamemode, gamemode_fancy = self.map_gamemodes['official'][top_line]
                     map_out = map_fancy
@@ -228,6 +232,7 @@ class TF2RichPresense:
                     self.activity['assets']['large_text'] = "{0} {1}".format(custom_gamemode_fancy, self.loc.text("[custom/community map]"))
 
                 top_line = self.loc.text("Map: {0}").format(map_out)
+                top_line = f"{top_line}{self.loc.text(' (hosting)')}" if hosting else top_line
 
             self.activity['details'] = top_line
             self.activity['state'] = bottom_line

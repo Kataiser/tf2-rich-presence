@@ -27,7 +27,6 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
 
     hide_queued_gamemode: bool = settings.get('hide_queued_gamemode')
     user_is_kataiser: bool = 'Kataiser' in user_usernames
-    hosting_text: str = self.loc.text(' (hosting)')
 
     # console.log is a log of tf2's console (duh), only exists if tf2 has -condebug (see no_condebug_warning())
     self.log.debug(f"Looking for console.log at {console_log_path}")
@@ -82,6 +81,9 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
 
     # iterates though roughly 16000 lines from console.log and learns everything from them
     line_used: str = ''
+    just_started_server: bool = False
+    server_still_running: bool = False
+
     line: str
     for line in lines:
         for menus_message in menus_messages:
@@ -102,6 +104,13 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
             current_map = line[5:-1]  # this variable is poorly named
             current_class = 'unselected'  # so is this one
             line_used = line
+
+            if just_started_server:
+                server_still_running = True
+                just_started_server = False
+            else:
+                just_started_server = False
+                server_still_running = False
 
         elif '[PartyClient] L' in line:  # full line: [PartyClient] Leaving queue
             current_class = 'Not queued'
@@ -126,8 +135,14 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
             current_class = 'Queued for a party\'s match'
             line_used = line
 
+        elif 'SV_ActivateServer' in line:
+            just_started_server = True
+
         if not user_is_kataiser and 'Kataiser' in line and not self.has_seen_kataiser:
             kataiser_seen_on = current_map
+
+    if server_still_running:
+        current_map = f'{current_map} (hosting)'
 
     if not user_is_kataiser and not self.has_seen_kataiser and kataiser_seen_on == current_map and current_map not in ('', 'In menus'):
         self.has_seen_kataiser = True
