@@ -75,7 +75,7 @@ def steam_config_file(log, exe_location: str, tf2_is_running: bool = False) -> l
                     continue
 
             try:
-                possible_username = parsed_lowercase['userlocalconfigstore']['friends']['personaname']
+                possible_username: Union[str, None] = parsed_lowercase['userlocalconfigstore']['friends']['personaname']
                 log.debug(f"Possible username: {possible_username}")
             except KeyError:
                 log.error("Couldn't find PersonaName in config")
