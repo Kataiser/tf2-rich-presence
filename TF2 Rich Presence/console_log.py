@@ -141,7 +141,7 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
         if not user_is_kataiser and 'Kataiser' in line and not self.has_seen_kataiser:
             kataiser_seen_on = current_map
 
-    if server_still_running:
+    if server_still_running and current_map != 'In menus':
         current_map = f'{current_map} (hosting)'
 
     if not user_is_kataiser and not self.has_seen_kataiser and kataiser_seen_on == current_map and current_map not in ('', 'In menus'):
