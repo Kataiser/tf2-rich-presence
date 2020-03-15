@@ -108,7 +108,7 @@ def access_custom_maps_cache(dict_input: Union[dict, None] = None) -> Dict[str, 
 
 # load maps database from maps.json
 @functools.lru_cache(maxsize=None)
-def load_maps_db() -> Dict[str, List[str]]:
+def load_maps_db() -> Dict[str, Dict[str, List[str]]]:
     maps_db_path = os.path.join('resources', 'maps.json') if os.path.isdir('resources') else 'maps.json'
     with open(maps_db_path, 'r') as maps_db:
         return json.load(maps_db)
