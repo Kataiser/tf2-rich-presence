@@ -117,7 +117,7 @@ def lowercase_keys(mixed_case: Union[dict, list]) -> Union[dict, list]:
     for key in mixed_case.keys():
         key_lower: str = key.lower()
 
-        if key_lower in allowed_keys or not purge_unused:
+        if key_lower in allowed_keys:
             mixed_case[key_lower]: Union[dict, list] = mixed_case.pop(key)
 
             if isinstance(mixed_case[key_lower], dict) or isinstance(mixed_case[key_lower], list):
