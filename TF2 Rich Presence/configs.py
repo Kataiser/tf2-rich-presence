@@ -48,7 +48,7 @@ def class_config_files(log, exe_location: str):
 
 # reads steams launch options save file to find -condebug
 @functools.lru_cache(maxsize=1)
-def steam_config_file(log, exe_location: str, tf2_is_running: bool = False) -> list:
+def steam_config_file(log, exe_location: str, tf2_is_running: bool = False) -> List[str]:
     log.debug("Looking for -condebug")
     found_condebug: bool = False
     found_usernames: List[str] = []
@@ -61,25 +61,26 @@ def steam_config_file(log, exe_location: str, tf2_is_running: bool = False) -> l
             global_config_file_path: str = os.path.join(exe_location, 'userdata', user_id_folder, 'config', 'localconfig.vdf')
             log.debug(f"Reading {global_config_file_path}")
 
-            with open(global_config_file_path, 'r+', errors='replace') as global_config_file:
-                global_config_file_read = global_config_file.read()
+            with open(global_config_file_path, 'r', errors='replace') as global_config_file:
+                global_config_file_read: str = global_config_file.read()
+                global_config_file_size: int = os.stat(global_config_file_path).st_size
 
-                if '-condebug' in global_config_file_read and '"440"' in global_config_file_read:
-                    log.debug(f"-condebug and \"440\" found, parsing file ({len(global_config_file_read)} bytes)")
+            if '-condebug' not in global_config_file_read or '"440"' not in global_config_file_read:
+                continue
 
-                    parsed = vdf.loads(global_config_file_read)
-                    log.debug(f"VDF parse complete ({len(parsed['UserLocalConfigStore'])} keys)")
-                    parsed_lowercase = lowercase_keys(parsed)
-                    log.debug(f"Lowercase complete ({len(parsed['userlocalconfigstore'])} keys)")
-                else:
-                    continue
+            log.debug(f"-condebug and \"440\" found, parsing file ({global_config_file_size} bytes)")
+            parsed: dict = vdf.loads(global_config_file_read)
+            log.debug(f"VDF parse complete ({len(parsed['UserLocalConfigStore'])} keys)")
+            parsed_lowercase: dict = lowercase_keys(parsed)
+            log.debug(f"Lowercase complete ({len(parsed['userlocalconfigstore'])} keys)")
 
             try:
-                possible_username: Union[str, None] = parsed_lowercase['userlocalconfigstore']['friends']['personaname']
+                possible_username: str = parsed_lowercase['userlocalconfigstore']['friends']['personaname']
                 log.debug(f"Possible username: {possible_username}")
             except KeyError:
-                log.error("Couldn't find PersonaName in config")
-                possible_username = None
+                personaname_exists_in_file: bool = 'personaname' in global_config_file_read.lower()
+                log.error(f"Couldn't find PersonaName in config (\"personaname\" in lowercase: {personaname_exists_in_file})")
+                possible_username = ''
 
             try:
                 tf2_launch_options = parsed_lowercase['userlocalconfigstore']['software']['valve']['steam']['apps']['440']['launchoptions']
@@ -110,13 +111,13 @@ def steam_config_file(log, exe_location: str, tf2_is_running: bool = False) -> l
 # adapted from https://www.popmartian.com/tipsntricks/2014/11/20/how-to-lower-case-all-dictionary-keys-in-a-complex-python-dictionary/
 def lowercase_keys(mixed_case: Union[dict, list]) -> Union[dict, list]:
     allowed_keys: tuple = ('userlocalconfigstore', 'friends', 'personaname', 'userlocalconfigstore', 'software', 'valve', 'steam', 'apps', '440', 'launchoptions')
-    keys_to_remove: list = []
+    keys_to_remove: List[str] = []
     key: str
 
     for key in mixed_case.keys():
         key_lower: str = key.lower()
 
-        if key_lower in allowed_keys:
+        if key_lower in allowed_keys or not purge_unused:
             mixed_case[key_lower]: Union[dict, list] = mixed_case.pop(key)
 
             if isinstance(mixed_case[key_lower], dict) or isinstance(mixed_case[key_lower], list):
