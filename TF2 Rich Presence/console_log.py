@@ -33,7 +33,7 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
     self.log.console_log_path = console_log_path
 
     if not os.path.exists(console_log_path):
-        self.log.error(f"console.log doesn't exist, issuing warning (files/dirs in /tf/: {os.listdir(os.path.dirname(console_log_path))})")
+        self.log.debug(f"console.log doesn't exist, issuing warning (files/dirs in /tf/: {os.listdir(os.path.dirname(console_log_path))})")
         del self.log
         no_condebug_warning(tf2_is_running=True)
 
