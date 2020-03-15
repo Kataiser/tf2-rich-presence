@@ -290,13 +290,13 @@ class TF2RichPresense:
         elif not p_data['TF2']['running']:
             self.necessary_program_not_running('Team Fortress 2', self.should_mention_tf2, 'TF2')
             self.should_mention_tf2 = False
-        elif not p_data['Steam']['running']:
-            self.necessary_program_not_running('Steam', self.should_mention_steam)
-            self.should_mention_steam = False
-        else:
-            # last but not least, Discord
+        elif not p_data['Discord']['running']:
             self.necessary_program_not_running('Discord', self.should_mention_discord)
             self.should_mention_discord = False
+        else:
+            # last but not least, Steam
+            self.necessary_program_not_running('Steam', self.should_mention_steam)
+            self.should_mention_steam = False
 
         return self.client_connected, self.client
 
