@@ -107,6 +107,7 @@ class TF2RichPresense:
         self.test_state: str = 'init'
         self.should_mention_discord: bool = True
         self.should_mention_tf2: bool = True
+        self.should_mention_steam: bool = True
         self.last_notify_time: Union[float, None] = None
         self.has_checked_class_configs: bool = False
         self.process_scanner: processes.ProcessScanner = processes.ProcessScanner(self.log)
@@ -145,7 +146,7 @@ class TF2RichPresense:
         # this as a one-liner is beautiful :)
         p_data: Dict[str, Dict[str, Union[bool, str, int, None]]] = self.process_scanner.scan()
 
-        if p_data['Steam']['running'] and len(p_data) == 3:
+        if p_data['Steam']['running']:
             # reads a steam config file
             valid_usernames: List[str] = configs.steam_config_file(self.log, p_data['Steam']['path'], p_data['TF2']['running'])
 
@@ -153,7 +154,10 @@ class TF2RichPresense:
         current_time: str = datetime.datetime.now().strftime('%I:%M:%S %p')
         self.current_time_formatted = current_time[1:] if current_time.startswith('0') else current_time
 
-        if p_data['TF2']['running'] and p_data['Discord']['running']:
+        if p_data['TF2']['running'] and p_data['Discord']['running'] and p_data['Steam']['running']:
+            if not p_data['Steam']['running'] and p_data['TF2']['running']:
+                self.log.error("TF2 is running but Steam isn't. WTF?")
+
             if not self.has_checked_class_configs:
                 # modifies a few tf2 config files
                 configs.class_config_files(self.log, p_data['TF2']['path'])
@@ -282,48 +286,52 @@ class TF2RichPresense:
 
             if not self.client_connected:
                 self.log.critical("self.client is disconnected when it shouldn't be")
+
         elif not p_data['TF2']['running']:
-            self.test_state = 'no tf2'
-
-            if self.client_connected:
-                try:
-                    self.log.debug("Disconnecting client")
-                    self.client.disconnect()  # doesn't work...
-                    client_state = (self.client.client_id, self.client.connected, self.client.ipc_path, self.client.pid, self.client.platform, self.client.socket)
-                    self.log.debug(f"client state after disconnect: {client_state}")
-                except Exception as err:
-                    self.log.error(f"client error while disconnecting: {err}")
-
-                self.log.info("Restarting")
-                del self.log
-                raise SystemExit  # ...but this does
-            else:
-                self.log.info(f"TF2 isn't running (mentioning to user: {self.should_mention_tf2})")
-
-                if self.should_mention_tf2:
-                    print(f'{self.current_time_formatted}{utils.generate_delta(self.loc, self.last_notify_time)}{colorama.Style.BRIGHT}')
-                    print(self.loc.text("Team Fortress 2 isn't running"))
-                    print(colorama.Style.RESET_ALL)
-                    self.should_mention_discord = True
-                    self.should_mention_tf2 = False
-                    self.last_notify_time = time.time()
-
-            # to prevent connecting when already connected
-            self.client_connected = False
+            self.necessary_program_not_running('Team Fortress 2', self.should_mention_tf2, 'TF2')
+            self.should_mention_tf2 = False
+        elif not p_data['Steam']['running']:
+            self.necessary_program_not_running('Steam', self.should_mention_steam)
+            self.should_mention_steam = False
         else:
-            # Discord isn't running
-            self.test_state = 'no discord'
-            self.log.info(f"Discord isn't running (mentioning to user: {self.should_mention_discord})")
-
-            if self.should_mention_discord:
-                print(f'{self.current_time_formatted}{utils.generate_delta(self.loc, self.last_notify_time)}{colorama.Style.BRIGHT}')
-                print(self.loc.text("Discord isn't running"))
-                print(colorama.Style.RESET_ALL)
-                self.should_mention_discord = False
-                self.should_mention_tf2 = True
-                self.last_notify_time = time.time()
+            # last but not least, Discord
+            self.necessary_program_not_running('Discord', self.should_mention_discord)
+            self.should_mention_discord = False
 
         return self.client_connected, self.client
+
+    # notify user (possibly) and restart (possibly)
+    def necessary_program_not_running(self, program_name: str, should_mention: bool, name_short: str = ''):
+        name_short = program_name if not name_short else name_short
+        self.test_state = f'no {name_short.lower()}'
+
+        if self.client_connected:
+            try:
+                self.log.debug("Disconnecting client")
+                self.client.disconnect()  # doesn't work...
+                client_state = (self.client.client_id, self.client.connected, self.client.ipc_path, self.client.pid, self.client.platform, self.client.socket)
+                self.log.debug(f"client state after disconnect: {client_state}")
+            except Exception as err:
+                self.log.error(f"client error while disconnecting: {err}")
+
+            self.log.info("Restarting")
+            del self.log
+            raise SystemExit  # ...but this does
+        else:
+            self.log.info(f"{name_short} isn't running (mentioning to user: {self.should_mention_tf2})")
+
+            if should_mention:
+                print(f'{self.current_time_formatted}{utils.generate_delta(self.loc, self.last_notify_time)}{colorama.Style.BRIGHT}')
+                print(self.loc.text("{0} isn't running").format(self.loc.text(program_name)))
+                print(colorama.Style.RESET_ALL)
+
+                self.last_notify_time = time.time()
+                self.should_mention_discord = True
+                self.should_mention_tf2 = True
+                self.should_mention_steam = True
+
+        # to prevent connecting when already connected
+        self.client_connected = False
 
     # reads a console.log and returns current map and class
     def interpret_console_log(self, *args, **kwargs) -> Tuple[str, str]:
