@@ -322,7 +322,7 @@ class TF2RichPresense:
 
             if should_mention:
                 print(f'{self.current_time_formatted}{utils.generate_delta(self.loc, self.last_notify_time)}{colorama.Style.BRIGHT}')
-                print(self.loc.text("{0} isn't running").format(self.loc.text(program_name)))
+                print(self.loc.text(f"{program_name} isn't running"))
                 print(colorama.Style.RESET_ALL)
 
                 self.last_notify_time = time.time()

@@ -2084,5 +2084,19 @@
         "Korean": "(호스팅)",
         "Chinese": " (托管)",
         "Japanese": "(ホスト)"
+    },
+    "1167132449": {
+        "English": "Steam isn't running",
+        "German": "Steam läuft nicht",
+        "French": "Steam ne fonctionne pas",
+        "Spanish": "Steam no está funcionando",
+        "Portuguese": "Steam não está a funcionar",
+        "Italian": "Steam non funziona",
+        "Dutch": "Steam loopt niet",
+        "Polish": "Steam nie działa",
+        "Russian": "Steam не работает",
+        "Korean": "Steam가 실행되지 않습니다",
+        "Chinese": "Steam没有运行",
+        "Japanese": "Steamは実行されていません"
     }
 }
