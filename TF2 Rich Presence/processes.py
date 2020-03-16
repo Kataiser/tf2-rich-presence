@@ -164,10 +164,9 @@ class ProcessScanner:
                 if ref_name in process[0]:
                     self.parsed_tasklist[ref_name] = int(process[1])
 
-        parsed_tasklist_keys = self.parsed_tasklist.keys()
-        self.process_data['TF2']['running'] = 'hl2.exe' in parsed_tasklist_keys
-        self.process_data['Steam']['running'] = 'Steam.exe' in parsed_tasklist_keys
-        self.process_data['Discord']['running'] = 'Discord' in parsed_tasklist_keys
+        self.process_data['TF2']['running'] = 'hl2.exe' in self.parsed_tasklist
+        self.process_data['Steam']['running'] = 'Steam.exe' in self.parsed_tasklist
+        self.process_data['Discord']['running'] = 'Discord' in self.parsed_tasklist
 
         # don't detect gmod (or any other program named hl2.exe)
         if self.process_data['TF2']['running']:
