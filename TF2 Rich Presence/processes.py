@@ -19,7 +19,7 @@ class ProcessScanner:
         self.log: logger.Log = log
         self.has_cached_all_pids: bool = False
         self.used_tasklist: bool = False
-        self.parsed_tasklist: dict = {}
+        self.parsed_tasklist: Dict[str, int] = {}
         self.executables: Dict[str, list] = {'posix': ['hl2_linux', 'steam', 'Discord'],
                                              'nt': ['hl2.exe', 'Steam.exe', 'Discord'],
                                              'order': ['TF2', 'Steam', 'Discord']}
@@ -149,11 +149,11 @@ class ProcessScanner:
     # https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/tasklist
     def parse_tasklist(self):
         try:
-            processes: List[str] = str(subprocess.check_output('tasklist /fi "STATUS eq running"')).split(r'\r\n')
+            processes: List[str] = str(subprocess.check_output('tasklist /fi "STATUS eq running" /fi "MEMUSAGE gt 10000" /nh')).split(r'\r\n')
         except subprocess.CalledProcessError:
-            processes: List[str] = []
+            processes = []
 
-        self.parsed_tasklist: dict = {}
+        self.parsed_tasklist = {}
 
         process_line: str
         ref_name: str
