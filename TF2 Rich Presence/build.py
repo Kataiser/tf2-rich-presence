@@ -255,6 +255,12 @@ def main(version_num='v1.13'):
 
     # generates zip package and an "installer" (a self extracting .7z as an exe), both with 7zip
     time.sleep(0.2)  # just to make sure everything is updated
+    if os.path.exists(f'tf2_rich_presence_{version_num}_self_extracting.exe.tmp'):
+        os.remove(f'tf2_rich_presence_{version_num}_self_extracting.exe.tmp')
+        print(f"Deleted tf2_rich_presence_{version_num}_self_extracting.exe.tmp")
+    if os.path.exists(f'tf2_rich_presence_{version_num}.zip.tmp'):
+        os.remove(f'tf2_rich_presence_{version_num}.zip.tmp')
+        print(f"Deleted tf2_rich_presence_{version_num}.zip.tmp")
     exe_path = f'tf2_rich_presence_{version_num}_self_extracting.exe'
     zip_path = f'tf2_rich_presence_{version_num}.zip'
     package7zip_command_exe_1 = f'build_tools{os.path.sep}7za.exe u {exe_path} -up1q0r2x1y2z1w2 "{new_build_folder_name}{os.path.sep}"'
@@ -266,10 +272,6 @@ def main(version_num='v1.13'):
     subprocess.run(f'{package7zip_command_exe_1} {package7zip_command_exe_2}', stdout=subprocess.DEVNULL)
     print(f"Creating {zip_path}...")
     subprocess.run(package7zip_command_zip, stdout=subprocess.DEVNULL)
-    if os.path.exists(f'tf2_rich_presence_{version_num}_self_extracting.exe.tmp'):
-        os.remove(f'tf2_rich_presence_{version_num}_self_extracting.exe.tmp')
-    if os.path.exists(f'tf2_rich_presence_{version_num}.zip.tmp'):
-        os.remove(f'tf2_rich_presence_{version_num}.zip.tmp')
 
     # creates README.md from README-source.md
     if os.path.exists('README-source.md'):
