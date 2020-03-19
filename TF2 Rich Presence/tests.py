@@ -216,6 +216,8 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertTrue('python' in p_info['path'].lower())  # hope your Python installation is sane
         self.assertTrue(isinstance(p_info['time'], int))
 
+        self.assertFalse(process_scanner.hl2_exe_is_tf2(os.getpid()))
+
     def test_settings_gui(self):
         root = tk.Tk()
         settings_gui = settings.GUI(root, self.log)

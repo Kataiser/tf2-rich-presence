@@ -3,6 +3,7 @@
 # cython: language_level=3
 
 import copy
+import functools
 import os
 import subprocess
 import time
@@ -171,12 +172,21 @@ class ProcessScanner:
 
         # don't detect gmod (or any other program named hl2.exe)
         if self.process_data['TF2']['running']:
-            hl2_exe_path: str = self.get_info_from_pid(self.parsed_tasklist['hl2.exe'], ('path',))['path']
-
-            if 'Team Fortress 2' not in hl2_exe_path:
-                self.log.error(f"Found non-TF2 hl2.exe at {hl2_exe_path}")
+            if not self.hl2_exe_is_tf2(self.parsed_tasklist['hl2.exe']):
                 self.process_data['TF2'] = copy.deepcopy(self.p_data_default['TF2'])
                 del self.parsed_tasklist['hl2.exe']
+
+    # makes sure "Team Fortress 2" exists in a process's path
+    @functools.lru_cache(maxsize=None)
+    def hl2_exe_is_tf2(self, hl2_exe_pid: int) -> bool:
+        hl2_exe_path: str = self.get_info_from_pid(hl2_exe_pid, ('path',))['path']
+
+        if 'Team Fortress 2' in hl2_exe_path:
+            self.log.debug(f"Found TF2 hl2.exe at {hl2_exe_path}")
+            return True
+        else:
+            self.log.error(f"Found non-TF2 hl2.exe at {hl2_exe_path}")
+            return False
 
 
 if __name__ == '__main__':
