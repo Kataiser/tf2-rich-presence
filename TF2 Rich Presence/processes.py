@@ -58,10 +58,10 @@ class ProcessScanner:
 
             if 'hl2.exe' in self.parsed_tasklist:
                 self.process_data['TF2']['pid'] = self.parsed_tasklist['hl2.exe']
-            if 'Steam.exe' in self.parsed_tasklist:
-                self.process_data['Steam']['pid'] = self.parsed_tasklist['Steam.exe']
-            if 'Discord' in self.parsed_tasklist:
-                self.process_data['Discord']['pid'] = self.parsed_tasklist['Discord']
+            if 'steam.exe' in self.parsed_tasklist:
+                self.process_data['Steam']['pid'] = self.parsed_tasklist['steam.exe']
+            if 'discord' in self.parsed_tasklist:
+                self.process_data['Discord']['pid'] = self.parsed_tasklist['discord']
 
             self.get_all_extended_info()
         else:
@@ -108,7 +108,7 @@ class ProcessScanner:
         self.process_data['Discord']['running'] = discord_data['running']
 
     # a mess of logic that gives process info from a PID
-    def get_info_from_pid(self, pid: int, return_data: tuple = ('path', 'time')) -> Dict[str, Union[str, bool, None, int]]:
+    def get_info_from_pid(self, pid: int, return_data: tuple) -> Dict[str, Union[str, bool, int, None]]:
         p_info: Dict[str, Union[str, bool, None, int]] = {'running': False, 'path': None, 'time': None}
         p_info_nones: Dict[str, Union[str, bool, None, int]] = {'running': False, 'path': None, 'time': None}
 
@@ -134,6 +134,7 @@ class ProcessScanner:
                             p_info['path'] = os.path.dirname(process.cmdline()[0])
                     else:
                         p_info['path'] = os.path.dirname(process.cmdline()[0])
+
                 if 'time' in return_data:
                     p_info['time'] = int(process.create_time())
         except Exception:
@@ -160,13 +161,13 @@ class ProcessScanner:
         for process_line in processes:
             process: list = process_line.split()
 
-            for ref_name in ('hl2.exe', 'Steam.exe', 'Discord'):
+            for ref_name in ('hl2.exe', 'Steam.exe', 'steam.exe', 'Discord'):
                 if ref_name in process[0]:
-                    self.parsed_tasklist[ref_name] = int(process[1])
+                    self.parsed_tasklist[ref_name.lower()] = int(process[1])
 
         self.process_data['TF2']['running'] = 'hl2.exe' in self.parsed_tasklist
-        self.process_data['Steam']['running'] = 'Steam.exe' in self.parsed_tasklist
-        self.process_data['Discord']['running'] = 'Discord' in self.parsed_tasklist
+        self.process_data['Steam']['running'] = 'steam.exe' in self.parsed_tasklist
+        self.process_data['Discord']['running'] = 'discord' in self.parsed_tasklist
 
         # don't detect gmod (or any other program named hl2.exe)
         if self.process_data['TF2']['running']:
