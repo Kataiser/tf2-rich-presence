@@ -10,7 +10,7 @@ import sys
 import time
 import traceback
 from operator import itemgetter
-from typing import TextIO, Union
+from typing import List, TextIO, Union
 
 import sentry_sdk
 
@@ -39,6 +39,7 @@ class Log:
         self.enabled: bool = settings.get('log_level') != 'Off'
         self.log_levels: list = ['Debug', 'Info', 'Error', 'Critical', 'Off']
         self.log_level: str = settings.get('log_level')
+        self.reported_error_hashes: List[int] = []
 
         # set the user in Sentry, since log filename is no longer sent
         with sentry_sdk.configure_scope() as scope:
@@ -115,7 +116,11 @@ class Log:
             self.write_log('ERROR', message_in)
 
         if reportable and self.sentry_level == 'All errors':
-            sentry_sdk.capture_message(f"Reporting non-critical ERROR: {message_in}")
+            if hash(message_in) not in self.reported_error_hashes:
+                sentry_sdk.capture_message(f"Reporting non-critical ERROR: {message_in}")
+                self.reported_error_hashes.append(hash(message_in))
+            else:
+                self.debug("Not reporting the error (has already been reported)")
 
     # a log with a level of CRITICAL (uncaught, fatal errors, probably sent to Sentry)
     def critical(self, message_in: str):
