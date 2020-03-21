@@ -208,13 +208,15 @@ class TestTF2RichPresense(unittest.TestCase):
 
     def test_process_scanning(self):
         process_scanner = processes.ProcessScanner(self.log)
+        process_scanner.executables['posix'].append('python')
+        process_scanner.executables['nt'].append('python')
 
         self.assertEqual(len(process_scanner.scan()), 3)
         p_info = process_scanner.get_info_from_pid(os.getpid(), ('path', 'time'))
 
-        self.assertEqual(p_info['running'], False)
+        self.assertEqual(p_info['running'], True)
         self.assertTrue('python' in p_info['path'].lower())  # hope your Python installation is sane
-        self.assertTrue(isinstance(p_info['time'], int))
+        self.assertGreater(p_info['time'], 1228305600)  # Python 3 release data lol
 
         self.assertFalse(process_scanner.hl2_exe_is_tf2(os.getpid()))
 

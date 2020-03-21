@@ -22,7 +22,7 @@ class ProcessScanner:
         self.used_tasklist: bool = False
         self.parsed_tasklist: Dict[str, int] = {}
         self.executables: Dict[str, list] = {'posix': ['hl2_linux', 'steam', 'Discord'],
-                                             'nt': ['hl2.exe', 'Steam.exe', 'Discord'],
+                                             'nt': ['hl2.exe', 'steam.exe', 'discord'],
                                              'order': ['TF2', 'Steam', 'Discord']}
         self.process_data: Dict[str, dict] = {'TF2': {'running': False, 'pid': None, 'path': None, 'time': None},
                                               'Steam': {'running': False, 'pid': None, 'path': None},
@@ -99,9 +99,9 @@ class ProcessScanner:
 
     # get only the needed info (exe path and process start time) for each, and then apply it to self.p_data
     def get_all_extended_info(self):
-        tf2_data: Dict[str] = self.get_info_from_pid(self.process_data['TF2']['pid'], ('path', 'time'))
-        steam_data: Dict[str] = self.get_info_from_pid(self.process_data['Steam']['pid'], ('path', 'cwd'))
-        discord_data: Dict[str] = self.get_info_from_pid(self.process_data['Discord']['pid'], ())
+        tf2_data: Dict[str, Union[str, bool, int, None]] = self.get_info_from_pid(self.process_data['TF2']['pid'], ('path', 'time'))
+        steam_data: Dict[str, Union[str, bool, int, None]] = self.get_info_from_pid(self.process_data['Steam']['pid'], ('path', 'cwd'))
+        discord_data: Dict[str, Union[str, bool, int, None]] = self.get_info_from_pid(self.process_data['Discord']['pid'], ())
 
         # ugly
         self.process_data['TF2']['running'], self.process_data['TF2']['path'], self.process_data['TF2']['time'] = tf2_data['running'], tf2_data['path'], tf2_data['time']
@@ -122,15 +122,16 @@ class ProcessScanner:
             except psutil.NoSuchProcess:
                 self.log.debug(f"Cached PID {pid} is no longer running")
             else:
-                p_info['running'] = [name for name in self.executables[os.name] if name in process.name()] != []
+                p_info['running'] = [name for name in self.executables[os.name] if name in process.name().lower()] != []
 
                 if not p_info['running']:
                     self.log.error(f"PID {pid} has been recycled as {process.name()}")
+                    return p_info_nones
 
                 if 'path' in return_data:
-                    if os.name == "posix":
+                    if os.name == 'posix':
                         if 'cwd' in return_data:
-                            p_info['path'] = os.path.dirname(process.cwd()) + "/Steam"
+                            p_info['path'] = os.path.dirname(process.cwd()) + '/Steam'
                         else:
                             p_info['path'] = os.path.dirname(process.cmdline()[0])
                     else:
@@ -138,6 +139,8 @@ class ProcessScanner:
 
                 if 'time' in return_data:
                     p_info['time'] = int(process.create_time())
+
+            return p_info
         except Exception:
             try:
                 self.log.error(f"psutil error for {process}: {traceback.format_exc()}")
@@ -145,8 +148,6 @@ class ProcessScanner:
                 self.log.error(f"psutil error: {traceback.format_exc()}")
 
             return p_info_nones
-
-        return p_info
 
     # https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/tasklist
     def parse_tasklist(self):

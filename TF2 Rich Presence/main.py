@@ -149,6 +149,8 @@ class TF2RichPresense:
         if p_data['Steam']['running']:
             # reads a steam config file
             valid_usernames: List[str] = configs.steam_config_file(self.log, p_data['Steam']['path'], p_data['TF2']['running'])
+        elif p_data['Steam']['pid'] is not None or p_data['Steam']['path'] is not None:
+            self.log.error(f"Steam isn't running but it's process info is {p_data['Steam']}. WTF?")
 
         # used for display only
         current_time: str = datetime.datetime.now().strftime('%I:%M:%S %p')
