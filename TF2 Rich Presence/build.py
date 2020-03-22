@@ -184,13 +184,9 @@ def main(version_num='v1.13'):
     os.rename(Path(f'{new_build_folder_name}/LICENSE'), Path(f'{new_build_folder_name}/License.txt'))
 
     # build PYDs using Cython and copy them in
+    subprocess.run(f'{sys.executable} cython_compile.py build_ext --inplace')
     pyds = [Path(f'cython_build/{file}') for file in os.listdir('cython_build') if file.endswith('.pyd')]
-    print(f"Compiling {len(pyds)} PYDs...")
-    compile_log = subprocess.run(f'{sys.executable} cython_compile.py build_ext --inplace', capture_output=True)
-    compile_log_stdout, compile_log_stderr = (compile_log.stdout.decode('UTF8'), compile_log.stderr.decode('UTF8'))
-    print(compile_log_stdout)
-    if compile_log_stderr != "":
-        raise SyntaxError(compile_log_stderr)
+    print(f"Compiled {len(pyds)} PYDs")
     for pyd in pyds:
         print("Copied", shutil.copy(pyd, Path(f'{new_build_folder_name}/resources/')))
 
