@@ -65,6 +65,7 @@ def main(version_num='v1.13'):
         print("Copied", shutil.copy('welcomer.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('detect_system_language.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('init.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('custom.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('utils.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('map list generator.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('thumb formatter.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
@@ -143,11 +144,12 @@ def main(version_num='v1.13'):
     print(f"Created new build folder: {new_build_folder_name}")
 
     missing_files = []
-    files_to_copy = [('maps.json', Path(f'{new_build_folder_name}/resources/')),
+    files_to_copy = [('launcher.py', Path(f'{new_build_folder_name}/resources/')),
+                     ('custom.py', Path(f'{new_build_folder_name}/resources/')),
+                     ('maps.json', Path(f'{new_build_folder_name}/resources/')),
                      ('localization.json', Path(f'{new_build_folder_name}/resources/')),
                      ('DB_default.json', Path(f'{new_build_folder_name}/resources/')),
                      ('LICENSE', new_build_folder_name),
-                     ('launcher.py', Path(f'{new_build_folder_name}/resources/')),
                      ('Readme.txt', Path(f'{new_build_folder_name}/')),
                      ('Launch TF2 with Rich Presence.bat', Path(f'{new_build_folder_name}/')),
                      ('Launch Rich Presence alongside TF2.bat', Path(f'{new_build_folder_name}/')),
@@ -300,6 +302,10 @@ def main(version_num='v1.13'):
         new_data = old_data.replace("release=VERSION", "release=f'{VERSION}-dev'")
         launcher_py_write.write(new_data)
     print(f"Set Sentry version to {version_num}-dev")
+
+    # HyperBubs
+    if os.path.isfile('custom_kataiser.py'):
+        shutil.copy('custom_kataiser.py', Path(f'{new_build_folder_name}/resources/custom.py'))
 
     # prepares display of time since last build
     if last_build_time:

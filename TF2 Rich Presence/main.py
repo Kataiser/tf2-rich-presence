@@ -120,6 +120,19 @@ class TF2RichPresense:
         self.map_gamemodes: Dict[str, Dict[str, List[str]]] = custom_maps.load_maps_db()
         self.loop_iteration: int = 0
 
+        # import custom functionality
+        tf2rp_custom_path: str = os.path.join('resources', 'custom.py') if os.path.isdir('resources') else 'custom.py'
+        if tf2rp_custom_path:
+            with open(tf2rp_custom_path, 'r') as tf2rp_custom_file:
+                tf2rp_custom_lines: int = len(tf2rp_custom_file.readlines())
+
+            import custom
+            self.log.debug(f"Imported tf2rp_custom ({tf2rp_custom_lines} lines)")
+            self.tf2rp_custom = custom.TF2RPCustom()  # good naming
+        else:
+            self.log.debug("tf2rp_custom doesn't exist")
+            self.tf2rp_custom = None
+
     def __repr__(self):
         return f"main.TF2RichPresense (state={self.test_state})"
 
@@ -136,6 +149,9 @@ class TF2RichPresense:
     def loop_body(self):
         self.loop_iteration += 1
         self.log.debug(f"Main loop iteration this app session: {self.loop_iteration}")
+
+        if self.tf2rp_custom:
+            self.tf2rp_custom.before_loop(self)
 
         self.old_activity1 = copy.deepcopy(self.activity)
         self.old_activity2 = copy.deepcopy(self.activity)
@@ -245,6 +261,9 @@ class TF2RichPresense:
             self.activity['assets']['large_text'] = self.loc.text(self.activity['assets']['large_text'])
             self.activity['timestamps']['start'] = p_data['TF2']['time']
 
+            if self.tf2rp_custom:
+                self.tf2rp_custom.after_loop(self)
+
             activity_comparison: Dict[str, Union[str, Dict[str, int], Dict[str, str]]] = copy.deepcopy(self.activity)
             if self.loc.text("Time on map: {0}").replace('{0}', '') in activity_comparison['state']:
                 activity_comparison['state'] = ''
@@ -298,6 +317,9 @@ class TF2RichPresense:
             # last but not least, Steam
             self.necessary_program_not_running('Steam', self.should_mention_steam)
             self.should_mention_steam = False
+
+        if self.tf2rp_custom:
+            self.tf2rp_custom.after_loop(self)
 
         return self.client_connected, self.client
 
