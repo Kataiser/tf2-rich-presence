@@ -34,6 +34,11 @@ import sentry_sdk
 
 import utils
 
+__author__ = "Kataiser"
+__copyright__ = "Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors"
+__license__ = "GPL-3.0"
+__email__ = "Mecharon1.gm@gmail.com"
+
 
 def launch():
     try:
