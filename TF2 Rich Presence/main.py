@@ -50,17 +50,17 @@ __email__ = "Mecharon1.gm@gmail.com"
 
 
 def launch():
-    log_main: logger.Log = logger.Log()
-    log_main.to_stderr = launcher.DEBUG
-
     try:
+        log_main: logger.Log = logger.Log()
+        log_main.to_stderr = launcher.DEBUG
+
         app: TF2RichPresense = TF2RichPresense(log_main)
         log_main.info(f"Starting TF2 Rich Presence {launcher.VERSION}")
         log_main.cleanup(20 if launcher.DEBUG else 10)
         log_main.debug(f"CPU: {psutil.cpu_count(logical=False)} cores, {psutil.cpu_count()} threads")
 
-        platform_info: Dict[str] = {'architecture': platform.architecture, 'machine': platform.machine, 'system': platform.system, 'platform': platform.platform,
-                                    'processor': platform.processor, 'python_version_tuple': platform.python_version_tuple}
+        platform_info: Dict[str, Any] = {'architecture': platform.architecture, 'machine': platform.machine, 'system': platform.system, 'platform': platform.platform,
+                                         'processor': platform.processor, 'python_version_tuple': platform.python_version_tuple}
         for platform_part in platform_info:
             try:
                 if platform_part == 'platform':
@@ -83,10 +83,9 @@ def launch():
         raise SystemExit
     except Exception:
         try:
-            formatted_exception = traceback.format_exc()
-            log_main.critical(formatted_exception)
+            log_main.critical(traceback.format_exc())
         except NameError:
-            pass
+            pass  # the crash happened in logger.Log().__init__() and so log_main is unassigned
 
         raise
 

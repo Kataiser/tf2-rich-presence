@@ -26,8 +26,7 @@ def launch(welcome_version):
         raise SystemExit
     except Exception:
         try:
-            formatted_exception = traceback.format_exc()
-            log_init.critical(formatted_exception)
+            log_init.critical(traceback.format_exc())
         except NameError:
             pass
 
