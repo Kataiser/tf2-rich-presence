@@ -352,14 +352,14 @@ def main(version_num='v1.13'):
 def convert_bat_to_exe(batch_location: str, vnum: str, icon_path: str):
     exe_location = batch_location.replace('.bat', '.exe')
     icon_location = os.path.abspath(icon_path)
+    move_location = Path(f'{os.path.dirname(batch_location)}/resources')
     version_num_windows = vnum[1:].replace('.', ',') + ',0' * (3 - vnum.count('.'))
     bat2exe_command_1 = f'build_tools{os.path.sep}Bat_To_Exe_Converter.exe -bat "{batch_location}" -save "{exe_location}" -icon "{icon_location}" -fileversion "{version_num_windows}"'
     bat2exe_command_2 = f'-productversion "{version_num_windows}" -company "Kataiser" -productname "TF2 Rich Presence" -description "Discord Rich Presence for Team Fortress 2"'
     print(f"Creating {exe_location}...")
     assert os.path.isfile(batch_location) and os.path.isfile(icon_path) and os.path.isfile(Path('build_tools/Bat_To_Exe_Converter.exe'))
     subprocess.run(f'{bat2exe_command_1} {bat2exe_command_2}')
-    os.remove(batch_location)
-    print(f"Deleted {batch_location}")
+    print(f"Moved from {batch_location} to {shutil.move(batch_location, move_location)}")
 
 
 # copy a directory to the git repo
