@@ -29,7 +29,7 @@ class Log:
             self.filename: str = path
         else:
             days_since_epoch_local = int((time.time() + time.localtime().tm_gmtoff) / 86400)  # 86400 seconds in a day
-            self.filename = os.path.join('logs', f'{user_pc_name}_{user_identifier}_{launcher.VERSION}_{days_since_epoch_local}.log')
+            self.filename = os.path.join('logs', f'TF2RP_{user_pc_name}_{user_identifier}_{launcher.VERSION}_{days_since_epoch_local}.log')
 
         # setup
         self.last_log_time: float = time.perf_counter()
