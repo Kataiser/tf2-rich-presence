@@ -14,29 +14,31 @@
 
 # TF2 Rich Presence
 Discord Rich Presence for Team Fortress 2
+- Current game state, queue info, playtime, and more
+- Configurable, reliable, and performance-efficient
 
 ![Preview image](preview.png)
 
 (The actual program is nowhere near as nice looking as this)
 
 ## Download
-With self-extractor: [tf2_rich_presence_{tf2rpvnum}_self_extracting.exe](https://github.com/Kataiser/tf2-rich-presence/releases/download/{tf2rpvnum}/tf2_rich_presence_{tf2rpvnum}_self_extracting.exe) ({installer_size} MB)  
+With 7-Zip's built-in extractor: [tf2_rich_presence_{tf2rpvnum}_self_extracting.exe](https://github.com/Kataiser/tf2-rich-presence/releases/download/{tf2rpvnum}/tf2_rich_presence_{tf2rpvnum}_self_extracting.exe) ({installer_size} MB)  
 Extract it yourself: [tf2_rich_presence_{tf2rpvnum}.zip](https://github.com/Kataiser/tf2-rich-presence/releases/download/{tf2rpvnum}/tf2_rich_presence_{tf2rpvnum}.zip) ({zip_size} MB)
 
 ## Installation and running
 1. Extract `tf2_rich_presence_{tf2rpvnum}.zip` OR run `tf2_rich_presence_{tf2rpvnum}_self_extracting.exe`, whichever you downloaded.
 2. Run `Launch TF2 with Rich Presence.exe`.
 	- OR run `Launch Rich Presence alongside TF2.exe`. This one doesn't automatically start Team Fortress 2.
-	- Both require Steam and Discord to be running as well.
+	- Both require Discord and Steam to be running as well and will wait until the game and both programs are running. 
 
-For faster launching, you can add the first EXE to your taskbar/start menu/desktop, or to Steam as a non-Steam game.
+For faster launching, you can add the first EXE to your taskbar/start menu/desktop/etc or to Steam as a non-Steam game.
 
 ## Changelogs
 - [Changelogs.html](https://htmlpreview.github.io/?https://github.com/Kataiser/tf2-rich-presence/blob/master/Changelogs.html)
 - [Releases](https://github.com/Kataiser/tf2-rich-presence/releases)
 
 ## Building from source
-For making and testing changes, or simply always running the most up-to-date code. (Windows only)
+For making and testing changes, or simply always running the most up-to-date code.
 1. Either clone the repo or [download the source](https://github.com/Kataiser/tf2-rich-presence/archive/master.zip).
 2. Copy the entire source to another location (sorry) and put the files outside of `TF2 Rich Presence` into that folder.
 3. Extract `TF2 Rich Presence\python-3.7.5-embed-win32.zip`.
