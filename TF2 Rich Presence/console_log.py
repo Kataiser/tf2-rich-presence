@@ -54,11 +54,11 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
 
     with open(console_log_path, 'r', errors='replace') as consolelog_file:
         if consolelog_file_size > byte_limit:
-            skip_to_byte = int(consolelog_file_size - byte_limit)
+            skip_to_byte: int = consolelog_file_size - int(byte_limit)
             consolelog_file.seek(skip_to_byte, 0)  # skip to last few KBs
 
             lines: List[str] = consolelog_file.readlines()
-            self.log.debug(f"console.log: {consolelog_file_size} bytes, skipped to {skip_to_byte}, read {byte_limit} bytes and {len(lines)} lines")
+            self.log.debug(f"console.log: {consolelog_file_size} bytes, skipped to {skip_to_byte}, read {int(byte_limit)} bytes and {len(lines)} lines")
         else:
             lines = consolelog_file.readlines()
             self.log.debug(f"console.log: {consolelog_file_size} bytes, {len(lines)} lines (didn't skip lines)")
