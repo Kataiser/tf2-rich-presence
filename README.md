@@ -37,6 +37,9 @@ For faster launching, you can add the first EXE to your taskbar/start menu/deskt
 - [Changelogs.html](https://htmlpreview.github.io/?https://github.com/Kataiser/tf2-rich-presence/blob/master/Changelogs.html)
 - [Releases](https://github.com/Kataiser/tf2-rich-presence/releases)
 
+## Linux and MacOS support?
+At the moment, both are considered unsupported. They probably work since [Jan200101](https://github.com/Jan200101) did some work on Linux a while ago, but the release builds are very much formatted for Windows. Contributors are welcome! Also check out [EmeraldSnorlax/TF2-RPC](https://github.com/EmeraldSnorlax/TF2-RPC), which is a much less mature program but is built on Linux and theoretically cross-platform too.
+
 ## Building from source
 For making and testing changes, or simply always running the most up-to-date code.
 1. Either clone the repo or [download the source](https://github.com/Kataiser/tf2-rich-presence/archive/master.zip).
