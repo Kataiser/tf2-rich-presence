@@ -9,13 +9,15 @@ import socket
 import sys
 import time
 import traceback
+import zlib
 from operator import itemgetter
-from typing import List, TextIO, Union
+from typing import Dict, TextIO, Union
 
 import sentry_sdk
 
 import launcher
 import settings
+import utils
 
 
 # TODO: replace this whole thing with a real logger
@@ -39,7 +41,6 @@ class Log:
         self.enabled: bool = settings.get('log_level') != 'Off'
         self.log_levels: list = ['Debug', 'Info', 'Error', 'Critical', 'Off']
         self.log_level: str = settings.get('log_level')
-        self.reported_error_hashes: List[int] = []
 
         # set the user in Sentry, since log filename is no longer sent
         with sentry_sdk.configure_scope() as scope:
@@ -116,9 +117,13 @@ class Log:
             self.write_log('ERROR', message_in)
 
         if reportable and self.sentry_level == 'All errors':
-            if hash(message_in) not in self.reported_error_hashes:
+            db: Dict[str, Union[dict, bool, list]] = utils.access_db()
+            message_hash: int = zlib.adler32(message_in.encode('UTF8'))
+
+            if message_hash not in db['error_hashes']:
                 sentry_sdk.capture_message(f"Reporting non-critical ERROR: {message_in}")
-                self.reported_error_hashes.append(hash(message_in))
+                db['error_hashes'].append(message_hash)
+                utils.access_db(write=db)
             else:
                 self.debug("Not reporting the error (has already been reported)")
 
