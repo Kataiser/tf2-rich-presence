@@ -15,16 +15,23 @@ import console_log
 def class_config_files(log, exe_location: str):
     log.debug(f"Reading (and possibly modifying) class configs at {exe_location}")
     tf2_classes: List[str] = ['Scout', 'Soldier', 'Pyro', 'Demoman', 'Heavy', 'Engineer', 'Medic', 'Sniper', 'Spy']
-    classes_found = []
-    classes_not_found = []
+    classes_found: List[tuple] = []
+    classes_not_found: List[tuple] = []
+    cfg_path: str = os.path.join(exe_location, 'tf', 'cfg')
+    # tf2 config files are at 'Steam\steamapps\common\Team Fortress 2\tf\cfg'
+
+    if not os.path.isdir(cfg_path):
+        if os.path.isdir(exe_location):
+            log.error(f"{exe_location} exists but {cfg_path} doesn't. WTF?")
+        else:
+            log.error(f"{exe_location} doesn't exist, can't read/modify class config files")
 
     for tf2_class in tf2_classes:
         # 'echo' means 'output to console' in source-speak
         selected_line: str = f'echo "{tf2_class} selected"'
 
         config_filename: str = tf2_class.lower().replace('heavy', 'heavyweapons')  # valve why
-        config_path = os.path.join(exe_location, 'tf', 'cfg', f'{config_filename}.cfg')
-        # config files are at 'Steam\steamapps\common\Team Fortress 2\tf\cfg'
+        config_path: str = os.path.join(cfg_path, f'{config_filename}.cfg')
 
         if os.path.isfile(config_path):
             # reads each existing class.cfg
