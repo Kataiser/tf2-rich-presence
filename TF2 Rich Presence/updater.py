@@ -64,6 +64,7 @@ def access_github_api(time_limit: float) -> Tuple[str, str, str]:
     r: Response = requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/releases/latest', timeout=time_limit)
 
     response: dict = r.json()
+    print(response)
     newest_version_api: str = response['tag_name']
     downloads_url_api: str = response['html_url']
     changelog_api: str = response['body']
