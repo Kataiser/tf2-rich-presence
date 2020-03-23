@@ -29,7 +29,7 @@ def main(version_num='v1.13'):
     if cli_skip_repo:
         github_repo_path = 'n'
     else:
-        if os.path.exists('last_repo_path.txt'):
+        if os.path.isfile('last_repo_path.txt'):
             with open('last_repo_path.txt', 'r') as last_repo_path_file:
                 last_repo_path = last_repo_path_file.read()
 
@@ -161,7 +161,7 @@ def main(version_num='v1.13'):
 
     # copies files, adding any version numbers
     for file_dest_pair in files_to_copy:
-        if not os.path.exists(file_dest_pair[0]):
+        if not os.path.isfile(file_dest_pair[0]):
             missing_files.append(file_dest_pair[0])
             continue
 
@@ -257,10 +257,10 @@ def main(version_num='v1.13'):
 
     # generates zip package and an "installer" (a self extracting .7z as an exe), both with 7zip
     time.sleep(0.2)  # just to make sure everything is updated
-    if os.path.exists(f'tf2_rich_presence_{version_num}_self_extracting.exe.tmp'):
+    if os.path.isfile(f'tf2_rich_presence_{version_num}_self_extracting.exe.tmp'):
         os.remove(f'tf2_rich_presence_{version_num}_self_extracting.exe.tmp')
         print(f"Deleted tf2_rich_presence_{version_num}_self_extracting.exe.tmp")
-    if os.path.exists(f'tf2_rich_presence_{version_num}.zip.tmp'):
+    if os.path.isfile(f'tf2_rich_presence_{version_num}.zip.tmp'):
         os.remove(f'tf2_rich_presence_{version_num}.zip.tmp')
         print(f"Deleted tf2_rich_presence_{version_num}.zip.tmp")
     exe_path = f'tf2_rich_presence_{version_num}_self_extracting.exe'
@@ -276,7 +276,7 @@ def main(version_num='v1.13'):
     subprocess.run(package7zip_command_zip, stdout=subprocess.DEVNULL)
 
     # creates README.md from README-source.md
-    if os.path.exists('README-source.md'):
+    if os.path.isfile('README-source.md'):
         readme_source_exists = True
         with open('README.md', 'r') as old_readme_md:
             old_readme_has_this_version = version_num in old_readme_md.read()

@@ -54,7 +54,7 @@ def launch():
             raise SystemError(f"--m must be in {allowed_modules}")
 
         old_dir = os.getcwd()
-        if os.path.exists('resources\\'):
+        if os.path.isdir('resources'):
             os.chdir('resources')
         loaded_module = importlib.import_module(args.m)
         os.chdir(old_dir)

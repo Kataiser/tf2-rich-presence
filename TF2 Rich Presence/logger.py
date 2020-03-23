@@ -149,7 +149,7 @@ class Log:
 
         self.debug(f"Deleted {len(deleted_log)} log(s): {deleted_log}")
 
-        for old_log in [log for log in all_logs if not log.endswith('.gz') and os.path.exists(log) and log != self.filename]:
+        for old_log in [log for log in all_logs if not log.endswith('.gz') and os.path.isfile(log) and log != self.filename]:
             with open(old_log, 'rb') as old_log_r:
                 data_in: bytes = old_log_r.read()
                 data_out: bytes = gzip.compress(data_in)
