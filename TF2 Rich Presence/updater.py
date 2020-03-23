@@ -62,12 +62,18 @@ def check_for_update(log: logger.Log, current_version: str, timeout: float):
 # actually accesses the Github api, in a seperate function for tests
 def access_github_api(time_limit: float) -> Tuple[str, str, str]:
     r: Response = requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/releases/latest', timeout=time_limit)
-
     response: dict = r.json()
-    print(response)
-    newest_version_api: str = response['tag_name']
-    downloads_url_api: str = response['html_url']
-    changelog_api: str = response['body']
+
+    try:
+        newest_version_api: str = response['tag_name']
+        downloads_url_api: str = response['html_url']
+        changelog_api: str = response['body']
+    except KeyError:
+        if 'message' in response and 'API rate limit exceeded' in response['message']:
+            rate_limit_message: str = f"Github {response['message'].split('(')[0][:-1]}"
+            raise RateLimitError(rate_limit_message)
+        else:
+            raise
 
     changelog_formatted: str = f'  {changelog_api}'.replace('## ', '').replace('\n- ', '\n - ').replace('\n', '\n  ')
     return newest_version_api, downloads_url_api, changelog_formatted
@@ -85,6 +91,10 @@ def failure_message(current_version: str, error_message: str = None):
     line2 = loc.text("To check for updates yourself, go to {0}").format("https://github.com/Kataiser/tf2-rich-presence/releases")
     line3 = "(you are currently running {0}).".format(current_version)
     print(f"{line1}\n{line2}\n{line3}\n")
+
+
+class RateLimitError(Exception):
+    pass
 
 
 if __name__ == '__main__':

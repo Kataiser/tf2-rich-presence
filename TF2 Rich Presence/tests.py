@@ -134,13 +134,17 @@ class TestTF2RichPresense(unittest.TestCase):
         os.chdir(old_dir)
 
     def test_access_github_api(self):
-        newest_version, downloads_url, changelog = updater.access_github_api(10)
-        self.assertTrue(newest_version.startswith('v') and '.' in newest_version)
-        self.assertTrue(downloads_url.startswith('https://github.com/Kataiser/tf2-rich-presence/releases/tag/v'))
-        self.assertTrue(len(changelog) > 0)
+        try:
+            newest_version, downloads_url, changelog = updater.access_github_api(10)
+        except updater.RateLimitError as error:
+            self.skipTest(error)
+        else:
+            self.assertTrue(newest_version.startswith('v') and '.' in newest_version)
+            self.assertTrue(downloads_url.startswith('https://github.com/Kataiser/tf2-rich-presence/releases/tag/v'))
+            self.assertTrue(len(changelog) > 0)
 
-        with self.assertRaises(requests.Timeout):
-            updater.access_github_api(0.01)
+            with self.assertRaises(requests.Timeout):
+                updater.access_github_api(0.01)
 
     def test_settings_check_int(self):
         self.assertTrue(settings.check_int('', 1000))
@@ -275,7 +279,10 @@ class TestTF2RichPresense(unittest.TestCase):
                                                                                         'large_image': 'main_menu', 'large_text': 'Main menu'}, 'state': ''})
 
     def test_init(self):
-        init.launch(0)
+        try:
+            init.launch(0)
+        except updater.RateLimitError as error:
+            self.skipTest(error)
 
 
 def fix_activity_dict(activity):
