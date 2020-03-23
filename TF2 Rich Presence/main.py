@@ -74,6 +74,13 @@ def launch():
         if not os.path.supports_unicode_filenames:
             log_main.error("Looks like the OS doesn't support unicode filenames. This might cause problems")
 
+        self_process: psutil.Process = psutil.Process()
+        priorities_before: tuple = (self_process.nice(), self_process.ionice())
+        self_process.nice(psutil.BELOW_NORMAL_PRIORITY_CLASS)
+        self_process.ionice(psutil.IOPRIO_LOW)
+        priorities_after: tuple = (self_process.nice(), self_process.ionice())
+        log_main.debug(f"Set process priorities from {priorities_before} to {priorities_after}")
+
         default_settings: dict = settings.get_setting_default(return_all=True)
         current_settings: dict = settings.access_registry()
         if current_settings == default_settings:
