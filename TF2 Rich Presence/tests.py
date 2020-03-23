@@ -139,7 +139,7 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertTrue(downloads_url.startswith('https://github.com/Kataiser/tf2-rich-presence/releases/tag/v'))
         self.assertTrue(len(changelog) > 0)
 
-        with self.assertRaises(requests.exceptions.Timeout):
+        with self.assertRaises(requests.Timeout):
             updater.access_github_api(0.01)
 
     def test_settings_check_int(self):

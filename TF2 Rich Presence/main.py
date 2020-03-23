@@ -78,6 +78,7 @@ def launch():
         else:
             log_main.debug(f"Non-default settings: {settings.compare_settings(default_settings, current_settings)}")
 
+        app.import_custom()
         app.run()
     except (KeyboardInterrupt, SystemExit):
         raise SystemExit
@@ -119,8 +120,13 @@ class TF2RichPresense:
         self.old_console_log_interpretation: tuple = ('', '')
         self.map_gamemodes: Dict[str, Dict[str, List[str]]] = custom_maps.load_maps_db()
         self.loop_iteration: int = 0
+        self.custom_functions = None
 
-        # import custom functionality
+    def __repr__(self):
+        return f"main.TF2RichPresense (state={self.test_state})"
+
+    # import custom functionality
+    def import_custom(self):
         tf2rp_custom_path: str = os.path.join('resources', 'custom.py') if os.path.isdir('resources') else 'custom.py'
         if tf2rp_custom_path:
             with open(tf2rp_custom_path, 'r') as tf2rp_custom_file:
@@ -128,13 +134,9 @@ class TF2RichPresense:
 
             import custom
             self.log.debug(f"Imported tf2rp_custom ({tf2rp_custom_lines} lines)")
-            self.tf2rp_custom = custom.TF2RPCustom()  # good naming
+            self.custom_functions = custom.TF2RPCustom()  # good naming
         else:
             self.log.debug("tf2rp_custom doesn't exist")
-            self.tf2rp_custom = None
-
-    def __repr__(self):
-        return f"main.TF2RichPresense (state={self.test_state})"
 
     def run(self):
         while True:
@@ -150,8 +152,8 @@ class TF2RichPresense:
         self.loop_iteration += 1
         self.log.debug(f"Main loop iteration this app session: {self.loop_iteration}")
 
-        if self.tf2rp_custom:
-            self.tf2rp_custom.before_loop(self)
+        if self.custom_functions:
+            self.custom_functions.before_loop(self)
 
         self.old_activity1 = copy.deepcopy(self.activity)
         self.old_activity2 = copy.deepcopy(self.activity)
@@ -165,7 +167,7 @@ class TF2RichPresense:
             # reads a steam config file
             valid_usernames: List[str] = configs.steam_config_file(self.log, p_data['Steam']['path'], p_data['TF2']['running'])
         elif p_data['Steam']['pid'] is not None or p_data['Steam']['path'] is not None:
-            self.log.error(f"Steam isn't running but it's process info is {p_data['Steam']}. WTF?")
+            self.log.error(f"Steam isn't running but its process info is {p_data['Steam']}. WTF?")
 
         # used for display only
         current_time: str = datetime.datetime.now().strftime('%I:%M:%S %p')
@@ -261,8 +263,8 @@ class TF2RichPresense:
             self.activity['assets']['large_text'] = self.loc.text(self.activity['assets']['large_text'])
             self.activity['timestamps']['start'] = p_data['TF2']['time']
 
-            if self.tf2rp_custom:
-                self.tf2rp_custom.after_loop(self)
+            if self.custom_functions:
+                self.custom_functions.after_loop(self)
 
             activity_comparison: Dict[str, Union[str, Dict[str, int], Dict[str, str]]] = copy.deepcopy(self.activity)
             if self.loc.text("Time on map: {0}").replace('{0}', '') in activity_comparison['state']:
@@ -318,8 +320,8 @@ class TF2RichPresense:
             self.necessary_program_not_running('Steam', self.should_mention_steam)
             self.should_mention_steam = False
 
-        if self.tf2rp_custom:
-            self.tf2rp_custom.after_loop(self)
+        if self.custom_functions:
+            self.custom_functions.after_loop(self)
 
         return self.client_connected, self.client
 

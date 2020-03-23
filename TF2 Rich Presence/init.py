@@ -16,12 +16,12 @@ def launch(welcome_version):
     log_init = logger.Log()
     log_init.info(f"Initializing TF2 Rich Presence {launcher.VERSION}")
     log_init.debug(f"Current log: {log_init.filename}")
-    log_init.info(f'Log level: {log_init.log_level}')
+    log_init.info(f"Log level: {log_init.log_level}")
 
     try:
         welcomer.welcome(log_init, welcome_version)
         detect_system_language.detect(log_init)
-        updater.check_for_update(log_init, launcher.VERSION, settings.get('request_timeout'))
+        updater.check_for_update(log_init, launcher.VERSION, float(settings.get('request_timeout')))
     except (KeyboardInterrupt, SystemExit):
         raise SystemExit
     except Exception:

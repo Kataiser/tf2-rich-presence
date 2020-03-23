@@ -83,7 +83,7 @@ def find_custom_map_gamemode(log, map_filename: str, force_api: bool = False, ti
                     log.debug(f"{map_filename}'s gamemode is {[gamemode, first_gamemode_fancy]} (fresh from teamwork.tf)")
                     return gamemode, first_gamemode_fancy
         except KeyError:
-            log.error(f"Couldn't find gamemode for that custom map (KeyError while parsing the api result). Full json response: \n{map_info}")
+            log.error(f"Couldn't find gamemode for custom map {map_filename} (KeyError while parsing the API result). Full json response: \n{map_info}")
 
         # unrecognized gamemodes
         first_gamemode = 'unknown_map'
