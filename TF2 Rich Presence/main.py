@@ -71,6 +71,9 @@ def launch():
                 log_main.error(f"Exception during platform.{platform_part}(), skipping\n{traceback.format_exc()}")
         log_main.debug(f"Platform: {platform_info}")
 
+        if not os.path.supports_unicode_filenames:
+            log_main.error("Looks like the OS doesn't support unicode filenames. This might cause problems")
+
         default_settings: dict = settings.get_setting_default(return_all=True)
         current_settings: dict = settings.access_registry()
         if current_settings == default_settings:
