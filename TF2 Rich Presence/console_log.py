@@ -19,8 +19,7 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
     current_class: str = 'Not queued'
     kataiser_seen_on: Union[str, None] = None
 
-    match_types: Dict[str, str] = {'match group 12v12 Casual Match': 'Casual', 'match group MvM Practice': 'MvM (Boot Camp)', 'match group MvM MannUp': 'MvM (Mann Up)',
-                                   'match group 6v6 Ladder Match': 'Competitive'}
+    match_types: Dict[str, str] = {'12v12 Casual Match': 'Casual', 'MvM Practice': 'MvM (Boot Camp)', 'MvM MannUp': 'MvM (Mann Up)', '6v6 Ladder Match': 'Competitive'}
     menus_messages: tuple = ('Server shutting down', 'For FCVAR_REPLICATED', '[TF Workshop]', 'Lobby destroyed', 'Disconnect:', 'Missing map')
     menus_message: str
     tf2_classes: tuple = ('Scout', 'Soldier', 'Pyro', 'Demoman', 'Heavy', 'Engineer', 'Medic', 'Sniper', 'Spy')
@@ -93,14 +92,14 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
                 line_used = line
                 break
 
-        if ' selected' in line:
+        if line.endswith(' selected \n'):
             current_class_possibly: str = line[:-11]
 
             if current_class_possibly in tf2_classes:
                 current_class = current_class_possibly
                 line_used = line
 
-        elif 'Map:' in line:
+        elif line.startswith('Map:'):
             current_map = line[5:-1]  # this variable is poorly named
             current_class = 'unselected'  # so is this one
             line_used = line
@@ -112,30 +111,31 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
                 just_started_server = False
                 server_still_running = False
 
-        elif '[PartyClient] L' in line:  # full line: [PartyClient] Leaving queue
+        elif '[PartyClient] L' in line:  # full line: "[PartyClient] Leaving queue"
             current_class = 'Not queued'
             line_used = line
 
-        elif '[PartyClient] Entering queue ' in line:
+        elif '[PartyClient] Entering q' in line:  # full line: "[PartyClient] Entering queue for match group " + whatever mode
             current_map = 'In menus'
             line_used = line
 
             if hide_queued_gamemode:
                 current_class = "Queued"
             else:
-                current_class = f"Queued for {match_types[line[33:-1]]}"
+                match_type: str = line.split('match group ')[-1][:-1]
+                current_class = f"Queued for {match_types[match_type]}"
 
-        elif 'Disconnect by user' in line and [i for i in user_usernames if i in line]:
+        elif line.startswith('Disconnect by user') and [un for un in user_usernames if un in line]:
             current_map = 'In menus'
             current_class = 'Not queued'
             line_used = line
 
-        elif '[PartyClient] Entering s' in line:  # full line: [PartyClient] Entering standby queue
+        elif '[PartyClient] Entering s' in line:  # full line: "[PartyClient] Entering standby queue"
             current_map = 'In menus'
             current_class = 'Queued for a party\'s match'
             line_used = line
 
-        elif 'SV_ActivateServer' in line:
+        elif 'SV_ActivateServer' in line:  # full line: "SV_ActivateServer: setting tickrate to 66.7"
             just_started_server = True
 
         if not user_is_kataiser and 'Kataiser' in line and not self.has_seen_kataiser:
@@ -144,7 +144,7 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
     if server_still_running and current_map != 'In menus':
         current_map = f'{current_map} (hosting)'
 
-    if not user_is_kataiser and not self.has_seen_kataiser and kataiser_seen_on == current_map and current_map not in ('', 'In menus'):
+    if not user_is_kataiser and not self.has_seen_kataiser and kataiser_seen_on == current_map and current_map != 'In menus':
         self.has_seen_kataiser = True
         self.log.debug(f"Kataiser located, telling user :D (on {current_map})")
         print(f"{colorama.Fore.LIGHTCYAN_EX}Hey, it seems that Kataiser, the developer of TF2 Rich Presence, is in your game! Say hi to me if you'd like :){colorama.Style.RESET_ALL}\n")
