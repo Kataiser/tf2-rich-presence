@@ -42,10 +42,6 @@ class Log:
         self.log_levels: list = ['Debug', 'Info', 'Error', 'Critical', 'Off']
         self.log_level: str = settings.get('log_level')
 
-        # set the user in Sentry, since log filename is no longer sent
-        with sentry_sdk.configure_scope() as scope:
-            scope.user = {'username': f'{user_pc_name}_{user_identifier}'}
-
         if self.enabled:
             if not os.path.isdir('logs'):
                 os.mkdir('logs')

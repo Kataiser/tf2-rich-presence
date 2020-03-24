@@ -20,8 +20,10 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import argparse
+import getpass
 import importlib
 import os
+import socket
 import sys
 import time
 import traceback
@@ -124,6 +126,17 @@ VERSION = '{tf2rpvnum}'
 
 if __name__ == '__main__':
     # set up Sentry (https://sentry.io/)
-    sentry_sdk.init(dsn=utils.get_api_key('sentry'), release=VERSION)
+    sentry_sdk.init(dsn=utils.get_api_key('sentry'),
+                    release=VERSION,
+                    attach_stacktrace=True,
+                    max_breadcrumbs=50,
+                    debug=DEBUG,
+                    environment="Debug build" if DEBUG else "Release",
+                    request_bodies='small')
+
+    with sentry_sdk.configure_scope() as scope:
+        user_identifier: str = getpass.getuser()
+        user_pc_name: str = socket.gethostname()
+        scope.user = {'username': f'{user_pc_name}_{user_identifier}'}
 
     launch()
