@@ -2,7 +2,7 @@ beautifulsoup4==4.8.2
 certifi==2019.11.28
 chardet==3.0.4
 colorama==0.4.3
-Cython==0.29.15
+Cython==0.29.16
 discoIPC==1.0.0
 idna==2.9
 lxml==4.5.0
