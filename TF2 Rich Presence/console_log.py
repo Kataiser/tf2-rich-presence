@@ -125,7 +125,7 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
                 match_type: str = line.split('match group ')[-1][:-1]
                 current_class = f"Queued for {match_types[match_type]}"
 
-        elif line.startswith('Disconnect by user') and [un for un in user_usernames if un in line]:
+        elif 'Disconnect by user' in line and [un for un in user_usernames if un in line]:
             current_map = 'In menus'
             current_class = 'Not queued'
             line_used = line
