@@ -78,13 +78,24 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
         except PermissionError as error:
             self.log.error(f"Failed to trim console.log: {error}")
 
-    # iterates though roughly 16000 lines from console.log and learns everything from them
-    line_used: str = ''
     just_started_server: bool = False
     server_still_running: bool = False
+    with_optimization: bool = True  # "with" optimization, not "with optimization"
 
+    for username in user_usernames:
+        if 'with' in username:
+            with_optimization = False
+
+    # iterates though roughly 16000 lines from console.log and learns everything from them
+    line_used: str = ''
     line: str
     for line in lines:
+        # lines that have "with" in them are basically always kill logs and can be safely ignored
+        # this (probably) improves performance
+        if with_optimization and 'with' in line:
+            if user_is_kataiser or 'Kataiser' not in line or self.has_seen_kataiser:
+                continue
+
         for menus_message in menus_messages:
             if menus_message in line:
                 current_map = 'In menus'
@@ -141,13 +152,13 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
         if not user_is_kataiser and 'Kataiser' in line and not self.has_seen_kataiser:
             kataiser_seen_on = current_map
 
-    if server_still_running and current_map != 'In menus':
-        current_map = f'{current_map} (hosting)'
-
     if not user_is_kataiser and not self.has_seen_kataiser and kataiser_seen_on == current_map and current_map != 'In menus':
         self.has_seen_kataiser = True
         self.log.debug(f"Kataiser located, telling user :D (on {current_map})")
         print(f"{colorama.Fore.LIGHTCYAN_EX}Hey, it seems that Kataiser, the developer of TF2 Rich Presence, is in your game! Say hi to me if you'd like :){colorama.Style.RESET_ALL}\n")
+
+    if server_still_running and current_map != 'In menus':
+        current_map = f'{current_map} (hosting)'
 
     self.log.debug(f"Got '{current_map}' and '{current_class}' from this line: '{line_used[:-1]}'")
     self.old_console_log_interpretation = (current_map, current_class)
