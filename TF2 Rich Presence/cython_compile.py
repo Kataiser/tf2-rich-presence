@@ -18,9 +18,11 @@ def main():
         os.mkdir('cython_build')
 
     for target in targets:
-        shutil.copy2(f'{target}.py', os.path.join('cython_build', f'{target}.py'))
+        target_py = f'{target}.py'
+        shutil.copy2(target_py, os.path.join('cython_build', target_py))
         os.chdir('cython_build')
-        setup(name=target, ext_modules=cythonize(f'{target}.py', nthreads=2, annotate=True))
+        print(f"{target_py}: ", end='')
+        setup(name=target, ext_modules=cythonize(target_py, nthreads=2, annotate=True))
         os.chdir(og_cwd)
 
 
