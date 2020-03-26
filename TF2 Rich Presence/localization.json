@@ -2098,5 +2098,47 @@
         "Korean": "Steam가 실행되지 않습니다",
         "Chinese": "Steam没有运行",
         "Japanese": "Steamは実行されていません"
+    },
+    "5934295940": {
+        "English": "{0} - {1} ({2})",
+        "German": "{0} - {1} ({2})",
+        "French": "{0} - {1} ({2})",
+        "Spanish": "{0} - {1} ({2})",
+        "Portuguese": "{0} - {1} ({2})",
+        "Italian": "{0} - {1} ({2})",
+        "Dutch": "{0} - {1} ({2})",
+        "Polish": "{0} - {1} ({2})",
+        "Russian": "{0} - {1} ({2})",
+        "Korean": "{0} - {1} ({2})",
+        "Chinese": "{0} - {1} ({2})",
+        "Japanese": "{0} - {1} ({2})"
+    },
+    "6943552060": {
+        "English": "{0} - {1} on {2}",
+        "German": "{0} - {1} auf {2}",
+        "French": "{0} - {1} sur {2}",
+        "Spanish": "{0} - {1} en {2}",
+        "Portuguese": "{0} - {1} em {2}",
+        "Italian": "{0} - {1} su {2}",
+        "Dutch": "{0} - {1} op {2}",
+        "Polish": "{0} - {1} na {2}",
+        "Russian": "{0} - {1} на {2}",
+        "Korean": "{0} - {1}에{2}",
+        "Chinese": "{0} - {1}上{2}",
+        "Japanese": "{0} - {1}に{2}"
+    },
+    "1266157337": {
+        "English": "{0} - Waiting for {1}",
+        "German": "{0} - Warten auf {1}",
+        "French": "{0} - En attendant {1}",
+        "Spanish": "{0} - Esperando a {1}",
+        "Portuguese": "{0} - À espera de {1}",
+        "Italian": "{0} - In attesa di {1}",
+        "Dutch": "{0} - Wachten op {1}",
+        "Polish": "{0} - Czekając na {1}",
+        "Russian": "{0} - ждущий {1}",
+        "Korean": "{0} - 대기 중{1}",
+        "Chinese": "{0} - 等待着{1}",
+        "Japanese": "{0} - 대기 중{1}"
     }
 }

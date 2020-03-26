@@ -22,6 +22,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import copy
+import ctypes
 import datetime
 import os
 import platform
@@ -109,6 +110,7 @@ class TF2RichPresense:
              'timestamps': {'start': int(time.time())},
              'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2', 'large_image': 'main_menu', 'large_text': 'Main menu'},
              'state': ''}
+        # TODO: make activity a flat class instead that can be converted to a dict in the above format
         self.old_activity1: Dict[str, Union[str, Dict[str, int], Dict[str, str]]] = {}  # for the console output
         self.old_activity2: Dict[str, Union[str, Dict[str, int], Dict[str, str]]] = {}  # for sending to Discord
         self.activity_translated: Dict[str, Union[str, Dict[str, int], Dict[str, str]]] = {}
@@ -198,6 +200,8 @@ class TF2RichPresense:
             top_line, bottom_line = self.interpret_console_log(console_log_path, valid_usernames, tf2_start_time=p_data['TF2']['time'])
             # TODO: use a state machine and/or much more consistent var names
 
+            actual_current_class: str = bottom_line  # oh my god.
+
             if 'In menus' in top_line:
                 # in menus displays the main menu
                 self.test_state = 'menus'
@@ -253,7 +257,7 @@ class TF2RichPresense:
 
                 try:
                     map_fancy, current_gamemode, gamemode_fancy = self.map_gamemodes['official'][top_line]
-                    map_out = map_fancy
+                    map_out: str = map_fancy
                     self.activity['assets']['large_image'] = current_gamemode
                     self.activity['assets']['large_text'] = gamemode_fancy
                 except KeyError:
@@ -284,16 +288,23 @@ class TF2RichPresense:
                 # output to terminal, just for monitoring
                 print(f"{self.current_time_formatted}{utils.generate_delta(self.loc, self.last_notify_time)}{colorama.Style.BRIGHT}")
 
+                base_window_title: str = self.loc.text("TF2 Rich Presence ({0})").format(launcher.VERSION)
+                window_title_format_menus: str = self.loc.text("{0} - {1} ({2})")
+                window_title_format_main: str = self.loc.text("{0} - {1} on {2}")
+
                 if [d for d in ('Queued', 'Main menu') if d in og_large_text]:
                     # if queued or on the main menu, simplify cmd output
                     print(self.loc.text(self.activity['details']))
                     print(self.loc.text(self.activity['state']))
+                    window_title = window_title_format_menus.format(base_window_title, self.loc.text(self.activity['details']), self.loc.text(self.activity['state']))
                 else:
                     print(f"{self.loc.text(self.activity['details'])} ({self.activity['assets']['large_text']})")
                     print(self.loc.text(self.activity['state']))
 
                     if settings.get('map_time'):
                         print(class_line)  # this means the current class. god this desperately needs a refactor
+
+                    window_title = window_title_format_main.format(base_window_title, actual_current_class, self.current_map)
 
                 print(colorama.Style.RESET_ALL, end='')
 
@@ -303,6 +314,9 @@ class TF2RichPresense:
 
                 self.log.debug(f"Activity changed, outputting (old: {self.old_activity1}, new: {self.activity})")
                 self.last_notify_time = time.time()
+
+                ctypes.windll.kernel32.SetConsoleTitleW(window_title)
+                self.log.debug(f"Set window title to \"{window_title}\"")
             else:
                 self.log.debug("Activity hasn't changed, not outputting")
 
@@ -353,7 +367,7 @@ class TF2RichPresense:
             del self.log
             raise SystemExit  # ...but this does
         else:
-            self.log.info(f"{name_short} isn't running (mentioning to user: {self.should_mention_tf2})")
+            self.log.info(f"{name_short} isn't running (mentioning to user: {should_mention})")
 
             if should_mention:
                 print(f'{self.current_time_formatted}{utils.generate_delta(self.loc, self.last_notify_time)}{colorama.Style.BRIGHT}')
@@ -364,6 +378,11 @@ class TF2RichPresense:
                 self.should_mention_discord = True
                 self.should_mention_tf2 = True
                 self.should_mention_steam = True
+
+                base_window_title: str = self.loc.text("TF2 Rich Presence ({0})").format(launcher.VERSION)
+                window_title = self.loc.text("{0} - Waiting for {1}").format(base_window_title, program_name)
+                ctypes.windll.kernel32.SetConsoleTitleW(window_title)
+                self.log.debug(f"Set window title to \"{window_title}\"")
 
         # to prevent connecting when already connected
         self.client_connected = False
