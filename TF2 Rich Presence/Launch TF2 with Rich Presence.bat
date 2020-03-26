@@ -7,8 +7,8 @@
 @echo off
 TITLE TF2 Rich Presence ({tf2rpvnum})
 start steam://rungameid/440
-"%~dp0\resources\python\python.exe" -OO "%~dp0\resources\launcher.py" --m init --welcome_version 0
+"%~dp0\resources\python\python.exe" -I -OO "%~dp0\resources\launcher.py" --m init --welcome_version 0
 
 :start
-"%~dp0\resources\python\python.exe" -OO "%~dp0\resources\launcher.py" --m main
+"%~dp0\resources\python\python.exe" -I -OO "%~dp0\resources\launcher.py" --m main
 goto start

@@ -5,4 +5,4 @@
 :: one folder up. They are for debugging and function identically to their corresponding EXEs (unless modified).
 
 @echo off
-start "" "%~dp0\resources\python\pythonw.exe" -OO "%~dp0\resources\launcher.py" --m settings
+start "" "%~dp0\resources\python\pythonw.exe" -I -OO "%~dp0\resources\launcher.py" --m settings
