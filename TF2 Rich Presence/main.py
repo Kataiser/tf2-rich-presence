@@ -139,16 +139,17 @@ class TF2RichPresense:
 
     # import custom functionality
     def import_custom(self):
-        tf2rp_custom_path: str = os.path.join('resources', 'custom.py') if os.path.isdir('resources') else 'custom.py'
-        if tf2rp_custom_path:
-            with open(tf2rp_custom_path, 'r') as tf2rp_custom_file:
-                tf2rp_custom_lines: int = len(tf2rp_custom_file.readlines())
+        custom_functions_path: str = os.path.join('resources', 'custom.py') if os.path.isdir('resources') else 'custom.py'
+
+        if custom_functions_path:
+            with open(custom_functions_path, 'r') as custom_functions_file:
+                custom_functions_lines: int = len(custom_functions_file.readlines())
 
             import custom
-            self.log.debug(f"Imported tf2rp_custom ({tf2rp_custom_lines} lines)")
+            self.log.debug(f"Imported custom.py ({custom_functions_lines} lines)")
             self.custom_functions = custom.TF2RPCustom()  # good naming
         else:
-            self.log.debug("tf2rp_custom doesn't exist")
+            self.log.debug("custom.py doesn't exist")
 
     def run(self):
         while True:
