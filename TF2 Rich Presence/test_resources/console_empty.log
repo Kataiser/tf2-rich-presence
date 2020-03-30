@@ -1,1 +1,1 @@
-This simulates a brand new log file that has no useful lines yet. main.interpret_console_log should return ('', '', '') which as of writing this is unhandled.
+This simulates a brand new log file that has no useful lines yet.

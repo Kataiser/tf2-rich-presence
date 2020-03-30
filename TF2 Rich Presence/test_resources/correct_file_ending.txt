@@ -12,7 +12,7 @@ Dropped CEDA from server (Server shutting down)
 Dropped Black Mesa from server (Server shutting down)
 Dropped TAAAAANK! from server (Server shutting down)
 Dropped ZAWMBEEZ from server (Server shutting down)
-Dropped Kataiser from server (Server shutting down)
+Dropped Not Kataiser from server (Server shutting down)
 [PartyClient] Requesting queue for 12v12 Casual Match
 [PartyClient] Entering queue for match group 12v12 Casual Match
 [PartyClient] Joining party 449503282159189
