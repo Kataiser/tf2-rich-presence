@@ -119,9 +119,6 @@ class ProcessScanner:
         try:
             try:
                 process: psutil.Process = psutil.Process(pid=pid)
-            except psutil.NoSuchProcess:
-                self.log.debug(f"Cached PID {pid} is no longer running")
-            else:
                 p_info['running'] = [name for name in self.executables[os.name] if name in process.name().lower()] != []
 
                 if not p_info['running']:
@@ -139,13 +136,17 @@ class ProcessScanner:
 
                 if 'time' in return_data:
                     p_info['time'] = int(process.create_time())
+            except psutil.NoSuchProcess:
+                self.log.debug(f"Cached PID {pid} is no longer running")
 
             return p_info
         except Exception:
+            formatted_exception: str = traceback.format_exc()
+
             try:
-                self.log.error(f"psutil error for {process}: {traceback.format_exc()}")
-            except Exception:
-                self.log.error(f"psutil error: {traceback.format_exc()}")
+                self.log.error(f"psutil error for {process}: {formatted_exception}")
+            except NameError:
+                self.log.error(f"psutil error: {formatted_exception}")
 
             return p_info_nones
 
