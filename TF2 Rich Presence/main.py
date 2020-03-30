@@ -381,7 +381,7 @@ class TF2RichPresense:
                 self.should_mention_steam = True
 
                 base_window_title: str = self.loc.text("TF2 Rich Presence ({0})").format(launcher.VERSION)
-                window_title = self.loc.text("{0} - Waiting for {1}").format(base_window_title, program_name)
+                window_title: str = self.loc.text("{0} - Waiting for {1}").format(base_window_title, program_name)
                 ctypes.windll.kernel32.SetConsoleTitleW(window_title)
                 self.log.debug(f"Set window title to \"{window_title}\"")
 

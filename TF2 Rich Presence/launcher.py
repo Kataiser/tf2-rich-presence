@@ -30,7 +30,7 @@ import traceback
 import zlib
 
 sys.path.append(os.path.abspath(os.path.join('resources', 'python', 'packages')))
-sys.path.append(os.path.abspath(os.path.join('resources')))
+sys.path.append(os.path.abspath('resources'))
 import colorama
 import sentry_sdk
 
@@ -111,6 +111,7 @@ def exc_already_reported(tb: str) -> bool:
         return False
 
 
+# if a crash happens, tell the user that an update is available
 def out_of_date_warning() -> str:
     update_info: dict = utils.access_db()['available_version']
 
