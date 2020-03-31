@@ -146,6 +146,27 @@ class TestTF2RichPresense(unittest.TestCase):
             with self.assertRaises(requests.Timeout):
                 updater.access_github_api(0.01)
 
+    def test_format_changelog(self):
+        unformatted = "## Changes" \
+                      "\n- This is a change or addition of some sort" \
+                      "\n- This is a second change" \
+                      "\n## Fixes" \
+                      "\n- This is a bug fix" \
+                      "\n- This is another bug fix" \
+                      "\n" \
+                      "\nThis is some extra text"
+
+        formatted = "  Changes" \
+                    "\n   - This is a change or addition of some sort" \
+                    "\n   - This is a second change" \
+                    "\n  Fixes" \
+                    "\n   - This is a bug fix" \
+                    "\n   - This is another bug fix" \
+                    "\n  " \
+                    "\n  This is some extra text"
+
+        self.assertEqual(updater.format_changelog(unformatted), formatted)
+
     def test_settings_check_int(self):
         self.assertTrue(settings.check_int('', 1000))
         self.assertTrue(settings.check_int('1', 1000))

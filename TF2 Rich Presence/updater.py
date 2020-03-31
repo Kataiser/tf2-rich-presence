@@ -75,8 +75,12 @@ def access_github_api(time_limit: float) -> Tuple[str, str, str]:
         else:
             raise
 
-    changelog_formatted: str = f'  {changelog_api}'.replace('## ', '').replace('\n- ', '\n - ').replace('\n', '\n  ')
+    changelog_formatted: str = format_changelog(changelog_api)
     return newest_version_api, downloads_url_api, changelog_formatted
+
+
+def format_changelog(log_text: str) -> str:
+    return f'  {log_text}'.replace('## ', '').replace('\n- ', '\n - ').replace('\n', '\n  ')
 
 
 # either timed out or some other exception
