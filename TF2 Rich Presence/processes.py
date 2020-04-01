@@ -134,8 +134,14 @@ class ProcessScanner:
                     else:
                         p_info['path'] = os.path.dirname(process.cmdline()[0])
 
+                    if not p_info['path']:
+                        return p_info_nones
+
                 if 'time' in return_data:
                     p_info['time'] = int(process.create_time())
+
+                    if not p_info['time']:
+                        return p_info_nones
 
                 return p_info
             except psutil.NoSuchProcess:
