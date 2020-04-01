@@ -6,7 +6,7 @@ import datetime
 import traceback
 from typing import Union
 
-import colorama
+from colorama import Fore
 
 import detect_system_language
 import launcher
@@ -54,7 +54,7 @@ def holidays(log: logger.Log):
 
     if holiday_text:
         log.info(f"Today is {now.year}/{now.month}/{now.day}: so the holiday text is \"{holiday_text}\"")
-        print(f"{colorama.Fore.LIGHTGREEN_EX}{holiday_text}{colorama.Fore.RESET}\n")
+        print(f"{Fore.LIGHTGREEN_EX}{holiday_text}{Fore.RESET}\n")
 
 
 if __name__ == '__main__':

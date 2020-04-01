@@ -30,8 +30,8 @@ import time
 import traceback
 from typing import Any, Dict, List, Tuple, Union
 
-import colorama
 import psutil
+from colorama import Style
 from discoIPC import ipc
 
 import configs
@@ -287,7 +287,7 @@ class TF2RichPresense:
 
             if activity_comparison != self.old_activity1:
                 # output to terminal, just for monitoring
-                print(f"{self.current_time_formatted}{utils.generate_delta(self.loc, self.last_notify_time)}{colorama.Style.BRIGHT}")
+                print(f"{self.current_time_formatted}{utils.generate_delta(self.loc, self.last_notify_time)}{Style.BRIGHT}")
 
                 base_window_title: str = self.loc.text("TF2 Rich Presence ({0})").format(launcher.VERSION)
                 window_title_format_menus: str = self.loc.text("{0} - {1} ({2})")
@@ -307,7 +307,7 @@ class TF2RichPresense:
 
                     window_title = window_title_format_main.format(base_window_title, actual_current_class, self.current_map)
 
-                print(colorama.Style.RESET_ALL, end='')
+                print(Style.RESET_ALL, end='')
 
                 time_elapsed = datetime.timedelta(seconds=int(time.time() - p_data['TF2']['time']))
                 print(self.loc.text("{0} elapsed").format(str(time_elapsed).replace('0:', '', 1)))
@@ -371,9 +371,9 @@ class TF2RichPresense:
             self.log.info(f"{name_short} isn't running (mentioning to user: {should_mention})")
 
             if should_mention:
-                print(f'{self.current_time_formatted}{utils.generate_delta(self.loc, self.last_notify_time)}{colorama.Style.BRIGHT}')
+                print(f'{self.current_time_formatted}{utils.generate_delta(self.loc, self.last_notify_time)}{Style.BRIGHT}')
                 print(self.loc.text(f"{program_name} isn't running"))
-                print(colorama.Style.RESET_ALL)
+                print(Style.RESET_ALL)
 
                 self.last_notify_time = time.time()
                 self.should_mention_discord = True
@@ -423,9 +423,9 @@ class TF2RichPresense:
                 # often happens when Discord is in the middle of starting up. report it anyway
                 self.log.error(str(client_connect_error))
 
-                print(f'{self.current_time_formatted}{colorama.Style.BRIGHT}')
+                print(f'{self.current_time_formatted}{Style.BRIGHT}')
                 print(self.loc.text("Can't connect to Discord for Rich Presence."))
-                print(colorama.Style.RESET_ALL)
+                print(Style.RESET_ALL)
 
                 time.sleep(settings.get('wait_time'))
                 del self.log

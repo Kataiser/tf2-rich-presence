@@ -5,7 +5,7 @@
 import os
 from typing import Dict, List, Tuple, Union
 
-import colorama
+from colorama import Fore, Style
 
 import launcher
 import localization
@@ -155,7 +155,7 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
     if not user_is_kataiser and not self.has_seen_kataiser and kataiser_seen_on == current_map and current_map != 'In menus':
         self.has_seen_kataiser = True
         self.log.debug(f"Kataiser located, telling user :D (on {current_map})")
-        print(f"{colorama.Fore.LIGHTCYAN_EX}Hey, it seems that Kataiser, the developer of TF2 Rich Presence, is in your game! Say hi to me if you'd like :){colorama.Style.RESET_ALL}\n")
+        print(f"{Fore.LIGHTCYAN_EX}Hey, it seems that Kataiser, the developer of TF2 Rich Presence, is in your game! Say hi to me if you'd like :){Style.RESET_ALL}\n")
 
     if server_still_running and current_map != 'In menus':
         current_map = f'{current_map} (hosting)'
@@ -171,9 +171,9 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
 def no_condebug_warning(tf2_is_running: bool = True):
     loc = localization.Localizer(language=settings.get('language'))
 
-    print(colorama.Style.BRIGHT, end='')
+    print(Style.BRIGHT, end='')
     print('\n{0}'.format(loc.text("Your TF2 installation doesn't yet seem to be set up properly. To fix:")))
-    print(colorama.Style.RESET_ALL, end='')
+    print(Style.RESET_ALL, end='')
     print(loc.text("1. Right click on Team Fortress 2 in your Steam library"))
     print(loc.text("2. Open properties (very bottom)"))
     print(loc.text("3. Click \"Set launch options...\""))

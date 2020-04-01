@@ -31,8 +31,8 @@ import zlib
 
 sys.path.append(os.path.abspath(os.path.join('resources', 'python', 'packages')))
 sys.path.append(os.path.abspath('resources'))
-import colorama
 import sentry_sdk
+from colorama import Fore, init, Style
 
 import utils
 
@@ -44,7 +44,7 @@ __email__ = "Mecharon1.gm@gmail.com"
 
 def launch():
     try:
-        colorama.init()
+        init()  # colorama
 
         allowed_modules = ('init', 'main', 'settings')
         parser = argparse.ArgumentParser()
@@ -73,7 +73,7 @@ def launch():
 
 # displays and reports current traceback
 def handle_crash():
-    print(colorama.Fore.LIGHTRED_EX, end='')
+    print(Fore.LIGHTRED_EX, end='')
     formatted_exception = traceback.format_exc()
 
     try:
@@ -81,15 +81,15 @@ def handle_crash():
             sentry_sdk.capture_exception()
     except Exception:
         # Sentry has failed us :(
-        print(f"\n{formatted_exception}{colorama.Style.RESET_ALL}{colorama.Style.BRIGHT}")
+        print(f"\n{formatted_exception}{Style.RESET_ALL}{Style.BRIGHT}")
         print(f"TF2 Rich Presence {VERSION} has crashed, and the error can't be reported to the developer."
-              f"\n{colorama.Style.RESET_ALL}(Consider opening an issue at https://github.com/Kataiser/tf2-rich-presence/issues){out_of_date_warning()}"
-              f"\n{colorama.Style.BRIGHT}Restarting in 5 seconds...\n")
+              f"\n{Style.RESET_ALL}(Consider opening an issue at https://github.com/Kataiser/tf2-rich-presence/issues){out_of_date_warning()}"
+              f"\n{Style.BRIGHT}Restarting in 5 seconds...\n")
     else:
-        print(f"\n{formatted_exception}{colorama.Style.RESET_ALL}{colorama.Style.BRIGHT}")
+        print(f"\n{formatted_exception}{Style.RESET_ALL}{Style.BRIGHT}")
         print(f"TF2 Rich Presence {VERSION} has crashed, and the error has been reported to the developer."
-              f"\n{colorama.Style.RESET_ALL}(Consider opening an issue at https://github.com/Kataiser/tf2-rich-presence/issues){out_of_date_warning()}"
-              f"\n{colorama.Style.BRIGHT}Restarting in 5 seconds...\n")
+              f"\n{Style.RESET_ALL}(Consider opening an issue at https://github.com/Kataiser/tf2-rich-presence/issues){out_of_date_warning()}"
+              f"\n{Style.BRIGHT}Restarting in 5 seconds...\n")
 
     time.sleep(5)
     # should restart via the bat/exe now
@@ -116,7 +116,7 @@ def out_of_date_warning() -> str:
     update_info: dict = utils.access_db()['available_version']
 
     if update_info['exists']:
-        return f"\n{colorama.Style.RESET_ALL}BTW an newer version for TF2 Rich Presence is available ({update_info['tag']}), which may have fixed this crash." \
+        return f"\n{Style.RESET_ALL}BTW an newer version for TF2 Rich Presence is available ({update_info['tag']}), which may have fixed this crash." \
                f"\nGet the update with the download button in settings."
     else:
         return ""
