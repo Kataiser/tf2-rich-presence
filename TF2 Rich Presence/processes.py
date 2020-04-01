@@ -136,10 +136,11 @@ class ProcessScanner:
 
                 if 'time' in return_data:
                     p_info['time'] = int(process.create_time())
+
+                return p_info
             except psutil.NoSuchProcess:
                 self.log.debug(f"Cached PID {pid} is no longer running")
-
-            return p_info
+                return p_info_nones
         except Exception:
             formatted_exception: str = traceback.format_exc()
 
