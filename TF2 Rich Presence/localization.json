@@ -2057,19 +2057,19 @@
         "Chinese": "限制控制台。日志的大小偶尔",
         "Japanese": "制限コンソール。時折ログのサイズ"
     },
-    "2415333661": {
-        "English": "Couldn't load settings, reverting to defaults.",
-        "German": "Konnte die Einstellungen nicht laden und auf die Standardeinstellungen zurückkehren.",
-        "French": "Impossible de charger les paramètres, retour aux valeurs par défaut.",
-        "Spanish": "No se pudieron cargar las configuraciones, volviendo a los valores por defecto.",
-        "Portuguese": "Não foi possível carregar as configurações, revertendo para os padrões.",
-        "Italian": "Non è stato possibile caricare le impostazioni, tornando ai valori predefiniti.",
-        "Dutch": "Non è stato possibile caricare le impostazioni, tornando ai valori predefiniti.",
-        "Polish": "Nie można było załadować ustawień, powracając do ustawień domyślnych.",
-        "Russian": "Не смог загрузить настройки, вернулся к настройкам по умолчанию.",
-        "Korean": "기본값으로 되돌리는 설정을로드 할 수 없습니다.",
-        "Chinese": "无法加载设置，还原为默认值。",
-        "Japanese": "デフォルトに戻す、設定を読み込めませんでした。"
+    "3315339845": {
+        "English": "Couldn't load settings, reverting to defaults.{0}",
+        "German": "Konnte die Einstellungen nicht laden und auf die Standardeinstellungen zurückkehren.{0}",
+        "French": "Impossible de charger les paramètres, retour aux valeurs par défaut.{0}",
+        "Spanish": "No se pudieron cargar las configuraciones, volviendo a los valores por defecto.{0}",
+        "Portuguese": "Não foi possível carregar as configurações, revertendo para os padrões.{0}",
+        "Italian": "Non è stato possibile caricare le impostazioni, tornando ai valori predefiniti.{0}",
+        "Dutch": "Non è stato possibile caricare le impostazioni, tornando ai valori predefiniti.{0}",
+        "Polish": "Nie można było załadować ustawień, powracając do ustawień domyślnych.{0}",
+        "Russian": "Не смог загрузить настройки, вернулся к настройкам по умолчанию.{0}",
+        "Korean": "기본값으로 되돌리는 설정을로드 할 수 없습니다.{0}",
+        "Chinese": "无法加载设置，还原为默认值。{0}",
+        "Japanese": "デフォルトに戻す、設定を読み込めませんでした。{0}"
     },
     "2992382540": {
         "English": " (hosting)",

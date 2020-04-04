@@ -290,7 +290,11 @@ class GUI(tk.Frame):
             self.trim_console_log.set(get_setting_default('trim_console_log'))
 
             self.log.debug("Restored defaults")
-            self.restore_button.state(['disabled'])
+
+            try:
+                self.restore_button.state(['disabled'])
+            except NameError:
+                self.log.error("Restore button doesn't exist yet")
 
     # saves settings to file and closes window
     def save_and_close(self):
@@ -362,7 +366,7 @@ def launch():
 def get(setting: str) -> Union[str, int, bool]:
     try:
         return access_registry()[setting]
-    except FileNotFoundError:
+    except KeyError:
         return get_setting_default(setting)
 
 
