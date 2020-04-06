@@ -87,7 +87,8 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
             with_optimization = False
 
     # iterates though roughly 16000 lines from console.log and learns everything from them
-    line_used: str = ''
+    map_line_used: str = ''
+    class_line_used: str = ''
     line: str
     for line in lines:
         # lines that have "with" in them are basically always kill logs and can be safely ignored
@@ -100,7 +101,7 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
             if menus_message in line:
                 current_map = 'In menus'
                 current_class = 'Not queued'
-                line_used = line
+                map_line_used = class_line_used = line
                 break
 
         if line.endswith(' selected \n'):
@@ -108,12 +109,12 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
 
             if current_class_possibly in tf2_classes:
                 current_class = current_class_possibly
-                line_used = line
+                class_line_used = line
 
         elif line.startswith('Map:'):
             current_map = line[5:-1]  # this variable is poorly named
             current_class = 'unselected'  # so is this one
-            line_used = line
+            map_line_used = class_line_used = line
 
             if just_started_server:
                 server_still_running = True
@@ -124,11 +125,11 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
 
         elif '[PartyClient] L' in line:  # full line: "[PartyClient] Leaving queue"
             current_class = 'Not queued'
-            line_used = line
+            class_line_used = line
 
         elif '[PartyClient] Entering q' in line:  # full line: "[PartyClient] Entering queue for match group " + whatever mode
             current_map = 'In menus'
-            line_used = line
+            map_line_used = class_line_used = line
 
             if hide_queued_gamemode:
                 current_class = "Queued"
@@ -139,12 +140,12 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
         elif 'Disconnect by user' in line and [un for un in user_usernames if un in line]:
             current_map = 'In menus'
             current_class = 'Not queued'
-            line_used = line
+            map_line_used = class_line_used = line
 
         elif '[PartyClient] Entering s' in line:  # full line: "[PartyClient] Entering standby queue"
             current_map = 'In menus'
             current_class = 'Queued for a party\'s match'
-            line_used = line
+            map_line_used = class_line_used = line
 
         elif 'SV_ActivateServer' in line:  # full line: "SV_ActivateServer: setting tickrate to 66.7"
             just_started_server = True
@@ -160,7 +161,11 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
     if server_still_running and current_map != 'In menus':
         current_map = f'{current_map} (hosting)'
 
-    self.log.debug(f"Got '{current_map}' and '{current_class}' from this line: '{line_used[:-1]}'")
+    if map_line_used == class_line_used:
+        self.log.debug(f"Got '{current_map}' and '{current_class}' from line '{map_line_used[:-1]}'")
+    else:
+        self.log.debug(f"Got '{current_map}' from line '{map_line_used[:-1]}' and '{current_class}' from line '{class_line_used[:-1]}'")
+
     self.old_console_log_interpretation = (current_map, current_class)
     self.old_console_log_mtime = console_log_mtime
 
