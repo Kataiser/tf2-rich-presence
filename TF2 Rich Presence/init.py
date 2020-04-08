@@ -22,7 +22,7 @@ def launch(welcome_version):
         log_init.info(f"Initializing TF2 Rich Presence {launcher.VERSION}")
         log_init.debug(f"Current log: {log_init.filename}")
         log_init.info(f"Log level: {log_init.log_level}")
-        
+
         welcomer.welcome(log_init, welcome_version)
 
         default_settings: dict = settings.get_setting_default(return_all=True)

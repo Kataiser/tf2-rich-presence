@@ -82,6 +82,9 @@ def launch():
         priorities_after: tuple = (self_process.nice(), self_process.ionice())
         log_main.debug(f"Set process priorities from {priorities_before} to {priorities_after}")
 
+        default_settings: dict = settings.get_setting_default(return_all=True)
+        current_settings: dict = settings.access_registry()
+
         if current_settings == default_settings:
             log_main.debug("Current settings are default")
         else:
