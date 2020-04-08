@@ -421,8 +421,24 @@ def check_int(text_in_entry: str, maximum: int) -> bool:
     return False
 
 
+# find settings that are different between two settings dicts
 def compare_settings(before: dict, after: dict) -> dict:
     return {k: after[k] for k in before if before[k] != after[k]}
+
+
+# fixes settings that aren't in "current" from "default"
+def fix_missing_settings(default: dict, current: dict) -> dict:
+    missing_settings: dict = {}
+
+    if len(default) != len(current):
+        for default_setting in default:
+            if default_setting not in current:
+                missing_settings[default_setting] = default[default_setting]
+                current[default_setting] = default[default_setting]
+
+        access_registry(save_dict=current)
+
+    return missing_settings
 
 
 if __name__ == '__main__':

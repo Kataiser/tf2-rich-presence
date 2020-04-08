@@ -84,6 +84,11 @@ def launch():
 
         default_settings: dict = settings.get_setting_default(return_all=True)
         current_settings: dict = settings.access_registry()
+        missing_settings: dict = settings.fix_missing_settings(default_settings, current_settings)
+
+        if missing_settings:
+            log_main.error(f"Missing setting(s), defaults reverted: {missing_settings}")
+
         if current_settings == default_settings:
             log_main.debug("Current settings are default")
         else:

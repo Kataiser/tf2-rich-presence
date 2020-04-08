@@ -184,6 +184,13 @@ class TestTF2RichPresense(unittest.TestCase):
         for setting in default_settings:
             self.assertEqual(type(default_settings[setting]), type(settings.get(setting)))
 
+    def test_fix_missing_settings(self):
+        test_default = {'a': 1, 'b': '2', 'c': True}
+        test_current = {'a': 1, 'c': True}
+        test_missing = settings.fix_missing_settings(test_default, test_current)
+
+        self.assertEqual(test_missing, {'b': '2'})
+
     def test_get_api_key(self):
         self.assertEqual(len(utils.get_api_key('discord')), 18)
         self.assertEqual(len(utils.get_api_key('teamwork')), 32)
@@ -241,7 +248,7 @@ class TestTF2RichPresense(unittest.TestCase):
 
         self.assertEqual(p_info['running'], True)
         self.assertTrue('python' in p_info['path'].lower())  # hope your Python installation is sane
-        self.assertGreater(p_info['time'], 1228305600)  # Python 3 release data lol
+        self.assertGreater(p_info['time'], 1228305600)  # Python 3 release date lol
 
         self.assertFalse(process_scanner.hl2_exe_is_tf2(os.getpid()))
 
