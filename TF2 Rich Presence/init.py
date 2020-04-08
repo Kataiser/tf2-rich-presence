@@ -17,13 +17,20 @@ import welcomer
 
 
 def launch(welcome_version):
-    log_init = logger.Log()
-    log_init.info(f"Initializing TF2 Rich Presence {launcher.VERSION}")
-    log_init.debug(f"Current log: {log_init.filename}")
-    log_init.info(f"Log level: {log_init.log_level}")
-
     try:
+        log_init = logger.Log()
+        log_init.info(f"Initializing TF2 Rich Presence {launcher.VERSION}")
+        log_init.debug(f"Current log: {log_init.filename}")
+        log_init.info(f"Log level: {log_init.log_level}")
+        
         welcomer.welcome(log_init, welcome_version)
+
+        default_settings: dict = settings.get_setting_default(return_all=True)
+        current_settings: dict = settings.access_registry()
+        missing_settings: dict = settings.fix_missing_settings(default_settings, current_settings)
+        if missing_settings:
+            log_init.error(f"Missing setting(s), defaults reverted: {missing_settings}")
+
         detect_system_language.detect(log_init)
         updater.check_for_update(log_init, launcher.VERSION, float(settings.get('request_timeout')))
         holidays(log_init)
