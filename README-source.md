@@ -31,7 +31,7 @@ Extract it yourself: [tf2_rich_presence_{tf2rpvnum}.zip](https://github.com/Kata
 	- OR run `Launch Rich Presence alongside TF2.exe`. This one doesn't automatically start Team Fortress 2.
 	- Both require Discord and Steam to be running as well and will wait until the game and both programs are running. 
 
-Note than having Python installed is not required. For faster launching, you can add the first EXE to your taskbar/start menu/desktop/etc or to Steam as a non-Steam game.
+For faster launching, you can add the first EXE to your taskbar/start menu/desktop/etc or to Steam as a non-Steam game. Note than having Python installed is not required, but the [VS 2015 redistributable](https://www.microsoft.com/en-us/download/details.aspx?id=48145) is, which is automatically installed by many Steam games and so you should already have it.
 
 ## Changelogs
 - [Changelogs.html](https://htmlpreview.github.io/?https://github.com/Kataiser/tf2-rich-presence/blob/master/Changelogs.html)
