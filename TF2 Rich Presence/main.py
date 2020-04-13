@@ -24,6 +24,7 @@
 import copy
 import ctypes
 import datetime
+import gc
 import os
 import platform
 import time
@@ -52,6 +53,8 @@ __email__ = "Mecharon1.gm@gmail.com"
 
 def launch():
     try:
+        gc.disable()
+
         log_main: logger.Log = logger.Log()
         log_main.to_stderr = launcher.DEBUG
 
@@ -96,6 +99,7 @@ def launch():
         raise SystemExit
     except Exception:
         try:
+            gc.enable()
             log_main.critical(traceback.format_exc())
         except NameError:
             pass  # the crash happened in logger.Log().__init__() and so log_main is unassigned
@@ -346,6 +350,11 @@ class TF2RichPresense:
             # last but not least, Steam
             self.necessary_program_not_running('Steam', self.should_mention_steam)
             self.should_mention_steam = False
+
+        if not gc.isenabled():
+            self.log.debug("Enabling GC")
+            gc.enable()
+            gc.collect()
 
         if self.custom_functions:
             self.custom_functions.after_loop(self)

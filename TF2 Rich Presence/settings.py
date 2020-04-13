@@ -4,6 +4,7 @@
 
 import atexit
 import functools
+import gc
 import json
 import os
 import subprocess
@@ -235,6 +236,11 @@ class GUI(tk.Frame):
         master.attributes('-topmost', True)
         master.after_idle(master.attributes, '-topmost', False)
 
+        if not gc.isenabled():
+            self.log.debug("Enabling GC")
+            gc.enable()
+            gc.collect()
+
     def __repr__(self):
         return f"settings.GUI {self.window_dimensions}"
 
@@ -356,6 +362,7 @@ class GUI(tk.Frame):
 
 # main entry point
 def launch():
+    gc.disable()
     root = tk.Tk()
     settings_gui = GUI(root)
     settings_gui.mainloop()

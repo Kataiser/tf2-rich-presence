@@ -3,6 +3,7 @@
 # cython: language_level=3
 
 import datetime
+import gc
 import traceback
 from typing import Union
 
@@ -18,6 +19,8 @@ import welcomer
 
 def launch(welcome_version):
     try:
+        gc.disable()
+
         log_init = logger.Log()
         log_init.info(f"Initializing TF2 Rich Presence {launcher.VERSION}")
         log_init.debug(f"Current log: {log_init.filename}")

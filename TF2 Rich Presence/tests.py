@@ -1,6 +1,7 @@
 # Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 
+import gc
 import io
 import os
 import shutil
@@ -36,6 +37,8 @@ class TestTF2RichPresense(unittest.TestCase):
         self.log.to_stderr = False
         self.log.sentry_enabled = False
         self.log.log_levels_allowed = self.log.log_levels
+
+        gc.enable()  # because init, main, or settings may have disabled it
 
     def tearDown(self):
         os.chdir(self.dir)
