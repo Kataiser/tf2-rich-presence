@@ -22,7 +22,7 @@ import utils
 
 # TODO: replace this whole thing with a real logger
 class Log:
-    def __init__(self, path: str = None):
+    def __init__(self, path: Union[str, None] = None):
         # find user's pc and account name
         user_identifier: str = getpass.getuser()
         user_pc_name: str = socket.gethostname()
