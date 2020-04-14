@@ -285,7 +285,7 @@ class TF2RichPresense:
             self.activity['timestamps']['start'] = p_data['TF2']['time']
 
             if self.custom_functions:
-                self.custom_functions.after_loop(self)
+                self.custom_functions.loop_middle(self)
 
             activity_comparison: Dict[str, Union[str, Dict[str, int], Dict[str, str]]] = copy.deepcopy(self.activity)
             if self.loc.text("Time on map: {0}").replace('{0}', '') in activity_comparison['state']:
