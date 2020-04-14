@@ -22,7 +22,9 @@ def main():
         shutil.copy2(target_py, os.path.join('cython_build', target_py))
         os.chdir('cython_build')
         print(f"{target_py}: ", end='')
-        setup(name=target, ext_modules=cythonize(target_py, nthreads=2, annotate=True))
+
+        setup(name=target, ext_modules=cythonize(target_py, nthreads=2, annotate=True, compiler_directives={'warn.unused': True, 'warn.unused_arg': True, 'warn.unused_result': True}))
+
         os.chdir(og_cwd)
 
 
