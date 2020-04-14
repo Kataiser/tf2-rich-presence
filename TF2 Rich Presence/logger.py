@@ -74,10 +74,8 @@ class Log:
     # adds a line to the current log file
     def write_log(self, level: str, message_out: str):
         if self.enabled:
-            current_time: float = time.perf_counter()
-
             if self.last_log_time:
-                time_since_last: str = f'+{format(current_time - self.last_log_time, ".4f")}'  # the format() adds trailing zeroes
+                time_since_last: str = f'+{format(time.perf_counter() - self.last_log_time, ".4f")}'  # the format() adds trailing zeroes
             else:
                 time_since_last = '+0.0000'
 
@@ -93,9 +91,9 @@ class Log:
                 self.error(f"Couldn't write log due to UnicodeEncodeError: {error}")
 
             if self.to_stderr:
-                print(full_line.rstrip('\n'), file=sys.stderr)
+                print(full_line[:-1], file=sys.stderr)
 
-            self.last_log_time = current_time
+            self.last_log_time = time.perf_counter()
 
     # a log with a level of INFO (not commonly used)
     def info(self, message_in: str):
