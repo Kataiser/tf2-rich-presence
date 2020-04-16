@@ -237,9 +237,9 @@ class GUI(tk.Frame):
         master.after_idle(master.attributes, '-topmost', False)
 
         if not gc.isenabled():
-            self.log.debug("Enabling GC")
             gc.enable()
             gc.collect()
+            self.log.debug("Enabled GC and collected")
 
     def __repr__(self):
         return f"settings.GUI {self.window_dimensions}"

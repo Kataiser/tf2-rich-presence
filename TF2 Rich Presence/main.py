@@ -352,9 +352,9 @@ class TF2RichPresense:
             self.should_mention_steam = False
 
         if not gc.isenabled():
-            self.log.debug("Enabling GC")
             gc.enable()
             gc.collect()
+            self.log.debug("Enabled GC and collected")
 
         if self.custom_functions:
             self.custom_functions.after_loop(self)
