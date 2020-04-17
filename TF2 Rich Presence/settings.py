@@ -122,7 +122,7 @@ class GUI(tk.Frame):
             self.loc.text("Delay between refreshes, in seconds: ")))
         setting3_option = ttk.Spinbox(setting3_frame, textvariable=self.wait_time, width=6, from_=0, to=1000, validate='all', validatecommand=(check_int_command, '%P', 1000),
                                       command=self.update_default_button_state)
-        setting4_frame = ttk.Frame(lf_main)
+        setting4_frame = ttk.Frame(lf_advanced)
         setting4_text = ttk.Label(setting4_frame, text="{}".format(
             self.loc.text("Hours before re-checking custom map gamemode: ")))
         setting4_option = ttk.Spinbox(setting4_frame, textvariable=self.map_invalidation_hours, width=6, from_=0, to=1000, validate='all', validatecommand=(check_int_command, '%P', 1000),
@@ -176,7 +176,7 @@ class GUI(tk.Frame):
             self.update_button.grid(row=10, sticky=tk.W, padx=(20, 40), pady=(0, 12))
 
         # add widgets to the labelframes or main window
-        setting1_frame.grid(row=11, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
+        setting1_frame.grid(row=12, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
         setting1_text.pack(side='left', fill=None, expand=False)
         for setting1_radiobutton in setting1_radiobuttons:
             setting1_radiobutton.pack(side='left', fill=None, expand=False)
@@ -185,16 +185,16 @@ class GUI(tk.Frame):
         setting3_frame.grid(row=1, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(3, 0))
         setting4_text.pack(side='left', fill=None, expand=False)
         setting4_option.pack(side='left', fill=None, expand=False)
-        setting4_frame.grid(row=4, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
+        setting4_frame.grid(row=10, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
         setting5.grid(row=9, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 10))
         setting6_text.pack(side='left', fill=None, expand=False)
         setting6_option.pack(side='left', fill=None, expand=False)
-        setting6_frame.grid(row=10, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
+        setting6_frame.grid(row=11, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
         setting8.grid(row=6, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
         setting9_text.pack(side='left', fill=None, expand=False)
         for setting9_radiobutton in setting9_radiobuttons:
             setting9_radiobutton.pack(side='left', fill=None, expand=False)
-        setting9_frame.grid(row=12, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 10))
+        setting9_frame.grid(row=13, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 10))
         setting10_text.pack(side='left', fill=None, expand=False)
         setting10_option.pack(side='left', fill=None, expand=False)
         setting10_frame.grid(row=5, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(11, 0))
