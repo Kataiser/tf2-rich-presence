@@ -14,6 +14,10 @@ import settings
 
 # reads a console.log and returns current map and class
 def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float = float(settings.get('console_scan_kb')), force: bool = False, tf2_start_time: int = 0) -> Tuple[str, str]:
+    TF2_LOAD_TIME_ASSUMPTION: int = 5
+    SIZE_LIMIT_MULTIPLE_TRIGGER: int = 4
+    SIZE_LIMIT_MULTIPLE_TARGET: int = 2
+
     # defaults
     current_map: str = 'In menus'
     current_class: str = 'Not queued'
@@ -43,9 +47,9 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
         return self.old_console_log_interpretation
 
     # TF2 takes some time to load the console when starting up, so until it's been modified to avoid getting outdated information
-    console_log_mtime_relative = console_log_mtime - tf2_start_time
-    if console_log_mtime_relative < 0:
-        self.log.debug(f"console.log's mtime relative to TF2's start time is {console_log_mtime_relative}, assuming default state")
+    console_log_mtime_relative: int = console_log_mtime - tf2_start_time
+    if console_log_mtime_relative <= TF2_LOAD_TIME_ASSUMPTION:
+        self.log.debug(f"console.log's mtime relative to TF2's start time is {console_log_mtime_relative} (<= {TF2_LOAD_TIME_ASSUMPTION}), assuming default state")
         return current_map, current_class
 
     consolelog_file_size: int = os.stat(console_log_path).st_size
@@ -63,8 +67,8 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
             self.log.debug(f"console.log: {consolelog_file_size} bytes, {len(lines)} lines (didn't skip lines)")
 
     # limit the file size, for readlines perf
-    if consolelog_file_size > byte_limit * 4 and settings.get('trim_console_log') and not force and not launcher.DEBUG:
-        trim_size = int(byte_limit * 2)
+    if consolelog_file_size > byte_limit * SIZE_LIMIT_MULTIPLE_TRIGGER and settings.get('trim_console_log') and not force and not launcher.DEBUG:
+        trim_size = int(byte_limit * SIZE_LIMIT_MULTIPLE_TARGET)
         self.log.debug(f"Limiting console.log to {trim_size} bytes")
 
         try:
