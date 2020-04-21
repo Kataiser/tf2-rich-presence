@@ -28,10 +28,10 @@ def check_for_update(log: logger.Log, current_version: str, timeout: float):
 
     try:
         newest_version, downloads_url, changelog = access_github_api(timeout)
-    except requests.Timeout:
+    except (requests.Timeout, requests.exceptions.ReadTimeout):
         log.error(f"Update check timed out", reportable=False)
         failure_message(current_version, f"timed out after {timeout} seconds")
-    except requests.ConnectionError:
+    except (requests.ConnectionError, requests.exceptions.ConnectionError):
         log.error(f"Connection error in updater: {traceback.format_exc()}", reportable=False)
         failure_message(current_version)
     except Exception:
