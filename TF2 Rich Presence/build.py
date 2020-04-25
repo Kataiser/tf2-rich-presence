@@ -19,7 +19,7 @@ import changelog_generator
 
 
 # TODO: don't do this seperate locations nonsense, convert to using a repo properly
-def main(version_num='v1.13.1'):
+def main(version_num='v1.13.2'):
     print(f"Building TF2 Rich Presence {version_num}")
 
     parser = argparse.ArgumentParser()
@@ -114,16 +114,15 @@ def main(version_num='v1.13.1'):
         ratelimit_remaining = 100
 
     # starts from scratch each time
-    old_build_folders = [f.path for f in os.scandir('.') if f.is_dir() and 'TF2 Rich Presence ' in f.path]
-    if old_build_folders:
-        for folder in old_build_folders:
-            try:
-                shutil.rmtree(folder)
-            except (OSError, PermissionError):
-                time.sleep(0.2)
-                shutil.rmtree(folder)  # beautiful
+    new_build_folder_name = f'TF2 Rich Presence {version_num}'
+    if os.path.isdir(new_build_folder_name):
+        try:
+            shutil.rmtree(new_build_folder_name)
+        except (OSError, PermissionError):
+            time.sleep(0.2)
+            shutil.rmtree(new_build_folder_name)  # beautiful
 
-            print(f"Removed old build folder: {folder}")
+        print(f"Removed old build folder: {new_build_folder_name}")
     else:
         print("No old build folder found")
 
@@ -137,7 +136,6 @@ def main(version_num='v1.13.1'):
 
     # creates folders again
     time.sleep(0.25)  # because windows is slow sometimes
-    new_build_folder_name = f'TF2 Rich Presence {version_num}'
     os.mkdir(new_build_folder_name)
     os.mkdir(Path(f'{new_build_folder_name}/resources'))
     os.mkdir(Path(f'{new_build_folder_name}/logs'))
