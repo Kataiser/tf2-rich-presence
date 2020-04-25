@@ -10,4 +10,4 @@ psutil==5.7.0
 requests==2.23.0
 sentry_sdk==0.14.3
 urllib3==1.25.8
-vdf==3.2
+vdf==3.3
