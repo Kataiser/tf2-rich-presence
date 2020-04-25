@@ -91,7 +91,11 @@ def handle_crash():
               f"\n{Style.RESET_ALL}(Consider opening an issue at https://github.com/Kataiser/tf2-rich-presence/issues){out_of_date_warning()}"
               f"\n{Style.BRIGHT}Restarting in 5 seconds...\n")
 
-    time.sleep(5)
+    try:
+        time.sleep(5)
+    except KeyboardInterrupt:
+        pass
+
     # should restart via the bat/exe now
 
 
