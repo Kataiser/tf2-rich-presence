@@ -19,6 +19,7 @@ import changelog_generator
 
 
 # TODO: don't do this seperate locations nonsense, convert to using a repo properly
+# TODO: option to do a "release" build that invalidates all caches (might need a new config interface)
 def main(version_num='v1.13.2'):
     print(f"Building TF2 Rich Presence {version_num}")
 
@@ -225,6 +226,7 @@ def main(version_num='v1.13.2'):
         raise SyntaxError("Whatever the Linux/MacOS equivalent of xcopy is")
 
     # compile PYCs, for faster initial load times
+    # TODO: if it's not too slow, determine which ones need to be deleted at build time (maybe cache somehow?)
     print("Compiling PYCs")
     compileall.compile_dir(Path(f'{new_build_folder_name}/resources'), optimize=2, quiet=True)
     with open('pycs_to_delete.txt', 'r') as pycs_to_delete_txt:
