@@ -2,6 +2,7 @@
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 # cython: language_level=3
 
+import datetime
 import getpass
 import gzip
 import os
@@ -79,7 +80,7 @@ class Log:
             else:
                 time_since_last = '+0.0000'
 
-            full_line: str = f"[{int(time.time())} {time_since_last}] {level}: {message_out}\n"
+            full_line: str = f"[{datetime.datetime.utcnow().strftime('%c')[4:-5]} {time_since_last}] {level}: {message_out}\n"
 
             # log breadcrumb to Sentry
             sentry_sdk.add_breadcrumb(message=full_line, level=level.lower().replace('critical', 'fatal'))
