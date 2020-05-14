@@ -57,12 +57,9 @@ class ProcessScanner:
             if len(self.parsed_tasklist) == 3:
                 self.has_cached_all_pids = True
 
-            if 'hl2.exe' in self.parsed_tasklist:
-                self.process_data['TF2']['pid'] = self.parsed_tasklist['hl2.exe']
-            if 'steam.exe' in self.parsed_tasklist:
-                self.process_data['Steam']['pid'] = self.parsed_tasklist['steam.exe']
-            if 'discord' in self.parsed_tasklist:
-                self.process_data['Discord']['pid'] = self.parsed_tasklist['discord']
+            self.process_data['TF2']['pid'] = self.parsed_tasklist['hl2.exe'] if 'hl2.exe' in self.parsed_tasklist else None
+            self.process_data['Steam']['pid'] = self.parsed_tasklist['steam.exe'] if 'steam.exe' in self.parsed_tasklist else None
+            self.process_data['Discord']['pid'] = self.parsed_tasklist['discord'] if 'discord' in self.parsed_tasklist else None
 
             self.get_all_extended_info()
         else:
