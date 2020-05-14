@@ -67,7 +67,8 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
             self.log.debug(f"console.log: {consolelog_file_size} bytes, {len(lines)} lines (didn't skip lines)")
 
     # limit the file size, for readlines perf
-    if consolelog_file_size > byte_limit * SIZE_LIMIT_MULTIPLE_TRIGGER and settings.get('trim_console_log') and not force and not launcher.DEBUG:
+    if consolelog_file_size > byte_limit * SIZE_LIMIT_MULTIPLE_TRIGGER and len(lines) > 15000 and settings.get('trim_console_log') and not force and not launcher.DEBUG:
+
         trim_size = int(byte_limit * SIZE_LIMIT_MULTIPLE_TARGET)
         self.log.debug(f"Limiting console.log to {trim_size} bytes")
 
@@ -169,6 +170,9 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
         self.log.debug(f"Got '{current_map}' and '{current_class}' from line '{map_line_used[:-1]}'")
     else:
         self.log.debug(f"Got '{current_map}' from line '{map_line_used[:-1]}' and '{current_class}' from line '{class_line_used[:-1]}'")
+
+    if map_line_used == '' and class_line_used != '':
+        self.log.error("Have class_line_used without map_line_used")
 
     self.old_console_log_interpretation = (current_map, current_class)
     self.old_console_log_mtime = console_log_mtime
