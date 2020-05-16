@@ -27,10 +27,15 @@ def find_custom_map_gamemode(log, map_filename: str, force_api: bool = False, ti
     log.debug(f"Finding gamemode for custom map: {map_filename}")
     seconds_since_epoch_now: int = int(time.time())
 
+    # see if the map is already in maps.json first
     map_gamemodes: dict = load_maps_db()
     if map_filename in map_gamemodes['common_custom']:
         gamemode = map_gamemodes['common_custom'][map_filename]
-        log.debug(f"Found it in maps.json: {gamemode}")
+        log.debug(f"Found it in maps.json common_custom: {gamemode}")
+        return gamemode
+    elif map_filename in map_gamemodes['creators_tf']:
+        gamemode = map_gamemodes['creators_tf'][map_filename]
+        log.debug(f"Found it in maps.json creators_tf: {gamemode}")
         return gamemode
 
     # to avoid constantly using internet, each map is cached to DB.json

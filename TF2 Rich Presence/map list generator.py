@@ -1,6 +1,7 @@
 # Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 
+import functools
 import json
 import sys
 
@@ -17,9 +18,12 @@ def main():
 
     official_out = json.dumps(official(), sort_keys=True).replace('], ', '],\n        ')
     common_custom_out = json.dumps(common_custom, sort_keys=True).replace('], ', '],\n        ')
+    creators_tf_out = json.dumps(creators_tf(), sort_keys=True).replace('], ', '],\n        ')
 
-    out = json.dumps({'official': 'replace1', 'common_custom': 'replace2'}, indent=4)\
-        .replace('"replace1"', '{\n        ' + official_out[1:]).replace('"replace2"', '{\n        ' + common_custom_out[1:])
+    out = json.dumps({'official': 'replace1', 'common_custom': 'replace2', 'creators_tf': 'replace3'}, indent=4) \
+        .replace('"replace1"', '{\n        ' + official_out[1:])\
+        .replace('"replace2"', '{\n        ' + common_custom_out[1:])\
+        .replace('"replace3"', '{\n        ' + creators_tf_out[1:])
 
     print(out)
     with open('maps.json', 'w') as maps_db:
@@ -59,6 +63,7 @@ def official() -> dict:
     return map_gamemodes
 
 
+@functools.lru_cache(maxsize=1)
 def map_stats() -> dict:
     custom_map_gamemodes = {}
 
@@ -83,6 +88,7 @@ def map_stats() -> dict:
     return custom_map_gamemodes
 
 
+@functools.lru_cache(maxsize=1)
 def map_explorer() -> dict:
     custom_map_gamemodes = {}
     official_maps = custom_maps.load_maps_db()['official']
@@ -116,6 +122,33 @@ def map_explorer() -> dict:
                 print(f"{map_file}: {custom_map_gamemodes[map_file]}")
 
     return custom_map_gamemodes
+
+
+def creators_tf() -> dict:
+    all_creators_maps = {'cp_glassworks_rc6a': ['control-point', 'Control Point'],
+                         'cp_kalinka_rc5': ['control-point', 'Control Point'],
+                         'cp_snowlodge_b5': ['attack-defend', 'Attack/Defend'],
+                         'cp_stoneyridge_rc2': ['attack-defend', 'Attack/Defend'],
+                         'ctf_snowfort': ['ctf', 'Capture the Flag'],
+                         'koth_baleofhay_rc1': ['koth', 'King of the Hill'],
+                         'koth_clearcut_b14c': ['koth', 'King of the Hill'],
+                         'koth_slaughter_b2a': ['koth', 'King of the Hill'],
+                         'koth_spillway_rc2': ['koth', 'King of the Hill'],
+                         'koth_synthetic_rc6': ['koth', 'King of the Hill'],
+                         'koth_whitewinter_c1': ['koth', 'King of the Hill'],
+                         'pl_fifthcurve_b6': ['payload', 'Payload'],
+                         'pl_stranded_rc1': ['payload', 'Payload'],
+                         'pl_vigil_rc7': ['payload', 'Payload'],
+                         'plr_hightower_snow_rc2': ['payload-race', 'Payload Race'],
+                         'sd_isotope_final': ['special-delivery', 'Special Delivery']}
+
+    exclusive_creators_map = {}
+
+    for creators_map in all_creators_maps:
+        if creators_map not in map_stats() and creators_map not in map_explorer():
+            exclusive_creators_map[creators_map] = all_creators_maps[creators_map]
+
+    return exclusive_creators_map
 
 
 if __name__ == '__main__':
