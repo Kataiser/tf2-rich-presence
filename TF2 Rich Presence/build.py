@@ -207,13 +207,17 @@ def main(version_num='v1.13.2'):
         latest_commit = ''
     git_username = subprocess.run('git config user.name', capture_output=True).stdout.decode('UTF8')[:-1]
     build_info_path = Path(f'{new_build_folder_name}/resources/build_info.txt')
+    with open('requirements.txt', 'r') as requirements_file:
+        requirements_versions = ', '.join([r[:-1] for r in requirements_file.readlines()])
     with open(build_info_path, 'w') as build_info_txt:
         build_info_txt.write(f"TF2 Rich Presence by Kataiser"
                              "\nhttps://github.com/Kataiser/tf2-rich-presence"
                              f"\n\nVersion: {version_num}"
                              f"\nBuilt at: {datetime.datetime.utcnow().strftime('%c')} UTC"
-                             f"\nBuilt by: {git_username}"
-                             f"\nLatest commit: {latest_commit}")
+                             f"\nBuilt by: https://github.com/{git_username}"
+                             f"\nLatest commit: {latest_commit}"
+                             f"\nRequirements versions: {requirements_versions}")
+    print(f"Created {build_info_path}")
 
     # copies the python interpreter
     python_source = os.path.abspath('python-3.7.7-embed-win32')
