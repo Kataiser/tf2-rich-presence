@@ -21,6 +21,7 @@ import changelog_generator
 # TODO: don't do this seperate locations nonsense, convert to using a repo properly
 # TODO: option to do a "release" build that invalidates all caches (might need a new config interface)
 def main(version_num='v1.13.2'):
+    sys.stdout = Logger()
     print(f"Building TF2 Rich Presence {version_num}")
 
     parser = argparse.ArgumentParser()
@@ -251,13 +252,12 @@ def main(version_num='v1.13.2'):
     convert_bat_to_exe(os.path.abspath(Path(f'{new_build_folder_name}/Change settings.bat')), version_num, 'tf2_logo_blurple_wrench.ico')
 
     # append build.log to build_info.txt
-    build_log_exists = os.path.isfile('build.log')
-    if build_log_exists:
-        print("Appending build.log to build_info.txt")
-        with open('build.log', 'r') as build_log_file:
-            build_log = build_log_file.read().replace(getpass.getuser(), 'USER')
-        with open(build_info_path, 'a') as build_info_txt:
-            build_info_txt.write(f'\n\nBuild log:\n{build_log}')
+    print("Appending build.log to build_info.txt")
+    sys.stdout.finish()
+    with open('build.log', 'r') as build_log_file:
+        build_log = build_log_file.read().replace(getpass.getuser(), 'USER')
+    with open(build_info_path, 'a') as build_info_txt:
+        build_info_txt.write(f'\n\nBuild log:\n{build_log}')
 
     # generates zip package and an "installer" (a self extracting .7z as an exe), both with 7zip
     time.sleep(0.2)  # just to make sure everything is updated
@@ -348,8 +348,6 @@ def main(version_num='v1.13.2'):
         print("README-source doesn't exist, didn't build README.md", file=sys.stderr)
     if missing_pycs:
         print(f"Couldn't delete {len(missing_pycs)}/{len(pycs_to_delete)} PYCs: {missing_pycs}", file=sys.stderr)
-    if not build_log_exists:
-        print("build.log doesn't exist, consider setting up your IDE to save the console to a file", file=sys.stderr)
     if git_username != 'Kataiser':
         print(f"Please note that your git username ({git_username}) has been included in {build_info_path}")
 
@@ -384,6 +382,27 @@ def copy_dir_to_git(source, target):
         subprocess.run(f'xcopy \"{source}\" \"{target}{os.path.sep}\" /E /Q')
     else:
         raise SyntaxError("Whatever the Linux/MacOS equivalent of xcopy is")
+
+
+# log all prints to a file
+class Logger(object):
+    def __init__(self):
+        if os.path.isfile('build.log'):
+            os.remove('build.log')
+
+        self.terminal = sys.stdout
+        self.log = open('build.log', 'a')
+
+    def write(self, message):
+        self.terminal.write(message)
+        self.log.write(message)
+
+    def flush(self):
+        pass
+
+    def finish(self):
+        self.log.close()
+        sys.stdout = sys.__stdout__
 
 
 if __name__ == '__main__':
