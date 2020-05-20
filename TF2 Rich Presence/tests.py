@@ -70,7 +70,7 @@ class TestTF2RichPresense(unittest.TestCase):
 
         # test a couple common maps (in maps.json)
         self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'plr_highertower', False, 5)), ('payload-race', 'Payload Race'))
-        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'cp_stoneyridge_rc2', False, 5)), ('attack-defend', 'Attack/Defend'))
+        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'cp_glassworks_rc6a', False, 5)), ('control-point', 'Control Point'))
 
         # don't use cache, force using the API (5 second timeout)
         self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'cp_catwalk_a5c', True, 5)), ('control-point', 'Control Point'))

@@ -25,7 +25,9 @@ def main():
         .replace('"replace2"', '{\n        ' + common_custom_out[1:])\
         .replace('"replace3"', '{\n        ' + creators_tf_out[1:])
 
+    print()
     print(out)
+
     with open('maps.json', 'w') as maps_db:
         maps_db.write(out)
 
@@ -116,6 +118,10 @@ def map_explorer() -> dict:
                     custom_map_gamemodes[map_file] = ('control-point', 'Control Point')
                 elif map_file == 'vsh_towertop_final':
                     custom_map_gamemodes[map_file] = ('versus-saxton-hale', 'Versus Saxton Hale')
+                elif map_file == 'pass_soccer_b3':
+                    custom_map_gamemodes[map_file] = ('passtime', 'PASS Time')
+                elif map_file == 'slender_sewer_b2b':
+                    custom_map_gamemodes[map_file] = ('slender', 'Slender')
                 else:
                     custom_map_gamemodes[map_file] = map_mode
 
@@ -127,20 +133,19 @@ def map_explorer() -> dict:
 def creators_tf() -> dict:
     all_creators_maps = {'cp_glassworks_rc6a': ['control-point', 'Control Point'],
                          'cp_kalinka_rc5': ['control-point', 'Control Point'],
-                         'cp_snowlodge_b5': ['attack-defend', 'Attack/Defend'],
-                         'cp_stoneyridge_rc2': ['attack-defend', 'Attack/Defend'],
-                         'ctf_snowfort': ['ctf', 'Capture the Flag'],
-                         'koth_baleofhay_rc1': ['koth', 'King of the Hill'],
-                         'koth_clearcut_b14c': ['koth', 'King of the Hill'],
+                         'cp_powerhouse_fix': ['control-point', 'Control Point'],
+                         'koth_clearcut_b14d': ['koth', 'King of the Hill'],
+                         'koth_harvestalpine_v3b': ['koth', 'King of the Hill'],
+                         'koth_product_rcx': ['koth', 'King of the Hill'],
                          'koth_slaughter_b2a': ['koth', 'King of the Hill'],
                          'koth_spillway_rc2': ['koth', 'King of the Hill'],
                          'koth_synthetic_rc6': ['koth', 'King of the Hill'],
-                         'koth_whitewinter_c1': ['koth', 'King of the Hill'],
-                         'pl_fifthcurve_b6': ['payload', 'Payload'],
-                         'pl_stranded_rc1': ['payload', 'Payload'],
-                         'pl_vigil_rc7': ['payload', 'Payload'],
-                         'plr_hightower_snow_rc2': ['payload-race', 'Payload Race'],
-                         'sd_isotope_final': ['special-delivery', 'Special Delivery']}
+                         'pl_badwater_pro_v9': ['payload', 'Payload'],
+                         'pl_barnblitz_pro8': ['payload', 'Payload'],
+                         'pl_fifthcurve_rc1': ['payload', 'Payload'],
+                         'pl_stranded_rc4': ['payload', 'Payload'],
+                         'pl_summercoast_rc8b': ['payload', 'Payload'],
+                         'pl_vigil_rc7': ['payload', 'Payload']}
 
     exclusive_creators_map = {}
 

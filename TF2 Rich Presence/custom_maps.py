@@ -18,6 +18,7 @@ import utils
 
 
 # uses teamwork.tf's API to find the gamemode of a custom map
+# TODO: get the gamemode from the file header (ex: "pl_") but ONLY when possible, and then use the API otherwise
 @functools.lru_cache(maxsize=1)
 def find_custom_map_gamemode(log, map_filename: str, force_api: bool = False, timeout: int = settings.get('request_timeout')) -> Tuple[str, str]:
     if map_filename == '':
