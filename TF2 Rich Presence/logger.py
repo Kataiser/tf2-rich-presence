@@ -80,7 +80,7 @@ class Log:
             else:
                 time_since_last = '+0.0000'
 
-            full_line: str = f"[{datetime.datetime.utcnow().strftime('%c')[4:-5]} {time_since_last}] {level}: {message_out}\n"
+            full_line: str = f"[{datetime.datetime.now().strftime('%c')[4:-5]} {time_since_last}] {level}: {message_out}\n"
 
             # log breadcrumb to Sentry
             sentry_sdk.add_breadcrumb(message=full_line, level=level.lower().replace('critical', 'fatal'))
