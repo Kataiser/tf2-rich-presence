@@ -102,6 +102,7 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
             if user_is_kataiser or 'Kataiser' not in line or self.has_seen_kataiser:
                 continue
 
+        # TODO: see if I can optimize this in some way, if needed
         for menus_message in menus_messages:
             if menus_message in line:
                 current_map = 'In menus'

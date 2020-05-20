@@ -184,6 +184,7 @@ class TF2RichPresense:
 
         if p_data['Steam']['running']:
             # reads a steam config file
+            # TODO: re-scan this (and maybe some other stuff) when leaving a game (or maybe some other time idk)
             valid_usernames: List[str] = configs.steam_config_file(self.log, p_data['Steam']['path'], p_data['TF2']['running'])
         elif p_data['Steam']['pid'] is not None or p_data['Steam']['path'] is not None:
             self.log.error(f"Steam isn't running but its process info is {p_data['Steam']}. WTF?")
