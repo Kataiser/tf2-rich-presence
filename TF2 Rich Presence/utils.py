@@ -12,7 +12,7 @@ from typing import Dict, Union
 
 
 # read from or write to DB.json (intentionally uncached)
-# TODO: might be a good idea to make this a registry thing to avoid permissions problems
+# TODO: have this be placed in AppData\Roaming and include settings
 def access_db(write: dict = None) -> Dict[str, Union[dict, bool, list]]:
     db_path: str = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
 

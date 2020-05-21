@@ -15,6 +15,8 @@ import settings
 import utils
 
 
+# TODO: an auto-updater (https://github.com/Squirrel/Squirrel.Windows maybe?)
+
 # uses Github api to get the tag of the newest public release and compare it to the current version number, alerting the user if out of date
 def check_for_update(log: logger.Log, current_version: str, timeout: float):
     loc = localization.Localizer(language=settings.get('language'))

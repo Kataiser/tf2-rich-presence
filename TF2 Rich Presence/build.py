@@ -18,7 +18,7 @@ import requests
 import changelog_generator
 
 
-# TODO: don't do this seperate locations nonsense, convert to using a repo properly
+# TODO: don't do this separate locations nonsense, convert to using a repo properly
 # TODO: option to do a "release" build that invalidates all caches (might need a new config interface)
 def main(version_num='v1.13.2'):
     sys.stdout = Logger()
