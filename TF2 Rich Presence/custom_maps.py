@@ -3,8 +3,6 @@
 # cython: language_level=3
 
 import functools
-import json
-import os
 import time
 import traceback
 from typing import Dict, KeysView, List, Tuple, Union
@@ -29,7 +27,7 @@ def find_custom_map_gamemode(log, map_filename: str, force_api: bool = False, ti
     seconds_since_epoch_now: int = int(time.time())
 
     # see if the map is already in maps.json first
-    map_gamemodes: dict = load_maps_db()
+    map_gamemodes: dict = utils.load_maps_db()
     if map_filename in map_gamemodes['common_custom']:
         gamemode = map_gamemodes['common_custom'][map_filename]
         log.debug(f"Found it in maps.json common_custom: {gamemode}")
@@ -111,14 +109,6 @@ def access_custom_maps_cache(dict_input: Union[dict, None] = None) -> Dict[str, 
         utils.access_db(db)
     else:
         return utils.access_db()['custom_maps']
-
-
-# load maps database from maps.json
-@functools.lru_cache(maxsize=None)
-def load_maps_db() -> Dict[str, Dict[str, List[str]]]:
-    maps_db_path = os.path.join('resources', 'maps.json') if os.path.isdir('resources') else 'maps.json'
-    with open(maps_db_path, 'r') as maps_db:
-        return json.load(maps_db)
 
 
 gamemodes: Dict[str, str] = {'ctf': 'Capture the Flag', 'control-point': 'Control Point', 'attack-defend': 'Attack/Defend', 'medieval-mode': 'Attack/Defend (Medieval Mode)',

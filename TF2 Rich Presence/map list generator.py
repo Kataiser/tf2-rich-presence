@@ -10,6 +10,7 @@ from bs4 import BeautifulSoup
 
 import custom_maps
 import logger
+import utils
 
 
 def main():
@@ -93,7 +94,7 @@ def map_stats() -> dict:
 @functools.lru_cache(maxsize=1)
 def map_explorer() -> dict:
     custom_map_gamemodes = {}
-    official_maps = custom_maps.load_maps_db()['official']
+    official_maps = utils.load_maps_db()['official']
 
     r = requests.get('https://teamwork.tf/community/map-explorer')
     soup = BeautifulSoup(r.text, 'lxml')

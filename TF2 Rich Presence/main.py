@@ -57,43 +57,9 @@ def launch():
 
         log_main: logger.Log = logger.Log()
         log_main.to_stderr = launcher.DEBUG
+        log_main.info(f"Starting TF2 Rich Presence {launcher.VERSION}")
 
         app: TF2RichPresense = TF2RichPresense(log_main)
-        log_main.info(f"Starting TF2 Rich Presence {launcher.VERSION}")
-        log_main.cleanup(20 if launcher.DEBUG else 10)
-        log_main.debug(f"CPU: {psutil.cpu_count(logical=False)} cores, {psutil.cpu_count()} threads")
-
-        platform_info: Dict[str, Any] = {'architecture': platform.architecture, 'machine': platform.machine, 'system': platform.system, 'platform': platform.platform,
-                                         'processor': platform.processor, 'python_version_tuple': platform.python_version_tuple}
-        for platform_part in platform_info:
-            try:
-                if platform_part == 'platform':
-                    platform_info[platform_part] = platform_info[platform_part](aliased=True)
-                else:
-                    platform_info[platform_part] = platform_info[platform_part]()
-            except Exception:
-                log_main.error(f"Exception during platform.{platform_part}(), skipping\n{traceback.format_exc()}")
-        log_main.debug(f"Platform: {platform_info}")
-
-        if not os.path.supports_unicode_filenames:
-            log_main.error("Looks like the OS doesn't support unicode filenames. This might cause problems")
-
-        self_process: psutil.Process = psutil.Process()
-        priorities_before: tuple = (self_process.nice(), self_process.ionice())
-        self_process.nice(psutil.BELOW_NORMAL_PRIORITY_CLASS)
-        self_process.ionice(psutil.IOPRIO_LOW)
-        priorities_after: tuple = (self_process.nice(), self_process.ionice())
-        log_main.debug(f"Set process priorities from {priorities_before} to {priorities_after}")
-
-        default_settings: dict = settings.get_setting_default(return_all=True)
-        current_settings: dict = settings.access_registry()
-
-        if current_settings == default_settings:
-            log_main.debug("Current settings are default")
-        else:
-            log_main.debug(f"Non-default settings: {settings.compare_settings(default_settings, current_settings)}")
-
-        app.import_custom()
         app.run()
     except (KeyboardInterrupt, SystemExit):
         raise SystemExit
@@ -135,9 +101,44 @@ class TF2RichPresense:
         self.has_seen_kataiser: bool = False
         self.old_console_log_mtime: Union[int, None] = None
         self.old_console_log_interpretation: tuple = ('', '')
-        self.map_gamemodes: Dict[str, Dict[str, List[str]]] = custom_maps.load_maps_db()
+        self.map_gamemodes: Dict[str, Dict[str, List[str]]] = utils.load_maps_db()
         self.loop_iteration: int = 0
         self.custom_functions = None
+
+        self_process: psutil.Process = psutil.Process()
+        priorities_before: tuple = (self_process.nice(), self_process.ionice())
+        self_process.nice(psutil.BELOW_NORMAL_PRIORITY_CLASS)
+        self_process.ionice(psutil.IOPRIO_LOW)
+        priorities_after: tuple = (self_process.nice(), self_process.ionice())
+        self.log.debug(f"Set process priorities from {priorities_before} to {priorities_after}")
+
+        self.log.cleanup(20 if launcher.DEBUG else 10)
+        self.log.debug(f"CPU: {psutil.cpu_count(logical=False)} cores, {psutil.cpu_count()} threads")
+
+        platform_info: Dict[str, Any] = {'architecture': platform.architecture, 'machine': platform.machine, 'system': platform.system, 'platform': platform.platform,
+                                         'processor': platform.processor, 'python_version_tuple': platform.python_version_tuple}
+        for platform_part in platform_info:
+            try:
+                if platform_part == 'platform':
+                    platform_info[platform_part] = platform_info[platform_part](aliased=True)
+                else:
+                    platform_info[platform_part] = platform_info[platform_part]()
+            except Exception:
+                self.log.error(f"Exception during platform.{platform_part}(), skipping\n{traceback.format_exc()}")
+        self.log.debug(f"Platform: {platform_info}")
+
+        if not os.path.supports_unicode_filenames:
+            self.log.error("Looks like the OS doesn't support unicode filenames. This might cause problems")
+
+        default_settings: dict = settings.get_setting_default(return_all=True)
+        current_settings: dict = settings.access_registry()
+
+        if current_settings == default_settings:
+            self.log.debug("Current settings are default")
+        else:
+            self.log.debug(f"Non-default settings: {settings.compare_settings(default_settings, current_settings)}")
+
+        self.import_custom()
 
     def __repr__(self):
         return f"main.TF2RichPresense (state={self.test_state})"
