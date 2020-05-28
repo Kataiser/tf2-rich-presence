@@ -18,7 +18,7 @@ import logger
 class ProcessScanner:
     def __init__(self, log: logger.Log):
         self.log: logger.Log = log
-        self.has_cached_all_pids: bool = False
+        self.all_pids_cached: bool = False
         self.used_tasklist: bool = False
         self.parsed_tasklist: Dict[str, int] = {}
         self.executables: Dict[str, list] = {'posix': ['hl2_linux', 'steam', 'Discord'],
@@ -29,6 +29,9 @@ class ProcessScanner:
                                               'Discord': {'running': False, 'pid': None}}
         self.p_data_default: Dict[str, dict] = copy.deepcopy(self.process_data)
         self.p_data_last: Dict[str, dict] = copy.deepcopy(self.process_data)
+
+    def __repr__(self):
+        return f"processes.ProcessScanner (all cached={self.all_pids_cached}, tf2={self.process_data['TF2']}, discord={self.process_data['Discord']}, steam={self.process_data['Steam']})"
 
     # scan all running processes to look for TF2, Steam, and Discord
     def scan(self) -> Dict[str, Dict[str, Union[bool, str, int, None]]]:
@@ -50,12 +53,12 @@ class ProcessScanner:
     def scan_windows(self):
         self.used_tasklist = False
 
-        if not self.has_cached_all_pids:  # guaranteed on the first run
+        if not self.all_pids_cached:  # guaranteed on the first run
             self.parse_tasklist()
             self.used_tasklist = True
 
             if len(self.parsed_tasklist) == 3:
-                self.has_cached_all_pids = True
+                self.all_pids_cached = True
 
             self.process_data['TF2']['pid'] = self.parsed_tasklist['hl2.exe'] if 'hl2.exe' in self.parsed_tasklist else None
             self.process_data['Steam']['pid'] = self.parsed_tasklist['steam.exe'] if 'steam.exe' in self.parsed_tasklist else None
@@ -76,7 +79,7 @@ class ProcessScanner:
                 self.process_data['Discord'] = self.p_data_default['Discord']
 
             if self.process_data != p_data_old:
-                self.has_cached_all_pids = False
+                self.all_pids_cached = False
 
     # for Linux and MacOS (I think)
     def scan_posix(self):

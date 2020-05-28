@@ -74,10 +74,16 @@ def launch():
 
 
 class TF2RichPresense:
-    def __init__(self, log: logger.Log):
-        self.log: logger.Log = log
+    def __init__(self, log: Union[logger.Log, None] = None):
+        if log:
+            self.log: logger.Log = log
+        else:
+            self.log.error(f"Initialized main.TF2RichPresense without a log, defaulting to one at {self.log.filename}")
+            self.log: logger.Log = logger.Log()
+
+        # this is what gets modified and sent to Discord via discoIPC
         self.activity: Dict[str, Union[str, Dict[str, int], Dict[str, str]]] = \
-            {'details': 'In menus',  # this is what gets modified and sent to Discord via discoIPC
+            {'details': 'In menus',
              'timestamps': {'start': int(time.time())},
              'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2', 'large_image': 'main_menu', 'large_text': 'Main menu'},
              'state': ''}
