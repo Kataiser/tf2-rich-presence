@@ -35,12 +35,14 @@ def main(version_num='v1.13.2'):
             with open('last_repo_path.txt', 'r') as last_repo_path_file:
                 last_repo_path = last_repo_path_file.read()
 
-            github_repo_path = input(f"Github repo path ('n' to skip, 'h' to use \"{last_repo_path}\"): ")
+            print(f"Github repo path ('n' to skip, 'h' to use \"{last_repo_path}\"): ")
+            github_repo_path = input()
 
             if github_repo_path == 'h':
                 github_repo_path = last_repo_path
         else:
-            github_repo_path = input("Github repo path ('n' to skip): ")
+            print("Github repo path ('n' to skip): ")
+            github_repo_path = input()
 
         if github_repo_path != 'n' and os.path.isdir(github_repo_path):
             with open('last_repo_path.txt', 'w') as last_repo_path_file:
