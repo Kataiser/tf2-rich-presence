@@ -15,8 +15,8 @@ import console_log
 def class_config_files(log, exe_location: str):
     log.debug(f"Reading (and possibly modifying) class configs at {exe_location}")
     tf2_classes: List[str] = ['Scout', 'Soldier', 'Pyro', 'Demoman', 'Heavy', 'Engineer', 'Medic', 'Sniper', 'Spy']
-    classes_found: List[tuple] = []
-    classes_not_found: List[tuple] = []
+    classes_found: List[str] = []
+    classes_not_found: List[str] = []
     cfg_path: str = os.path.join(exe_location, 'tf', 'cfg')
     # tf2 config files are at 'Steam\steamapps\common\Team Fortress 2\tf\cfg'
 
@@ -28,7 +28,7 @@ def class_config_files(log, exe_location: str):
 
     for tf2_class in tf2_classes:
         # 'echo' means 'output to console' in source-speak
-        selected_line: str = f'echo "{tf2_class} selected"'
+        selected_line: str = f'\n// Added by TF2 Rich Presence, please don\'t remove\necho "{tf2_class} selected"\n'
 
         config_filename: str = tf2_class.lower().replace('heavy', 'heavyweapons')  # valve why
         config_path: str = os.path.join(cfg_path, f'{config_filename}.cfg')
@@ -38,10 +38,10 @@ def class_config_files(log, exe_location: str):
             with open(config_path, 'r+', errors='ignore') as class_config_file:
                 if selected_line not in class_config_file.read():
                     # if it doesn't already have the echo line, add it
-                    class_config_file.write('\n\n' + selected_line)
-                    classes_not_found.append((f'{config_filename}.cfg', selected_line))
+                    class_config_file.write('\n' + selected_line)
+                    classes_not_found.append(config_filename)
                 else:
-                    classes_found.append((f'{config_filename}.cfg', selected_line))
+                    classes_found.append(config_filename)
         else:
             # the config file doesn't exist, so create it and add the echo line
             with open(config_path, 'w') as class_config_file:
@@ -50,7 +50,7 @@ def class_config_files(log, exe_location: str):
             log.debug(f"Created {class_config_file.name}")
 
     log.debug(f"Classes with echo found: {classes_found}")
-    log.debug(f"Classes with echo not found: {classes_not_found}")
+    log.debug(f"Classes with echo added: {classes_not_found}")
 
 
 # reads steams launch options save file to find -condebug
