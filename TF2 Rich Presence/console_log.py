@@ -14,7 +14,7 @@ import settings
 
 # reads a console.log and returns current map and class
 def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float = float(settings.get('console_scan_kb')), force: bool = False, tf2_start_time: int = 0) -> Tuple[str, str]:
-    TF2_LOAD_TIME_ASSUMPTION: int = 5
+    TF2_LOAD_TIME_ASSUMPTION: int = 10
     SIZE_LIMIT_MULTIPLE_TRIGGER: int = 4
     SIZE_LIMIT_MULTIPLE_TARGET: int = 2
 
@@ -24,7 +24,8 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
     kataiser_seen_on: Union[str, None] = None
 
     match_types: Dict[str, str] = {'12v12 Casual Match': 'Casual', 'MvM Practice': 'MvM (Boot Camp)', 'MvM MannUp': 'MvM (Mann Up)', '6v6 Ladder Match': 'Competitive'}
-    menus_messages: tuple = ('Server shutting down', 'For FCVAR_REPLICATED', '[TF Workshop]', 'Lobby destroyed', 'Disconnect:', 'destroyed Lobby', 'destroyed CAsyncWavDataCache', 'Missing map', 'Host_Error')
+    menus_messages: tuple = ('Server shutting down', 'For FCVAR_REPLICATED', '[TF Workshop]', 'Lobby destroyed', 'Disconnect:', 'destroyed Lobby', 'destroyed CAsyncWavDataCache',
+                             'Missing map', 'Host_Error', 'SoundEmitter:')
     menus_message: str
     tf2_classes: tuple = ('Scout', 'Soldier', 'Pyro', 'Demoman', 'Heavy', 'Engineer', 'Medic', 'Sniper', 'Spy')
 
@@ -95,6 +96,7 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
     map_line_used: str = ''
     class_line_used: str = ''
     line: str
+
     for line in lines:
         # lines that have "with" in them are basically always kill logs and can be safely ignored
         # this (probably) improves performance
@@ -102,13 +104,13 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
             if user_is_kataiser or 'Kataiser' not in line or self.has_seen_kataiser:
                 continue
 
-        # TODO: see if I can optimize this in some way, if needed
-        for menus_message in menus_messages:
-            if menus_message in line:
-                current_map = 'In menus'
-                current_class = 'Not queued'
-                map_line_used = class_line_used = line
-                break
+        if current_map != 'In menus':
+            for menus_message in menus_messages:
+                if menus_message in line:
+                    current_map = 'In menus'
+                    current_class = 'Not queued'
+                    map_line_used = class_line_used = line
+                    break
 
         if line.endswith(' selected \n'):
             current_class_possibly: str = line[:-11]
@@ -130,6 +132,7 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
                 server_still_running = False
 
         elif '[PartyClient] L' in line:  # full line: "[PartyClient] Leaving queue"
+            # not necessarily in menus
             current_class = 'Not queued'
             class_line_used = line
 
