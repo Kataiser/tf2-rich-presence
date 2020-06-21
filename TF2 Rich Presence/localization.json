@@ -36,7 +36,7 @@
         "Italian": "Distruzione del giocatore",
         "Dutch": "Speler Vernietiging",
         "Polish": "Zniszczenie gracza",
-        "Russian": "Уничтожение игрока",
+        "Russian": "Уничтожение игроков",
         "Korean": "플레이어 파괴",
         "Chinese": "玩家销毁",
         "Japanese": "プレイヤーの破壊"
@@ -78,7 +78,8 @@
         "Italian": "Controllo Territoriale",
         "Dutch": "Territoriale Controle",
         "Polish": "Kontrola Terytorialna",
-        "Russian": "Территориальное управление",
+        "Russian": "Захват територий",
+
         "Korean": "영어",
         "Chinese": "领土控制",
         "Japanese": "領土管理"
@@ -92,7 +93,7 @@
         "Italian": "Non riesco a connettermi a Discord per la Rich Presence.",
         "Dutch": "Kan geen verbinding maken met Discord for Rich Presence.",
         "Polish": "Nie da się połączyć z Discord o bogatej obecności.",
-        "Russian": "Не могу связаться с Раздором Богатого Присутствия.",
+        "Russian": "Нет соединения с Дискордом для Богатого Присутствия",
         "Korean": "에 연결할 수 없는 불화에 대한 풍부한 존재입니다.",
         "Chinese": "无法连接到不和谐丰富的存在。",
         "Japanese": "DiscordのRich Presenceに接続できません。"
@@ -120,7 +121,7 @@
         "Italian": "Casuale",
         "Dutch": "Vrijblijvend",
         "Polish": "Dorywczy",
-        "Russian": "Случайный",
+        "Russian": "Кэжуал",
         "Korean": "캐주얼",
         "Chinese": "休闲",
         "Japanese": "カジュアル"
@@ -162,7 +163,7 @@
         "Italian": "Ottenere l'aggiornamento a {0}",
         "Dutch": "De update is te vinden op {0}",
         "Polish": "Pobierz aktualizację na {0}",
-        "Russian": "Получить свежие новости можно по адресу {0}",
+        "Russian": "Получить обновление по {0}",
         "Korean": "을 얻을 업데이트{0}",
         "Chinese": "获取更新at{0}",
         "Japanese": "{0}でアップデートを入手"
@@ -190,7 +191,7 @@
         "Italian": "Presenza Ricca TF2 è attualmente in esecuzione, quindi deve essere riavviato affinché le modifiche abbiano effetto.",
         "Dutch": "TF2 Rijke Aanwezigheid is momenteel in werking, dus het moet opnieuw worden opgestart om de wijzigingen te kunnen doorvoeren.",
         "Polish": "TF2 Bogata Obecność jest obecnie uruchomiony, więc musi być ponownie uruchomiony, aby zmiany zaczęły obowiązywać.",
-        "Russian": "TF2 Богатое присутствие в настоящее время работает, поэтому его необходимо перезапустить, чтобы изменения вступили в силу.",
+        "Russian": "TF2 Богатое присутствие все еще работает, перезапустите что бы измененные настройки работали.",
         "Korean": "TF2 풍부한 존재는 현재 실행 중이므로 변경 사항을 적용 할 수 있도록 다시 시작해야합니다.",
         "Chinese": "存在当前正在运行的丰富的TF2，因此它需要被重启以使更改生效。",
         "Japanese": "現在,TF2リッチプレゼンスが実行されているため,変更を有効にするには,再起動する必要があります。"
@@ -204,7 +205,7 @@
         "Italian": "La Discord non è in esecuzione",
         "Dutch": "De Discord is niet aan de gang",
         "Polish": "Discord nie działa",
-        "Russian": "Разногласия не продолжаются",
+        "Russian": "Дискорд не открыт",
         "Korean": "불 실행되지 않는",
         "Chinese": "不和谐不是运行",
         "Japanese": "Discordが実行されていません"
@@ -218,7 +219,7 @@
         "Italian": "occasionale",
         "Dutch": "nonchalant",
         "Polish": "pobieżny",
-        "Russian": "обыденный",
+        "Russian": "кэжуал",
         "Korean": "캐주얼",
         "Chinese": "休闲",
         "Japanese": "カジュアル"
@@ -232,7 +233,7 @@
         "Italian": "attimo",
         "Dutch": "tweede",
         "Polish": "sekunda",
-        "Russian": "второстепенный",
+        "Russian": "секунда",
         "Korean": "두 번째",
         "Chinese": "二",
         "Japanese": "第二に"
@@ -246,7 +247,7 @@
         "Italian": "Questa versione ({0}) è obsoleta (la versione più recente è {1}).",
         "Dutch": "Deze versie ({0}) is verouderd (nieuwste versie is {1}).",
         "Polish": "Ta wersja ({0}) jest nieaktualna (najnowsza wersja to {1}).",
-        "Russian": "Эта версия ({0}) устарела (последняя версия {1}).",
+        "Russian": "Эта версия ({0}) устарела (новейшая версия {1}).",
         "Korean": "이 버전({0})가 최신이(새로운 버전은{1}).",
         "Chinese": "此版本（{0}）已过期（最新版本为{1}）。",
         "Japanese": "このバージョン({0})は最新ではありません(最新バージョンは{1})。"
@@ -260,7 +261,7 @@
         "Italian": "Chiudere senza salvare?",
         "Dutch": "Sluiten zonder te sparen?",
         "Polish": "Zamknąć bez oszczędzania?",
-        "Russian": "Почти без сбережений?",
+        "Russian": "Закрыть без сохранения?",
         "Korean": "저장하지 않고 닫습니다?",
         "Chinese": "接近而不保存？",
         "Japanese": "保存せずに閉じますか？"
@@ -274,7 +275,7 @@
         "Italian": "minuto",
         "Dutch": "minutieus",
         "Polish": "minuta",
-        "Russian": "минутный",
+        "Russian": "минута",
         "Korean": "분",
         "Chinese": "分钟",
         "Japanese": "分"
@@ -288,7 +289,7 @@
         "Italian": "Apri {0} pagina di download",
         "Dutch": "Open {0} download pagina",
         "Polish": "Otwórz stronę pobierania {0} Strona pobierania",
-        "Russian": "Открыть страницу загрузки {0}",
+        "Russian": "Открыть {0} страницу загрузки",
         "Korean": "{0}다운로드 페이지 열기",
         "Chinese": "打开{0}下载页面",
         "Japanese": "{0}ダウンロードページを開く"
@@ -302,7 +303,7 @@
         "Italian": "In coda per la Competitiva",
         "Dutch": "In de wachtrij voor Concurrerende",
         "Polish": "Stoi w kolejce do Konkurencyjny",
-        "Russian": "Очередь на состязание",
+        "Russian": "В очереди на Компэтитив",
         "Korean": "대기를 위해 경쟁",
         "Chinese": "排队等待竞争",
         "Japanese": "競争力のためのキュー"
@@ -316,7 +317,7 @@
         "Italian": "Presenza Ricca TF2 si è arrestato e l'errore è stato segnalato allo sviluppatore.",
         "Dutch": "TF2 Rijke Aanwezigheid is gecrasht en de fout is gemeld aan de ontwikkelaar.",
         "Polish": "TF2 Bogata Obecność uległ awarii, a błąd został zgłoszony deweloperowi.",
-        "Russian": "TF2 Богатое присутствие разбилось, и об ошибке было сообщено разработчику.",
+        "Russian": "TF2 Богатое присутствие сломалось, и ошибка была отправлена разработчику.",
         "Korean": "팀포 2 풍부한 존재가 추락하고,오류 보고 되었습니다.",
         "Chinese": "TF2丰富的存在已经崩溃，并已向开发人员报告错误。",
         "Japanese": "TF2Rich Presenceがクラッシュし,エラーが開発者に報告されました。"
@@ -330,7 +331,7 @@
         "Italian": "L'installazione di TF2 non sembra essere ancora configurata correttamente. Da correggere:",
         "Dutch": "Uw TF2-installatie lijkt nog niet goed te zijn opgezet. Te repareren:",
         "Polish": "Twoja instalacja TF2 nie została jeszcze prawidłowo skonfigurowana. Aby naprawić:",
-        "Russian": "Ваша установка TF2, похоже, еще не настроена должным образом. Чтобы починить:",
+        "Russian": "Ваша установка TF2 еще не настроена правильно. Чтобы исправить:",
         "Korean": "귀하의 팀포 2 설치하지 않은 것이 올바르게 설정되어. 정:",
         "Chinese": "您的TF2安装似乎尚未正确设置。 来修复:",
         "Japanese": "あなたのTF2インストールはまだ正しく設定されていないようです。 修正するには:"
@@ -344,7 +345,7 @@
         "Italian": "[Personalizzato / mappa della comunita]",
         "Dutch": "[aangepaste/gemeenschappelijke kaart]",
         "Polish": "[mapa zwyczaju/społeczności]",
-        "Russian": "[карта сообщества/общины]",
+        "Russian": "[сообщественная/кастомная карта]",
         "Korean": "[사용자 정의/커뮤니티 맵]",
         "Chinese": "[自定义/社区地图]",
         "Japanese": "[カスタム/コミュニティ地図]"
@@ -358,7 +359,7 @@
         "Italian": "Impossibile connettersi a GitHub per controllare la presenza di aggiornamenti ({0})",
         "Dutch": "Kon geen verbinding maken met GitHub om te controleren op updates ({0})",
         "Polish": "Nie można było połączyć się z GitHub w celu sprawdzenia aktualizacji ({0})",
-        "Russian": "Не удалось подключиться к GitHub, чтобы проверить наличие обновлений ({0})",
+        "Russian": "Не удалось подключиться к GitHub чтобы проверить наличие обновлений ({0})",
         "Korean": "에 연결할 수 없 GitHub 업데이트를 확인({0})",
         "Chinese": "无法连接到GitHub检查更新({0})",
         "Japanese": "更新をチェックするためにGitHubに接続できませんでした({0})"
@@ -386,7 +387,7 @@
         "Italian": "Incidenti",
         "Dutch": "Neerstortingen",
         "Polish": "Wypadki",
-        "Russian": "Аварии",
+        "Russian": "Сломы",
         "Korean": "충돌",
         "Chinese": "崩溃",
         "Japanese": "クラッシュ"
@@ -400,7 +401,7 @@
         "Italian": "Snella",
         "Dutch": "Slank",
         "Polish": "Smukła",
-        "Russian": "Тонкий",
+        "Russian": "Слэндер",
         "Korean": "슬",
         "Chinese": "纤细",
         "Japanese": "細い"
@@ -428,7 +429,7 @@
         "Italian": "Carico",
         "Dutch": "Laadvermogen",
         "Polish": "Ładowność",
-        "Russian": "Полезная нагрузка",
+        "Russian": "Груз",
         "Korean": "페이로드",
         "Chinese": "有效载荷",
         "Japanese": "ペイロード"
@@ -456,7 +457,7 @@
         "Italian": "Salto",
         "Dutch": "Springen",
         "Polish": "Skoki",
-        "Russian": "Прыжки",
+        "Russian": "Джамп",
         "Korean": "점프",
         "Chinese": "跳跃",
         "Japanese": "飛び降りる"
@@ -512,7 +513,7 @@
         "Italian": "verbale",
         "Dutch": "notulen",
         "Polish": "minuty",
-        "Russian": "протокол",
+        "Russian": "минуты",
         "Korean": "분",
         "Chinese": "分钟",
         "Japanese": "分"
@@ -526,7 +527,7 @@
         "Italian": "Frequenza di segnalazione dei log: ",
         "Dutch": "Frequentie van de logboekrapportage: ",
         "Polish": "Częstotliwość meldunków: ",
-        "Russian": "Частота отчетов журнала: ",
+        "Russian": "Частота отчетов: ",
         "Korean": "로그인 보고 주파수: ",
         "Chinese": "日志报告频率: ",
         "Japanese": "ログの報告頻度: "
@@ -568,7 +569,7 @@
         "Italian": "TPASS Time",
         "Dutch": "PASS Time",
         "Polish": "PASS Time",
-        "Russian": "Время PASS",
+        "Russian": "ПАСС Тайм",
         "Korean": "통과 시간",
         "Chinese": "消磨时间",
         "Japanese": "PASS Time"
@@ -582,7 +583,7 @@
         "Italian": "Avanzate",
         "Dutch": "Gevorderd",
         "Polish": "Zaawansowane",
-        "Russian": "Расширенный",
+        "Russian": "Продвинуто",
         "Korean": "고급",
         "Chinese": "进阶",
         "Japanese": "アドバンスド"
@@ -610,7 +611,7 @@
         "Italian": "Deathrun",
         "Dutch": "Deathrun",
         "Polish": "Deathrun",
-        "Russian": "Смертник",
+        "Russian": "Дэфран",
         "Korean": "Deathrun",
         "Chinese": "死亡之旅",
         "Japanese": "デスラン"
@@ -652,7 +653,7 @@
         "Italian": "Registri segnalati con successo",
         "Dutch": "Succesvol gemelde logboeken",
         "Polish": "Kłody, które pomyślnie przeszły pomyślnie sprawozdawczość",
-        "Russian": "Журналы успешно сданы",
+        "Russian": "Журналы успешно отправлены",
         "Korean": "성공적으로 로그 보고",
         "Chinese": "成功报告日志",
         "Japanese": "正常に報告されたログ"
@@ -680,7 +681,7 @@
         "Italian": "Ore prima di ricontrollare la modalità di gioco delle mappe personalizzate: ",
         "Dutch": "Uren voor het opnieuw controleren van de aangepaste kaart spelmodus: ",
         "Polish": "Godziny przed ponownym sprawdzeniem niestandardowego trybu gry na mapie: ",
-        "Russian": "За несколько часов до перепроверки пользовательского режима игры на карте: ",
+        "Russian": "Часы до перепроверки пользовательского режима игры на карте: ",
         "Korean": "시간 전에 다시 검사용 지도한 게임 모드: ",
         "Chinese": "小时前重新检查自定义地图游戏模式: ",
         "Japanese": "カスタムマップゲームモードを再確認するまでの時間: "
@@ -722,7 +723,7 @@
         "Italian": "Il Team Fortress 2 non è in esecuzione",
         "Dutch": "Team Fortress 2 loopt niet",
         "Polish": "Team Fortress 2 nie biegnie",
-        "Russian": "Командная крепость 2 не работает",
+        "Russian": "Тим Фортрес 2 не открыт",
         "Korean": "Team Fortress2 가 실행되지 않는",
         "Chinese": "团队要塞2不运行",
         "Japanese": "チームフォートレス2"
@@ -736,7 +737,7 @@
         "Italian": "Lancio di TF2 con Rich Presence a fianco di Team Fortress 2...",
         "Dutch": "Lancering van TF2 met Rich Presence naast Team Fortress 2...",
         "Polish": "Wystrzelenie TF2 z bogatą obecnością obok Team Fortress 2...",
-        "Russian": "Запуск TF2 с богатым присутствием рядом с крепостью 2...",
+        "Russian": "Запуск TF2 с богатым присутствием рядом с Тим Фортресом 2...",
         "Korean": "실행 팀포 2 와 풍부한 존재와 함께 Team Fortress2...",
         "Chinese": "启动TF2与丰富的存在与团队要塞2...",
         "Japanese": "チームフォートレス2とともにTF2を立ち上げる。.."
@@ -750,7 +751,7 @@
         "Italian": "Non aggiornato, la versione più recente è {0} (questo è {1})",
         "Dutch": "Achterhaald, nieuwste versie is {0} (dit is {1})",
         "Polish": "Nieaktualna, najnowsza wersja to {0} (to jest {1})",
-        "Russian": "Устаревшая, новейшая версия {0} (это {1})",
+        "Russian": "Устаревшая версия, новейшая версия {0} (это {1})",
         "Korean": "날짜,최신 버전은{0}(이{1})",
         "Chinese": "过时的，最新的版本是{0}（这是{1})",
         "Japanese": "最新バージョンは{0}です(これは{1}です})"
@@ -764,7 +765,7 @@
         "Italian": "Se Presenza Ricca TF2 è attualmente in esecuzione, potrebbe essere necessario riavviare Presenza Ricca TF2 affinché le modifiche abbiano effetto.",
         "Dutch": "Als TF2 Rijke Aanwezigheid momenteel actief is, moet het wellicht opnieuw worden opgestart om de wijzigingen in werking te laten treden.",
         "Polish": "Jeśli TF2 Bogata Obecność jest obecnie uruchomiony, może zaistnieć potrzeba jego ponownego uruchomienia, aby zmiany zaczęły obowiązywać.",
-        "Russian": "Если TF2 Богатое присутствие работает в настоящее время, то для вступления изменений в силу может потребоваться его перезапуск.",
+        "Russian": "Если TF2 Богатое присутствие сейчас открыто, возможно оно будет требовать перезапуск что бы перемены вошли в силу.",
         "Korean": "면 팀포 2 풍부한 존재는 현재 실행하고,그것을 다시 시작해야 할 수 있습에 대한 변경 사항을 적용합니다.",
         "Chinese": "如果存在当前正在运行的丰富的TF2，则可能需要重新启动以使更改生效。",
         "Japanese": "TF2Rich Presenceが現在実行されている場合、変更を有効にするために再起動が必要な場合があります。"
@@ -792,7 +793,7 @@
         "Italian": "Ore prima di ricontrollare la modalità di gioco delle mappe personalizzate: ",
         "Dutch": "Uren voor het opnieuw controleren van de aangepaste kaart spelmodus: ",
         "Polish": "Godziny przed ponownym sprawdzeniem niestandardowego trybu gry na mapie: ",
-        "Russian": "За несколько часов до перепроверки пользовательского режима игры на карте: ",
+        "Russian": "Часы до перепроверки пользовательского режима игры на карте: ",
         "Korean": "시간 전에 다시 검사용 지도한 게임 모드: ",
         "Chinese": "小时前重新检查自定义地图游戏模式: ",
         "Japanese": "カスタムマップゲームモードを再確認するまでの時間: "
@@ -806,7 +807,7 @@
         "Italian": "Caccia All'elica",
         "Dutch": "Prop Hunt",
         "Polish": "Polowanie na śmigłowce",
-        "Russian": "Охота на реквизит",
+        "Russian": "Пропхант",
         "Korean": "소품 사냥",
         "Chinese": "道具亨特",
         "Japanese": "プロップハント"
@@ -820,7 +821,7 @@
         "Italian": "Presenza Ricca TF2 ({0}) di Kataiser",
         "Dutch": "TF2 Rijke Aanwezigheid ({0}) door Kataiser",
         "Polish": "TF2 Bogata Obecność ({0}) autorstwa Kataiser.",
-        "Russian": "TF2 Богатое присутствие ({0}) Катайзера",
+        "Russian": "TF2 Богатое присутствие ({0}) от Катайзера",
         "Korean": "팀포 2 부자재({0})의 Kataiser",
         "Chinese": "TF2富存在({0})由Kataiser",
         "Japanese": "TF2Rich Presence({0})by Kataiser"
@@ -834,7 +835,7 @@
         "Italian": "3. Fare clic su \"Imposta opzioni di avvio...\"",
         "Dutch": "3. Klik op \"Startopties instellen...\"",
         "Polish": "3. Kliknąć \"Ustaw opcje uruchamiania...\"",
-        "Russian": "3. Нажмите кнопку \"Установить параметры запуска...\"",
+        "Russian": "3. Нажмите кнопку \"Set launch options...\"",
         "Korean": "3. 설정\"을 클릭합 시작 옵션을...\"",
         "Chinese": "3. 单击\"设置启动选项。..\"",
         "Japanese": "3. 「起動オプションを設定...」をクリックします"
@@ -876,7 +877,7 @@
         "Italian": "1 impostazione è stata modificata. {0}",
         "Dutch": "1 instelling is gewijzigd. {0}",
         "Polish": "1 ustawienie zostało zmienione. {0}",
-        "Russian": "Настройка 1 была изменена. {0}",
+        "Russian": "1 настройка была изменена. {0}",
         "Korean": "1 설정이 변경되었습니다. {0}",
         "Chinese": "1设置已更改。 {0}",
         "Japanese": "1設定を変更しました。 {0}"
@@ -890,7 +891,7 @@
         "Italian": "Mannpower",
         "Dutch": "Mannpower",
         "Polish": "Mannpower",
-        "Russian": "Власть",
+        "Russian": "Мэнпауэр",
         "Korean": "인력충만",
         "Chinese": "Mannpower",
         "Japanese": "Mannpower"
@@ -904,7 +905,7 @@
         "Italian": "2. Proprietà aperte (molto in basso)",
         "Dutch": "2. Open eigenschappen (zeer bodem)",
         "Polish": "2. Otwarte właściwości (bardzo niskie)",
-        "Russian": "2. Открытые свойства (очень низкие)",
+        "Russian": "2. Открыть свойства (на самом низу)",
         "Korean": "2. 속성을 열고(하단)",
         "Chinese": "2. 打开属性（极底)",
         "Japanese": "2. プロパティを開く(非常に下)"
@@ -932,7 +933,7 @@
         "Italian": "(si sta eseguendo {0}).",
         "Dutch": "(u bent momenteel aan het rennen {0}).",
         "Polish": "(aktualnie pracujesz {0}).",
-        "Russian": "(в настоящее время вы бежите {0}).",
+        "Russian": "(у вас сейчас открыто {0}).",
         "Korean": "(현재 실행 중인{0}).",
         "Chinese": "（您当前正在运行{0}）。",
         "Japanese": "(現在,{0}を実行しています)。"
@@ -960,7 +961,7 @@
         "Italian": "Max kilobyte di console.log per la scansione: ",
         "Dutch": "Maximaal aantal kilobytes console.log om te scannen: ",
         "Polish": "Maks. kilobajty pliku console.log do skanowania: ",
-        "Russian": "Максимальное количество килобайт для сканирования в файле console.log: ",
+        "Russian": "Максимальное количество килобайт для сканирования файла console.log: ",
         "Korean": "최대 킬로바이트 console.log 스캔하기: ",
         "Chinese": "最大千字节console.log要扫描: ",
         "Japanese": "キロバイトの最大値console.logをスキャンするには: "
@@ -974,7 +975,7 @@
         "Italian": "Timeout della connessione Internet (per l'aggiornamento e le mappe personalizzate), in pochi secondi: ",
         "Dutch": "Time-out van de internetverbinding (voor updater en aangepaste kaarten), in seconden: ",
         "Polish": "Czas oczekiwania na połączenie z Internetem (w przypadku aktualizacji i map niestandardowych), w sekundach: ",
-        "Russian": "Таймаут подключения к Интернету (для обновляемых и пользовательских карт), в секундах: ",
+        "Russian": "Таймаут подключения к Интернету (для апдейтера и пользовательских карт), в секундах: ",
         "Korean": "인터넷 연결 시간 제한(를 위한 업데이터와 사용자 정의도),초: ",
         "Chinese": "互联网连接超时（更新程序和自定义地图），以秒为单位: ",
         "Japanese": "インターネット接続タイムアウト(アップデータカスタムマップ),秒: "
@@ -1002,7 +1003,7 @@
         "Italian": "Guerre di Classe",
         "Dutch": "Klassenoorlogen",
         "Polish": "Wojny Klasowe",
-        "Russian": "Войны класса",
+        "Russian": "Войны классов",
         "Korean": "클래스 전쟁",
         "Chinese": "阶级战争",
         "Japanese": "クラスウォー"
@@ -1044,7 +1045,7 @@
         "Italian": "Non in coda",
         "Dutch": "Niet in de rij",
         "Polish": "Nie oczekując w kolejce",
-        "Russian": "Не стоит в очереди",
+        "Russian": "Вне очереди",
         "Korean": "대기지",
         "Chinese": "没有排队",
         "Japanese": "キューに入れない"
@@ -1072,7 +1073,7 @@
         "Italian": "Tipo di immagine piccola classe selezionata: ",
         "Dutch": "Geselecteerde klasse kleine afbeeldingstype: ",
         "Polish": "Wybrany typ małego obrazu klasy: ",
-        "Russian": "Выбранный тип изображения малого класса: ",
+        "Russian": "Тип изображения малой иконки выбранного класса: ",
         "Korean": "선택한 클래스를 작은 이미지 유형: ",
         "Chinese": "选定的类小图像类型: ",
         "Japanese": "選択したクラスの小さな画像タイプ: "
@@ -1086,7 +1087,7 @@
         "Italian": "Morte Match",
         "Dutch": "Dodenhorloge",
         "Polish": "Deathmatch",
-        "Russian": "Смертельный матч",
+        "Russian": "Дэфматч",
         "Korean": "책",
         "Chinese": "死亡竞赛",
         "Japanese": "デスマッチ"
@@ -1114,7 +1115,7 @@
         "Italian": "(Considerare l'apertura di un numero a {0})",
         "Dutch": "(Overweeg om een probleem te openen bij {0})",
         "Polish": "(Rozważyć otwarcie sprawy przy {0})",
-        "Russian": "(Рассмотрим возможность открытия выпуска по адресу: {0})",
+        "Russian": "(Рассмотрите возможность открытия проблемы на: {0})",
         "Korean": "(여는 것을 고려하는 문제에서{0})",
         "Chinese": "(考虑打开一个问题{0})",
         "Japanese": "({0}で問題を開くことを検討)"
@@ -1128,7 +1129,7 @@
         "Italian": "Nascondi tipo di gioco (Casual, comp, MvM) in coda per",
         "Dutch": "Verberg het type spel (Casual, Comp, MvM) in de rij voor",
         "Polish": "Ukryć typ gry (Casual, Konkurencyjny, MvM) ustawiony w kolejce do",
-        "Russian": "Скрыть тип игры (казуальная, конкурентная, MvM), поставленный в очередь для",
+        "Russian": "Скрыть тип игры (Кэжуал, Комп, MvM) для которй вы в очереди",
         "Korean": "숨기기 게임 유형(캐주얼하고,경쟁적이고,데이터를 쉽게 마이닝하고 분석)대기",
         "Chinese": "隐藏游戏类型（休闲，竞争，MvM）排队等候",
         "Japanese": "非表示のゲームの種類(カジュアル,競争,MvM)のキューに入れられた"
@@ -1170,7 +1171,7 @@
         "Italian": "deselezionati",
         "Dutch": "ongeselecteerd",
         "Polish": "niewybrany",
-        "Russian": "невыбранный",
+        "Russian": "невыбранно",
         "Korean": "선택하지 않은",
         "Chinese": "未选中",
         "Japanese": "未選択"
@@ -1198,7 +1199,7 @@
         "Italian": "(Se sei più di una versione non aggiornata, ci possono essere state più modifiche e correzioni di questa.)",
         "Dutch": "(Als je meer dan één versie achterhaald bent, kunnen er meer veranderingen en oplossingen zijn geweest dan dit.)",
         "Polish": "(Jeśli masz więcej niż jedną nieaktualną wersję, mogło być więcej zmian i poprawek niż to.)",
-        "Russian": "(Если вы устарели более чем на одну версию, возможно, было внесено больше изменений и исправлений, чем это.)",
+        "Russian": "(Если вы устарели более чем на одну версию, возможно, было внесено больше изменений и исправлений чем в этой.)",
         "Korean": "(당신이 더 이상 버전이아웃 날짜가 되었을 수도 있습니다 더 많은 변화하고 수정합니다.)",
         "Chinese": "（如果您有多个版本过时，可能会有更多的更改和修复。)",
         "Japanese": "(複数のバージョンが最新でない場合は,これよりも多くの変更と修正が行われている可能性があります。)"
@@ -1212,7 +1213,7 @@
         "Italian": "{0} trascorso",
         "Dutch": "{0} uur verstreken",
         "Polish": "{0} upłynęło",
-        "Russian": "{0}Истекло",
+        "Russian": "{0} Истекло",
         "Korean": "{0}경과",
         "Chinese": "{0}经过",
         "Japanese": "{0}経過しました"
@@ -1254,7 +1255,7 @@
         "Italian": "Raggiungimento",
         "Dutch": "Prestatie",
         "Polish": "Osiągnięcia",
-        "Russian": "Достижения",
+        "Russian": "Достижение",
         "Korean": "Achievement",
         "Chinese": "成就",
         "Japanese": "実績"
@@ -1268,7 +1269,7 @@
         "Italian": "Ripristinare l'impostazione predefinita di Restore 1 modificata?",
         "Dutch": "1 gewijzigde instelling terugzetten naar de standaardinstelling?",
         "Polish": "Przywrócenie domyślnego ustawienia 1 zmienionego na domyślne?",
-        "Russian": "Восстановить значение по умолчанию для параметра 1?",
+        "Russian": "Восстановить 1 измененную настройку по умолчанию?",
         "Korean": "복원 1 로 변경된 설정을 기본?",
         "Chinese": "将1更改的设置恢复为默认设置？",
         "Japanese": "1つの変更された設定をデフォルトに復元しますか？"
@@ -1282,7 +1283,7 @@
         "Italian": "Competitivo",
         "Dutch": "Concurrerend",
         "Polish": "Konkurencyjność",
-        "Russian": "Конкурентоспособность",
+        "Russian": "Компэтитив",
         "Korean": "경쟁력",
         "Chinese": "竞争力",
         "Japanese": "Competitive"
@@ -1310,7 +1311,7 @@
         "Italian": "agonistica",
         "Dutch": "concurrerend",
         "Polish": "konkurencyjny",
-        "Russian": "соревновательный",
+        "Russian": "компэтитив",
         "Korean": "경쟁력",
         "Chinese": "竞争力",
         "Japanese": "competitive"
@@ -1324,7 +1325,7 @@
         "Italian": "Carico Utile Race",
         "Dutch": "Laadvermogen Race",
         "Polish": "Ładowność Wyścig",
-        "Russian": "Гонка полезных грузов",
+        "Russian": "Гонка грузов",
         "Korean": "페이로드 레이스",
         "Chinese": "有效载荷竞赛",
         "Japanese": "ペイロードレース"
@@ -1338,7 +1339,7 @@
         "Italian": "5. OK e Chiudi",
         "Dutch": "5. OK en sluiten",
         "Polish": "5. OK i Zamknij",
-        "Russian": "5. OK и Close",
+        "Russian": "5. OK и Закрыть",
         "Korean": "5. 확인 닫기",
         "Chinese": "5. 好的，关闭",
         "Japanese": "5. OKで閉じる"
@@ -1394,7 +1395,7 @@
         "Italian": "Punto di Controllo",
         "Dutch": "Controlepunt",
         "Polish": "Punkt Kontrolny",
-        "Russian": "Контрольная точка",
+        "Russian": "Контрольные точки",
         "Korean": "제어점",
         "Chinese": "控制点",
         "Japanese": "コントロールポイント"
@@ -1422,7 +1423,7 @@
         "Italian": "Icona",
         "Dutch": "Pictogram",
         "Polish": "Ikona",
-        "Russian": "Икона",
+        "Russian": "Иконка",
         "Korean": "아이콘",
         "Chinese": "图标",
         "Japanese": "アイコン"
@@ -1576,7 +1577,7 @@
         "Italian": "Lancio di Team Fortress 2 con Rich Presence abilitato...",
         "Dutch": "Lancering van Team Fortress 2 met Rich Presence ingeschakeld...",
         "Polish": "Uruchomienie zespołu Team Fortress 2 z włączoną bogatą obecnością...",
-        "Russian": "Запуск второй боевой крепости с богатым присутствием...",
+        "Russian": "Запуск Team Fortress 2 с богатым присутствием...",
         "Korean": "실행 Team Fortress2 와 풍부한 존재가 사용되...",
         "Chinese": "启动团队要塞2与丰富的存在启用。..",
         "Japanese": "Rich Presenceを有効にしてTeam Fortress 2を起動しています..."
@@ -1604,9 +1605,9 @@
         "Italian": "Team Fortress 2",
         "Dutch": "Team Fortress 2",
         "Polish": "Team Fortress 2",
-        "Russian": "Крепость Команды 2",
+        "Russian": "Team Fortress 2",
         "Korean": "Team Fortress2",
-        "Chinese": "团队要塞2",
+        "Chinese": "Team Fortress 2",
         "Japanese": "Team Fortress 2"
     },
     "7395095750": {
@@ -1674,7 +1675,7 @@
         "Italian": "Ritardo tra un rinfresco e l'altro, in secondi: ",
         "Dutch": "Vertraging tussen de verversingen, in seconden: ",
         "Polish": "Opóźnienie pomiędzy odświeżaniem, w sekundach: ",
-        "Russian": "Задержка между закусками, в секундах: ",
+        "Russian": "Задержка между рефрешами, в секундах: ",
         "Korean": "지연 사이에 새로 고침,에서 초: ",
         "Chinese": "刷新之间的延迟，以秒为单位: ",
         "Japanese": "更新間の遅延（秒単位）: "
@@ -1702,7 +1703,7 @@
         "Italian": "Catturare la Dandiera",
         "Dutch": "Vang de Blag",
         "Polish": "Złap Flagę",
-        "Russian": "Захватить флаг",
+        "Russian": "Захвати флаг",
         "Korean": "깃발을 캡처",
         "Chinese": "捕获标志",
         "Japanese": "フラグをキャプチャ"
@@ -1730,7 +1731,7 @@
         "Italian": "Ripristina le impostazioni predefinite",
         "Dutch": "Standaardinstellingen herstellen",
         "Polish": "Przywrócenie ustawień domyślnych",
-        "Russian": "Восстановление значений по умолчанию",
+        "Russian": "Восстановление по умолчанию",
         "Korean": "기본값 복원",
         "Chinese": "恢复默认值",
         "Japanese": "デフォルトの復元"
@@ -1800,7 +1801,7 @@
         "Italian": "Heavy",
         "Dutch": "Heavy",
         "Polish": "Heavy",
-        "Russian": "Тяжелый",
+        "Russian": "Хэви",
         "Korean": "무거운",
         "Chinese": "重",
         "Japanese": "ヘビー"
@@ -1814,7 +1815,7 @@
         "Italian": "Nessuno, utilizzare il logo TF2",
         "Dutch": "Geen, gebruik het TF2-logo",
         "Polish": "Brak, użyj logo TF2",
-        "Russian": "Нет, используйте логотип TF2",
+        "Russian": "Нету, использовать логотип TF2",
         "Korean": "도를 사용 팀포 2 로고",
         "Chinese": "无,使用TF2标志",
         "Japanese": "なし,TF2ロゴを使用"
@@ -1828,7 +1829,7 @@
         "Italian": "In coda per Casual",
         "Dutch": "In de rij voor Casual",
         "Polish": "W kolejce do \"Casual\"",
-        "Russian": "Очередь в очередь на случайность",
+        "Russian": "В очереди на Кэжуал",
         "Korean": "대기주",
         "Chinese": "排队休闲",
         "Japanese": "カジュアル用キュー"
@@ -1898,7 +1899,7 @@
         "Italian": "Impostazioni Presenza Ricca TF2 ({0})",
         "Dutch": "TF2 instellingen voor rijke aanwezigheid ({0})",
         "Polish": "Ustawienia TF2 Bogata Obecność ({0})",
-        "Russian": "TF2 Богатое присутствие ({0}) Настройки TF2 Настройки",
+        "Russian": "TF2 Богатое присутствие ({0}) настройки",
         "Korean": "팀포 2 부자재({0})설정",
         "Chinese": "TF2富存在({0})设置",
         "Japanese": "TF2 Rich Presence({0})の設定"
@@ -1912,7 +1913,7 @@
         "Italian": "In fila per la partita di una festa",
         "Dutch": "In de rij staan voor een feestje",
         "Polish": "Stoi w kolejce do meczu na przyjęcie",
-        "Russian": "Очередь на матч вечеринки",
+        "Russian": "В очереди на матч лобби",
         "Korean": "파티 경기 대기 중",
         "Chinese": "排队等候派对的比赛",
         "Japanese": "パーティーの試合のキューに入れられた"
@@ -2066,7 +2067,7 @@
         "Italian": "Steam non funziona",
         "Dutch": "Steam loopt niet",
         "Polish": "Steam nie działa",
-        "Russian": "Steam не работает",
+        "Russian": "Steam не открыт",
         "Korean": "Steam가 실행되지 않습니다",
         "Chinese": "Steam没有运行",
         "Japanese": "Steamは実行されていません"
@@ -2108,7 +2109,7 @@
         "Italian": "{0} - In attesa di {1}",
         "Dutch": "{0} - Wachten op {1}",
         "Polish": "{0} - Czekając na {1}",
-        "Russian": "{0} - ждущий {1}",
+        "Russian": "{0} - Ждет {1}",
         "Korean": "{0} - 대기 중{1}",
         "Chinese": "{0} - 等待着{1}",
         "Japanese": "{0} - 대기 중{1}"
