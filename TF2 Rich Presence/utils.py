@@ -22,8 +22,16 @@ def access_db(write: dict = None) -> Dict[str, Union[dict, bool, list]]:
             db_json.truncate(0)
             json.dump(db_data, db_json, indent=4, ensure_ascii=False)
     else:
-        with open(db_path, 'r', encoding='UTF8') as db_json:
-            return json.load(db_json)
+        try:
+            with open(db_path, 'r', encoding='UTF8') as db_json:
+                return json.load(db_json)
+        except json.JSONDecodeError:
+            return {'custom_maps': {},
+                    'tb_hashes': [],
+                    'error_hashes': [],
+                    'has_asked_language': False,
+                    'available_version': {'exists': False, 'tag': '', 'url': ''},
+                    'missing_localization': []}
 
 
 # get API key from the 'APIs' file
