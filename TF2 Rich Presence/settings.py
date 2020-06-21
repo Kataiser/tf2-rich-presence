@@ -245,7 +245,7 @@ class GUI(tk.Frame):
         return f"settings.GUI {self.window_dimensions}"
 
     # runs every time a setting is changed, updates "restore defaults" button's state
-    def update_default_button_state(self):
+    def update_default_button_state(self, pointless_arg: str = None):
         if self.get_working_settings() == get_setting_default(return_all=True):  # if settings are default, disable button
             self.restore_button.state(['disabled'])
             self.log.debug("Disabled restore defaults button")
