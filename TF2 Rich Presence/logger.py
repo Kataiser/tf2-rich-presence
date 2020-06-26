@@ -107,7 +107,9 @@ class Log:
             self.write_log('DEBUG', message_in)
 
     # a log with a level of ERROR (caught, non-fatal errors)
-    def error(self, message_in: str, reportable: bool = True):
+    def error(self, message_in: Union[str, Exception], reportable: bool = True):
+        message_in = str(message_in)
+
         if 'Error' in self.log_levels_allowed:
             self.write_log('ERROR', message_in)
 
