@@ -20,9 +20,8 @@ def detect(log: logger.Log):
     db: Dict[str, Union[dict, bool, list]] = utils.access_db()
 
     if not db['has_asked_language']:
-        # language_codes = {'en': 'English', 'de': 'German', 'fr': 'French', 'es': 'Spanish', 'pt': 'Portuguese', 'it': 'Italian', 'nl': 'Dutch', 'pl': 'Polish', 'ru': 'Russian',
-        #                   'ko': 'Korean', 'zh': 'Chinese', 'ja': 'Japanese'}
-        language_codes: Dict[str, str] = {'en': 'English', 'de': 'German', 'fr': 'French', 'es': 'Spanish', 'pt': 'Portuguese', 'it': 'Italian', 'nl': 'Dutch', 'pl': 'Polish'}
+        language_codes = {'en': 'English', 'de': 'German', 'fr': 'French', 'es': 'Spanish', 'pt': 'Portuguese', 'it': 'Italian', 'nl': 'Dutch', 'pl': 'Polish', 'ru': 'Russian',
+                          'ko': 'Korean', 'zh': 'Chinese', 'ja': 'Japanese'}
 
         system_locale: str = locale.windows_locale[ctypes.windll.kernel32.GetUserDefaultUILanguage()]
         system_language_code: str = system_locale.split('_')[0]

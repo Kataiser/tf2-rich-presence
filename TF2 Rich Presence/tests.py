@@ -213,11 +213,11 @@ class TestTF2RichPresense(unittest.TestCase):
         if not test_process_scanner.scan()['Discord']['running']:
             self.skipTest("Discord needs to be running")
 
-        activity = {'details': 'In menus',
+        activity = {'details': "Testing TF2 Rich Presence",
                     'timestamps': {'start': int(time.time())},
                     'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2', 'large_image': 'main_menu',
                                'large_text': 'In menus'},
-                    'state': ''}
+                    'state': "(Probably don't actually have the game open)"}
 
         client = ipc.DiscordIPC('429389143756374017')
         time.sleep(0.1)  # this fix works? seriously?

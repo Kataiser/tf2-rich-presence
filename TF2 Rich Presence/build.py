@@ -90,6 +90,7 @@ def main(version_num='v1.13.2'):
         print("Copied", shutil.copy('requirements.txt', github_repo_path))
         print("Copied", shutil.copy('tf2_logo_blurple.ico', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('tf2_logo_blurple_wrench.ico', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('font_instructions.gif', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('Launch TF2 with Rich Presence.bat', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('Launch Rich Presence alongside TF2.bat', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('Change settings.bat', Path(f'{github_repo_path}/TF2 Rich Presence')))

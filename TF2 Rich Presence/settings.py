@@ -35,6 +35,7 @@ class GUI(tk.Frame):
 
         tk.Frame.__init__(self, master)
         self.master = master
+        self.instructions_image = self.font_window = None
         check_int_command = self.register(check_int)
         atexit.register(self.window_close_log)
 
@@ -50,14 +51,12 @@ class GUI(tk.Frame):
         self.log_levels = ['Debug', 'Info', 'Error', 'Critical', 'Off']
         self.sentry_levels = ['All errors', 'Crashes', 'Never']
         self.class_pic_types = ['Icon', 'Emblem', 'Portrait', 'None, use TF2 logo']
-        # self.languages = ['English', 'German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian', 'Korean', 'Chinese', 'Japanese']
-        self.languages = ['English', 'German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish']
+        self.languages = ['English', 'German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian', 'Korean', 'Chinese', 'Japanese']
 
         self.log_levels_display = [self.loc.text(item) for item in self.log_levels]
         self.sentry_levels_display = [self.loc.text(item) for item in self.sentry_levels]
         self.class_pic_types_display = [self.loc.text(item) for item in self.class_pic_types]
-        # self.languages_display = ['English', 'Deutsch', 'Français', 'Español', 'Português', 'Italiano', 'Nederlands', 'Polski', 'русский язык', '한국어', '汉语', '日本語']
-        self.languages_display = ['English', 'Deutsch', 'Français', 'Español', 'Português', 'Italiano', 'Nederlands', 'Polski']
+        self.languages_display = ['English', 'Deutsch', 'Français', 'Español', 'Português', 'Italiano', 'Nederlands', 'Polski', 'русский язык', '한국어', '汉语', '日本語']
 
         # create every setting variable without values
         self.sentry_level = tk.StringVar()
@@ -158,7 +157,7 @@ class GUI(tk.Frame):
         setting13_text = ttk.Label(setting13_frame, text="{}".format(
             self.loc.text("Language: ")))
         actual_language = self.language.get()
-        setting13_options = ttk.OptionMenu(setting13_frame, self.language, self.languages[0], *self.languages_display, command=self.update_default_button_state)
+        setting13_options = ttk.OptionMenu(setting13_frame, self.language, self.languages[0], *self.languages_display, command=self.update_language)
         self.language.set(actual_language)
         setting14 = ttk.Checkbutton(lf_main, variable=self.map_time, command=self.update_default_button_state, text="{}".format(
             self.loc.text("Show time on current map instead of selected class")))
@@ -245,13 +244,40 @@ class GUI(tk.Frame):
         return f"settings.GUI {self.window_dimensions}"
 
     # runs every time a setting is changed, updates "restore defaults" button's state
-    def update_default_button_state(self, pointless_arg: str = None):
+    def update_default_button_state(self):
         if self.get_working_settings() == get_setting_default(return_all=True):  # if settings are default, disable button
             self.restore_button.state(['disabled'])
             self.log.debug("Disabled restore defaults button")
         else:
             self.restore_button.state(['!disabled'])
             self.log.debug("Enabled restore defaults button")
+
+    def update_language(self, language_selected: str = None):
+        self.update_default_button_state()
+        self.show_font_message(language_selected)
+
+    def show_font_message(self, language: str = None):
+        if language in self.languages_display[-3:]:
+            self.master.update()
+            language_display = self.languages[self.languages_display.index(language)]
+            font_message_1 = f"The Windows command prompt's default font doesn't support {language_display} characters."
+            font_message_2 = "Here's how to fix it:"
+            font_message_3 = "Choose your preference between MS Gothic, NSimSun, and SimSun-ExtB."
+
+            self.font_window = tk.Toplevel(self.master)
+            self.font_window.title("title")
+            self.font_window.geometry('600x400')
+            ttk.Label(self.font_window, text=f"{font_message_1} {font_message_2}").pack()
+            instructions_canvas = tk.Canvas(self.font_window, width=382, height=325)
+            instructions_canvas.pack()
+            self.instructions_image = tk.PhotoImage(file='font_instructions.gif')
+            instructions_canvas.create_image(0, 0, anchor=tk.NW, image=self.instructions_image)
+            ttk.Label(self.font_window, text=font_message_3).pack()
+            ttk.Button(self.font_window, text="Close", command=self.close_font_window).pack(side=tk.RIGHT)
+            # MS Gothic, NSimSun, SimSun-ExtB
+
+    def close_font_window(self):
+        self.font_window.destroy()
 
     # return the settings as a dict, as they currently are in the GUI
     def get_working_settings(self) -> dict:
