@@ -26,12 +26,14 @@ def access_db(write: dict = None) -> Dict[str, Union[dict, bool, list]]:
             with open(db_path, 'r', encoding='UTF8') as db_json:
                 return json.load(db_json)
         except json.JSONDecodeError:
-            return {'custom_maps': {},
-                    'tb_hashes': [],
-                    'error_hashes': [],
-                    'has_asked_language': False,
-                    'available_version': {'exists': False, 'tag': '', 'url': ''},
-                    'missing_localization': []}
+            default_db = {'custom_maps': {},
+                          'tb_hashes': [],
+                          'error_hashes': [],
+                          'has_asked_language': False,
+                          'available_version': {'exists': False, 'tag': '', 'url': ''},
+                          'missing_localization': []}
+            access_db(write=default_db)
+            return default_db
 
 
 # get API key from the 'APIs' file
