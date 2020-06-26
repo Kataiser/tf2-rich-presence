@@ -79,7 +79,6 @@
         "Dutch": "Territoriale Controle",
         "Polish": "Kontrola Terytorialna",
         "Russian": "Захват територий",
-
         "Korean": "영어",
         "Chinese": "领土控制",
         "Japanese": "領土管理"
@@ -2113,5 +2112,61 @@
         "Korean": "{0} - 대기 중{1}",
         "Chinese": "{0} - 等待着{1}",
         "Japanese": "{0} - 대기 중{1}"
+    },
+    "1040127901": {
+        "English": "Choose your preference between MS Gothic, NSimSun, and SimSun-ExtB.",
+        "German": "Wählen Sie Ihre Präferenz zwischen MS Gothic, NSimSun und SimSun-ExtB.",
+        "French": "Choisissez votre préférence entre MS Gothic, NSimSun et SimSun-ExtB.",
+        "Spanish": "Elija su preferencia entre MS Gothic, NSimSun y SimSun-ExtB.",
+        "Portuguese": "Escolha sua preferência entre MS Gothic, NSimSun, e SimSun-ExtB.",
+        "Italian": "Scegliete la vostra preferenza tra MS Gothic, NSimSun e SimSun-ExtB.",
+        "Dutch": "Kies uw voorkeur tussen MS Gothic, NSimSun en SimSun-ExtB.",
+        "Polish": "Wybierz swoje preferencje pomiędzy MS Gothic, NSimSun i SimSun-ExtB.",
+        "Russian": "Выберите предпочтения между MS Gothic, NSimSun и SimSun-ExtB.",
+        "Korean": "MS Gothic,NSimSun,SimSun-ExtB 사이의 선호도를 선택하십시오.",
+        "Chinese": "在MS Gothic、NSimSun和SimSun-ExtB之间选择您的偏好。",
+        "Japanese": "MS Gothic、NSimSun、SimSun-ExtBからお好みのものをお選びください。"
+    },
+    "9411019900": {
+        "English": "Close",
+        "German": "schließen",
+        "French": "Fermer",
+        "Spanish": "Cerrar",
+        "Portuguese": "Fechar",
+        "Italian": "Chiudere",
+        "Dutch": "Sluit",
+        "Polish": "Close",
+        "Russian": "Закрыть",
+        "Korean": "닫기",
+        "Chinese": "关闭",
+        "Japanese": "クローズ"
+    },
+    "1004668653": {
+        "English": "Font instructions",
+        "German": "Schriftart-Anweisungen",
+        "French": "Instructions relatives aux polices",
+        "Spanish": "Instrucciones de la fuente",
+        "Portuguese": "Instruções da fonte",
+        "Italian": "Istruzioni per i font",
+        "Dutch": "Lettertype-instructies",
+        "Polish": "Instrukcje dotyczące czcionki",
+        "Russian": "Инструкции по шрифту",
+        "Korean": "글꼴 지침",
+        "Chinese": "字体说明",
+        "Japanese": "フォントの説明"
+    },
+    "2473140856": {
+        "English": "The Windows command prompt's default font doesn't support {0} characters. Here's how to fix it:",
+        "German": "Die Standardschriftart der Windows-Eingabeaufforderung unterstützt keine {0}-Zeichen. Hier erfahren Sie, wie Sie das beheben können:",
+        "French": "La police par défaut de l'invite de commande de Windows ne prend pas en charge les caractères {0}. Voici comment y remédier :",
+        "Spanish": "La fuente por defecto del símbolo del sistema de Windows no soporta {0} caracteres. Aquí está cómo arreglarlo:",
+        "Portuguese": "A fonte padrão do prompt de comando do Windows não suporta caracteres {0}. Veja aqui como consertá-lo:",
+        "Italian": "Il carattere predefinito del prompt dei comandi di Windows non supporta i caratteri {0}. Ecco come risolvere il problema:",
+        "Dutch": "Het standaardlettertype van de Windows opdrachtprompt ondersteunt geen {0} tekens. Hier is hoe het te repareren:",
+        "Polish": "Domyślna czcionka wiersza poleceń systemu Windows nie obsługuje znaków {0}. Oto jak to naprawić:",
+        "Russian": "Шрифт командной строки Windows по умолчанию не поддерживает символы {0}. Вот как это исправить:",
+        "Korean": "Windows 명령 프롬프트의 기본 글꼴은{0}문자를 지원하지 않습니다. 여기에 그것을 해결하는 방법은 다음과 같습니다:",
+        "Chinese": "Windows命令提示符的默认字体不支持{0}字符。下面是如何解决这个问题。",
+        "Japanese": "Windowsのコマンドプロンプトのデフォルトフォントが{0}文字をサポートしていません。これを修正する方法は以下の通りです。"
     }
 }

@@ -23,7 +23,7 @@ import utils
 
 
 class GUI(tk.Frame):
-    def __init__(self, master, log=None):
+    def __init__(self, master, log=None, gui_language='English'):
         if log:
             self.log = log
         else:
@@ -31,10 +31,11 @@ class GUI(tk.Frame):
             self.log.to_stderr = True
 
         self.log.info(f"Opening settings menu for TF2 Rich Presence {launcher.VERSION}")
-        self.loc = localization.Localizer(self.log, get('language'))
+        self.loc = localization.Localizer(self.log, gui_language if gui_language else get('language'))
 
         tk.Frame.__init__(self, master)
         self.master = master
+        self.gui_language = gui_language
         self.instructions_image = self.font_window = None
         check_int_command = self.register(check_int)
         atexit.register(self.window_close_log)
@@ -43,10 +44,10 @@ class GUI(tk.Frame):
         master.resizable(0, 0)  # disables resizing
 
         # set window icon, doesn't work if launching from Pycharm for some reason
-        try:
-            master.iconbitmap(default='tf2_logo_blurple_wrench.ico')
-        except tk.TclError:
+        if os.path.isdir('resources'):
             master.iconbitmap(default=os.path.join('resources', 'tf2_logo_blurple_wrench.ico'))
+        else:
+            master.iconbitmap(default='tf2_logo_blurple_wrench.ico')
 
         self.log_levels = ['Debug', 'Info', 'Error', 'Critical', 'Off']
         self.sentry_levels = ['All errors', 'Crashes', 'Never']
@@ -87,7 +88,7 @@ class GUI(tk.Frame):
             self.log_level.set(self.settings_loaded['log_level'])
             self.console_scan_kb.set(self.settings_loaded['console_scan_kb'])
             self.class_pic_type.set(self.settings_loaded['class_pic_type'])
-            self.language.set(self.settings_loaded['language'])
+            self.language.set(gui_language if gui_language else self.settings_loaded['language'])
             self.map_time.set(self.settings_loaded['map_time'])
             self.trim_console_log.set(self.settings_loaded['trim_console_log'])
         except Exception:
@@ -106,62 +107,62 @@ class GUI(tk.Frame):
         self.language.set(self.languages_display[self.languages.index(self.language.get())])
 
         # create label frames
-        lf_main = ttk.Labelframe(master, text=self.loc.text("Main"))
-        lf_advanced = ttk.Labelframe(master, text=self.loc.text("Advanced"))
+        self.lf_main = ttk.Labelframe(master, text=self.loc.text("Main"))
+        self.lf_advanced = ttk.Labelframe(master, text=self.loc.text("Advanced"))
 
         # create settings widgets
-        setting1_frame = ttk.Frame(lf_advanced)
+        setting1_frame = ttk.Frame(self.lf_advanced)
         setting1_text = ttk.Label(setting1_frame, text="{}".format(
             self.loc.text("Log reporting frequency: ")))
         setting1_radiobuttons = []
         for sentry_level_text in self.sentry_levels_display:
             setting1_radiobuttons.append(ttk.Radiobutton(setting1_frame, variable=self.sentry_level, text=sentry_level_text, value=sentry_level_text, command=self.update_default_button_state))
-        setting3_frame = ttk.Frame(lf_main)
+        setting3_frame = ttk.Frame(self.lf_main)
         setting3_text = ttk.Label(setting3_frame, text="{}".format(
             self.loc.text("Delay between refreshes, in seconds: ")))
         setting3_option = ttk.Spinbox(setting3_frame, textvariable=self.wait_time, width=6, from_=0, to=1000, validate='all', validatecommand=(check_int_command, '%P', 1000),
                                       command=self.update_default_button_state)
-        setting4_frame = ttk.Frame(lf_advanced)
+        setting4_frame = ttk.Frame(self.lf_advanced)
         setting4_text = ttk.Label(setting4_frame, text="{}".format(
             self.loc.text("Hours before re-checking custom map gamemode: ")))
         setting4_option = ttk.Spinbox(setting4_frame, textvariable=self.map_invalidation_hours, width=6, from_=0, to=1000, validate='all', validatecommand=(check_int_command, '%P', 1000),
                                       command=self.update_default_button_state)
-        setting5 = ttk.Checkbutton(lf_main, variable=self.check_updates, command=self.update_default_button_state, text="{}".format(
+        setting5 = ttk.Checkbutton(self.lf_main, variable=self.check_updates, command=self.update_default_button_state, text="{}".format(
             self.loc.text("Check for program updates when launching")))
-        setting6_frame = ttk.Frame(lf_advanced)
+        setting6_frame = ttk.Frame(self.lf_advanced)
         setting6_text = ttk.Label(setting6_frame, text="{}".format(
             self.loc.text("Internet connection timeout (for updater and custom maps), in seconds: ")))
         setting6_option = ttk.Spinbox(setting6_frame, textvariable=self.request_timeout, width=6, from_=0, to=60, validate='all', validatecommand=(check_int_command, '%P', 60),
                                       command=self.update_default_button_state)
-        setting8 = ttk.Checkbutton(lf_main, variable=self.hide_queued_gamemode, command=self.update_default_button_state, text="{}".format(
+        setting8 = ttk.Checkbutton(self.lf_main, variable=self.hide_queued_gamemode, command=self.update_default_button_state, text="{}".format(
             self.loc.text("Hide game type (Casual, Comp, MvM) queued for")))
-        setting9_frame = ttk.Frame(lf_advanced)
+        setting9_frame = ttk.Frame(self.lf_advanced)
         setting9_text = ttk.Label(setting9_frame, text="{}".format(
             self.loc.text("Max log level: ")))
         setting9_radiobuttons = []
         for log_level_text in self.log_levels_display:
             setting9_radiobuttons.append(ttk.Radiobutton(setting9_frame, variable=self.log_level, text=log_level_text, value=log_level_text, command=self.update_default_button_state))
-        setting10_frame = ttk.Frame(lf_advanced)
+        setting10_frame = ttk.Frame(self.lf_advanced)
         setting10_text = ttk.Label(setting10_frame, text="{}".format(
             self.loc.text("Max kilobytes of console.log to scan: ")))
         setting10_option = ttk.Spinbox(setting10_frame, textvariable=self.console_scan_kb, width=8, from_=0, to=float('inf'), validate='all',
                                        validatecommand=(check_int_command, '%P', float('inf')), command=self.update_default_button_state)
-        setting12_frame = ttk.Frame(lf_main)
+        setting12_frame = ttk.Frame(self.lf_main)
         setting12_text = ttk.Label(setting12_frame, text="{}".format(
             self.loc.text("Selected class small image type: ")))
         setting12_radiobuttons = []
         for class_pic_type_text in self.class_pic_types_display:
             setting12_radiobuttons.append(ttk.Radiobutton(setting12_frame, variable=self.class_pic_type, text=class_pic_type_text, value=class_pic_type_text,
                                                           command=self.update_default_button_state))
-        setting13_frame = ttk.Frame(lf_main)
+        setting13_frame = ttk.Frame(self.lf_main)
         setting13_text = ttk.Label(setting13_frame, text="{}".format(
             self.loc.text("Language: ")))
         actual_language = self.language.get()
         setting13_options = ttk.OptionMenu(setting13_frame, self.language, self.languages[0], *self.languages_display, command=self.update_language)
         self.language.set(actual_language)
-        setting14 = ttk.Checkbutton(lf_main, variable=self.map_time, command=self.update_default_button_state, text="{}".format(
+        setting14 = ttk.Checkbutton(self.lf_main, variable=self.map_time, command=self.update_default_button_state, text="{}".format(
             self.loc.text("Show time on current map instead of selected class")))
-        setting15 = ttk.Checkbutton(lf_advanced, variable=self.trim_console_log, command=self.update_default_button_state, text="{}".format(
+        setting15 = ttk.Checkbutton(self.lf_advanced, variable=self.trim_console_log, command=self.update_default_button_state, text="{}".format(
             self.loc.text("Limit console.log's size occasionally")))
 
         # download page button, but only if a new version is available
@@ -171,7 +172,7 @@ class GUI(tk.Frame):
             self.new_version_url = db['available_version']['url']
 
             self.update_button_text = tk.StringVar(value=self.loc.text(" Open {0} download page in default browser ").format(new_version_name))
-            self.update_button = ttk.Button(lf_main, textvariable=self.update_button_text, command=self.open_update_page)
+            self.update_button = ttk.Button(self.lf_main, textvariable=self.update_button_text, command=self.open_update_page)
             self.update_button.grid(row=10, sticky=tk.W, padx=(20, 40), pady=(0, 12))
 
         # add widgets to the labelframes or main window
@@ -207,17 +208,17 @@ class GUI(tk.Frame):
         setting14.grid(row=2, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
         setting15.grid(row=6, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
 
-        lf_main.grid(row=0, padx=30, pady=15)
-        lf_advanced.grid(row=1, padx=30, pady=0, sticky=tk.W + tk.E)
+        self.lf_main.grid(row=0, padx=30, pady=15)
+        self.lf_advanced.grid(row=1, padx=30, pady=0, sticky=tk.W + tk.E)
 
-        buttons_frame = ttk.Frame()
-        self.restore_button = ttk.Button(buttons_frame, text=self.loc.text("Restore defaults"), command=self.restore_defaults)
+        self.buttons_frame = ttk.Frame()
+        self.restore_button = ttk.Button(self.buttons_frame, text=self.loc.text("Restore defaults"), command=self.restore_defaults)
         self.restore_button.grid(row=0, column=1, padx=(10, 0), pady=(20, 20))
-        cancel_button = ttk.Button(buttons_frame, text=self.loc.text("Close without saving"), command=self.close_without_saving)
+        cancel_button = ttk.Button(self.buttons_frame, text=self.loc.text("Close without saving"), command=self.close_without_saving)
         cancel_button.grid(row=0, column=2, padx=10, pady=(20, 20))
-        self.ok_button = ttk.Button(buttons_frame, text=self.loc.text("Save and close"), command=self.save_and_close, default=tk.ACTIVE)
+        self.ok_button = ttk.Button(self.buttons_frame, text=self.loc.text("Save and close"), command=self.save_and_close, default=tk.ACTIVE)
         self.ok_button.grid(row=0, column=3, sticky=tk.W, padx=0, pady=(20, 20))
-        buttons_frame.grid(row=100, columnspan=3)
+        self.buttons_frame.grid(row=100, columnspan=3)
 
         target_h, target_y = (600, 500)
         window_x = round((self.winfo_screenwidth() / 2) - (target_h / 2))
@@ -252,32 +253,37 @@ class GUI(tk.Frame):
             self.restore_button.state(['!disabled'])
             self.log.debug("Enabled restore defaults button")
 
+    # runs every time the language setting is changed
     def update_language(self, language_selected: str = None):
-        self.update_default_button_state()
-        self.show_font_message(language_selected)
+        language_selected_normal = self.languages[self.languages_display.index(language_selected)]
 
+        if language_selected_normal != self.gui_language:
+            self.log.debug(f"Reloading settings menu with language {language_selected}")
+            self.lf_main.destroy()
+            self.lf_advanced.destroy()
+            self.buttons_frame.destroy()
+            self.__init__(self.master, gui_language=language_selected_normal)
+
+        self.show_font_message(language_selected_normal)
+
+    # (possibly) show a window with instructions for changing the command prompt font
     def show_font_message(self, language: str = None):
-        if language in self.languages_display[-3:]:
+        if language in self.languages[-3:]:
             self.master.update()
-            language_display = self.languages[self.languages_display.index(language)]
-            font_message_1 = f"The Windows command prompt's default font doesn't support {language_display} characters."
-            font_message_2 = "Here's how to fix it:"
-            font_message_3 = "Choose your preference between MS Gothic, NSimSun, and SimSun-ExtB."
+            font_message_1 = self.loc.text("The Windows command prompt's default font doesn't support {0} characters. Here's how to fix it:").format(language)
+            font_message_2 = self.loc.text("Choose your preference between MS Gothic, NSimSun, and SimSun-ExtB.")
 
+            font_instructions_path = os.path.join('resources', 'font_instructions.gif') if os.path.isdir('resources') else 'font_instructions.gif'
             self.font_window = tk.Toplevel(self.master)
-            self.font_window.title("title")
+            self.font_window.title(self.loc.text("Font instructions"))
             self.font_window.geometry('600x400')
-            ttk.Label(self.font_window, text=f"{font_message_1} {font_message_2}").pack()
+            ttk.Label(self.font_window, text=font_message_1).pack()
             instructions_canvas = tk.Canvas(self.font_window, width=382, height=325)
             instructions_canvas.pack()
-            self.instructions_image = tk.PhotoImage(file='font_instructions.gif')
+            self.instructions_image = tk.PhotoImage(file=font_instructions_path)
             instructions_canvas.create_image(0, 0, anchor=tk.NW, image=self.instructions_image)
-            ttk.Label(self.font_window, text=font_message_3).pack()
-            ttk.Button(self.font_window, text="Close", command=self.close_font_window).pack(side=tk.RIGHT)
-            # MS Gothic, NSimSun, SimSun-ExtB
-
-    def close_font_window(self):
-        self.font_window.destroy()
+            ttk.Label(self.font_window, text=font_message_2).pack()
+            ttk.Button(self.font_window, text=self.loc.text("Close"), command=self.font_window.destroy).pack(side=tk.RIGHT)
 
     # return the settings as a dict, as they currently are in the GUI
     def get_working_settings(self) -> dict:

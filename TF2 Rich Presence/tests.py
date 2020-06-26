@@ -265,10 +265,16 @@ class TestTF2RichPresense(unittest.TestCase):
     def test_settings_gui(self):
         root = tk.Tk()
         settings_gui = settings.GUI(root, self.log)
+        settings_gui.show_font_message('한국어')
+        settings_gui.update()
         dimensions = settings_gui.window_dimensions
+        settings_gui.update_language('日本語')
+        new_dimensions = settings_gui.window_dimensions
+        settings_gui.destroy()
 
         self.assertGreaterEqual(dimensions[0], 200)
         self.assertGreaterEqual(dimensions[1], 200)
+        self.assertNotEqual(dimensions, new_dimensions)
 
     def test_localization(self):
         all_keys = localization.access_localization_file().keys()

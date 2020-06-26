@@ -159,6 +159,7 @@ def main(version_num='v1.13.2'):
                      ('Change settings.bat', Path(f'{new_build_folder_name}/')),
                      ('tf2_logo_blurple.ico', Path(f'{new_build_folder_name}/resources/')),
                      ('tf2_logo_blurple_wrench.ico', Path(f'{new_build_folder_name}/resources/')),
+                     ('font_instructions.gif', Path(f'{new_build_folder_name}/resources/')),
                      ('APIs', Path(f'{new_build_folder_name}/resources/')),
                      ('Changelogs.html', Path(f'{new_build_folder_name}/'))]
 
