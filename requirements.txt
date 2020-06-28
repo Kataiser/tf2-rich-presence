@@ -4,7 +4,7 @@ chardet==3.0.4
 colorama==0.4.3
 Cython==0.29.16
 discoIPC==1.0.0
-idna==2.9
+idna==2.10
 lxml==4.5.1
 psutil==5.7.0
 requests==2.23.0
