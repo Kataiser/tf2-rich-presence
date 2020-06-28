@@ -23,7 +23,7 @@ import utils
 
 
 class GUI(tk.Frame):
-    def __init__(self, master, log=None, gui_language='English'):
+    def __init__(self, master, log=None, reload_settings=None):
         if log:
             self.log = log
         else:
@@ -31,11 +31,11 @@ class GUI(tk.Frame):
             self.log.to_stderr = True
 
         self.log.info(f"Opening settings menu for TF2 Rich Presence {launcher.VERSION}")
-        self.loc = localization.Localizer(self.log, gui_language if gui_language else get('language'))
+        self.gui_language = self.languages[self.languages.index(reload_settings[9].get())] if reload_settings else None
+        self.loc = localization.Localizer(self.log, self.gui_language if self.gui_language else get('language'))
 
         tk.Frame.__init__(self, master)
         self.master = master
-        self.gui_language = gui_language
         self.instructions_image = self.font_window = None
         check_int_command = self.register(check_int)
         atexit.register(self.window_close_log)
@@ -59,46 +59,51 @@ class GUI(tk.Frame):
         self.class_pic_types_display = [self.loc.text(item) for item in self.class_pic_types]
         self.languages_display = ['English', 'Deutsch', 'Français', 'Español', 'Português', 'Italiano', 'Nederlands', 'Polski', 'русский язык', '한국어', '汉语', '日本語']
 
-        # create every setting variable without values
-        self.sentry_level = tk.StringVar()
-        self.wait_time = tk.IntVar()
-        self.map_invalidation_hours = tk.IntVar()
-        self.check_updates = tk.BooleanVar()
-        self.request_timeout = tk.IntVar()
-        self.hide_queued_gamemode = tk.BooleanVar()
-        self.log_level = tk.StringVar()
-        self.console_scan_kb = tk.IntVar()
-        self.class_pic_type = tk.StringVar()
-        self.language = tk.StringVar()
-        self.map_time = tk.BooleanVar()
-        self.trim_console_log = tk.BooleanVar()
+        if reload_settings:
+            # the GUI was reloaded with a new language, so persist the currently selected (but not saved) settings
+            self.sentry_level, self.wait_time, self.map_invalidation_hours, self.check_updates, self.request_timeout, self.hide_queued_gamemode, self.log_level, self.console_scan_kb, \
+            self.class_pic_type, self.language, self.map_time, self.trim_console_log = reload_settings
+        else:
+            # create every setting variable without values
+            self.sentry_level = tk.StringVar()
+            self.wait_time = tk.IntVar()
+            self.map_invalidation_hours = tk.IntVar()
+            self.check_updates = tk.BooleanVar()
+            self.request_timeout = tk.IntVar()
+            self.hide_queued_gamemode = tk.BooleanVar()
+            self.log_level = tk.StringVar()
+            self.console_scan_kb = tk.IntVar()
+            self.class_pic_type = tk.StringVar()
+            self.language = tk.StringVar()
+            self.map_time = tk.BooleanVar()
+            self.trim_console_log = tk.BooleanVar()
 
-        try:
-            # load settings from registry
-            self.settings_loaded = access_registry()
-            self.log.debug(f"Current settings: {self.settings_loaded}")
-            self.log.debug(f"Are default: {self.settings_loaded == get_setting_default(return_all=True)}")
+            try:
+                # load settings from registry
+                self.settings_loaded = access_registry()
+                self.log.debug(f"Current settings: {self.settings_loaded}")
+                self.log.debug(f"Are default: {self.settings_loaded == get_setting_default(return_all=True)}")
 
-            self.sentry_level.set(self.settings_loaded['sentry_level'])
-            self.wait_time.set(self.settings_loaded['wait_time'])
-            self.map_invalidation_hours.set(self.settings_loaded['map_invalidation_hours'])
-            self.check_updates.set(self.settings_loaded['check_updates'])
-            self.request_timeout.set(self.settings_loaded['request_timeout'])
-            self.hide_queued_gamemode.set(self.settings_loaded['hide_queued_gamemode'])
-            self.log_level.set(self.settings_loaded['log_level'])
-            self.console_scan_kb.set(self.settings_loaded['console_scan_kb'])
-            self.class_pic_type.set(self.settings_loaded['class_pic_type'])
-            self.language.set(gui_language if gui_language else self.settings_loaded['language'])
-            self.map_time.set(self.settings_loaded['map_time'])
-            self.trim_console_log.set(self.settings_loaded['trim_console_log'])
-        except Exception:
-            # probably a json decode error
-            formatted_exception = traceback.format_exc()
-            self.log.error(f"Error in loading settings, defaulting: \n{formatted_exception}")
-            messagebox.showerror(self.loc.text("Error"), self.loc.text("Couldn't load settings, reverting to defaults.{0}").format(f'\n\n{formatted_exception}'))
+                self.sentry_level.set(self.settings_loaded['sentry_level'])
+                self.wait_time.set(self.settings_loaded['wait_time'])
+                self.map_invalidation_hours.set(self.settings_loaded['map_invalidation_hours'])
+                self.check_updates.set(self.settings_loaded['check_updates'])
+                self.request_timeout.set(self.settings_loaded['request_timeout'])
+                self.hide_queued_gamemode.set(self.settings_loaded['hide_queued_gamemode'])
+                self.log_level.set(self.settings_loaded['log_level'])
+                self.console_scan_kb.set(self.settings_loaded['console_scan_kb'])
+                self.class_pic_type.set(self.settings_loaded['class_pic_type'])
+                self.language.set(self.gui_language if self.gui_language else self.settings_loaded['language'])
+                self.map_time.set(self.settings_loaded['map_time'])
+                self.trim_console_log.set(self.settings_loaded['trim_console_log'])
+            except Exception:
+                # probably a json decode error
+                formatted_exception = traceback.format_exc()
+                self.log.error(f"Error in loading settings, defaulting: \n{formatted_exception}")
+                messagebox.showerror(self.loc.text("Error"), self.loc.text("Couldn't load settings, reverting to defaults.{0}").format(f'\n\n{formatted_exception}'))
 
-            self.restore_defaults()
-            self.settings_loaded = get_setting_default(return_all=True)
+                self.restore_defaults()
+                self.settings_loaded = get_setting_default(return_all=True)
 
         # make options account for localization
         self.log_level.set(self.log_levels_display[self.log_levels.index(self.log_level.get())])
@@ -258,11 +263,20 @@ class GUI(tk.Frame):
         language_selected_normal = self.languages[self.languages_display.index(language_selected)]
 
         if language_selected_normal != self.gui_language:
-            self.log.debug(f"Reloading settings menu with language {language_selected}")
+            self.log.debug(f"Reloading settings menu with language {language_selected_normal}")
             self.lf_main.destroy()
             self.lf_advanced.destroy()
             self.buttons_frame.destroy()
-            self.__init__(self.master, gui_language=language_selected_normal)
+
+            # normalize some settings to english so that the reload will be converted back
+            self.log_level.set(self.log_levels[self.log_levels_display.index(self.log_level.get())])
+            self.sentry_level.set(self.sentry_levels[self.sentry_levels_display.index(self.sentry_level.get())])
+            self.class_pic_type.set(self.class_pic_types[self.class_pic_types_display.index(self.class_pic_type.get())])
+            self.language.set(self.languages[self.languages_display.index(self.language.get())])
+
+            selected_settings = (self.sentry_level, self.wait_time, self.map_invalidation_hours, self.check_updates, self.request_timeout, self.hide_queued_gamemode, self.log_level,
+                             self.console_scan_kb, self.class_pic_type, self.language, self.map_time, self.trim_console_log)
+            self.__init__(self.master, reload_settings=selected_settings)
 
         self.show_font_message(language_selected_normal)
 
