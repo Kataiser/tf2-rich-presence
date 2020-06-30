@@ -213,7 +213,7 @@ class GUI(tk.Frame):
         setting14.grid(row=2, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
         setting15.grid(row=6, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
 
-        self.lf_main.grid(row=0, padx=30, pady=15)
+        self.lf_main.grid(row=0, padx=30, pady=15, sticky=tk.W + tk.E)
         self.lf_advanced.grid(row=1, padx=30, pady=0, sticky=tk.W + tk.E)
 
         self.buttons_frame = ttk.Frame()
@@ -259,7 +259,7 @@ class GUI(tk.Frame):
             self.log.debug("Enabled restore defaults button")
 
     # runs every time the language setting is changed
-    def update_language(self, language_selected: str = None):
+    def update_language(self, language_selected: str):
         language_selected_normal = self.languages[self.languages_display.index(language_selected)]
 
         if language_selected_normal != self.gui_language:
@@ -275,8 +275,8 @@ class GUI(tk.Frame):
             self.language.set(self.languages[self.languages_display.index(self.language.get())])
 
             selected_settings = (self.sentry_level, self.wait_time, self.map_invalidation_hours, self.check_updates, self.request_timeout, self.hide_queued_gamemode, self.log_level,
-                             self.console_scan_kb, self.class_pic_type, self.language, self.map_time, self.trim_console_log)
-            self.__init__(self.master, reload_settings=selected_settings)
+                                 self.console_scan_kb, self.class_pic_type, self.language, self.map_time, self.trim_console_log)
+            self.__init__(self.master, self.log, reload_settings=selected_settings)
 
         self.show_font_message(language_selected_normal)
 

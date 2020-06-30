@@ -268,6 +268,7 @@ class TestTF2RichPresense(unittest.TestCase):
         settings_gui.show_font_message('한국어')
         settings_gui.update()
         dimensions = settings_gui.window_dimensions
+        settings_gui.language.set('日本語')
         settings_gui.update_language('日本語')
         new_dimensions = settings_gui.window_dimensions
         settings_gui.destroy()
