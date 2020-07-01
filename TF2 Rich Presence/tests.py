@@ -275,7 +275,8 @@ class TestTF2RichPresense(unittest.TestCase):
 
         self.assertGreaterEqual(dimensions[0], 200)
         self.assertGreaterEqual(dimensions[1], 200)
-        self.assertNotEqual(dimensions, new_dimensions)
+        self.assertGreaterEqual(new_dimensions[0], 200)
+        self.assertGreaterEqual(new_dimensions[1], 200)
 
     def test_localization(self):
         all_keys = localization.access_localization_file().keys()
