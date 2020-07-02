@@ -256,9 +256,9 @@ class TF2RichPresense:
                         self.time_changed_map = time.time()
 
                     # convert seconds to a pretty timestamp
-                    seconds_on_map = time.time() - self.time_changed_map
-                    time_format = '%M:%S' if seconds_on_map <= 3600 else '%H:%M:%S'
-                    map_time_formatted = time.strftime(time_format, time.gmtime(seconds_on_map))
+                    seconds_on_map: float = time.time() - self.time_changed_map
+                    time_format: str = '%M:%S' if seconds_on_map <= 3600 else '%H:%M:%S'
+                    map_time_formatted: str = time.strftime(time_format, time.gmtime(seconds_on_map))
 
                     # I know I could just set the start time in activity, but I'd rather that always meant time with the game open
                     class_line = self.loc.text("Class: {0}").format(self.loc.text(bottom_line))
@@ -323,8 +323,8 @@ class TF2RichPresense:
 
                 print(Style.RESET_ALL, end='')
 
-                time_elapsed = datetime.timedelta(seconds=int(time.time() - p_data['TF2']['time']))
-                print(self.loc.text("{0} elapsed").format(str(time_elapsed).replace('0:', '', 1)))
+                time_elapsed: str = str(datetime.timedelta(seconds=int(time.time() - p_data['TF2']['time'])))
+                print(self.loc.text("{0} elapsed").format(time_elapsed[2:] if time_elapsed.startswith('0:') else time_elapsed))
                 print()
 
                 self.log.debug(f"Activity changed, outputting (old: {self.old_activity1}, new: {self.activity})")
