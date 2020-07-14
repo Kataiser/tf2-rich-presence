@@ -25,7 +25,7 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
 
     match_types: Dict[str, str] = {'12v12 Casual Match': 'Casual', 'MvM Practice': 'MvM (Boot Camp)', 'MvM MannUp': 'MvM (Mann Up)', '6v6 Ladder Match': 'Competitive'}
     menus_messages: tuple = ('Server shutting down', 'For FCVAR_REPLICATED', '[TF Workshop]', 'Lobby destroyed', 'Disconnect:', 'destroyed Lobby', 'destroyed CAsyncWavDataCache',
-                             'Disconnecting from abandoned', 'Missing map', 'Host_Error', 'Kicked due to inactivity', 'SoundEmitter:')
+                             'Disconnecting from abandoned', 'Missing map', 'Host_Error')
     menus_message: str
     tf2_classes: tuple = ('Scout', 'Soldier', 'Pyro', 'Demoman', 'Heavy', 'Engineer', 'Medic', 'Sniper', 'Spy')
 
@@ -105,12 +105,22 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
                 continue
 
         if current_map != 'In menus':
+            found_in_menus: bool = False
+
             for menus_message in menus_messages:
                 if menus_message in line:
+                    found_in_menus = True
                     current_map = 'In menus'
                     current_class = 'Not queued'
                     map_line_used = class_line_used = line
                     break
+
+            # ok this is jank but it's to only trigger on actually closing the map and not just (I think) ending a demo recording
+            if not found_in_menus and 'SoundEmitter:' in line:
+                if int(line.split('[')[1].split()[0]) > 1000:
+                    current_map = 'In menus'
+                    current_class = 'Not queued'
+                    map_line_used = class_line_used = line
 
         if line.endswith(' selected \n'):
             current_class_possibly: str = line[:-11]

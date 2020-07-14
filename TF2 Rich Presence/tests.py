@@ -55,6 +55,7 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', ['not Kataiser'], float('inf'), True), ('pl_badwater (hosting)', 'Pyro'))
         self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', ['not Kataiser'], float('inf'), True, recent_time), ('In menus', 'Not queued'))
         self.assertEqual(app.interpret_console_log('test_resources\\console_custom_map.log', ['not Kataiser'], float('inf'), True), ('cp_catwalk_a5c (hosting)', 'Soldier'))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_soundemitter.log', ['not Kataiser'], float('inf'), True), ('In menus', 'Not queued'))
         self.assertEqual(app.interpret_console_log('test_resources\\console_empty.log', ['not Kataiser'], float('inf'), True), ('In menus', 'Not queued'))
 
     def test_steam_config_file(self):
