@@ -70,7 +70,7 @@ class TestTF2RichPresense(unittest.TestCase):
         custom_maps.access_custom_maps_cache({})  # flush cache
 
         # test a couple common maps (in maps.json)
-        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'plr_highertower', False, 5)), ('payload-race', 'Payload Race'))
+        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'minecraftworld_a7', False, 5)), ('trading', 'Trading'))
         self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'cp_glassworks_rc6a', False, 5)), ('control-point', 'Control Point'))
 
         # don't use cache, force using the API (5 second timeout)
@@ -205,7 +205,7 @@ class TestTF2RichPresense(unittest.TestCase):
     def test_load_maps_db(self):
         maps_db = utils.load_maps_db()
         self.assertGreater(len(maps_db['official']), 20)
-        self.assertGreater(len(maps_db['common_custom']), 20)
+        self.assertGreater(len(maps_db['common_custom']), 10)
         self.assertGreater(len(maps_db['creators_tf']), 5)
 
     def test_discoipc(self):

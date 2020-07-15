@@ -84,7 +84,7 @@ def map_stats() -> dict:
 
                 if map_mode[0] == 'unknown_map':
                     print(f"FAILED: {map_file}", file=sys.stderr)
-                else:
+                elif not map_file.split('_')[0] in custom_maps.gamemode_prefixes:
                     custom_map_gamemodes[map_file] = map_mode
                     print(f"{map_file}: {custom_map_gamemodes[map_file]}")
 
@@ -107,7 +107,7 @@ def map_explorer() -> dict:
     for map_div in map_divs[:100]:
         map_file = map_div.find('h3').text
 
-        if map_file not in official_maps:
+        if map_file not in official_maps and not map_file.split('_')[0] in custom_maps.gamemode_prefixes:
             map_mode = custom_maps.find_custom_map_gamemode(log, map_file, timeout=10)
 
             if map_mode[0] == 'unknown_map':
@@ -115,14 +115,6 @@ def map_explorer() -> dict:
             else:
                 if map_file == 'cp_degrootkeep':
                     custom_map_gamemodes[map_file] = ('medieval-mode', 'Control Point (Medieval Mode)')
-                elif map_file == 'cp_dustbowl_forest':
-                    custom_map_gamemodes[map_file] = ('control-point', 'Control Point')
-                elif map_file == 'vsh_towertop_final':
-                    custom_map_gamemodes[map_file] = ('versus-saxton-hale', 'Versus Saxton Hale')
-                elif map_file == 'pass_soccer_b3':
-                    custom_map_gamemodes[map_file] = ('passtime', 'PASS Time')
-                elif map_file == 'slender_sewer_b2b':
-                    custom_map_gamemodes[map_file] = ('slender', 'Slender')
                 else:
                     custom_map_gamemodes[map_file] = map_mode
 

@@ -16,7 +16,6 @@ import utils
 
 
 # uses teamwork.tf's API to find the gamemode of a custom map
-# TODO: get the gamemode from the file header (ex: "pl_") but ONLY when possible, and then use the API otherwise
 @functools.lru_cache(maxsize=1)
 def find_custom_map_gamemode(log, map_filename: str, force_api: bool = False, timeout: int = settings.get('request_timeout')) -> Tuple[str, str]:
     if map_filename == '':
@@ -25,6 +24,14 @@ def find_custom_map_gamemode(log, map_filename: str, force_api: bool = False, ti
 
     log.debug(f"Finding gamemode for custom map: {map_filename}")
     seconds_since_epoch_now: int = int(time.time())
+
+    # determine based on the map prefix but ONLY if unambiguous (e.g. no "cp_")
+    map_prefix: str = map_filename.split('_')[0]
+    if map_prefix in gamemode_prefixes and not force_api:
+        prefix_gamemode: str = gamemode_prefixes[map_prefix]
+        prefix_gamemode_fancy: str = gamemodes[prefix_gamemode]
+        log.debug(f"Determined gamemode to be {(prefix_gamemode, prefix_gamemode_fancy)}) based on prefix ({map_prefix}_)")
+        return prefix_gamemode, prefix_gamemode_fancy
 
     # see if the map is already in maps.json first
     map_gamemodes: dict = utils.load_maps_db()
@@ -118,6 +125,10 @@ gamemodes: Dict[str, str] = {'ctf': 'Capture the Flag', 'control-point': 'Contro
                              'deathmatch': 'Deathmatch', 'cp-orange': 'Orange', 'versus-saxton-hale': 'Versus Saxton Hale', 'deathrun': 'Deathrun', 'achievement': 'Achievement',
                              'breakout': 'Jail Breakout', 'slender': 'Slender', 'dodgeball': 'Dodgeball', 'mario-kart': 'Mario Kart', 'prophunt': 'Prop Hunt',
                              'class-wars': 'Class Wars', 'stop-that-tank': 'Stop that Tank!'}
+gamemode_prefixes: Dict[str, str] = {'ctf': 'ctf', 'tc': 'territorial-control', 'pl': 'payload', 'plr': 'payload-race', 'koth': 'koth', 'sd': 'special-delivery', 'mvm': 'mvm',
+                                     'rd': 'beta-map', 'pass': 'passtime', 'pd': 'player-destruction', 'arena': 'arena', 'tr': 'training', 'surf': 'surfing', 'trade': 'trading',
+                                     'jump': 'jumping', 'dm': 'deathmatch', 'vsh': 'versus-saxton-hale', 'dr': 'deathrun', 'achievement': 'achievement', 'jb': 'breakout',
+                                     'slender': 'slender', 'tfdb': 'dodgeball', 'mario': 'mario-kart', 'ph': 'prophunt'}
 
 if __name__ == '__main__':
     print(find_custom_map_gamemode(logger.Log(), 'cp_catwalk_a5c', False))
