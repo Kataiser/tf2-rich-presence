@@ -95,7 +95,7 @@ def failure_message(current_version: str, error_message: str = None):
         line1 = loc.text("Couldn't connect to GitHub to check for updates.")
 
     line2 = loc.text("To check for updates yourself, go to {0}").format("https://github.com/Kataiser/tf2-rich-presence/releases")
-    line3 = "(you are currently running {0}).".format(current_version)
+    line3 = loc.text("(you are currently running {0}).").format(current_version)
     print(f"{line1}\n{line2}\n{line3}\n")
 
 

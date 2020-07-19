@@ -55,20 +55,6 @@
         "Chinese": "将{0}更改的设置恢复为默认值？",
         "Japanese": "{0}つの変更された設定をデフォルトに復元しますか？"
     },
-    "1141642225": {
-        "English": "This version ({0}) is out of date (newest version is {1})",
-        "German": "Diese Version ({0}) ist veraltet (neueste Version ist {1})",
-        "French": "Cette version ({0}) est obsolète (la dernière version est {1})",
-        "Spanish": "Esta versión ({0}) está desactualizada (la última versión es {1})",
-        "Portuguese": "Esta versão ({0}) está desactualizada (a versão mais recente é {1})",
-        "Italian": "Questa versione ({0}) è obsoleta (la versione più recente è {1})",
-        "Dutch": "Deze versie ({0}) is verouderd (nieuwste versie is {1})",
-        "Polish": "Ta wersja ({0}) jest nieaktualna (najnowsza wersja jest {1})",
-        "Russian": "Эта версия ({0}) устарела (последняя версия {1})",
-        "Korean": "이 버전({0})가 최신이(새로운 버전은{1})",
-        "Chinese": "此版本（{0}）已过期（最新版本为{1})",
-        "Japanese": "このバージョン({0})は最新ではありません(最新バージョンは{1})"
-    },
     "1270024083": {
         "English": "Territorial Control",
         "German": "Territoriale Kontrolle",
@@ -152,20 +138,6 @@
         "Korean": "오렌지",
         "Chinese": "橙色",
         "Japanese": "オレンジ色"
-    },
-    "1363281762": {
-        "English": "Get the update at {0}",
-        "German": "Holen Sie sich das Update bei {0}",
-        "French": "Obtenez la mise à jour à {0}",
-        "Spanish": "Obtenga la actualización en {0}",
-        "Portuguese": "Obtenha a atualização em {0}",
-        "Italian": "Ottenere l'aggiornamento a {0}",
-        "Dutch": "De update is te vinden op {0}",
-        "Polish": "Pobierz aktualizację na {0}",
-        "Russian": "Получить обновление по {0}",
-        "Korean": "을 얻을 업데이트{0}",
-        "Chinese": "获取更新at{0}",
-        "Japanese": "{0}でアップデートを入手"
     },
     "1393301620": {
         "English": "Sniper",
@@ -279,20 +251,6 @@
         "Chinese": "分钟",
         "Japanese": "分"
     },
-    "1531316240": {
-        "English": "Open {0} download page",
-        "German": "Öffnen Sie die {0} Download-Seite",
-        "French": "Ouvrir {0} page de téléchargement",
-        "Spanish": "Abrir {0} página de descarga",
-        "Portuguese": "Abrir a página de download {0}",
-        "Italian": "Apri {0} pagina di download",
-        "Dutch": "Open {0} download pagina",
-        "Polish": "Otwórz stronę pobierania {0} Strona pobierania",
-        "Russian": "Открыть {0} страницу загрузки",
-        "Korean": "{0}다운로드 페이지 열기",
-        "Chinese": "打开{0}下载页面",
-        "Japanese": "{0}ダウンロードページを開く"
-    },
     "1589381242": {
         "English": "Queued for Competitive",
         "German": "Für den Wettbewerb in die Warteschlange gestellt",
@@ -348,20 +306,6 @@
         "Korean": "[사용자 정의/커뮤니티 맵]",
         "Chinese": "[自定义/社区地图]",
         "Japanese": "[カスタム/コミュニティ地図]"
-    },
-    "1730628000": {
-        "English": "Couldn't connect to GitHub to check for updates ({0})",
-        "German": "Es konnte keine Verbindung zu GitHub hergestellt werden, um nach Updates zu suchen ({0})",
-        "French": "Impossible de se connecter à GitHub pour vérifier les mises à jour ({0})",
-        "Spanish": "No se pudo conectar a GitHub para buscar actualizaciones ({0})",
-        "Portuguese": "Não foi possível conectar ao GitHub para verificar se há atualizações ({0})",
-        "Italian": "Impossibile connettersi a GitHub per controllare la presenza di aggiornamenti ({0})",
-        "Dutch": "Kon geen verbinding maken met GitHub om te controleren op updates ({0})",
-        "Polish": "Nie można było połączyć się z GitHub w celu sprawdzenia aktualizacji ({0})",
-        "Russian": "Не удалось подключиться к GitHub чтобы проверить наличие обновлений ({0})",
-        "Korean": "에 연결할 수 없 GitHub 업데이트를 확인({0})",
-        "Chinese": "无法连接到GitHub检查更新({0})",
-        "Japanese": "更新をチェックするためにGitHubに接続できませんでした({0})"
     },
     "1775377300": {
         "English": "Demoman",
@@ -643,20 +587,6 @@
         "Chinese": "关键",
         "Japanese": "クリティカル"
     },
-    "2366704224": {
-        "English": "Successfully reported logs",
-        "German": "Erfolgreich gemeldete Protokolle",
-        "French": "Journaux de bord ayant fait l'objet d'un rapport avec succès",
-        "Spanish": "Registros reportados con éxito",
-        "Portuguese": "Logs informados com êxito",
-        "Italian": "Registri segnalati con successo",
-        "Dutch": "Succesvol gemelde logboeken",
-        "Polish": "Kłody, które pomyślnie przeszły pomyślnie sprawozdawczość",
-        "Russian": "Журналы успешно отправлены",
-        "Korean": "성공적으로 로그 보고",
-        "Chinese": "成功报告日志",
-        "Japanese": "正常に報告されたログ"
-    },
     "2400591970": {
         "English": "Training",
         "German": "Training",
@@ -741,34 +671,6 @@
         "Chinese": "启动TF2与丰富的存在与团队要塞2...",
         "Japanese": "チームフォートレス2とともにTF2を立ち上げる。.."
     },
-    "2669678758": {
-        "English": "Out of date, newest version is {0} (this is {1})",
-        "German": "Veraltet, neueste Version ist {0} (das ist {1})",
-        "French": "Désuète, la dernière version est {0} (ceci est {1})",
-        "Spanish": "Anticuada, la versión más reciente es {0} (esta es {1})",
-        "Portuguese": "Desatualizada, a versão mais recente é {0} (esta é {1})",
-        "Italian": "Non aggiornato, la versione più recente è {0} (questo è {1})",
-        "Dutch": "Achterhaald, nieuwste versie is {0} (dit is {1})",
-        "Polish": "Nieaktualna, najnowsza wersja to {0} (to jest {1})",
-        "Russian": "Устаревшая версия, новейшая версия {0} (это {1})",
-        "Korean": "날짜,최신 버전은{0}(이{1})",
-        "Chinese": "过时的，最新的版本是{0}（这是{1})",
-        "Japanese": "最新バージョンは{0}です(これは{1}です})"
-    },
-    "2673222339": {
-        "English": "If TF2 Rich Presence is currently running, it may need to be restarted for changes to take effect.",
-        "German": "Wenn TF2 Reichhaltige Präsenz gerade läuft, muss es möglicherweise neu gestartet werden, damit Änderungen wirksam werden.",
-        "French": "Si TF2 Richesse de la Présence est en cours d'exécution, il peut être nécessaire de le redémarrer pour que les modifications prennent effet.",
-        "Spanish": "Si TF2 Presencia Rica se está ejecutando actualmente, es posible que sea necesario reiniciarlo para que los cambios surtan efecto.",
-        "Portuguese": "Se o Presença Rica em TF2 está atualmente em execução, ele pode precisar ser reiniciado para que as mudanças tenham efeito.",
-        "Italian": "Se Presenza Ricca TF2 è attualmente in esecuzione, potrebbe essere necessario riavviare Presenza Ricca TF2 affinché le modifiche abbiano effetto.",
-        "Dutch": "Als TF2 Rijke Aanwezigheid momenteel actief is, moet het wellicht opnieuw worden opgestart om de wijzigingen in werking te laten treden.",
-        "Polish": "Jeśli TF2 Bogata Obecność jest obecnie uruchomiony, może zaistnieć potrzeba jego ponownego uruchomienia, aby zmiany zaczęły obowiązywać.",
-        "Russian": "Если TF2 Богатое присутствие сейчас открыто, возможно оно будет требовать перезапуск что бы перемены вошли в силу.",
-        "Korean": "면 팀포 2 풍부한 존재는 현재 실행하고,그것을 다시 시작해야 할 수 있습에 대한 변경 사항을 적용합니다.",
-        "Chinese": "如果存在当前正在运行的丰富的TF2，则可能需要重新启动以使更改生效。",
-        "Japanese": "TF2Rich Presenceが現在実行されている場合、変更を有効にするために再起動が必要な場合があります。"
-    },
     "2692882830": {
         "English": "Main menu",
         "German": "Hauptmenü",
@@ -782,20 +684,6 @@
         "Korean": "메인 메뉴",
         "Chinese": "主菜单",
         "Japanese": "メインメニュー"
-    },
-    "2715881719": {
-        "English": "Hours before re-checking custom map game mode: ",
-        "German": "Stunden, bevor Sie den benutzerdefinierten Kartenspielmodus erneut überprüfen: ",
-        "French": "Quelques heures avant de revérifier le mode de jeu de cartes personnalisées : ",
-        "Spanish": "Horas antes de volver a comprobar el modo de juego de mapa personalizado: ",
-        "Portuguese": "Horas antes de voltar a verificar o modo de jogo de mapa personalizado: ",
-        "Italian": "Ore prima di ricontrollare la modalità di gioco delle mappe personalizzate: ",
-        "Dutch": "Uren voor het opnieuw controleren van de aangepaste kaart spelmodus: ",
-        "Polish": "Godziny przed ponownym sprawdzeniem niestandardowego trybu gry na mapie: ",
-        "Russian": "Часы до перепроверки пользовательского режима игры на карте: ",
-        "Korean": "시간 전에 다시 검사용 지도한 게임 모드: ",
-        "Chinese": "小时前重新检查自定义地图游戏模式: ",
-        "Japanese": "カスタムマップゲームモードを再確認するまでの時間: "
     },
     "2768904650": {
         "English": "Prop Hunt",
@@ -1104,20 +992,6 @@
         "Korean": "륙",
         "Chinese": "关",
         "Japanese": "オフ"
-    },
-    "3615624206": {
-        "English": "(Consider opening an issue at {0})",
-        "German": "(Erwägen Sie, ein Problem bei {0} zu eröffnen.)",
-        "French": "(Envisagez d'ouvrir un numéro à {0})",
-        "Spanish": "(Considere la posibilidad de abrir una edición en {0})",
-        "Portuguese": "(Considere abrir um problema em {0})",
-        "Italian": "(Considerare l'apertura di un numero a {0})",
-        "Dutch": "(Overweeg om een probleem te openen bij {0})",
-        "Polish": "(Rozważyć otwarcie sprawy przy {0})",
-        "Russian": "(Рассмотрите возможность открытия проблемы на: {0})",
-        "Korean": "(여는 것을 고려하는 문제에서{0})",
-        "Chinese": "(考虑打开一个问题{0})",
-        "Japanese": "({0}で問題を開くことを検討)"
     },
     "1528106792": {
         "English": "Hide game type (Casual, Comp, MvM) queued for",
@@ -1497,20 +1371,6 @@
         "Chinese": "排队等候MvM",
         "Japanese": "MvMのキューに登録済み"
     },
-    "6554923770": {
-        "English": "Queued for {0}",
-        "German": "In der Warteschlange für {0}",
-        "French": "En file d'attente pour {0}",
-        "Spanish": "En cola por {0}",
-        "Portuguese": "Enfileirado para {0}",
-        "Italian": "In coda per {0}",
-        "Dutch": "In de rij voor {0}",
-        "Polish": "Stoi w kolejce do {0}",
-        "Russian": "Очередь на {0}",
-        "Korean": "대기{0}",
-        "Chinese": "排队等候{0}",
-        "Japanese": "{0}のためのキュー"
-    },
     "6724036300": {
         "English": "Pyro",
         "German": "Pyro",
@@ -1678,20 +1538,6 @@
         "Korean": "지연 사이에 새로 고침,에서 초: ",
         "Chinese": "刷新之间的延迟，以秒为单位: ",
         "Japanese": "更新間の遅延（秒単位）: "
-    },
-    "8222184420": {
-        "English": "Report logs to developer ({0} kilobytes)",
-        "German": "Protokollierung an den Entwickler ({0} Kilobyte)",
-        "French": "Signaler les journaux au développeur ({0} kilo-octets)",
-        "Spanish": "Registros de informes al desarrollador ({0} kilobytes)",
-        "Portuguese": "Relatório de logs para o desenvolvedor ({0} kilobytes)",
-        "Italian": "Segnala i log allo sviluppatore ({0} kilobyte)",
-        "Dutch": "Rapporteer logs aan de ontwikkelaar ({0} kilobytes)",
-        "Polish": "Raportowanie logów do dewelopera ({0} kilobajtów)",
-        "Russian": "Сообщить разработчику журнал регистрации событий ({0} килобайт)",
-        "Korean": "보고 로그를 개발자({0}kb)",
-        "Chinese": "向开发人员报告日志({0}千字节)",
-        "Japanese": "開発者へのレポートログ({0}キロバイト)"
     },
     "8452848160": {
         "English": "Capture the Flag",
@@ -1916,20 +1762,6 @@
         "Korean": "파티 경기 대기 중",
         "Chinese": "排队等候派对的比赛",
         "Japanese": "パーティーの試合のキューに入れられた"
-    },
-    "2742094613": {
-        "English": "Couldn't manually report logs",
-        "German": "Manuelles Berichten von Protokollen ist nicht möglich",
-        "French": "Impossible de rapporter manuellement les journaux",
-        "Spanish": "No podía reportar manualmente los registros",
-        "Portuguese": "Não foi possível reportar manualmente os registos",
-        "Italian": "Non è stato possibile segnalare manualmente i log",
-        "Dutch": "Kon niet handmatig logs rapporteren",
-        "Polish": "Nie mogłem ręcznie raportować logów",
-        "Russian": "Невозможно было вручную сообщать журналы",
-        "Korean": "로그를 수동으로 보고할 수 없음",
-        "Chinese": "无法手动报告日志",
-        "Japanese": "手動でログを報告できなかった"
     },
     "7863023170": {
         "English": "Time on map: {0}",
