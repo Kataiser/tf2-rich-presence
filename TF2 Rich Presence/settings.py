@@ -278,11 +278,11 @@ class GUI(tk.Frame):
                                  self.console_scan_kb, self.class_pic_type, self.language, self.map_time, self.trim_console_log)
             self.__init__(self.master, self.log, reload_settings=selected_settings)
 
-        self.show_font_message(language_selected_normal)
+        self.show_font_message(language_selected)
 
     # (possibly) show a window with instructions for changing the command prompt font
     def show_font_message(self, language: str = None):
-        if language in self.languages[-3:]:
+        if language in self.languages_display[-3:]:  # Korean, Chinese, and Japanese
             self.master.update()
             font_message_1 = self.loc.text("The Windows command prompt's default font doesn't support {0} characters. Here's how to fix it:").format(language)
             font_message_2 = self.loc.text("Choose your preference between MS Gothic, NSimSun, and SimSun-ExtB.")
@@ -290,14 +290,26 @@ class GUI(tk.Frame):
             font_instructions_path = os.path.join('resources', 'font_instructions.gif') if os.path.isdir('resources') else 'font_instructions.gif'
             self.font_window = tk.Toplevel(self.master)
             self.font_window.title(self.loc.text("Font instructions"))
-            self.font_window.geometry('600x400')
-            ttk.Label(self.font_window, text=font_message_1).pack()
+            self.font_window.resizable(0, 0)
+
+            ttk.Label(self.font_window, text=font_message_1).grid(row=0, padx=(20, 40), pady=(15, 10), sticky=tk.W)
             instructions_canvas = tk.Canvas(self.font_window, width=382, height=325)
-            instructions_canvas.pack()
             self.instructions_image = tk.PhotoImage(file=font_instructions_path)
             instructions_canvas.create_image(0, 0, anchor=tk.NW, image=self.instructions_image)
-            ttk.Label(self.font_window, text=font_message_2).pack()
-            ttk.Button(self.font_window, text=self.loc.text("Close"), command=self.font_window.destroy).pack(side=tk.RIGHT)
+            instructions_canvas.grid(row=1, padx=30, sticky=tk.W)
+            ttk.Label(self.font_window, text=font_message_2).grid(row=2, padx=20, pady=5, sticky=tk.W)
+            ttk.Button(self.font_window, text=self.loc.text("Close"), command=self.font_window.destroy, default=tk.ACTIVE).grid(row=3, padx=20, pady=(0, 20), sticky=tk.E)
+
+            self.font_window.update()
+            target_x = self.master.winfo_x() + round((self.master.winfo_width() - self.font_window.winfo_width()) / 2)
+            target_y = self.master.winfo_y() + round((self.master.winfo_height() - self.font_window.winfo_height()) / 2)
+            self.font_window.geometry(f'+{target_x}+{target_y}')
+            self.font_window.lift()
+            self.font_window.focus_force()
+
+            font_window_info = {'x': target_x, 'y': target_y, 'w': self.font_window.winfo_height(), 'h': self.font_window.winfo_width()}
+            self.log.debug(f"Created font message window: {font_window_info}")
+            # can't easily add a close window log, not worth all the hoops you'd need to jump through
 
     # return the settings as a dict, as they currently are in the GUI
     def get_working_settings(self) -> dict:
@@ -316,7 +328,7 @@ class GUI(tk.Frame):
 
     # set all settings to defaults
     def restore_defaults(self):
-        # TODO: fix unselected radio buttons when the displayed language != English
+        # TODO: fix unselected radio buttons when the displayed language != English (might already be fixed)
         settings_to_save = self.get_working_settings()
         settings_changed = {k: settings_to_save[k] for k in settings_to_save if k in self.settings_loaded and settings_to_save[k] != self.settings_loaded[k]}  # haha what
 
