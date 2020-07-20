@@ -69,7 +69,7 @@ class Log:
 
     def __del__(self):
         if not self.log_file.closed:
-            self.debug("Closing log file via destructor")
+            self.debug(f"Closing log file ({self.filename}) via destructor")
             self.log_file.close()
 
     # adds a line to the current log file

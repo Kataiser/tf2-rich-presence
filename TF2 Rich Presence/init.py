@@ -37,6 +37,8 @@ def launch(welcome_version):
         detect_system_language.detect(log_init)
         updater.check_for_update(log_init, launcher.VERSION, float(settings.get('request_timeout')))
         holidays(log_init)
+
+        del log_init
     except (KeyboardInterrupt, SystemExit):
         raise SystemExit
     except Exception:
