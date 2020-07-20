@@ -277,8 +277,7 @@ class GUI(tk.Frame):
             selected_settings = (self.sentry_level, self.wait_time, self.map_invalidation_hours, self.check_updates, self.request_timeout, self.hide_queued_gamemode, self.log_level,
                                  self.console_scan_kb, self.class_pic_type, self.language, self.map_time, self.trim_console_log)
             self.__init__(self.master, self.log, reload_settings=selected_settings)
-
-        self.show_font_message(language_selected)
+            self.show_font_message(language_selected)
 
     # (possibly) show a window with instructions for changing the command prompt font
     def show_font_message(self, language: str = None):
@@ -401,7 +400,7 @@ class GUI(tk.Frame):
         settings_changed_num = len(settings_changed)
         allowed_close = "yes"
         if settings_changed_num == 1:
-            allowed_close = messagebox.askquestion(self.loc.text("Close without saving"), f"1 setting has been changed. {close_question}")
+            allowed_close = messagebox.askquestion(self.loc.text("Close without saving"), self.loc.text("1 setting has been changed. {0}").format(close_question))
         elif settings_changed_num > 1:
             allowed_close = messagebox.askquestion(self.loc.text("Close without saving"), self.loc.text("{0} settings have been changed. {1}").format(settings_changed_num, close_question))
 
