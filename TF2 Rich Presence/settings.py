@@ -327,7 +327,6 @@ class GUI(tk.Frame):
 
     # set all settings to defaults
     def restore_defaults(self):
-        # TODO: fix unselected radio buttons when the displayed language != English (might already be fixed)
         settings_to_save = self.get_working_settings()
         settings_changed = {k: settings_to_save[k] for k in settings_to_save if k in self.settings_loaded and settings_to_save[k] != self.settings_loaded[k]}  # haha what
 
@@ -339,6 +338,8 @@ class GUI(tk.Frame):
             allowed_reset = messagebox.askquestion(self.loc.text("Restore defaults"), self.loc.text("Restore {0} changed settings to defaults?").format(settings_changed_num))
 
         if allowed_reset == "yes":
+            need_to_reload = self.language.get() != 'English'
+
             self.sentry_level.set(get_setting_default('sentry_level'))
             self.wait_time.set(get_setting_default('wait_time'))
             self.map_invalidation_hours.set(get_setting_default('map_invalidation_hours'))
@@ -352,12 +353,21 @@ class GUI(tk.Frame):
             self.map_time.set(get_setting_default('map_time'))
             self.trim_console_log.set(get_setting_default('trim_console_log'))
 
+            # make options account for localization (same as in __init__)
+            self.log_level.set(self.log_levels_display[self.log_levels.index(self.log_level.get())])
+            self.sentry_level.set(self.sentry_levels_display[self.sentry_levels.index(self.sentry_level.get())])
+            self.class_pic_type.set(self.class_pic_types_display[self.class_pic_types.index(self.class_pic_type.get())])
+            self.language.set(self.languages_display[self.languages.index(self.language.get())])
+
             self.log.debug("Restored defaults")
 
             try:
                 self.restore_button.state(['disabled'])
             except NameError:
                 self.log.error("Restore button doesn't exist yet")
+
+            if need_to_reload:
+                self.update_language('English')
 
     # saves settings to file and closes window
     def save_and_close(self):
