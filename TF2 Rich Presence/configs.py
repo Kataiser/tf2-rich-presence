@@ -55,10 +55,10 @@ def class_config_files(log, exe_location: str):
 
 # reads steams launch options save file to find -condebug
 @functools.lru_cache(maxsize=1)
-def steam_config_file(log, exe_location: str, tf2_is_running: bool = False) -> List[str]:
+def steam_config_file(log, exe_location: str, tf2_is_running: bool = False) -> set:
     log.debug("Scanning Steam config files for -condebug")
     found_condebug: bool = False
-    found_usernames: List[str] = []
+    found_usernames: set = set()
 
     user_id_folders: List[str] = next(os.walk(os.path.join(exe_location, 'userdata')))[1]
     log.debug(f"User id folders: {user_id_folders}")
@@ -97,7 +97,7 @@ def steam_config_file(log, exe_location: str, tf2_is_running: bool = False) -> L
                     log.debug(f"Found -condebug in launch options ({tf2_launch_options})")
 
                     if possible_username:
-                        found_usernames.append(possible_username)
+                        found_usernames.add(possible_username)
             except KeyError:
                 pass  # looks like -condebug was in some other game
         except FileNotFoundError:

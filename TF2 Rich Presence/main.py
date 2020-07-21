@@ -110,7 +110,8 @@ class TF2RichPresense:
         self.map_gamemodes: Dict[str, Dict[str, List[str]]] = utils.load_maps_db()
         self.loop_iteration: int = 0
         self.custom_functions = None
-        self.valid_usernames: List[str] = []
+        self.valid_usernames: set = set()
+        self.last_name_scan_time: float = time.time()
 
         self_process: psutil.Process = psutil.Process()
         priorities_before: tuple = (self_process.nice(), self_process.ionice())
@@ -192,7 +193,8 @@ class TF2RichPresense:
 
         if p_data['Steam']['running']:
             # reads a steam config file
-            self.valid_usernames: List[str] = configs.steam_config_file(self.log, p_data['Steam']['path'], p_data['TF2']['running'])
+            self.valid_usernames.update(configs.steam_config_file(self.log, p_data['Steam']['path'], p_data['TF2']['running']))
+            self.last_name_scan_time = time.time()
         elif p_data['Steam']['pid'] is not None or p_data['Steam']['path'] is not None:
             self.log.error(f"Steam isn't running but its process info is {p_data['Steam']}. WTF?")
 

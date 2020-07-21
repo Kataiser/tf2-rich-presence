@@ -3,6 +3,7 @@
 # cython: language_level=3
 
 import os
+import time
 from typing import Dict, List, Tuple, Union
 
 from colorama import Fore, Style
@@ -14,11 +15,12 @@ import settings
 
 
 # reads a console.log and returns current map and class
-def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float = float(settings.get('console_scan_kb')), force: bool = False, tf2_start_time: int = 0,
+def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_limit: float = float(settings.get('console_scan_kb')), force: bool = False, tf2_start_time: int = 0,
               steam_path: Union[str, None] = None) -> Tuple[str, str]:
     TF2_LOAD_TIME_ASSUMPTION: int = 10
     SIZE_LIMIT_MULTIPLE_TRIGGER: int = 4
     SIZE_LIMIT_MULTIPLE_TARGET: int = 2
+    CONFIG_THROTTLE_TIME: int = 120
 
     # defaults
     current_map: str = 'In menus'
@@ -196,8 +198,9 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
     if map_line_used == '' and class_line_used != '':
         self.log.error("Have class_line_used without map_line_used")
 
-    if rescan_config and steam_path:
-        self.valid_usernames = configs.steam_config_file(self.log, steam_path, True)
+    if rescan_config and steam_path and time.time() - self.last_name_scan_time > CONFIG_THROTTLE_TIME:
+        self.valid_usernames.update(configs.steam_config_file(self.log, steam_path, True))
+        self.last_name_scan_time = time.time()
 
     self.old_console_log_interpretation = (current_map, current_class)
     self.old_console_log_mtime = console_log_mtime
