@@ -20,7 +20,7 @@ import changelog_generator
 
 # TODO: don't do this separate locations nonsense, convert to using a repo properly
 # TODO: option to do a "release" build that invalidates all caches (might need a new config interface)
-def main(version_num='v1.13.2'):
+def main(version_num='v1.14'):
     sys.stdout = Logger()
     print(f"Building TF2 Rich Presence {version_num}")
 
