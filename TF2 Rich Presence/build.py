@@ -190,7 +190,7 @@ def main(version_num='v1.13.2'):
     os.rename(Path(f'{new_build_folder_name}/LICENSE'), Path(f'{new_build_folder_name}/License.txt'))
 
     # build PYDs using Cython and copy them in
-    subprocess.run(f'{sys.executable} cython_compile.py build_ext --inplace')
+    print(subprocess.run(f'{sys.executable} cython_compile.py build_ext --inplace', capture_output=True).stdout.decode('UTF8').replace('\r\n', '\n'))
     pyds = [Path(f'cython_build/{file}') for file in os.listdir('cython_build') if file.endswith('.pyd')]
     print(f"Compiled {len(pyds)} PYDs")
     for pyd in pyds:
@@ -218,7 +218,7 @@ def main(version_num='v1.13.2'):
         build_info_txt.write(f"TF2 Rich Presence by Kataiser"
                              "\nhttps://github.com/Kataiser/tf2-rich-presence"
                              f"\n\nVersion: {version_num}"
-                             f"\nBuilt at: {datetime.datetime.utcnow().strftime('%c')} UTC"
+                             f"\nBuilt at: {datetime.datetime.now().strftime('%c')} CST"
                              f"\nBuilt by: https://github.com/{git_username}"
                              f"\nLatest commit: {latest_commit}"
                              f"\nRequirements versions: {requirements_versions}")
