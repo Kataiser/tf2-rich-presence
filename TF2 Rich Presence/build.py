@@ -190,7 +190,7 @@ def main(version_num='v1.13.2'):
     os.rename(Path(f'{new_build_folder_name}/LICENSE'), Path(f'{new_build_folder_name}/License.txt'))
 
     # build PYDs using Cython and copy them in
-    print(subprocess.run(f'{sys.executable} cython_compile.py build_ext --inplace', capture_output=True).stdout.decode('UTF8').replace('\r\n', '\n'))
+    print(subprocess.run(f'{sys.executable} cython_compile.py build_ext --inplace', capture_output=True).stdout.decode('UTF8').replace('\r\n', '\n')[:-1])
     pyds = [Path(f'cython_build/{file}') for file in os.listdir('cython_build') if file.endswith('.pyd')]
     print(f"Compiled {len(pyds)} PYDs")
     for pyd in pyds:

@@ -7,13 +7,15 @@ from typing import Dict, List, Tuple, Union
 
 from colorama import Fore, Style
 
+import configs
 import launcher
 import localization
 import settings
 
 
 # reads a console.log and returns current map and class
-def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float = float(settings.get('console_scan_kb')), force: bool = False, tf2_start_time: int = 0) -> Tuple[str, str]:
+def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float = float(settings.get('console_scan_kb')), force: bool = False, tf2_start_time: int = 0,
+              steam_path: Union[str, None] = None) -> Tuple[str, str]:
     TF2_LOAD_TIME_ASSUMPTION: int = 10
     SIZE_LIMIT_MULTIPLE_TRIGGER: int = 4
     SIZE_LIMIT_MULTIPLE_TARGET: int = 2
@@ -92,11 +94,12 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
         if 'with' in username:
             with_optimization = False
 
-    # iterates though roughly 16000 lines from console.log and learns everything from them
     map_line_used: str = ''
     class_line_used: str = ''
+    rescan_config: bool = False
     line: str
 
+    # iterates though roughly 16000 lines from console.log and learns everything from them
     for line in lines:
         # lines that have "with" in them are basically always kill logs and can be safely ignored
         # this (probably) improves performance
@@ -133,6 +136,7 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
             current_map = line[5:-1]  # this variable is poorly named
             current_class = 'unselected'  # so is this one
             map_line_used = class_line_used = line
+            rescan_config = True
 
             if just_started_server:
                 server_still_running = True
@@ -145,10 +149,12 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
             # not necessarily in menus
             current_class = 'Not queued'
             class_line_used = line
+            rescan_config = current_map == 'In menus'
 
         elif '[PartyClient] Entering q' in line:  # full line: "[PartyClient] Entering queue for match group " + whatever mode
             current_map = 'In menus'
             map_line_used = class_line_used = line
+            rescan_config = True
 
             if hide_queued_gamemode:
                 current_class = "Queued"
@@ -160,11 +166,13 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
             current_map = 'In menus'
             current_class = 'Not queued'
             map_line_used = class_line_used = line
+            rescan_config = True
 
         elif '[PartyClient] Entering s' in line:  # full line: "[PartyClient] Entering standby queue"
             current_map = 'In menus'
             current_class = 'Queued for a party\'s match'
             map_line_used = class_line_used = line
+            rescan_config = True
 
         elif 'SV_ActivateServer' in line:  # full line: "SV_ActivateServer: setting tickrate to 66.7"
             just_started_server = True
@@ -187,6 +195,9 @@ def interpret(self, console_log_path: str, user_usernames: list, kb_limit: float
 
     if map_line_used == '' and class_line_used != '':
         self.log.error("Have class_line_used without map_line_used")
+
+    if rescan_config and steam_path:
+        self.valid_usernames = configs.steam_config_file(self.log, steam_path, True)
 
     self.old_console_log_interpretation = (current_map, current_class)
     self.old_console_log_mtime = console_log_mtime

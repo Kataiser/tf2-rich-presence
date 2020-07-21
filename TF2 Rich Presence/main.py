@@ -110,6 +110,7 @@ class TF2RichPresense:
         self.map_gamemodes: Dict[str, Dict[str, List[str]]] = utils.load_maps_db()
         self.loop_iteration: int = 0
         self.custom_functions = None
+        self.valid_usernames: List[str] = []
 
         self_process: psutil.Process = psutil.Process()
         priorities_before: tuple = (self_process.nice(), self_process.ionice())
@@ -191,8 +192,7 @@ class TF2RichPresense:
 
         if p_data['Steam']['running']:
             # reads a steam config file
-            # TODO: re-scan this (and maybe some other stuff) when leaving a game (or maybe some other time idk)
-            valid_usernames: List[str] = configs.steam_config_file(self.log, p_data['Steam']['path'], p_data['TF2']['running'])
+            self.valid_usernames: List[str] = configs.steam_config_file(self.log, p_data['Steam']['path'], p_data['TF2']['running'])
         elif p_data['Steam']['pid'] is not None or p_data['Steam']['path'] is not None:
             self.log.error(f"Steam isn't running but its process info is {p_data['Steam']}. WTF?")
 
@@ -212,10 +212,10 @@ class TF2RichPresense:
             console_log_path: str = os.path.join(p_data['TF2']['path'], 'tf', 'console.log')
             top_line: str
             bottom_line: str
-            top_line, bottom_line = self.interpret_console_log(console_log_path, valid_usernames, tf2_start_time=p_data['TF2']['time'])
+            top_line, bottom_line = self.interpret_console_log(console_log_path, self.valid_usernames, tf2_start_time=p_data['TF2']['time'], steam_path=p_data['Steam']['path'])
             # TODO: use a state machine and/or much more consistent var names
 
-            actual_current_class: str = bottom_line  # oh my god.
+            actual_current_class: str = bottom_line  # https://www.portal2sounds.com/1130
 
             if 'In menus' in top_line:
                 # in menus displays the main menu

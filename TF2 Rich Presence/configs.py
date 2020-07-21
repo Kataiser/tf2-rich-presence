@@ -56,7 +56,7 @@ def class_config_files(log, exe_location: str):
 # reads steams launch options save file to find -condebug
 @functools.lru_cache(maxsize=1)
 def steam_config_file(log, exe_location: str, tf2_is_running: bool = False) -> List[str]:
-    log.debug("Looking for -condebug")
+    log.debug("Scanning Steam config files for -condebug")
     found_condebug: bool = False
     found_usernames: List[str] = []
 
