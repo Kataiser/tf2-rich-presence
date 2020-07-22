@@ -14,7 +14,7 @@
 
 # TF2 Rich Presence
 Discord Rich Presence for Team Fortress 2
-- Current game state, queue info, playtime, and more
+- Detects current game state, queue info, playtime, and more
 - Configurable, reliable, and performance-efficient
 
 ![Preview image](preview.png)
@@ -38,13 +38,14 @@ For faster launching, you can add the first EXE to your taskbar/start menu/deskt
 - [Releases](https://github.com/Kataiser/tf2-rich-presence/releases)
 
 ## Linux and MacOS support?
-At the moment, both are considered unsupported. They probably work since [Jan200101](https://github.com/Jan200101) did some work on Linux a while ago, but the release builds are very much formatted for Windows. Contributors are welcome! Also check out [EmeraldSnorlax/TF2-RPC](https://github.com/EmeraldSnorlax/TF2-RPC), which is a much less mature program but is built on Linux and theoretically cross-platform too, or [cyclowns/tf2-discord](https://github.com/cyclowns/tf2-discord), which is confirmed to work on both Windows and Linux. Alternatively, running launcher.py from this source also might work.
+At the moment, both are considered unsupported. They probably work since [Jan200101](https://github.com/Jan200101) did some work on Linux a while ago, but the release builds are formatted for Windows. Contributors are very welcome! Also check out [cyclowns/tf2-discord](https://github.com/cyclowns/tf2-discord), which is confirmed to work on both Windows and Linux, or [EmeraldSnorlax/TF2-RPC](https://github.com/EmeraldSnorlax/TF2-RPC), which is a much less mature program but is built on Linux and theoretically cross-platform too. Alternatively, following most or all of the "building from source" instructions might work, or possibly running `python resources/launcher.py` in a release.
 
 ## Building from source
 For making and testing changes, or simply always running the most up-to-date code.
 1. Either clone the repo or [download the source](https://github.com/Kataiser/tf2-rich-presence/archive/master.zip).
 2. Copy the entire source to another location (sorry) and put the files outside of `TF2 Rich Presence` into that folder.
-3. Extract `TF2 Rich Presence\python-3.7.5-embed-win32.zip`.
-4. Make sure the `python` and `pip` commands point to Python 3.7.x
-5. Install a C compiler (see [Installing Cython](http://docs.cython.org/en/latest/src/quickstart/install.html)). I personally use VS 2019.
-6. From within `TF2 Rich Presence`, run `pip install -r requirements.txt` and `python build.py`.
+3. Extract `TF2 Rich Presence\python-3.7.7-embed-win32.zip`.
+4. Make sure the `python` and `pip` commands point to Python 3.7.x (other versions probably work too)
+5. Install a C compiler (see [Installing Cython](http://docs.cython.org/en/latest/src/quickstart/install.html)). I personally use MinGW.
+6. From within `TF2 Rich Presence`, run `pip install -r requirements.txt`.
+7. Either run `python build.py` to compile and build, or `python launcher.py` to launch in debug mode.

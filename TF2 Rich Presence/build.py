@@ -176,7 +176,7 @@ def main(version_num='v1.14'):
 
                     if file_dest_pair[0] in ('launcher.py', 'Readme.txt') or file_dest_pair[0].endswith('.bat'):
                         modified_file = modified_file.replace('{tf2rpvnum}', version_num)
-                        modified_file = modified_file.replace('{built}', f"{datetime.datetime.utcnow().strftime('%c')} UTC")
+                        modified_file = modified_file.replace('{built}', f"{datetime.datetime.now().strftime('%c')} CST")
                     if file_dest_pair[0] == 'launcher.py':
                         modified_file = modified_file.replace('DEBUG = True', 'DEBUG = False')
 
