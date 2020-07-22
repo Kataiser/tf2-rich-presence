@@ -103,6 +103,23 @@ def main(version_num='v1.14'):
         copy_dir_to_git('test_resources', Path(f'{github_repo_path}/TF2 Rich Presence/test_resources'))
         copy_dir_to_git('build_tools', Path(f'{github_repo_path}/TF2 Rich Presence/build_tools'))
 
+    # starts from scratch each time
+    new_build_folder_name = f'TF2 Rich Presence {version_num}'
+    if os.path.isdir(new_build_folder_name):
+        # prep for trying to avoid a pointless API request
+        if os.path.isfile(Path(f'{new_build_folder_name}/Changelogs.html')):
+            with open(Path(f'{new_build_folder_name}/Changelogs.html'), 'r') as old_changelogs:
+                update_changelogs = version_num not in old_changelogs.read()
+        try:
+            shutil.rmtree(new_build_folder_name)
+        except (OSError, PermissionError):
+            time.sleep(0.2)
+            shutil.rmtree(new_build_folder_name)  # beautiful
+        print(f"Removed old build folder: {new_build_folder_name}")
+    else:
+        print("No old build folder found")
+
+    if github_repo_path != 'n' and update_changelogs:
         print("Generating Changelogs.html")
         ratelimit_remaining = 100
         try:
@@ -115,21 +132,9 @@ def main(version_num='v1.14'):
         if github_repo_path != 'n':
             print("Copied", shutil.copy('Changelogs.html', Path(f'{github_repo_path}/')))
     else:
+        print("No need to update Changelogs.html")
         generated_changelogs = True
         ratelimit_remaining = 100
-
-    # starts from scratch each time
-    new_build_folder_name = f'TF2 Rich Presence {version_num}'
-    if os.path.isdir(new_build_folder_name):
-        try:
-            shutil.rmtree(new_build_folder_name)
-        except (OSError, PermissionError):
-            time.sleep(0.2)
-            shutil.rmtree(new_build_folder_name)  # beautiful
-
-        print(f"Removed old build folder: {new_build_folder_name}")
-    else:
-        print("No old build folder found")
 
     files_in_cwd = os.listdir('.')
     last_build_time = None
