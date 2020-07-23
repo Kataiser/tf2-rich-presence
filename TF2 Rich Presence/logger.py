@@ -86,8 +86,13 @@ class Log:
             sentry_sdk.add_breadcrumb(message=full_line, level=level.lower().replace('critical', 'fatal'))
 
             try:
-                self.log_file.write(full_line)
-                self.log_file.flush()
+                try:
+                    self.log_file.write(full_line)
+                    self.log_file.flush()
+                except OSError as error:
+                    if str(error) == 'No space left on device':
+                        # not my problem
+                        pass
             except UnicodeEncodeError as error:
                 self.error(f"Couldn't write log due to UnicodeEncodeError: {error}")
 
