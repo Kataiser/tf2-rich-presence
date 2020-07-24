@@ -105,6 +105,7 @@ def main(version_num='v1.14'):
 
     # starts from scratch each time
     new_build_folder_name = f'TF2 Rich Presence {version_num}'
+    update_changelogs = True
     if os.path.isdir(new_build_folder_name):
         # prep for trying to avoid a pointless API request
         if os.path.isfile(Path(f'{new_build_folder_name}/Changelogs.html')):

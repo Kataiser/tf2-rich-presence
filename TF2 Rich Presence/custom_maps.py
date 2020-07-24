@@ -81,7 +81,7 @@ def find_custom_map_gamemode(log, map_filename: str, force_api: bool = False, ti
         try:
             log.debug(f"All gamemodes found: {map_info['all_gamemodes']}")
             map_gamemode: List[str] = map_info['all_gamemodes']
-            
+
             for gamemode in map_gamemode:
                 if gamemode in gamemodes_keys:
                     log.debug(f"Using gamemode {gamemode}")
