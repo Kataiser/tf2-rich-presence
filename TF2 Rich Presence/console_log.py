@@ -118,6 +118,7 @@ def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_
                     current_map = 'In menus'
                     current_class = 'Not queued'
                     map_line_used = class_line_used = line
+                    rescan_config = True
                     break
 
             # ok this is jank but it's to only trigger on actually closing the map and not just (I think) ending a demo recording
@@ -126,6 +127,7 @@ def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_
                     current_map = 'In menus'
                     current_class = 'Not queued'
                     map_line_used = class_line_used = line
+                    rescan_config = True
 
         if line.endswith(' selected \n'):
             current_class_possibly: str = line[:-11]
@@ -199,6 +201,7 @@ def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_
         self.log.error("Have class_line_used without map_line_used")
 
     if rescan_config and steam_path and time.time() - self.last_name_scan_time > CONFIG_THROTTLE_TIME:
+        self.log.debug("Rescanning Steam config for usernames")
         self.valid_usernames.update(configs.steam_config_file(self.log, steam_path, True))
         self.last_name_scan_time = time.time()
 
