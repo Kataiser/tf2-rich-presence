@@ -20,7 +20,7 @@ def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_
     TF2_LOAD_TIME_ASSUMPTION: int = 10
     SIZE_LIMIT_MULTIPLE_TRIGGER: int = 4
     SIZE_LIMIT_MULTIPLE_TARGET: int = 2
-    CONFIG_THROTTLE_TIME: int = 120
+    CONFIG_THROTTLE_TIME: int = 60
 
     # defaults
     current_map: str = 'In menus'
@@ -135,6 +135,7 @@ def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_
             if current_class_possibly in tf2_classes:
                 current_class = current_class_possibly
                 class_line_used = line
+                rescan_config = False
 
         elif line.startswith('Map:'):
             current_map = line[5:-1]  # this variable is poorly named
@@ -200,8 +201,10 @@ def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_
     if map_line_used == '' and class_line_used != '':
         self.log.error("Have class_line_used without map_line_used")
 
-    if rescan_config and steam_path and time.time() - self.last_name_scan_time > CONFIG_THROTTLE_TIME:
-        self.log.debug("Rescanning Steam config for usernames")
+    time_since_last_scan: float = time.time() - self.last_name_scan_time
+    if rescan_config and steam_path and time_since_last_scan > CONFIG_THROTTLE_TIME:
+        self.log.debug(f"Rescanning Steam config for usernames (time since last scan = {format(time_since_last_scan, '.1f')})")
+        configs.steam_config_file.cache_clear()
         self.valid_usernames.update(configs.steam_config_file(self.log, steam_path, True))
         self.last_name_scan_time = time.time()
 
