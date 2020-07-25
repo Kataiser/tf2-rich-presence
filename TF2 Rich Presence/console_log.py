@@ -151,15 +151,14 @@ def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_
                 server_still_running = False
 
         elif '[PartyClient] L' in line:  # full line: "[PartyClient] Leaving queue"
-            # not necessarily in menus
+            # queueing is not necessarily only in menus
             current_class = 'Not queued'
             class_line_used = line
             rescan_config = current_map == 'In menus'
 
         elif '[PartyClient] Entering q' in line:  # full line: "[PartyClient] Entering queue for match group " + whatever mode
-            current_map = 'In menus'
-            map_line_used = class_line_used = line
-            rescan_config = True
+            class_line_used = line
+            rescan_config = current_map == 'In menus'
 
             if hide_queued_gamemode:
                 current_class = "Queued"
@@ -167,17 +166,15 @@ def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_
                 match_type: str = line.split('match group ')[-1][:-1]
                 current_class = f"Queued for {match_types[match_type]}"
 
-        elif 'Disconnect by user' in line and [un for un in user_usernames if un in line]:
-            current_map = 'In menus'
-            current_class = 'Not queued'
-            map_line_used = class_line_used = line
-            rescan_config = True
-
         elif '[PartyClient] Entering s' in line:  # full line: "[PartyClient] Entering standby queue"
-            current_map = 'In menus'
             current_class = 'Queued for a party\'s match'
-            map_line_used = class_line_used = line
-            rescan_config = True
+            class_line_used = line
+            rescan_config = current_map == 'In menus'
+
+        elif 'Disconnect by user' in line and [un for un in user_usernames if un in line]:
+            current_class = 'Not queued'
+            class_line_used = line
+            rescan_config = current_map == 'In menus'
 
         elif 'SV_ActivateServer' in line:  # full line: "SV_ActivateServer: setting tickrate to 66.7"
             just_started_server = True
