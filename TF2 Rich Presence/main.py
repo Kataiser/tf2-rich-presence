@@ -218,6 +218,7 @@ class TF2RichPresense:
             # TODO: use a state machine and/or much more consistent var names
 
             actual_current_class: str = bottom_line  # https://www.portal2sounds.com/1130
+            queued_in_game: bool = bottom_line not in console_log.tf2_classes  # ditto
 
             if 'In menus' in top_line:
                 # in menus displays the main menu
@@ -242,15 +243,18 @@ class TF2RichPresense:
                 self.test_state = 'in game'
                 class_pic_type: str = settings.get('class_pic_type').lower()
 
-                if class_pic_type == 'none, use tf2 logo' or bottom_line == 'unselected':
+                if class_pic_type == 'none, use tf2 logo' or bottom_line == 'unselected' or queued_in_game:
                     self.activity['assets']['small_image'] = 'tf2_icon_small'
                     self.activity['assets']['small_text'] = 'Team Fortress 2'
                 else:
+                    # btw it's not possible to set the correct class icon while in a game and queued with the current setup
                     small_class_image = f'{bottom_line.lower()}_{class_pic_type}'
                     self.log.debug(f"Setting class small image to {small_class_image}")
 
                     self.activity['assets']['small_image'] = small_class_image
                     self.activity['assets']['small_text'] = bottom_line
+
+                class_line: str = self.loc.text("Class: {0}").format(self.loc.text(bottom_line)) if not queued_in_game else self.loc.text(bottom_line)
 
                 if settings.get('map_time'):
                     if self.current_map != top_line:  # top_line means the current map here... I should probably refactor that
@@ -263,10 +267,9 @@ class TF2RichPresense:
                     map_time_formatted: str = time.strftime(time_format, time.gmtime(seconds_on_map))
 
                     # I know I could just set the start time in activity, but I'd rather that always meant time with the game open
-                    class_line = self.loc.text("Class: {0}").format(self.loc.text(bottom_line))
                     bottom_line = self.loc.text("Time on map: {0}").format(map_time_formatted)
                 else:
-                    bottom_line = self.loc.text("Class: {0}").format(self.loc.text(bottom_line))
+                    bottom_line = class_line
 
                 # good code
                 hosting: bool = ' (hosting)' in top_line

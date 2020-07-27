@@ -31,7 +31,6 @@ def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_
     menus_messages: tuple = ('Server shutting down', 'For FCVAR_REPLICATED', '[TF Workshop]', 'Lobby destroyed', 'Disconnect:', 'destroyed Lobby', 'destroyed CAsyncWavDataCache',
                              'Disconnecting from abandoned', 'Missing map', 'Host_Error')
     menus_message: str
-    tf2_classes: tuple = ('Scout', 'Soldier', 'Pyro', 'Demoman', 'Heavy', 'Engineer', 'Medic', 'Sniper', 'Spy')
 
     hide_queued_gamemode: bool = settings.get('hide_queued_gamemode')
     user_is_kataiser: bool = 'Kataiser' in user_usernames
@@ -98,6 +97,7 @@ def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_
 
     map_line_used: str = ''
     class_line_used: str = ''
+    last_class: str = ''
     rescan_config: bool = False
     line: str
 
@@ -134,6 +134,7 @@ def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_
 
             if current_class_possibly in tf2_classes:
                 current_class = current_class_possibly
+                last_class = current_class
                 class_line_used = line
                 rescan_config = False
 
@@ -152,9 +153,14 @@ def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_
 
         elif '[PartyClient] L' in line:  # full line: "[PartyClient] Leaving queue"
             # queueing is not necessarily only in menus
-            current_class = 'Not queued'
             class_line_used = line
-            rescan_config = current_map == 'In menus'
+
+            if current_map == 'In menus':
+                current_class = 'Not queued'
+                rescan_config = True
+            else:
+                current_class = last_class
+                rescan_config = False
 
         elif '[PartyClient] Entering q' in line:  # full line: "[PartyClient] Entering queue for match group " + whatever mode
             class_line_used = line
@@ -231,3 +237,6 @@ def no_condebug_warning(tf2_is_running: bool = True):
     # -condebug is kinda necessary so just wait to restart if it's not there
     input('{0}\n'.format(loc.text("Press enter in this window when done")))
     raise SystemExit
+
+
+tf2_classes: tuple = ('Scout', 'Soldier', 'Pyro', 'Demoman', 'Heavy', 'Engineer', 'Medic', 'Sniper', 'Spy')
