@@ -111,7 +111,6 @@ def steam_config_file(log, exe_location: str, tf2_is_running: bool = False) -> s
         # yell at the user to fix their settings
         console_log.no_condebug_warning(tf2_is_running)
     else:
-        log.debug(f"Usernames with -condebug: {found_usernames}")
         return found_usernames
 
 

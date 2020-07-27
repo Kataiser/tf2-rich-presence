@@ -203,6 +203,7 @@ def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_
         self.log.debug(f"Rescanning Steam config for usernames (time since last scan = {format(time_since_last_scan, '.1f')})")
         configs.steam_config_file.cache_clear()
         self.valid_usernames.update(configs.steam_config_file(self.log, steam_path, True))
+        self.log.debug(f"Usernames with -condebug: {self.valid_usernames}")
         self.last_name_scan_time = time.time()
 
     self.old_console_log_interpretation = (current_map, current_class)
