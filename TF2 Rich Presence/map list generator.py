@@ -127,7 +127,9 @@ def creators_tf() -> dict:
     all_creators_maps = {'cp_glassworks_rc6a': ['control-point', 'Control Point'],
                          'cp_kalinka_rc5': ['control-point', 'Control Point'],
                          'cp_powerhouse_fix': ['control-point', 'Control Point'],
+                         'cp_rumble_rc5': ['attack-defend', 'Attack/Defend'],
                          'koth_clearcut_b14d': ['koth', 'King of the Hill'],
+                         'koth_databank_rc1': ['koth', 'King of the Hill'],
                          'koth_harvestalpine_v3b': ['koth', 'King of the Hill'],
                          'koth_product_rcx': ['koth', 'King of the Hill'],
                          'koth_slaughter_b2a': ['koth', 'King of the Hill'],
@@ -136,6 +138,7 @@ def creators_tf() -> dict:
                          'pl_badwater_pro_v9': ['payload', 'Payload'],
                          'pl_barnblitz_pro8': ['payload', 'Payload'],
                          'pl_fifthcurve_rc1': ['payload', 'Payload'],
+                         'pl_sludgepit_final1': ['payload', 'Payload'],
                          'pl_stranded_rc4': ['payload', 'Payload'],
                          'pl_summercoast_rc8b': ['payload', 'Payload'],
                          'pl_vigil_rc7': ['payload', 'Payload']}
