@@ -20,6 +20,7 @@ def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_
     TF2_LOAD_TIME_ASSUMPTION: int = 10
     SIZE_LIMIT_MULTIPLE_TRIGGER: int = 4
     SIZE_LIMIT_MULTIPLE_TARGET: int = 2
+    SIZE_LIMIT_MIN_LINES: int = 15000
     CONFIG_THROTTLE_TIME: int = 60
 
     # defaults
@@ -80,10 +81,15 @@ def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_
             with open(console_log_path, 'rb+') as consolelog_file_b:
                 # this can probably be done faster and/or cleaner
                 consolelog_file_b.seek(trim_size, 2)
-                consolelog_file_trimmed = consolelog_file_b.read()
-                consolelog_file_b.seek(0)
-                consolelog_file_b.truncate()
-                consolelog_file_b.write(consolelog_file_trimmed)
+                consolelog_file_trimmed: bytes = consolelog_file_b.read()
+                trimmed_line_count: int = consolelog_file_trimmed.count(b'\n')
+
+                if trimmed_line_count > SIZE_LIMIT_MIN_LINES:
+                    consolelog_file_b.seek(0)
+                    consolelog_file_b.truncate()
+                    consolelog_file_b.write(consolelog_file_trimmed)
+                else:
+                    self.log.error(f"Trimmed line count will be {trimmed_line_count} (< {SIZE_LIMIT_MIN_LINES}), aborting")
         except PermissionError as error:
             self.log.error(f"Failed to trim console.log: {error}")
 
