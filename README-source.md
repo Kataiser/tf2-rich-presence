@@ -31,7 +31,7 @@ Extract it yourself: [tf2_rich_presence_{tf2rpvnum}.zip](https://github.com/Kata
 	- OR run `Launch Rich Presence alongside TF2.exe`. This one doesn't automatically start Team Fortress 2.
 	- Both require Discord and Steam to be running as well and will wait until the game and both programs are running. 
 
-For faster launching, you can add the first EXE to your taskbar/start menu/desktop/etc or to Steam as a non-Steam game. Note than having Python installed is not required, but the [VS 2015 redistributable](https://www.microsoft.com/en-us/download/details.aspx?id=48145) is, which is automatically installed by many Steam games and so you should already have it.
+For faster launching, you can add the first EXE to your taskbar/start menu/desktop/etc or to Steam as a non-Steam game. Note that having Python installed is not required.
 
 ## Changelogs
 - [Changelogs.html](https://htmlpreview.github.io/?https://github.com/Kataiser/tf2-rich-presence/blob/master/Changelogs.html)
@@ -39,6 +39,9 @@ For faster launching, you can add the first EXE to your taskbar/start menu/deskt
 
 ## Linux and MacOS support?
 At the moment, both are considered unsupported. They probably work since [Jan200101](https://github.com/Jan200101) did some work on Linux a while ago, but the release builds are formatted for Windows. Contributors are very welcome! Also check out [cyclowns/tf2-discord](https://github.com/cyclowns/tf2-discord), which is confirmed to work on both Windows and Linux, or [EmeraldSnorlax/TF2-RPC](https://github.com/EmeraldSnorlax/TF2-RPC), which is a much less mature program but is built on Linux and theoretically cross-platform too. Alternatively, following most or all of the "building from source" instructions might work, or possibly running `python resources/launcher.py` in a release.
+
+## VAC safe?
+Almost certainly. If you don't want to risk it then fair enough, but I've run this on my main account for years and feel comfortable with it. The game's runtime and memory are never touched in any way to read its state. Here's the complete list of external files that are read from and/or written to: `\tf\console.log`, `\tf\cfg\*class*.cfg`, and `\Steam\userdata\*id*\config\localconfig.vdf`. The game process is also queried for its start time and install path.
 
 ## Building from source
 For making and testing changes, or simply always running the most up-to-date code.
