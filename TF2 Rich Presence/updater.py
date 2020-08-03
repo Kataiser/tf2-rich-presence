@@ -33,11 +33,11 @@ def check_for_update(log: logger.Log, current_version: str, timeout: float):
     except (requests.Timeout, requests.exceptions.ReadTimeout):
         log.error(f"Update check timed out", reportable=False)
         failure_message(current_version, f"timed out after {timeout} seconds")
-    except (requests.ConnectionError, requests.exceptions.ConnectionError):
+    except requests.RequestException:
         log.error(f"Connection error in updater: {traceback.format_exc()}", reportable=False)
         failure_message(current_version)
     except Exception:
-        log.error(f"Non-timeout update error: {traceback.format_exc()}")
+        log.error(f"Non-connection based update error: {traceback.format_exc()}")
         failure_message(current_version, 'unknown error')
     else:
         if current_version == newest_version:

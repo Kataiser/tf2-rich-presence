@@ -226,7 +226,7 @@ class TF2RichPresense:
             console_log_path: str = os.path.join(p_data['TF2']['path'], 'tf', 'console.log')
             top_line: str
             bottom_line: str
-            top_line, bottom_line = self.interpret_console_log(console_log_path, self.valid_usernames, tf2_start_time=p_data['TF2']['time'], steam_path=p_data['Steam']['path'])
+            top_line, bottom_line = self.interpret_console_log(console_log_path, self.valid_usernames, tf2_start_time=p_data['TF2']['time'])
             # TODO: use a state machine and/or much more consistent var names
 
             actual_current_class: str = bottom_line  # https://www.portal2sounds.com/1130
