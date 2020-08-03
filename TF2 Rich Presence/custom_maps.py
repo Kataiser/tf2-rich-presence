@@ -68,14 +68,18 @@ def find_custom_map_gamemode(log, map_filename: str, force_api: bool = False, ti
             api_response: Response = requests.get(f'https://teamwork.tf/api/v1/map-stats/map/{map_filename}?key={utils.get_api_key("teamwork")}', timeout=timeout)
             map_info: dict = api_response.json()
             log.debug(f"API lookup got {len(api_response.content)} byte response")
-        except requests.Timeout:
-            log.debug("Timeout connecting to teamwork.tf, defaulting to \"Unknown gamemode\" and not caching")
-            first_gamemode: str = 'unknown_map'
-            first_gamemode_fancy: str = 'Unknown gamemode'
-            return first_gamemode, first_gamemode_fancy
-        except Exception:
+        except requests.RequestException:
             log.error(f"Error connecting to teamwork.tf: {traceback.format_exc()}")
-            return 'unknown_map', 'Unknown gamemode'
+
+            if map_prefix == 'cp':
+                first_gamemode: str = 'control-point'
+                first_gamemode_fancy: str = 'Control Point'
+            else:
+                first_gamemode = 'unknown_map'
+                first_gamemode_fancy = 'Unknown gamemode'
+
+            log.debug(f"Defaulting to \"{first_gamemode_fancy}\" and not caching")
+            return first_gamemode, first_gamemode_fancy
 
         # parses the api result
         try:
@@ -86,9 +90,9 @@ def find_custom_map_gamemode(log, map_filename: str, force_api: bool = False, ti
                 if gamemode in gamemodes_keys:
                     log.debug(f"Using gamemode {gamemode}")
                     first_gamemode_fancy = gamemodes[gamemode]
+
                     # modify the cache locally
                     custom_map_gamemodes[map_filename] = [gamemode, first_gamemode_fancy, seconds_since_epoch_now]
-
                     # load the cache to actually modify it
                     access_custom_maps_cache(dict_input=custom_map_gamemodes)
 
