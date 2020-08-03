@@ -60,7 +60,8 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual(app.interpret_console_log('test_resources\\console_empty.log', ['not Kataiser'], float('inf'), True), ('In menus', 'Not queued'))
 
     def test_steam_config_file(self):
-        self.assertEqual(configs.steam_config_file(self.log, 'test_resources\\'), {'Kataiser'})
+        app = main.TF2RichPresense(self.log)
+        self.assertEqual(configs.steam_config_file(app, 'test_resources\\'), {'Kataiser'})
 
     def test_find_custom_map_gamemode(self):
         try:

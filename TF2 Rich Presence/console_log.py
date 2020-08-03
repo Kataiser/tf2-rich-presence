@@ -3,25 +3,22 @@
 # cython: language_level=3
 
 import os
-import time
 from typing import Dict, List, Tuple, Union
 
 from colorama import Fore, Style
 
-import configs
 import launcher
 import localization
 import settings
 
 
 # reads a console.log and returns current map and class
-def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_limit: float = float(settings.get('console_scan_kb')), force: bool = False, tf2_start_time: int = 0,
-              steam_path: Union[str, None] = None) -> Tuple[str, str]:
+def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_limit: float = float(settings.get('console_scan_kb')), force: bool = False,
+              tf2_start_time: int = 0) -> Tuple[str, str]:
     TF2_LOAD_TIME_ASSUMPTION: int = 10
     SIZE_LIMIT_MULTIPLE_TRIGGER: int = 4
     SIZE_LIMIT_MULTIPLE_TARGET: int = 2
     SIZE_LIMIT_MIN_LINES: int = 15000
-    CONFIG_THROTTLE_TIME: int = 60
 
     # defaults
     current_map: str = 'In menus'
@@ -104,7 +101,6 @@ def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_
     map_line_used: str = ''
     class_line_used: str = ''
     last_class: str = ''
-    rescan_config: bool = False
     line: str
 
     # iterates though roughly 16000 lines from console.log and learns everything from them
@@ -124,7 +120,6 @@ def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_
                     current_map = 'In menus'
                     current_class = 'Not queued'
                     map_line_used = class_line_used = line
-                    rescan_config = True
                     break
 
             # ok this is jank but it's to only trigger on actually closing the map and not just (I think) ending a demo recording
@@ -133,7 +128,6 @@ def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_
                     current_map = 'In menus'
                     current_class = 'Not queued'
                     map_line_used = class_line_used = line
-                    rescan_config = True
 
         if line.endswith(' selected \n'):
             current_class_possibly: str = line[:-11]
@@ -142,13 +136,11 @@ def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_
                 current_class = current_class_possibly
                 last_class = current_class
                 class_line_used = line
-                rescan_config = False
 
         elif line.startswith('Map:'):
             current_map = line[5:-1]  # this variable is poorly named
             current_class = 'unselected'  # so is this one
             map_line_used = class_line_used = line
-            rescan_config = True
 
             if just_started_server:
                 server_still_running = True
@@ -160,17 +152,10 @@ def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_
         elif '[PartyClient] L' in line:  # full line: "[PartyClient] Leaving queue"
             # queueing is not necessarily only in menus
             class_line_used = line
-
-            if current_map == 'In menus':
-                current_class = 'Not queued'
-                rescan_config = True
-            else:
-                current_class = last_class
-                rescan_config = False
+            current_class = 'Not queued' if current_map == 'In menus' else last_class
 
         elif '[PartyClient] Entering q' in line:  # full line: "[PartyClient] Entering queue for match group " + whatever mode
             class_line_used = line
-            rescan_config = current_map == 'In menus'
 
             if hide_queued_gamemode:
                 current_class = "Queued"
@@ -181,12 +166,10 @@ def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_
         elif '[PartyClient] Entering s' in line:  # full line: "[PartyClient] Entering standby queue"
             current_class = 'Queued for a party\'s match'
             class_line_used = line
-            rescan_config = current_map == 'In menus'
 
         elif 'Disconnect by user' in line and [un for un in user_usernames if un in line]:
             current_class = 'Not queued'
             class_line_used = line
-            rescan_config = current_map == 'In menus'
 
         elif 'SV_ActivateServer' in line:  # full line: "SV_ActivateServer: setting tickrate to 66.7"
             just_started_server = True
@@ -209,17 +192,6 @@ def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_
 
     if map_line_used == '' and class_line_used != '':
         self.log.error("Have class_line_used without map_line_used")
-
-    time_since_last_scan: float = time.time() - self.last_name_scan_time
-    if rescan_config and steam_path and time_since_last_scan > CONFIG_THROTTLE_TIME:
-        self.log.debug(f"Rescanning Steam config for usernames (time since last scan = {format(time_since_last_scan, '.1f')})")
-        configs.steam_config_file.cache_clear()
-        self.valid_usernames.update(configs.steam_config_file(self.log, steam_path, True))
-        self.log.debug(f"Usernames with -condebug: {self.valid_usernames}")
-        self.last_name_scan_time = time.time()
-
-    self.old_console_log_interpretation = (current_map, current_class)
-    self.old_console_log_mtime = console_log_mtime
 
     return current_map, current_class
 

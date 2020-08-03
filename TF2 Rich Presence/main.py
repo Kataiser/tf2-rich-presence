@@ -29,7 +29,7 @@ import os
 import platform
 import time
 import traceback
-from typing import Any, Dict, List, Tuple, Union
+from typing import Any, Dict, List, Set, Tuple, Union
 
 import psutil
 from colorama import Style
@@ -110,8 +110,9 @@ class TF2RichPresense:
         self.map_gamemodes: Dict[str, Dict[str, List[str]]] = utils.load_maps_db()
         self.loop_iteration: int = 0
         self.custom_functions = None
-        self.valid_usernames: set = set()
+        self.valid_usernames: Set[str] = set()
         self.last_name_scan_time: float = time.time()  # close enough
+        self.steam_config_mtimes: List[Tuple[str, int]] = []
 
         self_process: psutil.Process = psutil.Process()
         priorities_before: tuple = (self_process.nice(), self_process.ionice())
@@ -191,10 +192,21 @@ class TF2RichPresense:
         # this as a one-liner is beautiful :)
         p_data: Dict[str, Dict[str, Union[bool, str, int, None]]] = self.process_scanner.scan()
 
+        # reads steam config files to find usernames with -condebug (on init, and if any of them have been modified)
         if p_data['Steam']['running']:
-            # reads a steam config file
-            self.valid_usernames.update(configs.steam_config_file(self.log, p_data['Steam']['path'], p_data['TF2']['running']))
-            self.log.debug(f"Usernames with -condebug: {self.valid_usernames}")
+            config_scan_needed: bool = self.steam_config_mtimes == []
+
+            for config_and_mtime in self.steam_config_mtimes:
+                new_mtime: int = int(os.stat(config_and_mtime[0]).st_mtime)
+
+                if new_mtime != config_and_mtime[1]:
+                    self.log.debug(f"Rescanning Steam config files ({new_mtime} > {config_and_mtime[1]} for {config_and_mtime[0]})")
+                    config_scan_needed = True
+
+            if config_scan_needed:
+                self.steam_config_mtimes = []
+                self.valid_usernames.update(self.steam_config_file(p_data['Steam']['path'], p_data['TF2']['running']))
+                self.log.debug(f"Usernames with -condebug: {self.valid_usernames}")
         elif p_data['Steam']['pid'] is not None or p_data['Steam']['path'] is not None:
             self.log.error(f"Steam isn't running but its process info is {p_data['Steam']}. WTF?")
 
@@ -415,6 +427,10 @@ class TF2RichPresense:
     # reads a console.log and returns current map and class
     def interpret_console_log(self, *args, **kwargs) -> Tuple[str, str]:
         return console_log.interpret(self, *args, **kwargs)
+
+    # reads steam's launch options save file to find usernames with -condebug
+    def steam_config_file(self, *args, **kwargs) -> set:
+        return configs.steam_config_file(self, *args, **kwargs)
 
     # sends localized RPC data, connecting to Discord initially if need be
     def send_rpc_activity(self):
