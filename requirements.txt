@@ -2,12 +2,12 @@ beautifulsoup4==4.9.1
 certifi==2020.6.20
 chardet==3.0.4
 colorama==0.4.3
-Cython==3.0a5
+Cython==3.0a6
 discoIPC==1.0.0
 idna==2.10
 lxml==4.5.2
 psutil==5.7.2
 requests==2.24.0
-sentry_sdk==0.16.1
-urllib3==1.25.9
+sentry_sdk==0.16.3
+urllib3==1.25.10
 vdf==3.3
