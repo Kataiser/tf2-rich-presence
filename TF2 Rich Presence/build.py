@@ -21,12 +21,19 @@ import changelog_generator
 # TODO: don't do this separate locations nonsense, convert to using a repo properly
 # TODO: option to do a "release" build that invalidates all caches (might need a new config interface)
 def main(version_num='v1.14'):
-    sys.stdout = Logger()
-    print(f"Building TF2 Rich Presence {version_num}")
-
     parser = argparse.ArgumentParser()
-    parser.add_argument('--n', action='store_true', help="Skip copying to an repo location")
+    parser.add_argument('--n', action='store_true', help="Skip copying to an repo location", default=False)
+    parser.add_argument('--ide', action='store_true', help="Use IDE-based build.log handling", default=False)
     cli_skip_repo = parser.parse_args().n
+    ide_build_log_handling = parser.parse_args().ide
+
+    if not ide_build_log_handling:
+        if os.path.isfile('build.log'):
+            os.remove('build.log')
+            time.sleep(0.1)
+        sys.stdout = Logger()
+
+    print(f"Building TF2 Rich Presence {version_num}")
 
     if cli_skip_repo:
         github_repo_path = 'n'
@@ -262,12 +269,18 @@ def main(version_num='v1.14'):
     convert_bat_to_exe(os.path.abspath(Path(f'{new_build_folder_name}/Change settings.bat')), version_num, 'tf2_logo_blurple_wrench.ico')
 
     # append build.log to build_info.txt
-    print("Appending build.log to build_info.txt")
-    sys.stdout.finish()
-    with open('build.log', 'r') as build_log_file:
-        build_log = build_log_file.read().replace(getpass.getuser(), 'USER')
-    with open(build_info_path, 'a') as build_info_txt:
-        build_info_txt.write(f'\n\nBuild log:\n{build_log}')
+    build_log_exists = os.path.isfile('build.log')
+    if build_log_exists:
+        # just to make sure it's actually up-to-date
+        build_log_exists = time.time() - os.stat('build.log').st_mtime < 10
+    if build_log_exists:
+        print("Appending build.log to build_info.txt")
+        if not ide_build_log_handling:
+            sys.stdout.finish()
+        with open('build.log', 'r') as build_log_file:
+            build_log = build_log_file.read().replace(getpass.getuser(), 'USER')
+        with open(build_info_path, 'a') as build_info_txt:
+            build_info_txt.write(f"\n\nBuild log{' (IDE handled)' if ide_build_log_handling else ''}:\n{build_log}")
 
     # generates zip package and an "installer" (a self extracting .7z as an exe), both with 7zip
     time.sleep(0.2)  # just to make sure everything is updated
@@ -358,6 +371,8 @@ def main(version_num='v1.14'):
         print("README-source doesn't exist, didn't build README.md", file=sys.stderr)
     if missing_pycs:
         print(f"Couldn't delete {len(missing_pycs)}/{len(pycs_to_delete)} PYCs: {missing_pycs}", file=sys.stderr)
+    if not build_log_exists:
+        print("build.log doesn't exist (or is old), consider setting up your IDE to save the console to a file or just not using --ide", file=sys.stderr)
     if git_username != 'Kataiser':
         print(f"Please note that your git username ({git_username}) has been included in {build_info_path}")
 
@@ -397,9 +412,6 @@ def copy_dir_to_git(source, target):
 # log all prints to a file
 class Logger(object):
     def __init__(self):
-        if os.path.isfile('build.log'):
-            os.remove('build.log')
-
         self.terminal = sys.stdout
         self.log = open('build.log', 'a')
 
