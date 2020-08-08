@@ -15,6 +15,15 @@ from typing import Dict, List, Union
 # TODO: have this be placed in AppData\Roaming and include settings
 def access_db(write: dict = None) -> Dict[str, Union[dict, bool, list]]:
     db_path: str = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
+    default_db: dict = {'custom_maps': {},
+                        'tb_hashes': [],
+                        'error_hashes': [],
+                        'has_asked_language': False,
+                        'available_version': {'exists': False, 'tag': '', 'url': ''},
+                        'missing_localization': []}
+
+    if not os.path.isfile(db_path):
+        open(db_path, 'w').close()
 
     if write:
         with open(db_path, 'w', encoding='UTF8') as db_json:
@@ -26,12 +35,6 @@ def access_db(write: dict = None) -> Dict[str, Union[dict, bool, list]]:
             with open(db_path, 'r', encoding='UTF8') as db_json:
                 return json.load(db_json)
         except json.JSONDecodeError:
-            default_db = {'custom_maps': {},
-                          'tb_hashes': [],
-                          'error_hashes': [],
-                          'has_asked_language': False,
-                          'available_version': {'exists': False, 'tag': '', 'url': ''},
-                          'missing_localization': []}
             access_db(write=default_db)
             return default_db
 
@@ -87,5 +90,9 @@ def generate_delta(loc, old_time: Union[float, None]) -> str:
 @functools.lru_cache(maxsize=None)
 def load_maps_db() -> Dict[str, Dict[str, List[str]]]:
     maps_db_path = os.path.join('resources', 'maps.json') if os.path.isdir('resources') else 'maps.json'
-    with open(maps_db_path, 'r') as maps_db:
-        return json.load(maps_db)
+
+    if os.path.isfile(maps_db_path):
+        with open(maps_db_path, 'r') as maps_db:
+            return json.load(maps_db)
+    else:
+        return {'official': {}, 'common_custom': {}, 'creators_tf': {}}

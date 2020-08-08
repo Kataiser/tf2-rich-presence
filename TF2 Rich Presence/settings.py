@@ -44,10 +44,13 @@ class GUI(tk.Frame):
         master.resizable(0, 0)  # disables resizing
 
         # set window icon, doesn't work if launching from Pycharm for some reason
-        if os.path.isdir('resources'):
-            master.iconbitmap(default=os.path.join('resources', 'tf2_logo_blurple_wrench.ico'))
-        else:
-            master.iconbitmap(default='tf2_logo_blurple_wrench.ico')
+        try:
+            if os.path.isdir('resources'):
+                master.iconbitmap(default=os.path.join('resources', 'tf2_logo_blurple_wrench.ico'))
+            else:
+                master.iconbitmap(default='tf2_logo_blurple_wrench.ico')
+        except tk.TclError:
+            self.log.error(traceback.format_exc())
 
         self.log_levels = ['Debug', 'Info', 'Error', 'Critical', 'Off']
         self.sentry_levels = ['All errors', 'Crashes', 'Never']

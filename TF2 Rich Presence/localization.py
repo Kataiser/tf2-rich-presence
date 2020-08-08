@@ -19,19 +19,31 @@ class Localizer:
         self.missing_lines = []
         self.appending = appending  # if extending localization.json
 
+        if os.path.isdir('resources'):
+            self.loc_file_path = os.path.join('resources', 'localization.json')
+        else:
+            self.loc_file_path = 'localization.json'
+
+        self.loc_file_exists = os.path.isfile(self.loc_file_path)
+        if not self.loc_file_exists and self.log:
+            self.log.error(f"localization.json doesn't exist (should be at {os.path.abspath(self.loc_file_path)})")
+
     def __repr__(self):
         return f"localization.Localizer ({self.language}, appending={self.appending}, {len(self.missing_lines)} missing lines)"
 
     @functools.lru_cache(maxsize=None)
     def text(self, english_text: str) -> str:
+        if not self.loc_file_exists:
+            return english_text
+
         # TODO: use manual language keys instead of text hashes (maybe)
         english_text_adler32 = hash_text(english_text)
 
         if self.appending:  # only used for development
-            access_localization_file(append=(english_text_adler32, english_text))
+            access_localization_file(self.loc_file_path, append=(english_text_adler32, english_text))
             return english_text
 
-        if english_text_adler32 not in access_localization_file():  # exclude that because it causes DB.json spam
+        if english_text_adler32 not in access_localization_file(self.loc_file_path):
             if english_text not in self.missing_lines:
                 self.missing_lines.append(english_text)
 
@@ -47,17 +59,12 @@ class Localizer:
         if self.language == 'English':
             return english_text
         else:
-            return access_localization_file()[english_text_adler32][self.language]
+            return access_localization_file(self.loc_file_path)[english_text_adler32][self.language]
 
 
 @functools.lru_cache(maxsize=1)
-def access_localization_file(append: Union[tuple, None] = None) -> dict:
-    if os.path.isdir('resources'):
-        localization_file_path = os.path.join('resources', 'localization.json')
-    else:
-        localization_file_path = 'localization.json'
-
-    with open(localization_file_path, 'r', encoding='utf-8') as localization_file:
+def access_localization_file(path: str = 'localization.json', append: Union[tuple, None] = None) -> dict:
+    with open(path, 'r', encoding='utf-8') as localization_file:
         localization_data = json.load(localization_file)
 
     if not append:
@@ -73,7 +80,7 @@ def access_localization_file(append: Union[tuple, None] = None) -> dict:
             for language in ['German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian', 'Korean', 'Chinese', 'Japanese']:
                 localization_data[append_hash][language] = ""
 
-            with open(localization_file_path, 'w', encoding='utf-8') as localization_file:
+            with open(path, 'w', encoding='utf-8') as localization_file:
                 json.dump(localization_data, localization_file, indent=4, ensure_ascii=False)
         else:
             print(f"Already exists with hash {append_hash}")

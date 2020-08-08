@@ -78,6 +78,7 @@ def handle_crash():
 
     try:
         if not exc_already_reported(formatted_exception):
+            sentry_sdk.add_breadcrumb(message=str(os.listdir('resources')), level='fatal')
             sentry_sdk.capture_exception()
     except Exception:
         # Sentry has failed us :(
@@ -103,8 +104,8 @@ def handle_crash():
 def exc_already_reported(tb: str) -> bool:
     try:
         tb_hash: str = str(zlib.crc32(tb.encode('utf-8', errors='replace')))  # technically not a hash but w/e
-
         db: dict = utils.access_db()
+
         if tb_hash in db['tb_hashes']:
             return True
         else:

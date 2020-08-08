@@ -156,7 +156,7 @@ class TF2RichPresense:
     def import_custom(self):
         custom_functions_path: str = os.path.join('resources', 'custom.py') if os.path.isdir('resources') else 'custom.py'
 
-        if custom_functions_path:
+        if os.path.isdir(custom_functions_path):
             with open(custom_functions_path, 'r') as custom_functions_file:
                 custom_functions_lines: int = len(custom_functions_file.readlines())
 
@@ -293,7 +293,7 @@ class TF2RichPresense:
                     self.activity['assets']['large_image'] = current_gamemode
                     self.activity['assets']['large_text'] = gamemode_fancy
                 except KeyError:
-                    # is a custom map
+                    # is (hopefully) a custom map
                     custom_gamemode, custom_gamemode_fancy_english = custom_maps.find_custom_map_gamemode(self.log, top_line, False)
                     custom_gamemode_fancy = self.loc.text(custom_gamemode_fancy_english)
                     map_out = top_line
