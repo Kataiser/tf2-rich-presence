@@ -6,25 +6,25 @@ import functools
 import json
 import os
 import zlib
-from typing import Union
+from typing import List, Union
 
 import launcher
 import utils
 
 
 class Localizer:
-    def __init__(self, log=None, language=None, appending=False):
+    def __init__(self, log=None, language: Union[str, None] = None, appending: bool = False):
         self.log = log
-        self.language = language
-        self.missing_lines = []
-        self.appending = appending  # if extending localization.json
+        self.language: Union[str, None] = language
+        self.missing_lines: List[str] = []
+        self.appending: bool = appending  # if extending localization.json
 
         if os.path.isdir('resources'):
-            self.loc_file_path = os.path.join('resources', 'localization.json')
+            self.loc_file_path: str = os.path.join('resources', 'localization.json')
         else:
             self.loc_file_path = 'localization.json'
 
-        self.loc_file_exists = os.path.isfile(self.loc_file_path)
+        self.loc_file_exists: bool = os.path.isfile(self.loc_file_path)
         if not self.loc_file_exists and self.log:
             self.log.error(f"localization.json doesn't exist (should be at {os.path.abspath(self.loc_file_path)})")
 
@@ -37,7 +37,7 @@ class Localizer:
             return english_text
 
         # TODO: use manual language keys instead of text hashes (maybe)
-        english_text_adler32 = hash_text(english_text)
+        english_text_adler32: str = hash_text(english_text)
 
         if self.appending:  # only used for development
             access_localization_file(self.loc_file_path, append=(english_text_adler32, english_text))
@@ -47,7 +47,7 @@ class Localizer:
             if english_text not in self.missing_lines:
                 self.missing_lines.append(english_text)
 
-                db = utils.access_db()
+                db: dict = utils.access_db()
                 db['missing_localization'].append(english_text)
                 utils.access_db(db)
                 if self.log:
@@ -65,7 +65,7 @@ class Localizer:
 @functools.lru_cache(maxsize=1)
 def access_localization_file(path: str = 'localization.json', append: Union[tuple, None] = None) -> dict:
     with open(path, 'r', encoding='utf-8') as localization_file:
-        localization_data = json.load(localization_file)
+        localization_data: dict = json.load(localization_file)
 
     if not append:
         return localization_data

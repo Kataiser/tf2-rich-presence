@@ -43,10 +43,7 @@ def detect(log: logger.Log):
             root.withdraw()
             root.lift()
             root.attributes('-topmost', True)
-            try:
-                root.iconbitmap(default='tf2_logo_blurple_wrench.ico')
-            except tk.TclError:
-                root.iconbitmap(default=os.path.join('resources', 'tf2_logo_blurple_wrench.ico'))
+            settings.set_window_icon(log, root, False)
 
             changed_language: str = messagebox.askquestion(f"TF2 Rich Presence {launcher.VERSION}", f"Change language to your system's default ({system_language})?")
             log.debug(f"Changed language: {changed_language}")

@@ -72,6 +72,9 @@ class Log:
             self.debug(f"Closing log file ({self.filename}) via destructor")
             self.log_file.close()
 
+    def __bool__(self):
+        return self.enabled
+
     # adds a line to the current log file
     def write_log(self, level: str, message_out: str):
         if self.enabled:

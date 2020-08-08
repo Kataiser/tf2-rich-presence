@@ -78,8 +78,8 @@ class TF2RichPresense:
         if log:
             self.log: logger.Log = log
         else:
-            self.log.error(f"Initialized main.TF2RichPresense without a log, defaulting to one at {self.log.filename}")
             self.log: logger.Log = logger.Log()
+            self.log.error(f"Initialized main.TF2RichPresense without a log, defaulting to one at {self.log.filename}")
 
         # this is what gets modified and sent to Discord via discoIPC
         self.activity: Dict[str, Union[str, Dict[str, int], Dict[str, str]]] = \

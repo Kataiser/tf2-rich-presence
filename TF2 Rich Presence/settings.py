@@ -42,15 +42,7 @@ class GUI(tk.Frame):
 
         master.title(self.loc.text("TF2 Rich Presence ({0}) settings").format(launcher.VERSION))
         master.resizable(0, 0)  # disables resizing
-
-        # set window icon, doesn't work if launching from Pycharm for some reason
-        try:
-            if os.path.isdir('resources'):
-                master.iconbitmap(default=os.path.join('resources', 'tf2_logo_blurple_wrench.ico'))
-            else:
-                master.iconbitmap(default='tf2_logo_blurple_wrench.ico')
-        except tk.TclError:
-            self.log.error(traceback.format_exc())
+        set_window_icon(self.log, master, True)
 
         self.log_levels = ['Debug', 'Info', 'Error', 'Critical', 'Off']
         self.sentry_levels = ['All errors', 'Crashes', 'Never']
@@ -516,6 +508,19 @@ def fix_missing_settings(default: dict, current: dict) -> dict:
         access_registry(save_dict=current)
 
     return missing_settings
+
+
+# doesn't work if launching from Pycharm for some reason
+def set_window_icon(log: logger.Log, window: tk.Tk, wrench: bool):
+    filename = 'tf2_logo_blurple_wrench.ico' if wrench else 'tf2_logo_blurple.ico'
+
+    try:
+        if os.path.isdir('resources'):
+            window.iconbitmap(default=os.path.join('resources', filename))
+        else:
+            window.iconbitmap(default=filename)
+    except tk.TclError:
+        log.error(traceback.format_exc())
 
 
 if __name__ == '__main__':
