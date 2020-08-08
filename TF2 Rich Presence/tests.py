@@ -265,7 +265,10 @@ class TestTF2RichPresense(unittest.TestCase):
 
         self.assertFalse(process_scanner.hl2_exe_is_tf2(os.getpid()))
 
-    def test_settings_gui(self):
+    def test_settings_gui(self, skip=True):
+        if skip:
+            self.skipTest("Run by test_missing_files instead (try setting skip's default to False to see why)")
+
         root = tk.Tk()
         settings_gui = settings.GUI(root, self.log)
         settings_gui.show_font_message('한국어')
@@ -332,6 +335,21 @@ class TestTF2RichPresense(unittest.TestCase):
             init.launch(0)
         except updater.RateLimitError as error:
             self.skipTest(error)
+
+    def test_missing_files(self):
+        files_to_hide = ['tf2_logo_blurple.ico', 'tf2_logo_blurple_wrench.ico', 'DB.json', 'localization.json', 'maps.json', 'custom.py']
+
+        for file in files_to_hide:
+            os.rename(file, f'.{file}')
+
+        self.test_main_simple()
+        self.test_settings_gui(skip=False)
+
+        for file in files_to_hide:
+            if os.path.isfile(file):
+                os.remove(file)
+
+            os.rename(f'.{file}', file)
 
 
 def fix_activity_dict(activity):
