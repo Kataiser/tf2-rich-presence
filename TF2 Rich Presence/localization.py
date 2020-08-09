@@ -28,6 +28,8 @@ class Localizer:
         if not self.loc_file_exists and self.log:
             self.log.error(f"localization.json doesn't exist (should be at {os.path.abspath(self.loc_file_path)})")
 
+        self.text.cache_clear()
+
     def __repr__(self):
         return f"localization.Localizer ({self.language}, appending={self.appending}, {len(self.missing_lines)} missing lines)"
 

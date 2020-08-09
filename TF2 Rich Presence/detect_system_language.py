@@ -4,7 +4,6 @@
 
 import ctypes
 import locale
-import os
 import tkinter as tk
 from tkinter import messagebox
 from typing import Dict, Union
@@ -25,14 +24,16 @@ def detect(log: logger.Log):
 
         system_locale: str = locale.windows_locale[ctypes.windll.kernel32.GetUserDefaultUILanguage()]
         system_language_code: str = system_locale.split('_')[0]
+        is_brazilian_port: bool = system_locale == 'pt_BR'
 
-        try:
+        if system_language_code in language_codes or is_brazilian_port:
             system_language: str = language_codes[system_language_code]
-        except KeyError:
-            log.error(f"System language code {system_language_code} is not a localized language, defaulting to English")
-            system_language = 'English'
+            can_localize: bool = True
+        else:
+            log.error(f"System locale {system_locale} is not localizable")
+            can_localize = False
 
-        if settings.get('language') != system_language:
+        if can_localize and settings.get('language') != system_language:
             log.info(f"System language ({system_locale}, {system_language}) != settings language ({settings.get('language')}), asking to change")
 
             db['has_asked_language'] = True
@@ -45,14 +46,15 @@ def detect(log: logger.Log):
             root.attributes('-topmost', True)
             settings.set_window_icon(log, root, False)
 
-            changed_language: str = messagebox.askquestion(f"TF2 Rich Presence {launcher.VERSION}", f"Change language to your system's default ({system_language})?")
+            system_language_display: str = 'Português Brasileiro' if is_brazilian_port else system_language
+            changed_language: str = messagebox.askquestion(f"TF2 Rich Presence {launcher.VERSION}", f"Change language to your system's default ({system_language_display})?")
             log.debug(f"Changed language: {changed_language}")
 
             if changed_language == 'yes':
                 temp_settings: dict = settings.access_registry()
                 temp_settings['language'] = system_language
                 settings.access_registry(save_dict=temp_settings)
-                raise SystemExit
+                settings.get.cache_clear()
 
 
 if __name__ == '__main__':
