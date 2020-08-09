@@ -52,7 +52,7 @@ class GUI(tk.Frame):
         self.log_levels_display = [self.loc.text(item) for item in self.log_levels]
         self.sentry_levels_display = [self.loc.text(item) for item in self.sentry_levels]
         self.class_pic_types_display = [self.loc.text(item) for item in self.class_pic_types]
-        self.languages_display = ['English', 'Deutsch', 'Français', 'Español', 'Português', 'Italiano', 'Nederlands', 'Polski', 'русский язык', '한국어', '汉语', '日本語']
+        self.languages_display = ['English', 'Deutsch', 'Français', 'Español', 'Português Brasileiro', 'Italiano', 'Nederlands', 'Polski', 'русский язык', '한국어', '汉语', '日本語']
 
         if reload_settings:
             # the GUI was reloaded with a new language, so persist the currently selected (but not saved) settings
@@ -283,6 +283,7 @@ class GUI(tk.Frame):
 
             font_instructions_path = os.path.join('resources', 'font_instructions.gif') if os.path.isdir('resources') else 'font_instructions.gif'
             self.font_window = tk.Toplevel(self.master)
+            self.font_window.geometry(f'+{self.master.winfo_x()}+{self.master.winfo_y()}')
             self.font_window.title(self.loc.text("Font instructions"))
             self.font_window.resizable(0, 0)
 
