@@ -22,16 +22,16 @@ Discord Rich Presence for Team Fortress 2
 (The actual program is nowhere near as nice looking as this)
 
 ## Download
-With 7-Zip's built-in extractor: [tf2_rich_presence_v1.13.2_self_extracting.exe](https://github.com/Kataiser/tf2-rich-presence/releases/download/v1.13.2/tf2_rich_presence_v1.13.2_self_extracting.exe) (8.1 MB)  
-Extract it yourself: [tf2_rich_presence_v1.13.2.zip](https://github.com/Kataiser/tf2-rich-presence/releases/download/v1.13.2/tf2_rich_presence_v1.13.2.zip) (11.0 MB)
+With 7-Zip's built-in extractor: [tf2_rich_presence_v1.14_self_extracting.exe](https://github.com/Kataiser/tf2-rich-presence/releases/download/v1.14/tf2_rich_presence_v1.14_self_extracting.exe) (8.1 MB)  
+Extract it yourself: [tf2_rich_presence_v1.14.zip](https://github.com/Kataiser/tf2-rich-presence/releases/download/v1.14/tf2_rich_presence_v1.14.zip) (11.0 MB)
 
 ## Installation and running
-1. Extract `tf2_rich_presence_v1.13.2.zip` OR run `tf2_rich_presence_v1.13.2_self_extracting.exe`, whichever you downloaded.
+1. Extract `tf2_rich_presence_v1.14.zip` OR run `tf2_rich_presence_v1.14_self_extracting.exe`, whichever you downloaded.
 2. Run `Launch TF2 with Rich Presence.exe`.
 	- OR run `Launch Rich Presence alongside TF2.exe`. This one doesn't automatically start Team Fortress 2.
 	- Both require Discord and Steam to be running as well and will wait until the game and both programs are running. 
 
-For faster launching, you can add the first EXE to your taskbar/start menu/desktop/etc or to Steam as a non-Steam game. Note than having Python installed is not required, but the [VS 2015 redistributable](https://www.microsoft.com/en-us/download/details.aspx?id=48145) is, which is automatically installed by many Steam games and so you should already have it.
+For faster launching, you can add the first EXE to your taskbar/start menu/desktop/etc or to Steam as a non-Steam game. Note that having Python installed is not required.
 
 ## Changelogs
 - [Changelogs.html](https://htmlpreview.github.io/?https://github.com/Kataiser/tf2-rich-presence/blob/master/Changelogs.html)
