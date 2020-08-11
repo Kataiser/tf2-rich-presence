@@ -203,7 +203,11 @@ def main(version_num='v1.14'):
     os.rename(Path(f'{new_build_folder_name}/LICENSE'), Path(f'{new_build_folder_name}/License.txt'))
 
     # build PYDs using Cython and copy them in
-    print(subprocess.run(f'{sys.executable} cython_compile.py build_ext --inplace', capture_output=True).stdout.decode('UTF8').replace('\r\n', '\n')[:-1])
+    compile_command = f'{sys.executable} cython_compile.py build_ext --inplace'
+    if ide_build_log_handling:
+        subprocess.run(compile_command)
+    else:
+        print(subprocess.run(compile_command, capture_output=True).stdout.decode('UTF8').replace('\r\n', '\n')[:-1])
     pyds = [Path(f'cython_build/{file}') for file in os.listdir('cython_build') if file.endswith('.pyd')]
     print(f"Compiled {len(pyds)} PYDs")
     for pyd in pyds:
@@ -277,6 +281,7 @@ def main(version_num='v1.14'):
         print("Appending build.log to build_info.txt")
         if not ide_build_log_handling:
             sys.stdout.finish()
+        time.sleep(0.1)
         with open('build.log', 'r') as build_log_file:
             build_log = build_log_file.read().replace(getpass.getuser(), 'USER')
         with open(build_info_path, 'a') as build_info_txt:
