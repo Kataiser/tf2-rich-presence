@@ -19,13 +19,14 @@ import changelog_generator
 
 
 # TODO: don't do this separate locations nonsense, convert to using a repo properly
-# TODO: option to do a "release" build that invalidates all caches (might need a new config interface)
 def main(version_num='v1.14'):
     parser = argparse.ArgumentParser()
     parser.add_argument('--n', action='store_true', help="Skip copying to an repo location", default=False)
     parser.add_argument('--ide', action='store_true', help="Use IDE-based build.log handling", default=False)
+    parser.add_argument('--release', action='store_true', help="Release build, invalidates all caches", default=False)
     cli_skip_repo = parser.parse_args().n
     ide_build_log_handling = parser.parse_args().ide
+    release_build = parser.parse_args().release
 
     if not ide_build_log_handling:
         if os.path.isfile('build.log'):
@@ -33,7 +34,20 @@ def main(version_num='v1.14'):
             time.sleep(0.1)
         sys.stdout = Logger()
 
-    print(f"Building TF2 Rich Presence {version_num}")
+    if release_build:
+        print(f"Building TF2 Rich Presence {version_num} for release")
+
+        if os.path.isdir('cython_build'):
+            shutil.rmtree('cython_build')
+            print("Deleted cython_build")
+        if os.path.isfile('README.md'):
+            os.remove('README.md')
+            print("Deleted README.md")
+        if os.path.isfile('Changelogs.html'):
+            os.remove('Changelogs.html')
+            print("Deleted Changelogs.html")
+    else:
+        print(f"Building TF2 Rich Presence {version_num}")
 
     if cli_skip_repo:
         github_repo_path = 'n'
@@ -123,7 +137,7 @@ def main(version_num='v1.14'):
         except (OSError, PermissionError):
             time.sleep(0.2)
             shutil.rmtree(new_build_folder_name)  # beautiful
-        print(f"Removed old build folder: {new_build_folder_name}")
+        print(f"Deleted old build folder: {new_build_folder_name}")
     else:
         print("No old build folder found")
 
@@ -288,6 +302,12 @@ def main(version_num='v1.14'):
             build_info_txt.write(f"\n\nBuild log{' (IDE handled)' if ide_build_log_handling else ''}:\n{build_log}")
 
     # generates zip package and an "installer" (a self extracting .7z as an exe), both with 7zip
+    exe_path = f'tf2_rich_presence_{version_num}_self_extracting.exe'
+    zip_path = f'tf2_rich_presence_{version_num}.zip'
+    if release_build:
+        os.remove(exe_path)
+        os.remove(zip_path)
+        print(f"Deleted {exe_path} and {zip_path}")
     time.sleep(0.2)  # just to make sure everything is updated
     if os.path.isfile(f'tf2_rich_presence_{version_num}_self_extracting.exe.tmp'):
         os.remove(f'tf2_rich_presence_{version_num}_self_extracting.exe.tmp')
@@ -295,8 +315,6 @@ def main(version_num='v1.14'):
     if os.path.isfile(f'tf2_rich_presence_{version_num}.zip.tmp'):
         os.remove(f'tf2_rich_presence_{version_num}.zip.tmp')
         print(f"Deleted tf2_rich_presence_{version_num}.zip.tmp")
-    exe_path = f'tf2_rich_presence_{version_num}_self_extracting.exe'
-    zip_path = f'tf2_rich_presence_{version_num}.zip'
     package7zip_command_exe_1 = f'build_tools{os.path.sep}7za.exe u {exe_path} -up1q0r2x1y2z1w2 "{new_build_folder_name}{os.path.sep}"'
     package7zip_command_exe_2 = '-sfx7z.sfx -ssw -mx=9 -myx=9 -mmt=2 -m0=LZMA2:d=8m'
     package7zip_command_zip = f'build_tools{os.path.sep}7za.exe u {zip_path} -up1q0r2x1y2z1w2 "{new_build_folder_name}{os.path.sep}" -ssw -mx=9 -m0=Deflate64 -mmt=2'
@@ -310,8 +328,11 @@ def main(version_num='v1.14'):
     # creates README.md from README-source.md
     if os.path.isfile('README-source.md'):
         readme_source_exists = True
-        with open('README.md', 'r') as old_readme_md:
-            old_readme_has_this_version = version_num in old_readme_md.read()
+        if os.path.isfile('README.md'):
+            with open('README.md', 'r') as old_readme_md:
+                old_readme_has_this_version = version_num in old_readme_md.read()
+        else:
+            old_readme_has_this_version = False
         if old_readme_has_this_version:
             print("Old README.md is not outdated, skipping modifying it")
         else:
