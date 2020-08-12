@@ -398,7 +398,7 @@ class TF2RichPresense:
                 client_state = (self.client.client_id, self.client.connected, self.client.ipc_path, self.client.pid, self.client.platform, self.client.socket)
                 self.log.debug(f"client state after disconnect: {client_state}")
             except Exception as err:
-                self.log.error(f"client error while disconnecting: {err}")
+                self.log.error(f"client error while disconnecting: {err}", reportable=False)
 
             self.log.info("Restarting")
             del self.log
@@ -460,8 +460,8 @@ class TF2RichPresense:
             self.client_connected = True
         except Exception as client_connect_error:
             if str(client_connect_error) in ("Can't send data to Discord via IPC.", "Can't connect to Discord Client."):
-                # often happens when Discord is in the middle of starting up. report it anyway
-                self.log.error(str(client_connect_error))
+                # often happens when Discord is in the middle of starting up
+                self.log.error(str(client_connect_error), reportable=False)
 
                 print(f'{self.current_time_formatted}{Style.BRIGHT}')
                 print(self.loc.text("Can't connect to Discord for Rich Presence."))
