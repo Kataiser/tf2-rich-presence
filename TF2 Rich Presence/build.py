@@ -16,6 +16,7 @@ from pathlib import Path
 import requests
 
 import changelog_generator
+import cython_compile
 
 
 # TODO: don't do this separate locations nonsense, convert to using a repo properly
@@ -223,6 +224,7 @@ def main(version_num='v1.14'):
         print(subprocess.run(compile_command, capture_output=True).stdout.decode('UTF8').replace('\r\n', '\n')[:-1])
     pyds = [Path(f'cython_build/{file}') for file in os.listdir('cython_build') if file.endswith('.pyd')]
     print(f"Compiled {len(pyds)} PYDs")
+    assert len(pyds) == len(cython_compile.targets)  # makes sure everything compiled
     for pyd in pyds:
         print("Copied", shutil.copy(pyd, Path(f'{new_build_folder_name}/resources/')))
 
@@ -304,9 +306,12 @@ def main(version_num='v1.14'):
     exe_path = f'tf2_rich_presence_{version_num}_self_extracting.exe'
     zip_path = f'tf2_rich_presence_{version_num}.zip'
     if release_build:
-        os.remove(exe_path)
-        os.remove(zip_path)
-        print(f"Deleted {exe_path} and {zip_path}")
+        if os.path.isfile(exe_path):
+            os.remove(exe_path)
+            print(f"Deleted {exe_path}")
+        if os.path.isfile(zip_path):
+            os.remove(zip_path)
+            print(f"Deleted {zip_path}")
     time.sleep(0.2)  # just to make sure everything is updated
     if os.path.isfile(f'tf2_rich_presence_{version_num}_self_extracting.exe.tmp'):
         os.remove(f'tf2_rich_presence_{version_num}_self_extracting.exe.tmp')

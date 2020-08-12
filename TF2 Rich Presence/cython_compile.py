@@ -11,9 +11,7 @@ from Cython.Build import cythonize
 def main():
     # make sure to only run this from build.py or cython_compile.bat, in order to get the command line args
 
-    targets = ('configs', 'console_log', 'custom_maps', 'detect_system_language', 'init', 'localization', 'logger', 'main', 'processes', 'settings', 'updater', 'utils', 'welcomer')
     og_cwd = os.getcwd()
-
     if not os.path.isdir('cython_build'):
         os.mkdir('cython_build')
 
@@ -27,6 +25,8 @@ def main():
 
         os.chdir(og_cwd)
 
+
+targets = ('configs', 'console_log', 'custom_maps', 'detect_system_language', 'init', 'localization', 'logger', 'main', 'processes', 'settings', 'updater', 'utils', 'welcomer')
 
 if __name__ == '__main__':
     main()
