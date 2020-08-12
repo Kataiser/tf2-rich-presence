@@ -34,20 +34,7 @@ def main(version_num='v1.14'):
             time.sleep(0.1)
         sys.stdout = Logger()
 
-    if release_build:
-        print(f"Building TF2 Rich Presence {version_num} for release")
-
-        if os.path.isdir('cython_build'):
-            shutil.rmtree('cython_build')
-            print("Deleted cython_build")
-        if os.path.isfile('README.md'):
-            os.remove('README.md')
-            print("Deleted README.md")
-        if os.path.isfile('Changelogs.html'):
-            os.remove('Changelogs.html')
-            print("Deleted Changelogs.html")
-    else:
-        print(f"Building TF2 Rich Presence {version_num}")
+    print(f"Building TF2 Rich Presence {version_num}{' for release' if release_build else ''}")
 
     if cli_skip_repo:
         github_repo_path = 'n'
@@ -123,6 +110,18 @@ def main(version_num='v1.14'):
 
         copy_dir_to_git('test_resources', Path(f'{github_repo_path}/TF2 Rich Presence/test_resources'))
         copy_dir_to_git('build_tools', Path(f'{github_repo_path}/TF2 Rich Presence/build_tools'))
+
+    # clear caches if releasing
+    if release_build:
+        if os.path.isdir('cython_build'):
+            shutil.rmtree('cython_build')
+            print("Deleted cython_build")
+        if os.path.isfile('README.md'):
+            os.remove('README.md')
+            print("Deleted README.md")
+        if os.path.isfile('Changelogs.html'):
+            os.remove('Changelogs.html')
+            print("Deleted Changelogs.html")
 
     # starts from scratch each time
     new_build_folder_name = f'TF2 Rich Presence {version_num}'
