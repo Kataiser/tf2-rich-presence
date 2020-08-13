@@ -168,8 +168,9 @@ def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_
             class_line_used = line
 
         elif 'Disconnect by user' in line and [un for un in user_usernames if un in line]:
+            current_map = 'In menus'
             current_class = 'Not queued'
-            class_line_used = line
+            map_line_used = class_line_used = line
 
         elif 'SV_ActivateServer' in line:  # full line: "SV_ActivateServer: setting tickrate to 66.7"
             just_started_server = True
