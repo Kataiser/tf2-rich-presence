@@ -141,7 +141,7 @@ def main(version_num='v1.14'):
     else:
         print("No old build folder found")
 
-    if github_repo_path != 'n' and update_changelogs:
+    if (github_repo_path != 'n' and update_changelogs) or release_build:
         print("Generating Changelogs.html")
         ratelimit_remaining = 100
         try:
