@@ -39,7 +39,7 @@ def official() -> dict:
     gamemodes['Control Point (Domination)'] = 'control-point'
     gamemodes['No gamemode'] = 'beta-map'
     gamemode_replacements = [('d(M', 'd (M'), ('t(D', 't (D'), (' Mode', ''), ('Developer aidTest', 'No gamemode'), ('Developer aidControl Point', 'Control Point')]
-    map_gamemodes = {}
+    map_gamemodes = {'background01': ('Background01', 'beta-map', 'No gamemode'), 'devtest': ('Devtest', 'beta-map', 'No gamemode')}
 
     r = requests.get('https://wiki.teamfortress.com/wiki/List_of_maps')
     soup = BeautifulSoup(r.text, 'lxml')
@@ -61,7 +61,9 @@ def official() -> dict:
         if map_mode and map_name:
             map_file = map_file.replace(' ', '')
             map_gamemodes[map_file] = (map_name, map_mode, gamemode_fancy)
-            print(f"{map_file}: {map_gamemodes[map_file]}")
+
+    for map_file in map_gamemodes:
+        print(f"{map_file}: {map_gamemodes[map_file]}")
 
     return map_gamemodes
 
