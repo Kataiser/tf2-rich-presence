@@ -73,17 +73,17 @@ class TestTF2RichPresense(unittest.TestCase):
 
         # test a couple common maps (in maps.json)
         self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'minecraftworld_a7', False, 5)), ('trading', 'Trading'))
-        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'cp_glassworks_rc6a', False, 5)), ('control-point', 'Control Point'))
+        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'mge_training_v8_beta4b', False, 5)), ('training', 'Training'))
 
         # don't use cache, force using the API (5 second timeout)
         self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'cp_catwalk_a5c', True, 5)), ('control-point', 'Control Point'))
-        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'koth_wubwubwub_remix_vip', True, 5)), ('koth', 'King of the Hill'))
+        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'cp_orange_x3', True, 5)), ('cp-orange', 'Orange'))
         self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'surf_air_arena_v4', True, 5)), ('surfing', 'Surfing'))
         self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'ytsb8eitybw', True, 5)), ('unknown_map', 'Unknown gamemode'))
 
         # cache allowed now
         self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'cp_catwalk_a5c', False, 5)), ('control-point', 'Control Point'))
-        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'koth_wubwubwub_remix_vip', False, 5)), ('koth', 'King of the Hill'))
+        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'cp_orange_x3', False, 5)), ('cp-orange', 'Orange'))
         self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'surf_air_arena_v4', False, 5)), ('surfing', 'Surfing'))
         self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'ytsb8eitybw', False, 5)), ('unknown_map', 'Unknown gamemode'))
 
