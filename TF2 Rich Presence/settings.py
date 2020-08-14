@@ -512,7 +512,7 @@ def fix_missing_settings(default: dict, current: dict) -> dict:
 
 
 # doesn't work if launching from Pycharm for some reason
-def set_window_icon(log: logger.Log, window: tk.Tk, wrench: bool):
+def set_window_icon(log, window: tk.Tk, wrench: bool):
     filename = 'tf2_logo_blurple_wrench.ico' if wrench else 'tf2_logo_blurple.ico'
 
     try:
