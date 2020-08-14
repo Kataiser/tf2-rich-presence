@@ -125,7 +125,7 @@ class Log:
             message_hash: int = zlib.adler32(message_in.encode('UTF8'))
 
             if message_hash not in db['error_hashes']:
-                sentry_sdk.capture_message(f"Reporting non-critical ERROR: {message_in}")
+                sentry_sdk.capture_message(message_in)
                 db['error_hashes'].append(message_hash)
                 utils.access_db(write=db)
             else:
