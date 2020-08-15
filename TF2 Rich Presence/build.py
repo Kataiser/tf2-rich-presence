@@ -290,6 +290,31 @@ def main(version_num='v1.14'):
     convert_bat_to_exe(os.path.abspath(Path(f'{new_build_folder_name}/Launch Rich Presence alongside TF2.bat')), version_num, 'tf2_logo_blurple.ico')
     convert_bat_to_exe(os.path.abspath(Path(f'{new_build_folder_name}/Change settings.bat')), version_num, 'tf2_logo_blurple_wrench.ico')
 
+    # ensure everything exists that needs to
+    assert os.listdir(Path(f'{new_build_folder_name}/logs')) == []
+    assert os.listdir(Path(f'{new_build_folder_name}/resources/__pycache__')) != []
+    assert os.listdir(Path(f'{new_build_folder_name}/resources/python')) != []
+    assert os.listdir(Path(f'{new_build_folder_name}/resources/python/packages')) != []
+    assert os.path.isfile(Path(f'{new_build_folder_name}/Changelogs.html'))
+    assert os.path.isfile(Path(f'{new_build_folder_name}/License.txt'))
+    assert os.path.isfile(Path(f'{new_build_folder_name}/Readme.txt'))
+    assert os.path.isfile(Path(f'{new_build_folder_name}/resources/python/python.exe'))
+    assert os.path.isfile(Path(f'{new_build_folder_name}/resources/APIs'))
+    assert os.path.isfile(Path(f'{new_build_folder_name}/resources/font_instructions.gif'))
+    assert os.path.isfile(Path(f'{new_build_folder_name}/resources/tf2_logo_blurple.ico'))
+    assert os.path.isfile(Path(f'{new_build_folder_name}/resources/tf2_logo_blurple_wrench.ico'))
+    assert os.path.isfile(Path(f'{new_build_folder_name}/resources/custom.py'))
+    assert os.path.isfile(Path(f'{new_build_folder_name}/resources/launcher.py'))
+    assert os.path.isfile(Path(f'{new_build_folder_name}/resources/build_info.txt'))
+    with open(Path(f'{new_build_folder_name}/resources/DB.json'), 'r') as assertjson_db:
+        assert json.load(assertjson_db) != {}
+    with open(Path(f'{new_build_folder_name}/resources/localization.json'), 'r', encoding='UTF8') as assertjson_loc:
+        assert json.load(assertjson_loc) != {}
+    with open(Path(f'{new_build_folder_name}/resources/maps.json'), 'r') as assertjson_maps:
+        assert json.load(assertjson_maps) != {}
+    assert len([f for f in os.listdir(Path(f'{new_build_folder_name}/resources')) if f.endswith('.pyd')]) == len(cython_compile.targets)
+    print("Final assertions passed")
+
     # append build.log to build_info.txt
     build_log_exists = os.path.isfile('build.log')
     if build_log_exists:
@@ -426,6 +451,8 @@ def convert_bat_to_exe(batch_location: str, vnum: str, icon_path: str):
     assert os.path.isfile(batch_location) and os.path.isfile(icon_path) and os.path.isfile(Path('build_tools/Bat_To_Exe_Converter.exe'))
     subprocess.run(f'{bat2exe_command_1} {bat2exe_command_2}')
     print(f"Moved from {batch_location} to {shutil.move(batch_location, move_location)}")
+    assert os.path.isfile(exe_location)
+    assert not os.path.isfile(batch_location)
 
 
 # copy a directory to the git repo
