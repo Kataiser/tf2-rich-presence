@@ -158,9 +158,8 @@ def main(version_num='v1.14'):
         generated_changelogs = True
         ratelimit_remaining = 100
 
-    files_in_cwd = os.listdir('.')
     last_build_time = None
-    for file in files_in_cwd:
+    for file in os.listdir('.'):
         if file.startswith('tf2_rich_presence_'):
             if file.endswith('_self_extracting.exe') or file.endswith('.zip'):
                 last_build_time = os.stat(file).st_mtime
@@ -198,19 +197,23 @@ def main(version_num='v1.14'):
 
         try:
             with open(file_dest_pair[0], 'r', encoding='UTF8') as file_source:
-                with open(Path(f'{file_dest_pair[1]}/{file_dest_pair[0]}'), 'w', encoding='utf-8') as file_target:
-                    modified_file = file_source.read()
-
-                    if file_dest_pair[0] in ('launcher.py', 'Readme.txt') or file_dest_pair[0].endswith('.bat'):
-                        modified_file = modified_file.replace('{tf2rpvnum}', version_num)
-                        modified_file = modified_file.replace('{built}', f"{datetime.datetime.now().strftime('%c')} CST")
-                    if file_dest_pair[0] == 'launcher.py':
-                        modified_file = modified_file.replace('DEBUG = True', 'DEBUG = False')
-
-                    file_target.write(modified_file)
-                    print(f"Copied (and possibly modified) {file_dest_pair[0]}")
+                modified_file = file_source.read()
         except UnicodeDecodeError:
             print("Copied", shutil.copy(*file_dest_pair))
+        else:
+            with open(Path(f'{file_dest_pair[1]}/{file_dest_pair[0]}'), 'w', encoding='UTF8') as file_target:
+                modified = False
+
+                if file_dest_pair[0] in ('launcher.py', 'Readme.txt') or file_dest_pair[0].endswith('.bat'):
+                    modified_file = modified_file.replace('{tf2rpvnum}', version_num)
+                    modified_file = modified_file.replace('{built}', f"{datetime.datetime.now().strftime('%c')} CST")
+                    modified = True
+                if file_dest_pair[0] == 'launcher.py':
+                    modified_file = modified_file.replace('DEBUG = True', 'DEBUG = False')
+                    modified = True
+
+                file_target.write(modified_file)
+                print(f"Copied{' (and modified)' if modified else ''} {file_dest_pair[0]}")
 
     # rename a couple files
     os.rename(Path(f'{new_build_folder_name}/resources/DB_default.json'), Path(f'{new_build_folder_name}/resources/DB.json'))
