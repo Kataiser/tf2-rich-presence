@@ -74,7 +74,7 @@ def launch():
 
 
 class TF2RichPresense:
-    def __init__(self, log: Union[logger.Log, None] = None):
+    def __init__(self, log: Union[logger.Log, None] = None, set_process_priority: bool = True):
         if log:
             self.log: logger.Log = log
         else:
@@ -114,12 +114,13 @@ class TF2RichPresense:
         self.last_name_scan_time: float = time.time()  # close enough
         self.steam_config_mtimes: List[Tuple[str, int]] = []
 
-        self_process: psutil.Process = psutil.Process()
-        priorities_before: tuple = (self_process.nice(), self_process.ionice())
-        self_process.nice(psutil.BELOW_NORMAL_PRIORITY_CLASS)
-        self_process.ionice(psutil.IOPRIO_LOW)
-        priorities_after: tuple = (self_process.nice(), self_process.ionice())
-        self.log.debug(f"Set process priorities from {priorities_before} to {priorities_after}")
+        if set_process_priority:
+            self_process: psutil.Process = psutil.Process()
+            priorities_before: tuple = (self_process.nice(), self_process.ionice())
+            self_process.nice(psutil.BELOW_NORMAL_PRIORITY_CLASS)
+            self_process.ionice(psutil.IOPRIO_LOW)
+            priorities_after: tuple = (self_process.nice(), self_process.ionice())
+            self.log.debug(f"Set process priorities from {priorities_before} to {priorities_after}")
 
         self.log.cleanup(20 if launcher.DEBUG else 10)
         self.log.debug(f"CPU: {psutil.cpu_count(logical=False)} cores, {psutil.cpu_count()} threads")

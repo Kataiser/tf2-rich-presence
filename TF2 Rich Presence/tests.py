@@ -9,6 +9,7 @@ import time
 import tkinter as tk
 import unittest
 
+import psutil
 import requests
 from discoIPC import ipc
 
@@ -47,20 +48,21 @@ class TestTF2RichPresense(unittest.TestCase):
 
     def test_interpret_console_log(self):
         recent_time = int(time.time()) - 10
-        app = main.TF2RichPresense(self.log)
+        app = main.TF2RichPresense(self.log, set_process_priority=False)
 
         self.assertEqual(app.interpret_console_log('test_resources\\console_in_menus.log', ['not Kataiser'], float('inf'), True), ('In menus', 'Not queued'))
         self.assertEqual(app.interpret_console_log('test_resources\\console_in_menus.log', ['not Kataiser'], 4, True), ('In menus', 'Not queued'))
         self.assertEqual(app.interpret_console_log('test_resources\\console_queued_casual.log', ['not Kataiser'], float('inf'), True), ('In menus', 'Queued for Casual'))
         self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', ['not Kataiser'], float('inf'), True), ('pl_badwater (hosting)', 'Pyro'))
         self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', ['not Kataiser'], float('inf'), True, recent_time), ('In menus', 'Not queued'))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', ['not Kataiser'], 0.2, True), ('In menus', 'Not queued'))
         self.assertEqual(app.interpret_console_log('test_resources\\console_custom_map.log', ['not Kataiser'], float('inf'), True), ('cp_catwalk_a5c (hosting)', 'Soldier'))
         self.assertEqual(app.interpret_console_log('test_resources\\console_soundemitter.log', ['not Kataiser'], float('inf'), True), ('In menus', 'Not queued'))
         self.assertEqual(app.interpret_console_log('test_resources\\console_queued_in_game.log', ['not Kataiser'], float('inf'), True), ('itemtest (hosting)', 'Queued for Casual'))
         self.assertEqual(app.interpret_console_log('test_resources\\console_empty.log', ['not Kataiser'], float('inf'), True), ('In menus', 'Not queued'))
 
     def test_steam_config_file(self):
-        app = main.TF2RichPresense(self.log)
+        app = main.TF2RichPresense(self.log, set_process_priority=False)
         self.assertEqual(configs.steam_config_file(app, 'test_resources\\'), {'Kataiser'})
 
     def test_find_custom_map_gamemode(self):
@@ -329,6 +331,10 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual(fix_activity_dict(app.activity),
                          {'details': 'In menus', 'timestamps': {'start': 0}, 'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2',
                                                                                         'large_image': 'main_menu', 'large_text': 'Main menu'}, 'state': ''})
+
+        self_process = psutil.Process()
+        self_process.nice(psutil.NORMAL_PRIORITY_CLASS)
+        self_process.ionice(psutil.IOPRIO_NORMAL)
 
     def test_init(self):
         try:
