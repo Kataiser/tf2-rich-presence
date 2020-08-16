@@ -192,12 +192,27 @@ class ProcessScanner:
                 self.process_data['TF2'] = copy.deepcopy(self.p_data_default['TF2'])
                 del self.parsed_tasklist['hl2.exe']
 
-    # makes sure "Team Fortress 2" exists in a process's path
+    # makes sure a process's path is a TF2 install, not some other game
     @functools.lru_cache(maxsize=None)
     def hl2_exe_is_tf2(self, hl2_exe_pid: int) -> bool:
         hl2_exe_path: str = self.get_info_from_pid(hl2_exe_pid, ('path',))['path']
+        is_tf2: bool = False
 
         if 'Team Fortress 2' in hl2_exe_path:
+            appid_path: str = os.path.join(hl2_exe_path, 'steam_appid.txt')
+
+            if os.path.isfile(appid_path):
+                with open(appid_path, 'rb') as appid_file:
+                    appid_read: bytes = appid_file.read()
+
+                    if appid_read.startswith(b'440\n'):
+                        is_tf2 = True
+                    else:
+                        self.log.debug(f"steam_appid.txt contains \"{appid_read}\" ")
+            else:
+                self.log.debug(f"steam_appid.txt doesn't exist (install folder: {os.listdir(hl2_exe_path)})")
+        
+        if is_tf2:
             self.log.debug(f"Found TF2 hl2.exe at {hl2_exe_path}")
             return True
         else:
