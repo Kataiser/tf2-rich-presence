@@ -12,7 +12,7 @@ import time
 import traceback
 import zlib
 from operator import itemgetter
-from typing import Dict, TextIO, Union
+from typing import Dict, List, TextIO, Tuple, Union
 
 import sentry_sdk
 
@@ -35,6 +35,7 @@ class Log:
             self.filename = os.path.join('logs', f'TF2RP_{user_pc_name}_{user_identifier}_{launcher.VERSION}_{days_since_epoch_local}.log')
 
         # setup
+        self.filename_errors: str = os.path.join('logs', f'TF2RP_{user_pc_name}_{user_identifier}_{launcher.VERSION}.errors.log')
         self.last_log_time: float = time.perf_counter()
         self.console_log_path: Union[str, None] = None
         self.to_stderr: bool = launcher.DEBUG
@@ -42,6 +43,7 @@ class Log:
         self.enabled: bool = settings.get('log_level') != 'Off'
         self.log_levels: list = ['Debug', 'Info', 'Error', 'Critical', 'Off']
         self.log_level: str = settings.get('log_level')
+        self.local_error_hashes: List[int] = []  # just in case DB.json breaks
 
         if self.enabled:
             if not os.path.isdir('logs'):
@@ -64,6 +66,8 @@ class Log:
         if not os.access(db_path, os.W_OK):
             self.error("DB.json can't be written to. This could cause crashes")
 
+        self.debug(f"Created {repr(self)}")
+
     def __repr__(self) -> str:
         return f"logger.Log at {self.filename} (enabled={self.enabled} level={self.log_level}, stderr={self.to_stderr})"
 
@@ -76,7 +80,7 @@ class Log:
         return self.enabled
 
     # adds a line to the current log file
-    def write_log(self, level: str, message_out: str):
+    def write_log(self, level: str, message_out: str, use_errors_file: bool = False):
         if self.enabled:
             if self.last_log_time:
                 time_since_last: str = f'+{format(time.perf_counter() - self.last_log_time, ".4f")}'  # the format() adds trailing zeroes
@@ -91,6 +95,10 @@ class Log:
             try:
                 self.log_file.write(full_line)
                 self.log_file.flush()
+                
+                if use_errors_file and not launcher.DEBUG:
+                    with open(self.filename_errors, 'a', encoding='UTF8') as errors_log:
+                        errors_log.write(full_line)
             except UnicodeEncodeError as error:
                 self.error(f"Couldn't write log due to UnicodeEncodeError: {error}")
             except OSError as error:
@@ -118,36 +126,37 @@ class Log:
         message_in = str(message_in)
 
         if 'Error' in self.log_levels_allowed:
-            self.write_log('ERROR', message_in)
+            self.write_log('ERROR', message_in, use_errors_file=True)
 
         if reportable and self.sentry_level == 'All errors':
             db: Dict[str, Union[dict, bool, list]] = utils.access_db()
             message_hash: int = zlib.adler32(message_in.encode('UTF8'))
 
-            if message_hash not in db['error_hashes']:
+            if message_hash not in db['error_hashes'] and message_hash not in self.local_error_hashes:
+                self.local_error_hashes.append(message_hash)
                 sentry_sdk.capture_message(message_in)
                 db['error_hashes'].append(message_hash)
                 utils.access_db(write=db)
             else:
                 self.debug("Not reporting the error (has already been reported)")
 
-    # a log with a level of CRITICAL (uncaught, fatal errors, probably sent to Sentry)
+    # a log with a level of CRITICAL (uncaught, fatal errors, probably (hopefully) sent to Sentry)
     def critical(self, message_in: str):
         if 'Critical' in self.log_levels_allowed:
-            self.write_log('CRITICAL', message_in)
+            self.write_log('CRITICAL', message_in, use_errors_file=True)
 
     # deletes older log files and compresses the rest
     def cleanup(self, max_logs: int):
-        all_logs: list = [os.path.join('logs', log) for log in os.listdir('logs')]
-        all_logs_times: list = [(log_filename, os.stat(log_filename).st_mtime_ns) for log_filename in all_logs]
-        all_logs_sorted: list = [log_pair[0] for log_pair in sorted(all_logs_times, key=itemgetter(1))]
+        all_logs: List[str] = [os.path.join('logs', log) for log in os.listdir('logs') if not log.endswith('.errors.log')]
+        all_logs_times: List[Tuple[str, int]] = [(log_filename, os.stat(log_filename).st_mtime_ns) for log_filename in all_logs]
+        all_logs_sorted: List[str] = [log_pair[0] for log_pair in sorted(all_logs_times, key=itemgetter(1))]
         overshoot: int = max_logs - len(all_logs_sorted)
-        deleted_log: list = []
-        compressed_log: list = []
+        deleted_logs: List[str] = []
+        compressed_logs: List[Tuple[str, Union[float, None]]] = []
 
         while overshoot < 0:
             log_to_delete: str = all_logs_sorted.pop(0)
-            deleted_log.append(log_to_delete)
+            deleted_logs.append(log_to_delete)
 
             try:
                 os.remove(log_to_delete)
@@ -156,7 +165,7 @@ class Log:
 
             overshoot = max_logs - len(all_logs_sorted)
 
-        self.debug(f"Deleted {len(deleted_log)} log(s): {deleted_log}")
+        self.debug(f"Deleted {len(deleted_logs)} log(s): {deleted_logs}")
 
         for old_log in [log for log in all_logs if not log.endswith('.gz') and os.path.isfile(log) and log != self.filename]:
             with open(old_log, 'rb') as old_log_r:
@@ -167,10 +176,10 @@ class Log:
                     old_log_w.write(data_out)
 
             os.remove(old_log)
-            comp_ratio = round(len(data_out) / len(data_in), 3) if data_in else None  # fixes a ZeroDivisionError
-            compressed_log.append((old_log, comp_ratio))
+            comp_ratio: Union[float, None] = round(len(data_out) / len(data_in), 3) if data_in else None  # fixes a ZeroDivisionError
+            compressed_logs.append((old_log, comp_ratio))
 
-        self.debug(f"Compressed {len(compressed_log)} log(s): {compressed_log}")
+        self.debug(f"Compressed {len(compressed_logs)} log(s): {compressed_logs}")
 
 
 if __name__ == '__main__':
