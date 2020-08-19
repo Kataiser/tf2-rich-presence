@@ -7,9 +7,6 @@ import time
 import traceback
 from typing import Dict, KeysView, List, Tuple, Union
 
-import requests
-from requests import Response
-
 import logger
 import settings
 import utils
@@ -62,7 +59,8 @@ def find_custom_map_gamemode(log, map_filename: str, force_api: bool = False, ti
             log.debug(f"Outdated cache ({cached_data[2]} -> {seconds_since_epoch_now})")
             raise KeyError
     except KeyError:
-        gamemodes_keys: KeysView[str] = gamemodes.keys()
+        import requests
+        from requests import Response
 
         try:
             api_response: Response = requests.get(f'https://teamwork.tf/api/v1/map-stats/map/{map_filename}?key={utils.get_api_key("teamwork")}', timeout=timeout)
@@ -85,6 +83,7 @@ def find_custom_map_gamemode(log, map_filename: str, force_api: bool = False, ti
         try:
             log.debug(f"All gamemodes found: {map_info['all_gamemodes']}")
             map_gamemode: List[str] = map_info['all_gamemodes']
+            gamemodes_keys: KeysView[str] = gamemodes.keys()
 
             for gamemode in map_gamemode:
                 if gamemode in gamemodes_keys:

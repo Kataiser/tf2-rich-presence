@@ -5,9 +5,6 @@
 import traceback
 from typing import Tuple
 
-import requests
-from requests import Response
-
 import launcher
 import localization
 import logger
@@ -23,10 +20,10 @@ def check_for_update(log: logger.Log, current_version: str, timeout: float):
 
     if not settings.get('check_updates'):
         log.debug("Updater is disabled, skipping")
-        del log
-        raise SystemExit
+        return
 
     log.debug(f"Checking for updates, timeout: {timeout} secs")
+    import requests
 
     try:
         newest_version, downloads_url, changelog = access_github_api(timeout)
@@ -63,6 +60,8 @@ def check_for_update(log: logger.Log, current_version: str, timeout: float):
 
 # actually accesses the Github api, in a seperate function for tests
 def access_github_api(time_limit: float) -> Tuple[str, str, str]:
+    import requests
+    from requests import Response
     r: Response = requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/releases/latest', timeout=time_limit)
     response: dict = r.json()
 
