@@ -211,7 +211,7 @@ class ProcessScanner:
                         self.log.debug(f"steam_appid.txt contains \"{appid_read}\" ")
             else:
                 self.log.debug(f"steam_appid.txt doesn't exist (install folder: {os.listdir(hl2_exe_path)})")
-        
+
         if is_tf2:
             self.log.debug(f"Found TF2 hl2.exe at {hl2_exe_path}")
             return True

@@ -66,7 +66,7 @@ class Localizer:
 
 @functools.lru_cache(maxsize=1)
 def access_localization_file(path: str = 'localization.json', append: Union[tuple, None] = None) -> dict:
-    with open(path, 'r', encoding='utf-8') as localization_file:
+    with open(path, 'r', encoding='UTF8') as localization_file:
         localization_data: dict = json.load(localization_file)
 
     if not append:
@@ -82,14 +82,14 @@ def access_localization_file(path: str = 'localization.json', append: Union[tupl
             for language in ['German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian', 'Korean', 'Chinese', 'Japanese']:
                 localization_data[append_hash][language] = ""
 
-            with open(path, 'w', encoding='utf-8') as localization_file:
+            with open(path, 'w', encoding='UTF8') as localization_file:
                 json.dump(localization_data, localization_file, indent=4, ensure_ascii=False)
         else:
             print(f"Already exists with hash {append_hash}")
 
 
 def hash_text(text: str) -> str:
-    return str(zlib.adler32(text.replace(launcher.VERSION, '').encode('utf-8'))).ljust(10, '0')  # shoulda just used hash() from the start
+    return str(zlib.adler32(text.replace(launcher.VERSION, '').encode('UTF8'))).ljust(10, '0')  # shoulda just used hash() from the start
 
 
 if __name__ == '__main__':

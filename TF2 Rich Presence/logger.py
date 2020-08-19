@@ -50,7 +50,7 @@ class Log:
                 os.mkdir('logs')
 
             self.log_levels_allowed: list = [level for level in self.log_levels if self.log_levels.index(level) >= self.log_levels.index(self.log_level)]
-            self.log_file: TextIO = open(self.filename, 'a', encoding='utf-8')
+            self.log_file: TextIO = open(self.filename, 'a', encoding='UTF8')
         else:
             self.log_levels_allowed = self.log_levels
 
@@ -60,7 +60,7 @@ class Log:
             if old_filename != self.filename and 'gzip' not in old_filename:
                 if self.enabled:
                     self.log_file.close()
-                    self.log_file = open(self.filename, 'a', encoding='utf-8')
+                    self.log_file = open(self.filename, 'a', encoding='UTF8')
 
         db_path: str = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
         if not os.access(db_path, os.W_OK):
@@ -95,7 +95,7 @@ class Log:
             try:
                 self.log_file.write(full_line)
                 self.log_file.flush()
-                
+
                 if use_errors_file and not launcher.DEBUG:
                     with open(self.filename_errors, 'a', encoding='UTF8') as errors_log:
                         errors_log.write(full_line)
