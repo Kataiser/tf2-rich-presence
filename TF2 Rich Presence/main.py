@@ -157,7 +157,7 @@ class TF2RichPresense:
     def import_custom(self):
         custom_functions_path: str = os.path.join('resources', 'custom.py') if os.path.isdir('resources') else 'custom.py'
 
-        if os.path.isdir(custom_functions_path):
+        if os.path.isfile(custom_functions_path):
             with open(custom_functions_path, 'r') as custom_functions_file:
                 custom_functions_lines: int = len(custom_functions_file.readlines())
 
@@ -182,13 +182,13 @@ class TF2RichPresense:
         self.loop_iteration += 1
         self.log.debug(f"Main loop iteration this app session: {self.loop_iteration}")
 
-        if self.custom_functions:
-            self.custom_functions.before_loop(self)
-
         self.old_activity1 = copy.deepcopy(self.activity)
         self.old_activity2 = copy.deepcopy(self.activity)
         if self.loc.text("Time on map: {0}").replace('{0}', '') in self.old_activity1['state']:
             self.old_activity1['state'] = ''
+
+        if self.custom_functions:
+            self.custom_functions.before_loop(self)
 
         # this as a one-liner is beautiful :)
         p_data: Dict[str, Dict[str, Union[bool, str, int, None]]] = self.process_scanner.scan()
