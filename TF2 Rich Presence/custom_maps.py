@@ -3,6 +3,7 @@
 # cython: language_level=3
 
 import functools
+import json
 import time
 import traceback
 from typing import Dict, KeysView, List, Tuple, Union
@@ -64,9 +65,9 @@ def find_custom_map_gamemode(log, map_filename: str, force_api: bool = False, ti
 
         try:
             api_response: Response = requests.get(f'https://teamwork.tf/api/v1/map-stats/map/{map_filename}?key={utils.get_api_key("teamwork")}', timeout=timeout)
-            map_info: dict = api_response.json()
             log.debug(f"API lookup got {len(api_response.content)} byte response")
-        except requests.RequestException:
+            map_info: dict = api_response.json()
+        except (requests.RequestException, json.JSONDecodeError):
             log.error(f"Error connecting to teamwork.tf: {traceback.format_exc()}")
 
             if map_prefix == 'cp':
