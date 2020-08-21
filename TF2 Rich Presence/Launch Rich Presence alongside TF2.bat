@@ -6,8 +6,17 @@
 
 @echo off
 TITLE TF2 Rich Presence ({tf2rpvnum})
+
+if not exist resources\ ( 
+    echo Resources folder missing, exiting
+    goto bail
+)
+
 "%~dp0\resources\python\python.exe" -I -OO "%~dp0\resources\launcher.py" --m init --welcome_version 1
 
 :start
 "%~dp0\resources\python\python.exe" -I -OO "%~dp0\resources\launcher.py" --m main
 goto start
+
+:bail
+pause
