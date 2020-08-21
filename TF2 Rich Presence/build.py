@@ -313,7 +313,12 @@ def main(version_num='v1.14'):
     with open(Path(f'{new_build_folder_name}/resources/maps.json'), 'r') as assertjson_maps:
         assert json.load(assertjson_maps) != {}
     assert len([f for f in os.listdir(Path(f'{new_build_folder_name}/resources')) if f.endswith('.pyd')]) == len(cython_compile.targets)
-    print("Final assertions passed")
+    try:
+        assertions_enabled = False
+        assert False
+    except AssertionError:
+        print("Final assertions passed")
+        assertions_enabled = True
 
     # append build.log to build_info.txt
     build_log_exists = os.path.isfile('build.log')
@@ -431,6 +436,8 @@ def main(version_num='v1.14'):
         print(f"Couldn't delete {len(missing_pycs)}/{len(pycs_to_delete)} PYCs: {missing_pycs}", file=sys.stderr)
     if not build_log_exists:
         print("build.log doesn't exist (or is old), consider setting up your IDE to save the console to a file or just not using --ide", file=sys.stderr)
+    if not assertions_enabled:
+        print("Assertions are disabled, build is probably fine but please run without -O or -OO)", file=sys.stderr)
     if git_username != 'Kataiser':
         print(f"Please note that your git username ({git_username}) has been included in {build_info_path}")
 
