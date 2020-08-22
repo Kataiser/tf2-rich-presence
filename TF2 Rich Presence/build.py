@@ -132,6 +132,12 @@ def main(version_num='v1.14'):
         if os.path.isfile(Path(f'{new_build_folder_name}/Changelogs.html')):
             with open(Path(f'{new_build_folder_name}/Changelogs.html'), 'r') as old_changelogs:
                 update_changelogs = version_num not in old_changelogs.read()
+        # potentially create a mess, but it's better than them being lost
+        for file in os.listdir(Path(f'{new_build_folder_name}/logs')):
+            if file.endswith('.errors.log'):
+                if not os.path.isdir('error_logs'):
+                    os.mkdir('error_logs')
+                print("Copied", shutil.copy(Path(f'{new_build_folder_name}/logs/{file}'), 'error_logs'))
         try:
             shutil.rmtree(new_build_folder_name)
         except (OSError, PermissionError):
