@@ -287,7 +287,7 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertGreaterEqual(new_dimensions[1], 200)
 
     def test_localization(self):
-        all_keys = localization.access_localization_file().keys()
+        all_keys = tuple(localization.access_localization_file().keys())
         english_lines = [localization.access_localization_file()[key]['English'] for key in all_keys]
         num_lines_total = len(english_lines)
         incorrect_hashes = []
@@ -306,7 +306,14 @@ class TestTF2RichPresense(unittest.TestCase):
 
             num_equal_lines = 0
             for line_english in english_lines:
-                line_localized = localizer.text(line_english)
+                try:
+                    line_localized = localizer.text(line_english)
+                except KeyError:
+                    if localization.hash_text(line_english) in all_keys[-4:]:
+                        continue
+                    else:
+                        raise
+
                 self.assertNotEqual(line_localized, "")
                 self.assertEqual(line_localized.count('{0}'), line_english.count('{0}'))
                 self.assertEqual(line_localized.count('{1}'), line_english.count('{1}'))
@@ -317,7 +324,7 @@ class TestTF2RichPresense(unittest.TestCase):
             if language == 'English':
                 self.assertEqual(num_equal_lines, num_lines_total)
             else:
-                self.assertLess(num_equal_lines, num_lines_total / 2)
+                self.assertLess(num_equal_lines, num_lines_total / 4)
 
     def test_main_simple(self):
         log = logger.Log()
