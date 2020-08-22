@@ -359,7 +359,7 @@ class GUI(tk.Frame):
 
             try:
                 self.restore_button.state(['disabled'])
-            except NameError:
+            except (NameError, AttributeError):
                 self.log.error("Restore button doesn't exist yet")
 
             if need_to_reload:
