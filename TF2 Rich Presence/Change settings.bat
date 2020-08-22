@@ -12,6 +12,9 @@ if not exist resources\ (
 )
 
 start "" "%~dp0\resources\python\pythonw.exe" -I -OO "%~dp0\resources\launcher.py" --m settings
+goto close
 
 :bail
 pause
+
+:close
