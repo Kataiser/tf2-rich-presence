@@ -106,7 +106,7 @@ def main(version_num='v1.14'):
         print("Copied", shutil.copy('README-source.MD', github_repo_path))
         print("Copied", shutil.copy('requirements.txt', github_repo_path))
         print("Copied", shutil.copy('pycs_to_delete.txt', Path(f'{github_repo_path}/TF2 Rich Presence')))
-        print("Copied", shutil.copy('python-3.7.7-embed-win32.zip', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('python-3.7.9-embed-win32.zip', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copyfile(Path(f'{github_repo_path}/TF2 Rich Presence/DB_default.json'), Path(f'{github_repo_path}/TF2 Rich Presence/DB.json')))
 
         copy_dir_to_git('test_resources', Path(f'{github_repo_path}/TF2 Rich Presence/test_resources'))
@@ -266,8 +266,8 @@ def main(version_num='v1.14'):
     print(f"Created {build_info_path}")
 
     # copies the python interpreter
-    python_source = os.path.abspath('python-3.7.7-embed-win32')
-    python_target = os.path.abspath(Path(f'{new_build_folder_name}/resources/python'))
+    python_source = os.path.abspath('python-3.7.9-embed-win32')
+    python_target = os.path.abspath(Path(f'{new_build_folder_name}/resources/python-3.7.9-embed-win32'))
     print(f"Copying from {python_source}\n\tto {python_target}: ", end='')
     assert os.path.isdir(python_source) and not os.path.isdir(python_target)
     if sys.platform == 'win32':
@@ -299,12 +299,12 @@ def main(version_num='v1.14'):
     # ensure everything exists that needs to
     assert os.listdir(Path(f'{new_build_folder_name}/logs')) == []
     assert os.listdir(Path(f'{new_build_folder_name}/resources/__pycache__')) != []
-    assert os.listdir(Path(f'{new_build_folder_name}/resources/python')) != []
-    assert os.listdir(Path(f'{new_build_folder_name}/resources/python/packages')) != []
+    assert os.listdir(Path(f'{new_build_folder_name}/resources/python-3.7.9-embed-win32')) != []
+    assert os.listdir(Path(f'{new_build_folder_name}/resources/python-3.7.9-embed-win32/packages')) != []
     assert os.path.isfile(Path(f'{new_build_folder_name}/Changelogs.html'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/License.txt'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/Readme.txt'))
-    assert os.path.isfile(Path(f'{new_build_folder_name}/resources/python/python.exe'))
+    assert os.path.isfile(Path(f'{new_build_folder_name}/resources/python-3.7.9-embed-win32/python.exe'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/resources/APIs'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/resources/font_instructions.gif'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/resources/tf2_logo_blurple.ico'))
