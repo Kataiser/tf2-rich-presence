@@ -40,7 +40,7 @@ def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_
     if not os.path.isfile(console_log_path):
         self.log.error(f"console.log doesn't exist, issuing warning (files/dirs in /tf/: {os.listdir(os.path.dirname(console_log_path))})", reportable=False)
         del self.log
-        no_condebug_warning(tf2_is_running=True)
+        no_condebug_warning(self.log, tf2_is_running=True)
 
     # only interpret console.log again if it's been modified
     console_log_mtime: int = int(os.stat(console_log_path).st_mtime)
@@ -198,9 +198,7 @@ def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_
 
 
 # alerts the user that they don't seem to have -condebug
-def no_condebug_warning(tf2_is_running: bool = True):
-    loc = localization.Localizer(language=settings.get('language'))
-
+def no_condebug_warning(loc: localization.Localizer, tf2_is_running: bool = True):
     print(Style.BRIGHT, end='')
     print('\n{0}'.format(loc.text("Your TF2 installation doesn't yet seem to be set up properly. To fix:")))
     print(Style.RESET_ALL, end='')

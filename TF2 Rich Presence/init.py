@@ -11,6 +11,7 @@ from colorama import Fore
 
 import detect_system_language
 import launcher
+import localization
 import logger
 import settings
 import updater
@@ -26,16 +27,17 @@ def launch(welcome_version):
         log_init.debug(f"Current log: {log_init.filename}")
         log_init.info(f"Log level: {log_init.log_level}")
 
-        welcomer.welcome(log_init, welcome_version)
-
         default_settings: dict = settings.get_setting_default(return_all=True)
         current_settings: dict = settings.access_registry()
         missing_settings: dict = settings.fix_missing_settings(default_settings, current_settings)
         if missing_settings:
             log_init.error(f"Missing setting(s), defaults reverted: {missing_settings}")
 
+        loc_init = localization.Localizer(log=log_init, language=settings.get('language'))
+
+        welcomer.welcome(log_init, loc_init, welcome_version)
         detect_system_language.detect(log_init)
-        updater.check_for_update(log_init, launcher.VERSION, float(settings.get('request_timeout')))
+        updater.check_for_update(log_init, loc_init, launcher.VERSION, float(settings.get('request_timeout')))
         holidays(log_init)
 
         del log_init

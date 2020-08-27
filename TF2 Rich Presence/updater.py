@@ -15,9 +15,7 @@ import utils
 # TODO: an auto-updater (https://github.com/Squirrel/Squirrel.Windows maybe?)
 
 # uses Github api to get the tag of the newest public release and compare it to the current version number, alerting the user if out of date
-def check_for_update(log: logger.Log, current_version: str, timeout: float):
-    loc = localization.Localizer(language=settings.get('language'))
-
+def check_for_update(log: logger.Log, loc: localization.Localizer, current_version: str, timeout: float):
     if not settings.get('check_updates'):
         log.debug("Updater is disabled, skipping")
         return
@@ -29,13 +27,13 @@ def check_for_update(log: logger.Log, current_version: str, timeout: float):
         newest_version, downloads_url, changelog = access_github_api(timeout)
     except (requests.Timeout, requests.exceptions.ReadTimeout):
         log.error(f"Update check timed out", reportable=False)
-        failure_message(current_version, f"timed out after {timeout} seconds")
+        failure_message(loc, current_version, f"timed out after {timeout} seconds")
     except requests.RequestException:
         log.error(f"Connection error in updater: {traceback.format_exc()}", reportable=False)
-        failure_message(current_version)
+        failure_message(loc, current_version)
     except Exception:
         log.error(f"Non-connection based update error: {traceback.format_exc()}")
-        failure_message(current_version, 'unknown error')
+        failure_message(loc, current_version, 'unknown error')
     else:
         if current_version == newest_version:
             log.debug(f"Up to date ({current_version})")
@@ -85,9 +83,7 @@ def format_changelog(log_text: str) -> str:
 
 
 # either timed out or some other exception
-def failure_message(current_version: str, error_message: str = None):
-    loc = localization.Localizer(language=settings.get('language'))
-
+def failure_message(loc: localization.Localizer, current_version: str, error_message: str = None):
     if error_message:
         line1 = loc.text("Couldn't connect to GitHub to check for updates ({0}).").format(error_message)
     else:
@@ -103,5 +99,4 @@ class RateLimitError(Exception):
 
 
 if __name__ == '__main__':
-    log = logger.Log()
-    check_for_update(log, launcher.VERSION, 10.0)
+    check_for_update(logger.Log(), localization.Localizer(language=settings.get('language')), launcher.VERSION, 10.0)

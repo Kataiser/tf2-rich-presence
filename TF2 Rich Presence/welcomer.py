@@ -12,9 +12,8 @@ import logger
 import settings
 
 
-def welcome(log: logger.Log, message_version: str):
-    # localize the window title
-    loc = localization.Localizer(language=settings.get('language'))
+def welcome(log: logger.Log, loc: localization.Localizer, message_version: str):
+    # set the window title
     ctypes.windll.kernel32.SetConsoleTitleW(loc.text("TF2 Rich Presence ({0})").format(launcher.VERSION))
     log.debug(f"Welcoming with message version {message_version}")
 
@@ -32,5 +31,4 @@ def welcome(log: logger.Log, message_version: str):
 
 
 if __name__ == '__main__':
-    log = logger.Log()
-    welcome(log, '0')
+    welcome(logger.Log(), localization.Localizer(language=settings.get('language')), '0')
