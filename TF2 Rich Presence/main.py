@@ -231,7 +231,7 @@ class TF2RichPresense:
             # TODO: use a state machine and/or much more consistent var names
 
             actual_current_class: str = bottom_line  # https://www.portal2sounds.com/1130
-            queued_in_game: bool = bottom_line not in console_log.tf2_classes  # ditto
+            queued_in_game: bool = bottom_line not in console_log.tf2_classes and bottom_line != 'unselected'  # ditto
 
             if 'In menus' in top_line:
                 # in menus displays the main menu
