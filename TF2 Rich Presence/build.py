@@ -11,6 +11,7 @@ import shutil
 import subprocess
 import sys
 import time
+import zipfile
 from pathlib import Path
 
 import requests
@@ -267,13 +268,23 @@ def main(version_num='v1.14'):
 
     # copies the python interpreter
     python_source = os.path.abspath('python-3.7.9-embed-win32')
-    python_target = os.path.abspath(Path(f'{new_build_folder_name}/resources/python-3.7.9-embed-win32'))
-    print(f"Copying from {python_source}\n\tto {python_target}: ", end='')
-    assert os.path.isdir(python_source) and not os.path.isdir(python_target)
-    if sys.platform == 'win32':
-        subprocess.run(f'xcopy \"{python_source}\" \"{python_target}\\\" /E /Q')
+    python_source_zip = os.path.abspath('python-3.7.9-embed-win32.zip')
+    if os.path.isdir(python_source):
+        python_target = os.path.abspath(Path(f'{new_build_folder_name}/resources/python-3.7.9-embed-win32'))
+        print(f"Copying from {python_source}\n\tto {python_target}: ", end='')
+        assert os.path.isdir(python_source) and not os.path.isdir(python_target)
+        if sys.platform == 'win32':
+            subprocess.run(f'xcopy \"{python_source}\" \"{python_target}\\\" /E /Q')
+        else:
+            raise SyntaxError("Whatever the Linux/MacOS equivalent of xcopy is")
+    elif os.path.isfile(python_source_zip):
+        python_target = os.path.abspath(Path(f'{new_build_folder_name}/resources'))
+        print(f"Extracting from {python_source_zip}\n\tto {python_target}")
+        with zipfile.ZipFile(python_source_zip, 'r') as interpreter_zip:
+            assert interpreter_zip.testzip() is None
+            interpreter_zip.extractall(path=python_target)
     else:
-        raise SyntaxError("Whatever the Linux/MacOS equivalent of xcopy is")
+        raise SystemError("Python interpreter missing")
 
     # compile PYCs, for faster initial load times
     # TODO: if it's not too slow, determine which ones need to be deleted at build time (maybe cache somehow?)
