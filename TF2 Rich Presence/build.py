@@ -327,15 +327,15 @@ def main(version_num='v1.14'):
         assertions_enabled = True
 
     # append build.log to build_info.txt
+    if not ide_build_log_handling:
+        sys.stdout.finish()
+    time.sleep(0.1)
     build_log_exists = os.path.isfile('build.log')
     if build_log_exists:
         # just to make sure it's actually up-to-date
         build_log_exists = time.time() - os.stat('build.log').st_mtime < 10
     if build_log_exists:
         print("Appending build.log to build_info.txt")
-        if not ide_build_log_handling:
-            sys.stdout.finish()
-        time.sleep(0.1)
         with open('build.log', 'r') as build_log_file:
             build_log = build_log_file.read().replace(getpass.getuser(), 'USER')
         with open(build_info_path, 'a') as build_info_txt:
