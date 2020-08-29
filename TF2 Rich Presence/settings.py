@@ -382,17 +382,16 @@ class GUI(tk.Frame):
         access_registry(save_dict=settings_to_save)
         self.log.info(f"Settings have been saved as: {settings_to_save}")
 
-        processes = str(subprocess.check_output('tasklist /fi "STATUS eq running"', creationflags=0x08000000))  # the creation flag disables a cmd window flash
-        if 'Launch Rich Presence' in processes or 'Launch TF2 with Rich' in processes:
-            restart_message = self.loc.text("TF2 Rich Presence is currently running, so it needs to be restarted for changes to take effect.")
-        else:
-            restart_message = ""
+        restart_message = ""
+        if len(settings_changed) >= 1:
+            processes = str(subprocess.check_output('tasklist /fi "STATUS eq running"', creationflags=0x08000000))  # the creation flag disables a cmd window flash
+            if 'Launch Rich Presence' in processes or 'Launch TF2 with Rich' in processes:
+                restart_message = self.loc.text("TF2 Rich Presence is currently running, so it needs to be restarted for changes to take effect.")
 
-        settings_changed_num = len(settings_changed)
-        if settings_changed_num == 1:
+        if len(settings_changed) == 1:
             messagebox.showinfo(self.loc.text("Save and close"), self.loc.text("1 setting has been changed. {0}").format(restart_message))
-        elif settings_changed_num > 1:
-            messagebox.showinfo(self.loc.text("Save and close"), self.loc.text("{0} settings have been changed. {1}").format(settings_changed_num, restart_message))
+        elif len(settings_changed) > 1:
+            messagebox.showinfo(self.loc.text("Save and close"), self.loc.text("{0} settings have been changed. {1}").format(len(settings_changed), restart_message))
 
         self.master.destroy()  # closes window
 
