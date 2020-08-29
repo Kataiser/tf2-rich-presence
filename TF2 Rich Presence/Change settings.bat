@@ -11,7 +11,7 @@ if not exist resources\ (
     goto bail
 )
 
-start "" "%~dp0\resources\python\pythonw.exe" -I -OO "%~dp0\resources\launcher.py" --m settings
+start "" "%~dp0\resources\python-3.7.9-embed-win32\pythonw.exe" -I -OO "%~dp0\resources\launcher.py" --m settings
 goto close
 
 :bail

@@ -13,10 +13,10 @@ if not exist resources\ (
 )
 
 start steam://rungameid/440
-"%~dp0\resources\python\python.exe" -I -OO "%~dp0\resources\launcher.py" --m init --welcome_version 0
+"%~dp0\resources\python-3.7.9-embed-win32\python.exe" -I -OO "%~dp0\resources\launcher.py" --m init --welcome_version 0
 
 :start
-"%~dp0\resources\python\python.exe" -I -OO "%~dp0\resources\launcher.py" --m main
+"%~dp0\resources\python-3.7.9-embed-win32\python.exe" -I -OO "%~dp0\resources\launcher.py" --m main
 goto start
 
 :bail
