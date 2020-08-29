@@ -63,7 +63,7 @@ For making and testing changes, or simply always running the most up-to-date cod
 - Map-specific images, instead of gamemodes
 	- Would cause all sorts of problems, including removing the class icon style option
 	- Discord art asset limit is 150, the rest of the program uses 47, and there are 118 vanilla maps in the game
-	- So won't be be able to get every map, can just limit to the most popular though
+	- So won't be able to get every map, can just limit to the most popular though
 - A proper installer
 	- Also maybe store DB.json and settings in AppData\Roaming
 	- Make a [Chocolatey](https://chocolatey.org/) package as well, could be done after v2 release though
