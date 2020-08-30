@@ -40,7 +40,7 @@ def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_
     if not os.path.isfile(console_log_path):
         self.log.error(f"console.log doesn't exist, issuing warning (files/dirs in /tf/: {os.listdir(os.path.dirname(console_log_path))})", reportable=False)
         del self.log
-        no_condebug_warning(self.log, tf2_is_running=True)
+        no_condebug_warning(self.loc, tf2_is_running=True)
 
     # only interpret console.log again if it's been modified
     console_log_mtime: int = int(os.stat(console_log_path).st_mtime)
