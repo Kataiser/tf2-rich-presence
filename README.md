@@ -60,6 +60,9 @@ For making and testing changes, or simply always running the most up-to-date cod
 - Server player count
 	- Doable with either [python-valve](https://github.com/serverstf/python-valve) or [python-a2s](https://github.com/Yepoleb/python-a2s)
 	- Would conflict with the class/time on map option, needs to be a three way setting
+- Run as a service
+	- Idea basically stolen from [cyclowns/tf2-discord](https://github.com/cyclowns/tf2-discord)
+	- Alternatively, minimize to taskbar (if possible)
 - Map-specific images, instead of gamemodes
 	- Would cause all sorts of problems, including removing the class icon style option
 	- Discord art asset limit is 150, the rest of the program uses 47, and there are 118 vanilla maps in the game
