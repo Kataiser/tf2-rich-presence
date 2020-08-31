@@ -43,6 +43,9 @@ class GUI(tk.Frame):
         master.title(self.loc.text("TF2 Rich Presence ({0}) settings").format(launcher.VERSION))
         master.resizable(0, 0)  # disables resizing
         set_window_icon(self.log, master, True)
+        if not reload_settings:
+            self.window_x: Union[int, None] = None
+            self.window_y: Union[int, None] = None
 
         self.log_levels = ['Debug', 'Info', 'Error', 'Critical', 'Off']
         self.sentry_levels = ['All errors', 'Crashes', 'Never']
@@ -220,11 +223,12 @@ class GUI(tk.Frame):
         self.ok_button.grid(row=0, column=3, sticky=tk.W, padx=0, pady=(20, 20))
         self.buttons_frame.grid(row=100, columnspan=3)
 
-        target_h, target_y = (600, 500)
-        window_x = round((self.winfo_screenwidth() / 2) - (target_h / 2))
-        window_y = round((self.winfo_screenheight() / 2) - (target_y / 2)) - 40
-        master.geometry(f'+{window_x}+{window_y}')
-        self.log.debug(f"Window position: {(window_x, window_y)}")
+        if not self.window_x and not self.window_y:
+            target_h, target_y = (600, 500)
+            self.window_x = round((self.winfo_screenwidth() / 2) - (target_h / 2))
+            self.window_y = round((self.winfo_screenheight() / 2) - (target_y / 2)) - 40
+        master.geometry(f'+{self.window_x}+{self.window_y}')
+        self.log.debug(f"Window position: {(self.window_x, self.window_y)}")
 
         self.update_default_button_state()
         master.update()
@@ -271,6 +275,8 @@ class GUI(tk.Frame):
 
             selected_settings = (self.sentry_level, self.wait_time, self.map_invalidation_hours, self.check_updates, self.request_timeout, self.hide_queued_gamemode, self.log_level,
                                  self.console_scan_kb, self.class_pic_type, self.language, self.map_time, self.trim_console_log)
+            self.window_x = self.master.winfo_rootx() - 8
+            self.window_y = self.master.winfo_rooty() - 31
             self.__init__(self.master, self.log, reload_settings=selected_settings)
             self.show_font_message(language_selected)
 
