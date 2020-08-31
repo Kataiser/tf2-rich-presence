@@ -57,6 +57,7 @@ For making and testing changes, or simply always running the most up-to-date cod
 	- I'm fairly confident I know how to implement this (it's a bit of work though)
 	- Would require doing RPC with [pypresence](https://github.com/qwertyquerty/pypresence) due to a bug in [discoIPC](https://github.com/k3rn31p4nic/discoIPC)
 	- Would also have the benefit of not requiring two (slow) Python interpreter launches
+	- This is the only criteria I'll require for release v2.0, any of the others could be in later versions
 - Server player count
 	- Doable with either [python-valve](https://github.com/serverstf/python-valve) or [python-a2s](https://github.com/Yepoleb/python-a2s)
 	- Would conflict with the class/time on map option, needs to be a three way setting
@@ -69,4 +70,5 @@ For making and testing changes, or simply always running the most up-to-date cod
 	- So won't be able to get every map, can just limit to the most popular though
 - A proper installer
 	- Also maybe store DB.json and settings in AppData\Roaming
-	- Make a [Chocolatey](https://chocolatey.org/) package as well, could be done after v2 release though
+	- Make a [Chocolatey](https://chocolatey.org/) package as well
+	- Possibly include an autoupdater, either [Squirrel](https://github.com/Squirrel/Squirrel.Windows) or rolling my own
