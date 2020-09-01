@@ -61,6 +61,19 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual(app.interpret_console_log('test_resources\\console_queued_in_game.log', ['not Kataiser'], float('inf'), True), ('itemtest (hosting)', 'Queued for Casual'))
         self.assertEqual(app.interpret_console_log('test_resources\\console_empty.log', ['not Kataiser'], float('inf'), True), ('In menus', 'Not queued'))
 
+        # tests trimming
+        badwater_small = 'test_resources\\console_badwater.log'
+        badwater_big = 'test_resources\\console_badwater_big.log'
+        shutil.copy(badwater_small, badwater_big)
+        with open(badwater_big, 'rb+') as console_badwater_sacrifice:
+            console_badwater_sacrifice.write(console_badwater_sacrifice.read())
+        initial_size = os.stat(badwater_big).st_size
+        self.assertEqual(app.interpret_console_log(badwater_big, ['not Kataiser']), ('pl_badwater (hosting)', 'Pyro'))
+        trimmed_size = os.stat(badwater_big).st_size
+        self.assertLess(trimmed_size, initial_size)
+        self.assertEqual(trimmed_size, (1024 ** 2) * 2)
+        os.remove(badwater_big)
+
     def test_steam_config_file(self):
         app = main.TF2RichPresense(self.log, set_process_priority=False)
         self.assertEqual(configs.steam_config_file(app, 'test_resources\\'), {'Kataiser'})

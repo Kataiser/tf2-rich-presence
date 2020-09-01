@@ -68,16 +68,15 @@ def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_
             lines = consolelog_file.readlines()
             self.log.debug(f"console.log: {consolelog_file_size} bytes, {len(lines)} lines (didn't skip lines)")
 
-    # limit the file size, for readlines perf
-    if consolelog_file_size > byte_limit * SIZE_LIMIT_MULTIPLE_TRIGGER and len(lines) > 15000 and settings.get('trim_console_log') and not force and not launcher.DEBUG:
-
+    # limit the file size, for better readlines performance
+    if consolelog_file_size > byte_limit * SIZE_LIMIT_MULTIPLE_TRIGGER and len(lines) > SIZE_LIMIT_MIN_LINES and settings.get('trim_console_log') and not force:
         trim_size = int(byte_limit * SIZE_LIMIT_MULTIPLE_TARGET)
         self.log.debug(f"Limiting console.log to {trim_size} bytes")
 
         try:
             with open(console_log_path, 'rb+') as consolelog_file_b:
                 # this can probably be done faster and/or cleaner
-                consolelog_file_b.seek(trim_size, 2)
+                consolelog_file_b.seek(-trim_size, 2)
                 consolelog_file_trimmed: bytes = consolelog_file_b.read()
                 trimmed_line_count: int = consolelog_file_trimmed.count(b'\n')
 
@@ -86,7 +85,7 @@ def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_
                     consolelog_file_b.truncate()
                     consolelog_file_b.write(consolelog_file_trimmed)
                 else:
-                    self.log.error(f"Trimmed line count will be {trimmed_line_count} (< {SIZE_LIMIT_MIN_LINES}), aborting")
+                    self.log.error(f"Trimmed line count will be {trimmed_line_count} (< {SIZE_LIMIT_MIN_LINES}), aborting (trim len = {len(consolelog_file_trimmed)})")
         except PermissionError as error:
             self.log.error(f"Failed to trim console.log: {error}")
 

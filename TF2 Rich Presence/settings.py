@@ -473,7 +473,7 @@ def get_setting_default(setting: str = '', return_all: bool = False) -> Union[st
                 'request_timeout': 5,
                 'hide_queued_gamemode': False,
                 'log_level': 'Debug',
-                'console_scan_kb': 1000,
+                'console_scan_kb': 1024,
                 'class_pic_type': 'Icon',
                 'language': 'English',
                 'map_time': True,
