@@ -8,6 +8,6 @@ idna==2.10
 lxml==4.5.2
 psutil==5.7.2
 requests==2.24.0
-sentry_sdk==0.17.0
+sentry_sdk==0.17.2
 urllib3==1.25.10
 vdf==3.3
