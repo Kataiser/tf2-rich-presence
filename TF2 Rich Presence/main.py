@@ -112,7 +112,7 @@ class TF2RichPresense:
         self.custom_functions = None
         self.valid_usernames: Set[str] = set()
         self.last_name_scan_time: float = time.time()  # close enough
-        self.steam_config_mtimes: List[Tuple[str, int]] = []
+        self.steam_config_mtimes: Dict[str, int] = {}
 
         if set_process_priority:
             self_process: psutil.Process = psutil.Process()
@@ -197,11 +197,12 @@ class TF2RichPresense:
         if p_data['Steam']['running']:
             config_scan_needed: bool = self.steam_config_mtimes == []
 
-            for config_and_mtime in self.steam_config_mtimes:
-                new_mtime: int = int(os.stat(config_and_mtime[0]).st_mtime)
+            for steam_config in self.steam_config_mtimes:
+                old_mtime: int = self.steam_config_mtimes[steam_config]
+                new_mtime: int = int(os.stat(steam_config).st_mtime)
 
-                if new_mtime != config_and_mtime[1]:
-                    self.log.debug(f"Rescanning Steam config files ({new_mtime} > {config_and_mtime[1]} for {config_and_mtime[0]})")
+                if new_mtime > old_mtime:
+                    self.log.debug(f"Rescanning Steam config files ({new_mtime} > {old_mtime} for {steam_config})")
                     config_scan_needed = True
 
             if config_scan_needed:

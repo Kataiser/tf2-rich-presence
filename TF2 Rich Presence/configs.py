@@ -95,9 +95,9 @@ def steam_config_file(self, exe_location: str, tf2_is_running: bool = False) -> 
                 if '-condebug' in tf2_launch_options:
                     found_condebug = True
                     self.log.debug(f"Found -condebug in launch options ({tf2_launch_options})")
-                    config_mtime: Tuple[str, int] = (global_config_file_path, int(os.stat(global_config_file_path).st_mtime))
-                    self.steam_config_mtimes.append(config_mtime)
-                    self.log.debug(f"Added mtime ({config_mtime[1]})")
+                    config_mtime: int = int(os.stat(global_config_file_path).st_mtime)
+                    self.steam_config_mtimes[global_config_file_path] = config_mtime
+                    self.log.debug(f"Added mtime ({config_mtime})")
 
                     if possible_username:
                         found_usernames.add(possible_username)
