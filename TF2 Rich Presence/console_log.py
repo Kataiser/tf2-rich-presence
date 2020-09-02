@@ -193,6 +193,35 @@ def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_
     if map_line_used == '' and class_line_used != '':
         self.log.error("Have class_line_used without map_line_used")
 
+    # remove empty lines (bot spam)
+    if 'In menus' in current_map and not force:
+        if self.cleanup_primed:
+            self.log.debug("Potentially cleaning up console.log")
+            console_log_lines_out: List[str] = []
+            empty_line_count: int = 0
+
+            with open(console_log_path, 'r', encoding='UTF8', errors='replace') as console_log_read:
+                console_log_lines_in: List[str] = console_log_read.readlines()
+
+            for line in console_log_lines_in:
+                if line.strip(' \t') == '\n':
+                    empty_line_count += 1
+                else:
+                    console_log_lines_out.append(line)
+
+            if empty_line_count >= 20:
+                with open(console_log_path, 'w', encoding='UTF8') as console_log_write:
+                    for line in console_log_lines_out:
+                        console_log_write.write(line)
+
+                self.log.debug(f"Removed {empty_line_count} empty lines from console.log")
+            else:
+                self.log.debug(f"Didn't remove {empty_line_count} empty lines from console.log")
+
+            self.cleanup_primed = False
+    else:
+        self.cleanup_primed = True
+
     return current_map, current_class
 
 

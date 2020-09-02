@@ -62,17 +62,29 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual(app.interpret_console_log('test_resources\\console_empty.log', ['not Kataiser'], float('inf'), True), ('In menus', 'Not queued'))
 
         # tests trimming
-        badwater_small = 'test_resources\\console_badwater.log'
-        badwater_big = 'test_resources\\console_badwater_big.log'
-        shutil.copy(badwater_small, badwater_big)
-        with open(badwater_big, 'rb+') as console_badwater_sacrifice:
+        trimtest_small = 'test_resources\\console_badwater.log'
+        trimtest_big = 'test_resources\\console_badwater_big.log'
+        shutil.copy(trimtest_small, trimtest_big)
+        with open(trimtest_big, 'rb+') as console_badwater_sacrifice:
             console_badwater_sacrifice.write(console_badwater_sacrifice.read())
-        initial_size = os.stat(badwater_big).st_size
-        self.assertEqual(app.interpret_console_log(badwater_big, ['not Kataiser']), ('pl_badwater (hosting)', 'Pyro'))
-        trimmed_size = os.stat(badwater_big).st_size
+        initial_size = os.stat(trimtest_big).st_size
+        self.assertEqual(app.interpret_console_log(trimtest_big, ['not Kataiser']), ('pl_badwater (hosting)', 'Pyro'))
+        trimmed_size = os.stat(trimtest_big).st_size
         self.assertLess(trimmed_size, initial_size)
         self.assertEqual(trimmed_size, (1024 ** 2) * 2)
-        os.remove(badwater_big)
+        os.remove(trimtest_big)
+
+        # tests removing empty lines
+        emptytest_big = 'test_resources\\console_in_menus.log'
+        emptytest_small = 'test_resources\\console_in_menus_small.log'
+        shutil.copy(emptytest_big, emptytest_small)
+        initial_size = os.stat(emptytest_small).st_size
+        app.interpret_console_log(emptytest_small, ['not Kataiser'], float('inf'))
+        cleaned_size = os.stat(emptytest_small).st_size
+        print(initial_size, cleaned_size)
+        self.assertLess(cleaned_size, initial_size)
+        self.assertEqual(app.interpret_console_log(emptytest_small, ['not Kataiser'], float('inf')), ('In menus', 'Not queued'))
+        os.remove(emptytest_small)
 
     def test_steam_config_file(self):
         app = main.TF2RichPresense(self.log, set_process_priority=False)

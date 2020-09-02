@@ -113,6 +113,7 @@ class TF2RichPresense:
         self.valid_usernames: Set[str] = set()
         self.last_name_scan_time: float = time.time()  # close enough
         self.steam_config_mtimes: Dict[str, int] = {}
+        self.cleanup_primed: bool = True
 
         if set_process_priority:
             self_process: psutil.Process = psutil.Process()
@@ -206,7 +207,6 @@ class TF2RichPresense:
                     config_scan_needed = True
 
             if config_scan_needed:
-                self.steam_config_mtimes = []
                 self.valid_usernames.update(self.steam_config_file(p_data['Steam']['path'], p_data['TF2']['running']))
                 self.log.debug(f"Usernames with -condebug: {self.valid_usernames}")
         elif p_data['Steam']['pid'] is not None or p_data['Steam']['path'] is not None:
