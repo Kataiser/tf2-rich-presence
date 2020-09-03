@@ -338,7 +338,7 @@ class TF2RichPresense:
                     if settings.get('map_time'):
                         print(class_line)  # this means the current class. god this desperately needs a refactor
 
-                    window_title = window_title_format_main.format(base_window_title, actual_current_class, self.current_map)
+                    window_title = window_title_format_main.format(base_window_title, actual_current_class, map_out)
 
                 print(Style.RESET_ALL, end='')
 
