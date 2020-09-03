@@ -19,9 +19,12 @@ python-3.7.9-embed-win32\packages\sentry_sdk\integrations\__pycache__\aws_lambda
 python-3.7.9-embed-win32\packages\sentry_sdk\integrations\__pycache__\beam.cpython-37.opt-2.pyc
 python-3.7.9-embed-win32\packages\sentry_sdk\integrations\__pycache__\bottle.cpython-37.opt-2.pyc
 python-3.7.9-embed-win32\packages\sentry_sdk\integrations\__pycache__\celery.cpython-37.opt-2.pyc
+python-3.7.9-embed-win32\packages\sentry_sdk\integrations\__pycache__\executing.cpython-37.opt-2.pyc
 python-3.7.9-embed-win32\packages\sentry_sdk\integrations\__pycache__\falcon.cpython-37.opt-2.pyc
 python-3.7.9-embed-win32\packages\sentry_sdk\integrations\__pycache__\flask.cpython-37.opt-2.pyc
+python-3.7.9-embed-win32\packages\sentry_sdk\integrations\__pycache__\gcp.cpython-37.opt-2.pyc
 python-3.7.9-embed-win32\packages\sentry_sdk\integrations\__pycache__\gnu_backtrace.cpython-37.opt-2.pyc
+python-3.7.9-embed-win32\packages\sentry_sdk\integrations\__pycache__\pure_eval.cpython-37.opt-2.pyc
 python-3.7.9-embed-win32\packages\sentry_sdk\integrations\__pycache__\pyramid.cpython-37.opt-2.pyc
 python-3.7.9-embed-win32\packages\sentry_sdk\integrations\__pycache__\redis.cpython-37.opt-2.pyc
 python-3.7.9-embed-win32\packages\sentry_sdk\integrations\__pycache__\rq.cpython-37.opt-2.pyc
@@ -36,11 +39,13 @@ python-3.7.9-embed-win32\packages\sentry_sdk\integrations\django\__pycache__\asg
 python-3.7.9-embed-win32\packages\sentry_sdk\integrations\django\__pycache__\middleware.cpython-37.opt-2.pyc
 python-3.7.9-embed-win32\packages\sentry_sdk\integrations\django\__pycache__\templates.cpython-37.opt-2.pyc
 python-3.7.9-embed-win32\packages\sentry_sdk\integrations\django\__pycache__\transactions.cpython-37.opt-2.pyc
+python-3.7.9-embed-win32\packages\sentry_sdk\integrations\django\__pycache__\views.cpython-37.opt-2.pyc
 python-3.7.9-embed-win32\packages\sentry_sdk\integrations\spark\__pycache__\__init__.cpython-37.opt-2.pyc
 python-3.7.9-embed-win32\packages\sentry_sdk\integrations\spark\__pycache__\spark_driver.cpython-37.opt-2.pyc
 python-3.7.9-embed-win32\packages\sentry_sdk\integrations\spark\__pycache__\spark_worker.cpython-37.opt-2.pyc
 python-3.7.9-embed-win32\packages\urllib3\contrib\__pycache__\appengine.cpython-37.opt-2.pyc
 python-3.7.9-embed-win32\packages\urllib3\contrib\__pycache__\ntlmpool.cpython-37.opt-2.pyc
+python-3.7.9-embed-win32\packages\urllib3\contrib\__pycache__\pyopenssl.cpython-37.opt-2.pyc
 python-3.7.9-embed-win32\packages\urllib3\contrib\__pycache__\securetransport.cpython-37.opt-2.pyc
 python-3.7.9-embed-win32\packages\urllib3\contrib\_securetransport\__pycache__\__init__.cpython-37.opt-2.pyc
 python-3.7.9-embed-win32\packages\urllib3\contrib\_securetransport\__pycache__\bindings.cpython-37.opt-2.pyc
