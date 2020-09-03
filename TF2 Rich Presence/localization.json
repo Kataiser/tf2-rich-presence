@@ -853,20 +853,6 @@
         "Chinese": "最大千字节console.log要扫描: ",
         "Japanese": "キロバイトの最大値console.logをスキャンするには: "
     },
-    "3314620921": {
-        "English": "Internet connection timeout (for updater and custom maps), in seconds: ",
-        "German": "Zeitüberschreitung der Internetverbindung (für Updater und benutzerdefinierte Karten) in Sekunden: ",
-        "French": "Délai d'attente de la connexion Internet (pour les mises à jour et les cartes personnalisées), en secondes : ",
-        "Spanish": "Tiempo de espera para la conexión a Internet (para actualizaciones y mapas personalizados), en segundos: ",
-        "Portuguese": "Tempo limite de conexão à Internet (para atualização e mapas personalizados), em segundos: ",
-        "Italian": "Timeout della connessione Internet (per l'aggiornamento e le mappe personalizzate), in pochi secondi: ",
-        "Dutch": "Time-out van de internetverbinding (voor updater en aangepaste kaarten), in seconden: ",
-        "Polish": "Czas oczekiwania na połączenie z Internetem (w przypadku aktualizacji i map niestandardowych), w sekundach: ",
-        "Russian": "Таймаут подключения к Интернету (для апдейтера и пользовательских карт), в секундах: ",
-        "Korean": "인터넷 연결 시간 제한(를 위한 업데이터와 사용자 정의도),초: ",
-        "Chinese": "互联网连接超时（更新程序和自定义地图），以秒为单位: ",
-        "Japanese": "インターネット接続タイムアウト(アップデータカスタムマップ),秒: "
-    },
     "3316786350": {
         "English": "Mario Kart",
         "German": "Mario Kart",
@@ -1968,5 +1954,19 @@
         "Korean": "Windows 명령 프롬프트의 기본 글꼴은{0}문자를 지원하지 않습니다. 여기에 그것을 해결하는 방법은 다음과 같습니다:",
         "Chinese": "Windows命令提示符的默认字体不支持{0}字符。下面是如何解决这个问题。",
         "Japanese": "Windowsのコマンドプロンプトのデフォルトフォントが{0}文字をサポートしていません。これを修正する方法は以下の通りです。"
+    },
+    "1334582221": {
+        "English": "Internet connection timeout (for updater and some custom maps), in seconds: ",
+        "German": "Zeitüberschreitung der Internetverbindung (für Updater und einige benutzerdefinierte Karten), in Sekunden: ",
+        "French": "Délai de connexion à Internet (pour la mise à jour et certaines cartes personnalisées), en secondes : ",
+        "Spanish": "Tiempo de espera de la conexión a Internet (para el actualizador y algunos mapas personalizados), en segundos: ",
+        "Portuguese": "Tempo limite de conexão à Internet (para atualizador e alguns mapas personalizados), em segundos: ",
+        "Italian": "Timeout della connessione a Internet (per l'aggiornamento e alcune mappe personalizzate), in pochi secondi: ",
+        "Dutch": "Time-out van de internetverbinding (voor updater en enkele aangepaste kaarten), in seconden: ",
+        "Polish": "Czas oczekiwania na połączenie z Internetem (dla programu updater i niektórych map niestandardowych), w sekundach: ",
+        "Russian": "Тайм-аут подключения к Интернету (для обновления и некоторых пользовательских карт), в секундах: ",
+        "Korean": "인터넷 연결 시간 초과(업데이터 및 일부 사용자 지정 맵 용),초 단위:",
+        "Chinese": "互联网连接超时（更新程序和一些自定义地图），以秒为单位:",
+        "Japanese": "インターネット接続のタイムアウト (アップデータと一部のカスタム マップの) 秒単位:"
     }
 }

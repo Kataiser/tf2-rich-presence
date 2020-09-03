@@ -134,7 +134,7 @@ class GUI(tk.Frame):
             self.loc.text("Check for program updates when launching")))
         setting6_frame = ttk.Frame(self.lf_advanced)
         setting6_text = ttk.Label(setting6_frame, text="{}".format(
-            self.loc.text("Internet connection timeout (for updater and custom maps), in seconds: ")))
+            self.loc.text("Internet connection timeout (for updater and some custom maps), in seconds: ")))
         setting6_option = ttk.Spinbox(setting6_frame, textvariable=self.request_timeout, width=6, from_=0, to=60, validate='all', validatecommand=(check_int_command, '%P', 60),
                                       command=self.update_default_button_state)
         setting8 = ttk.Checkbutton(self.lf_main, variable=self.hide_queued_gamemode, command=self.update_default_button_state, text="{}".format(
