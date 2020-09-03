@@ -61,7 +61,10 @@ class Localizer:
         if self.language == 'English':
             return english_text
         else:
-            return access_localization_file(self.loc_file_path)[english_text_adler32][self.language]
+            try:
+                return access_localization_file(self.loc_file_path)[english_text_adler32][self.language]
+            except KeyError as error:
+                raise KeyError(f"{error}, ({self.loc_file_path}, {english_text_adler32}, {self.language})")
 
 
 @functools.lru_cache(maxsize=1)

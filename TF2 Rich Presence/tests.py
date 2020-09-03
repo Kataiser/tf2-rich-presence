@@ -334,7 +334,7 @@ class TestTF2RichPresense(unittest.TestCase):
                 try:
                     line_localized = localizer.text(line_english)
                 except KeyError:
-                    if localization.hash_text(line_english) in all_keys[-4:]:
+                    if localization.hash_text(line_english) in ('1040127901', '9411019900', '1004668653', '2473140856'):
                         continue
                     else:
                         raise
