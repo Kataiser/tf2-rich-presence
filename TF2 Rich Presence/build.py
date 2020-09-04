@@ -234,7 +234,6 @@ def main(version_num='v1.14.1'):
         print(subprocess.run(compile_command, capture_output=True).stdout.decode('UTF8').replace('\r\n', '\n')[:-1])
     pyds = [Path(f'cython_build/{file}') for file in os.listdir('cython_build') if file.endswith('.pyd')]
     print(f"Compiled {len(pyds)} PYDs")
-    assert len(pyds) == len(cython_compile.targets)  # makes sure everything compiled
     for pyd in pyds:
         print("Copied", shutil.copy(pyd, Path(f'{new_build_folder_name}/resources/')))
 
@@ -329,7 +328,8 @@ def main(version_num='v1.14.1'):
         assert json.load(assertjson_loc) != {}
     with open(Path(f'{new_build_folder_name}/resources/maps.json'), 'r') as assertjson_maps:
         assert json.load(assertjson_maps) != {}
-    assert len([f for f in os.listdir(Path(f'{new_build_folder_name}/resources')) if f.endswith('.pyd')]) == len(cython_compile.targets)
+    for file in cython_compile.targets:
+        assert os.stat(f'{file}.py').st_mtime < os.stat(Path(f'cython_build/{file}.cp37-win32.pyd')).st_mtime
     try:
         assertions_enabled = False
         assert False
