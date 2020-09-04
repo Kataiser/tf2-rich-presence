@@ -329,7 +329,7 @@ def main(version_num='v1.14.1'):
     with open(Path(f'{new_build_folder_name}/resources/maps.json'), 'r') as assertjson_maps:
         assert json.load(assertjson_maps) != {}
     for file in cython_compile.targets:
-        pyd_extension = 'cp37-amd64.pyd' if sys.maxsize.bit_length() > 32 else 'cp37-win32.pyd'
+        pyd_extension = 'cp37-win_amd64.pyd' if sys.maxsize.bit_length() > 32 else 'cp37-win32.pyd'
         assert os.stat(f'{file}.py').st_mtime < os.stat(Path(f'cython_build/{file}.{pyd_extension}')).st_mtime
     try:
         assertions_enabled = False
