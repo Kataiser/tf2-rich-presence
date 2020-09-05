@@ -196,7 +196,7 @@ class TF2RichPresense:
 
         # reads steam config files to find usernames with -condebug (on init, and if any of them have been modified)
         if p_data['Steam']['running']:
-            config_scan_needed: bool = self.steam_config_mtimes == []
+            config_scan_needed: bool = self.steam_config_mtimes == {}
 
             for steam_config in self.steam_config_mtimes:
                 old_mtime: int = self.steam_config_mtimes[steam_config]
