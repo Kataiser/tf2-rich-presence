@@ -26,8 +26,8 @@ def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_
     kataiser_seen_on: Union[str, None] = None
 
     match_types: Dict[str, str] = {'12v12 Casual Match': 'Casual', 'MvM Practice': 'MvM (Boot Camp)', 'MvM MannUp': 'MvM (Mann Up)', '6v6 Ladder Match': 'Competitive'}
-    menus_messages: tuple = ('Server shutting down', 'For FCVAR_REPLICATED', '[TF Workshop]', 'Lobby destroyed', 'Disconnect:', 'destroyed Lobby', 'destroyed CAsyncWavDataCache',
-                             'Disconnecting from abandoned', 'Missing map', 'Host_Error')
+    menus_messages: tuple = ('Lobby destroyed', 'For FCVAR_REPLICATED', '[TF Workshop]', 'Disconnecting from abandoned', 'Server shutting down', 'destroyed Lobby', 'Disconnect:',
+                             'destroyed CAsyncWavDataCache', 'Connection failed after', 'Missing map', 'Host_Error')
     menus_message: str
 
     hide_queued_gamemode: bool = settings.get('hide_queued_gamemode')
