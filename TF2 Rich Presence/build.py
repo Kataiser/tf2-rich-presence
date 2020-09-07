@@ -288,7 +288,7 @@ def main(version_num='v1.14.1'):
     # compile PYCs, for faster initial load times
     # TODO: if it's not too slow, determine which ones need to be deleted at build time (maybe cache somehow?)
     print("Compiling PYCs")
-    compileall.compile_dir(Path(f'{new_build_folder_name}/resources'), optimize=2, quiet=True)
+    compileall.compile_dir(Path(f'{new_build_folder_name}/resources'), quiet=True)
     with open('pycs_to_delete.txt', 'r') as pycs_to_delete_txt:
         pycs_to_delete = [pyc_path.rstrip('\n') for pyc_path in pycs_to_delete_txt.readlines()]
     missing_pycs = []
