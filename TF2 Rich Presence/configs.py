@@ -3,7 +3,7 @@
 # cython: language_level=3
 
 import os
-from typing import List, Set, Tuple, Union
+from typing import List, Set, Union
 
 import vdf
 

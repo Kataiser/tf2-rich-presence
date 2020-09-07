@@ -3,17 +3,16 @@
 # cython: language_level=3
 
 import os
-from typing import Dict, List, Tuple, Union
+from typing import Dict, List, Set, Tuple, Union
 
 from colorama import Fore, Style
 
-import launcher
 import localization
 import settings
 
 
 # reads a console.log and returns current map and class
-def interpret(self, console_log_path: str, user_usernames: Union[list, set], kb_limit: float = float(settings.get('console_scan_kb')), force: bool = False,
+def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: float = float(settings.get('console_scan_kb')), force: bool = False,
               tf2_start_time: int = 0) -> Tuple[str, str]:
     TF2_LOAD_TIME_ASSUMPTION: int = 10
     SIZE_LIMIT_MULTIPLE_TRIGGER: int = 4

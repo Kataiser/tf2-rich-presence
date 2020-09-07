@@ -5,8 +5,8 @@
 # Quite limited but someone may find a use it (I know I have)
 # Also you can replace a .pyd file here with a .py of the same name (sans .cp37-win32) and it'll import
 
-import main
 import logger
+import main
 
 
 class TF2RPCustom:
