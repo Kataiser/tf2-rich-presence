@@ -42,13 +42,13 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
         no_condebug_warning(self.loc, tf2_is_running=True)
 
     # only interpret console.log again if it's been modified
-    console_log_mtime: int = int(os.stat(console_log_path).st_mtime)
-    if not force and console_log_mtime == self.old_console_log_mtime:
+    self.console_log_mtime = int(os.stat(console_log_path).st_mtime)
+    if not force and self.console_log_mtime == self.old_console_log_mtime:
         self.log.debug(f"Not rescanning console.log, remaining on {self.old_console_log_interpretation}")
         return self.old_console_log_interpretation
 
-    # TF2 takes some time to load the console when starting up, so until it's been modified to avoid getting outdated information
-    console_log_mtime_relative: int = console_log_mtime - tf2_start_time
+    # TF2 takes some time to load the console when starting up, so wait until it's been modified to avoid getting outdated information
+    console_log_mtime_relative: int = self.console_log_mtime - tf2_start_time
     if console_log_mtime_relative <= TF2_LOAD_TIME_ASSUMPTION:
         self.log.debug(f"console.log's mtime relative to TF2's start time is {console_log_mtime_relative} (<= {TF2_LOAD_TIME_ASSUMPTION}), assuming default state")
         return current_map, current_class

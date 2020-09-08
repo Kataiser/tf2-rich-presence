@@ -105,6 +105,7 @@ class TF2RichPresense:
         self.current_map: Union[str, None] = None  # don't trust this variable
         self.time_changed_map: float = time.time()
         self.has_seen_kataiser: bool = False
+        self.console_log_mtime: Union[int, None] = None
         self.old_console_log_mtime: Union[int, None] = None
         self.old_console_log_interpretation: tuple = ('', '')
         self.map_gamemodes: Dict[str, Dict[str, List[str]]] = utils.load_maps_db()
@@ -228,8 +229,10 @@ class TF2RichPresense:
             console_log_path: str = os.path.join(p_data['TF2']['path'], 'tf', 'console.log')
             top_line: str
             bottom_line: str
-            top_line, bottom_line = self.interpret_console_log(console_log_path, self.valid_usernames, tf2_start_time=p_data['TF2']['time'])
             # TODO: use a state machine and/or much more consistent var names
+            top_line, bottom_line = self.interpret_console_log(console_log_path, self.valid_usernames, tf2_start_time=p_data['TF2']['time'])
+            self.old_console_log_mtime = self.console_log_mtime
+            self.old_console_log_interpretation = (top_line, bottom_line)
 
             actual_current_class: str = bottom_line  # https://www.portal2sounds.com/1130
             queued_in_game: bool = bottom_line not in console_log.tf2_classes and bottom_line != 'unselected'  # ditto

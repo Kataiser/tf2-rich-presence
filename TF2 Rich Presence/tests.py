@@ -81,7 +81,6 @@ class TestTF2RichPresense(unittest.TestCase):
         initial_size = os.stat(emptytest_small).st_size
         app.interpret_console_log(emptytest_small, {'not Kataiser'}, float('inf'))
         cleaned_size = os.stat(emptytest_small).st_size
-        print(initial_size, cleaned_size)
         self.assertLess(cleaned_size, initial_size)
         self.assertEqual(app.interpret_console_log(emptytest_small, {'not Kataiser'}, float('inf')), ('In menus', 'Not queued'))
         os.remove(emptytest_small)
