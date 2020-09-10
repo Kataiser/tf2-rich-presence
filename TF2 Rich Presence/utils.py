@@ -47,6 +47,7 @@ def get_api_key(service: str) -> str:
     else:
         apis_path = 'APIs'
 
+    # compressed only for very basic obfuscation
     with gzip.open(apis_path, 'r') as api_keys_file:
         return json.load(api_keys_file)[service]
 
