@@ -25,21 +25,25 @@ def find_custom_map_gamemode(log, map_filename: str, force_api: bool = False, ti
 
     # determine based on the map prefix but ONLY if unambiguous (e.g. no "cp_")
     map_prefix: str = map_filename.split('_')[0]
-    if map_prefix in gamemode_prefixes and not force_api:
+    if map_prefix in gamemode_prefixes and '_' in map_filename and not force_api:
         prefix_gamemode: str = gamemode_prefixes[map_prefix]
         prefix_gamemode_fancy: str = gamemodes[prefix_gamemode]
         log.debug(f"Determined gamemode to be {(prefix_gamemode, prefix_gamemode_fancy)}) based on prefix ({map_prefix}_)")
         return prefix_gamemode, prefix_gamemode_fancy
 
-    # see if the map is already in maps.json first
+    # determine based on common substrings
+    for gamemode_substring in gamemode_substrings:
+        if gamemode_substring in map_filename:
+            substring_gamemode: str = gamemode_substrings[gamemode_substring]
+            substring_gamemode_fancy: str = gamemodes[substring_gamemode]
+            log.debug(f"Determined gamemode to be {(substring_gamemode, substring_gamemode_fancy)}) based on substring ({gamemode_substring}_)")
+            return substring_gamemode, substring_gamemode_fancy
+
+    # see if the map is already in maps.json
     map_gamemodes: dict = utils.load_maps_db()
     if map_filename in map_gamemodes['common_custom']:
         gamemode = map_gamemodes['common_custom'][map_filename]
         log.debug(f"Found it in maps.json common_custom: {gamemode}")
-        return gamemode
-    elif map_filename in map_gamemodes['creators_tf']:
-        gamemode = map_gamemodes['creators_tf'][map_filename]
-        log.debug(f"Found it in maps.json creators_tf: {gamemode}")
         return gamemode
 
     # to avoid constantly using internet, each map is cached to DB.json
@@ -134,7 +138,8 @@ gamemode_prefixes: Dict[str, str] = {'ctf': 'ctf', 'tc': 'territorial-control', 
                                      'rd': 'beta-map', 'pass': 'passtime', 'pd': 'player-destruction', 'arena': 'arena', 'tr': 'training', 'surf': 'surfing', 'trade': 'trading',
                                      'jump': 'jumping', 'dm': 'deathmatch', 'vsh': 'versus-saxton-hale', 'dr': 'deathrun', 'achievement': 'achievement', 'jb': 'breakout',
                                      'slender': 'slender', 'tfdb': 'dodgeball', 'mario': 'mario-kart', 'ph': 'prophunt', 'zs': 'zombie', 'ze': 'zombie', 'zf': 'zombie',
-                                     'duel': 'deathmatch', 'sn': 'deathmatch'}
+                                     'duel': 'deathmatch', 'sn': 'deathmatch', 'ba': 'breakout', 'jail': 'breakout', 'idle': 'trading'}
+gamemode_substrings: Dict[str, str] = {'cp_orange': 'cp-orange', 'training': 'training'}
 
 if __name__ == '__main__':
     print(find_custom_map_gamemode(logger.Log(), 'cp_catwalk_a5c', False))

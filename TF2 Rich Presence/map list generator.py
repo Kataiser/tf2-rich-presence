@@ -16,15 +16,22 @@ import utils
 def main():
     common_custom = map_stats()
     common_custom.update(map_explorer())  # basically a set dict
+    common_custom.update(creators_tf())
+
+    for custom_map in list(common_custom.keys()):
+        if custom_map.split('_')[0] in custom_maps.gamemode_prefixes and '_' in custom_map:
+            del common_custom[custom_map]
+        else:
+            for gamemode_substring in custom_maps.gamemode_substrings:
+                if gamemode_substring in custom_map:
+                    del common_custom[custom_map]
 
     official_out = json.dumps(official(), sort_keys=True).replace('], ', '],\n        ')
     common_custom_out = json.dumps(common_custom, sort_keys=True).replace('], ', '],\n        ')
-    creators_tf_out = json.dumps(creators_tf(), sort_keys=True).replace('], ', '],\n        ')
 
-    out = json.dumps({'official': 'replace1', 'common_custom': 'replace2', 'creators_tf': 'replace3'}, indent=4) \
+    out = json.dumps({'official': 'replace1', 'common_custom': 'replace2'}, indent=4) \
         .replace('"replace1"', '{\n        ' + official_out[1:])\
-        .replace('"replace2"', '{\n        ' + common_custom_out[1:])\
-        .replace('"replace3"', '{\n        ' + creators_tf_out[1:])
+        .replace('"replace2"', '{\n        ' + common_custom_out[1:])
 
     print()
     print(out)
@@ -86,7 +93,7 @@ def map_stats() -> dict:
 
                 if map_mode[0] == 'unknown_map':
                     print(f"FAILED: {map_file}", file=sys.stderr)
-                elif not map_file.split('_')[0] in custom_maps.gamemode_prefixes:
+                else:
                     custom_map_gamemodes[map_file] = map_mode
                     print(f"{map_file}: {custom_map_gamemodes[map_file]}")
 
