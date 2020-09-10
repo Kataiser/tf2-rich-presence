@@ -231,9 +231,9 @@ class TestTF2RichPresense(unittest.TestCase):
 
     def test_load_maps_db(self):
         maps_db = utils.load_maps_db()
-        self.assertGreater(len(maps_db['official']), 20)
-        self.assertGreater(len(maps_db['common_custom']), 10)
-        
+        self.assertGreater(len(maps_db['official']), 100)
+        self.assertGreater(len(maps_db['common_custom']), 5)
+
     def test_discoipc(self):
         # this test fails if Discord isn't running
         test_process_scanner = processes.ProcessScanner(self.log)
