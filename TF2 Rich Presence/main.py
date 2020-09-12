@@ -115,6 +115,7 @@ class TF2RichPresense:
         self.last_name_scan_time: float = time.time()  # close enough
         self.steam_config_mtimes: Dict[str, int] = {}
         self.cleanup_primed: bool = True
+        self.slow_sleep_time: bool = False
 
         if set_process_priority:
             self_process: psutil.Process = psutil.Process()
@@ -170,17 +171,17 @@ class TF2RichPresense:
             self.log.debug("custom.py doesn't exist")
 
     def run(self):
-        sleep_time: int = settings.get('wait_time')
-
         while True:
             self.loop_body()
 
             # rich presence only updates every 15 seconds, but it listens constantly so sending every 2 seconds (by default) is fine
-            self.log.debug(f"Sleeping for {sleep_time} seconds")
+            sleep_time: int = settings.get('wait_time') * (2 if self.slow_sleep_time else 1)
+            self.log.debug(f"Sleeping for {sleep_time} seconds (slow = {self.slow_sleep_time})")
             time.sleep(sleep_time)
 
     # the main logic. runs every 2 seconds (by default)
     def loop_body(self):
+        self.slow_sleep_time = False
         self.loop_iteration += 1
         self.log.debug(f"Main loop iteration this app session: {self.loop_iteration}")
 
@@ -395,6 +396,7 @@ class TF2RichPresense:
     def necessary_program_not_running(self, program_name: str, should_mention: bool, name_short: str = ''):
         name_short = program_name if not name_short else name_short
         self.test_state = f'no {name_short.lower()}'
+        self.slow_sleep_time = True  # update less often if not all programs are running
 
         if self.client_connected:
             try:
