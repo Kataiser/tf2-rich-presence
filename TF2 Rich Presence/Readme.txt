@@ -1,6 +1,7 @@
 TF2 Rich Presence ({tf2rpvnum}) by Kataiser
 https://github.com/Kataiser/tf2-rich-presence
 Built at {built}
+Licensed under GNU GPLv3, see License.txt
 
 Installation and running:
   1. Extract "tf2_rich_presence_{tf2rpvnum}.zip" OR run "tf2_rich_presence_{tf2rpvnum}_self_extracting.exe", whichever you downloaded.
