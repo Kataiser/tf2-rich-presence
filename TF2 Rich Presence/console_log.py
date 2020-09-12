@@ -196,7 +196,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
         self.log.error("Have class_line_used without map_line_used")
 
     # remove empty lines (bot spam)
-    if 'In menus' in current_map and not force:
+    if 'In menus' in current_map and settings.get('trim_console_log') and not force:
         if self.cleanup_primed:
             self.log.debug("Potentially cleaning up console.log")
             console_log_lines_out: List[str] = []
@@ -211,7 +211,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
                 else:
                     console_log_lines_out.append(line)
 
-            if empty_line_count >= 20:
+            if empty_line_count >= 20 and len(console_log_lines_out) > SIZE_LIMIT_MIN_LINES:
                 with open(console_log_path, 'w', encoding='UTF8') as console_log_write:
                     for line in console_log_lines_out:
                         console_log_write.write(line)

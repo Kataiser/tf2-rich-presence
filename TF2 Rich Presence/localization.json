@@ -1833,20 +1833,6 @@
         "Chinese": "完成后在此窗口中按enter键",
         "Japanese": "このウィンドウでenterキーを押します"
     },
-    "1125289210": {
-        "English": "Limit console.log's size occasionally",
-        "German": "Begrenzen Sie die Größe von console.log gelegentlich",
-        "French": "Limiter la taille de console.log occasionnellement",
-        "Spanish": "Limitar el tamaño de console.log ocasionalmente",
-        "Portuguese": "Limitar o tamanho do console.log ocasionalmente",
-        "Italian": "Limitare occasionalmente le dimensioni di console.log",
-        "Dutch": "Beperk de grootte van de console.log af en toe",
-        "Polish": "Ograniczenie rozmiaru console.log sporadycznie",
-        "Russian": "Иногда ограничивать размер console.log",
-        "Korean": "제한 콘솔.로그의 크기 가끔",
-        "Chinese": "限制控制台。日志的大小偶尔",
-        "Japanese": "制限コンソール。時折ログのサイズ"
-    },
     "3315339845": {
         "English": "Couldn't load settings, reverting to defaults.{0}",
         "German": "Konnte die Einstellungen nicht laden und auf die Standardeinstellungen zurückkehren.{0}",
@@ -1968,5 +1954,19 @@
         "Korean": "인터넷 연결 시간 초과(업데이터 및 일부 사용자 지정 맵 용),초 단위:",
         "Chinese": "互联网连接超时（更新程序和一些自定义地图），以秒为单位:",
         "Japanese": "インターネット接続のタイムアウト (アップデータと一部のカスタム マップの) 秒単位:"
+    },
+    "3044742820": {
+        "English": "Occasionally limit console.log's size and remove empty lines",
+        "German": "Gelegentlich die Größe von console.log begrenzen und leere Zeilen entfernen",
+        "French": "Limiter occasionnellement la taille de console.log et supprimer les lignes vides",
+        "Spanish": "Ocasionalmente limitar el tamaño de console.log y eliminar las líneas vacías",
+        "Portuguese": "Ocasionalmente limitar o tamanho do console.log e remover linhas vazias",
+        "Italian": "Occasionalmente limitare le dimensioni di console.log e rimuovere le righe vuote",
+        "Dutch": "Beperk af en toe de grootte van console.log en verwijder lege regels",
+        "Polish": "Sporadycznie ograniczaj rozmiar konsoli.log i usuwaj puste linie",
+        "Russian": "Иногда ограничивать размер console.log и удалять пустые строки",
+        "Korean": "때때로 콘솔을 제한하십시오.로그의 크기와 빈 줄 제거",
+        "Chinese": "偶尔限制 console.log 的大小，并删除空行",
+        "Japanese": "時々 console.log のサイズを制限し、空行を削除します"
     }
 }

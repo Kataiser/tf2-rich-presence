@@ -166,7 +166,7 @@ class GUI(tk.Frame):
         setting14 = ttk.Checkbutton(self.lf_main, variable=self.map_time, command=self.update_default_button_state, text="{}".format(
             self.loc.text("Show time on current map instead of selected class")))
         setting15 = ttk.Checkbutton(self.lf_advanced, variable=self.trim_console_log, command=self.update_default_button_state, text="{}".format(
-            self.loc.text("Limit console.log's size occasionally")))
+            self.loc.text("Occasionally limit console.log's size and remove empty lines")))
 
         # download page button, but only if a new version is available
         db = utils.access_db()
