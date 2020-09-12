@@ -192,7 +192,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     else:
         self.log.debug(f"Got '{current_map}' from line '{map_line_used[:-1]}' and '{current_class}' from line '{class_line_used[:-1]}'")
 
-    if map_line_used == '' and class_line_used != '':
+    if map_line_used == '' and class_line_used != '' and 'Queued' not in class_line_used:
         self.log.error("Have class_line_used without map_line_used")
 
     # remove empty lines (bot spam)
