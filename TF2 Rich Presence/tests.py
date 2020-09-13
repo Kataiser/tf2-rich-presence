@@ -362,6 +362,8 @@ class TestTF2RichPresense(unittest.TestCase):
                                                                                         'large_image': 'main_menu', 'large_text': 'Main menu'}, 'state': ''})
 
         self_process = psutil.Process()
+        self.assertEqual(self_process.nice(), psutil.BELOW_NORMAL_PRIORITY_CLASS)
+        self.assertEqual(self_process.ionice(), psutil.IOPRIO_LOW)
         self_process.nice(psutil.NORMAL_PRIORITY_CLASS)
         self_process.ionice(psutil.IOPRIO_NORMAL)
 

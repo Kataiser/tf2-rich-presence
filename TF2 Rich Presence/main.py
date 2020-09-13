@@ -116,14 +116,7 @@ class TF2RichPresense:
         self.steam_config_mtimes: Dict[str, int] = {}
         self.cleanup_primed: bool = True
         self.slow_sleep_time: bool = False
-
-        if set_process_priority:
-            self_process: psutil.Process = psutil.Process()
-            priorities_before: tuple = (self_process.nice(), self_process.ionice())
-            self_process.nice(psutil.BELOW_NORMAL_PRIORITY_CLASS)
-            self_process.ionice(psutil.IOPRIO_LOW)
-            priorities_after: tuple = (self_process.nice(), self_process.ionice())
-            self.log.debug(f"Set process priorities from {priorities_before} to {priorities_after}")
+        self.has_set_process_priority: bool = not set_process_priority
 
         self.log.cleanup(20 if launcher.DEBUG else 10)
         self.log.debug(f"CPU: {psutil.cpu_count(logical=False)} cores, {psutil.cpu_count()} threads")
@@ -386,6 +379,15 @@ class TF2RichPresense:
             gc.enable()
             gc.collect()
             self.log.debug("Enabled GC and collected")
+
+        if not self.has_set_process_priority:
+            self_process: psutil.Process = psutil.Process()
+            priorities_before: tuple = (self_process.nice(), self_process.ionice())
+            self_process.nice(psutil.BELOW_NORMAL_PRIORITY_CLASS)
+            self_process.ionice(psutil.IOPRIO_LOW)
+            priorities_after: tuple = (self_process.nice(), self_process.ionice())
+            self.log.debug(f"Set process priorities from {priorities_before} to {priorities_after}")
+            self.has_set_process_priority = True
 
         if self.custom_functions:
             self.custom_functions.after_loop(self)
