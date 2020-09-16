@@ -90,7 +90,7 @@ class Log:
             full_line: str = f"[{datetime.datetime.now().strftime('%c')[4:-5]} {time_since_last}] {level}: {message_out}\n"
 
             # log breadcrumb to Sentry
-            sentry_sdk.add_breadcrumb(message=full_line, level=level.lower().replace('critical', 'fatal'))
+            sentry_sdk.add_breadcrumb(message=full_line[-512:], level=level.lower().replace('critical', 'fatal'))
 
             try:
                 self.log_file.write(full_line)
@@ -134,7 +134,7 @@ class Log:
 
             if message_hash not in db['error_hashes'] and message_hash not in self.local_error_hashes:
                 self.local_error_hashes.append(message_hash)
-                sentry_sdk.capture_message(message_in)
+                sentry_sdk.capture_message(message_in[-512:])
                 db['error_hashes'].append(message_hash)
                 utils.access_db(write=db)
             else:
