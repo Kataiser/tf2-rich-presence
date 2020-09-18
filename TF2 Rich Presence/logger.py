@@ -161,7 +161,7 @@ class Log:
             try:
                 os.remove(log_to_delete)
             except Exception:
-                self.error(f"Couldn't delete log file {log_to_delete}: {traceback.format_exc()}")
+                self.error(f"Couldn't delete old log file {log_to_delete}: {traceback.format_exc()}")
 
             overshoot = max_logs - len(all_logs_sorted)
 
@@ -175,7 +175,11 @@ class Log:
                 with open(f'{old_log}.gz', 'wb') as old_log_w:
                     old_log_w.write(data_out)
 
-            os.remove(old_log)
+            try:
+                os.remove(old_log)
+            except Exception:
+                self.error(f"Couldn't replace log file {log_to_delete}: {traceback.format_exc()}")
+
             comp_ratio: Union[float, None] = round(len(data_out) / len(data_in), 3) if data_in else None  # fixes a ZeroDivisionError
             compressed_logs.append((old_log, comp_ratio))
 
