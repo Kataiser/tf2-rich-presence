@@ -117,6 +117,7 @@ class TF2RichPresense:
         self.cleanup_primed: bool = True
         self.slow_sleep_time: bool = False
         self.has_set_process_priority: bool = not set_process_priority
+        self.kataiser_scan_loop: int = 0
 
         self.log.cleanup(20 if launcher.DEBUG else 10)
         self.log.debug(f"CPU: {psutil.cpu_count(logical=False)} cores, {psutil.cpu_count()} threads")

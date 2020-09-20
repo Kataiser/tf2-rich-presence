@@ -18,19 +18,11 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     SIZE_LIMIT_MULTIPLE_TRIGGER: int = 4
     SIZE_LIMIT_MULTIPLE_TARGET: int = 2
     SIZE_LIMIT_MIN_LINES: int = 15000
+    KATAISER_LOOP_FREQ: int = 4
 
     # defaults
     current_map: str = 'In menus'
     current_class: str = 'Not queued'
-    kataiser_seen_on: Union[str, None] = None
-
-    match_types: Dict[str, str] = {'12v12 Casual Match': 'Casual', 'MvM Practice': 'MvM (Boot Camp)', 'MvM MannUp': 'MvM (Mann Up)', '6v6 Ladder Match': 'Competitive'}
-    menus_messages: tuple = ('Lobby destroyed', 'For FCVAR_REPLICATED', '[TF Workshop]', 'Disconnecting from abandoned', 'Server shutting down', 'destroyed Lobby', 'Disconnect:',
-                             'destroyed CAsyncWavDataCache', 'Connection failed after', 'Missing map', 'Host_Error')
-    menus_message: str
-
-    hide_queued_gamemode: bool = settings.get('hide_queued_gamemode')
-    user_is_kataiser: bool = 'Kataiser' in user_usernames
 
     # console.log is a log of tf2's console (duh), only exists if tf2 has -condebug (see no_condebug_warning())
     self.log.debug(f"Looking for console.log at {console_log_path}")
@@ -88,9 +80,21 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
         except PermissionError as error:
             self.log.error(f"Failed to trim console.log: {error}")
 
+    # setup
     just_started_server: bool = False
     server_still_running: bool = False
     with_optimization: bool = True  # "with" optimization, not "with optimization"
+    self.kataiser_scan_loop += 1
+    kataiser_scan: bool = self.kataiser_scan_loop == KATAISER_LOOP_FREQ if not force else True
+    if kataiser_scan:
+        self.kataiser_scan_loop = 0
+    hide_queued_gamemode: bool = settings.get('hide_queued_gamemode')
+    user_is_kataiser: bool = 'Kataiser' in user_usernames
+    kataiser_seen_on: Union[str, None] = None
+    match_types: Dict[str, str] = {'12v12 Casual Match': 'Casual', 'MvM Practice': 'MvM (Boot Camp)', 'MvM MannUp': 'MvM (Mann Up)', '6v6 Ladder Match': 'Competitive'}
+    menus_messages: tuple = ('Lobby destroyed', 'For FCVAR_REPLICATED', '[TF Workshop]', 'Disconnecting from abandoned', 'Server shutting down', 'destroyed Lobby', 'Disconnect:',
+                             'destroyed CAsyncWavDataCache', 'Connection failed after', 'Missing map', 'Host_Error')
+    menus_message: str
 
     for username in user_usernames:
         if 'with' in username:
@@ -106,7 +110,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
         # lines that have "with" in them are basically always kill logs and can be safely ignored
         # this (probably) improves performance
         if with_optimization and 'with' in line:
-            if user_is_kataiser or 'Kataiser' not in line or self.has_seen_kataiser:
+            if not kataiser_scan or user_is_kataiser or 'Kataiser' not in line or self.has_seen_kataiser:
                 continue
 
         if current_map != 'In menus':
@@ -176,8 +180,10 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
         elif 'SV_ActivateServer' in line:  # full line: "SV_ActivateServer: setting tickrate to 66.7"
             just_started_server = True
 
-        if not user_is_kataiser and 'Kataiser' in line and not self.has_seen_kataiser:
-            kataiser_seen_on = current_map
+        if kataiser_scan and not user_is_kataiser and 'Kataiser' in line and not self.has_seen_kataiser:
+            # makes sure no one's just talking about me for some reason
+            if not (line.count(' :  ') == 1 and 'Kataiser' not in line.split(' :  ')[0] and 'Kataiser' in line.split(' :  ')[1]):
+                kataiser_seen_on = current_map
 
     if not user_is_kataiser and not self.has_seen_kataiser and kataiser_seen_on == current_map and current_map != 'In menus':
         self.has_seen_kataiser = True
