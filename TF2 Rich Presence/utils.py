@@ -26,10 +26,18 @@ def access_db(write: dict = None) -> Dict[str, Union[dict, bool, list]]:
         open(db_path, 'w').close()
 
     if write:
-        with open(db_path, 'w', encoding='UTF8') as db_json:
-            db_data: dict = write
-            db_json.truncate(0)
-            json.dump(db_data, db_json, indent=4, ensure_ascii=False)
+        try:
+            with open(db_path, 'w', encoding='UTF8') as db_json:
+                db_data: dict = write
+                db_json.truncate(0)
+                json.dump(db_data, db_json, indent=4, ensure_ascii=False)
+        except (UnicodeEncodeError, PermissionError):
+            pass
+        except OSError as error:
+            if str(error) == 'No space left on device':
+                pass
+            else:
+                raise
     else:
         try:
             with open(db_path, 'r', encoding='UTF8') as db_json:

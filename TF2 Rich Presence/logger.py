@@ -5,6 +5,7 @@
 import datetime
 import getpass
 import gzip
+import inspect
 import os
 import socket
 import sys
@@ -101,10 +102,14 @@ class Log:
                         errors_log.write(full_line)
             except UnicodeEncodeError as error:
                 self.error(f"Couldn't write log due to UnicodeEncodeError: {error}")
+            except PermissionError as error:
+                self.error(f"Couldn't write log due to PermissionError: {error}")
             except OSError as error:
                 if str(error) == 'No space left on device':
                     # not my problem
                     pass
+                else:
+                    raise
 
             if self.to_stderr:
                 print(full_line[:-1], file=sys.stderr)
@@ -122,8 +127,9 @@ class Log:
             self.write_log('DEBUG', message_in)
 
     # a log with a level of ERROR (caught, non-fatal errors)
-    def error(self, message_in: Union[str, Exception], reportable: bool = True):
-        message_in = str(message_in)
+    def error(self, message_in: str, reportable: bool = True):
+        if len(inspect.stack()) >= 10:
+            pass
 
         if 'Error' in self.log_levels_allowed:
             self.write_log('ERROR', message_in, use_errors_file=True)
@@ -142,6 +148,9 @@ class Log:
 
     # a log with a level of CRITICAL (uncaught, fatal errors, probably (hopefully) sent to Sentry)
     def critical(self, message_in: str):
+        if len(inspect.stack()) >= 10:
+            pass
+
         if 'Critical' in self.log_levels_allowed:
             self.write_log('CRITICAL', message_in, use_errors_file=True)
 

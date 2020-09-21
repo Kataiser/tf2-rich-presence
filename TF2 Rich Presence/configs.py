@@ -104,7 +104,7 @@ def steam_config_file(self, exe_location: str, tf2_is_running: bool = False) -> 
         except FileNotFoundError:
             pass
         except PermissionError as error:
-            self.log.error(error)
+            self.log.error(str(error))
 
     if not found_condebug:
         self.log.error("-condebug not found, telling user", reportable=False)
