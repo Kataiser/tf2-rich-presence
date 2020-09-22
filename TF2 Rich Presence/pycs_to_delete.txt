@@ -19,6 +19,7 @@ python-3.7.9-embed-win32\packages\sentry_sdk\integrations\__pycache__\aws_lambda
 python-3.7.9-embed-win32\packages\sentry_sdk\integrations\__pycache__\beam.cpython-37.pyc
 python-3.7.9-embed-win32\packages\sentry_sdk\integrations\__pycache__\bottle.cpython-37.pyc
 python-3.7.9-embed-win32\packages\sentry_sdk\integrations\__pycache__\celery.cpython-37.pyc
+python-3.7.9-embed-win32\packages\sentry_sdk\integrations\__pycache__\chalice.cpython-37.pyc
 python-3.7.9-embed-win32\packages\sentry_sdk\integrations\__pycache__\executing.cpython-37.pyc
 python-3.7.9-embed-win32\packages\sentry_sdk\integrations\__pycache__\falcon.cpython-37.pyc
 python-3.7.9-embed-win32\packages\sentry_sdk\integrations\__pycache__\flask.cpython-37.pyc
