@@ -122,6 +122,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
                     current_map = 'In menus'
                     current_class = 'Not queued'
                     map_line_used = class_line_used = line
+                    kataiser_seen_on = None
                     break
 
             # ok this is jank but it's to only trigger on actually closing the map and not just (I think) ending a demo recording
@@ -130,6 +131,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
                     current_map = 'In menus'
                     current_class = 'Not queued'
                     map_line_used = class_line_used = line
+                    kataiser_seen_on = None
 
         if line.endswith(' selected \n'):
             current_class_possibly: str = line[:-11]
@@ -175,6 +177,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
                     current_map = 'In menus'
                     current_class = 'Not queued'
                     map_line_used = class_line_used = line
+                    kataiser_seen_on = None
                     break
 
         elif 'SV_ActivateServer' in line:  # full line: "SV_ActivateServer: setting tickrate to 66.7"
