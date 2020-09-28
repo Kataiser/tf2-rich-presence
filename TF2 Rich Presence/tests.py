@@ -20,9 +20,10 @@ import localization
 import logger
 import main
 import processes
-import settings
+import settings_gui
 import updater
 import utils
+import settings
 
 
 class TestTF2RichPresense(unittest.TestCase):
@@ -201,15 +202,15 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual(updater.format_changelog(unformatted), formatted)
 
     def test_settings_check_int(self):
-        self.assertTrue(settings.check_int('', 1000))
-        self.assertTrue(settings.check_int('1', 1000))
-        self.assertTrue(settings.check_int('1000', 1000))
-        self.assertTrue(settings.check_int('60', 60))
+        self.assertTrue(settings_gui.check_int('', 1000))
+        self.assertTrue(settings_gui.check_int('1', 1000))
+        self.assertTrue(settings_gui.check_int('1000', 1000))
+        self.assertTrue(settings_gui.check_int('60', 60))
 
-        self.assertFalse(settings.check_int('1001', 1000))
-        self.assertFalse(settings.check_int('61', 60))
-        self.assertFalse(settings.check_int('a', 1000))
-        self.assertFalse(settings.check_int('abc123qwe098', 1000))
+        self.assertFalse(settings_gui.check_int('1001', 1000))
+        self.assertFalse(settings_gui.check_int('61', 60))
+        self.assertFalse(settings_gui.check_int('a', 1000))
+        self.assertFalse(settings_gui.check_int('abc123qwe098', 1000))
 
     def test_settings_access(self):
         default_settings = settings.get_setting_default(return_all=True)
@@ -294,14 +295,14 @@ class TestTF2RichPresense(unittest.TestCase):
             self.skipTest("Run by test_missing_files instead (try setting skip's default to False to see why)")
 
         root = tk.Tk()
-        settings_gui = settings.GUI(root, self.log)
-        settings_gui.show_font_message('한국어')
-        settings_gui.update()
-        dimensions = settings_gui.window_dimensions
-        settings_gui.language.set('日本語')
-        settings_gui.update_language('日本語')
-        new_dimensions = settings_gui.window_dimensions
-        settings_gui.destroy()
+        settings_gui_test = settings_gui.GUI(root, self.log)
+        settings_gui_test.show_font_message('한국어')
+        settings_gui_test.update()
+        dimensions = settings_gui_test.window_dimensions
+        settings_gui_test.language.set('日本語')
+        settings_gui_test.update_language('日本語')
+        new_dimensions = settings_gui_test.window_dimensions
+        settings_gui_test.destroy()
 
         self.assertGreaterEqual(dimensions[0], 200)
         self.assertGreaterEqual(dimensions[1], 200)

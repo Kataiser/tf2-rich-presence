@@ -75,6 +75,7 @@ def main(version_num='v1.14.3'):
         print("Copied", shutil.copy('processes.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('updater.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('settings.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('settings_gui.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('localization.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('welcomer.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('detect_system_language.py', Path(f'{github_repo_path}/TF2 Rich Presence')))

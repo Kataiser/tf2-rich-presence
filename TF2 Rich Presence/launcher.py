@@ -46,7 +46,7 @@ def launch():
     try:
         init()  # colorama
 
-        allowed_modules = ('init', 'main', 'settings')
+        allowed_modules = ('init', 'main', 'settings_gui')
         parser = argparse.ArgumentParser()
         parser.add_argument('--m', default='main', help=f"The module to launch {allowed_modules}")
         parser.add_argument('--welcome_version', default='0', help="Which version of the welcome message to use (0 or 1)")

@@ -13,7 +13,7 @@ if not exist resources\ (
     )
 )
 
-start "" "resources\python-3.7.9-embed-win32\pythonw.exe" -I "resources\launcher.py" --m settings
+start "" "resources\python-3.7.9-embed-win32\pythonw.exe" -I "resources\launcher.py" --m settings_gui
 goto close
 
 :bail
