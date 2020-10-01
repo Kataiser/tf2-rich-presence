@@ -196,13 +196,15 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     if server_still_running and current_map != 'In menus':
         current_map = f'{current_map} (hosting)'
 
+    if map_line_used == '' and class_line_used != '' and 'queued' not in current_class.lower():
+        self.log.error(f"Have class_line_used {(class_line_used, current_class)} without map_line_used, resetting")
+        current_class = 'Not queued'
+        class_line_used = ''
+
     if map_line_used == class_line_used:
         self.log.debug(f"Got '{current_map}' and '{current_class}' from line '{map_line_used[:-1]}'")
     else:
         self.log.debug(f"Got '{current_map}' from line '{map_line_used[:-1]}' and '{current_class}' from line '{class_line_used[:-1]}'")
-
-    if map_line_used == '' and class_line_used != '' and 'Queued' not in class_line_used:
-        self.log.error("Have class_line_used without map_line_used")
 
     # remove empty lines (bot spam)
     if 'In menus' in current_map and settings.get('trim_console_log') and not force:
