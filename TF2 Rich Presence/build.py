@@ -435,7 +435,7 @@ def main(version_num='v1.14.4'):
 
     # finishing output
     print(f"\n{datetime.datetime.now().strftime('%c')}")
-    print(f"Finished building TF2 Rich Presence {version_num} (took {int(time.perf_counter() - build_start_time)} seconds{time_since_last_build_text})")
+    print(f"Finished building TF2 Rich Presence {version_num}{' for release' if release_build else ''} (took {int(time.perf_counter() - build_start_time)} seconds{time_since_last_build_text})")
     time.sleep(0.1)
 
     # warnings from here on out
