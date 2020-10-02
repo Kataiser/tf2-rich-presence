@@ -16,7 +16,7 @@ import utils
 def main():
     common_custom = map_stats()
     common_custom.update(map_explorer())  # basically a set dict
-    common_custom.update(creators_tf())
+    common_custom.update(creators_tf_cp())
 
     for custom_map in list(common_custom.keys()):
         if custom_map.split('_')[0] in custom_maps.gamemode_prefixes and '_' in custom_map:
@@ -137,31 +137,17 @@ def map_explorer() -> dict:
     return custom_map_gamemodes
 
 
-def creators_tf() -> dict:
-    all_creators_maps = {'cp_glassworks_rc6a': ['control-point', 'Control Point'],
-                         'cp_kalinka_rc5': ['control-point', 'Control Point'],
-                         'cp_powerhouse_fix': ['control-point', 'Control Point'],
-                         'cp_rumble_rc5': ['attack-defend', 'Attack/Defend'],
-                         'koth_clearcut_b14d': ['koth', 'King of the Hill'],
-                         'koth_databank_rc1': ['koth', 'King of the Hill'],
-                         'koth_harvestalpine_v3b': ['koth', 'King of the Hill'],
-                         'koth_product_rcx': ['koth', 'King of the Hill'],
-                         'koth_slaughter_b2a': ['koth', 'King of the Hill'],
-                         'koth_spillway_rc2': ['koth', 'King of the Hill'],
-                         'koth_synthetic_rc6': ['koth', 'King of the Hill'],
-                         'pl_badwater_pro_v9': ['payload', 'Payload'],
-                         'pl_barnblitz_pro8': ['payload', 'Payload'],
-                         'pl_fifthcurve_rc1': ['payload', 'Payload'],
-                         'pl_sludgepit_final1': ['payload', 'Payload'],
-                         'pl_stranded_rc4': ['payload', 'Payload'],
-                         'pl_summercoast_rc8b': ['payload', 'Payload'],
-                         'pl_vigil_rc7': ['payload', 'Payload']}
+def creators_tf_cp() -> dict:
+    all_cp_creators_maps = {'cp_glassworks_rc6a': ['control-point', 'Control Point'],
+                            'cp_kalinka_rc5': ['control-point', 'Control Point'],
+                            'cp_powerhouse_fix': ['control-point', 'Control Point'],
+                            'cp_rumble_rc5': ['attack-defend', 'Attack/Defend']}
 
     exclusive_creators_map = {}
 
-    for creators_map in all_creators_maps:
+    for creators_map in all_cp_creators_maps:
         if creators_map not in map_stats() and creators_map not in map_explorer():
-            exclusive_creators_map[creators_map] = all_creators_maps[creators_map]
+            exclusive_creators_map[creators_map] = all_cp_creators_maps[creators_map]
 
     return exclusive_creators_map
 
