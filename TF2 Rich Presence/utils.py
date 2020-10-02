@@ -8,6 +8,8 @@ import gzip
 import json
 import os
 import time
+import tkinter as tk
+import traceback
 from typing import Dict, List, Union
 
 
@@ -105,3 +107,16 @@ def load_maps_db() -> Dict[str, Dict[str, List[str]]]:
             return json.load(maps_db)
     else:
         return {'official': {}, 'common_custom': {}, 'creators_tf': {}}
+
+
+# doesn't work if launching from Pycharm for some reason
+def set_window_icon(log, window: tk.Tk, wrench: bool):
+    filename = 'tf2_logo_blurple_wrench.ico' if wrench else 'tf2_logo_blurple.ico'
+
+    try:
+        if os.path.isdir('resources'):
+            window.iconbitmap(default=os.path.join('resources', filename))
+        else:
+            window.iconbitmap(default=filename)
+    except tk.TclError:
+        log.error(traceback.format_exc())

@@ -40,7 +40,7 @@ class GUI(tk.Frame):
 
         master.title(self.loc.text("TF2 Rich Presence ({0}) settings").format(launcher.VERSION))
         master.resizable(0, 0)  # disables resizing
-        set_window_icon(self.log, master, True)
+        utils.set_window_icon(self.log, master, True)
         if not reload_settings:
             self.window_x: Union[int, None] = None
             self.window_y: Union[int, None] = None
@@ -443,19 +443,6 @@ def check_int(text_in_entry: str, maximum: int) -> bool:
         return True
 
     return False
-
-
-# doesn't work if launching from Pycharm for some reason
-def set_window_icon(log, window: tk.Tk, wrench: bool):
-    filename = 'tf2_logo_blurple_wrench.ico' if wrench else 'tf2_logo_blurple.ico'
-
-    try:
-        if os.path.isdir('resources'):
-            window.iconbitmap(default=os.path.join('resources', filename))
-        else:
-            window.iconbitmap(default=filename)
-    except tk.TclError:
-        log.error(traceback.format_exc())
 
 
 if __name__ == '__main__':

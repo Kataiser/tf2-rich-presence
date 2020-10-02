@@ -11,7 +11,6 @@ from typing import Dict, Union
 import launcher
 import logger
 import settings
-import settings_gui
 import utils
 
 
@@ -45,7 +44,7 @@ def detect(log: logger.Log):
             root.withdraw()
             root.lift()
             root.attributes('-topmost', True)
-            settings_gui.set_window_icon(log, root, False)
+            utils.set_window_icon(log, root, False)
 
             system_language_display: str = 'Português Brasileiro' if is_brazilian_port else system_language
             changed_language: str = messagebox.askquestion(f"TF2 Rich Presence {launcher.VERSION}", f"Change language to your system's default ({system_language_display})?")
