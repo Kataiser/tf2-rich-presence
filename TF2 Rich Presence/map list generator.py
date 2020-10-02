@@ -30,7 +30,7 @@ def main():
     common_custom_out = json.dumps(common_custom, sort_keys=True).replace('], ', '],\n        ')
 
     out = json.dumps({'official': 'replace1', 'common_custom': 'replace2'}, indent=4) \
-        .replace('"replace1"', '{\n        ' + official_out[1:])\
+        .replace('"replace1"', '{\n        ' + official_out[1:]) \
         .replace('"replace2"', '{\n        ' + common_custom_out[1:])
 
     print()
@@ -46,7 +46,12 @@ def official() -> dict:
     gamemodes['Control Point (Domination)'] = 'control-point'
     gamemodes['No gamemode'] = 'beta-map'
     gamemode_replacements = [('d(M', 'd (M'), ('t(D', 't (D'), (' Mode', ''), ('Developer aidTest', 'No gamemode'), ('Developer aidControl Point', 'Control Point')]
-    map_gamemodes = {'background01': ('Background01', 'beta-map', 'No gamemode'), 'devtest': ('Devtest', 'beta-map', 'No gamemode')}
+    map_gamemodes = {'background01': ('Background01', 'beta-map', 'No gamemode'),
+                     'devtest': ('Devtest', 'beta-map', 'No gamemode'),
+                     'koth_megalo': ('Megalo', 'koth', 'King of the Hill'),
+                     'koth_undergrove_event': ('Moldergrove', 'koth', 'King of the Hill'),
+                     'pl_bloodwater': ('Bloodwater', 'payload', 'Payload'),
+                     'pl_hasslecastle': ('Hassle Castle', 'payload', 'Payload')}
 
     r = requests.get('https://wiki.teamfortress.com/wiki/List_of_maps')
     soup = BeautifulSoup(r.text, 'lxml')
@@ -60,8 +65,8 @@ def official() -> dict:
 
         gamemode_fancy = tr.find_all('td')[2].text[1:-1]
 
-        for replacemment in gamemode_replacements:
-            gamemode_fancy = gamemode_fancy.replace(*replacemment)
+        for replacement in gamemode_replacements:
+            gamemode_fancy = gamemode_fancy.replace(*replacement)
 
         map_mode = gamemodes[gamemode_fancy]
 
