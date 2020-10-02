@@ -137,7 +137,7 @@ gamemodes: Dict[str, str] = {'ctf': 'Capture the Flag', 'control-point': 'Contro
 gamemode_prefixes: Dict[str, str] = {'ctf': 'ctf', 'tc': 'territorial-control', 'pl': 'payload', 'plr': 'payload-race', 'koth': 'koth', 'sd': 'special-delivery', 'mvm': 'mvm',
                                      'rd': 'beta-map', 'pass': 'passtime', 'pd': 'player-destruction', 'arena': 'arena', 'tr': 'training', 'surf': 'surfing', 'trade': 'trading',
                                      'jump': 'jumping', 'dm': 'deathmatch', 'vsh': 'versus-saxton-hale', 'dr': 'deathrun', 'achievement': 'achievement', 'jb': 'breakout',
-                                     'slender': 'slender', 'tfdb': 'dodgeball', 'mario': 'mario-kart', 'ph': 'prophunt', 'zs': 'zombie', 'ze': 'zombie', 'zf': 'zombie',
+                                     'slender': 'slender', 'tfdb': 'dodgeball', 'mario': 'mario-kart', 'ph': 'prophunt', 'zs': 'zombie', 'ze': 'zombie', 'zf': 'zombie', 'zm': 'zombie',
                                      'duel': 'deathmatch', 'sn': 'deathmatch', 'ba': 'breakout', 'jail': 'breakout', 'idle': 'trading'}
 gamemode_substrings: Dict[str, str] = {'cp_orange': 'cp-orange', 'training': 'training'}
 
