@@ -47,6 +47,13 @@ class TestTF2RichPresense(unittest.TestCase):
         del self.log
         settings.access_registry(save_dict=self.old_settings)
 
+        # fix a failed test_missing_files
+        for file in os.listdir():
+            if file.startswith('.') and os.path.isfile(file):
+                if os.path.isfile(file[1:]):
+                    os.remove(file[1:])
+                os.rename(file, file[1:])
+
     def test_interpret_console_log(self):
         recent_time = int(time.time()) - 10
         app = main.TF2RichPresense(self.log, set_process_priority=False)
