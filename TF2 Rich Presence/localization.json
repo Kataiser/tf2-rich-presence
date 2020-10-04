@@ -1951,9 +1951,9 @@
         "Dutch": "Time-out van de internetverbinding (voor updater en enkele aangepaste kaarten), in seconden: ",
         "Polish": "Czas oczekiwania na połączenie z Internetem (dla programu updater i niektórych map niestandardowych), w sekundach: ",
         "Russian": "Тайм-аут подключения к Интернету (для обновления и некоторых пользовательских карт), в секундах: ",
-        "Korean": "인터넷 연결 시간 초과(업데이터 및 일부 사용자 지정 맵 용),초 단위:",
-        "Chinese": "互联网连接超时（更新程序和一些自定义地图），以秒为单位:",
-        "Japanese": "インターネット接続のタイムアウト (アップデータと一部のカスタム マップの) 秒単位:"
+        "Korean": "인터넷 연결 시간 초과(업데이터 및 일부 사용자 지정 맵 용),초 단위: ",
+        "Chinese": "互联网连接超时（更新程序和一些自定义地图），以秒为单位: ",
+        "Japanese": "インターネット接続のタイムアウト (アップデータと一部のカスタム マップの) 秒単位: "
     },
     "3044742820": {
         "English": "Occasionally limit console.log's size and remove empty lines",
@@ -1968,5 +1968,19 @@
         "Korean": "때때로 콘솔을 제한하십시오.로그의 크기와 빈 줄 제거",
         "Chinese": "偶尔限制 console.log 的大小，并删除空行",
         "Japanese": "時々 console.log のサイズを制限し、空行を削除します"
+    },
+    "2898597302": {
+        "English": "Delay between refreshes when TF2 and Discord aren't running: ",
+        "German": "Verzögerung zwischen den Aktualisierungen, wenn TF2 und Discord nicht laufen: ",
+        "French": "Délai entre les rafraîchissements lorsque TF2 et Discord ne fonctionnent pas : ",
+        "Spanish": "Retraso entre actualizaciones cuando TF2 y Discord no están funcionando: ",
+        "Portuguese": "Atraso entre as atualizações quando a TF2 e a Discord não estão funcionando: ",
+        "Italian": "Ritardo tra i rinfreschi quando TF2 e Discord non sono in funzione: ",
+        "Dutch": "Vertraging tussen de verversingen als TF2 en Discord niet werken: ",
+        "Polish": "Opóźnienie pomiędzy odświeżaniem, gdy TF2 i Discord nie działają: ",
+        "Russian": "Задержка между освежениями, когда не работает TF2 и Discord: ",
+        "Korean": "TF2 와 불화가 실행되지 않을 때 새로 고침 사이의 지연: ",
+        "Chinese": "TF2和Discord不运行时，刷新之间的延迟: ",
+        "Japanese": "TF2とDiscordが起動していないときのリフレッシュの遅延: "
     }
 }

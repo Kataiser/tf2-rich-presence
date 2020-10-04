@@ -29,7 +29,7 @@ class GUI(tk.Frame):
             self.log.to_stderr = True
 
         self.log.info(f"Opening settings menu for TF2 Rich Presence {launcher.VERSION}")
-        self.gui_language = self.languages[self.languages.index(reload_settings[9].get())] if reload_settings else None
+        self.gui_language = self.languages[self.languages.index(reload_settings[10].get())] if reload_settings else None
         self.loc = localization.Localizer(self.log, self.gui_language if self.gui_language else settings.get('language'))
 
         tk.Frame.__init__(self, master)
@@ -57,12 +57,13 @@ class GUI(tk.Frame):
 
         if reload_settings:
             # the GUI was reloaded with a new language, so persist the currently selected (but not saved) settings
-            self.sentry_level, self.wait_time, self.map_invalidation_hours, self.check_updates, self.request_timeout, self.hide_queued_gamemode, self.log_level, self.console_scan_kb, \
-            self.class_pic_type, self.language, self.map_time, self.trim_console_log = reload_settings
+            self.sentry_level, self.wait_time, self.wait_time_slow, self.map_invalidation_hours, self.check_updates, self.request_timeout, self.hide_queued_gamemode, self.log_level, \
+            self.console_scan_kb, self.class_pic_type, self.language, self.map_time, self.trim_console_log = reload_settings
         else:
             # create every setting variable without values
             self.sentry_level = tk.StringVar()
             self.wait_time = tk.IntVar()
+            self.wait_time_slow = tk.IntVar()
             self.map_invalidation_hours = tk.IntVar()
             self.check_updates = tk.BooleanVar()
             self.request_timeout = tk.IntVar()
@@ -82,6 +83,7 @@ class GUI(tk.Frame):
 
                 self.sentry_level.set(self.settings_loaded['sentry_level'])
                 self.wait_time.set(self.settings_loaded['wait_time'])
+                self.wait_time_slow.set(self.settings_loaded['wait_time_slow'])
                 self.map_invalidation_hours.set(self.settings_loaded['map_invalidation_hours'])
                 self.check_updates.set(self.settings_loaded['check_updates'])
                 self.request_timeout.set(self.settings_loaded['request_timeout'])
@@ -165,6 +167,11 @@ class GUI(tk.Frame):
             self.loc.text("Show time on current map instead of selected class")))
         setting15 = ttk.Checkbutton(self.lf_advanced, variable=self.trim_console_log, command=self.update_default_button_state, text="{}".format(
             self.loc.text("Occasionally limit console.log's size and remove empty lines")))
+        setting16_frame = ttk.Frame(self.lf_main)
+        setting16_text = ttk.Label(setting16_frame, text="{}".format(
+            self.loc.text("Delay between refreshes when TF2 and Discord aren't running: ")))  # and Steam but whatever
+        setting16_option = ttk.Spinbox(setting16_frame, textvariable=self.wait_time_slow, width=6, from_=0, to=1000, validate='all', validatecommand=(check_int_command, '%P', 1000),
+                                       command=self.update_default_button_state)
 
         # download page button, but only if a new version is available
         db = utils.access_db()
@@ -206,8 +213,11 @@ class GUI(tk.Frame):
         setting13_text.pack(side='left', fill=None, expand=False)
         setting13_options.pack(side='left', fill=None, expand=False)
         setting13_frame.grid(row=0, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(9, 0))
-        setting14.grid(row=2, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
+        setting14.grid(row=3, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
         setting15.grid(row=6, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
+        setting16_text.pack(side='left', fill=None, expand=False)
+        setting16_option.pack(side='left', fill=None, expand=False)
+        setting16_frame.grid(row=2, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(3, 0))
 
         self.lf_main.grid(row=0, padx=30, pady=15, sticky=tk.W + tk.E)
         self.lf_advanced.grid(row=1, padx=30, pady=0, sticky=tk.W + tk.E)
@@ -271,8 +281,8 @@ class GUI(tk.Frame):
             self.class_pic_type.set(self.class_pic_types[self.class_pic_types_display.index(self.class_pic_type.get())])
             self.language.set(self.languages[self.languages_display.index(self.language.get())])
 
-            selected_settings = (self.sentry_level, self.wait_time, self.map_invalidation_hours, self.check_updates, self.request_timeout, self.hide_queued_gamemode, self.log_level,
-                                 self.console_scan_kb, self.class_pic_type, self.language, self.map_time, self.trim_console_log)
+            selected_settings = (self.sentry_level, self.wait_time, self.wait_time_slow, self.map_invalidation_hours, self.check_updates, self.request_timeout, self.hide_queued_gamemode,
+                                 self.log_level, self.console_scan_kb, self.class_pic_type, self.language, self.map_time, self.trim_console_log)
             self.window_x = self.master.winfo_rootx() - 8
             self.window_y = self.master.winfo_rooty() - 31
             self.__init__(self.master, self.log, reload_settings=selected_settings)
@@ -314,6 +324,7 @@ class GUI(tk.Frame):
     def get_working_settings(self) -> dict:
         return {'sentry_level': self.sentry_levels[self.sentry_levels_display.index(self.sentry_level.get())],
                 'wait_time': self.wait_time.get(),
+                'wait_time_slow': self.wait_time_slow.get(),
                 'map_invalidation_hours': self.map_invalidation_hours.get(),
                 'check_updates': self.check_updates.get(),
                 'request_timeout': max(self.request_timeout.get(), 1),
@@ -342,6 +353,7 @@ class GUI(tk.Frame):
 
             self.sentry_level.set(settings.get_setting_default('sentry_level'))
             self.wait_time.set(settings.get_setting_default('wait_time'))
+            self.wait_time_slow.set(settings.get_setting_default('wait_time_slow'))
             self.map_invalidation_hours.set(settings.get_setting_default('map_invalidation_hours'))
             self.check_updates.set(settings.get_setting_default('check_updates'))
             self.request_timeout.set(settings.get_setting_default('request_timeout'))
@@ -372,7 +384,7 @@ class GUI(tk.Frame):
     # saves settings to file and closes window
     def save_and_close(self):
         # spinboxes can be set to blank, so if the user saves while blank, they try to default or be set to 0
-        int_settings = self.wait_time, self.map_invalidation_hours, self.request_timeout, self.console_scan_kb
+        int_settings = self.wait_time, self.wait_time_slow, self.map_invalidation_hours, self.request_timeout, self.console_scan_kb
         for int_setting in int_settings:
             try:
                 int_setting.get()

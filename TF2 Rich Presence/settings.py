@@ -40,6 +40,7 @@ def access_registry(save_dict: Union[dict, None] = None) -> dict:
 def get_setting_default(setting: str = '', return_all: bool = False) -> Union[str, int, bool, dict]:
     defaults = {'sentry_level': 'All errors',
                 'wait_time': 2,
+                'wait_time_slow': 5,
                 'map_invalidation_hours': 24,
                 'check_updates': True,
                 'request_timeout': 5,
