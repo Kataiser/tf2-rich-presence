@@ -47,11 +47,7 @@ def official() -> dict:
     gamemodes['No gamemode'] = 'beta-map'
     gamemode_replacements = [('d(M', 'd (M'), ('t(D', 't (D'), (' Mode', ''), ('Developer aidTest', 'No gamemode'), ('Developer aidControl Point', 'Control Point')]
     map_gamemodes = {'background01': ('Background01', 'beta-map', 'No gamemode'),
-                     'devtest': ('Devtest', 'beta-map', 'No gamemode'),
-                     'koth_megalo': ('Megalo', 'koth', 'King of the Hill'),
-                     'koth_undergrove_event': ('Moldergrove', 'koth', 'King of the Hill'),
-                     'pl_bloodwater': ('Bloodwater', 'payload', 'Payload'),
-                     'pl_hasslecastle': ('Hassle Castle', 'payload', 'Payload')}
+                     'devtest': ('Devtest', 'beta-map', 'No gamemode')}
 
     r = requests.get('https://wiki.teamfortress.com/wiki/List_of_maps')
     soup = BeautifulSoup(r.text, 'lxml')

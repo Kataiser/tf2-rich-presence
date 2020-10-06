@@ -124,11 +124,12 @@
         "tr_target": ["Target", "training", "Training"]},
     "common_custom": {
         "cp_glassworks_rc6a": ["control-point", "Control Point"],
-        "cp_helms_deep_fx": ["class-wars", "Class Wars"],
         "cp_kalinka_rc5": ["control-point", "Control Point"],
         "cp_lazytown_lazyday": ["control-point", "Control Point"],
         "cp_powerhouse_fix": ["control-point", "Control Point"],
         "cp_rumble_rc5": ["attack-defend", "Attack/Defend"],
         "minecraftworld_a7": ["trading", "Trading"],
-        "trademon_plaza_4": ["trading", "Trading"]}
+        "oot3d_hyrule": ["trading", "Trading"],
+        "pkmn_goldenrodcity_b3": ["trading", "Trading"],
+        "tm_stadium_rc1": ["achievement", "Achievement"]}
 }

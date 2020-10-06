@@ -107,7 +107,7 @@ class TestTF2RichPresense(unittest.TestCase):
 
         # test a couple common maps (in maps.json)
         self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'minecraftworld_a7', False, 5)), ('trading', 'Trading'))
-        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'mge_training_v8_beta4b', False, 5)), ('training', 'Training'))
+        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'cp_rumble_rc5', False, 5)), ('attack-defend', 'Attack/Defend'))
 
         # don't use cache, force using the API (5 second timeout)
         self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'cp_catwalk_a5c', True, 5)), ('control-point', 'Control Point'))
