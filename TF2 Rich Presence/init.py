@@ -24,8 +24,6 @@ def launch(welcome_version):
 
         log_init = logger.Log()
         log_init.info(f"Initializing TF2 Rich Presence {launcher.VERSION}")
-        log_init.debug(f"Current log: {log_init.filename}")
-        log_init.info(f"Log level: {log_init.log_level}")
 
         default_settings: dict = settings.get_setting_default(return_all=True)
         current_settings: dict = settings.access_registry()
@@ -45,9 +43,10 @@ def launch(welcome_version):
         raise SystemExit
     except Exception:
         try:
+            gc.enable()
             log_init.critical(traceback.format_exc())
         except NameError:
-            pass
+            pass  # the crash happened in logger.Log().__init__() and so log_main is unassigned
 
         raise
 

@@ -139,7 +139,7 @@ class TestTF2RichPresense(unittest.TestCase):
         self.log.log_file = open(self.log.filename, 'a', encoding='UTF8')
         self.log.info("Test1 饏Ӟ򒚦R៣񘺏1ࠞͳⴺۋ")
         self.log.error(str(SystemError("Test2")), reportable=False)
-        self.assertEqual(repr(self.log), r'logger.Log at test_resources\test_self.log (enabled=True level=Debug, stderr=False)')
+        self.assertEqual(repr(self.log), r'logger.Log at test_resources\test_self.log (enabled=True, level=Debug, stderr=False)')
         self.log.log_file.close()
 
         with open(self.log.filename, 'r', encoding='UTF8') as current_log_file:

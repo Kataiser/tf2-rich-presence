@@ -70,7 +70,7 @@ class Log:
         self.debug(f"Created {repr(self)}")
 
     def __repr__(self) -> str:
-        return f"logger.Log at {self.filename} (enabled={self.enabled} level={self.log_level}, stderr={self.to_stderr})"
+        return f"logger.Log at {self.filename} (enabled={self.enabled}, level={self.log_level}, stderr={self.to_stderr})"
 
     def __del__(self):
         if not self.log_file.closed:
