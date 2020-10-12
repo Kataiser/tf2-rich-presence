@@ -120,7 +120,7 @@ class TF2RichPresense:
         self.kataiser_scan_loop: int = 0
 
         self.log.cleanup(20 if launcher.DEBUG else 10)
-        self.log.debug(f"CPU: {psutil.cpu_count(logical=False)} cores, {psutil.cpu_count()} threads")
+        self.log.debug(f"CPU: {psutil.cpu_count(logical=False)} cores, {psutil.cpu_count()} threads, {round(psutil.cpu_freq().max / 1000, 1)} GHz")
 
         platform_info: Dict[str, Any] = {'architecture': platform.architecture, 'machine': platform.machine, 'system': platform.system, 'platform': platform.platform,
                                          'processor': platform.processor, 'python_version_tuple': platform.python_version_tuple}
