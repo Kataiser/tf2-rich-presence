@@ -84,6 +84,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     just_started_server: bool = False
     server_still_running: bool = False
     with_optimization: bool = True  # "with" optimization, not "with optimization"
+    chat_safety: bool = True
     self.kataiser_scan_loop += 1
     kataiser_scan: bool = self.kataiser_scan_loop == KATAISER_LOOP_FREQ if not force else True
     if kataiser_scan:
@@ -92,13 +93,15 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     user_is_kataiser: bool = 'Kataiser' in user_usernames
     kataiser_seen_on: Union[str, None] = None
     match_types: Dict[str, str] = {'12v12 Casual Match': 'Casual', 'MvM Practice': 'MvM (Boot Camp)', 'MvM MannUp': 'MvM (Mann Up)', '6v6 Ladder Match': 'Competitive'}
-    menus_messages: tuple = ('Lobby destroyed', 'For FCVAR_REPLICATED', '[TF Workshop]', 'request to abandon', 'Server shutting down', 'destroyed Lobby', 'Disconnect:',
-                             'destroyed CAsyncWavDataCache', 'Connection failed after', 'Missing map', 'Host_Error')
+    menus_messages: tuple = ('For FCVAR_REPLICATED', '[TF Workshop]', 'request to abandon', 'Server shutting down', 'destroyed Lobby', 'Disconnect:', 'destroyed CAsyncWavDataCache',
+                             'Connection failed after', 'Missing map', 'Host_Error')
     menus_message: str
 
     for username in user_usernames:
         if 'with' in username:
             with_optimization = False
+        if ' :  ' in username:
+            chat_safety = False
 
     map_line_used: str = ''
     class_line_used: str = ''
@@ -109,7 +112,8 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     for line in lines:
         # lines that have "with" in them are basically always kill logs and can be safely ignored
         # this (probably) improves performance
-        if with_optimization and 'with' in line:
+        # same goes for chat logs, this one's actually to reduce false detections
+        if (with_optimization and 'with' in line) or (chat_safety and ' :  ' in line):
             if not kataiser_scan or user_is_kataiser or 'Kataiser' not in line or self.has_seen_kataiser:
                 continue
 
