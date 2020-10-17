@@ -5,7 +5,7 @@ colorama==0.4.3
 Cython==3.0a6
 discoIPC==1.0.0
 idna==2.10
-lxml==4.5.2
+lxml==4.6.0
 psutil==5.7.2
 requests==2.24.0
 sentry_sdk==0.18.0
