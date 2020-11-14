@@ -9,5 +9,5 @@ lxml==4.6.1
 psutil==5.7.3
 requests==2.24.0
 sentry_sdk==0.19.1
-urllib3==1.25.11
+urllib3==1.26.2
 vdf==3.3
