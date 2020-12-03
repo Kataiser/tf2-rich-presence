@@ -92,6 +92,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     hide_queued_gamemode: bool = settings.get('hide_queued_gamemode')
     user_is_kataiser: bool = 'Kataiser' in user_usernames
     kataiser_seen_on: Union[str, None] = None
+    # TODO: detection for canceling loading into community servers (if possible)
     match_types: Dict[str, str] = {'12v12 Casual Match': 'Casual', 'MvM Practice': 'MvM (Boot Camp)', 'MvM MannUp': 'MvM (Mann Up)', '6v6 Ladder Match': 'Competitive'}
     menus_messages: tuple = ('For FCVAR_REPLICATED', '[TF Workshop]', 'request to abandon', 'Server shutting down', 'destroyed Lobby', 'Disconnect:', 'destroyed CAsyncWavDataCache',
                              'Connection failed after', 'Missing map', 'Host_Error')
