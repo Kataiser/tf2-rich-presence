@@ -47,7 +47,11 @@ def official() -> dict:
     gamemodes['No gamemode'] = 'beta-map'
     gamemode_replacements = [('d(M', 'd (M'), ('t(D', 't (D'), (' Mode', ''), ('Developer aidTest', 'No gamemode'), ('Developer aidControl Point', 'Control Point')]
     map_gamemodes = {'background01': ('Background01', 'beta-map', 'No gamemode'),
-                     'devtest': ('Devtest', 'beta-map', 'No gamemode')}
+                     'devtest': ('Devtest', 'beta-map', 'No gamemode'),
+                     'pl_pier': ('Pier', 'payload', 'Payload'),
+                     'ctf_snowfall_final': ('Snowfall', 'ctf', 'Capture the Flag'),
+                     'pd_snowville_event': ('SnowVille', 'player-destruction', 'Player Destruction'),
+                     'pl_wutville_event': ('Wutville', 'payload', 'Payload')}
 
     r = requests.get('https://wiki.teamfortress.com/wiki/List_of_maps')
     soup = BeautifulSoup(r.text, 'lxml')
@@ -59,7 +63,7 @@ def official() -> dict:
         except AttributeError:
             continue
 
-        gamemode_fancy = tr.find_all('td')[2].text[1:-1]
+        gamemode_fancy = tr.find_all('td')[2].text.strip()
 
         for replacement in gamemode_replacements:
             gamemode_fancy = gamemode_fancy.replace(*replacement)
