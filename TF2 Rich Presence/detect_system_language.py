@@ -53,7 +53,7 @@ def detect(log: logger.Log):
             if changed_language == 'yes':
                 temp_settings: dict = settings.access_registry()
                 temp_settings['language'] = system_language
-                settings.access_registry(save_dict=temp_settings)
+                settings.access_registry(save=temp_settings)
                 settings.get.cache_clear()
 
 

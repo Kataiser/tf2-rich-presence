@@ -29,7 +29,7 @@ import settings
 class TestTF2RichPresense(unittest.TestCase):
     def setUp(self):
         self.old_settings = settings.access_registry()
-        target_settings = settings.get_setting_default(return_all=True)
+        target_settings = settings.defaults()
         if self.old_settings != target_settings:
             settings.access_registry(target_settings)
 
@@ -45,7 +45,7 @@ class TestTF2RichPresense(unittest.TestCase):
     def tearDown(self):
         os.chdir(self.dir)
         del self.log
-        settings.access_registry(save_dict=self.old_settings)
+        settings.access_registry(save=self.old_settings)
 
         # fix a failed test_missing_files
         for file in os.listdir():
@@ -222,17 +222,20 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertFalse(settings_gui.check_int('abc123qwe098', 1000))
 
     def test_settings_access(self):
-        default_settings = settings.get_setting_default(return_all=True)
+        default_settings = settings.defaults()
 
         for setting in default_settings:
             self.assertEqual(type(default_settings[setting]), type(settings.get(setting)))
 
-    def test_fix_missing_settings(self):
-        test_default = {'a': 1, 'b': '2', 'c': True}
-        test_current = {'a': 1, 'c': True}
-        test_missing = settings.fix_missing_settings(test_default, test_current)
+    def test_compare_settings(self):
+        self.assertEqual(settings.compare_settings({'a': 'b', 'c': 'd'}, {'a': 'b', 'c': 'e'}), {'c': 'e'})
 
-        self.assertEqual(test_missing, {'b': '2'})
+    def test_fix_missing_settings(self):
+        defaults = settings.defaults()
+        del defaults['wait_time']
+        settings.access_registry(save=defaults)
+        settings.fix_missing_settings(self.log)
+        self.assertEqual(settings.access_registry(), settings.defaults())
 
     def test_get_api_key(self):
         self.assertEqual(len(utils.get_api_key('discord')), 18)

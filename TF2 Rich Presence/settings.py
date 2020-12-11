@@ -18,20 +18,20 @@ def get(setting: str) -> Union[str, int, bool]:
 
 
 # either reads the settings key and returns it as a dict, or if a dict is provided, saves it
-# note that settings are saved a JSON in a single string key
-def access_registry(save_dict: Union[dict, None] = None) -> dict:
+# note that settings are saved as JSON in a single string key
+def access_registry(save: Union[dict, None] = None) -> dict:
     reg_key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, r'Software\TF2 Rich Presence')
 
     try:
         reg_key_data = json.loads(winreg.QueryValue(reg_key, 'Settings'))
     except FileNotFoundError:  # means that the key hasn't been initialized
         # assume no key means default settings. might not be true but whatever
-        default_settings = get_setting_default(return_all=True)
+        default_settings = defaults()
         winreg.SetValue(reg_key, 'Settings', winreg.REG_SZ, json.dumps(default_settings, separators=(',', ':')))
         reg_key_data = default_settings
 
-    if save_dict:
-        winreg.SetValue(reg_key, 'Settings', winreg.REG_SZ, json.dumps(save_dict, separators=(',', ':')))
+    if save:
+        winreg.SetValue(reg_key, 'Settings', winreg.REG_SZ, json.dumps(save, separators=(',', ':')))
     else:
         return reg_key_data
 
@@ -58,26 +58,34 @@ def get_setting_default(setting: str = '', return_all: bool = False) -> Union[st
         return defaults[setting]
 
 
+# slightly less ugly
+def defaults() -> dict:
+    return get_setting_default(return_all=True)
+
+
 # find settings that are different between two settings dicts
 def compare_settings(before: dict, after: dict) -> dict:
     return {k: after[k] for k in before if before[k] != after[k]}
 
 
 # fixes settings that aren't in "current" from "default"
-def fix_missing_settings(default: dict, current: dict) -> dict:
-    missing_settings: dict = {}
+def fix_missing_settings(log):
+    default: dict = defaults()
+    current: dict = access_registry()
+    missing: dict = {}
 
     if len(default) != len(current):
         for default_setting in default:
             if default_setting not in current:
-                missing_settings[default_setting] = default[default_setting]
+                missing[default_setting] = default[default_setting]
                 current[default_setting] = default[default_setting]
 
-        access_registry(save_dict=current)
+        access_registry(save=current)
 
-    return missing_settings
+    if missing:
+        log.error(f"Missing setting(s), defaults added to current: {missing}")
 
 
 if __name__ == '__main__':
-    for setting in get_setting_default(return_all=True):
+    for setting in defaults():
         print(f"{setting}: {get(setting)}")

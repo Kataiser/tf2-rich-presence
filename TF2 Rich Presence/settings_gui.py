@@ -77,9 +77,10 @@ class GUI(tk.Frame):
 
             try:
                 # load settings from registry
+                settings.fix_missing_settings(self.log)
                 self.settings_loaded = settings.access_registry()
                 self.log.debug(f"Current settings: {self.settings_loaded}")
-                self.log.debug(f"Are default: {self.settings_loaded == settings.get_setting_default(return_all=True)}")
+                self.log.debug(f"Are default: {self.settings_loaded == settings.defaults()}")
 
                 self.sentry_level.set(self.settings_loaded['sentry_level'])
                 self.wait_time.set(self.settings_loaded['wait_time'])
@@ -101,7 +102,7 @@ class GUI(tk.Frame):
                 messagebox.showerror(self.loc.text("Error"), self.loc.text("Couldn't load settings, reverting to defaults.{0}").format(f'\n\n{formatted_exception}'))
 
                 self.restore_defaults()
-                self.settings_loaded = settings.get_setting_default(return_all=True)
+                self.settings_loaded = settings.defaults()
 
         # make options account for localization
         self.log_level.set(self.log_levels_display[self.log_levels.index(self.log_level.get())])
@@ -258,7 +259,7 @@ class GUI(tk.Frame):
 
     # runs every time a setting is changed, updates "restore defaults" button's state
     def update_default_button_state(self):
-        if self.get_working_settings() == settings.get_setting_default(return_all=True):  # if settings are default, disable button
+        if self.get_working_settings() == settings.defaults():  # if settings are default, disable button
             self.restore_button.state(['disabled'])
             self.log.debug("Disabled restore defaults button")
         else:
@@ -395,7 +396,7 @@ class GUI(tk.Frame):
         settings_changed = settings.compare_settings(self.settings_loaded, settings_to_save)
         self.log.debug(f"Setting(s) changed: {settings_changed}")
         self.log.info("Saving and closing settings menu")
-        settings.access_registry(save_dict=settings_to_save)
+        settings.access_registry(save=settings_to_save)
         self.log.info(f"Settings have been saved as: {settings_to_save}")
 
         restart_message = ""

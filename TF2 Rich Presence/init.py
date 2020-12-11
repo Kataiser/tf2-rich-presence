@@ -21,16 +21,9 @@ import welcomer
 def launch(welcome_version):
     try:
         gc.disable()
-
         log_init = logger.Log()
         log_init.info(f"Initializing TF2 Rich Presence {launcher.VERSION}")
-
-        default_settings: dict = settings.get_setting_default(return_all=True)
-        current_settings: dict = settings.access_registry()
-        missing_settings: dict = settings.fix_missing_settings(default_settings, current_settings)
-        if missing_settings:
-            log_init.error(f"Missing setting(s), defaults reverted: {missing_settings}")
-
+        settings.fix_missing_settings(log_init)
         loc_init = localization.Localizer(log=log_init, language=settings.get('language'))
 
         welcomer.welcome(log_init, loc_init, welcome_version)
