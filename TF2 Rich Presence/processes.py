@@ -198,7 +198,7 @@ class ProcessScanner:
         hl2_exe_path: str = self.get_info_from_pid(hl2_exe_pid, ('path',))['path']
         is_tf2: bool = False
 
-        if hl2_exe_path and 'Team Fortress 2' in hl2_exe_path:
+        if hl2_exe_path and 'team fortress 2' in hl2_exe_path.lower():
             appid_path: str = os.path.join(hl2_exe_path, 'steam_appid.txt')
 
             if os.path.isfile(appid_path):
