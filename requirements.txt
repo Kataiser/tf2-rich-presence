@@ -1,6 +1,6 @@
 beautifulsoup4==4.9.3
 certifi==2020.11.8
-chardet==3.0.4
+chardet==4.0.0
 colorama==0.4.4
 Cython==3.0a6
 discoIPC==1.0.0
