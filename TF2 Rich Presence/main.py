@@ -119,7 +119,11 @@ class TF2RichPresense:
         self.has_set_process_priority: bool = not set_process_priority
         self.kataiser_scan_loop: int = 0
 
-        self.log.cleanup(20 if launcher.DEBUG else 10)
+        try:
+            self.log.cleanup(20 if launcher.DEBUG else 10)
+        except (FileNotFoundError, PermissionError):
+            self.log.error(f"Couldn't clean up logs folder:\n{traceback.format_exc()}")
+
         self.log.debug(f"CPU: {psutil.cpu_count(logical=False)} cores, {psutil.cpu_count()} threads, {round(psutil.cpu_freq().max / 1000, 1)} GHz")
 
         platform_info: Dict[str, Any] = {'architecture': platform.architecture, 'machine': platform.machine, 'system': platform.system, 'platform': platform.platform,
@@ -137,7 +141,7 @@ class TF2RichPresense:
         if not os.path.supports_unicode_filenames:
             self.log.error("Looks like the OS doesn't support unicode filenames. This might cause problems")
 
-        settings.fix_missing_settings(self.log)
+        settings.fix_missing_settings(self.log)  # this should've been already dealt with by init, but sometimes that seems to just not work
         default_settings: dict = settings.defaults()
         current_settings: dict = settings.access_registry()
 

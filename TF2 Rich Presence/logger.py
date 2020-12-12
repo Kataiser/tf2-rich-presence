@@ -49,19 +49,18 @@ class Log:
         if self.enabled:
             if not os.path.isdir('logs'):
                 os.mkdir('logs')
+                time.sleep(0.1)  # ensure it gets created
+                created_logs_dir: bool = True
+            else:
+                created_logs_dir = False
 
             self.log_levels_allowed: list = [level for level in self.log_levels if self.log_levels.index(level) >= self.log_levels.index(self.log_level)]
             self.log_file: TextIO = open(self.filename, 'a', encoding='UTF8')
+
+            if created_logs_dir:
+                self.debug("Created logs folder")
         else:
             self.log_levels_allowed = self.log_levels
-
-        for old_filename in os.listdir('logs'):
-            old_filename: str = os.path.join('logs', old_filename)
-
-            if old_filename != self.filename and 'gzip' not in old_filename:
-                if self.enabled:
-                    self.log_file.close()
-                    self.log_file = open(self.filename, 'a', encoding='UTF8')
 
         db_path: str = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
         if not os.access(db_path, os.W_OK):
