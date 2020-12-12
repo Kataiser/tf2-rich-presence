@@ -22,11 +22,11 @@ Discord Rich Presence for Team Fortress 2
 (The actual program is nowhere near as nice looking as this)
 
 ## Download
-With 7-Zip's built-in extractor: [tf2_rich_presence_v1.14.5_self_extracting.exe](https://github.com/Kataiser/tf2-rich-presence/releases/download/v1.14.5/tf2_rich_presence_v1.14.5_self_extracting.exe) (8.1 MB)  
-Extract it yourself: [tf2_rich_presence_v1.14.5.zip](https://github.com/Kataiser/tf2-rich-presence/releases/download/v1.14.5/tf2_rich_presence_v1.14.5.zip) (10.8 MB)
+With 7-Zip's built-in extractor: [tf2_rich_presence_v1.14.6_self_extracting.exe](https://github.com/Kataiser/tf2-rich-presence/releases/download/v1.14.6/tf2_rich_presence_v1.14.6_self_extracting.exe) (8.1 MB)  
+Extract it yourself: [tf2_rich_presence_v1.14.6.zip](https://github.com/Kataiser/tf2-rich-presence/releases/download/v1.14.6/tf2_rich_presence_v1.14.6.zip) (11.0 MB)
 
 ## Installation and running
-1. Extract `tf2_rich_presence_v1.14.5.zip` OR run `tf2_rich_presence_v1.14.5_self_extracting.exe`, whichever you downloaded.
+1. Extract `tf2_rich_presence_v1.14.6.zip` OR run `tf2_rich_presence_v1.14.6_self_extracting.exe`, whichever you downloaded.
 2. Run `Launch TF2 with Rich Presence.exe`.
 	- OR run `Launch Rich Presence alongside TF2.exe`. This one doesn't automatically start Team Fortress 2.
 	- Both require Discord and Steam to be running as well and will wait until the game and both programs are running. 
