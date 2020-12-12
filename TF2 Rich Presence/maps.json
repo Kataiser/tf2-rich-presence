@@ -127,11 +127,17 @@
         "tr_dustbowl": ["Dustbowl", "training", "Training"],
         "tr_target": ["Target", "training", "Training"]},
     "common_custom": {
+        "cp_aqua": ["control-point", "Control Point"],
+        "cp_dustbowl_unlimited_v3fx": ["class-wars", "Class Wars"],
         "cp_glassworks_rc6a": ["control-point", "Control Point"],
         "cp_kalinka_rc5": ["control-point", "Control Point"],
         "cp_lazytown_lazyday": ["control-point", "Control Point"],
         "cp_powerhouse_fix": ["control-point", "Control Point"],
         "cp_rumble_rc5": ["attack-defend", "Attack/Defend"],
+        "cp_shaft_a4": ["control-point", "Control Point"],
+        "cp_urban_scramble": ["control-point", "Control Point"],
         "minecraftworld_a7": ["trading", "Trading"],
+        "paradise_gaming_v2b": ["trading", "Trading"],
+        "tf2ware2_a4": ["prophunt", "Prop Hunt"],
         "walmart_bettermeme_v12": ["trading", "Trading"]}
 }
