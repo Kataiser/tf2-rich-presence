@@ -8,6 +8,7 @@ import getpass
 import json
 import os
 import shutil
+import site
 import subprocess
 import sys
 import time
@@ -58,6 +59,7 @@ def main(version_num='v1.14.5'):
             with open('last_repo_path.txt', 'w') as last_repo_path_file:
                 last_repo_path_file.write(github_repo_path)
 
+    interpreter_name = 'python-3.7.9-embed-win32'
     build_start_time = time.perf_counter()
     print()
 
@@ -108,7 +110,7 @@ def main(version_num='v1.14.5'):
         print("Copied", shutil.copy('README-source.MD', github_repo_path))
         print("Copied", shutil.copy('requirements.txt', github_repo_path))
         print("Copied", shutil.copy('pycs_to_delete.txt', Path(f'{github_repo_path}/TF2 Rich Presence')))
-        print("Copied", shutil.copy('python-3.7.9-embed-win32.zip', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy(f'{interpreter_name}.zip', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copyfile(Path(f'{github_repo_path}/TF2 Rich Presence/DB_default.json'), Path(f'{github_repo_path}/TF2 Rich Presence/DB.json')))
 
         copy_dir_to_git('test_resources', Path(f'{github_repo_path}/TF2 Rich Presence/test_resources'))
@@ -134,12 +136,14 @@ def main(version_num='v1.14.5'):
         if os.path.isfile(Path(f'{new_build_folder_name}/Changelogs.html')):
             with open(Path(f'{new_build_folder_name}/Changelogs.html'), 'r') as old_changelogs:
                 update_changelogs = version_num not in old_changelogs.read()
-        # potentially create a mess, but it's better than them being lost
-        for file in os.listdir(Path(f'{new_build_folder_name}/logs')):
-            if file.endswith('.errors.log'):
-                if not os.path.isdir('error_logs'):
-                    os.mkdir('error_logs')
-                print("Copied", shutil.copy(Path(f'{new_build_folder_name}/logs/{file}'), 'error_logs'))
+        logs_path = Path(f'{new_build_folder_name}/logs')
+        if os.path.isdir(logs_path):
+            # potentially create a mess, but it's better than them being lost
+            for file in os.listdir(logs_path):
+                if file.endswith('.errors.log'):
+                    if not os.path.isdir('error_logs'):
+                        os.mkdir('error_logs')
+                    print("Copied", shutil.copy(Path(f'{new_build_folder_name}/logs/{file}'), 'error_logs'))
         try:
             shutil.rmtree(new_build_folder_name)
         except (OSError, PermissionError):
@@ -267,10 +271,10 @@ def main(version_num='v1.14.5'):
     print(f"Created {build_info_path}")
 
     # copies the python interpreter
-    python_source = os.path.abspath('python-3.7.9-embed-win32')
-    python_source_zip = os.path.abspath('python-3.7.9-embed-win32.zip')
+    python_source = os.path.abspath(interpreter_name)
+    python_source_zip = os.path.abspath(f'{interpreter_name}.zip')
     if os.path.isdir(python_source):
-        python_target = os.path.abspath(Path(f'{new_build_folder_name}/resources/python-3.7.9-embed-win32'))
+        python_target = os.path.abspath(Path(f'{new_build_folder_name}/resources/{interpreter_name}'))
         print(f"Copying from {python_source}\n\tto {python_target}: ", end='')
         assert os.path.isdir(python_source) and not os.path.isdir(python_target)
         if sys.platform == 'win32':
@@ -285,6 +289,23 @@ def main(version_num='v1.14.5'):
             interpreter_zip.extractall(path=python_target)
     else:
         raise SystemError("Python interpreter missing")
+
+    # copies the requirement packages (no longer part of the interpreter folder or zip
+    new_packages_dir = Path(f'{new_build_folder_name}/resources/{interpreter_name}/packages')
+    os.mkdir(new_packages_dir)
+    venv_packages_dir = site.getsitepackages()[1]
+    assert 'site-packages' in venv_packages_dir.lower()
+    needed_packages = ['certifi', 'chardet', 'colorama', 'discoIPC', 'idna', 'psutil', 'requests', 'sentry_sdk', 'urllib3', 'vdf']
+    for site_package in os.listdir(venv_packages_dir):
+        for needed_package in needed_packages:
+            if needed_package in site_package:
+                site_package_path = Path(f'{venv_packages_dir}/{site_package}')
+                new_package_dir = Path(f'{new_packages_dir}/{site_package}')
+                shutil.copytree(site_package_path, new_package_dir)
+                break
+    print(f"Copied {len(needed_packages)} packages from {venv_packages_dir} to {new_packages_dir}")
+    shutil.rmtree(Path(f'{new_packages_dir}/psutil/tests'))
+    print("Deleted psutil tests")
 
     # compile PYCs, for faster initial load times
     # TODO: if it's not too slow, determine which ones need to be deleted at build time (maybe cache somehow?)
@@ -310,12 +331,12 @@ def main(version_num='v1.14.5'):
     # ensure everything exists that needs to
     assert os.listdir(Path(f'{new_build_folder_name}/logs')) == []
     assert os.listdir(Path(f'{new_build_folder_name}/resources/__pycache__')) != []
-    assert os.listdir(Path(f'{new_build_folder_name}/resources/python-3.7.9-embed-win32')) != []
-    assert os.listdir(Path(f'{new_build_folder_name}/resources/python-3.7.9-embed-win32/packages')) != []
+    assert os.listdir(Path(f'{new_build_folder_name}/resources/{interpreter_name}')) != []
+    assert len(os.listdir(Path(f'{new_build_folder_name}/resources/{interpreter_name}/packages'))) == 20
     assert os.path.isfile(Path(f'{new_build_folder_name}/Changelogs.html'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/License.txt'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/Readme.txt'))
-    assert os.path.isfile(Path(f'{new_build_folder_name}/resources/python-3.7.9-embed-win32/python.exe'))
+    assert os.path.isfile(Path(f'{new_build_folder_name}/resources/{interpreter_name}/python.exe'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/resources/APIs'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/resources/font_instructions.gif'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/resources/tf2_logo_blurple.ico'))
