@@ -5,7 +5,6 @@
 import datetime
 import getpass
 import gzip
-import inspect
 import os
 import socket
 import sys
@@ -127,9 +126,6 @@ class Log:
 
     # a log with a level of ERROR (caught, non-fatal errors)
     def error(self, message_in: str, reportable: bool = True):
-        if len(inspect.stack()) >= 10:
-            pass
-
         if 'Error' in self.log_levels_allowed:
             self.write_log('ERROR', message_in, use_errors_file=True)
 
@@ -147,9 +143,6 @@ class Log:
 
     # a log with a level of CRITICAL (uncaught, fatal errors, probably (hopefully) sent to Sentry)
     def critical(self, message_in: str):
-        if len(inspect.stack()) >= 10:
-            pass
-
         if 'Critical' in self.log_levels_allowed:
             self.write_log('CRITICAL', message_in, use_errors_file=True)
 

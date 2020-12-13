@@ -45,15 +45,15 @@ class GUI(tk.Frame):
             self.window_x: Union[int, None] = None
             self.window_y: Union[int, None] = None
 
-        self.log_levels = ['Debug', 'Info', 'Error', 'Critical', 'Off']
-        self.sentry_levels = ['All errors', 'Crashes', 'Never']
-        self.class_pic_types = ['Icon', 'Emblem', 'Portrait', 'None, use TF2 logo']
-        self.languages = ['English', 'German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian', 'Korean', 'Chinese', 'Japanese']
+        self.log_levels = ('Debug', 'Info', 'Error', 'Critical', 'Off')
+        self.sentry_levels = ('All errors', 'Crashes', 'Never')
+        self.class_pic_types = ('Icon', 'Emblem', 'Portrait', 'None, use TF2 logo')
+        self.languages = ('English', 'German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian', 'Korean', 'Chinese', 'Japanese')
 
         self.log_levels_display = [self.loc.text(item) for item in self.log_levels]
         self.sentry_levels_display = [self.loc.text(item) for item in self.sentry_levels]
         self.class_pic_types_display = [self.loc.text(item) for item in self.class_pic_types]
-        self.languages_display = ['English', 'Deutsch', 'Français', 'Español', 'Português Brasileiro', 'Italiano', 'Nederlands', 'Polski', 'русский язык', '한국어', '汉语', '日本語']
+        self.languages_display = ('English', 'Deutsch', 'Français', 'Español', 'Português Brasileiro', 'Italiano', 'Nederlands', 'Polski', 'русский язык', '한국어', '汉语', '日本語')
 
         if reload_settings:
             # the GUI was reloaded with a new language, so persist the currently selected (but not saved) settings
