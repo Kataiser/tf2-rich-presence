@@ -26,7 +26,8 @@ def main():
         os.chdir(og_cwd)
 
 
-targets = ('configs', 'console_log', 'custom_maps', 'detect_system_language', 'init', 'localization', 'logger', 'main', 'processes', 'settings', 'settings_gui', 'updater', 'utils', 'welcomer')
+targets = ('configs', 'console_log', 'custom_maps', 'detect_system_language', 'init', 'localization', 'logger', 'main', 'match', 'processes', 'settings', 'settings_gui', 'updater',
+           'utils', 'welcomer')
 
 if __name__ == '__main__':
     main()
