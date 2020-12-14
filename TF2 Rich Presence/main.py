@@ -41,7 +41,7 @@ import custom_maps
 import launcher
 import localization
 import logger
-import match
+import server
 import processes
 import settings
 import utils
@@ -459,7 +459,7 @@ class TF2RichPresense:
 
     # get player count or user score (kills) from the game server
     def get_match_data(self, *args, **kwargs) -> str:
-        return match.get_match_data(self, *args, **kwargs)
+        return server.get_match_data(self, *args, **kwargs)
 
     # sends localized RPC data, connecting to Discord initially if need be
     def send_rpc_activity(self):
