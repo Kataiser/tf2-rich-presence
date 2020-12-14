@@ -50,7 +50,7 @@ def get_setting_default(setting: str = '', return_all: bool = False) -> Union[st
                 'console_scan_kb': 1024,
                 'class_pic_type': 'Icon',
                 'language': 'English',
-                'map_time': True,
+                'second_line': 'Player count',
                 'trim_console_log': True}
 
     if return_all:

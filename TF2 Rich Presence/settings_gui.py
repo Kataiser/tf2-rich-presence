@@ -49,16 +49,18 @@ class GUI(tk.Frame):
         self.sentry_levels = ('All errors', 'Crashes', 'Never')
         self.class_pic_types = ('Icon', 'Emblem', 'Portrait', 'None, use TF2 logo')
         self.languages = ('English', 'German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian', 'Korean', 'Chinese', 'Japanese')
+        self.second_lines = ('Player count', 'Time on map', 'Class', 'Kills')
 
         self.log_levels_display = [self.loc.text(item) for item in self.log_levels]
         self.sentry_levels_display = [self.loc.text(item) for item in self.sentry_levels]
         self.class_pic_types_display = [self.loc.text(item) for item in self.class_pic_types]
+        self.second_lines_display = [self.loc.text(item) for item in self.second_lines]
         self.languages_display = ('English', 'Deutsch', 'Français', 'Español', 'Português Brasileiro', 'Italiano', 'Nederlands', 'Polski', 'русский язык', '한국어', '汉语', '日本語')
 
         if reload_settings:
             # the GUI was reloaded with a new language, so persist the currently selected (but not saved) settings
             self.sentry_level, self.wait_time, self.wait_time_slow, self.map_invalidation_hours, self.check_updates, self.request_timeout, self.hide_queued_gamemode, self.log_level, \
-            self.console_scan_kb, self.class_pic_type, self.language, self.map_time, self.trim_console_log = reload_settings
+            self.console_scan_kb, self.class_pic_type, self.language, self.second_line, self.trim_console_log = reload_settings
         else:
             # create every setting variable without values
             self.sentry_level = tk.StringVar()
@@ -72,7 +74,7 @@ class GUI(tk.Frame):
             self.console_scan_kb = tk.IntVar()
             self.class_pic_type = tk.StringVar()
             self.language = tk.StringVar()
-            self.map_time = tk.BooleanVar()
+            self.second_line = tk.StringVar()
             self.trim_console_log = tk.BooleanVar()
 
             try:
@@ -93,7 +95,7 @@ class GUI(tk.Frame):
                 self.console_scan_kb.set(self.settings_loaded['console_scan_kb'])
                 self.class_pic_type.set(self.settings_loaded['class_pic_type'])
                 self.language.set(self.gui_language if self.gui_language else self.settings_loaded['language'])
-                self.map_time.set(self.settings_loaded['map_time'])
+                self.second_line.set(self.settings_loaded['second_line'])
                 self.trim_console_log.set(self.settings_loaded['trim_console_log'])
             except Exception:
                 # probably a json decode error
@@ -109,6 +111,9 @@ class GUI(tk.Frame):
         self.sentry_level.set(self.sentry_levels_display[self.sentry_levels.index(self.sentry_level.get())])
         self.class_pic_type.set(self.class_pic_types_display[self.class_pic_types.index(self.class_pic_type.get())])
         self.language.set(self.languages_display[self.languages.index(self.language.get())])
+        self.second_line.set(self.second_lines_display[self.second_lines.index(self.second_line.get())])
+        actual_language = self.language.get()
+        actual_second_line = self.second_line.get()
 
         # create label frames
         self.lf_main = ttk.Labelframe(master, text=self.loc.text("Main"))
@@ -161,11 +166,11 @@ class GUI(tk.Frame):
         setting13_frame = ttk.Frame(self.lf_main)
         setting13_text = ttk.Label(setting13_frame, text="{}".format(
             self.loc.text("Language: ")))
-        actual_language = self.language.get()
         setting13_options = ttk.OptionMenu(setting13_frame, self.language, self.languages[0], *self.languages_display, command=self.update_language)
-        self.language.set(actual_language)
-        setting14 = ttk.Checkbutton(self.lf_main, variable=self.map_time, command=self.update_default_button_state, text="{}".format(
-            self.loc.text("Show time on current map instead of selected class")))
+        setting14_frame = ttk.Frame(self.lf_main)
+        setting14_text = ttk.Label(setting14_frame, text="{}".format(
+            self.loc.text("Second line: ")))
+        setting14_options = ttk.OptionMenu(setting14_frame, self.second_line, self.second_lines[0], *self.second_lines_display, command=self.update_default_button_state)
         setting15 = ttk.Checkbutton(self.lf_advanced, variable=self.trim_console_log, command=self.update_default_button_state, text="{}".format(
             self.loc.text("Occasionally limit console.log's size and remove empty lines")))
         setting16_frame = ttk.Frame(self.lf_main)
@@ -173,6 +178,10 @@ class GUI(tk.Frame):
             self.loc.text("Delay between refreshes when TF2 and Discord aren't running: ")))  # and Steam but whatever
         setting16_option = ttk.Spinbox(setting16_frame, textvariable=self.wait_time_slow, width=6, from_=0, to=1000, validate='all', validatecommand=(check_int_command, '%P', 1000),
                                        command=self.update_default_button_state)
+
+        # more localization compensation
+        self.language.set(actual_language)
+        self.second_line.set(actual_second_line)
 
         # download page button, but only if a new version is available
         db = utils.access_db()
@@ -214,7 +223,9 @@ class GUI(tk.Frame):
         setting13_text.pack(side='left', fill=None, expand=False)
         setting13_options.pack(side='left', fill=None, expand=False)
         setting13_frame.grid(row=0, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(9, 0))
-        setting14.grid(row=3, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
+        setting14_text.pack(side='left', fill=None, expand=False)
+        setting14_options.pack(side='left', fill=None, expand=False)
+        setting14_frame.grid(row=3, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(3, 0))
         setting15.grid(row=6, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
         setting16_text.pack(side='left', fill=None, expand=False)
         setting16_option.pack(side='left', fill=None, expand=False)
@@ -258,7 +269,7 @@ class GUI(tk.Frame):
         return f"settings.GUI {self.window_dimensions}"
 
     # runs every time a setting is changed, updates "restore defaults" button's state
-    def update_default_button_state(self):
+    def update_default_button_state(self, *args):
         if self.get_working_settings() == settings.defaults():  # if settings are default, disable button
             self.restore_button.state(['disabled'])
             self.log.debug("Disabled restore defaults button")
@@ -281,9 +292,10 @@ class GUI(tk.Frame):
             self.sentry_level.set(self.sentry_levels[self.sentry_levels_display.index(self.sentry_level.get())])
             self.class_pic_type.set(self.class_pic_types[self.class_pic_types_display.index(self.class_pic_type.get())])
             self.language.set(self.languages[self.languages_display.index(self.language.get())])
+            self.second_line.set(self.second_lines[self.second_lines_display.index(self.second_line.get())])
 
             selected_settings = (self.sentry_level, self.wait_time, self.wait_time_slow, self.map_invalidation_hours, self.check_updates, self.request_timeout, self.hide_queued_gamemode,
-                                 self.log_level, self.console_scan_kb, self.class_pic_type, self.language, self.map_time, self.trim_console_log)
+                                 self.log_level, self.console_scan_kb, self.class_pic_type, self.language, self.second_line, self.trim_console_log)
             self.window_x = self.master.winfo_rootx() - 8
             self.window_y = self.master.winfo_rooty() - 31
             self.__init__(self.master, self.log, reload_settings=selected_settings)
@@ -334,7 +346,7 @@ class GUI(tk.Frame):
                 'console_scan_kb': self.console_scan_kb.get(),
                 'class_pic_type': self.class_pic_types[self.class_pic_types_display.index(self.class_pic_type.get())],
                 'language': self.languages[self.languages_display.index(self.language.get())],
-                'map_time': self.map_time.get(),
+                'second_line': self.second_lines[self.second_lines_display.index(self.second_line.get())],
                 'trim_console_log': self.trim_console_log.get()}
 
     # set all settings to defaults
@@ -363,7 +375,7 @@ class GUI(tk.Frame):
             self.console_scan_kb.set(settings.get_setting_default('console_scan_kb'))
             self.class_pic_type.set(settings.get_setting_default('class_pic_type'))
             self.language.set(settings.get_setting_default('language'))
-            self.map_time.set(settings.get_setting_default('map_time'))
+            self.second_line.set(settings.get_setting_default('second_line'))
             self.trim_console_log.set(settings.get_setting_default('trim_console_log'))
 
             # make options account for localization (same as in __init__)
@@ -371,6 +383,7 @@ class GUI(tk.Frame):
             self.sentry_level.set(self.sentry_levels_display[self.sentry_levels.index(self.sentry_level.get())])
             self.class_pic_type.set(self.class_pic_types_display[self.class_pic_types.index(self.class_pic_type.get())])
             self.language.set(self.languages_display[self.languages.index(self.language.get())])
+            self.second_line.set(self.second_lines_display[self.second_lines.index(self.second_line.get())])
 
             self.log.debug("Restored defaults")
 

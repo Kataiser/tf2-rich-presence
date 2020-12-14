@@ -13,7 +13,7 @@ import settings
 
 # reads a console.log and returns current map and class
 def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: float = float(settings.get('console_scan_kb')), force: bool = False,
-              tf2_start_time: int = 0) -> Tuple[str, str]:
+              tf2_start_time: int = 0) -> Tuple[str, str, str]:
     TF2_LOAD_TIME_ASSUMPTION: int = 10
     SIZE_LIMIT_MULTIPLE_TRIGGER: int = 4
     SIZE_LIMIT_MULTIPLE_TARGET: int = 2
@@ -43,7 +43,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     console_log_mtime_relative: int = self.console_log_mtime - tf2_start_time
     if console_log_mtime_relative <= TF2_LOAD_TIME_ASSUMPTION:
         self.log.debug(f"console.log's mtime relative to TF2's start time is {console_log_mtime_relative} (<= {TF2_LOAD_TIME_ASSUMPTION}), assuming default state")
-        return current_map, current_class
+        return current_map, current_class, ''
 
     consolelog_file_size: int = os.stat(console_log_path).st_size
     byte_limit: float = kb_limit * 1024.0
@@ -90,6 +90,8 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     if kataiser_scan:
         self.kataiser_scan_loop = 0
     hide_queued_gamemode: bool = settings.get('hide_queued_gamemode')
+    scan_for_address: bool = settings.get('second_line') in ('Player count', 'Kills')
+    server_address: str = ''
     user_is_kataiser: bool = 'Kataiser' in user_usernames
     kataiser_seen_on: Union[str, None] = None
     # TODO: detection for canceling loading into community servers (if possible)
@@ -127,6 +129,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
                     current_map = 'In menus'
                     current_class = 'Not queued'
                     map_line_used = class_line_used = line
+                    server_address = ''
                     kataiser_seen_on = None
                     break
 
@@ -136,6 +139,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
                     current_map = 'In menus'
                     current_class = 'Not queued'
                     map_line_used = class_line_used = line
+                    server_address = ''
                     kataiser_seen_on = None
 
         if line.endswith(' selected \n'):
@@ -157,6 +161,9 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
             else:
                 just_started_server = False
                 server_still_running = False
+
+        elif scan_for_address and line.startswith('Connected to '):
+            server_address = line[13:-1]
 
         elif '[PartyClient] L' in line:  # full line: "[PartyClient] Leaving queue"
             # queueing is not necessarily only in menus
@@ -182,6 +189,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
                     current_map = 'In menus'
                     current_class = 'Not queued'
                     map_line_used = class_line_used = line
+                    server_address = ''
                     kataiser_seen_on = None
                     break
 
@@ -210,6 +218,9 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
         self.log.debug(f"Got '{current_map}' and '{current_class}' from line '{map_line_used[:-1]}'")
     else:
         self.log.debug(f"Got '{current_map}' from line '{map_line_used[:-1]}' and '{current_class}' from line '{class_line_used[:-1]}'")
+
+    if scan_for_address:
+        self.log.debug(f"Got server address {server_address}")
 
     # remove empty lines (bot spam)
     if 'In menus' in current_map and settings.get('trim_console_log') and not force:
@@ -240,7 +251,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     else:
         self.cleanup_primed = True
 
-    return current_map, current_class
+    return current_map, current_class, server_address
 
 
 # alerts the user that they don't seem to have -condebug

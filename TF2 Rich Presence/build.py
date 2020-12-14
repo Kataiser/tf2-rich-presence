@@ -295,7 +295,7 @@ def main(version_num='v1.14.6'):
     os.mkdir(new_packages_dir)
     venv_packages_dir = site.getsitepackages()[1]
     assert 'site-packages' in venv_packages_dir.lower()
-    needed_packages = ['certifi', 'chardet', 'colorama', 'discoIPC', 'idna', 'psutil', 'requests', 'sentry_sdk', 'urllib3', 'vdf']
+    needed_packages = ['a2s', 'certifi', 'chardet', 'colorama', 'discoIPC', 'idna', 'psutil', 'python-a2s', 'requests', 'sentry_sdk', 'urllib3', 'vdf']
     for site_package in os.listdir(venv_packages_dir):
         for needed_package in needed_packages:
             if needed_package in site_package:
@@ -332,7 +332,7 @@ def main(version_num='v1.14.6'):
     assert os.listdir(Path(f'{new_build_folder_name}/logs')) == []
     assert os.listdir(Path(f'{new_build_folder_name}/resources/__pycache__')) != []
     assert os.listdir(Path(f'{new_build_folder_name}/resources/{interpreter_name}')) != []
-    assert len(os.listdir(Path(f'{new_build_folder_name}/resources/{interpreter_name}/packages'))) == 20
+    assert len(os.listdir(Path(f'{new_build_folder_name}/resources/{interpreter_name}/packages'))) == 22
     assert os.path.isfile(Path(f'{new_build_folder_name}/Changelogs.html'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/License.txt'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/Readme.txt'))

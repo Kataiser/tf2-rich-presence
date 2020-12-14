@@ -27,10 +27,12 @@ import datetime
 import gc
 import os
 import platform
+import socket
 import time
 import traceback
 from typing import Any, Dict, List, Set, Tuple, Union
 
+import a2s
 import psutil
 from colorama import Style
 from discoIPC import ipc
@@ -92,7 +94,7 @@ class TF2RichPresense:
         self.old_activity2: Dict[str, Union[str, Dict[str, int], Dict[str, str]]] = {}  # for sending to Discord
         self.activity_translated: Dict[str, Union[str, Dict[str, int], Dict[str, str]]] = {}
         self.client_connected: bool = False
-        self.client: Union[ipc.DiscordIPC, None] = None
+        self.rpc_client: Union[ipc.DiscordIPC, None] = None
         self.test_state: str = 'init'
         self.should_mention_discord: bool = True
         self.should_mention_tf2: bool = True
@@ -107,7 +109,7 @@ class TF2RichPresense:
         self.has_seen_kataiser: bool = False
         self.console_log_mtime: Union[int, None] = None
         self.old_console_log_mtime: Union[int, None] = None
-        self.old_console_log_interpretation: tuple = ('', '')
+        self.old_console_log_interpretation: tuple = ('', '', '')
         self.map_gamemodes: Dict[str, Dict[str, List[str]]] = utils.load_maps_db()
         self.loop_iteration: int = 0
         self.custom_functions = None
@@ -118,6 +120,9 @@ class TF2RichPresense:
         self.slow_sleep_time: bool = False
         self.has_set_process_priority: bool = not set_process_priority
         self.kataiser_scan_loop: int = 0
+        self.last_server_request_time: float = 0.0
+        self.last_server_request_data: str = ''
+        self.last_server_request_address: str = ''
 
         try:
             self.log.cleanup(20 if launcher.DEBUG else 10)
@@ -184,9 +189,10 @@ class TF2RichPresense:
         self.loop_iteration += 1
         self.log.debug(f"Main loop iteration this app session: {self.loop_iteration}")
 
+        constant_dynamic_activity: bool = settings.get('second_line') != 'Class' and self.test_state == 'in game'  # test state can become out of date later this loop but it's right atm
         self.old_activity1 = copy.deepcopy(self.activity)
         self.old_activity2 = copy.deepcopy(self.activity)
-        if self.loc.text("Time on map: {0}").replace('{0}', '') in self.old_activity1['state']:
+        if constant_dynamic_activity and '?' not in self.old_activity1['state']:
             self.old_activity1['state'] = ''
 
         if self.custom_functions:
@@ -230,9 +236,9 @@ class TF2RichPresense:
             top_line: str
             bottom_line: str
             # TODO: use a state machine and/or much more consistent var names
-            top_line, bottom_line = self.interpret_console_log(console_log_path, self.valid_usernames, tf2_start_time=p_data['TF2']['time'])
+            top_line, bottom_line, server_address = self.interpret_console_log(console_log_path, self.valid_usernames, tf2_start_time=p_data['TF2']['time'])
             self.old_console_log_mtime = self.console_log_mtime
-            self.old_console_log_interpretation = (top_line, bottom_line)
+            self.old_console_log_interpretation = (top_line, bottom_line, server_address)
 
             actual_current_class: str = bottom_line  # https://www.portal2sounds.com/1130
             queued_in_game: bool = bottom_line not in console_log.tf2_classes and bottom_line != 'unselected'  # ditto
@@ -259,6 +265,8 @@ class TF2RichPresense:
             else:  # not in menus = in a game
                 self.test_state = 'in game'
                 class_pic_type: str = settings.get('class_pic_type').lower()
+                second_line_setting: str = settings.get('second_line')
+                class_line: str = self.loc.text("Class: {0}").format(self.loc.text(bottom_line)) if not queued_in_game else self.loc.text(bottom_line)
 
                 if class_pic_type == 'none, use tf2 logo' or bottom_line == 'unselected' or queued_in_game:
                     self.activity['assets']['small_image'] = 'tf2_icon_small'
@@ -271,9 +279,12 @@ class TF2RichPresense:
                     self.activity['assets']['small_image'] = small_class_image
                     self.activity['assets']['small_text'] = bottom_line
 
-                class_line: str = self.loc.text("Class: {0}").format(self.loc.text(bottom_line)) if not queued_in_game else self.loc.text(bottom_line)
-
-                if settings.get('map_time'):
+                if second_line_setting in ('Player count', 'Kills'):
+                    bottom_line = self.get_match_data(server_address, second_line_setting)
+                    self.log.debug(f"Got match data from server: {bottom_line}")
+                elif second_line_setting == 'Class':
+                    bottom_line = class_line
+                elif second_line_setting == 'Time on map':
                     if self.current_map != top_line:  # top_line means the current map here... I should probably refactor that
                         self.current_map = top_line
                         self.time_changed_map = time.time()
@@ -286,7 +297,7 @@ class TF2RichPresense:
                     # I know I could just set the start time in activity, but I'd rather that always meant time with the game open
                     bottom_line = self.loc.text("Time on map: {0}").format(map_time_formatted)
                 else:
-                    bottom_line = class_line
+                    self.log.error(f"Second line is invalid ({second_line_setting})")
 
                 # good code
                 hosting: bool = ' (hosting)' in top_line
@@ -318,7 +329,7 @@ class TF2RichPresense:
                 self.custom_functions.loop_middle(self)
 
             activity_comparison: Dict[str, Union[str, Dict[str, int], Dict[str, str]]] = copy.deepcopy(self.activity)
-            if self.loc.text("Time on map: {0}").replace('{0}', '') in activity_comparison['state']:
+            if constant_dynamic_activity and '?' not in activity_comparison['state']:
                 activity_comparison['state'] = ''
 
             if activity_comparison != self.old_activity1:
@@ -338,7 +349,7 @@ class TF2RichPresense:
                     print(f"{self.loc.text(self.activity['details'])} ({self.activity['assets']['large_text']})")
                     print(self.loc.text(self.activity['state']))
 
-                    if settings.get('map_time'):
+                    if settings.get('second_line') != 'Class':
                         print(class_line)  # this means the current class. god this desperately needs a refactor
 
                     window_title = window_title_format_main.format(base_window_title, actual_current_class, map_out)
@@ -398,7 +409,7 @@ class TF2RichPresense:
         if self.custom_functions:
             self.custom_functions.after_loop(self)
 
-        return self.client_connected, self.client
+        return self.client_connected, self.rpc_client
 
     # notify user (possibly) and restart (possibly)
     def necessary_program_not_running(self, program_name: str, should_mention: bool, name_short: str = ''):
@@ -409,8 +420,8 @@ class TF2RichPresense:
         if self.client_connected:
             try:
                 self.log.debug("Disconnecting client")
-                self.client.disconnect()  # doesn't work...
-                client_state = (self.client.client_id, self.client.connected, self.client.ipc_path, self.client.pid, self.client.platform, self.client.socket)
+                self.rpc_client.disconnect()  # doesn't work...
+                client_state = (self.rpc_client.client_id, self.rpc_client.connected, self.rpc_client.ipc_path, self.rpc_client.pid, self.rpc_client.platform, self.rpc_client.socket)
                 self.log.debug(f"client state after disconnect: {client_state}")
             except Exception as err:
                 self.log.error(f"client error while disconnecting: {err}", reportable=False)
@@ -440,22 +451,86 @@ class TF2RichPresense:
         self.client_connected = False
 
     # reads a console.log and returns current map and class
-    def interpret_console_log(self, *args, **kwargs) -> Tuple[str, str]:
+    def interpret_console_log(self, *args, **kwargs) -> Tuple[str, str, str]:
         return console_log.interpret(self, *args, **kwargs)
 
     # reads steam's launch options save file to find usernames with -condebug
     def steam_config_file(self, *args, **kwargs) -> set:
         return configs.steam_config_file(self, *args, **kwargs)
 
+    # get player count or user score (kills) from the game server
+    def get_match_data(self, address: str, mode: str, force: bool = False) -> str:
+        RATE_LIMIT: int = 12
+        time_since_last: float = time.time() - self.last_server_request_time
+
+        if time_since_last < RATE_LIMIT and self.last_server_request_address == address and not force:
+            self.log.debug(f"Skipping getting server data ({round(time_since_last, 1)} < {RATE_LIMIT}), persisting {self.last_server_request_data}")
+            return self.last_server_request_data
+        else:
+            self.last_server_request_time = time.time()
+            self.last_server_request_address = address
+            self.log.debug(f"Getting match data from server ({address}) with mode {mode}")
+
+            if mode not in ('Player count', 'Kills'):
+                self.log.error(f"Match info mode is invalid ({mode})")
+                self.last_server_request_data = ""
+                self.last_server_request_time -= RATE_LIMIT
+                return self.last_server_request_data
+            if ':' not in address:
+                self.log.error(f"Server address is invalid ({address})")
+                self.last_server_request_data = ""
+                self.last_server_request_time -= RATE_LIMIT
+                return self.last_server_request_data
+
+            ip, socket_ = address.split(':')
+
+            try:
+                if mode == 'Player count':
+                    server_info = a2s.info((ip, int(socket_)), timeout=settings.get('request_timeout'))
+                    # there's a decent amount of extra data here that isn't used but could be (server name, bot count, tags, etc.)
+                else:
+                    players_info = a2s.players((ip, int(socket_)), timeout=settings.get('request_timeout'))
+            except (a2s.BrokenMessageError, a2s.BrokenMessageError, socket.timeout, socket.gaierror, ConnectionRefusedError):
+                self.log.error(f"Couldn't get server info: {traceback.format_exc()}")
+                self.last_server_request_data = ""
+                self.last_server_request_time -= RATE_LIMIT
+                return self.last_server_request_data
+
+            if mode == 'Player count':  # probably not worth doing an extra request each time if using kills mode
+                if server_info.protocol != 17:
+                    self.log.error(f"Server protocol is {server_info.protocol}, not 17")
+                if server_info.game_id != 440:
+                    self.log.error(f"Server game ID is {server_info.game_id}, not 440")
+                if server_info.game != 'Team Fortress':
+                    self.log.error(f"Server game is {server_info.folder}, not Team Fortress")
+
+            if mode == 'Player count':
+                if 'valve' in server_info.keywords:
+                    max_players: int = 24
+                else:
+                    max_players = server_info.max_players
+
+                self.last_server_request_data = self.loc.text("Players: {0}/{1}").format(server_info.player_count, max_players)
+                return self.last_server_request_data
+            else:
+                for player in players_info:
+                    if player.name in self.valid_usernames:
+                        self.last_server_request_data = self.loc.text("Kills: {0}").format(player.score)
+                        return self.last_server_request_data
+
+                self.log.error("User doesn't seem to be in the server")
+                self.last_server_request_data = self.loc.text("Kills: {0}").format(0)
+                return self.last_server_request_data
+
     # sends localized RPC data, connecting to Discord initially if need be
     def send_rpc_activity(self):
         try:
             if not self.client_connected:
                 # connects to Discord and sends first status, starts on main menu
-                self.client = ipc.DiscordIPC(utils.get_api_key('discord'))
-                self.client.connect()
+                self.rpc_client = ipc.DiscordIPC(utils.get_api_key('discord'))
+                self.rpc_client.connect()
                 client_state: Tuple[Any, bool, str, int, str, Any] = (
-                    self.client.client_id, self.client.connected, self.client.ipc_path, self.client.pid, self.client.platform, self.client.socket)
+                    self.rpc_client.client_id, self.rpc_client.connected, self.rpc_client.ipc_path, self.rpc_client.pid, self.rpc_client.platform, self.rpc_client.socket)
                 self.log.debug(f"Initial RPC client state: {client_state}")
 
             # localize activity
@@ -465,12 +540,12 @@ class TF2RichPresense:
             self.activity_translated['assets']['large_text'] = self.loc.text(self.activity['assets']['large_text'])
 
             # stop DB.json spam as the map time increases
-            if not (settings.get('map_time') and self.test_state == 'in game'):
+            if not (settings.get('second_line') != 'Class' and self.test_state == 'in game'):
                 self.activity_translated['state'] = self.loc.text(self.activity['state'])
 
-            self.client.update_activity(self.activity_translated)
+            self.rpc_client.update_activity(self.activity_translated)
             self.log.info(f"Sent over RPC: {self.activity_translated}")
-            client_state = (self.client.client_id, self.client.connected, self.client.ipc_path, self.client.pid, self.client.platform, self.client.socket)
+            client_state = (self.rpc_client.client_id, self.rpc_client.connected, self.rpc_client.ipc_path, self.rpc_client.pid, self.rpc_client.platform, self.rpc_client.socket)
             self.log.debug(f"client state: {client_state}")
             self.client_connected = True
         except Exception as client_connect_error:
