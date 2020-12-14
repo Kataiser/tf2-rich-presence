@@ -13,7 +13,7 @@ import settings
 
 # get player count or user score (kills) from the game server
 def get_match_data(self, address: str, mode: str, force: bool = False) -> str:
-    RATE_LIMIT: int = 12
+    RATE_LIMIT: int = 10
     time_since_last: float = time.time() - self.last_server_request_time
 
     if time_since_last < RATE_LIMIT and self.last_server_request_address == address and not force:
