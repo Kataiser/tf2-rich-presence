@@ -23,7 +23,7 @@ def launch(welcome_version):
         gc.disable()
         log_init = logger.Log()
         log_init.info(f"Initializing TF2 Rich Presence {launcher.VERSION}")
-        settings.fix_missing_settings(log_init)
+        settings.fix_settings(log_init)
         loc_init = localization.Localizer(log=log_init, language=settings.get('language'))
 
         welcomer.welcome(log_init, loc_init, welcome_version)

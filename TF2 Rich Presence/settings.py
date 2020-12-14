@@ -69,22 +69,30 @@ def compare_settings(before: dict, after: dict) -> dict:
     return {k: after[k] for k in before if before[k] != after[k]}
 
 
-# fixes settings that aren't in "current" from "default"
-def fix_missing_settings(log):
+# fixes settings that are missing or deprecated
+def fix_settings(log):
     default: dict = defaults()
     current: dict = access_registry()
-    missing: dict = {}
+    added: dict = {}
+    removed: dict = {}
+    made_fixes: bool = False
 
-    if len(default) != len(current):
-        for default_setting in default:
-            if default_setting not in current:
-                missing[default_setting] = default[default_setting]
-                current[default_setting] = default[default_setting]
+    for default_setting in default:
+        if default_setting not in current:
+            current[default_setting] = default[default_setting]
+            added[default_setting] = default[default_setting]
+            made_fixes = True
+
+    for current_setting in list(current):
+        if current_setting not in default:
+            removed[current_setting] = current[current_setting]
+            del current[current_setting]
+            made_fixes = True
 
         access_registry(save=current)
 
-    if missing:
-        log.error(f"Missing setting(s), defaults added to current: {missing}")
+    if made_fixes:
+        log.error(f"Fixed settings: added {added}, removed {removed}")
 
 
 if __name__ == '__main__':

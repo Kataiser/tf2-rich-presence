@@ -79,7 +79,7 @@ class GUI(tk.Frame):
 
             try:
                 # load settings from registry
-                settings.fix_missing_settings(self.log)
+                settings.fix_settings(self.log)
                 self.settings_loaded = settings.access_registry()
                 self.log.debug(f"Current settings: {self.settings_loaded}")
                 self.log.debug(f"Are default: {self.settings_loaded == settings.defaults()}")

@@ -246,11 +246,12 @@ class TestTF2RichPresense(unittest.TestCase):
     def test_compare_settings(self):
         self.assertEqual(settings.compare_settings({'a': 'b', 'c': 'd'}, {'a': 'b', 'c': 'e'}), {'c': 'e'})
 
-    def test_fix_missing_settings(self):
-        defaults = settings.defaults()
-        del defaults['wait_time']
-        settings.access_registry(save=defaults)
-        settings.fix_missing_settings(self.log)
+    def test_fix_settings(self):
+        broken = settings.defaults()
+        del broken['wait_time']
+        broken['fake'] = True
+        settings.access_registry(save=broken)
+        settings.fix_settings(self.log)
         self.assertEqual(settings.access_registry(), settings.defaults())
 
     def test_get_api_key(self):

@@ -146,7 +146,7 @@ class TF2RichPresense:
         if not os.path.supports_unicode_filenames:
             self.log.error("Looks like the OS doesn't support unicode filenames. This might cause problems")
 
-        settings.fix_missing_settings(self.log)  # this should've been already dealt with by init, but sometimes that seems to just not work
+        settings.fix_settings(self.log)  # this should've been already dealt with by init, but sometimes that seems to just not work
         default_settings: dict = settings.defaults()
         current_settings: dict = settings.access_registry()
 
