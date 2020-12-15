@@ -66,11 +66,13 @@ def get_match_data(self, address: str, mode: str, force: bool = False) -> str:
                 max_players = server_info.max_players
 
             self.last_server_request_data = self.loc.text("Players: {0}/{1}").format(server_info.player_count, max_players)
+            self.log.debug(f"Got match data from server: {self.last_server_request_data}")
             return self.last_server_request_data
         else:
             for player in players_info:
                 if player.name in self.valid_usernames:
                     self.last_server_request_data = self.loc.text("Kills: {0}").format(player.score)
+                    self.log.debug(f"Got match data from server: {self.last_server_request_data}")
                     return self.last_server_request_data
 
             self.log.error("User doesn't seem to be in the server")

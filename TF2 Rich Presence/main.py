@@ -280,7 +280,6 @@ class TF2RichPresense:
 
                 if second_line_setting in ('Player count', 'Kills'):
                     bottom_line = self.get_match_data(server_address, second_line_setting)
-                    self.log.debug(f"Got match data from server: {bottom_line}")
                 elif second_line_setting == 'Class':
                     bottom_line = class_line
                 elif second_line_setting == 'Time on map':
@@ -359,7 +358,7 @@ class TF2RichPresense:
                 print(self.loc.text("{0} elapsed").format(time_elapsed[2:] if time_elapsed.startswith('0:') else time_elapsed))
                 print()
 
-                self.log.debug(f"Activity changed, outputting (old: {self.old_activity1}, new: {self.activity})")
+                self.log.info(f"Activity changed, outputting (old: {self.old_activity1}, new: {self.activity})")
                 self.last_notify_time = time.time()
 
                 ctypes.windll.kernel32.SetConsoleTitleW(window_title)
