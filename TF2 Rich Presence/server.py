@@ -56,8 +56,8 @@ def get_match_data(self, address: str, mode: str, force: bool = False) -> str:
                 self.log.error(f"Server protocol is {server_info.protocol}, not 17")
             if server_info.game_id != 440:
                 self.log.error(f"Server game ID is {server_info.game_id}, not 440")
-            if server_info.game != 'Team Fortress':
-                self.log.error(f"Server game is {server_info.folder}, not Team Fortress")
+            if server_info.game not in ('Team Fortress', 'tf'):
+                self.log.error(f"Server game is {server_info.folder}, not Team Fortress or tf")
 
         if mode == 'Player count':
             if 'valve' in server_info.keywords:
