@@ -13,11 +13,11 @@ import settings
 
 # get player count or user score (kills) from the game server
 def get_match_data(self, address: str, mode: str, force: bool = False) -> str:
-    RATE_LIMIT: int = 10
+    rate_limit: int = int(settings.get('server_rate_limit'))
     time_since_last: float = time.time() - self.last_server_request_time
 
-    if time_since_last < RATE_LIMIT and self.last_server_request_address == address and not force:
-        self.log.debug(f"Skipping getting server data ({round(time_since_last, 1)} < {RATE_LIMIT}), persisting {self.last_server_request_data}")
+    if time_since_last < rate_limit and self.last_server_request_address == address and not force:
+        self.log.debug(f"Skipping getting server data ({round(time_since_last, 1)} < {rate_limit}), persisting {self.last_server_request_data}")
         return self.last_server_request_data
     else:
         self.last_server_request_time = time.time()
@@ -27,12 +27,12 @@ def get_match_data(self, address: str, mode: str, force: bool = False) -> str:
         if mode not in ('Player count', 'Kills'):
             self.log.error(f"Match info mode is invalid ({mode})")
             self.last_server_request_data = ""
-            self.last_server_request_time -= RATE_LIMIT
+            self.last_server_request_time -= rate_limit
             return self.last_server_request_data
         if ':' not in address:
             self.log.error(f"Server address is invalid ({address})")
             self.last_server_request_data = ""
-            self.last_server_request_time -= RATE_LIMIT
+            self.last_server_request_time -= rate_limit
             return self.last_server_request_data
 
         ip: str
@@ -48,7 +48,7 @@ def get_match_data(self, address: str, mode: str, force: bool = False) -> str:
         except (a2s.BrokenMessageError, a2s.BrokenMessageError, socket.timeout, socket.gaierror, ConnectionRefusedError):
             self.log.error(f"Couldn't get server info: {traceback.format_exc()}")
             self.last_server_request_data = ""
-            self.last_server_request_time -= RATE_LIMIT
+            self.last_server_request_time -= rate_limit
             return self.last_server_request_data
 
         if mode == 'Player count':  # probably not worth doing an extra request each time if using kills mode

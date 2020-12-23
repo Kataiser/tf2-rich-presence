@@ -51,7 +51,8 @@ def get_setting_default(setting: str = '', return_all: bool = False) -> Union[st
                 'class_pic_type': 'Icon',
                 'language': 'English',
                 'second_line': 'Player count',
-                'trim_console_log': True}
+                'trim_console_log': True,
+                'server_rate_limit': 10}
 
     if return_all:
         return defaults

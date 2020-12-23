@@ -60,7 +60,7 @@ class GUI(tk.Frame):
         if reload_settings:
             # the GUI was reloaded with a new language, so persist the currently selected (but not saved) settings
             self.sentry_level, self.wait_time, self.wait_time_slow, self.map_invalidation_hours, self.check_updates, self.request_timeout, self.hide_queued_gamemode, self.log_level, \
-            self.console_scan_kb, self.class_pic_type, self.language, self.second_line, self.trim_console_log = reload_settings
+            self.console_scan_kb, self.class_pic_type, self.language, self.second_line, self.trim_console_log, self.server_rate_limit = reload_settings
         else:
             # create every setting variable without values
             self.sentry_level = tk.StringVar()
@@ -76,6 +76,7 @@ class GUI(tk.Frame):
             self.language = tk.StringVar()
             self.second_line = tk.StringVar()
             self.trim_console_log = tk.BooleanVar()
+            self.server_rate_limit = tk.IntVar()
 
             try:
                 # load settings from registry
@@ -97,6 +98,7 @@ class GUI(tk.Frame):
                 self.language.set(self.gui_language if self.gui_language else self.settings_loaded['language'])
                 self.second_line.set(self.settings_loaded['second_line'])
                 self.trim_console_log.set(self.settings_loaded['trim_console_log'])
+                self.server_rate_limit.set(self.settings_loaded['server_rate_limit'])
             except Exception:
                 # probably a json decode error
                 formatted_exception = traceback.format_exc()
@@ -106,7 +108,7 @@ class GUI(tk.Frame):
                 self.restore_defaults()
                 self.settings_loaded = settings.defaults()
 
-        # make options account for localization
+        # make dropdown options account for localization
         self.log_level.set(self.log_levels_display[self.log_levels.index(self.log_level.get())])
         self.sentry_level.set(self.sentry_levels_display[self.sentry_levels.index(self.sentry_level.get())])
         self.class_pic_type.set(self.class_pic_types_display[self.class_pic_types.index(self.class_pic_type.get())])
@@ -129,19 +131,19 @@ class GUI(tk.Frame):
         setting3_frame = ttk.Frame(self.lf_main)
         setting3_text = ttk.Label(setting3_frame, text="{}".format(
             self.loc.text("Delay between refreshes, in seconds: ")))
-        setting3_option = ttk.Spinbox(setting3_frame, textvariable=self.wait_time, width=6, from_=0, to=1000, validate='all', validatecommand=(check_int_command, '%P', 1000),
+        setting3_option = ttk.Spinbox(setting3_frame, textvariable=self.wait_time, width=6, from_=0, to=float('inf'), validate='all', validatecommand=(check_int_command, '%P'),
                                       command=self.update_default_button_state)
         setting4_frame = ttk.Frame(self.lf_advanced)
         setting4_text = ttk.Label(setting4_frame, text="{}".format(
             self.loc.text("Hours before re-checking custom map gamemode: ")))
-        setting4_option = ttk.Spinbox(setting4_frame, textvariable=self.map_invalidation_hours, width=6, from_=0, to=1000, validate='all', validatecommand=(check_int_command, '%P', 1000),
+        setting4_option = ttk.Spinbox(setting4_frame, textvariable=self.map_invalidation_hours, width=6, from_=0, to=float('inf'), validate='all', validatecommand=(check_int_command, '%P'),
                                       command=self.update_default_button_state)
         setting5 = ttk.Checkbutton(self.lf_main, variable=self.check_updates, command=self.update_default_button_state, text="{}".format(
             self.loc.text("Check for program updates when launching")))
         setting6_frame = ttk.Frame(self.lf_advanced)
         setting6_text = ttk.Label(setting6_frame, text="{}".format(
             self.loc.text("Internet connection timeout (for updater and some custom maps), in seconds: ")))
-        setting6_option = ttk.Spinbox(setting6_frame, textvariable=self.request_timeout, width=6, from_=0, to=60, validate='all', validatecommand=(check_int_command, '%P', 60),
+        setting6_option = ttk.Spinbox(setting6_frame, textvariable=self.request_timeout, width=6, from_=0, to=float('inf'), validate='all', validatecommand=(check_int_command, '%P'),
                                       command=self.update_default_button_state)
         setting8 = ttk.Checkbutton(self.lf_main, variable=self.hide_queued_gamemode, command=self.update_default_button_state, text="{}".format(
             self.loc.text("Hide game type (Casual, Comp, MvM) queued for")))
@@ -155,7 +157,7 @@ class GUI(tk.Frame):
         setting10_text = ttk.Label(setting10_frame, text="{}".format(
             self.loc.text("Max kilobytes of console.log to scan: ")))
         setting10_option = ttk.Spinbox(setting10_frame, textvariable=self.console_scan_kb, width=8, from_=0, to=float('inf'), validate='all',
-                                       validatecommand=(check_int_command, '%P', float('inf')), command=self.update_default_button_state)
+                                       validatecommand=(check_int_command, '%P'), command=self.update_default_button_state)
         setting12_frame = ttk.Frame(self.lf_main)
         setting12_text = ttk.Label(setting12_frame, text="{}".format(
             self.loc.text("Selected class small image type: ")))
@@ -176,7 +178,12 @@ class GUI(tk.Frame):
         setting16_frame = ttk.Frame(self.lf_main)
         setting16_text = ttk.Label(setting16_frame, text="{}".format(
             self.loc.text("Delay between refreshes when TF2 and Discord aren't running: ")))  # and Steam but whatever
-        setting16_option = ttk.Spinbox(setting16_frame, textvariable=self.wait_time_slow, width=6, from_=0, to=1000, validate='all', validatecommand=(check_int_command, '%P', 1000),
+        setting16_option = ttk.Spinbox(setting16_frame, textvariable=self.wait_time_slow, width=6, from_=0, to=float('inf'), validate='all', validatecommand=(check_int_command, '%P'),
+                                       command=self.update_default_button_state)
+        setting17_frame = ttk.Frame(self.lf_advanced)
+        setting17_text = ttk.Label(setting17_frame, text="{}".format(
+            self.loc.text("Server querying rate limit: ")))
+        setting17_option = ttk.Spinbox(setting17_frame, textvariable=self.server_rate_limit, width=6, from_=0, to=float('inf'), validate='all', validatecommand=(check_int_command, '%P'),
                                        command=self.update_default_button_state)
 
         # more localization compensation
@@ -185,51 +192,58 @@ class GUI(tk.Frame):
 
         # download page button, but only if a new version is available
         db = utils.access_db()
-        if db['available_version']['exists']:
+        show_update_button = db['available_version']['exists']
+        if show_update_button:
             new_version_name = db['available_version']['tag']
             self.new_version_url = db['available_version']['url']
 
             self.update_button_text = tk.StringVar(value=self.loc.text(" Open {0} download page in default browser ").format(new_version_name))
             self.update_button = ttk.Button(self.lf_main, textvariable=self.update_button_text, command=self.open_update_page)
-            self.update_button.grid(row=10, sticky=tk.W, padx=(20, 40), pady=(0, 12))
 
-        # add widgets to the labelframes or main window
-        setting1_frame.grid(row=12, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
+        # prepare widgets to be added
         setting1_text.pack(side='left', fill=None, expand=False)
         for setting1_radiobutton in setting1_radiobuttons:
             setting1_radiobutton.pack(side='left', fill=None, expand=False)
         setting3_text.pack(side='left', fill=None, expand=False)
         setting3_option.pack(side='left', fill=None, expand=False)
-        setting3_frame.grid(row=1, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(3, 0))
         setting4_text.pack(side='left', fill=None, expand=False)
         setting4_option.pack(side='left', fill=None, expand=False)
-        setting4_frame.grid(row=10, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
-        setting5.grid(row=9, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 10))
         setting6_text.pack(side='left', fill=None, expand=False)
         setting6_option.pack(side='left', fill=None, expand=False)
-        setting6_frame.grid(row=11, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
-        setting8.grid(row=6, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
         setting9_text.pack(side='left', fill=None, expand=False)
         for setting9_radiobutton in setting9_radiobuttons:
             setting9_radiobutton.pack(side='left', fill=None, expand=False)
-        setting9_frame.grid(row=13, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 10))
         setting10_text.pack(side='left', fill=None, expand=False)
         setting10_option.pack(side='left', fill=None, expand=False)
-        setting10_frame.grid(row=5, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(11, 0))
         setting12_text.pack(side='left', fill=None, expand=False)
         for setting12_radiobutton in setting12_radiobuttons:
             setting12_radiobutton.pack(side='left', fill=None, expand=False)
-        setting12_frame.grid(row=8, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
         setting13_text.pack(side='left', fill=None, expand=False)
         setting13_options.pack(side='left', fill=None, expand=False)
-        setting13_frame.grid(row=0, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(9, 0))
         setting14_text.pack(side='left', fill=None, expand=False)
         setting14_options.pack(side='left', fill=None, expand=False)
-        setting14_frame.grid(row=3, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(3, 0))
-        setting15.grid(row=6, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
         setting16_text.pack(side='left', fill=None, expand=False)
         setting16_option.pack(side='left', fill=None, expand=False)
+        setting17_text.pack(side='left', fill=None, expand=False)
+        setting17_option.pack(side='left', fill=None, expand=False)
+
+        # add widgets to the labelframes and main window
+        setting13_frame.grid(row=0, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(9, 0))
+        setting3_frame.grid(row=1, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(3, 0))
         setting16_frame.grid(row=2, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(3, 0))
+        setting14_frame.grid(row=3, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(3, 0))
+        setting10_frame.grid(row=4, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(11, 0))
+        setting8.grid(row=5, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
+        setting15.grid(row=6, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
+        setting12_frame.grid(row=7, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
+        setting5.grid(row=8, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 10))
+        if show_update_button:
+            self.update_button.grid(row=9, sticky=tk.W, padx=(20, 40), pady=(0, 12))
+        setting4_frame.grid(row=10, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
+        setting6_frame.grid(row=11, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
+        setting17_frame.grid(row=12, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(3, 0))
+        setting1_frame.grid(row=13, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
+        setting9_frame.grid(row=14, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 10))
 
         self.lf_main.grid(row=0, padx=30, pady=15, sticky=tk.W + tk.E)
         self.lf_advanced.grid(row=1, padx=30, pady=0, sticky=tk.W + tk.E)
@@ -295,7 +309,7 @@ class GUI(tk.Frame):
             self.second_line.set(self.second_lines[self.second_lines_display.index(self.second_line.get())])
 
             selected_settings = (self.sentry_level, self.wait_time, self.wait_time_slow, self.map_invalidation_hours, self.check_updates, self.request_timeout, self.hide_queued_gamemode,
-                                 self.log_level, self.console_scan_kb, self.class_pic_type, self.language, self.second_line, self.trim_console_log)
+                                 self.log_level, self.console_scan_kb, self.class_pic_type, self.language, self.second_line, self.trim_console_log, self.server_rate_limit)
             self.window_x = self.master.winfo_rootx() - 8
             self.window_y = self.master.winfo_rooty() - 31
             self.__init__(self.master, self.log, reload_settings=selected_settings)
@@ -347,7 +361,8 @@ class GUI(tk.Frame):
                 'class_pic_type': self.class_pic_types[self.class_pic_types_display.index(self.class_pic_type.get())],
                 'language': self.languages[self.languages_display.index(self.language.get())],
                 'second_line': self.second_lines[self.second_lines_display.index(self.second_line.get())],
-                'trim_console_log': self.trim_console_log.get()}
+                'trim_console_log': self.trim_console_log.get(),
+                'server_rate_limit': self.server_rate_limit.get()}
 
     # set all settings to defaults
     def restore_defaults(self):
@@ -377,6 +392,7 @@ class GUI(tk.Frame):
             self.language.set(settings.get_setting_default('language'))
             self.second_line.set(settings.get_setting_default('second_line'))
             self.trim_console_log.set(settings.get_setting_default('trim_console_log'))
+            self.server_rate_limit.set(settings.get_setting_default('server_rate_limit'))
 
             # make options account for localization (same as in __init__)
             self.log_level.set(self.log_levels_display[self.log_levels.index(self.log_level.get())])
@@ -398,7 +414,8 @@ class GUI(tk.Frame):
     # saves settings to file and closes window
     def save_and_close(self):
         # spinboxes can be set to blank, so if the user saves while blank, they try to default or be set to 0
-        int_settings = self.wait_time, self.wait_time_slow, self.map_invalidation_hours, self.request_timeout, self.console_scan_kb
+        int_settings = (self.wait_time, self.wait_time_slow, self.map_invalidation_hours, self.request_timeout, self.console_scan_kb, self.server_rate_limit)
+
         for int_setting in int_settings:
             try:
                 int_setting.get()
@@ -461,11 +478,11 @@ def launch():
 
 
 # checks if a string is an integer between 0 and a supplied maximum (blank is allowed, will get set to default when saving)
-def check_int(text_in_entry: str, maximum: int) -> bool:
+def check_int(text_in_entry: str) -> bool:
     if text_in_entry == '':
         return True
 
-    if text_in_entry.isdigit() and 0 <= int(text_in_entry) <= float(maximum):
+    if text_in_entry.isdigit() and int(text_in_entry) >= 0:
         return True
 
     return False

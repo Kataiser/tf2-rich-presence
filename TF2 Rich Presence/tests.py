@@ -227,15 +227,14 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual(updater.format_changelog(unformatted), formatted)
 
     def test_settings_check_int(self):
-        self.assertTrue(settings_gui.check_int('', 1000))
-        self.assertTrue(settings_gui.check_int('1', 1000))
-        self.assertTrue(settings_gui.check_int('1000', 1000))
-        self.assertTrue(settings_gui.check_int('60', 60))
+        self.assertTrue(settings_gui.check_int(''))
+        self.assertTrue(settings_gui.check_int('1'))
+        self.assertTrue(settings_gui.check_int('1000'))
+        self.assertTrue(settings_gui.check_int('60'))
 
-        self.assertFalse(settings_gui.check_int('1001', 1000))
-        self.assertFalse(settings_gui.check_int('61', 60))
-        self.assertFalse(settings_gui.check_int('a', 1000))
-        self.assertFalse(settings_gui.check_int('abc123qwe098', 1000))
+        self.assertFalse(settings_gui.check_int('a'))
+        self.assertFalse(settings_gui.check_int('abc123qwe098'))
+        self.assertFalse(settings_gui.check_int('-1'))
 
     def test_settings_access(self):
         default_settings = settings.defaults()
