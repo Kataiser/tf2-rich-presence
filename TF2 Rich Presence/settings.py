@@ -42,7 +42,6 @@ def get_setting_default(setting: str = '', return_all: bool = False) -> Union[st
     defaults = {'sentry_level': 'All errors',
                 'wait_time': 2,
                 'wait_time_slow': 5,
-                'map_invalidation_hours': 24,
                 'check_updates': True,
                 'request_timeout': 5,
                 'hide_queued_gamemode': False,

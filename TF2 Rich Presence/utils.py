@@ -10,7 +10,7 @@ import os
 import time
 import tkinter as tk
 import traceback
-from typing import Dict, List, Union
+from typing import Dict, Union
 
 
 # read from or write to DB.json (intentionally uncached)
@@ -95,18 +95,6 @@ def generate_delta(loc, old_time: Union[float, None]) -> str:
                 return f" (+{time_diff} {loc.text('seconds')})"
     else:
         return ""
-
-
-# load maps database from maps.json
-@functools.lru_cache(maxsize=None)
-def load_maps_db() -> Dict[str, Dict[str, List[str]]]:
-    maps_db_path = os.path.join('resources', 'maps.json') if os.path.isdir('resources') else 'maps.json'
-
-    if os.path.isfile(maps_db_path):
-        with open(maps_db_path, 'r') as maps_db:
-            return json.load(maps_db)
-    else:
-        return {'official': {}, 'common_custom': {}, 'creators_tf': {}}
 
 
 # doesn't work if launching from Pycharm for some reason

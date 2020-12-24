@@ -1927,20 +1927,6 @@
         "Chinese": "Windows命令提示符的默认字体不支持{0}字符。下面是如何解决这个问题。",
         "Japanese": "Windowsのコマンドプロンプトのデフォルトフォントが{0}文字をサポートしていません。これを修正する方法は以下の通りです。"
     },
-    "1334582221": {
-        "English": "Internet connection timeout (for updater and some custom maps), in seconds: ",
-        "German": "Zeitüberschreitung der Internetverbindung (für Updater und einige benutzerdefinierte Karten), in Sekunden: ",
-        "French": "Délai de connexion à Internet (pour la mise à jour et certaines cartes personnalisées), en secondes : ",
-        "Spanish": "Tiempo de espera de la conexión a Internet (para el actualizador y algunos mapas personalizados), en segundos: ",
-        "Portuguese": "Tempo limite de conexão à Internet (para atualizador e alguns mapas personalizados), em segundos: ",
-        "Italian": "Timeout della connessione a Internet (per l'aggiornamento e alcune mappe personalizzate), in pochi secondi: ",
-        "Dutch": "Time-out van de internetverbinding (voor updater en enkele aangepaste kaarten), in seconden: ",
-        "Polish": "Czas oczekiwania na połączenie z Internetem (dla programu updater i niektórych map niestandardowych), w sekundach: ",
-        "Russian": "Тайм-аут подключения к Интернету (для обновления и некоторых пользовательских карт), в секундах: ",
-        "Korean": "인터넷 연결 시간 초과(업데이터 및 일부 사용자 지정 맵 용),초 단위: ",
-        "Chinese": "互联网连接超时（更新程序和一些自定义地图），以秒为单位: ",
-        "Japanese": "インターネット接続のタイムアウト (アップデータと一部のカスタム マップの) 秒単位: "
-    },
     "3044742820": {
         "English": "Occasionally limit console.log's size and remove empty lines",
         "German": "Gelegentlich die Größe von console.log begrenzen und leere Zeilen entfernen",
@@ -2080,5 +2066,19 @@
         "Korean": "서버 쿼리 속도 제한: ",
         "Chinese": "服务器查询速率限制。",
         "Japanese": "サーバーがレート制限を照会しています。"
+    },
+    "4883034200": {
+        "English": "Internet connection timeout (for updater and server querying): ",
+        "German": "Timeout der Internetverbindung (für Updater- und Serverabfrage): ",
+        "French": "Timeout de la connexion Internet (pour la mise à jour et l'interrogation du serveur) : ",
+        "Spanish": "Tiempo de espera de la conexión a Internet (para la actualización y la consulta del servidor): ",
+        "Portuguese": "Tempo limite de conexão à Internet (para atualização e consulta do servidor): ",
+        "Italian": "Timeout della connessione a Internet (per l'aggiornamento e l'interrogazione del server): ",
+        "Dutch": "Time-out van de internetverbinding (voor updateprogramma's en vragen over de server): ",
+        "Polish": "Timeout połączenia internetowego (dla aktualizacji i zapytań do serwera): ",
+        "Russian": "Тайм-аут подключения к Интернету (для обновления и запроса к серверу): ",
+        "Korean": "인터넷 연결 시간 초과(업데이트 및 서버 쿼리): ",
+        "Chinese": "互联网连接超时（用于更新程序和服务器查询）。",
+        "Japanese": "インターネット接続のタイムアウト (アップデータおよびサーバー クエリ用)。"
     }
 }

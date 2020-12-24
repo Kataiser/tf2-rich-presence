@@ -29,7 +29,7 @@ import os
 import platform
 import time
 import traceback
-from typing import Any, Dict, List, Set, Tuple, Union
+from typing import Any, Dict, Set, Tuple, Union
 
 import psutil
 from colorama import Style
@@ -37,12 +37,12 @@ from discoIPC import ipc
 
 import configs
 import console_log
-import custom_maps
+import gamemodes
 import launcher
 import localization
 import logger
-import server
 import processes
+import server
 import settings
 import utils
 
@@ -109,7 +109,6 @@ class TF2RichPresense:
         self.console_log_mtime: Union[int, None] = None
         self.old_console_log_mtime: Union[int, None] = None
         self.old_console_log_interpretation: tuple = ('', '', '')
-        self.map_gamemodes: Dict[str, Dict[str, List[str]]] = utils.load_maps_db()
         self.loop_iteration: int = 0
         self.custom_functions = None
         self.valid_usernames: Set[str] = set()
@@ -301,18 +300,10 @@ class TF2RichPresense:
                 hosting: bool = ' (hosting)' in top_line
                 top_line = top_line.replace(' (hosting)', '')
 
-                try:
-                    map_fancy, current_gamemode, gamemode_fancy = self.map_gamemodes['official'][top_line]
-                    map_out: str = map_fancy
-                    self.activity['assets']['large_image'] = current_gamemode
-                    self.activity['assets']['large_text'] = gamemode_fancy
-                except KeyError:
-                    # is (hopefully) a custom map
-                    custom_gamemode, custom_gamemode_fancy_english = custom_maps.find_custom_map_gamemode(self.log, top_line, False)
-                    custom_gamemode_fancy = self.loc.text(custom_gamemode_fancy_english)
-                    map_out = top_line
-                    self.activity['assets']['large_image'] = custom_gamemode
-                    self.activity['assets']['large_text'] = "{0} {1}".format(custom_gamemode_fancy, self.loc.text("[custom/community map]"))
+                map_fancy, current_gamemode, gamemode_fancy = gamemodes.get_map_gamemode(self.log, top_line)
+                map_out: str = map_fancy
+                self.activity['assets']['large_image'] = current_gamemode
+                self.activity['assets']['large_text'] = gamemode_fancy
 
                 top_line = self.loc.text("Map: {0}").format(map_out)
                 top_line = f"{top_line}{self.loc.text(' (hosting)')}" if hosting else top_line

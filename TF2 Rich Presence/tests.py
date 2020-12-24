@@ -14,16 +14,16 @@ import requests
 from discoIPC import ipc
 
 import configs
-import custom_maps
+import gamemodes
 import init
 import localization
 import logger
 import main
 import processes
+import settings
 import settings_gui
 import updater
 import utils
-import settings
 
 
 class TestTF2RichPresense(unittest.TestCase):
@@ -113,29 +113,13 @@ class TestTF2RichPresense(unittest.TestCase):
             self.assertIn(player_count.split('/')[1], ('24', '30', '32'))
             self.assertEqual(app.get_match_data(test_address, 'Kills', force=True), "Kills: 0")
 
-    def test_find_custom_map_gamemode(self):
-        try:
-            requests.get(f'https://teamwork.tf/api/v1/quickplay?key={utils.get_api_key("teamwork")}', timeout=5)
-        except (requests.ConnectTimeout, requests.ReadTimeout):
-            self.skipTest("Teamwork.tf's API seems to be down")
-
-        custom_maps.access_custom_maps_cache({})  # flush cache
-
-        # test a couple common maps (in maps.json)
-        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'minecraftworld_a7', False, 5)), ('trading', 'Trading'))
-        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'cp_rumble_rc5', False, 5)), ('attack-defend', 'Attack/Defend'))
-
-        # don't use cache, force using the API (5 second timeout)
-        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'cp_catwalk_a5c', True, 5)), ('control-point', 'Control Point'))
-        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'cp_orange_x3', True, 5)), ('cp-orange', 'Orange'))
-        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'surf_air_arena_v4', True, 5)), ('surfing', 'Surfing'))
-        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'ytsb8eitybw', True, 5)), ('unknown_map', 'Unknown gamemode'))
-
-        # cache allowed now
-        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'cp_catwalk_a5c', False, 5)), ('control-point', 'Control Point'))
-        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'cp_orange_x3', False, 5)), ('cp-orange', 'Orange'))
-        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'surf_air_arena_v4', False, 5)), ('surfing', 'Surfing'))
-        self.assertEqual(tuple(custom_maps.find_custom_map_gamemode(self.log, 'ytsb8eitybw', False, 5)), ('unknown_map', 'Unknown gamemode'))
+    def test_get_map_gamemode(self):
+        self.assertEqual(gamemodes.get_map_gamemode(self.log, 'cp_dustbowl'), ['Dustbowl', 'attack-defend', 'Attack/Defend'])
+        self.assertEqual(gamemodes.get_map_gamemode(self.log, 'koth_probed'), ['Probed', 'koth', 'King of the Hill'])
+        self.assertEqual(gamemodes.get_map_gamemode(self.log, 'cp_catwalk_a5c'), ('cp_catwalk_a5c', 'control-point', 'Control Point'))
+        self.assertEqual(gamemodes.get_map_gamemode(self.log, 'cp_orange_x3'), ('cp_orange_x3', 'cp-orange', 'Orange'))
+        self.assertEqual(gamemodes.get_map_gamemode(self.log, 'surf_air_arena_v4'), ('surf_air_arena_v4', 'surfing', 'Surfing'))
+        self.assertEqual(gamemodes.get_map_gamemode(self.log, 'ytsb8eitybw'), ('ytsb8eitybw', 'unknown_map', 'Unknown gamemode'))
 
     def test_logger(self):
         self.log.log_file.close()
@@ -259,9 +243,8 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual(len(utils.get_api_key('sentry')), 91)
 
     def test_load_maps_db(self):
-        maps_db = utils.load_maps_db()
-        self.assertGreater(len(maps_db['official']), 100)
-        self.assertGreater(len(maps_db['common_custom']), 5)
+        maps_db = gamemodes.load_maps_db()
+        self.assertGreater(len(maps_db), 100)
 
     def test_discoipc(self):
         # this test fails if Discord isn't running
