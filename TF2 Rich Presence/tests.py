@@ -307,14 +307,21 @@ class TestTF2RichPresense(unittest.TestCase):
 
         root = tk.Tk()
         settings_gui_test = settings_gui.GUI(root, self.log)
+        settings_gui_test.wait_time.set(3)
+        settings_gui_test.setting_changed()
+        working_settings = settings_gui_test.get_working_settings()
         settings_gui_test.show_font_message('한국어')
         settings_gui_test.update()
         dimensions = settings_gui_test.window_dimensions
         settings_gui_test.language.set('日本語')
         settings_gui_test.update_language('日本語')
         new_dimensions = settings_gui_test.window_dimensions
-        settings_gui_test.destroy()
+        settings_gui_test.wait_time.set(3)
+        settings_gui_test.save_and_close(force=True)
 
+        self.assertEqual(len(working_settings), len(settings.defaults()))
+        self.assertEqual(working_settings['wait_time'], 3)
+        self.assertEqual(settings.get('wait_time'), 3)
         self.assertGreaterEqual(dimensions[0], 200)
         self.assertGreaterEqual(dimensions[1], 200)
         self.assertGreaterEqual(new_dimensions[0], 200)

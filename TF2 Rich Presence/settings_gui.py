@@ -402,7 +402,7 @@ class GUI(tk.Frame):
                 self.update_language('English')
 
     # saves settings to file and closes window
-    def save_and_close(self):
+    def save_and_close(self, force: bool = True):
         self.fix_blank_spinboxes()
         settings_to_save = self.get_working_settings()
         settings_changed = settings.compare_settings(self.settings_loaded, settings_to_save)
@@ -417,10 +417,11 @@ class GUI(tk.Frame):
             if 'Launch Rich Presence' in processes or 'Launch TF2 with Rich' in processes:
                 restart_message = self.loc.text("TF2 Rich Presence is currently running, so it needs to be restarted for changes to take effect.")
 
-        if len(settings_changed) == 1:
-            messagebox.showinfo(self.loc.text("Save and close"), self.loc.text("1 setting has been changed. {0}").format(restart_message))
-        elif len(settings_changed) > 1:
-            messagebox.showinfo(self.loc.text("Save and close"), self.loc.text("{0} settings have been changed. {1}").format(len(settings_changed), restart_message))
+        if not force:
+            if len(settings_changed) == 1:
+                messagebox.showinfo(self.loc.text("Save and close"), self.loc.text("1 setting has been changed. {0}").format(restart_message))
+            elif len(settings_changed) > 1:
+                messagebox.showinfo(self.loc.text("Save and close"), self.loc.text("{0} settings have been changed. {1}").format(len(settings_changed), restart_message))
 
         self.master.destroy()  # closes window
 
