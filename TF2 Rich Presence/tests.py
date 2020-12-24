@@ -30,8 +30,8 @@ class TestTF2RichPresense(unittest.TestCase):
     def setUp(self):
         self.old_settings = settings.access_registry()
         target_settings = settings.defaults()
-        if self.old_settings != target_settings:
-            settings.access_registry(target_settings)
+        target_settings['request_timeout'] = 30
+        settings.access_registry(target_settings)
 
         self.dir = os.getcwd()
         self.log = logger.Log()
