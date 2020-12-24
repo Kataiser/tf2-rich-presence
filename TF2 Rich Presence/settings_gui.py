@@ -106,12 +106,8 @@ class GUI(tk.Frame):
                 self.restore_defaults()
                 self.settings_loaded = settings.defaults()
 
-        # make dropdown options account for localization
-        self.log_level.set(self.log_levels_display[self.log_levels.index(self.log_level.get())])
-        self.sentry_level.set(self.sentry_levels_display[self.sentry_levels.index(self.sentry_level.get())])
-        self.class_pic_type.set(self.class_pic_types_display[self.class_pic_types.index(self.class_pic_type.get())])
-        self.language.set(self.languages_display[self.languages.index(self.language.get())])
-        self.second_line.set(self.second_lines_display[self.second_lines.index(self.second_line.get())])
+        # account for localization
+        self.localization_compensate()
         actual_language = self.language.get()
         actual_second_line = self.second_line.get()
 
@@ -384,13 +380,7 @@ class GUI(tk.Frame):
             self.trim_console_log.set(settings.get_setting_default('trim_console_log'))
             self.server_rate_limit.set(settings.get_setting_default('server_rate_limit'))
 
-            # make options account for localization (same as in __init__)
-            self.log_level.set(self.log_levels_display[self.log_levels.index(self.log_level.get())])
-            self.sentry_level.set(self.sentry_levels_display[self.sentry_levels.index(self.sentry_level.get())])
-            self.class_pic_type.set(self.class_pic_types_display[self.class_pic_types.index(self.class_pic_type.get())])
-            self.language.set(self.languages_display[self.languages.index(self.language.get())])
-            self.second_line.set(self.second_lines_display[self.second_lines.index(self.second_line.get())])
-
+            self.localization_compensate()
             self.log.debug("Restored defaults")
 
             try:
@@ -456,6 +446,14 @@ class GUI(tk.Frame):
                 default_value = settings.get_setting_default(int_setting_str)
                 self.log.debug(f"Set {int_setting_str} from blank to default ({default_value})")
                 int_setting.set(default_value)
+
+    # make dropdown options account for localization (very ugly)
+    def localization_compensate(self):
+        self.log_level.set(self.log_levels_display[self.log_levels.index(self.log_level.get())])
+        self.sentry_level.set(self.sentry_levels_display[self.sentry_levels.index(self.sentry_level.get())])
+        self.class_pic_type.set(self.class_pic_types_display[self.class_pic_types.index(self.class_pic_type.get())])
+        self.language.set(self.languages_display[self.languages.index(self.language.get())])
+        self.second_line.set(self.second_lines_display[self.second_lines.index(self.second_line.get())])
 
     # open the release page in the default browser
     def open_update_page(self):

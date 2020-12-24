@@ -219,9 +219,6 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     else:
         self.log.debug(f"Got '{current_map}' from line '{map_line_used[:-1]}' and '{current_class}' from line '{class_line_used[:-1]}'")
 
-    if scan_for_address:
-        self.log.debug(f"Got server address {server_address}")
-
     # remove empty lines (bot spam)
     if 'In menus' in current_map and settings.get('trim_console_log') and not force:
         if self.cleanup_primed:
