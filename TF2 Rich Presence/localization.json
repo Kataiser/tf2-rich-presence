@@ -2066,5 +2066,19 @@
         "Korean": "살인:{0}",
         "Chinese": "杀。{0}",
         "Japanese": "殺す。{0}"
+    },
+    "2639727217": {
+        "English": "Server querying rate limit: ",
+        "German": "Grenze der Abfragerate des Servers: ",
+        "French": "Limite du taux d'interrogation du serveur : ",
+        "Spanish": "Límite de la tasa de consultas del servidor: ",
+        "Portuguese": "Limite de taxa de consulta do servidor: ",
+        "Italian": "Limite del tasso di interrogazione del server: ",
+        "Dutch": "Server querying tarief limiet: ",
+        "Polish": "Limit częstotliwości zapytań serwera: ",
+        "Russian": "Ограничение скорости запроса сервера: ",
+        "Korean": "서버 쿼리 속도 제한: ",
+        "Chinese": "服务器查询速率限制。",
+        "Japanese": "サーバーがレート制限を照会しています。"
     }
 }
