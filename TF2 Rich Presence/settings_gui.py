@@ -125,39 +125,38 @@ class GUI(tk.Frame):
             self.loc.text("Log reporting frequency: ")))
         setting1_radiobuttons = []
         for sentry_level_text in self.sentry_levels_display:
-            setting1_radiobuttons.append(ttk.Radiobutton(setting1_frame, variable=self.sentry_level, text=sentry_level_text, value=sentry_level_text, command=self.update_default_button_state))
+            setting1_radiobuttons.append(ttk.Radiobutton(setting1_frame, variable=self.sentry_level, text=sentry_level_text, value=sentry_level_text, command=self.setting_changed))
         setting3_frame = ttk.Frame(self.lf_main)
         setting3_text = ttk.Label(setting3_frame, text="{}".format(
             self.loc.text("Delay between refreshes, in seconds: ")))
         setting3_option = ttk.Spinbox(setting3_frame, textvariable=self.wait_time, width=6, from_=0, to=float('inf'), validate='all', validatecommand=(check_int_command, '%P'),
-                                      command=self.update_default_button_state)
-        setting5 = ttk.Checkbutton(self.lf_main, variable=self.check_updates, command=self.update_default_button_state, text="{}".format(
+                                      command=self.setting_changed)
+        setting5 = ttk.Checkbutton(self.lf_main, variable=self.check_updates, command=self.setting_changed, text="{}".format(
             self.loc.text("Check for program updates when launching")))
         setting6_frame = ttk.Frame(self.lf_advanced)
         setting6_text = ttk.Label(setting6_frame, text="{}".format(
             self.loc.text("Internet connection timeout (for updater and server querying): ")))
         setting6_option = ttk.Spinbox(setting6_frame, textvariable=self.request_timeout, width=6, from_=0, to=float('inf'), validate='all', validatecommand=(check_int_command, '%P'),
-                                      command=self.update_default_button_state)
-        setting8 = ttk.Checkbutton(self.lf_main, variable=self.hide_queued_gamemode, command=self.update_default_button_state, text="{}".format(
+                                      command=self.setting_changed)
+        setting8 = ttk.Checkbutton(self.lf_main, variable=self.hide_queued_gamemode, command=self.setting_changed, text="{}".format(
             self.loc.text("Hide game type (Casual, Comp, MvM) queued for")))
         setting9_frame = ttk.Frame(self.lf_advanced)
         setting9_text = ttk.Label(setting9_frame, text="{}".format(
             self.loc.text("Max log level: ")))
         setting9_radiobuttons = []
         for log_level_text in self.log_levels_display:
-            setting9_radiobuttons.append(ttk.Radiobutton(setting9_frame, variable=self.log_level, text=log_level_text, value=log_level_text, command=self.update_default_button_state))
+            setting9_radiobuttons.append(ttk.Radiobutton(setting9_frame, variable=self.log_level, text=log_level_text, value=log_level_text, command=self.setting_changed))
         setting10_frame = ttk.Frame(self.lf_advanced)
         setting10_text = ttk.Label(setting10_frame, text="{}".format(
             self.loc.text("Max kilobytes of console.log to scan: ")))
-        setting10_option = ttk.Spinbox(setting10_frame, textvariable=self.console_scan_kb, width=8, from_=0, to=float('inf'), validate='all',
-                                       validatecommand=(check_int_command, '%P'), command=self.update_default_button_state)
+        setting10_option = ttk.Spinbox(setting10_frame, textvariable=self.console_scan_kb, width=8, from_=0, to=float('inf'), validate='all', validatecommand=(check_int_command, '%P'),
+                                       command=self.setting_changed)
         setting12_frame = ttk.Frame(self.lf_main)
         setting12_text = ttk.Label(setting12_frame, text="{}".format(
             self.loc.text("Selected class small image type: ")))
         setting12_radiobuttons = []
         for class_pic_type_text in self.class_pic_types_display:
-            setting12_radiobuttons.append(ttk.Radiobutton(setting12_frame, variable=self.class_pic_type, text=class_pic_type_text, value=class_pic_type_text,
-                                                          command=self.update_default_button_state))
+            setting12_radiobuttons.append(ttk.Radiobutton(setting12_frame, variable=self.class_pic_type, text=class_pic_type_text, value=class_pic_type_text, command=self.setting_changed))
         setting13_frame = ttk.Frame(self.lf_main)
         setting13_text = ttk.Label(setting13_frame, text="{}".format(
             self.loc.text("Language: ")))
@@ -165,19 +164,19 @@ class GUI(tk.Frame):
         setting14_frame = ttk.Frame(self.lf_main)
         setting14_text = ttk.Label(setting14_frame, text="{}".format(
             self.loc.text("Second line: ")))
-        setting14_options = ttk.OptionMenu(setting14_frame, self.second_line, self.second_lines[0], *self.second_lines_display, command=self.update_default_button_state)
-        setting15 = ttk.Checkbutton(self.lf_advanced, variable=self.trim_console_log, command=self.update_default_button_state, text="{}".format(
+        setting14_options = ttk.OptionMenu(setting14_frame, self.second_line, self.second_lines[0], *self.second_lines_display, command=self.setting_changed)
+        setting15 = ttk.Checkbutton(self.lf_advanced, variable=self.trim_console_log, command=self.setting_changed, text="{}".format(
             self.loc.text("Occasionally limit console.log's size and remove empty lines")))
         setting16_frame = ttk.Frame(self.lf_main)
         setting16_text = ttk.Label(setting16_frame, text="{}".format(
             self.loc.text("Delay between refreshes when TF2 and Discord aren't running: ")))  # and Steam but whatever
         setting16_option = ttk.Spinbox(setting16_frame, textvariable=self.wait_time_slow, width=6, from_=0, to=float('inf'), validate='all', validatecommand=(check_int_command, '%P'),
-                                       command=self.update_default_button_state)
+                                       command=self.setting_changed)
         setting17_frame = ttk.Frame(self.lf_advanced)
         setting17_text = ttk.Label(setting17_frame, text="{}".format(
             self.loc.text("Server querying rate limit: ")))
         setting17_option = ttk.Spinbox(setting17_frame, textvariable=self.server_rate_limit, width=6, from_=0, to=float('inf'), validate='all', validatecommand=(check_int_command, '%P'),
-                                       command=self.update_default_button_state)
+                                       command=self.setting_changed)
 
         # more localization compensation
         self.language.set(actual_language)
@@ -254,7 +253,7 @@ class GUI(tk.Frame):
         master.geometry(f'+{self.window_x}+{self.window_y}')
         self.log.debug(f"Window position: {(self.window_x, self.window_y)}")
 
-        self.update_default_button_state()
+        self.setting_changed()
         master.update()
         self.window_dimensions = master.winfo_width(), master.winfo_height()
         self.log.debug(f"Window size: {self.window_dimensions}")
@@ -272,9 +271,12 @@ class GUI(tk.Frame):
     def __repr__(self):
         return f"settings.GUI {self.window_dimensions}"
 
-    # runs every time a setting is changed, updates "restore defaults" button's state
-    def update_default_button_state(self, *args):
-        if self.get_working_settings() == settings.defaults():  # if settings are default, disable button
+    # runs every time a setting is changed
+    def setting_changed(self, *args):
+        self.fix_blank_spinboxes()
+
+        # updates "restore defaults" button's state
+        if self.get_working_settings() == settings.defaults():
             self.restore_button.state(['disabled'])
             self.log.debug("Disabled restore defaults button")
         else:
@@ -401,15 +403,7 @@ class GUI(tk.Frame):
 
     # saves settings to file and closes window
     def save_and_close(self):
-        # spinboxes can be set to blank, so if the user saves while blank, they try to default or be set to 0
-        int_settings = (self.wait_time, self.wait_time_slow, self.request_timeout, self.console_scan_kb, self.server_rate_limit)
-
-        for int_setting in int_settings:
-            try:
-                int_setting.get()
-            except tk.TclError:
-                int_setting.set(0)
-
+        self.fix_blank_spinboxes()
         settings_to_save = self.get_working_settings()
         settings_changed = settings.compare_settings(self.settings_loaded, settings_to_save)
         self.log.debug(f"Setting(s) changed: {settings_changed}")
@@ -447,6 +441,20 @@ class GUI(tk.Frame):
         if allowed_close == "yes":
             self.log.info("Closing settings menu without saving")
             self.master.destroy()
+
+    # spinboxes can be set to blank, so try set them to 0 in that case
+    def fix_blank_spinboxes(self):
+        int_settings = (self.wait_time, self.wait_time_slow, self.request_timeout, self.console_scan_kb, self.server_rate_limit)
+        int_settings_str = ('wait_time', 'wait_time_slow', 'request_timeout', 'console_scan_kb', 'server_rate_limit')
+
+        for int_setting in int_settings:
+            try:
+                int_setting.get()
+            except tk.TclError:
+                int_setting_str = int_settings_str[int_settings.index(int_setting)]
+                default_value = settings.get_setting_default(int_setting_str)
+                self.log.debug(f"Set {int_setting_str} from blank to default ({default_value})")
+                int_setting.set(default_value)
 
     # open the release page in the default browser
     def open_update_page(self):
