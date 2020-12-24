@@ -27,18 +27,18 @@ def get_map_gamemode(log, map_filename: str):
     log.debug(f"Finding gamemode for custom map: {map_filename}")
 
     # determine based on common substrings
-    for gamemode_substring in gamemode_substrings:
+    for gamemode_substring in substrings:
         if gamemode_substring in map_filename:
-            gamemode = gamemode_substrings[gamemode_substring]
-            gamemode_fancy = gamemodes[gamemode]
+            gamemode = substrings[gamemode_substring]
+            gamemode_fancy = modes[gamemode]
             log.debug(f"Determined gamemode to be {(gamemode, gamemode_fancy)}) based on substring ({gamemode_substring}_)")
             return map_filename, gamemode, gamemode_fancy
 
     # determine based on the map prefix
     map_prefix: str = map_filename.split('_')[0]
-    if map_prefix in gamemode_prefixes and '_' in map_filename:
-        gamemode: str = gamemode_prefixes[map_prefix]
-        gamemode_fancy: str = gamemodes[gamemode]
+    if map_prefix in prefixes and '_' in map_filename:
+        gamemode: str = prefixes[map_prefix]
+        gamemode_fancy: str = modes[gamemode]
         log.debug(f"Determined gamemode to be {(gamemode, gamemode_fancy)}) based on prefix ({map_prefix}_)")
         return map_filename, gamemode, gamemode_fancy
 
@@ -58,20 +58,20 @@ def load_maps_db() -> Dict[str, List[str]]:
         return {}
 
 
-gamemodes: Dict[str, str] = {'ctf': 'Capture the Flag', 'control-point': 'Control Point', 'attack-defend': 'Attack/Defend', 'medieval-mode': 'Attack/Defend (Medieval Mode)',
-                             'territorial-control': 'Territorial Control', 'payload': 'Payload', 'payload-race': 'Payload Race', 'koth': 'King of the Hill',
-                             'special-delivery': 'Special Delivery', 'mvm': 'Mann vs. Machine', 'beta-map': 'Robot Destruction', 'mannpower': 'Mannpower', 'passtime': 'PASS Time',
-                             'player-destruction': 'Player Destruction', 'arena': 'Arena', 'training': 'Training', 'surfing': 'Surfing', 'trading': 'Trading', 'jumping': 'Jumping',
-                             'deathmatch': 'Deathmatch', 'cp-orange': 'Orange', 'versus-saxton-hale': 'Versus Saxton Hale', 'deathrun': 'Deathrun', 'achievement': 'Achievement',
-                             'breakout': 'Jail Breakout', 'slender': 'Slender', 'dodgeball': 'Dodgeball', 'mario-kart': 'Mario Kart', 'prophunt': 'Prop Hunt', 'class-wars': 'Class Wars',
-                             'stop-that-tank': 'Stop that Tank!', 'zombie': 'Zombie'}
+modes: Dict[str, str] = {'ctf': 'Capture the Flag', 'control-point': 'Control Point', 'attack-defend': 'Attack/Defend', 'medieval-mode': 'Attack/Defend (Medieval Mode)',
+                         'territorial-control': 'Territorial Control', 'payload': 'Payload', 'payload-race': 'Payload Race', 'koth': 'King of the Hill', 'special-delivery': 'Special Delivery',
+                         'mvm': 'Mann vs. Machine', 'beta-map': 'Robot Destruction', 'mannpower': 'Mannpower', 'passtime': 'PASS Time', 'player-destruction': 'Player Destruction',
+                         'arena': 'Arena', 'training': 'Training', 'surfing': 'Surfing', 'trading': 'Trading', 'jumping': 'Jumping', 'deathmatch': 'Deathmatch', 'cp-orange': 'Orange',
+                         'versus-saxton-hale': 'Versus Saxton Hale', 'deathrun': 'Deathrun', 'achievement': 'Achievement', 'breakout': 'Jail Breakout', 'slender': 'Slender',
+                         'dodgeball': 'Dodgeball', 'mario-kart': 'Mario Kart', 'prophunt': 'Prop Hunt', 'class-wars': 'Class Wars',
+                         'stop-that-tank': 'Stop that Tank!', 'zombie': 'Zombie'}
 
-gamemode_prefixes: Dict[str, str] = {'ctf': 'ctf', 'tc': 'territorial-control', 'pl': 'payload', 'plr': 'payload-race', 'koth': 'koth', 'sd': 'special-delivery', 'mvm': 'mvm',
-                                     'rd': 'beta-map', 'pass': 'passtime', 'pd': 'player-destruction', 'arena': 'arena', 'tr': 'training', 'surf': 'surfing', 'cp': 'control-point',
-                                     'trade': 'trading', 'jump': 'jumping', 'dm': 'deathmatch', 'vsh': 'versus-saxton-hale', 'dr': 'deathrun', 'achievement': 'achievement', 'jb': 'breakout',
-                                     'slender': 'slender', 'tfdb': 'dodgeball', 'mario': 'mario-kart', 'ph': 'prophunt', 'zs': 'zombie', 'ze': 'zombie', 'zf': 'zombie', 'zm': 'zombie',
-                                     'duel': 'deathmatch', 'sn': 'deathmatch', 'ba': 'breakout', 'jail': 'breakout', 'idle': 'trading'}
-gamemode_substrings: Dict[str, str] = {'cp_orange': 'cp-orange', 'training': 'training'}
+prefixes: Dict[str, str] = {'ctf': 'ctf', 'tc': 'territorial-control', 'pl': 'payload', 'plr': 'payload-race', 'koth': 'koth', 'sd': 'special-delivery', 'mvm': 'mvm', 'rd': 'beta-map',
+                            'pass': 'passtime', 'pd': 'player-destruction', 'arena': 'arena', 'tr': 'training', 'surf': 'surfing', 'cp': 'control-point', 'trade': 'trading', 'jump': 'jumping',
+                            'dm': 'deathmatch', 'vsh': 'versus-saxton-hale', 'dr': 'deathrun', 'achievement': 'achievement', 'jb': 'breakout', 'slender': 'slender', 'tfdb': 'dodgeball',
+                            'mario': 'mario-kart', 'ph': 'prophunt', 'zs': 'zombie', 'ze': 'zombie', 'zf': 'zombie', 'zm': 'zombie', 'duel': 'deathmatch', 'sn': 'deathmatch', 'ba': 'breakout',
+                            'jail': 'breakout', 'idle': 'trading'}
+substrings: Dict[str, str] = {'cp_orange': 'cp-orange', 'training': 'training'}
 
 if __name__ == '__main__':
     print(get_map_gamemode(logger.Log(), 'pl_borneo'))

@@ -433,7 +433,7 @@ class GUI(tk.Frame):
             self.log.info("Closing settings menu without saving")
             self.master.destroy()
 
-    # spinboxes can be set to blank, so try set them to 0 in that case
+    # a spinbox can be set to blank, so set it to defualt in that case
     def fix_blank_spinboxes(self):
         int_settings = (self.wait_time, self.wait_time_slow, self.request_timeout, self.console_scan_kb, self.server_rate_limit)
         int_settings_str = ('wait_time', 'wait_time_slow', 'request_timeout', 'console_scan_kb', 'server_rate_limit')

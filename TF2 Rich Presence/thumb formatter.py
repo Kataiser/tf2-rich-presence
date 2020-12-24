@@ -7,7 +7,7 @@ import gamemodes
 
 
 def main():
-    for image_filename in gamemodes.gamemodes.keys():
+    for image_filename in gamemodes.modes.keys():
         print(image_filename)
         image_loaded = Image.open('map_thumbs source/' + image_filename + '.png')
 

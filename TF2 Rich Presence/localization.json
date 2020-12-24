@@ -293,20 +293,6 @@
         "Chinese": "您的TF2安装似乎尚未正确设置。 来修复:",
         "Japanese": "あなたのTF2インストールはまだ正しく設定されていないようです。 修正するには:"
     },
-    "1712457926": {
-        "English": "[custom/community map]",
-        "German": "[Zoll/Gemeinschaftskarte]",
-        "French": "[carte douanière/communautaire]",
-        "Spanish": "[Mapa de costumbre/comunidad]",
-        "Portuguese": "[mapa personalizado/comunitário]",
-        "Italian": "[Personalizzato / mappa della comunita]",
-        "Dutch": "[aangepaste/gemeenschappelijke kaart]",
-        "Polish": "[mapa zwyczaju/społeczności]",
-        "Russian": "[сообщественная/кастомная карта]",
-        "Korean": "[사용자 정의/커뮤니티 맵]",
-        "Chinese": "[自定义/社区地图]",
-        "Japanese": "[カスタム/コミュニティ地図]"
-    },
     "1775377300": {
         "English": "Demoman",
         "German": "Demoman",
@@ -600,20 +586,6 @@
         "Korean": "교육",
         "Chinese": "培训",
         "Japanese": "トレーニング"
-    },
-    "2452164823": {
-        "English": "Hours before re-checking custom map gamemode: ",
-        "German": "Stunden, bevor Sie den benutzerdefinierten Kartenspielmodus erneut überprüfen: ",
-        "French": "Quelques heures avant de revérifier le mode de jeu de cartes personnalisées : ",
-        "Spanish": "Horas antes de volver a comprobar el modo de juego de mapa personalizado: ",
-        "Portuguese": "Horas antes de verificar novamente o modo de jogo do mapa personalizado: ",
-        "Italian": "Ore prima di ricontrollare la modalità di gioco delle mappe personalizzate: ",
-        "Dutch": "Uren voor het opnieuw controleren van de aangepaste kaart spelmodus: ",
-        "Polish": "Godziny przed ponownym sprawdzeniem niestandardowego trybu gry na mapie: ",
-        "Russian": "Часы до перепроверки пользовательского режима игры на карте: ",
-        "Korean": "시간 전에 다시 검사용 지도한 게임 모드: ",
-        "Chinese": "小时前重新检查自定义地图游戏模式: ",
-        "Japanese": "カスタムマップゲームモードを再確認するまでの時間: "
     },
     "2465472860": {
         "English": "Portrait",

@@ -10,7 +10,7 @@ import gamemodes
 
 
 def main():
-    gamemodes_reversed = {gamemodes.gamemodes[key]: key for key in gamemodes.gamemodes}
+    gamemodes_reversed = {gamemodes.modes[key]: key for key in gamemodes.modes}
     gamemodes_reversed['Attack/Defend (Medieval)'] = 'attack-defend'
     gamemodes_reversed['Control Point (Domination)'] = 'control-point'
     gamemodes_reversed['No gamemode'] = 'beta-map'
