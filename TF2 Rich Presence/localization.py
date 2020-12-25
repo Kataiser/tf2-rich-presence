@@ -82,11 +82,13 @@ def access_localization_file(path: str = 'localization.json', append: Union[tupl
             localization_data[append_hash]['English'] = append_text
             print(f"Hash: {append_hash}, element {len(localization_data)}")
 
-            for language in ['German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian', 'Korean', 'Chinese', 'Japanese']:
+            for language in ('German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian', 'Korean', 'Chinese', 'Japanese'):
                 localization_data[append_hash][language] = ""
 
+            localization_data_sorted: dict = dict(sorted(localization_data.items(), key=lambda kv: (kv[1]['English'], kv[0])))  # sort lexographically using English text
+
             with open(path, 'w', encoding='UTF8') as localization_file:
-                json.dump(localization_data, localization_file, indent=4, ensure_ascii=False)
+                json.dump(localization_data_sorted, localization_file, indent=4, ensure_ascii=False)
         else:
             print(f"Already exists with hash {append_hash}")
 
