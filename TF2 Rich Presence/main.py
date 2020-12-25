@@ -308,6 +308,11 @@ class TF2RichPresense:
                 top_line = self.loc.text("Map: {0}").format(map_out)
                 top_line = f"{top_line}{self.loc.text(' (hosting)')}" if hosting else top_line
 
+            if not top_line:
+                self.log.error("Top line is blank")
+            if not bottom_line:
+                self.log.error("Bottom line is blank")
+
             self.activity['details'] = top_line
             self.activity['state'] = bottom_line
             og_large_text: str = self.activity['assets']['large_text']  # why

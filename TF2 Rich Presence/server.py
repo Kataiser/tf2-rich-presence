@@ -26,12 +26,16 @@ def get_match_data(self, address: str, mode: str, force: bool = False) -> str:
 
         if mode not in ('Player count', 'Kills'):
             self.log.error(f"Match info mode is invalid ({mode})")
-            self.last_server_request_data = ""
+            self.last_server_request_data = unknown_data()
             self.last_server_request_time -= rate_limit
             return self.last_server_request_data
         if ':' not in address:
-            self.log.error(f"Server address is invalid ({address})")
-            self.last_server_request_data = ""
+            if address:
+                self.log.error(f"Server address ({address}) is invalid")
+            else:
+                self.log.debug(f"Server address is blank, assuming hosting")
+
+            self.last_server_request_data = unknown_data(self.loc, mode)
             self.last_server_request_time -= rate_limit
             return self.last_server_request_data
 
@@ -47,7 +51,7 @@ def get_match_data(self, address: str, mode: str, force: bool = False) -> str:
                 players_info = a2s.players((ip, int(socket_)), timeout=settings.get('request_timeout'))
         except (a2s.BrokenMessageError, a2s.BrokenMessageError, socket.timeout, socket.gaierror, ConnectionRefusedError):
             self.log.error(f"Couldn't get server info: {traceback.format_exc()}")
-            self.last_server_request_data = ""
+            self.last_server_request_data = unknown_data(self.loc, mode)
             self.last_server_request_time -= rate_limit
             return self.last_server_request_data
 
@@ -76,5 +80,14 @@ def get_match_data(self, address: str, mode: str, force: bool = False) -> str:
                     return self.last_server_request_data
 
             self.log.error("User doesn't seem to be in the server")
-            self.last_server_request_data = self.loc.text("Kills: {0}").format(0)
+            self.last_server_request_data = unknown_data(self.loc, mode)
             return self.last_server_request_data
+
+
+def unknown_data(loc=None, mode: str = '') -> str:
+    if mode == 'Player count':
+        return loc.text("Players: {0}/{1}").format("?", "?")
+    elif mode == 'Kills':
+        return loc.text("Kills: {0}").format("?")
+    else:
+        return ""  # this will cause an error in main and make RPC fail, but it won't crash :)

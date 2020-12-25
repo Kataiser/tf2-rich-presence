@@ -111,7 +111,9 @@ class TestTF2RichPresense(unittest.TestCase):
             player_count = app.get_match_data(test_address, 'Player count')
             self.assertTrue(player_count.startswith('Players: '))
             self.assertIn(player_count.split('/')[1], ('24', '30', '32'))
-            self.assertEqual(app.get_match_data(test_address, 'Kills', force=True), "Kills: 0")
+            self.assertEqual(app.get_match_data(test_address, 'Kills', force=True), "Kills: ?")
+
+        self.assertEqual(app.get_match_data('', 'Player count', force=True), "Players: ?/?")
 
     def test_get_map_gamemode(self):
         self.assertEqual(gamemodes.get_map_gamemode(self.log, 'cp_dustbowl'), ['Dustbowl', 'attack-defend', 'Attack/Defend'])
