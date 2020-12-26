@@ -27,7 +27,7 @@ def get_match_data(self, address: str, mode: str, force: bool = False) -> str:
         if mode not in ('Player count', 'Kills'):
             self.log.error(f"Match info mode is invalid ({mode})")
             self.last_server_request_data = unknown_data()
-            self.last_server_request_time -= rate_limit
+            self.last_server_request_time -= rate_limit  # ignores rate limit
             return self.last_server_request_data
         if ':' not in address:
             if address:
@@ -40,18 +40,22 @@ def get_match_data(self, address: str, mode: str, force: bool = False) -> str:
             return self.last_server_request_data
 
         ip: str
-        socket_: str
-        ip, socket_ = address.split(':')
+        ip_socket: str
+        ip, ip_socket = address.split(':')
 
         try:
             if mode == 'Player count':
-                server_info = a2s.info((ip, int(socket_)), timeout=settings.get('request_timeout'))
+                server_info = a2s.info((ip, int(ip_socket)), timeout=settings.get('request_timeout'))
                 # there's a decent amount of extra data here that isn't used but could be (server name, bot count, tags, etc.)
             else:
-                players_info = a2s.players((ip, int(socket_)), timeout=settings.get('request_timeout'))
-        except (a2s.BrokenMessageError, a2s.BrokenMessageError, socket.timeout, socket.gaierror, ConnectionRefusedError):
+                players_info = a2s.players((ip, int(ip_socket)), timeout=settings.get('request_timeout'))
+        except (a2s.BrokenMessageError, a2s.BrokenMessageError, socket.gaierror, ConnectionRefusedError):
             self.log.error(f"Couldn't get server info: {traceback.format_exc()}")
             self.last_server_request_data = unknown_data(self.loc, mode)
+            self.last_server_request_time -= rate_limit
+            return self.last_server_request_data
+        except socket.timeout:
+            self.log.debug("Timed out getting server info, persisting previous data")
             self.last_server_request_time -= rate_limit
             return self.last_server_request_data
 
