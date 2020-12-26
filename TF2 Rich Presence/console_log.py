@@ -219,30 +219,43 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     else:
         self.log.debug(f"Got '{current_map}' from line '{map_line_used[:-1]}' and '{current_class}' from line '{class_line_used[:-1]}'")
 
-    # remove empty lines (bot spam)
+    # remove empty lines (bot spam) and some error logs
     if 'In menus' in current_map and settings.get('trim_console_log') and not force:
         if self.cleanup_primed:
             self.log.debug("Potentially cleaning up console.log")
             console_log_lines_out: List[str] = []
-            empty_line_count: int = 0
+            bad_line_count: int = 0
 
             with open(console_log_path, 'r', encoding='UTF8', errors='replace') as console_log_read:
                 console_log_lines_in: List[str] = console_log_read.readlines()
 
+            error_substrings: tuple = ('bad reference count', 'particle system', 'DataTable warning', 'SOLID_VPHYSICS', 'BlockingGetDataPointer', 'No such variable')
+
             for line in console_log_lines_in:
-                if line.strip(' \t') == '\n':
-                    empty_line_count += 1
+                remove_line: bool = False
+
+                for error_substring in error_substrings:
+                    if error_substring in line:
+                        remove_line = True
+                        break
+
+                if not remove_line:
+                    if line.strip(' \t') == '\n' or (user_is_kataiser and 'Usage: spec_player' in line):
+                        remove_line = True
+
+                if remove_line:
+                    bad_line_count += 1
                 else:
                     console_log_lines_out.append(line)
 
-            if empty_line_count >= 20 and len(console_log_lines_out) > SIZE_LIMIT_MIN_LINES:
+            if bad_line_count >= 20 and len(console_log_lines_out) > SIZE_LIMIT_MIN_LINES:
                 with open(console_log_path, 'w', encoding='UTF8') as console_log_write:
                     for line in console_log_lines_out:
                         console_log_write.write(line)
 
-                self.log.debug(f"Removed {empty_line_count} empty lines from console.log")
+                self.log.debug(f"Removed {bad_line_count} bad lines from console.log")
             else:
-                self.log.debug(f"Didn't remove {empty_line_count} empty lines from console.log")
+                self.log.debug(f"Didn't remove {bad_line_count} bad lines from console.log")
 
             self.cleanup_primed = False
     else:

@@ -1081,19 +1081,19 @@
         "Chinese": "没有排队",
         "Japanese": "キューに入れない"
     },
-    "3044742820": {
-        "English": "Occasionally limit console.log's size and remove empty lines",
-        "German": "Gelegentlich die Größe von console.log begrenzen und leere Zeilen entfernen",
-        "French": "Limiter occasionnellement la taille de console.log et supprimer les lignes vides",
-        "Spanish": "Ocasionalmente limitar el tamaño de console.log y eliminar las líneas vacías",
-        "Portuguese": "Ocasionalmente limitar o tamanho do console.log e remover linhas vazias",
-        "Italian": "Occasionalmente limitare le dimensioni di console.log e rimuovere le righe vuote",
-        "Dutch": "Beperk af en toe de grootte van console.log en verwijder lege regels",
-        "Polish": "Sporadycznie ograniczaj rozmiar konsoli.log i usuwaj puste linie",
-        "Russian": "Иногда ограничивать размер console.log и удалять пустые строки",
-        "Korean": "때때로 콘솔을 제한하십시오.로그의 크기와 빈 줄 제거",
-        "Chinese": "偶尔限制 console.log 的大小，并删除空行",
-        "Japanese": "時々 console.log のサイズを制限し、空行を削除します"
+    "2293570909": {
+        "English": "Occasionally limit console.log's size and remove empty lines and common errors",
+        "German": "Gelegentlich die Größe von console.log begrenzen und leere Zeilen und häufige Fehler entfernen",
+        "French": "Limiter occasionnellement la taille de console.log et supprimer les lignes vides et les erreurs courantes",
+        "Spanish": "Ocasionalmente limita el tamaño de console.log y elimina las líneas vacías y los errores comunes",
+        "Portuguese": "Ocasionalmente limitar o tamanho do console.log e remover linhas vazias e erros comuns",
+        "Italian": "Occasionalmente limitare le dimensioni di console.log e rimuovere le righe vuote e gli errori comuni",
+        "Dutch": "Beperk af en toe de grootte van console.log en verwijder lege regels en veelvoorkomende fouten",
+        "Polish": "Sporadycznie ograniczaj rozmiar console.log i usuwaj puste linie i typowe błędy",
+        "Russian": "Иногда ограничивать размер console.log и удалять пустые строки и типичные ошибки",
+        "Korean": "때때로 콘솔을 제한하십시오.로그의 크기와 빈 줄 및 공통 오류 제거",
+        "Chinese": "偶尔限制 console.log 的大小，并删除空行和常见错误",
+        "Japanese": "時々 console.log のサイズを制限し、空行や一般的なエラーを削除します"
     },
     "3578294000": {
         "English": "Off",

@@ -77,7 +77,7 @@ class TestTF2RichPresense(unittest.TestCase):
         trimtest_big = 'test_resources\\console_badwater_big.log'
         shutil.copy(trimtest_small, trimtest_big)
         with open(trimtest_big, 'rb+') as console_badwater_sacrifice:
-            console_badwater_sacrifice.write(console_badwater_sacrifice.read())
+            console_badwater_sacrifice.write(console_badwater_sacrifice.read())  # this just doubles the file size
         initial_size = os.stat(trimtest_big).st_size
         self.assertEqual(app.interpret_console_log(trimtest_big, {'not Kataiser'}), ('pl_badwater (hosting)', 'Pyro', ''))
         trimmed_size = os.stat(trimtest_big).st_size
@@ -85,16 +85,20 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual(trimmed_size, (1024 ** 2) * 2)
         os.remove(trimtest_big)
 
-        # tests removing empty lines
-        emptytest_big = 'test_resources\\console_in_menus.log'
-        emptytest_small = 'test_resources\\console_in_menus_small.log'
-        shutil.copy(emptytest_big, emptytest_small)
-        initial_size = os.stat(emptytest_small).st_size
-        app.interpret_console_log(emptytest_small, {'not Kataiser'}, float('inf'))
-        cleaned_size = os.stat(emptytest_small).st_size
+        # tests removing error and empty lines
+        errorstest_big = 'test_resources\\console_in_menus.log'
+        errorstest_small = 'test_resources\\console_in_menus_small.log'
+        shutil.copy(errorstest_big, errorstest_small)
+        initial_size = os.stat(errorstest_small).st_size
+        with open(errorstest_small, 'r', encoding='UTF8') as errorstest_small_unclean:
+            self.assertTrue('DataTable warning' in errorstest_small_unclean.read())
+        app.interpret_console_log(errorstest_small, {'not Kataiser'}, float('inf'))
+        cleaned_size = os.stat(errorstest_small).st_size
         self.assertLess(cleaned_size, initial_size)
-        self.assertEqual(app.interpret_console_log(emptytest_small, {'not Kataiser'}, float('inf')), ('In menus', 'Not queued', ''))
-        os.remove(emptytest_small)
+        with open(errorstest_small, 'r', encoding='UTF8') as errorstest_small_cleaned:
+            self.assertFalse('DataTable warning' in errorstest_small_cleaned.read())
+        self.assertEqual(app.interpret_console_log(errorstest_small, {'not Kataiser'}, float('inf')), ('In menus', 'Not queued', ''))
+        os.remove(errorstest_small)
 
     def test_steam_config_file(self):
         app = main.TF2RichPresense(self.log, set_process_priority=False)

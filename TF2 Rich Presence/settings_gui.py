@@ -162,7 +162,7 @@ class GUI(tk.Frame):
             self.loc.text("Second line: ")))
         setting14_options = ttk.OptionMenu(setting14_frame, self.second_line, self.second_lines[0], *self.second_lines_display, command=self.setting_changed)
         setting15 = ttk.Checkbutton(self.lf_advanced, variable=self.trim_console_log, command=self.setting_changed, text="{}".format(
-            self.loc.text("Occasionally limit console.log's size and remove empty lines")))
+            self.loc.text("Occasionally limit console.log's size and remove empty lines and common errors")))
         setting16_frame = ttk.Frame(self.lf_main)
         setting16_text = ttk.Label(setting16_frame, text="{}".format(
             self.loc.text("Delay between refreshes when TF2 and Discord aren't running: ")))  # and Steam but whatever
