@@ -219,12 +219,14 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     else:
         self.log.debug(f"Got '{current_map}' from line '{map_line_used[:-1]}' and '{current_class}' from line '{class_line_used[:-1]}'")
 
-    # remove empty lines (bot spam) and some error logs
+    # remove empty lines (bot spam probably) and some error logs
     if 'In menus' in current_map and settings.get('trim_console_log') and not force:
         if self.cleanup_primed:
             self.log.debug("Potentially cleaning up console.log")
             console_log_lines_out: List[str] = []
-            bad_line_count: int = 0
+            total_line_count: int = 0
+            blank_line_count: int = 0
+            error_line_count: int = 0
 
             with open(console_log_path, 'r', encoding='UTF8', errors='replace') as console_log_read:
                 console_log_lines_in: List[str] = console_log_read.readlines()
@@ -235,27 +237,31 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
                 remove_line: bool = False
 
                 for error_substring in error_substrings:
-                    if error_substring in line:
+                    if error_substring in line and ' :  ' not in line:
                         remove_line = True
+                        error_line_count += 1
                         break
 
                 if not remove_line:
                     if line.strip(' \t') == '\n' or (user_is_kataiser and 'Usage: spec_player' in line):
                         remove_line = True
+                        blank_line_count += 1
 
                 if remove_line:
-                    bad_line_count += 1
+                    total_line_count += 1
                 else:
                     console_log_lines_out.append(line)
 
-            if bad_line_count >= 20 and len(console_log_lines_out) > SIZE_LIMIT_MIN_LINES:
+            line_count_text: str = f"{error_line_count} error lines and {blank_line_count} blank lines (total: {total_line_count})"
+
+            if total_line_count >= 50 and len(console_log_lines_out) > SIZE_LIMIT_MIN_LINES:
                 with open(console_log_path, 'w', encoding='UTF8') as console_log_write:
                     for line in console_log_lines_out:
                         console_log_write.write(line)
 
-                self.log.debug(f"Removed {bad_line_count} bad lines from console.log")
+                self.log.debug(f"Removed {line_count_text} from console.log")
             else:
-                self.log.debug(f"Didn't remove {bad_line_count} bad lines from console.log")
+                self.log.debug(f"Didn't remove {line_count_text} from console.log")
 
             self.cleanup_primed = False
     else:
