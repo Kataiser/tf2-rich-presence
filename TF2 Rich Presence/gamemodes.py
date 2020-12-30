@@ -42,7 +42,7 @@ def get_map_gamemode(log, map_filename: str):
         log.debug(f"Determined gamemode to be {(gamemode, gamemode_fancy)}) based on prefix ({map_prefix}_)")
         return map_filename, gamemode, gamemode_fancy
 
-    log.error("Couldn't get map gamemode")  # probably trading
+    log.debug("Couldn't determine map gamemode from filename")  # probably trading
     return map_filename, 'unknown_map', 'Unknown gamemode'
 
 

@@ -83,8 +83,9 @@ def get_match_data(self, address: str, mode: str, force: bool = False) -> str:
                     self.log.debug(f"Got match data from server: {self.last_server_request_data}")
                     return self.last_server_request_data
 
-            self.log.error("User doesn't seem to be in the server")
-            self.last_server_request_data = unknown_data(self.loc, mode)
+            self.log.debug("User doesn't seem to be in the server, assuming still loading in")
+            self.last_server_request_data = self.loc.text("Kills: {0}").format(0)
+            self.last_server_request_time -= rate_limit
             return self.last_server_request_data
 
 
