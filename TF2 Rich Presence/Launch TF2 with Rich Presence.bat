@@ -15,10 +15,10 @@ if not exist resources\ (
 )
 
 start steam://rungameid/440
-"resources\python-3.7.9-embed-win32\python.exe" -I "resources\launcher.py" --m init --welcome_version 0
+"resources\python-3.9.1-embed-win32\python.exe" -I "resources\launcher.py" --m init --welcome_version 0
 
 :start
-"resources\python-3.7.9-embed-win32\python.exe" -I "resources\launcher.py" --m main
+"resources\python-3.9.1-embed-win32\python.exe" -I "resources\launcher.py" --m main
 goto start
 
 :bail

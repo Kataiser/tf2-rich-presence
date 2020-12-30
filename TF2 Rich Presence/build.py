@@ -59,7 +59,7 @@ def main(version_num='v1.14.6'):
             with open('last_repo_path.txt', 'w') as last_repo_path_file:
                 last_repo_path_file.write(github_repo_path)
 
-    interpreter_name = 'python-3.7.9-embed-win32'
+    interpreter_name = 'python-3.9.1-embed-win32'
     build_start_time = time.perf_counter()
     print()
 
@@ -187,6 +187,7 @@ def main(version_num='v1.14.6'):
 
     missing_files = []
     files_to_copy = [('launcher.py', Path(f'{new_build_folder_name}/resources/')),
+                     ('init.py', Path(f'{new_build_folder_name}/resources/')),
                      ('custom.py', Path(f'{new_build_folder_name}/resources/')),
                      ('maps.json', Path(f'{new_build_folder_name}/resources/')),
                      ('localization.json', Path(f'{new_build_folder_name}/resources/')),
@@ -352,7 +353,7 @@ def main(version_num='v1.14.6'):
     with open(Path(f'{new_build_folder_name}/resources/maps.json'), 'r') as assertjson_maps:
         assert json.load(assertjson_maps) != {}
     for file in cython_compile.targets:
-        pyd_extension = 'cp37-win_amd64.pyd' if sys.maxsize.bit_length() > 32 else 'cp37-win32.pyd'
+        pyd_extension = 'cp39-win_amd64.pyd' if sys.maxsize.bit_length() > 32 else 'cp39-win32.pyd'
         assert os.stat(f'{file}.py').st_mtime < os.stat(Path(f'cython_build/{file}.{pyd_extension}')).st_mtime
     try:
         assertions_enabled = False

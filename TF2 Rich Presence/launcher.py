@@ -29,7 +29,7 @@ import time
 import traceback
 import zlib
 
-sys.path.append(os.path.abspath(os.path.join('resources', 'python-3.7.9-embed-win32', 'packages')))
+sys.path.append(os.path.abspath(os.path.join('resources', 'python-3.9.1-embed-win32', 'packages')))
 sys.path.append(os.path.abspath('resources'))
 import sentry_sdk
 from colorama import Fore, init, Style

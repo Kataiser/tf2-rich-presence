@@ -14,10 +14,10 @@ if not exist resources\ (
     )
 )
 
-"resources\python-3.7.9-embed-win32\python.exe" -I "resources\launcher.py" --m init --welcome_version 1
+"resources\python-3.9.1-embed-win32\python.exe" -I "resources\launcher.py" --m init --welcome_version 1
 
 :start
-"resources\python-3.7.9-embed-win32\python.exe" -I "resources\launcher.py" --m main
+"resources\python-3.9.1-embed-win32\python.exe" -I "resources\launcher.py" --m main
 goto start
 
 :bail
