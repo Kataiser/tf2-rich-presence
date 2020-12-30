@@ -7,7 +7,7 @@ matrix:
       before_install:
         - choco install python --version=3.9.1
         - python -m pip install --upgrade pip
-      env: PATH=/c/Python37:/c/Python39/Scripts:$PATH
+      env: PATH=/c/Python39:/c/Python39/Scripts:$PATH
 install: pip3 install -r requirements.txt
 script: 
   - xcopy LICENSE "TF2 Rich Presence"
