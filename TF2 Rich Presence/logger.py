@@ -25,8 +25,11 @@ import utils
 class Log:
     def __init__(self, path: Union[str, None] = None):
         # find user's pc and account name
-        user_identifier: str = getpass.getuser()
         user_pc_name: str = socket.gethostname()
+        try:
+            user_identifier: str = getpass.getuser()
+        except ModuleNotFoundError:
+            user_identifier = user_pc_name
 
         if path:
             self.filename: str = path

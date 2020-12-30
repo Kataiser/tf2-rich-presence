@@ -131,18 +131,29 @@ DEBUG = True
 VERSION = '{tf2rpvnum}'
 
 if __name__ == '__main__':
-    # set up Sentry (https://sentry.io/)
-    sentry_sdk.init(dsn=utils.get_api_key('sentry'),
-                    release=VERSION,
-                    attach_stacktrace=True,
-                    max_breadcrumbs=50,
-                    debug=DEBUG,
-                    environment="Debug build" if DEBUG else "Release",
-                    request_bodies='small')
+    try:
+        import settings
+        enable_sentry: bool = settings.get('log_level') != 'never'
+    except Exception:
+        enable_sentry = True  # will probably crash later anyway if this happens
 
-    with sentry_sdk.configure_scope() as scope:
-        user_identifier: str = getpass.getuser()
-        user_pc_name: str = socket.gethostname()
-        scope.user = {'username': f'{user_pc_name}_{user_identifier}'}
+    if enable_sentry:
+        # set up Sentry (https://sentry.io/)
+        sentry_sdk.init(dsn=utils.get_api_key('sentry'),
+                        release=VERSION,
+                        attach_stacktrace=True,
+                        max_breadcrumbs=50,
+                        debug=DEBUG,
+                        environment="Debug build" if DEBUG else "Release",
+                        request_bodies='small')
+
+        with sentry_sdk.configure_scope() as scope:
+            user_pc_name: str = socket.gethostname()
+            try:
+                user_identifier: str = getpass.getuser()
+            except ModuleNotFoundError:
+                user_identifier = user_pc_name
+
+            scope.user = {'username': f'{user_pc_name}_{user_identifier}'}
 
     launch()
