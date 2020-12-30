@@ -1,6 +1,5 @@
 # Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
-# cython: language_level=3
 
 import datetime
 import gc

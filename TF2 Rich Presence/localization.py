@@ -30,7 +30,7 @@ class Localizer:
 
         self.text.cache_clear()
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"localization.Localizer ({self.language}, appending={self.appending}, {len(self.missing_lines)} missing lines)"
 
     @functools.lru_cache(maxsize=None)

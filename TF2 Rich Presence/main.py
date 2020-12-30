@@ -155,7 +155,7 @@ class TF2RichPresense:
 
         self.import_custom()
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"main.TF2RichPresense (state={self.test_state})"
 
     # import custom functionality
