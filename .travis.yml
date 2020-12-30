@@ -14,5 +14,5 @@ script:
   - xcopy Changelogs.html "TF2 Rich Presence"
   - xcopy requirements.txt "TF2 Rich Presence"
   - cd "TF2 Rich Presence"
-  - python tests.py
+  - travis_retry python tests.py
   - python build.py --n
