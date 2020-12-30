@@ -245,7 +245,6 @@ class TestTF2RichPresense(unittest.TestCase):
 
     def test_get_api_key(self):
         self.assertEqual(len(utils.get_api_key('discord')), 18)
-        self.assertEqual(len(utils.get_api_key('teamwork')), 32)
         self.assertEqual(len(utils.get_api_key('sentry')), 91)
 
     def test_load_maps_db(self):

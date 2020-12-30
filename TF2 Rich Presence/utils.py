@@ -52,14 +52,11 @@ def access_db(write: dict = None) -> Dict[str, Union[dict, bool, list]]:
 # get API key from the 'APIs' file
 @functools.lru_cache(maxsize=None)
 def get_api_key(service: str) -> str:
-    if os.path.isdir('resources'):
-        apis_path = os.path.join('resources', 'APIs')
-    else:
-        apis_path = 'APIs'
-
-    # compressed only for very basic obfuscation
-    with gzip.open(apis_path, 'r') as api_keys_file:
-        return json.load(api_keys_file)[service]
+    # just some very basic obfuscation
+    data: bytes = b'\x1f\x8b\x08\x00K\xc5\xec_\x02\xff%\xccI\x0e\xc20\x0c@\xd1\xabT^#b\xc7\xce\xe0\xac\xb8JF\xd1\rEM7\x08qw\x8aX\x7f\xfd\xf7\x86\xb6\xce\xba\xed\r\xd2\x02b\x95\xa3\x92pp\x9e' \
+                  b'\x83 \x05\xb8,0\xfb\xe3\xd8_\xbf~?\x8e\xe7L\xc6\xb4\x1e"\xd5n\xc5\xc9\x10\x17{\x1e\xb9\x90\xaa\xf5\x8c\xa5\x12b\xaa\xfd\xfc\x87S\xe5B\xe2=g\x8c\x82\xb5\xe9\xd0\x98\x03I' \
+                  b'\xbe\xfd\xcd\xeb\xba\x19:\x15\x15\x81\xcf\x17Q\x16\x89\xda\x8a\x00\x00\x00'
+    return json.loads(gzip.decompress(data))[service]
 
 
 # generate text that displays the difference between now and old_time

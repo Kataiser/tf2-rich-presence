@@ -92,7 +92,6 @@ def main(version_num='v1.14.6'):
         print("Copied", shutil.copy('maps.json', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('localization.json', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('DB_default.json', Path(f'{github_repo_path}/TF2 Rich Presence')))
-        print("Copied", shutil.copy('APIs', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('main menu.png', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('casual.png', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('comp.png', Path(f'{github_repo_path}/TF2 Rich Presence')))
@@ -200,7 +199,6 @@ def main(version_num='v1.14.6'):
                      ('tf2_logo_blurple.ico', Path(f'{new_build_folder_name}/resources/')),
                      ('tf2_logo_blurple_wrench.ico', Path(f'{new_build_folder_name}/resources/')),
                      ('font_instructions.gif', Path(f'{new_build_folder_name}/resources/')),
-                     ('APIs', Path(f'{new_build_folder_name}/resources/')),
                      ('Changelogs.html', Path(f'{new_build_folder_name}/'))]
 
     # copies files, adding any version numbers
@@ -339,7 +337,6 @@ def main(version_num='v1.14.6'):
     assert os.path.isfile(Path(f'{new_build_folder_name}/License.txt'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/Readme.txt'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/resources/{interpreter_name}/python.exe'))
-    assert os.path.isfile(Path(f'{new_build_folder_name}/resources/APIs'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/resources/font_instructions.gif'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/resources/tf2_logo_blurple.ico'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/resources/tf2_logo_blurple_wrench.ico'))
