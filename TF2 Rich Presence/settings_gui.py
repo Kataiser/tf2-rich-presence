@@ -49,7 +49,7 @@ class GUI(tk.Frame):
         self.sentry_levels = ('All errors', 'Crashes', 'Never')
         self.class_pic_types = ('Icon', 'Emblem', 'Portrait', 'None, use TF2 logo')
         self.languages = ('English', 'German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian', 'Korean', 'Chinese', 'Japanese')
-        self.second_lines = ('Player count', 'Time on map', 'Class', 'Kills')
+        self.second_lines = ('Player count', 'Time on map', 'Kills', 'Class')
 
         self.log_levels_display = [self.loc.text(item) for item in self.log_levels]
         self.sentry_levels_display = [self.loc.text(item) for item in self.sentry_levels]
