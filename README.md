@@ -22,11 +22,11 @@ Discord Rich Presence for Team Fortress 2
 (The actual program is nowhere near as nice looking as this)
 
 ## Download
-With 7-Zip's built-in extractor: [tf2_rich_presence_v1.14.6_self_extracting.exe](https://github.com/Kataiser/tf2-rich-presence/releases/download/v1.14.6/tf2_rich_presence_v1.14.6_self_extracting.exe) (8.1 MB)  
-Extract it yourself: [tf2_rich_presence_v1.14.6.zip](https://github.com/Kataiser/tf2-rich-presence/releases/download/v1.14.6/tf2_rich_presence_v1.14.6.zip) (11.0 MB)
+With 7-Zip's built-in extractor: [tf2_rich_presence_v1.15_self_extracting.exe](https://github.com/Kataiser/tf2-rich-presence/releases/download/v1.15/tf2_rich_presence_v1.15_self_extracting.exe) (8.8 MB)  
+Extract it yourself: [tf2_rich_presence_v1.15.zip](https://github.com/Kataiser/tf2-rich-presence/releases/download/v1.15/tf2_rich_presence_v1.15.zip) (11.9 MB)
 
 ## Installation and running
-1. Extract `tf2_rich_presence_v1.14.6.zip` OR run `tf2_rich_presence_v1.14.6_self_extracting.exe`, whichever you downloaded.
+1. Extract `tf2_rich_presence_v1.15.zip` OR run `tf2_rich_presence_v1.15_self_extracting.exe`, whichever you downloaded.
 2. Run `Launch TF2 with Rich Presence.exe`.
 	- OR run `Launch Rich Presence alongside TF2.exe`. This one doesn't automatically start Team Fortress 2.
 	- Both require Discord and Steam to be running as well and will wait until the game and both programs are running. 
@@ -47,7 +47,7 @@ Almost certainly. If you don't want to risk it then fair enough, but I've run th
 For making and testing changes, or simply always running the most up-to-date code.
 1. Either clone the repo or [download the source](https://github.com/Kataiser/tf2-rich-presence/archive/master.zip).
 2. Copy the entire source to another location (sorry) and put the files outside of `TF2 Rich Presence` into that folder.
-3. Make sure the `python` and `pip` commands point to Python 3.7.x (other versions probably work too)
+3. Make sure the `python` and `pip` commands point to Python 3.9.x (other versions might work too)
 4. Install a C compiler (see [Installing Cython](http://docs.cython.org/en/latest/src/quickstart/install.html)). I personally use MinGW.
 5. From within `TF2 Rich Presence`, run `pip install -r requirements.txt`.
 6. Either run `python build.py` to compile and build, or `python launcher.py` to launch in debug mode.

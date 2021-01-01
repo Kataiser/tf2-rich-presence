@@ -71,6 +71,56 @@
     <div>Generated from <a class="underlined_link" href="https://github.com/Kataiser/tf2-rich-presence/releases">releases</a></div>
     
         <h4>
+            <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.15">
+                v1.15
+            </a>
+            (2021-01-01)
+        </h4>
+        <h3>
+            Changes
+        </h3>
+        <ul>
+            <li>
+                Can now get match player count or number of kills from server
+                <ul>
+                    <li>
+                        Second line options are now player count, time on map, kills, and class
+                    </li>
+                    <li>
+                        Player count is the new default, but your previous settings won't be changed
+                    </li>
+                </ul>
+            </li>
+            <li>
+                Removed custom map gamemode API lookup from teamwork.tf, now exclusively uses file name
+                <ul>
+                    <li>
+                        It was very rarely used at this point, slow, often wrong, and not worth maintaining
+                    </li>
+                </ul>
+            </li>
+            <li>
+                The trim console.log setting now removes some common errors, fixing game state detection bugs
+            </li>
+            <li>
+                Updated the localization file
+            </li>
+        </ul>
+        <h3>
+            Fixes
+        </h3>
+        <ul>
+            <li>
+                Fixed a crash regarding Windows username
+            </li>
+            <li>
+                Fixed issues when setting number settings to blank
+            </li>
+            <li>
+                Fixed cases where disabling log reporting would be ignored
+            </li>
+        </ul>
+        <h4>
             <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v1.14.6">
                 v1.14.6
             </a>
