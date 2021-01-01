@@ -58,7 +58,7 @@ def holidays(log: logger.Log):
         holiday_text = "Merry Christmas!"
 
     if holiday_text:
-        log.info(f"Today is {now.year}/{now.month}/{now.day}: so the holiday text is \"{holiday_text}\"")
+        log.info(f"Today is {now.year}/{now.month}/{now.day}, so the holiday text is \"{holiday_text}\"")
         print(f"{Fore.LIGHTGREEN_EX}{holiday_text}{Fore.RESET}\n")
 
 
