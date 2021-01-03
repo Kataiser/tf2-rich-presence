@@ -291,7 +291,7 @@ def main(version_num='v1.15'):
         raise SystemError("Python interpreter missing")
 
     # copies the requirement packages (no longer part of the interpreter folder or zip
-    new_packages_dir = Path(f'{new_build_folder_name}/resources/{interpreter_name}/packages')
+    new_packages_dir = Path(f'{new_build_folder_name}/resources/packages')
     os.mkdir(new_packages_dir)
     venv_packages_dir = site.getsitepackages()[1]
     assert 'site-packages' in venv_packages_dir.lower()
@@ -332,7 +332,7 @@ def main(version_num='v1.15'):
     assert os.listdir(Path(f'{new_build_folder_name}/logs')) == []
     assert os.listdir(Path(f'{new_build_folder_name}/resources/__pycache__')) != []
     assert os.listdir(Path(f'{new_build_folder_name}/resources/{interpreter_name}')) != []
-    assert len(os.listdir(Path(f'{new_build_folder_name}/resources/{interpreter_name}/packages'))) == 22
+    assert len(os.listdir(Path(f'{new_build_folder_name}/resources/packages'))) == 22
     assert os.path.isfile(Path(f'{new_build_folder_name}/Changelogs.html'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/License.txt'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/Readme.txt'))
