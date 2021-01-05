@@ -259,7 +259,7 @@ def main(version_num='v1.15'):
     git_username = subprocess.run('git config user.name', capture_output=True).stdout.decode('UTF8')[:-1]
     build_info_path = Path(f'{new_build_folder_name}/resources/build_info.txt')
     with open('requirements.txt', 'r') as requirements_file:
-        requirements_versions = ', '.join([r[:-1] for r in requirements_file.readlines()])
+        requirements_versions = ', '.join([r.rstrip('\n') for r in requirements_file.readlines()])
     with open(build_info_path, 'w') as build_info_txt:
         build_info_txt.write(f"TF2 Rich Presence by Kataiser"
                              "\nhttps://github.com/Kataiser/tf2-rich-presence"
