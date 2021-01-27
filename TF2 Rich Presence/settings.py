@@ -1,16 +1,16 @@
-# Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
+# Copyright (C) 2018-2021 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 # cython: language_level=3
 
 import functools
 import json
 import winreg
-from typing import Union
+from typing import Optional, Union
 
 
 # access a setting from any file, with a string that is the same as the variable name (cached, so settings changes won't be rechecked right away)
-# TODO: access settings as a class with type hinted public members
-@functools.lru_cache(maxsize=None)
+# TODO: access settings as a class with type hinted members
+@functools.cache
 def get(setting: str) -> Union[str, int, bool]:
     try:
         return access_registry()[setting]
@@ -20,7 +20,7 @@ def get(setting: str) -> Union[str, int, bool]:
 
 # either reads the settings key and returns it as a dict, or if a dict is provided, saves it
 # note that settings are saved as JSON in a single string key
-def access_registry(save: Union[dict, None] = None) -> dict:
+def access_registry(save: Optional[dict] = None) -> Optional[dict]:
     reg_key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, r'Software\TF2 Rich Presence')
 
     try:
@@ -39,24 +39,25 @@ def access_registry(save: Union[dict, None] = None) -> dict:
 
 # either gets a settings default, or if return_dict, returns all defaults as a dict
 def get_setting_default(setting: str = '', return_all: bool = False) -> Union[str, int, bool, dict]:
-    defaults = {'sentry_level': 'All errors',
-                'wait_time': 2,
-                'wait_time_slow': 5,
-                'check_updates': True,
-                'request_timeout': 5,
-                'hide_queued_gamemode': False,
-                'log_level': 'Debug',
-                'console_scan_kb': 1024,
-                'class_pic_type': 'Icon',
-                'language': 'English',
-                'second_line': 'Player count',
-                'trim_console_log': True,
-                'server_rate_limit': 10}
+    default_settings = {'sentry_level': 'All errors',
+                        'wait_time': 2,
+                        'wait_time_slow': 5,
+                        'check_updates': True,
+                        'request_timeout': 2,
+                        'hide_queued_gamemode': False,
+                        'log_level': 'Debug',
+                        'console_scan_kb': 1024,
+                        'language': 'English',
+                        'top_line': 'Player count',
+                        'bottom_line': 'Time on map',
+                        'trim_console_log': True,
+                        'server_rate_limit': 10,
+                        'gui_scale': 100}
 
     if return_all:
-        return defaults
+        return default_settings
     else:
-        return defaults[setting]
+        return default_settings[setting]
 
 
 # slightly less ugly
@@ -90,6 +91,7 @@ def fix_settings(log):
             made_fixes = True
 
         access_registry(save=current)
+        get.cache_clear()
 
     if made_fixes:
         log.error(f"Fixed settings: added {added}, removed {removed}")

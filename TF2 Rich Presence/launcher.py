@@ -3,7 +3,7 @@
 # TF2 Rich Presence
 # https://github.com/Kataiser/tf2-rich-presence
 #
-# Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
+# Copyright (C) 2018-2021 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 #
 # This program is free software: you can redistribute it and/or modify
@@ -19,61 +19,63 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import argparse
 import getpass
-import importlib
 import os
 import socket
 import sys
-import time
 import traceback
 import zlib
+from tkinter import messagebox
 
 sys.path.append(os.path.abspath('resources'))
 sys.path.append(os.path.abspath(os.path.join('resources', 'packages')))
 import sentry_sdk
-from colorama import Fore, init, Style
 
 import utils
 
 __author__ = "Kataiser"
-__copyright__ = "Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors"
+__copyright__ = "Copyright (C) 2018-2021 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors"
 __license__ = "GPL-3.0"
 __email__ = "Mecharon1.gm@gmail.com"
 
 
-def launch():
+def main():
     try:
-        init()  # colorama
+        import settings
+        enable_sentry: bool = settings.get('sentry_level') != 'Never'
+    except Exception:
+        enable_sentry = True  # will almost certainly crash later anyway if this happens
 
-        allowed_modules = ('init', 'main', 'settings_gui')
-        parser = argparse.ArgumentParser()
-        parser.add_argument('--m', default='main', help=f"The module to launch {allowed_modules}")
-        parser.add_argument('--welcome_version', default='0', help="Which version of the welcome message to use (0 or 1)")
-        args = parser.parse_args()
+    try:
+        if enable_sentry:
+            # set up Sentry (https://sentry.io/)
+            sentry_sdk.init(dsn=utils.get_api_key('sentry'),
+                            release=VERSION,
+                            attach_stacktrace=True,
+                            max_breadcrumbs=50,
+                            debug=DEBUG,
+                            environment="Debug build" if DEBUG else "Release",
+                            request_bodies='small')
 
-        if args.m not in allowed_modules:
-            raise SystemError(f"--m must be in {allowed_modules}")
+            with sentry_sdk.configure_scope() as scope:
+                user_pc_name: str = socket.gethostname()
+                try:
+                    user_identifier: str = getpass.getuser()
+                except ModuleNotFoundError:
+                    user_identifier = user_pc_name
 
-        old_dir = os.getcwd()
-        if os.path.isdir('resources'):
-            os.chdir('resources')
-        loaded_module = importlib.import_module(args.m)
-        os.chdir(old_dir)
+                scope.user = {'username': f'{user_pc_name}_{user_identifier}'}
 
-        if args.m == 'init':
-            loaded_module.launch(args.welcome_version)
-        else:
-            loaded_module.launch()
-    except (KeyboardInterrupt, SystemExit):
-        raise SystemExit
+        import main
+        main.launch()
+    except SystemExit:
+        raise
     except Exception:
         handle_crash()
 
 
 # displays and reports current traceback
 def handle_crash():
-    print(Fore.LIGHTRED_EX, end='')
     formatted_exception = traceback.format_exc()
 
     try:
@@ -82,22 +84,17 @@ def handle_crash():
             sentry_sdk.capture_exception()
     except Exception:
         # Sentry has failed us :(
-        print(f"\n{formatted_exception}{Style.RESET_ALL}{Style.BRIGHT}")
-        print(f"TF2 Rich Presence {VERSION} has crashed, and the error can't be reported to the developer."
-              f"\n{Style.RESET_ALL}(Consider opening an issue at https://github.com/Kataiser/tf2-rich-presence/issues){out_of_date_warning()}"
-              f"\n{Style.BRIGHT}Restarting in 5 seconds...\n")
+        messagebox.showerror("TF2 Rich Presence",
+                             f"\n{formatted_exception}"
+                             f"\nTF2 Rich Presence {VERSION} has crashed, and the error can't be reported to the developer."
+                             f"\n(Consider opening an issue at https://github.com/Kataiser/tf2-rich-presence/issues){out_of_date_warning()}")
     else:
-        print(f"\n{formatted_exception}{Style.RESET_ALL}{Style.BRIGHT}")
-        print(f"TF2 Rich Presence {VERSION} has crashed, and the error has been reported to the developer."
-              f"\n{Style.RESET_ALL}(Consider opening an issue at https://github.com/Kataiser/tf2-rich-presence/issues){out_of_date_warning()}"
-              f"\n{Style.BRIGHT}Restarting in 5 seconds...\n")
+        messagebox.showerror("TF2 Rich Presence",
+                             f"\n{formatted_exception}"
+                             f"\nTF2 Rich Presence {VERSION} has crashed, and the error has been reported to the developer."
+                             f"\n(Consider opening an issue at https://github.com/Kataiser/tf2-rich-presence/issues){out_of_date_warning()}")
 
-    try:
-        time.sleep(5)
-    except KeyboardInterrupt:
-        pass
-
-    # should restart via the bat/exe now
+    # program closes now
 
 
 # don't report the same exception twice
@@ -118,12 +115,14 @@ def exc_already_reported(tb: str) -> bool:
 
 # if a crash happens, tell the user that an update is available
 def out_of_date_warning() -> str:
-    update_info: dict = utils.access_db()['available_version']
+    try:
+        available_version: str = utils.access_db()['available_version']
 
-    if update_info['exists']:
-        return f"\n{Style.RESET_ALL}BTW an newer version for TF2 Rich Presence is available ({update_info['tag']}), which may have fixed this crash." \
-               f"\nGet the update with the download button in settings."
-    else:
+        if available_version:
+            return f"\nBTW an newer version for TF2 Rich Presence is available ({available_version}), which may have fixed this crash."
+        else:
+            return ""
+    except Exception:
         return ""
 
 
@@ -131,29 +130,4 @@ DEBUG = True
 VERSION = '{tf2rpvnum}'
 
 if __name__ == '__main__':
-    try:
-        import settings
-        enable_sentry: bool = settings.get('log_level') != 'never'
-    except Exception:
-        enable_sentry = True  # will probably crash later anyway if this happens
-
-    if enable_sentry:
-        # set up Sentry (https://sentry.io/)
-        sentry_sdk.init(dsn=utils.get_api_key('sentry'),
-                        release=VERSION,
-                        attach_stacktrace=True,
-                        max_breadcrumbs=50,
-                        debug=DEBUG,
-                        environment="Debug build" if DEBUG else "Release",
-                        request_bodies='small')
-
-        with sentry_sdk.configure_scope() as scope:
-            user_pc_name: str = socket.gethostname()
-            try:
-                user_identifier: str = getpass.getuser()
-            except ModuleNotFoundError:
-                user_identifier = user_pc_name
-
-            scope.user = {'username': f'{user_pc_name}_{user_identifier}'}
-
-    launch()
+    main()

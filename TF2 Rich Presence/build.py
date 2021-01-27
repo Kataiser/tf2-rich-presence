@@ -1,4 +1,4 @@
-# Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
+# Copyright (C) 2018-2021 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 
 import argparse
@@ -22,7 +22,7 @@ import cython_compile
 
 
 # TODO: don't do this separate locations nonsense, convert to using a repo properly
-def main(version_num='v1.15'):
+def main(version_num='v2.0'):
     parser = argparse.ArgumentParser()
     parser.add_argument('--n', action='store_true', help="Skip copying to an repo location", default=False)
     parser.add_argument('--ide', action='store_true', help="Use IDE-based build.log handling", default=False)
@@ -66,10 +66,12 @@ def main(version_num='v1.15'):
     # copies stuff to the Github repo
     if github_repo_path != 'n':
         print("Copied", shutil.copy('main.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('gui.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('launcher.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('build.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('cython_compile.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('tests.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('game_state.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('console_log.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('logger.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('configs.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
@@ -79,14 +81,14 @@ def main(version_num='v1.15'):
         print("Copied", shutil.copy('settings.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('settings_gui.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('localization.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
-        print("Copied", shutil.copy('welcomer.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
-        print("Copied", shutil.copy('detect_system_language.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
-        print("Copied", shutil.copy('init.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('custom.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('utils.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('server.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('generate_map_pics.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('map list generator.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
-        print("Copied", shutil.copy('thumb formatter.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('format_gamemode_images.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('generate_deleted_pycs.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('webp_converter.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('changelog_generator.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('Changelogs_source.html', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('maps.json', Path(f'{github_repo_path}/TF2 Rich Presence')))
@@ -100,19 +102,17 @@ def main(version_num='v1.15'):
         print("Copied", shutil.copy('Tf2-logo.png', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('unknown_map.png', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('Readme.txt', Path(f'{github_repo_path}/TF2 Rich Presence')))
-        print("Copied", shutil.copy('requirements.txt', github_repo_path))
         print("Copied", shutil.copy('tf2_logo_blurple.ico', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('tf2_logo_blurple_wrench.ico', Path(f'{github_repo_path}/TF2 Rich Presence')))
-        print("Copied", shutil.copy('font_instructions.gif', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('Launch TF2 with Rich Presence.bat', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('Launch Rich Presence alongside TF2.bat', Path(f'{github_repo_path}/TF2 Rich Presence')))
-        print("Copied", shutil.copy('Change settings.bat', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('README-source.MD', github_repo_path))
         print("Copied", shutil.copy('requirements.txt', github_repo_path))
         print("Copied", shutil.copy('pycs_to_delete.txt', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy(f'{interpreter_name}.zip', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copyfile(Path(f'{github_repo_path}/TF2 Rich Presence/DB_default.json'), Path(f'{github_repo_path}/TF2 Rich Presence/DB.json')))
 
+        copy_dir_to_git('gui_images', Path(f'{github_repo_path}/TF2 Rich Presence/gui_images'))
         copy_dir_to_git('test_resources', Path(f'{github_repo_path}/TF2 Rich Presence/test_resources'))
         copy_dir_to_git('build_tools', Path(f'{github_repo_path}/TF2 Rich Presence/build_tools'))
 
@@ -181,12 +181,12 @@ def main(version_num='v1.15'):
     time.sleep(0.25)  # because windows is slow sometimes
     os.mkdir(new_build_folder_name)
     os.mkdir(Path(f'{new_build_folder_name}/resources'))
+    os.mkdir(Path(f'{new_build_folder_name}/resources/gui_images'))
     os.mkdir(Path(f'{new_build_folder_name}/logs'))
     print(f"Created new build folder: {new_build_folder_name}")
 
     missing_files = []
     files_to_copy = [('launcher.py', Path(f'{new_build_folder_name}/resources/')),
-                     ('init.py', Path(f'{new_build_folder_name}/resources/')),
                      ('custom.py', Path(f'{new_build_folder_name}/resources/')),
                      ('maps.json', Path(f'{new_build_folder_name}/resources/')),
                      ('localization.json', Path(f'{new_build_folder_name}/resources/')),
@@ -195,10 +195,8 @@ def main(version_num='v1.15'):
                      ('Readme.txt', Path(f'{new_build_folder_name}/')),
                      ('Launch TF2 with Rich Presence.bat', Path(f'{new_build_folder_name}/')),
                      ('Launch Rich Presence alongside TF2.bat', Path(f'{new_build_folder_name}/')),
-                     ('Change settings.bat', Path(f'{new_build_folder_name}/')),
                      ('tf2_logo_blurple.ico', Path(f'{new_build_folder_name}/resources/')),
                      ('tf2_logo_blurple_wrench.ico', Path(f'{new_build_folder_name}/resources/')),
-                     ('font_instructions.gif', Path(f'{new_build_folder_name}/resources/')),
                      ('Changelogs.html', Path(f'{new_build_folder_name}/'))]
 
     # copies files, adding any version numbers
@@ -231,6 +229,14 @@ def main(version_num='v1.15'):
     os.rename(Path(f'{new_build_folder_name}/resources/DB_default.json'), Path(f'{new_build_folder_name}/resources/DB.json'))
     os.rename(Path(f'{new_build_folder_name}/LICENSE'), Path(f'{new_build_folder_name}/License.txt'))
 
+    # copy in GUI images
+    print(f"Copying GUI images: ", end='')
+    gui_images_target = Path(f'{new_build_folder_name}/resources/gui_images/')
+    if sys.platform == 'win32':
+        subprocess.run(f'xcopy \"gui_images\" \"{gui_images_target}\" /E /Q')
+    else:
+        raise SyntaxError("Whatever the Linux/MacOS equivalent of xcopy is")
+
     # build PYDs using Cython and copy them in
     compile_command = f'{sys.executable} cython_compile.py build_ext --inplace'
     if ide_build_log_handling:
@@ -259,7 +265,7 @@ def main(version_num='v1.15'):
     git_username = subprocess.run('git config user.name', capture_output=True).stdout.decode('UTF8')[:-1]
     build_info_path = Path(f'{new_build_folder_name}/resources/build_info.txt')
     with open('requirements.txt', 'r') as requirements_file:
-        requirements_versions = ', '.join([r.rstrip('\n') for r in requirements_file.readlines()])
+        requirements_versions = ', '.join([r.replace('==', ' ').rstrip('\n') for r in requirements_file.readlines()])
     with open(build_info_path, 'w') as build_info_txt:
         build_info_txt.write(f"TF2 Rich Presence by Kataiser"
                              "\nhttps://github.com/Kataiser/tf2-rich-presence"
@@ -295,10 +301,10 @@ def main(version_num='v1.15'):
     os.mkdir(new_packages_dir)
     venv_packages_dir = site.getsitepackages()[1]
     assert 'site-packages' in venv_packages_dir.lower()
-    needed_packages = ['a2s', 'certifi', 'chardet', 'colorama', 'discoIPC', 'idna', 'psutil', 'python-a2s', 'requests', 'sentry_sdk', 'urllib3', 'vdf']
+    needed_packages = ['PIL', 'Pillow', 'a2s', 'certifi', 'chardet', 'idna', 'psutil', 'python-a2s', 'requests', 'sentry_sdk', 'urllib3', 'vdf', 'discoIPC']
     for site_package in os.listdir(venv_packages_dir):
         for needed_package in needed_packages:
-            if needed_package in site_package:
+            if needed_package in site_package and 'requests_cache' not in site_package:
                 site_package_path = Path(f'{venv_packages_dir}/{site_package}')
                 new_package_dir = Path(f'{new_packages_dir}/{site_package}')
                 shutil.copytree(site_package_path, new_package_dir)
@@ -326,7 +332,6 @@ def main(version_num='v1.15'):
     # build the launchers
     convert_bat_to_exe(os.path.abspath(Path(f'{new_build_folder_name}/Launch TF2 with Rich Presence.bat')), version_num, 'tf2_logo_blurple.ico')
     convert_bat_to_exe(os.path.abspath(Path(f'{new_build_folder_name}/Launch Rich Presence alongside TF2.bat')), version_num, 'tf2_logo_blurple.ico')
-    convert_bat_to_exe(os.path.abspath(Path(f'{new_build_folder_name}/Change settings.bat')), version_num, 'tf2_logo_blurple_wrench.ico')
 
     # ensure everything exists that needs to
     assert os.listdir(Path(f'{new_build_folder_name}/logs')) == []
@@ -337,7 +342,6 @@ def main(version_num='v1.15'):
     assert os.path.isfile(Path(f'{new_build_folder_name}/License.txt'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/Readme.txt'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/resources/{interpreter_name}/python.exe'))
-    assert os.path.isfile(Path(f'{new_build_folder_name}/resources/font_instructions.gif'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/resources/tf2_logo_blurple.ico'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/resources/tf2_logo_blurple_wrench.ico'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/resources/custom.py'))
@@ -441,11 +445,11 @@ def main(version_num='v1.15'):
         last_build_time = round(time.time() - last_build_time)
 
         if last_build_time > 86400:
-            last_build_time_text = f"{round(last_build_time / 86400, 1)} days"
+            last_build_time_text = f"{round(last_build_time / 86400)} days"
         elif last_build_time > 3600:
-            last_build_time_text = f"{round(last_build_time / 3600, 1)} hours"
+            last_build_time_text = f"{round(last_build_time / 3600)} hours"
         elif last_build_time > 60:
-            last_build_time_text = f"{round(last_build_time / 60, 1)} minutes"
+            last_build_time_text = f"{round(last_build_time / 60)} minutes"
         else:
             last_build_time_text = f"{last_build_time} seconds"
 

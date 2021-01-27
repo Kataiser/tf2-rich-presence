@@ -1,4 +1,4 @@
-# Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
+# Copyright (C) 2018-2021 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 
 import gc
@@ -14,8 +14,8 @@ import requests
 from discoIPC import ipc
 
 import configs
+import game_state
 import gamemodes
-import init
 import localization
 import logger
 import main
@@ -40,7 +40,7 @@ class TestTF2RichPresense(unittest.TestCase):
         self.log.sentry_enabled = False
         self.log.log_levels_allowed = self.log.log_levels
 
-        gc.enable()  # because init, main, or settings may have disabled it
+        gc.enable()  # because main may have disabled it
 
     def tearDown(self):
         os.chdir(self.dir)
@@ -58,19 +58,21 @@ class TestTF2RichPresense(unittest.TestCase):
         recent_time = int(time.time()) - 10
         app = main.TF2RichPresense(self.log, set_process_priority=False)
 
-        self.assertEqual(app.interpret_console_log('test_resources\\console_in_menus.log', {'not Kataiser'}, float('inf'), True), ('In menus', 'Not queued', ''))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_in_menus.log', {'not Kataiser'}, 4, True), ('In menus', 'Not queued', ''))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_queued_casual.log', {'not Kataiser'}, float('inf'), True), ('In menus', 'Queued for Casual', ''))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', {'not Kataiser'}, float('inf'), True), ('pl_badwater (hosting)', 'Pyro', ''))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', {'not Kataiser'}, float('inf'), True, recent_time), ('In menus', 'Not queued', ''))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', {'not Kataiser'}, 0.2, True), ('In menus', 'Not queued', ''))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_custom_map.log', {'not Kataiser'}, float('inf'), True), ('cp_catwalk_a5c (hosting)', 'Soldier', ''))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_soundemitter.log', {'not Kataiser'}, float('inf'), True), ('In menus', 'Not queued', ''))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_queued_in_game.log', {'not Kataiser'}, float('inf'), True), ('itemtest (hosting)', 'Queued for Casual', ''))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_canceled_load.log', {'not Kataiser'}, float('inf'), True), ('In menus', 'Not queued', ''))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_chat.log', {'not Kataiser'}, float('inf'), True), ('itemtest (hosting)', 'Scout', ''))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_empty.log', {'not Kataiser'}, float('inf'), True), ('In menus', 'Not queued', ''))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_valve_server.log', {'not Kataiser'}, float('inf'), True), ('pl_snowycoast', 'Pyro', '162.254.194.158:27048'))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_in_menus.log', {'not Kataiser'}, float('inf'), True), (True, '', '', '', '', False))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_in_menus.log', {'not Kataiser'}, 4, True), (True, '', '', '', '', False))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_queued_casual.log', {'not Kataiser'}, float('inf'), True), (True, '', '', '', 'Queued for Casual', False))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', {'not Kataiser'}, float('inf'), True), (False, 'pl_badwater', 'Pyro', '', '', True))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', {'not Kataiser'}, float('inf'), True, recent_time), (True, '', '', '', '', False))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', {'not Kataiser'}, 0.2, True), (True, '', '', '', '', False))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_custom_map.log', {'not Kataiser'}, float('inf'), True), (False, 'cp_catwalk_a5c', 'Soldier', '', '', True))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_soundemitter.log', {'not Kataiser'}, float('inf'), True), (True, '', '', '', '', False))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_queued_in_game.log', {'not Kataiser'}, float('inf'), True),
+                         (False, 'itemtest', 'Heavy', '', 'Queued for Casual', True))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_canceled_load.log', {'not Kataiser'}, float('inf'), True), (True, '', '', '', '', False))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_chat.log', {'not Kataiser'}, float('inf'), True), (False, 'itemtest', 'Scout', '', '', True))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_empty.log', {'not Kataiser'}, float('inf'), True), (True, '', '', '', '', False))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_valve_server.log', {'not Kataiser'}, float('inf'), True),
+                         (False, 'pl_snowycoast', 'Pyro', '162.254.194.158:27048', '', False))
 
         # tests trimming
         trimtest_small = 'test_resources\\console_badwater.log'
@@ -79,7 +81,7 @@ class TestTF2RichPresense(unittest.TestCase):
         with open(trimtest_big, 'rb+') as console_badwater_sacrifice:
             console_badwater_sacrifice.write(console_badwater_sacrifice.read())  # this just doubles the file size
         initial_size = os.stat(trimtest_big).st_size
-        self.assertEqual(app.interpret_console_log(trimtest_big, {'not Kataiser'}), ('pl_badwater (hosting)', 'Pyro', ''))
+        self.assertEqual(app.interpret_console_log(trimtest_big, {'not Kataiser'}), (False, 'pl_badwater', 'Pyro', '', '', True))
         trimmed_size = os.stat(trimtest_big).st_size
         self.assertLess(trimmed_size, initial_size)
         self.assertEqual(trimmed_size, (1024 ** 2) * 2)
@@ -97,7 +99,7 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertLess(cleaned_size, initial_size)
         with open(errorstest_small, 'r', encoding='UTF8') as errorstest_small_cleaned:
             self.assertFalse('DataTable warning' in errorstest_small_cleaned.read())
-        self.assertEqual(app.interpret_console_log(errorstest_small, {'not Kataiser'}, float('inf')), ('In menus', 'Not queued', ''))
+        self.assertEqual(app.interpret_console_log(errorstest_small, {'not Kataiser'}, float('inf')), (True, '', '', '', '', False))
         os.remove(errorstest_small)
 
     def test_steam_config_file(self):
@@ -105,19 +107,19 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual(configs.steam_config_file(app, 'test_resources\\'), {'Kataiser'})
 
     def test_get_match_info(self):
-        app = main.TF2RichPresense(self.log, set_process_priority=False)
+        test_game_state = game_state.GameState(self.log, localization.Localizer(self.log, 'English'))
         test_addresses = ('162.254.194.158:27048',  # valve
                           'us2.uncledane.com:27015',
                           '51.81.49.25:27015',  # creators.tf
                           '192.223.26.238:27015')  # lazypurple
 
         for test_address in test_addresses:
-            player_count = app.get_match_data(test_address, 'Player count')
-            self.assertTrue(player_count.startswith("Players: "))
-            self.assertIn(player_count.split('/')[1], ('24', '30', '32'))
-            self.assertEqual(app.get_match_data(test_address, 'Kills', force=True), "Kills: 0")
+            server_data = test_game_state.get_match_data(test_address, ['Player count', 'Kills'])
+            self.assertTrue(server_data['player_count'].startswith("Players: "))
+            self.assertIn(server_data['player_count'].split('/')[1], ('24', '30', '32'))
+            self.assertEqual(server_data['kills'], "Kills: 0")
 
-        self.assertEqual(app.get_match_data('', 'Player count', force=True), "Players: ?/?")
+        self.assertEqual(test_game_state.get_match_data('', 'Player count', force=True), {'player_count': 'Players: ?/?'})
 
     def test_get_map_gamemode(self):
         self.assertEqual(gamemodes.get_map_gamemode(self.log, 'cp_dustbowl'), ['Dustbowl', 'attack-defend', 'Attack/Defend'])
@@ -125,7 +127,7 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual(gamemodes.get_map_gamemode(self.log, 'cp_catwalk_a5c'), ('cp_catwalk_a5c', 'control-point', 'Control Point'))
         self.assertEqual(gamemodes.get_map_gamemode(self.log, 'cp_orange_x3'), ('cp_orange_x3', 'cp-orange', 'Orange'))
         self.assertEqual(gamemodes.get_map_gamemode(self.log, 'surf_air_arena_v4'), ('surf_air_arena_v4', 'surfing', 'Surfing'))
-        self.assertEqual(gamemodes.get_map_gamemode(self.log, 'ytsb8eitybw'), ('ytsb8eitybw', 'unknown_map', 'Unknown gamemode'))
+        self.assertEqual(gamemodes.get_map_gamemode(self.log, 'ytsb8eitybw'), ('ytsb8eitybw', 'unknown', 'Unknown gamemode'))
 
     def test_logger(self):
         self.log.log_file.close()
@@ -306,16 +308,12 @@ class TestTF2RichPresense(unittest.TestCase):
 
         self.assertFalse(process_scanner.hl2_exe_is_tf2(os.getpid()))
 
-    def test_settings_gui(self, skip=True):
-        if skip:
-            self.skipTest("Run by test_missing_files instead (try setting skip's default to False to see why)")
-
+    def test_settings_gui(self):
         root = tk.Tk()
         settings_gui_test = settings_gui.GUI(root, self.log)
         settings_gui_test.wait_time.set(3)
         settings_gui_test.setting_changed()
         working_settings = settings_gui_test.get_working_settings()
-        settings_gui_test.show_font_message('한국어')
         settings_gui_test.update()
         dimensions = settings_gui_test.window_dimensions
         settings_gui_test.language.set('日本語')
@@ -376,41 +374,30 @@ class TestTF2RichPresense(unittest.TestCase):
         log = logger.Log()
         app = main.TF2RichPresense(log)
         self.assertEqual(repr(app), 'main.TF2RichPresense (state=init)')
-        self.assertEqual(fix_activity_dict(app.activity),
-                         {'details': 'In menus', 'timestamps': {'start': 0}, 'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2',
-                                                                                        'large_image': 'main_menu', 'large_text': 'Main menu'}, 'state': ''})
+        self.assertEqual(fix_activity_dict(app.game_state.activity()),
+                         {'details': 'In menus',
+                          'state': 'Not queued',
+                          'timestamps': {'start': 0},
+                          'assets': {'large_image': 'main_menu',
+                                     'large_text': 'In menus - TF2 Rich Presence {tf2rpvnum}',
+                                     'small_image': 'tf2_logo',
+                                     'small_text': 'Team Fortress 2'}})
         app.loop_body()
         self.assertEqual(repr(app), 'main.TF2RichPresense (state=no tf2)')
-        self.assertEqual(fix_activity_dict(app.activity),
-                         {'details': 'In menus', 'timestamps': {'start': 0}, 'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2',
-                                                                                        'large_image': 'main_menu', 'large_text': 'Main menu'}, 'state': ''})
+        self.assertEqual(fix_activity_dict(app.game_state.activity()),
+                         {'details': 'In menus',
+                          'state': 'Not queued',
+                          'timestamps': {'start': 0},
+                          'assets': {'large_image': 'main_menu',
+                                     'large_text': 'In menus - TF2 Rich Presence {tf2rpvnum}',
+                                     'small_image': 'tf2_logo',
+                                     'small_text': 'Team Fortress 2'}})
 
         self_process = psutil.Process()
         self.assertEqual(self_process.nice(), psutil.BELOW_NORMAL_PRIORITY_CLASS)
         self.assertEqual(self_process.ionice(), psutil.IOPRIO_LOW)
         self_process.nice(psutil.NORMAL_PRIORITY_CLASS)
         self_process.ionice(psutil.IOPRIO_NORMAL)
-
-    def test_init(self):
-        try:
-            init.launch(0)
-        except updater.RateLimitError as error:
-            self.skipTest(error)
-
-    def test_missing_files(self):
-        files_to_hide = ['tf2_logo_blurple.ico', 'tf2_logo_blurple_wrench.ico', 'DB.json', 'localization.json', 'maps.json', 'custom.py']
-
-        for file in files_to_hide:
-            os.rename(file, f'.{file}')
-
-        self.test_main_simple()
-        self.test_settings_gui(skip=False)
-
-        for file in files_to_hide:
-            if os.path.isfile(file):
-                os.remove(file)
-
-            os.rename(f'.{file}', file)
 
 
 def fix_activity_dict(activity):

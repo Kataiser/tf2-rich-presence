@@ -1,13 +1,11 @@
-# Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
+# Copyright (C) 2018-2021 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 # cython: language_level=3
 
 import os
-from typing import List, Set, Union
+from typing import List, Optional, Set, Tuple, Union
 
 import vdf
-
-import console_log
 
 
 # allows the console to output 'class selected' on class choose
@@ -53,7 +51,7 @@ def class_config_files(log, exe_location: str):
 
 
 # reads steam's launch options save file to find usernames with -condebug
-def steam_config_file(self, exe_location: str, tf2_is_running: bool = False) -> Set[str]:
+def steam_config_file(self, exe_location: str) -> Optional[Set[str]]:
     self.log.debug("Scanning Steam config files for -condebug")
     found_condebug: bool = False
     found_usernames: Set[str] = set()
@@ -108,26 +106,26 @@ def steam_config_file(self, exe_location: str, tf2_is_running: bool = False) -> 
 
     if not found_condebug:
         self.log.error("-condebug not found, telling user", reportable=False)
-        del self.log
         # yell at the user to fix their settings
-        console_log.no_condebug_warning(self.loc, tf2_is_running)
+        self.no_condebug = False
+        return None
     else:
         return found_usernames
 
 
 # adapted from https://www.popmartian.com/tipsntricks/2014/11/20/how-to-lower-case-all-dictionary-keys-in-a-complex-python-dictionary/
 def lowercase_keys(mixed_case: Union[dict, list]) -> Union[dict, list]:
-    allowed_keys: tuple = ('userlocalconfigstore', 'friends', 'personaname', 'userlocalconfigstore', 'software', 'valve', 'steam', 'apps', '440', 'launchoptions')
+    allowed_keys: Tuple[str, ...] = ('userlocalconfigstore', 'friends', 'personaname', 'userlocalconfigstore', 'software', 'valve', 'steam', 'apps', '440', 'launchoptions')
     key: str
 
     for key in list(mixed_case):
         key_lower: str = key.lower()
 
         if key_lower in allowed_keys:
-            mixed_case[key_lower]: Union[dict, list] = mixed_case.pop(key)
+            mixed_case[key_lower] = mixed_case.pop(key)
 
             if isinstance(mixed_case[key_lower], dict) or isinstance(mixed_case[key_lower], list):
-                mixed_case[key_lower]: Union[dict, list] = lowercase_keys(mixed_case[key_lower])
+                mixed_case[key_lower] = lowercase_keys(mixed_case[key_lower])
         else:
             del mixed_case[key]
 

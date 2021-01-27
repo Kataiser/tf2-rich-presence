@@ -1,4 +1,4 @@
-# Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
+# Copyright (C) 2018-2021 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 
 import json
@@ -15,8 +15,7 @@ def main():
     gamemodes_reversed['Control Point (Domination)'] = 'control-point'
     gamemodes_reversed['No gamemode'] = 'beta-map'
     gamemode_replacements = [('d(M', 'd (M'), ('t(D', 't (D'), (' Mode', ''), ('Developer aidTest', 'No gamemode'), ('Developer aidControl Point', 'Control Point')]
-    map_gamemodes = {'background01': ('Background01', 'beta-map', 'No gamemode'),
-                     'devtest': ('Devtest', 'beta-map', 'No gamemode')}
+    map_gamemodes = {}
 
     r = requests.get('https://wiki.teamfortress.com/wiki/List_of_maps')
     soup = BeautifulSoup(r.text, 'lxml')
@@ -26,6 +25,9 @@ def main():
             map_file = tr.find('code').text
             map_name = tr.find('b').text
         except AttributeError:
+            continue
+
+        if map_file == 'itemtest':
             continue
 
         gamemode_fancy = tr.find_all('td')[2].text.strip()

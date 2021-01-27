@@ -5,7 +5,7 @@
 # TF2 Rich Presence
 # https://github.com/Kataiser/tf2-rich-presence
 #
-# Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
+# Copyright (C) 2018-2021 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 #
 # This program is free software: you can redistribute it and/or modify
@@ -21,33 +21,30 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import copy
-import ctypes
 import datetime
 import gc
 import os
 import platform
 import time
 import traceback
-from typing import Any, Dict, Set, Tuple, Union
+from typing import Any, Dict, Optional, Set, Tuple, Union
 
 import psutil
-from colorama import Style
 from discoIPC import ipc
 
 import configs
 import console_log
-import gamemodes
+import game_state
+import gui
 import launcher
 import localization
 import logger
 import processes
-import server
 import settings
 import utils
 
 __author__ = "Kataiser"
-__copyright__ = "Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors"
+__copyright__ = "Copyright (C) 2018-2021 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors"
 __license__ = "GPL-3.0"
 __email__ = "Mecharon1.gm@gmail.com"
 
@@ -62,8 +59,8 @@ def launch():
 
         app: TF2RichPresense = TF2RichPresense(log_main)
         app.run()
-    except (KeyboardInterrupt, SystemExit):
-        raise SystemExit
+    except SystemExit:
+        raise
     except Exception:
         try:
             gc.enable()
@@ -75,40 +72,38 @@ def launch():
 
 
 class TF2RichPresense:
-    def __init__(self, log: Union[logger.Log, None] = None, set_process_priority: bool = True):
+    def __init__(self, log: Optional[logger.Log] = None, set_process_priority: bool = True):
         if log:
             self.log: logger.Log = log
         else:
-            self.log: logger.Log = logger.Log()
+            self.log = logger.Log()
             self.log.error(f"Initialized main.TF2RichPresense without a log, defaulting to one at {self.log.filename}")
 
-        # this is what gets modified and sent to Discord via discoIPC
-        self.activity: Dict[str, Union[str, Dict[str, int], Dict[str, str]]] = \
-            {'details': 'In menus',
-             'timestamps': {'start': int(time.time())},
-             'assets': {'small_image': 'tf2_icon_small', 'small_text': 'Team Fortress 2', 'large_image': 'main_menu', 'large_text': 'Main menu'},
-             'state': ''}
-        # TODO: make activity a flat class instead that can be converted to a dict in the above format
-        self.old_activity1: Dict[str, Union[str, Dict[str, int], Dict[str, str]]] = {}  # for the console output
-        self.old_activity2: Dict[str, Union[str, Dict[str, int], Dict[str, str]]] = {}  # for sending to Discord
-        self.activity_translated: Dict[str, Union[str, Dict[str, int], Dict[str, str]]] = {}
+        settings.fix_settings(self.log)
+        default_settings: dict = settings.defaults()
+        current_settings: dict = settings.access_registry()
+
+        if current_settings == default_settings:
+            self.log.debug("Current settings are default")
+        else:
+            self.log.debug(f"Non-default settings: {settings.compare_settings(default_settings, current_settings)}")
+
+        self.gui: gui.GUI = gui.GUI(self.log)
+        self.process_scanner: processes.ProcessScanner = processes.ProcessScanner(self.log)
+        self.loc: localization.Localizer = localization.Localizer(self.log, settings.get('language'))
+        self.game_state = game_state.GameState(self.log, self.loc)
+        self.rpc_client: Optional[ipc.DiscordIPC] = None
         self.client_connected: bool = False
-        self.rpc_client: Union[ipc.DiscordIPC, None] = None
+        self.rpc_connected: bool = False
         self.test_state: str = 'init'
+        self.activity: dict = {}
         self.should_mention_discord: bool = True
         self.should_mention_tf2: bool = True
         self.should_mention_steam: bool = True
-        self.last_notify_time: Union[float, None] = None
         self.has_checked_class_configs: bool = False
-        self.process_scanner: processes.ProcessScanner = processes.ProcessScanner(self.log)
-        self.loc: localization.Localizer = localization.Localizer(self.log, settings.get('language'))
-        self.current_time_formatted: str = ""
-        self.current_map: Union[str, None] = None  # don't trust this variable
-        self.time_changed_map: float = time.time()
         self.has_seen_kataiser: bool = False
-        self.console_log_mtime: Union[int, None] = None
-        self.old_console_log_mtime: Union[int, None] = None
-        self.old_console_log_interpretation: tuple = ('', '', '')
+        self.console_log_mtime: Optional[int] = None
+        self.old_console_log_mtime: Optional[int] = None
         self.loop_iteration: int = 0
         self.custom_functions = None
         self.valid_usernames: Set[str] = set()
@@ -118,9 +113,9 @@ class TF2RichPresense:
         self.slow_sleep_time: bool = False
         self.has_set_process_priority: bool = not set_process_priority
         self.kataiser_scan_loop: int = 0
-        self.last_server_request_time: float = 0.0
-        self.last_server_request_data: str = ''
-        self.last_server_request_address: str = ''
+        self.did_init_operations: bool = False
+        self.no_condebug: bool = False
+        self.fast_next_loop: bool = False
 
         try:
             self.log.cleanup(20 if launcher.DEBUG else 10)
@@ -143,15 +138,6 @@ class TF2RichPresense:
 
         if not os.path.supports_unicode_filenames:
             self.log.error("Looks like the OS doesn't support unicode filenames. This might cause problems")
-
-        settings.fix_settings(self.log)  # this should've been already dealt with by init, but sometimes that seems to just not work
-        default_settings: dict = settings.defaults()
-        current_settings: dict = settings.access_registry()
-
-        if current_settings == default_settings:
-            self.log.debug("Current settings are default")
-        else:
-            self.log.debug(f"Non-default settings: {settings.compare_settings(default_settings, current_settings)}")
 
         self.import_custom()
 
@@ -178,28 +164,32 @@ class TF2RichPresense:
 
             # rich presence only updates every 15 seconds, but it listens constantly so sending every 2 or 5 seconds (by default) is probably fine
             sleep_time: int = settings.get('wait_time_slow') if self.slow_sleep_time else settings.get('wait_time')
+            sleep_time_started: float = time.perf_counter()
             self.log.debug(f"Sleeping for {sleep_time} seconds (slow = {self.slow_sleep_time})")
-            time.sleep(sleep_time)
 
-    # the main logic. runs every 2 seconds (by default)
+            while time.perf_counter() - sleep_time_started < sleep_time and self.gui.alive and not self.fast_next_loop:
+                time.sleep(1 / 30)  # 30 Hz updates (btw tell me if this is stupid)
+                self.gui.safe_update()
+
+    # the main logic. runs every 2 or 5 seconds (by default)
     def loop_body(self):
+        # because closing the GUI doesn't actually exit the program
+        if not self.gui.alive:
+            del self.log
+            raise SystemExit
+
         self.slow_sleep_time = False
         self.loop_iteration += 1
         self.log.debug(f"Main loop iteration this app session: {self.loop_iteration}")
-
-        constant_dynamic_activity: bool = settings.get('second_line') != 'Class' and self.test_state == 'in game'  # test state can become out of date later this loop but it's right atm
-        self.old_activity1 = copy.deepcopy(self.activity)
-        self.old_activity2 = copy.deepcopy(self.activity)
-        if constant_dynamic_activity and '?' not in self.old_activity1['state']:
-            self.old_activity1['state'] = ''
+        self.no_condebug = False  # this will be updated by either console_log.py or configs.py if need be
+        self.fast_next_loop = False
 
         if self.custom_functions:
             self.custom_functions.before_loop(self)
 
-        # this as a one-liner is beautiful :)
         p_data: Dict[str, Dict[str, Union[bool, str, int, None]]] = self.process_scanner.scan()
 
-        # reads steam config files to find usernames with -condebug (on init, and if any of them have been modified)
+        # reads steam config files to find usernames with -condebug (on first loop, and if any of them have been modified)
         if p_data['Steam']['running']:
             config_scan_needed: bool = self.steam_config_mtimes == {}
 
@@ -212,14 +202,15 @@ class TF2RichPresense:
                     config_scan_needed = True
 
             if config_scan_needed:
-                self.valid_usernames.update(self.steam_config_file(p_data['Steam']['path'], p_data['TF2']['running']))
-                self.log.debug(f"Usernames with -condebug: {self.valid_usernames}")
+                steam_config_results: Optional[Set[str]] = self.steam_config_file(p_data['Steam']['path'])
+
+                if steam_config_results:
+                    self.valid_usernames.update(steam_config_results)
+                    self.log.debug(f"Usernames with -condebug: {self.valid_usernames}")
+                else:
+                    self.no_condebug = True
         elif p_data['Steam']['pid'] is not None or p_data['Steam']['path'] is not None:
             self.log.error(f"Steam isn't running but its process info is {p_data['Steam']}. WTF?")
-
-        # used for display only
-        current_time: str = datetime.datetime.now().strftime('%I:%M:%S %p')
-        self.current_time_formatted = current_time[1:] if current_time.startswith('0') else current_time
 
         if p_data['TF2']['running'] and p_data['Discord']['running'] and p_data['Steam']['running']:
             if not p_data['Steam']['running'] and p_data['TF2']['running']:
@@ -230,166 +221,109 @@ class TF2RichPresense:
                 configs.class_config_files(self.log, p_data['TF2']['path'])
                 self.has_checked_class_configs = True
 
+            self.game_state.game_start_time = p_data['TF2']['time']
+            self.gui.set_clean_console_log_button_state(True)
+
             console_log_path: str = os.path.join(p_data['TF2']['path'], 'tf', 'console.log')
-            top_line: str
-            bottom_line: str
-            # TODO: use a state machine and/or much more consistent var names
-            top_line, bottom_line, server_address = self.interpret_console_log(console_log_path, self.valid_usernames, tf2_start_time=p_data['TF2']['time'])
+            console_log_parsed: Optional[Tuple[bool, str, str, str, str, bool]] = self.interpret_console_log(console_log_path, self.valid_usernames, tf2_start_time=p_data['TF2']['time'])
             self.old_console_log_mtime = self.console_log_mtime
-            self.old_console_log_interpretation = (top_line, bottom_line, server_address)
 
-            actual_current_class: str = bottom_line  # https://www.portal2sounds.com/1130
-            queued_in_game: bool = bottom_line not in console_log.tf2_classes and bottom_line != 'unselected'  # ditto
+            if console_log_parsed:
+                self.game_state.set_bulk(console_log_parsed)
 
-            if 'In menus' in top_line:
-                # in menus displays the main menu
+            time_elapsed_num: str = str(datetime.timedelta(seconds=int(time.time() - p_data['TF2']['time'])))
+            time_elapsed: str = self.loc.text("{0} elapsed").format(time_elapsed_num.removeprefix('0:'))
+            base_window_title: str = self.loc.text("TF2 Rich Presence ({0})").format(launcher.VERSION)
+            window_title_format_menus: str = self.loc.text("{0} - {1} ({2})")
+            window_title_format_main: str = self.loc.text("{0} - {1} on {2}")
+
+            # most of this is GUI handling
+            if self.game_state.in_menus:
+                # in menus mean the main menu
                 self.test_state = 'menus'
-                self.current_map = None
-                self.activity['assets']['small_image'] = 'tf2_icon_small'
-                self.activity['assets']['small_text'] = 'Team Fortress 2'
+                window_title: str = window_title_format_menus.format(base_window_title, "In menus", self.loc.text(self.game_state.queued_state))
 
-                if bottom_line == 'Queued for Casual':
-                    self.activity['assets']['large_image'] = 'casual'
-                    self.activity['assets']['large_text'] = bottom_line
-                elif bottom_line == 'Queued for Competitive':
-                    self.activity['assets']['large_image'] = 'comp'
-                    self.activity['assets']['large_text'] = bottom_line
-                elif 'Queued for MvM' in bottom_line:
-                    self.activity['assets']['large_image'] = 'mvm_queued'
-                    self.activity['assets']['large_text'] = bottom_line
+                self.gui.set_state_3('main_menu', ("In menus", self.game_state.queued_state, time_elapsed))
+                self.gui.clear_fg_image()
+                self.gui.clear_class_image()
+
+                if self.game_state.queued_state == "Queued for Casual":
+                    self.gui.set_fg_image('casual')
+                elif self.game_state.queued_state == "Queued for Competitive":
+                    self.gui.set_fg_image('comp')
+                elif "Queued for MvM" in self.game_state.queued_state:
+                    self.gui.set_fg_image('mvm_queued')
                 else:
-                    self.activity['assets']['large_image'] = 'main_menu'
-                    self.activity['assets']['large_text'] = 'Main menu'
-            else:  # not in menus = in a game
+                    self.gui.set_fg_image('tf2_logo')
+            else:  # not in menus = in a match
                 self.test_state = 'in game'
-                class_pic_type: str = settings.get('class_pic_type').lower()
-                second_line_setting: str = settings.get('second_line')
-                class_line: str = self.loc.text("Class: {0}").format(self.loc.text(bottom_line)) if not queued_in_game else self.loc.text(bottom_line)
+                window_title = window_title_format_main.format(base_window_title, self.game_state.tf2_class, self.game_state.map_fancy)
 
-                if class_pic_type == 'none, use tf2 logo' or bottom_line == 'unselected' or queued_in_game:
-                    self.activity['assets']['small_image'] = 'tf2_icon_small'
-                    self.activity['assets']['small_text'] = 'Team Fortress 2'
+                # get server data, if needed (game_state doesn't handle it itself)
+                server_modes = []
+                if settings.get('top_line') in ('Player count', 'Kills'):
+                    server_modes.append(settings.get('top_line'))
+                if settings.get('bottom_line') in ('Player count', 'Kills'):
+                    server_modes.append(settings.get('bottom_line'))
+                self.game_state.set_server_data(server_modes, self.valid_usernames)
+
+                if self.game_state.gamemode == "Unknown gamemode":
+                    bg_image: str = 'bg_modes/unknown'
                 else:
-                    # btw it's not possible to set the correct class icon while in a game and queued with the current setup
-                    small_class_image = f'{bottom_line.lower()}_{class_pic_type}'
-                    self.log.debug(f"Setting class small image to {small_class_image}")
+                    bg_image = f'bg_modes/{self.game_state.gamemode}'
 
-                    self.activity['assets']['small_image'] = small_class_image
-                    self.activity['assets']['small_text'] = bottom_line
+                self.gui.set_state_4(bg_image, (self.game_state.map_line, self.game_state.get_line('top'), self.game_state.get_line('bottom'), time_elapsed))
+                self.gui.set_class_image(self.game_state.tf2_class)
 
-                if second_line_setting in ('Player count', 'Kills'):
-                    bottom_line = self.get_match_data(server_address, second_line_setting)
-                elif second_line_setting == 'Class':
-                    bottom_line = class_line
-                elif second_line_setting == 'Time on map':
-                    if self.current_map != top_line:  # top_line means the current map here... I should probably refactor that
-                        self.current_map = top_line
-                        self.time_changed_map = time.time()
-
-                    # convert seconds to a pretty timestamp
-                    seconds_on_map: float = time.time() - self.time_changed_map
-                    time_format: str = '%M:%S' if seconds_on_map <= 3600 else '%H:%M:%S'
-                    map_time_formatted: str = time.strftime(time_format, time.gmtime(seconds_on_map))
-
-                    # I know I could just set the start time in activity, but I'd rather that always meant time with the game open
-                    bottom_line = self.loc.text("Time on map: {0}").format(map_time_formatted)
+                if self.game_state.custom_map or self.game_state.tf2_map in game_state.excluded_maps:
+                    if self.game_state.gamemode == 'unknown':
+                        self.gui.set_fg_image('fg_modes/unknown')
+                    else:
+                        self.gui.set_fg_image(f'fg_modes/{self.game_state.gamemode}')
                 else:
-                    self.log.error(f"Second line is invalid ({second_line_setting})")
+                    if self.game_state.tf2_map in game_state.map_fallbacks:
+                        self.gui.set_fg_image(f'fg_maps/{game_state.map_fallbacks[self.game_state.tf2_map]}')
+                    else:
+                        self.gui.set_fg_image(f'fg_maps/{self.game_state.tf2_map}')
 
-                # good code
-                hosting: bool = ' (hosting)' in top_line
-                top_line = top_line.replace(' (hosting)', '')
+            if self.game_state.update_rpc:
+                self.activity = self.game_state.activity()
 
-                map_fancy, current_gamemode, gamemode_fancy = gamemodes.get_map_gamemode(self.log, top_line)
-                map_out: str = map_fancy
-                self.activity['assets']['large_image'] = current_gamemode
-                self.activity['assets']['large_text'] = gamemode_fancy
+                # let this make some last-second adjustments to activity
+                if self.custom_functions:
+                    self.custom_functions.loop_middle(self)
 
-                top_line = self.loc.text("Map: {0}").format(map_out)
-                top_line = f"{top_line}{self.loc.text(' (hosting)')}" if hosting else top_line
-
-            if not top_line:
-                self.log.error("Top line is blank")
-            if not bottom_line:
-                self.log.error("Bottom line is blank")
-
-            self.activity['details'] = top_line
-            self.activity['state'] = bottom_line
-            og_large_text: str = self.activity['assets']['large_text']  # why
-            self.activity['assets']['large_text'] = self.loc.text(self.activity['assets']['large_text'])
-            self.activity['timestamps']['start'] = p_data['TF2']['time']
-
-            if self.custom_functions:
-                self.custom_functions.loop_middle(self)
-
-            activity_comparison: Dict[str, Union[str, Dict[str, int], Dict[str, str]]] = copy.deepcopy(self.activity)
-            if constant_dynamic_activity and '?' not in activity_comparison['state']:
-                activity_comparison['state'] = ''
-
-            if activity_comparison != self.old_activity1:
-                # output to terminal, just for monitoring
-                print(f"{self.current_time_formatted}{utils.generate_delta(self.loc, self.last_notify_time)}{Style.BRIGHT}")
-
-                base_window_title: str = self.loc.text("TF2 Rich Presence ({0})").format(launcher.VERSION)
-                window_title_format_menus: str = self.loc.text("{0} - {1} ({2})")
-                window_title_format_main: str = self.loc.text("{0} - {1} on {2}")
-
-                if [d for d in ('Queued', 'Main menu') if d in og_large_text]:
-                    # if queued or on the main menu, simplify cmd output
-                    print(self.loc.text(self.activity['details']))
-                    print(self.loc.text(self.activity['state']))
-                    window_title = window_title_format_menus.format(base_window_title, self.loc.text(self.activity['details']), self.loc.text(self.activity['state']))
-                else:
-                    print(f"{self.loc.text(self.activity['details'])} ({self.activity['assets']['large_text']})")
-                    print(self.loc.text(self.activity['state']))
-
-                    if settings.get('second_line') != 'Class':
-                        print(class_line)  # this means the current class. god this desperately needs a refactor
-
-                    window_title = window_title_format_main.format(base_window_title, actual_current_class, map_out)
-
-                print(Style.RESET_ALL, end='')
-
-                time_elapsed: str = str(datetime.timedelta(seconds=int(time.time() - p_data['TF2']['time'])))
-                print(self.loc.text("{0} elapsed").format(time_elapsed[2:] if time_elapsed.startswith('0:') else time_elapsed))
-                print()
-
-                self.log.info(f"Activity changed, outputting (old: {self.old_activity1}, new: {self.activity})")
-                self.last_notify_time = time.time()
-
-                ctypes.windll.kernel32.SetConsoleTitleW(window_title)
-                self.log.debug(f"Set window title to \"{window_title}\"")
-            else:
-                self.log.debug("Activity hasn't changed, not outputting")
-
-            if self.activity != self.old_activity2:
-                # send everything to discord
-                large_text_base = self.activity['assets']['large_text']
-                self.activity['assets']['large_text'] += self.loc.text(" - TF2 Rich Presence {0}").format(launcher.VERSION)
                 self.send_rpc_activity()
-                self.activity['assets']['large_text'] = large_text_base
-                # this gets reset because the old activity doesn't have it
             else:
-                self.log.debug("Activity hasn't changed, not sending to Discord")
+                self.log.debug("Not updating RPC state")
 
-            if not self.client_connected:
-                self.log.critical("self.client is disconnected when it shouldn't be")
+                # not a lot of useful stuff this can do here, but it should still get the chance to run
+                if self.custom_functions:
+                    self.custom_functions.loop_middle(self)
+
+            self.gui.master.title(window_title)
+            self.log.debug(f"Set window title to \"{window_title}\"")
 
         elif not p_data['TF2']['running']:
-            self.necessary_program_not_running('Team Fortress 2', self.should_mention_tf2, 'TF2')
+            self.necessary_program_not_running('Team Fortress 2', 'TF2')
             self.should_mention_tf2 = False
         elif not p_data['Discord']['running']:
-            self.necessary_program_not_running('Discord', self.should_mention_discord)
+            self.necessary_program_not_running('Discord')
             self.should_mention_discord = False
         else:
             # last but not least, Steam
-            self.necessary_program_not_running('Steam', self.should_mention_steam)
+            self.necessary_program_not_running('Steam')
             self.should_mention_steam = False
 
-        if not gc.isenabled():
-            gc.enable()
-            gc.collect()
-            self.log.debug("Enabled GC and collected")
+        if self.custom_functions:
+            self.custom_functions.after_loop(self)
+
+        self.gui.safe_update()
+        self.init_operations()
+
+        if self.no_condebug:
+            self.gui.no_condebug_warning()
+            self.fast_next_loop = True
 
         if not self.has_set_process_priority:
             self_process: psutil.Process = psutil.Process()
@@ -400,102 +334,76 @@ class TF2RichPresense:
             self.log.debug(f"Set process priorities from {priorities_before} to {priorities_after}")
             self.has_set_process_priority = True
 
-        if self.custom_functions:
-            self.custom_functions.after_loop(self)
+        if not gc.isenabled():
+            gc.enable()
+            gc.collect()
+            self.log.debug("Enabled GC and collected")
 
         return self.client_connected, self.rpc_client
 
-    # notify user (possibly) and restart (possibly)
-    def necessary_program_not_running(self, program_name: str, should_mention: bool, name_short: str = ''):
+    def necessary_program_not_running(self, program_name: str, name_short: str = ''):
         name_short = program_name if not name_short else name_short
         self.test_state = f'no {name_short.lower()}'
         self.slow_sleep_time = True  # update less often if not all programs are running
 
         if self.client_connected:
-            try:
-                self.log.debug("Disconnecting client")
-                self.rpc_client.disconnect()  # doesn't work...
-                client_state = (self.rpc_client.client_id, self.rpc_client.connected, self.rpc_client.ipc_path, self.rpc_client.pid, self.rpc_client.platform, self.rpc_client.socket)
-                self.log.debug(f"client state after disconnect: {client_state}")
-            except Exception as err:
-                self.log.error(f"client error while disconnecting: {err}", reportable=False)
+            self.log.debug("Disconnecting RPC client")
+            self.rpc_client.disconnect()
+            self.client_connected = False
 
-            self.log.info("Restarting")
-            del self.log
-            raise SystemExit  # ...but this does
-        else:
-            self.log.info(f"{name_short} isn't running (mentioning to user: {should_mention})")
+        self.gui.set_state_1('default', "Team Fortress 2 isn't running")
+        self.gui.clear_fg_image()
+        self.gui.clear_class_image()
+        self.gui.set_clean_console_log_button_state(False)
+        self.gui.clean_console_log = False
 
-            if should_mention:
-                print(f'{self.current_time_formatted}{utils.generate_delta(self.loc, self.last_notify_time)}{Style.BRIGHT}')
-                print(self.loc.text(f"{program_name} isn't running"))
-                print(Style.RESET_ALL)
+        base_window_title: str = self.loc.text("TF2 Rich Presence ({0})").format(launcher.VERSION)
+        window_title: str = self.loc.text("{0} - Waiting for {1}").format(base_window_title, program_name)
+        self.gui.master.title(window_title)
+        self.log.debug(f"Set window title to \"{window_title}\"")
 
-                self.last_notify_time = time.time()
-                self.should_mention_discord = True
-                self.should_mention_tf2 = True
-                self.should_mention_steam = True
-
-                base_window_title: str = self.loc.text("TF2 Rich Presence ({0})").format(launcher.VERSION)
-                window_title: str = self.loc.text("{0} - Waiting for {1}").format(base_window_title, program_name)
-                ctypes.windll.kernel32.SetConsoleTitleW(window_title)
-                self.log.debug(f"Set window title to \"{window_title}\"")
-
-        # to prevent connecting when already connected
-        self.client_connected = False
-
-    # reads a console.log and returns current map and class
-    def interpret_console_log(self, *args, **kwargs) -> Tuple[str, str, str]:
-        return console_log.interpret(self, *args, **kwargs)
-
-    # reads steam's launch options save file to find usernames with -condebug
-    def steam_config_file(self, *args, **kwargs) -> set:
-        return configs.steam_config_file(self, *args, **kwargs)
-
-    # get player count or user score (kills) from the game server
-    def get_match_data(self, *args, **kwargs) -> str:
-        return server.get_match_data(self, *args, **kwargs)
-
-    # sends localized RPC data, connecting to Discord initially if need be
+    # sends RPC data, connecting to Discord initially if need be
     def send_rpc_activity(self):
         try:
             if not self.client_connected:
-                # connects to Discord and sends first status, starts on main menu
-                self.rpc_client = ipc.DiscordIPC(utils.get_api_key('discord'))
+                # connects to Discord
+                self.rpc_client = ipc.DiscordIPC(utils.get_api_key('discord2'))
                 self.rpc_client.connect()
-                client_state: Tuple[Any, bool, str, int, str, Any] = (
-                    self.rpc_client.client_id, self.rpc_client.connected, self.rpc_client.ipc_path, self.rpc_client.pid, self.rpc_client.platform, self.rpc_client.socket)
-                self.log.debug(f"Initial RPC client state: {client_state}")
 
-            # localize activity
-            self.activity_translated = copy.deepcopy(self.activity)
-            self.activity_translated['details'] = self.loc.text(self.activity['details'])
-            self.activity_translated['assets']['small_text'] = self.loc.text(self.activity['assets']['small_text'])
-            self.activity_translated['assets']['large_text'] = self.loc.text(self.activity['assets']['large_text'])
-
-            # stop DB.json spam as the map time increases
-            if not (settings.get('second_line') != 'Class' and self.test_state == 'in game'):
-                self.activity_translated['state'] = self.loc.text(self.activity['state'])
-
-            self.rpc_client.update_activity(self.activity_translated)
-            self.log.info(f"Sent over RPC: {self.activity_translated}")
-            client_state = (self.rpc_client.client_id, self.rpc_client.connected, self.rpc_client.ipc_path, self.rpc_client.pid, self.rpc_client.platform, self.rpc_client.socket)
-            self.log.debug(f"client state: {client_state}")
+            self.rpc_client.update_activity(self.activity)
+            self.log.info(f"Sent over RPC: {self.activity}")
+            client_state: tuple = (self.rpc_client.client_id, self.rpc_client.connected, self.rpc_client.ipc_path, self.rpc_client.pid, self.rpc_client.platform, self.rpc_client.socket)
+            self.log.debug(f"Client state: {client_state}")
             self.client_connected = True
         except Exception as client_connect_error:
             if str(client_connect_error) in ("Can't send data to Discord via IPC.", "Can't connect to Discord Client."):
                 # often happens when Discord is in the middle of starting up
+                # TODO: maybe show this in the GUI
                 self.log.error(str(client_connect_error), reportable=False)
-
-                print(f'{self.current_time_formatted}{Style.BRIGHT}')
-                print(self.loc.text("Can't connect to Discord for Rich Presence."))
-                print(Style.RESET_ALL)
-
-                time.sleep(settings.get('wait_time'))
-                del self.log
-                raise SystemExit
             else:
                 raise
+
+    # do stuff that was previously in init.py, but only after one main loop so that the GUI is ready
+    def init_operations(self):
+        if not self.did_init_operations:
+            self.did_init_operations = True
+            self.gui.safe_update()
+            self.log.debug("Performing init operations")
+            localization.detect_system_language(self.log)
+            self.gui.holiday()
+
+            if settings.get('check_updates'):
+                self.gui.check_for_updates(False)
+            else:
+                self.log.debug("Updater is disabled, skipping")
+
+    # reads a console.log and returns current map and class
+    def interpret_console_log(self, *args, **kwargs) -> Optional[Tuple[bool, str, str, str, str, bool]]:
+        return console_log.interpret(self, *args, **kwargs)
+
+    # reads steam's launch options save file to find usernames with -condebug
+    def steam_config_file(self, *args, **kwargs) -> Optional[Set[str]]:
+        return configs.steam_config_file(self, *args, **kwargs)
 
 
 if __name__ == '__main__':

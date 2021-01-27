@@ -1,9 +1,9 @@
-# Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
+# Copyright (C) 2018-2021 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 
 # Add some custom functionality to TF2 Rich Presence if you'd like
 # Quite limited but someone may find a use it (I know I have)
-# Also you can replace a .pyd file here with a .py of the same name (sans .cp37-win32) and it'll import
+# Also you can replace a .pyd file here with a .py of the same name (sans .cp39-win32) and it'll import
 
 import logger
 import main
@@ -17,7 +17,7 @@ class TF2RPCustom:
         # app.log.debug("Performing custom.before_loop()")
         pass
 
-    # after TF2RichPresense.activity is finalized but before it's displayed or sent to Discord
+    # after TF2RichPresense.game_state is finalized but before it's displayed or sent to Discord (only runs if in game)
     def loop_middle(self, app: main.TF2RichPresense):
         # app.log.debug("Performing custom.loop_middle()")
         pass

@@ -1,22 +1,28 @@
-# Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
+# Copyright (C) 2018-2021 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 # cython: language_level=3
 
+import ctypes
 import functools
 import json
+import locale
 import os
 import zlib
-from typing import List, Union
+from tkinter import messagebox
+from typing import Dict, Optional, Union
+from typing import List
 
 import launcher
+import logger
+import settings
 import utils
 
 
 class Localizer:
-    def __init__(self, log=None, language: Union[str, None] = None, appending: bool = False):
-        self.log = log
-        self.language: Union[str, None] = language
-        self.missing_lines: List[str] = []
+    def __init__(self, log: Optional[logger.Log] = None, language: Optional[str] = None, appending: bool = False):
+        self.log: Optional[logger.Log] = log
+        self.language: Optional[str] = language
+        self.missing_lines: List[str] = []  # TODO: ingest from DB.json maybe
         self.appending: bool = appending  # if extending localization.json
 
         if os.path.isdir('resources'):
@@ -33,7 +39,7 @@ class Localizer:
     def __repr__(self) -> str:
         return f"localization.Localizer ({self.language}, appending={self.appending}, {len(self.missing_lines)} missing lines)"
 
-    @functools.lru_cache(maxsize=None)
+    @functools.cache
     def text(self, english_text: str) -> str:
         if not self.loc_file_exists:
             return english_text
@@ -49,7 +55,7 @@ class Localizer:
             if english_text not in self.missing_lines:
                 self.missing_lines.append(english_text)
 
-                db: dict = utils.access_db()
+                db: Dict[str, Union[bool, list, str]] = utils.access_db()
                 db['missing_localization'].append(english_text)
                 utils.access_db(db)
                 if self.log:
@@ -59,6 +65,8 @@ class Localizer:
             return english_text
 
         if self.language == 'English':
+            # returns what was passed to this function, NOT what's in localization.json
+            # this means that that data is only used for helping with translating
             return english_text
         else:
             try:
@@ -67,8 +75,8 @@ class Localizer:
                 raise KeyError(f"{error}, ({self.loc_file_path}, {english_text_adler32}, {self.language})")
 
 
-@functools.lru_cache(maxsize=1)
-def access_localization_file(path: str = 'localization.json', append: Union[tuple, None] = None) -> dict:
+@functools.cache
+def access_localization_file(path: str = 'localization.json', append: Optional[tuple] = None) -> Optional[dict]:
     with open(path, 'r', encoding='UTF8') as localization_file:
         localization_data: dict = json.load(localization_file)
 
@@ -95,6 +103,41 @@ def access_localization_file(path: str = 'localization.json', append: Union[tupl
 
 def hash_text(text: str) -> str:
     return str(zlib.adler32(text.replace(launcher.VERSION, '').encode('UTF8'))).ljust(10, '0')  # shoulda just used hash() from the start
+
+
+# if the system (OS) language doesn't match the current settings, ask to change language (but only once)
+def detect_system_language(log: logger.Log):
+    db: Dict[str, Union[bool, list, str]] = utils.access_db()
+
+    if not db['has_asked_language']:
+        language_codes = {'en': 'English', 'de': 'German', 'fr': 'French', 'es': 'Spanish', 'pt': 'Portuguese', 'it': 'Italian', 'nl': 'Dutch', 'pl': 'Polish', 'ru': 'Russian',
+                          'ko': 'Korean', 'zh': 'Chinese', 'ja': 'Japanese'}
+
+        system_locale: str = locale.windows_locale[ctypes.windll.kernel32.GetUserDefaultUILanguage()]
+        system_language_code: str = system_locale.split('_')[0]
+        is_brazilian_port: bool = system_locale == 'pt_BR'
+
+        if system_language_code in language_codes or is_brazilian_port:
+            system_language: str = language_codes[system_language_code]
+            can_localize: bool = True
+        else:
+            log.error(f"System locale {system_locale} is not localizable")
+            can_localize = False
+
+        if can_localize and settings.get('language') != system_language:
+            log.info(f"System language ({system_locale}, {system_language}) != settings language ({settings.get('language')}), asking to change")
+            db['has_asked_language'] = True
+            utils.access_db(db)
+            system_language_display: str = 'Português Brasileiro' if is_brazilian_port else system_language
+            # this is intentionally not localized
+            changed_language: str = messagebox.askquestion(f"TF2 Rich Presence {launcher.VERSION}", f"Change language to your system's default ({system_language_display})?")
+            log.debug(f"Changed language: {changed_language}")
+
+            if changed_language == 'yes':
+                temp_settings: dict = settings.access_registry()
+                temp_settings['language'] = system_language
+                settings.access_registry(save=temp_settings)
+                settings.get.cache_clear()
 
 
 if __name__ == '__main__':

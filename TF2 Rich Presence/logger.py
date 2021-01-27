@@ -1,4 +1,4 @@
-# Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
+# Copyright (C) 2018-2021 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 # cython: language_level=3
 
@@ -12,7 +12,7 @@ import time
 import traceback
 import zlib
 from operator import itemgetter
-from typing import Dict, List, TextIO, Tuple, Union
+from typing import Dict, List, Optional, TextIO, Tuple, Union
 
 import sentry_sdk
 
@@ -23,7 +23,7 @@ import utils
 
 # TODO: replace this whole thing with a real logger
 class Log:
-    def __init__(self, path: Union[str, None] = None):
+    def __init__(self, path: Optional[str] = None):
         # find user's pc and account name
         user_pc_name: str = socket.gethostname()
         try:
@@ -40,9 +40,8 @@ class Log:
         # setup
         self.filename_errors: str = os.path.join('logs', f'TF2RP_{user_pc_name}_{user_identifier}_{launcher.VERSION}.errors.log')
         self.last_log_time: float = time.perf_counter()
-        self.console_log_path: Union[str, None] = None
+        self.console_log_path: Optional[str] = None
         self.to_stderr: bool = launcher.DEBUG
-        self.sentry_level: str = settings.get('sentry_level')
         self.enabled: bool = settings.get('log_level') != 'Off'
         self.log_levels: list = ['Debug', 'Info', 'Error', 'Critical', 'Off']
         self.log_level: str = settings.get('log_level')
@@ -91,8 +90,9 @@ class Log:
 
             full_line: str = f"[{datetime.datetime.now().strftime('%c')[4:-5]} {time_since_last}] {level}: {message_out}\n"
 
-            # log breadcrumb to Sentry
-            sentry_sdk.add_breadcrumb(message=full_line[-512:], level=level.lower().replace('critical', 'fatal'))
+            if settings.get('sentry_level') != "Never":
+                # log breadcrumb to Sentry
+                sentry_sdk.add_breadcrumb(message=full_line[-512:], level=level.lower().replace('critical', 'fatal'))
 
             try:
                 self.log_file.write(full_line)
@@ -130,10 +130,10 @@ class Log:
     # a log with a level of ERROR (caught, non-fatal errors)
     def error(self, message_in: str, reportable: bool = True):
         if 'Error' in self.log_levels_allowed:
-            self.write_log('ERROR', message_in, use_errors_file=True)
+            self.write_log('ERROR', message_in, use_errors_file=reportable)
 
-        if reportable and self.sentry_level == 'All errors':
-            db: Dict[str, Union[dict, bool, list]] = utils.access_db()
+        if reportable and settings.get('sentry_level') == 'All errors':
+            db: Dict[str, Union[bool, list, str]] = utils.access_db()
             message_hash: int = zlib.adler32(message_in.encode('UTF8'))
 
             if message_hash not in db['error_hashes'] and message_hash not in self.local_error_hashes:
@@ -156,7 +156,7 @@ class Log:
         all_logs_sorted: List[str] = [log_pair[0] for log_pair in sorted(all_logs_times, key=itemgetter(1))]
         overshoot: int = max_logs - len(all_logs_sorted)
         deleted_logs: List[str] = []
-        compressed_logs: List[Tuple[str, Union[float, None]]] = []
+        compressed_logs: List[Tuple[str, Optional[float]]] = []
 
         while overshoot < 0:
             log_to_delete: str = all_logs_sorted.pop(0)
@@ -184,7 +184,7 @@ class Log:
             except Exception:
                 self.error(f"Couldn't replace log file {log_to_delete}: {traceback.format_exc()}")
 
-            comp_ratio: Union[float, None] = round(len(data_out) / len(data_in), 3) if data_in else None  # fixes a ZeroDivisionError
+            comp_ratio: Optional[float] = round(len(data_out) / len(data_in), 3) if data_in else None  # fixes a ZeroDivisionError
             compressed_logs.append((old_log, comp_ratio))
 
         self.debug(f"Compressed {len(compressed_logs)} log(s): {compressed_logs}")

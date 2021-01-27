@@ -1,19 +1,17 @@
-# Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
+# Copyright (C) 2018-2021 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 # cython: language_level=3
 
 import os
-from typing import Dict, List, Set, Tuple, Union
+from tkinter import messagebox
+from typing import Dict, List, Optional, Set, Tuple
 
-from colorama import Fore, Style
-
-import localization
 import settings
 
 
-# reads a console.log and returns current map and class
+# reads a console.log and returns as much game state as possible, alternatively returns whether an old scan was reused
 def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: float = float(settings.get('console_scan_kb')), force: bool = False,
-              tf2_start_time: int = 0) -> Tuple[str, str, str]:
+              tf2_start_time: int = 0) -> Optional[Tuple[bool, str, str, str, str, bool]]:
     TF2_LOAD_TIME_ASSUMPTION: int = 10
     SIZE_LIMIT_MULTIPLE_TRIGGER: int = 4
     SIZE_LIMIT_MULTIPLE_TARGET: int = 2
@@ -21,29 +19,35 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     KATAISER_LOOP_FREQ: int = 4
 
     # defaults
-    current_map: str = 'In menus'
-    current_class: str = 'Not queued'
+    in_menus: bool = True
+    tf2_map: str = ''
+    tf2_class: str = ''
+    server_address: str = ''
+    queued_state: str = ''
+    hosting: bool = False
+    default_state = (in_menus, tf2_map, tf2_class, server_address, queued_state, hosting)
 
-    # console.log is a log of tf2's console (duh), only exists if tf2 has -condebug (see no_condebug_warning())
+    # console.log is a log of tf2's console (duh), only exists if tf2 has -condebug (see no_condebug_warning() in GUI)
     self.log.debug(f"Looking for console.log at {console_log_path}")
     self.log.console_log_path = console_log_path
 
     if not os.path.isfile(console_log_path):
         self.log.error(f"console.log doesn't exist, issuing warning (files/dirs in /tf/: {os.listdir(os.path.dirname(console_log_path))})", reportable=False)
-        del self.log
-        no_condebug_warning(self.loc, tf2_is_running=True)
+        # self.gui.no_condebug_warning(True)
+        self.no_condebug = False
+        return default_state  # might as well
 
     # only interpret console.log again if it's been modified
     self.console_log_mtime = int(os.stat(console_log_path).st_mtime)
-    if not force and self.console_log_mtime == self.old_console_log_mtime:
-        self.log.debug(f"Not rescanning console.log, remaining on {self.old_console_log_interpretation}")
-        return self.old_console_log_interpretation
+    if not force and self.console_log_mtime == self.old_console_log_mtime and not self.gui.clean_console_log:
+        self.log.debug("Not rescanning console.log")
+        return None
 
     # TF2 takes some time to load the console when starting up, so wait until it's been modified to avoid getting outdated information
     console_log_mtime_relative: int = self.console_log_mtime - tf2_start_time
     if console_log_mtime_relative <= TF2_LOAD_TIME_ASSUMPTION:
         self.log.debug(f"console.log's mtime relative to TF2's start time is {console_log_mtime_relative} (<= {TF2_LOAD_TIME_ASSUMPTION}), assuming default state")
-        return current_map, current_class, ''
+        return default_state
 
     consolelog_file_size: int = os.stat(console_log_path).st_size
     byte_limit: float = kb_limit * 1024.0
@@ -89,15 +93,13 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     kataiser_scan: bool = self.kataiser_scan_loop == KATAISER_LOOP_FREQ if not force else True
     if kataiser_scan:
         self.kataiser_scan_loop = 0
-    hide_queued_gamemode: bool = settings.get('hide_queued_gamemode')
-    scan_for_address: bool = settings.get('second_line') in ('Player count', 'Kills')
-    server_address: str = ''
+    scan_for_address: bool = any(mode in (settings.get('top_line'), settings.get('bottom_line')) for mode in ('Player count', 'Kills'))
     user_is_kataiser: bool = 'Kataiser' in user_usernames
-    kataiser_seen_on: Union[str, None] = None
+    kataiser_seen_on: Optional[str] = None
     # TODO: detection for canceling loading into community servers (if possible)
     match_types: Dict[str, str] = {'12v12 Casual Match': 'Casual', 'MvM Practice': 'MvM (Boot Camp)', 'MvM MannUp': 'MvM (Mann Up)', '6v6 Ladder Match': 'Competitive'}
-    menus_messages: tuple = ('For FCVAR_REPLICATED', '[TF Workshop]', 'request to abandon', 'Server shutting down', 'destroyed Lobby', 'Disconnect:', 'destroyed CAsyncWavDataCache',
-                             'Connection failed after', 'Missing map', 'Host_Error')
+    menus_messages: Tuple[str, ...] = ('For FCVAR_REPLICATED', '[TF Workshop]', 'request to abandon', 'Server shutting down', 'destroyed Lobby', 'Disconnect:', 'destroyed CAsyncWavDataCache',
+                                       'Connection failed after', 'Missing map', 'Host_Error')
     menus_message: str
 
     for username in user_usernames:
@@ -106,12 +108,8 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
         if ' :  ' in username:
             chat_safety = False
 
-    map_line_used: str = ''
-    class_line_used: str = ''
-    last_class: str = ''
+    # iterates though 0 (initially) to roughly 16000 lines from console.log and learns (almost) everything from them
     line: str
-
-    # iterates though roughly 16000 lines from console.log and learns everything from them
     for line in lines:
         # lines that have "with" in them are basically always kill logs and can be safely ignored
         # this (probably) improves performance
@@ -120,40 +118,29 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
             if not kataiser_scan or user_is_kataiser or 'Kataiser' not in line or self.has_seen_kataiser:
                 continue
 
-        if current_map != 'In menus':
-            found_in_menus: bool = False
-
+        if not in_menus:
             for menus_message in menus_messages:
                 if menus_message in line:
-                    found_in_menus = True
-                    current_map = 'In menus'
-                    current_class = 'Not queued'
-                    map_line_used = class_line_used = line
-                    server_address = ''
+                    in_menus = True
                     kataiser_seen_on = None
                     break
 
             # ok this is jank but it's to only trigger on actually closing the map and not just (I think) ending a demo recording
-            if not found_in_menus and 'SoundEmitter:' in line:
+            if not in_menus and 'SoundEmitter:' in line:
                 if int(line.split('[')[1].split()[0]) > 1000:
-                    current_map = 'In menus'
-                    current_class = 'Not queued'
-                    map_line_used = class_line_used = line
-                    server_address = ''
+                    in_menus = True
                     kataiser_seen_on = None
 
         if line.endswith(' selected \n'):
-            current_class_possibly: str = line[:-11]
+            class_possibly: str = line[:-11]
 
-            if current_class_possibly in tf2_classes:
-                current_class = current_class_possibly
-                last_class = current_class
-                class_line_used = line
+            if class_possibly in tf2_classes:
+                tf2_class = class_possibly
 
         elif line.startswith('Map:'):
-            current_map = line[5:-1]  # this variable is poorly named
-            current_class = 'unselected'  # so is this one
-            map_line_used = class_line_used = line
+            in_menus = False
+            tf2_map = line[5:-1]
+            tf2_class = ''
 
             if just_started_server:
                 server_still_running = True
@@ -167,29 +154,19 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
 
         elif '[PartyClient] L' in line:  # full line: "[PartyClient] Leaving queue"
             # queueing is not necessarily only in menus
-            class_line_used = line
-            current_class = 'Not queued' if current_map == 'In menus' else last_class
+            queued_state = ''
 
         elif '[PartyClient] Entering q' in line:  # full line: "[PartyClient] Entering queue for match group " + whatever mode
-            class_line_used = line
-
-            if hide_queued_gamemode:
-                current_class = "Queued"
-            else:
-                match_type: str = line.split('match group ')[-1][:-1]
-                current_class = f"Queued for {match_types[match_type]}"
+            match_type: str = line.split('match group ')[-1][:-1]
+            queued_state = f"Queued for {match_types[match_type]}"
 
         elif '[PartyClient] Entering s' in line:  # full line: "[PartyClient] Entering standby queue"
-            current_class = 'Queued for a party\'s match'
-            class_line_used = line
+            queued_state = 'Queued for a party\'s match'
 
         elif 'Disconnect by user' in line:
             for user_username in user_usernames:
                 if user_username in line:
-                    current_map = 'In menus'
-                    current_class = 'Not queued'
-                    map_line_used = class_line_used = line
-                    server_address = ''
+                    in_menus = True
                     kataiser_seen_on = None
                     break
 
@@ -199,94 +176,91 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
         if kataiser_scan and not user_is_kataiser and 'Kataiser' in line and not self.has_seen_kataiser:
             # makes sure no one's just talking about me for some reason
             if not (line.count(' :  ') == 1 and 'Kataiser' not in line.split(' :  ')[0] and 'Kataiser' in line.split(' :  ')[1]):
-                kataiser_seen_on = current_map
+                kataiser_seen_on = tf2_map
 
-    if not user_is_kataiser and not self.has_seen_kataiser and kataiser_seen_on == current_map and current_map != 'In menus':
+    if not user_is_kataiser and not self.has_seen_kataiser and not in_menus and kataiser_seen_on == tf2_map:
         self.has_seen_kataiser = True
-        self.log.debug(f"Kataiser located, telling user :D (on {current_map})")
-        print(f"{Fore.LIGHTCYAN_EX}Hey, it seems that Kataiser, the developer of TF2 Rich Presence, is in your game! Say hi to me if you'd like :){Style.RESET_ALL}\n")
-
-    if server_still_running and current_map != 'In menus':
-        current_map = f'{current_map} (hosting)'
-
-    if map_line_used == '' and class_line_used != '' and 'queued' not in current_class.lower():
-        self.log.error(f"Have class_line_used {(class_line_used, current_class)} without map_line_used, resetting")
-        current_class = 'Not queued'
-        class_line_used = ''
-
-    if map_line_used == class_line_used:
-        self.log.debug(f"Got '{current_map}' and '{current_class}' from line '{map_line_used[:-1]}'")
+        self.log.debug(f"Kataiser located, telling user :D (on {tf2_map})")
+        self.gui.show_kataiser_in_game()
     else:
-        self.log.debug(f"Got '{current_map}' from line '{map_line_used[:-1]}' and '{current_class}' from line '{class_line_used[:-1]}'")
+        self.gui.hide_kataiser_in_game()
+
+    if in_menus:
+        tf2_map = ''
+        tf2_class = ''
+        server_address = ''
+        hosting = False
+    elif tf2_class != '' and tf2_map == '':
+        self.log.error("Have class without map")
+
+    if server_still_running and not in_menus:
+        hosting = True
+        server_address = ''
+
+    scan_results = (in_menus, tf2_map, tf2_class, server_address, queued_state, hosting)
+    self.log.debug(f"console.log parse results: {scan_results}")
 
     # remove empty lines (bot spam probably) and some error logs
-    if 'In menus' in current_map and settings.get('trim_console_log') and not force:
-        if self.cleanup_primed:
+    # TODO: move this into a function
+    if (in_menus and settings.get('trim_console_log') and not force and self.cleanup_primed) or self.gui.clean_console_log:
+        if self.gui.clean_console_log:
+            self.log.debug("Forcing cleanup of console.log")
+        else:
             self.log.debug("Potentially cleaning up console.log")
-            console_log_lines_out: List[str] = []
-            total_line_count: int = 0
-            blank_line_count: int = 0
-            error_line_count: int = 0
 
-            with open(console_log_path, 'r', encoding='UTF8', errors='replace') as console_log_read:
-                console_log_lines_in: List[str] = console_log_read.readlines()
+        console_log_lines_out: List[str] = []
+        total_line_count: int = 0
+        blank_line_count: int = 0
+        error_line_count: int = 0
 
-            error_substrings: tuple = ('bad reference count', 'particle system', 'DataTable warning', 'SOLID_VPHYSICS', 'BlockingGetDataPointer', 'No such variable')
+        with open(console_log_path, 'r', encoding='UTF8', errors='replace') as console_log_read:
+            console_log_lines_in: List[str] = console_log_read.readlines()
 
-            for line in console_log_lines_in:
-                remove_line: bool = False
+        error_substrings: Tuple[str, ...] = ('bad reference count', 'particle system', 'DataTable warning', 'SOLID_VPHYSICS', 'BlockingGetDataPointer', 'No such variable')
+        if user_is_kataiser:
+            error_substrings += ('Usage: spec_player',)  # cause I have a bind that errors a lot
 
-                for error_substring in error_substrings:
-                    if error_substring in line and ' :  ' not in line:
-                        remove_line = True
-                        error_line_count += 1
-                        break
+        for line in console_log_lines_in:
+            remove_line: bool = False
 
-                if not remove_line:
-                    if line.strip(' \t') == '\n' or (user_is_kataiser and 'Usage: spec_player' in line):
-                        remove_line = True
-                        blank_line_count += 1
+            for error_substring in error_substrings:
+                if error_substring in line and ' :  ' not in line:
+                    remove_line = True
+                    error_line_count += 1
+                    break
 
-                if remove_line:
-                    total_line_count += 1
-                else:
-                    console_log_lines_out.append(line)
+            if not remove_line:
+                if line.strip(' \t') == '\n':
+                    remove_line = True
+                    blank_line_count += 1
 
-            line_count_text: str = f"{error_line_count} error lines and {blank_line_count} blank lines (total: {total_line_count})"
-
-            if total_line_count >= 50 and len(console_log_lines_out) > SIZE_LIMIT_MIN_LINES:
-                with open(console_log_path, 'w', encoding='UTF8') as console_log_write:
-                    for line in console_log_lines_out:
-                        console_log_write.write(line)
-
-                self.log.debug(f"Removed {line_count_text} from console.log")
+            if remove_line:
+                total_line_count += 1
             else:
-                self.log.debug(f"Didn't remove {line_count_text} from console.log")
+                console_log_lines_out.append(line)
 
-            self.cleanup_primed = False
+        line_count_text: str = f"{error_line_count} error lines and {blank_line_count} blank lines (total: {total_line_count})"
+
+        if total_line_count >= (1 if self.gui.clean_console_log else 50) and len(console_log_lines_out) > SIZE_LIMIT_MIN_LINES:
+            with open(console_log_path, 'w', encoding='UTF8') as console_log_write:
+                for line in console_log_lines_out:
+                    console_log_write.write(line)
+
+            self.log.debug(f"Removed {line_count_text} from console.log")
+        else:
+            self.log.debug(f"Didn't remove {line_count_text} from console.log")
+
+        if self.gui.clean_console_log:
+            self.gui.pause()
+            messagebox.showinfo("TF2 Rich Presence", f"Removed {line_count_text} from console.log.")
+            self.gui.unpause()
+            self.gui.clean_console_log = False
+
+        self.cleanup_primed = False
     else:
         self.cleanup_primed = True
 
-    return current_map, current_class, server_address
+    return scan_results
 
 
-# alerts the user that they don't seem to have -condebug
-def no_condebug_warning(loc: localization.Localizer, tf2_is_running: bool = True):
-    print(Style.BRIGHT, end='')
-    print('\n{0}'.format(loc.text("Your TF2 installation doesn't yet seem to be set up properly. To fix:")))
-    print(Style.RESET_ALL, end='')
-    print(loc.text("1. Right click on Team Fortress 2 in your Steam library"))
-    print(loc.text("2. Open properties (very bottom)"))
-    print(loc.text("3. Click \"Set launch options...\""))
-    print(loc.text("4. Add {0}").format("-condebug"))
-    print(loc.text("5. OK and Close"))
-    if tf2_is_running:
-        print(loc.text("6. Restart TF2"))
-    print()
-
-    # -condebug is kinda necessary so just wait to restart if it's not there
-    input('{0}\n'.format(loc.text("Press enter in this window when done")))
-    raise SystemExit
-
-
-tf2_classes: tuple = ('Scout', 'Soldier', 'Pyro', 'Demoman', 'Heavy', 'Engineer', 'Medic', 'Sniper', 'Spy')
+tf2_classes: Tuple[str, ...] = ('Scout', 'Soldier', 'Pyro', 'Demoman', 'Heavy', 'Engineer', 'Medic', 'Sniper', 'Spy')

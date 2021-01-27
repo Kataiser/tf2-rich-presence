@@ -1,12 +1,11 @@
 {
-    "custom_maps": {},
     "tb_hashes": [],
     "error_hashes": [],
     "has_asked_language": false,
-    "available_version": {
-        "exists": false,
-        "tag": "",
-        "url": ""
-    },
-	"missing_localization": []
+    "missing_localization": [],
+    "available_version": "",
+    "gui_position": [
+        0,
+        0
+    ]
 }

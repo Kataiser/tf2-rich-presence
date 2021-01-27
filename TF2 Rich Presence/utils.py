@@ -1,4 +1,4 @@
-# Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
+# Copyright (C) 2018-2021 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 # cython: language_level=3
 
@@ -8,21 +8,19 @@ import gzip
 import json
 import os
 import time
-import tkinter as tk
-import traceback
-from typing import Dict, Union
+from typing import Dict, Optional, Union
 
 
 # read from or write to DB.json (intentionally uncached)
 # TODO: have this be placed in AppData\Roaming and include settings
-def access_db(write: dict = None) -> Dict[str, Union[dict, bool, list]]:
+def access_db(write: dict = None) -> Optional[Dict[str, Union[bool, list, str]]]:
     db_path: str = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
-    default_db: dict = {'custom_maps': {},
-                        'tb_hashes': [],
+    default_db: dict = {'tb_hashes': [],
                         'error_hashes': [],
                         'has_asked_language': False,
-                        'available_version': {'exists': False, 'tag': '', 'url': ''},
-                        'missing_localization': []}
+                        'missing_localization': [],
+                        'available_version': '',
+                        'gui_position': [0, 0]}
 
     if not os.path.isfile(db_path):
         open(db_path, 'w').close()
@@ -50,17 +48,17 @@ def access_db(write: dict = None) -> Dict[str, Union[dict, bool, list]]:
 
 
 # get API key from the 'APIs' file
-@functools.lru_cache(maxsize=None)
+@functools.cache
 def get_api_key(service: str) -> str:
     # just some very basic obfuscation
-    data: bytes = b'\x1f\x8b\x08\x00K\xc5\xec_\x02\xff%\xccI\x0e\xc20\x0c@\xd1\xabT^#b\xc7\xce\xe0\xac\xb8JF\xd1\rEM7\x08qw\x8aX\x7f\xfd\xf7\x86\xb6\xce\xba\xed\r\xd2\x02b\x95\xa3\x92pp\x9e' \
-                  b'\x83 \x05\xb8,0\xfb\xe3\xd8_\xbf~?\x8e\xe7L\xc6\xb4\x1e"\xd5n\xc5\xc9\x10\x17{\x1e\xb9\x90\xaa\xf5\x8c\xa5\x12b\xaa\xfd\xfc\x87S\xe5B\xe2=g\x8c\x82\xb5\xe9\xd0\x98\x03I' \
-                  b'\xbe\xfd\xcd\xeb\xba\x19:\x15\x15\x81\xcf\x17Q\x16\x89\xda\x8a\x00\x00\x00'
+    data: bytes = b'\x1f\x8b\x08\x00bl\xfa_\x02\xff-\x8eK\x0e\xc20\x0c\x05\xef\x925\xa2q\xfc\x12\xdb]q\x954\x1f\xd1\rEm7\x08qw"\xc1\xfa\xe9\xcd\xcc\xdb\xd5\xf5(\xdb^\xdd\xec\x10\x8c\xd5' \
+                  b'\x08,1\xb1\xc0\x93\xb8\x8b;\xda\xe3\xdc_c\xbd\x9f\xe7\xf3\x98\xa7\xa96Q*- \xa2#j\xcb=/d\x16\x12\xfb\xa5\x90\xf7si\xe3\xdd\xa3\x19/\x84\x948{\x85/\xd5\xbai\x16B\xbe\xfd' \
+                  b'\x90\xd7u\x9bhP\x0c\x18\x9a\x7fE\x18"\x01\xe9\x08\x01\x07\x92\xa0\x91\x84\xdc\xe7\x0b)\x81\xb1\xd4\xa7\x00\x00\x00'
     return json.loads(gzip.decompress(data))[service]
 
 
 # generate text that displays the difference between now and old_time
-def generate_delta(loc, old_time: Union[float, None]) -> str:
+def generate_delta(loc, old_time: Optional[float]) -> str:
     if old_time:
         time_diff: int = round(time.time() - old_time)
 
@@ -92,16 +90,3 @@ def generate_delta(loc, old_time: Union[float, None]) -> str:
                 return f" (+{time_diff} {loc.text('seconds')})"
     else:
         return ""
-
-
-# doesn't work if launching from Pycharm for some reason
-def set_window_icon(log, window: tk.Tk, wrench: bool):
-    filename = 'tf2_logo_blurple_wrench.ico' if wrench else 'tf2_logo_blurple.ico'
-
-    try:
-        if os.path.isdir('resources'):
-            window.iconbitmap(default=os.path.join('resources', filename))
-        else:
-            window.iconbitmap(default=filename)
-    except tk.TclError:
-        log.error(traceback.format_exc())

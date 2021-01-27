@@ -1,4 +1,4 @@
-# Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
+# Copyright (C) 2018-2021 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 
 import os
@@ -26,7 +26,7 @@ def main():
         os.chdir(og_cwd)
 
 
-targets = ('configs', 'console_log', 'detect_system_language', 'gamemodes', 'localization', 'logger', 'main', 'processes', 'server', 'settings', 'settings_gui', 'updater', 'utils', 'welcomer')
+targets = ('configs', 'console_log', 'game_state', 'gamemodes', 'gui', 'localization', 'logger', 'main', 'processes', 'server', 'settings', 'settings_gui', 'updater', 'utils')
 
 if __name__ == '__main__':
     main()

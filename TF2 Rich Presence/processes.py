@@ -1,4 +1,4 @@
-# Copyright (C) 2019 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
+# Copyright (C) 2018-2021 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 # cython: language_level=3
 
@@ -8,7 +8,7 @@ import os
 import subprocess
 import time
 import traceback
-from typing import Dict, List, Union
+from typing import Dict, List, Tuple, Union
 
 import psutil
 
@@ -109,7 +109,7 @@ class ProcessScanner:
         self.process_data['Discord']['running'] = discord_data['running']
 
     # a mess of logic that gives process info from a PID
-    def get_info_from_pid(self, pid: int, return_data: tuple) -> Dict[str, Union[str, bool, int, None]]:
+    def get_info_from_pid(self, pid: int, return_data: Tuple[str, ...]) -> Dict[str, Union[str, bool, int, None]]:
         p_info: Dict[str, Union[str, bool, None, int]] = {'running': False, 'path': None, 'time': None}
         p_info_nones: Dict[str, Union[str, bool, None, int]] = {'running': False, 'path': None, 'time': None}
 
@@ -138,7 +138,7 @@ class ProcessScanner:
                         return p_info_nones
 
                 if 'time' in return_data:
-                    p_info['time'] = int(process.create_time())
+                    p_info['time'] = int(process.create_time())  # int instead of round to prevent future times
 
                     if not p_info['time']:
                         return p_info_nones
@@ -160,7 +160,8 @@ class ProcessScanner:
     # https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/tasklist
     def parse_tasklist(self):
         try:
-            processes: List[str] = str(subprocess.check_output('tasklist /fi "STATUS eq running" /fi "MEMUSAGE gt 10000" /nh')).split(r'\r\n')
+            processes_command = subprocess.check_output('tasklist /fi "STATUS eq running" /fi "MEMUSAGE gt 10000" /nh', creationflags=0x08000000)
+            processes: List[str] = str(processes_command).split(r'\r\n')
         except subprocess.CalledProcessError as error:
             self.log.error(f"tasklist failed: CalledProcessError ({error})")
             processes = []
@@ -193,7 +194,7 @@ class ProcessScanner:
                 del self.parsed_tasklist['hl2.exe']
 
     # makes sure a process's path is a TF2 install, not some other game
-    @functools.lru_cache(maxsize=None)
+    @functools.cache
     def hl2_exe_is_tf2(self, hl2_exe_pid: int) -> bool:
         hl2_exe_path: str = self.get_info_from_pid(hl2_exe_pid, ('path',))['path']
         is_tf2: bool = False
