@@ -1,0 +1,41 @@
+name: Tests & CD
+
+on:
+  push:
+    branches: [ $default-branch ]
+  pull_request:
+    branches: [ $default-branch ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    if: "!contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Python 3.9.1
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9.1
+        architecture: 'x86'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Set up environment
+      run: |
+        xcopy LICENSE "TF2 Rich Presence"
+        xcopy Changelogs.html "TF2 Rich Presence"
+        xcopy requirements.txt "TF2 Rich Presence"
+        cd "TF2 Rich Presence"
+    - name: Run tests
+      run: |
+        python tests.py
+    - name: Build
+      run: |
+        python build.py --n --artifact
+    - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: TF2 Rich Presence dev build
+          path: "TF2 Rich Presence\tf2_rich_presence_dev.zip"
