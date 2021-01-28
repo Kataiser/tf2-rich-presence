@@ -35,4 +35,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: TF2 Rich Presence dev build
-        path: "TF2 Rich Presence\tf2_rich_presence_dev.zip"
+        path: "TF2 Rich Presence/tf2_rich_presence_dev.zip"
