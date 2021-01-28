@@ -24,6 +24,7 @@ Discord Rich Presence for Team Fortress 2
 ## Download
 With 7-Zip's built-in extractor: [tf2_rich_presence_{tf2rpvnum}_self_extracting.exe](https://github.com/Kataiser/tf2-rich-presence/releases/download/{tf2rpvnum}/tf2_rich_presence_{tf2rpvnum}_self_extracting.exe) ({installer_size} MB)  
 Extract it yourself: [tf2_rich_presence_{tf2rpvnum}.zip](https://github.com/Kataiser/tf2-rich-presence/releases/download/{tf2rpvnum}/tf2_rich_presence_{tf2rpvnum}.zip) ({zip_size} MB)
+Alternatively, get the latest autobuild (may be buggy): tf2_rich_presence_dev.7z
 
 ## Installation and running
 1. Extract `tf2_rich_presence_{tf2rpvnum}.zip` OR run `tf2_rich_presence_{tf2rpvnum}_self_extracting.exe`, whichever you downloaded.
