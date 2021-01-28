@@ -382,8 +382,7 @@ class GUI(tk.Frame):
 
         if rect_coords:
             image_draw: ImageDraw.Draw = ImageDraw.Draw(image, 'RGBA')
-            alpha: float = 0.75
-            image_draw.rectangle((0, rect_coords[0] * self.scale, 500 * self.scale, rect_coords[1] * self.scale), fill=(0, 0, 0, round(256 * alpha)))
+            image_draw.rectangle((0, rect_coords[0] * self.scale, 500 * self.scale, rect_coords[1] * self.scale), fill=(0, 0, 0, 192))
 
         self.log.debug("Loading/processing BG image done")
         return ImageTk.PhotoImage(image)
@@ -391,7 +390,12 @@ class GUI(tk.Frame):
     # assumes square image, also loads TF2 class and anything else if needed
     @functools.cache
     def fg_image_load(self, image_name: str, size: int) -> ImageTk.PhotoImage:
-        return ImageTk.PhotoImage(self.load_image(image_name).resize((round(size * self.scale), round(size * self.scale))))
+        if 'fg_maps' in image_name or ('fg_modes' in image_name and 'unknown' not in image_name):
+            mode = 'RGB'
+        else:
+            mode = 'RGBA'
+
+        return ImageTk.PhotoImage(self.load_image(image_name, mode).resize((round(size * self.scale), round(size * self.scale))))
 
     def menu_open_settings(self, *args):
         self.log.info("GUI: Opening settings menu")

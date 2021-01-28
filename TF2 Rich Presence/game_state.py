@@ -96,7 +96,6 @@ class GameState:
             else:
                 top_line = self.get_line('top', True)
                 bottom_line = self.get_line('bottom', True)
-                self.update_rpc = True
 
         if not top_line:
             self.log.error("Top line is blank")
@@ -125,6 +124,7 @@ class GameState:
     # set everything straight from console.log parse results
     def set_bulk(self, state: Tuple[bool, str, str, str, str, bool]):
         prev_state: str = str(self)
+
         self.set_in_menus(state[0])
         self.set_hosting(state[5])
         self.set_tf2_map(state[1])
@@ -132,7 +132,7 @@ class GameState:
         self.set_queued_state(state[4])
         self.server_address = state[3]  # this isn't a setter because it doesn't directly mean changed server data
 
-        if self.update_rpc:
+        if str(self) != prev_state:  # don't use self.update_rpc because
             self.log.debug(f"Game state updated from ({prev_state}) to ({str(self)})")
 
     def set_in_menus(self, in_menus: bool):
@@ -178,10 +178,6 @@ class GameState:
             self.update_rpc = True
 
     def set_queued_state(self, queued_state: str):
-        # fix console.log parse results being a bit simple
-        queued_state = "Queued" if settings.get('hide_queued_gamemode') and 'Queued' in queued_state else queued_state
-        queued_state = "Not queued" if queued_state == '' else queued_state
-
         if queued_state != self.queued_state:
             self.queued_state = queued_state
             self.update_rpc = True
@@ -214,7 +210,7 @@ class GameState:
     def time_on_map(self) -> str:
         seconds_on_map: float = time.time() - self.map_change_time
         time_format: str = '%M:%S' if seconds_on_map <= 3600 else '%H:%M:%S'
-        map_time_formatted: str = time.strftime(time_format, time.gmtime(seconds_on_map))
+        map_time_formatted: str = time.strftime(time_format, time.gmtime(seconds_on_map)).removeprefix('0')
         return self.loc.text("Time on map: {0}").format(map_time_formatted)
 
     # get either the top or bottom line, based on user settings

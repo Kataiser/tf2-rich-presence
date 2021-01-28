@@ -232,7 +232,7 @@ class TF2RichPresense:
                 self.game_state.set_bulk(console_log_parsed)
 
             time_elapsed_num: str = str(datetime.timedelta(seconds=int(time.time() - p_data['TF2']['time'])))
-            time_elapsed: str = self.loc.text("{0} elapsed").format(time_elapsed_num.removeprefix('0:'))
+            time_elapsed: str = self.loc.text("{0} elapsed").format(time_elapsed_num.removeprefix('0:').removeprefix('0'))
             base_window_title: str = self.loc.text("TF2 Rich Presence ({0})").format(launcher.VERSION)
             window_title_format_menus: str = self.loc.text("{0} - {1} ({2})")
             window_title_format_main: str = self.loc.text("{0} - {1} on {2}")

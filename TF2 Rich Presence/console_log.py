@@ -23,7 +23,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     tf2_map: str = ''
     tf2_class: str = ''
     server_address: str = ''
-    queued_state: str = ''
+    queued_state: str = "Not queued"
     hosting: bool = False
     default_state = (in_menus, tf2_map, tf2_class, server_address, queued_state, hosting)
 
@@ -154,7 +154,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
 
         elif '[PartyClient] L' in line:  # full line: "[PartyClient] Leaving queue"
             # queueing is not necessarily only in menus
-            queued_state = ''
+            queued_state = "Not queued"
 
         elif '[PartyClient] Entering q' in line:  # full line: "[PartyClient] Entering queue for match group " + whatever mode
             match_type: str = line.split('match group ')[-1][:-1]
@@ -196,6 +196,10 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     if server_still_running and not in_menus:
         hosting = True
         server_address = ''
+
+    if settings.get('hide_queued_gamemode') and "Queued" in queued_state:
+        self.log.debug(f"Hiding queued state (\"{queued_state}\" to \"Queued\")")
+        queued_state = "Queued"
 
     scan_results = (in_menus, tf2_map, tf2_class, server_address, queued_state, hosting)
     self.log.debug(f"console.log parse results: {scan_results}")
