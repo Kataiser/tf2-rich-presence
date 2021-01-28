@@ -58,21 +58,21 @@ class TestTF2RichPresense(unittest.TestCase):
         recent_time = int(time.time()) - 10
         app = main.TF2RichPresense(self.log, set_process_priority=False)
 
-        self.assertEqual(app.interpret_console_log('test_resources\\console_in_menus.log', {'not Kataiser'}, float('inf'), True), (True, '', '', '', '', False))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_in_menus.log', {'not Kataiser'}, 4, True), (True, '', '', '', '', False))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_in_menus.log', {'not Kataiser'}, float('inf'), True), (True, '', '', '', 'Not queued', False))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_in_menus.log', {'not Kataiser'}, 4, True), (True, '', '', '', 'Not queued', False))
         self.assertEqual(app.interpret_console_log('test_resources\\console_queued_casual.log', {'not Kataiser'}, float('inf'), True), (True, '', '', '', 'Queued for Casual', False))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', {'not Kataiser'}, float('inf'), True), (False, 'pl_badwater', 'Pyro', '', '', True))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', {'not Kataiser'}, float('inf'), True, recent_time), (True, '', '', '', '', False))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', {'not Kataiser'}, 0.2, True), (True, '', '', '', '', False))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_custom_map.log', {'not Kataiser'}, float('inf'), True), (False, 'cp_catwalk_a5c', 'Soldier', '', '', True))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_soundemitter.log', {'not Kataiser'}, float('inf'), True), (True, '', '', '', '', False))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', {'not Kataiser'}, float('inf'), True), (False, 'pl_badwater', 'Pyro', '', 'Not queued', True))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', {'not Kataiser'}, float('inf'), True, recent_time), (True, '', '', '', 'Not queued', False))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', {'not Kataiser'}, 0.2, True), (True, '', '', '', 'Not queued', False))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_custom_map.log', {'not Kataiser'}, float('inf'), True), (False, 'cp_catwalk_a5c', 'Soldier', '', 'Not queued', True))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_soundemitter.log', {'not Kataiser'}, float('inf'), True), (True, '', '', '', 'Not queued', False))
         self.assertEqual(app.interpret_console_log('test_resources\\console_queued_in_game.log', {'not Kataiser'}, float('inf'), True),
                          (False, 'itemtest', 'Heavy', '', 'Queued for Casual', True))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_canceled_load.log', {'not Kataiser'}, float('inf'), True), (True, '', '', '', '', False))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_chat.log', {'not Kataiser'}, float('inf'), True), (False, 'itemtest', 'Scout', '', '', True))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_empty.log', {'not Kataiser'}, float('inf'), True), (True, '', '', '', '', False))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_canceled_load.log', {'not Kataiser'}, float('inf'), True), (True, '', '', '', 'Not queued', False))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_chat.log', {'not Kataiser'}, float('inf'), True), (False, 'itemtest', 'Scout', '', 'Not queued', True))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_empty.log', {'not Kataiser'}, float('inf'), True), (True, '', '', '', 'Not queued', False))
         self.assertEqual(app.interpret_console_log('test_resources\\console_valve_server.log', {'not Kataiser'}, float('inf'), True),
-                         (False, 'pl_snowycoast', 'Pyro', '162.254.194.158:27048', '', False))
+                         (False, 'pl_snowycoast', 'Pyro', '162.254.194.158:27048', 'Not queued', False))
 
         # tests trimming
         trimtest_small = 'test_resources\\console_badwater.log'
@@ -81,7 +81,7 @@ class TestTF2RichPresense(unittest.TestCase):
         with open(trimtest_big, 'rb+') as console_badwater_sacrifice:
             console_badwater_sacrifice.write(console_badwater_sacrifice.read())  # this just doubles the file size
         initial_size = os.stat(trimtest_big).st_size
-        self.assertEqual(app.interpret_console_log(trimtest_big, {'not Kataiser'}), (False, 'pl_badwater', 'Pyro', '', '', True))
+        self.assertEqual(app.interpret_console_log(trimtest_big, {'not Kataiser'}), (False, 'pl_badwater', 'Pyro', '', 'Not queued', True))
         trimmed_size = os.stat(trimtest_big).st_size
         self.assertLess(trimmed_size, initial_size)
         self.assertEqual(trimmed_size, (1024 ** 2) * 2)
@@ -99,7 +99,7 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertLess(cleaned_size, initial_size)
         with open(errorstest_small, 'r', encoding='UTF8') as errorstest_small_cleaned:
             self.assertFalse('DataTable warning' in errorstest_small_cleaned.read())
-        self.assertEqual(app.interpret_console_log(errorstest_small, {'not Kataiser'}, float('inf')), (True, '', '', '', '', False))
+        self.assertEqual(app.interpret_console_log(errorstest_small, {'not Kataiser'}, float('inf')), (True, '', '', '', 'Not queued', False))
         os.remove(errorstest_small)
 
     def test_steam_config_file(self):
@@ -193,7 +193,7 @@ class TestTF2RichPresense(unittest.TestCase):
             self.assertTrue(len(changelog) > 0)
 
             with self.assertRaises(requests.Timeout):
-                updater.access_github_api(0.01)
+                updater.access_github_api(0.0001)
 
     def test_format_changelog(self):
         unformatted = "## Changes" \
