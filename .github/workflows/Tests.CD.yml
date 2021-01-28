@@ -30,9 +30,9 @@ jobs:
     - name: Build packages
       run: |
         cd "TF2 Rich Presence"
-        python build.py --n
+        python build.py --n --artifact
     - name: Upload artifact package
       uses: actions/upload-artifact@v2
       with:
         name: tf2_rich_presence_dev
-        path: "TF2 Rich Presence"
+        path: "TF2 Rich Presence/tf2_rich_presence_dev.7z"
