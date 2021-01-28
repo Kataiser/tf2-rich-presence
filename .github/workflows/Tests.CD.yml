@@ -18,7 +18,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-    - name: Set up environment
+    - name: Copy files
       run: |
         xcopy LICENSE "TF2 Rich Presence"
         xcopy Changelogs.html "TF2 Rich Presence"
@@ -27,11 +27,11 @@ jobs:
       run: |
         cd "TF2 Rich Presence"
         python tests.py
-    - name: Build
+    - name: Build packages
       run: |
         cd "TF2 Rich Presence"
         python build.py --n --artifact
-    - name: Upload artifact
+    - name: Upload artifact package
       uses: actions/upload-artifact@v2
       with:
         name: TF2 Rich Presence dev build
