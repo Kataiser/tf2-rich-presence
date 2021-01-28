@@ -23,12 +23,13 @@ jobs:
         xcopy LICENSE "TF2 Rich Presence"
         xcopy Changelogs.html "TF2 Rich Presence"
         xcopy requirements.txt "TF2 Rich Presence"
-        cd "TF2 Rich Presence"
     - name: Run tests
       run: |
+        cd "TF2 Rich Presence"
         python tests.py
     - name: Build
       run: |
+        cd "TF2 Rich Presence"
         python build.py --n --artifact
     - name: Upload artifact
       uses: actions/upload-artifact@v2
