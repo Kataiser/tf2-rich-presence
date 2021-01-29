@@ -33,7 +33,6 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
 
     if not os.path.isfile(console_log_path):
         self.log.error(f"console.log doesn't exist, issuing warning (files/dirs in /tf/: {os.listdir(os.path.dirname(console_log_path))})", reportable=False)
-        # self.gui.no_condebug_warning(True)
         self.no_condebug = False
         return default_state  # might as well
 

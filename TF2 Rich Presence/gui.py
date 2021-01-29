@@ -341,10 +341,12 @@ class GUI(tk.Frame):
     def show_kataiser_in_game(self):
         if not self.showing_kataiser_text:
             self.canvas.itemconfigure(self.kataiser_text, text="Hey, it seems that Kataiser, the developer of TF2 Rich Presence, is in your game!\nSay hi to me if you'd like :)")
+            self.showing_kataiser_text = True
 
     def hide_kataiser_in_game(self):
         if self.showing_kataiser_text:
             self.canvas.itemconfigure(self.kataiser_text, text="")
+            self.showing_kataiser_text = False
 
     # load a .webp image from gui_images, mode can be RGBA or RGB. image_name shouldn't have the file extension and can have forward slashes
     @functools.cache
@@ -482,7 +484,7 @@ class GUI(tk.Frame):
         # would be nice if there was a way to auto upload the log file
         webbrowser.open('https://github.com/Kataiser/tf2-rich-presence/issues/new?body=Please%20remember%20to%20add%20your%20most%20recent%20log%20file')
 
-    def menu_about(self, *args):
+    def menu_about(self, *args, silent: bool = False):
         self.log.info("GUI: opening about window")
         build_info_path: str = os.path.join('resources', 'build_info.txt')
         build_time: str = ""
@@ -510,12 +512,14 @@ class GUI(tk.Frame):
                      f"\nAs well as anyone who's ever submitted bug reports"
 
         self.log.debug(f"Generated about page: {about.splitlines()}")
-        self.pause()
-        messagebox.showinfo("About TF2 Rich Presence", about)
-        self.unpause()
+
+        if not silent:
+            self.pause()
+            messagebox.showinfo("About TF2 Rich Presence", about)
+            self.unpause()
 
     # cause why not
-    def holiday(self):
+    def holiday(self, silent: bool = False):
         now: datetime.datetime = datetime.datetime.now()
         holiday_text: Optional[str] = None
 
@@ -530,9 +534,11 @@ class GUI(tk.Frame):
 
         if holiday_text is not None:
             self.log.info(f"Today is {now.year}/{now.month}/{now.day}, so the holiday text is \"{holiday_text}\"")
-            self.pause()
-            messagebox.showinfo(holiday_text)
-            self.unpause()
+
+            if not silent:
+                self.pause()
+                messagebox.showinfo(holiday_text)
+                self.unpause()
 
     # runs either when the X button is clicked or whenever needed
     def close_window(self):
@@ -577,27 +583,31 @@ def pos_window_by_center(window: Union[tk.Tk, tk.Toplevel], x: int, y: int):
 def main():
     main_gui = GUI(logger.Log())
     main_gui.set_clean_console_log_button_state(True)  # cause main would normally enable it once in game
-
-    test_state = 4
-
-    if test_state == 0:
-        main_gui.set_state_1('default', "Team Fortress 2 isn't running")
-    elif test_state == 1:
-        main_gui.set_state_3('main_menu', ("In menus", "Not queued", "01:21 elapsed"))
-        main_gui.set_fg_image('tf2_logo')
-    elif test_state == 2:
-        main_gui.set_state_3('main_menu', ("In menus", "Queued for Casual", "01:21 elapsed"))
-        main_gui.set_fg_image('casual')
-    elif test_state == 3:
-        main_gui.set_state_4('bg_modes/payload', ("Map: Swiftwater", "Players: 19/24", "Time on map: 2:39", "06:21 elapsed"))
-        main_gui.set_fg_image('fg_maps/pl_swiftwater_final1')
-        main_gui.set_class_image('sniper')
-    elif test_state == 4:
-        main_gui.set_state_4('bg_modes/control-point', ("Map: cp_catwalk_a5c (hosting)", "Players: ?/?", "Time on map: 2:39", "06:21 elapsed"))
-        main_gui.set_fg_image('fg_modes/control-point')
-        main_gui.set_class_image('pyro')
-
+    test_state(main_gui, 3)
     main_gui.mainloop()
+
+
+def test_state(test_gui: GUI, state: int):
+    if state == 0:
+        test_gui.set_state_1('default', "Team Fortress 2 isn't running")
+        test_gui.clear_fg_image()
+        test_gui.clear_class_image()
+    elif state == 1:
+        test_gui.set_state_3('main_menu', ("In menus", "Not queued", "01:21 elapsed"))
+        test_gui.set_fg_image('tf2_logo')
+        test_gui.clear_class_image()
+    elif state == 2:
+        test_gui.set_state_3('main_menu', ("In menus", "Queued for Casual", "01:21 elapsed"))
+        test_gui.set_fg_image('casual')
+        test_gui.clear_class_image()
+    elif state == 3:
+        test_gui.set_state_4('bg_modes/payload', ("Map: Swiftwater", "Players: 19/24", "Time on map: 2:39", "06:21 elapsed"))
+        test_gui.set_fg_image('fg_maps/pl_swiftwater_final1')
+        test_gui.set_class_image('sniper')
+    elif state == 4:
+        test_gui.set_state_4('bg_modes/control-point', ("Map: cp_catwalk_a5c (hosting)", "Players: ?/?", "Time on map: 2:39", "06:21 elapsed"))
+        test_gui.set_fg_image('fg_modes/control-point')
+        test_gui.set_class_image('pyro')
 
 
 if __name__ == "__main__":

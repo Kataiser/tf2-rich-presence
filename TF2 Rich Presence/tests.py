@@ -16,6 +16,7 @@ from discoIPC import ipc
 import configs
 import game_state
 import gamemodes
+import gui
 import localization
 import logger
 import main
@@ -387,14 +388,14 @@ class TestTF2RichPresense(unittest.TestCase):
         self_process.ionice(psutil.IOPRIO_NORMAL)
 
     def test_game_state(self):
-        test_game_state = game_state.GameState()
-        self.assertTrue(test_game_state.update_rpc)
-        self.assertEqual(str(test_game_state), 'in menus, queued="Not queued"')
+        game_state_test = game_state.GameState()
+        self.assertTrue(game_state_test.update_rpc)
+        self.assertEqual(str(game_state_test), 'in menus, queued="Not queued"')
 
-        test_game_state.set_bulk((True, '', '', '', 'Not queued', False))
-        self.assertTrue(test_game_state.update_rpc)
-        self.assertEqual(str(test_game_state), 'in menus, queued="Not queued"')
-        self.assertEqual(fix_activity_dict(test_game_state.activity()),
+        game_state_test.set_bulk((True, '', '', '', 'Not queued', False))
+        self.assertTrue(game_state_test.update_rpc)
+        self.assertEqual(str(game_state_test), 'in menus, queued="Not queued"')
+        self.assertEqual(fix_activity_dict(game_state_test.activity()),
                          {'details': 'In menus',
                           'state': 'Not queued',
                           'timestamps': {'start': 0},
@@ -402,12 +403,12 @@ class TestTF2RichPresense(unittest.TestCase):
                                      'large_text': 'In menus - TF2 Rich Presence {tf2rpvnum}',
                                      'small_image': 'tf2_logo',
                                      'small_text': 'Team Fortress 2'}})
-        self.assertFalse(test_game_state.update_rpc)
+        self.assertFalse(game_state_test.update_rpc)
 
-        test_game_state.set_bulk((False, 'koth_highpass', 'Demoman', '', 'Not queued', True))
-        self.assertTrue(test_game_state.update_rpc)
-        self.assertEqual(str(test_game_state), 'Demoman on Highpass, gamemode=koth, hosting=True, queued="Not queued", server=')
-        self.assertEqual(fix_activity_dict(test_game_state.activity()),
+        game_state_test.set_bulk((False, 'koth_highpass', 'Demoman', '', 'Not queued', True))
+        self.assertTrue(game_state_test.update_rpc)
+        self.assertEqual(str(game_state_test), 'Demoman on Highpass, gamemode=koth, hosting=True, queued="Not queued", server=')
+        self.assertEqual(fix_activity_dict(game_state_test.activity()),
                          {'details': 'Map: Highpass (hosting)',
                           'state': 'Time on map: 0:00',
                           'timestamps': {'start': 0},
@@ -415,15 +416,15 @@ class TestTF2RichPresense(unittest.TestCase):
                                      'large_text': 'Highpass - TF2 Rich Presence {tf2rpvnum}',
                                      'small_image': 'demoman',
                                      'small_text': 'Demoman'}})
-        self.assertTrue(test_game_state.update_rpc)
+        self.assertTrue(game_state_test.update_rpc)
 
         temp_settings = settings.defaults()
         temp_settings['bottom_line'] = 'Class'
         settings.access_registry(temp_settings)
-        test_game_state.set_bulk((False, 'koth_highpass', 'Demoman', '', 'Not queued', True))
-        self.assertTrue(test_game_state.update_rpc)
-        self.assertEqual(str(test_game_state), 'Demoman on Highpass, gamemode=koth, hosting=True, queued="Not queued", server=')
-        self.assertEqual(fix_activity_dict(test_game_state.activity()),
+        game_state_test.set_bulk((False, 'koth_highpass', 'Demoman', '', 'Not queued', True))
+        self.assertTrue(game_state_test.update_rpc)
+        self.assertEqual(str(game_state_test), 'Demoman on Highpass, gamemode=koth, hosting=True, queued="Not queued", server=')
+        self.assertEqual(fix_activity_dict(game_state_test.activity()),
                          {'details': 'Map: Highpass (hosting)',
                           'state': 'Class: Demoman',
                           'timestamps': {'start': 0},
@@ -431,14 +432,14 @@ class TestTF2RichPresense(unittest.TestCase):
                                      'large_text': 'Highpass - TF2 Rich Presence {tf2rpvnum}',
                                      'small_image': 'demoman',
                                      'small_text': 'Demoman'}})
-        self.assertFalse(test_game_state.update_rpc)
+        self.assertFalse(game_state_test.update_rpc)
 
         settings.access_registry(settings.defaults())
-        test_game_state.set_bulk((False, 'pl_snowycoast', 'Pyro', '162.254.194.158:27048', 'Not queued', False))
-        self.assertTrue(test_game_state.update_rpc)
-        test_game_state.set_server_data(['Player count'], {'Kataiser'})
-        self.assertEqual(str(test_game_state), 'Pyro on Snowycoast, gamemode=payload, hosting=False, queued="Not queued", server=162.254.194.158:27048')
-        self.assertEqual(fix_activity_dict(test_game_state.activity()),
+        game_state_test.set_bulk((False, 'pl_snowycoast', 'Pyro', '162.254.194.158:27048', 'Not queued', False))
+        self.assertTrue(game_state_test.update_rpc)
+        game_state_test.set_server_data(['Player count'], {'Kataiser'})
+        self.assertEqual(str(game_state_test), 'Pyro on Snowycoast, gamemode=payload, hosting=False, queued="Not queued", server=162.254.194.158:27048')
+        self.assertEqual(fix_activity_dict(game_state_test.activity()),
                          {'details': 'Players: 0/0',
                           'state': 'Time on map: 0:00',
                           'timestamps': {'start': 0},
@@ -446,14 +447,14 @@ class TestTF2RichPresense(unittest.TestCase):
                                      'large_text': 'Snowycoast - TF2 Rich Presence {tf2rpvnum}',
                                      'small_image': 'pyro',
                                      'small_text': 'Pyro'}})
-        self.assertTrue(test_game_state.update_rpc)
+        self.assertTrue(game_state_test.update_rpc)
 
         temp_settings = settings.defaults()
         temp_settings['bottom_line'] = 'Kills'
         temp_settings['server_rate_limit'] = 0
         settings.access_registry(temp_settings)
-        test_game_state.set_server_data(['Player count', 'Kills'], {'Kataiser'})
-        self.assertEqual(fix_activity_dict(test_game_state.activity()),
+        game_state_test.set_server_data(['Player count', 'Kills'], {'Kataiser'})
+        self.assertEqual(fix_activity_dict(game_state_test.activity()),
                          {'details': 'Players: 0/0',
                           'state': 'Kills: 0',
                           'timestamps': {'start': 0},
@@ -461,13 +462,13 @@ class TestTF2RichPresense(unittest.TestCase):
                                      'large_text': 'Snowycoast - TF2 Rich Presence {tf2rpvnum}',
                                      'small_image': 'pyro',
                                      'small_text': 'Pyro'}})
-        self.assertFalse(test_game_state.update_rpc)
+        self.assertFalse(game_state_test.update_rpc)
 
         settings.access_registry(settings.defaults())
-        test_game_state.set_bulk((False, 'cp_catwalk_a5c', 'Soldier', '', 'Queued for Casual', True))
-        self.assertTrue(test_game_state.update_rpc)
-        self.assertEqual(str(test_game_state), 'Soldier on cp_catwalk_a5c, gamemode=control-point, hosting=True, queued="Queued for Casual", server=')
-        self.assertEqual(fix_activity_dict(test_game_state.activity()),
+        game_state_test.set_bulk((False, 'cp_catwalk_a5c', 'Soldier', '', 'Queued for Casual', True))
+        self.assertTrue(game_state_test.update_rpc)
+        self.assertEqual(str(game_state_test), 'Soldier on cp_catwalk_a5c, gamemode=control-point, hosting=True, queued="Queued for Casual", server=')
+        self.assertEqual(fix_activity_dict(game_state_test.activity()),
                          {'details': 'Map: cp_catwalk_a5c (hosting)',
                           'state': 'Time on map: 0:00',  # this'll be fixed (should be "Queued for Casual")
                           'timestamps': {'start': 0},
@@ -475,12 +476,12 @@ class TestTF2RichPresense(unittest.TestCase):
                                      'large_text': 'Control Point - TF2 Rich Presence {tf2rpvnum}',
                                      'small_image': 'soldier',
                                      'small_text': 'Soldier'}})
-        self.assertTrue(test_game_state.update_rpc)
+        self.assertTrue(game_state_test.update_rpc)
 
-        test_game_state.set_bulk((False, 'ctf_sawmill', 'Engineer', '', 'Not queued', True))
-        self.assertTrue(test_game_state.update_rpc)
-        self.assertEqual(str(test_game_state), 'Engineer on Sawmill (CTF), gamemode=ctf, hosting=True, queued="Not queued", server=')
-        self.assertEqual(fix_activity_dict(test_game_state.activity()),
+        game_state_test.set_bulk((False, 'ctf_sawmill', 'Engineer', '', 'Not queued', True))
+        self.assertTrue(game_state_test.update_rpc)
+        self.assertEqual(str(game_state_test), 'Engineer on Sawmill (CTF), gamemode=ctf, hosting=True, queued="Not queued", server=')
+        self.assertEqual(fix_activity_dict(game_state_test.activity()),
                          {'details': 'Map: Sawmill (CTF) (hosting)',
                           'state': 'Time on map: 0:00',
                           'timestamps': {'start': 0},
@@ -488,7 +489,44 @@ class TestTF2RichPresense(unittest.TestCase):
                                      'large_text': 'Sawmill (CTF) - TF2 Rich Presence {tf2rpvnum}',
                                      'small_image': 'engineer',
                                      'small_text': 'Engineer'}})
-        self.assertTrue(test_game_state.update_rpc)
+        self.assertTrue(game_state_test.update_rpc)
+
+    def test_gui(self):
+        gui_test = gui.GUI(self.log)
+        gui_test.set_clean_console_log_button_state(True)
+
+        for state in [i for i in range(5)]:
+            gui.test_state(gui_test, state)
+            gui_test.safe_update()
+
+        self.assertEqual((gui_test.text_state, gui_test.bg_state, gui_test.fg_state, gui_test.class_state),
+                         (('Map: cp_catwalk_a5c (hosting)', 'Players: ?/?', 'Time on map: 2:39', '06:21 elapsed'),
+                          ('bg_modes/control-point', 77, 172), 'fg_modes/control-point', 'classes/pyro'))
+
+        for state in [4 - i for i in range(5)]:
+            gui.test_state(gui_test, state)
+            gui_test.safe_update()
+
+        self.assertEqual((gui_test.text_state, gui_test.bg_state, gui_test.fg_state, gui_test.class_state), (("Team Fortress 2 isn't running",), ('default', 0, 0), '', ''))
+
+        gui_test.pause()
+        gui_test.unpause()
+        gui_test.enable_update_notification()
+        gui_test.check_for_updates(popup=True)
+        gui_test.show_kataiser_in_game()
+        gui_test.hide_kataiser_in_game()
+        gui_test.holiday(silent=True)
+        gui_test.menu_open_settings()
+        gui_test.menu_about(silent=True)
+
+        fg_image = gui_test.fg_image_load('tf2_logo', 120)
+        self.assertEqual((fg_image.width(), fg_image.height()), (120, 120))
+        gui_test.scale = 2
+        gui_test.fg_image_load.cache_clear()
+        fg_image = gui_test.fg_image_load('tf2_logo', 120)
+        self.assertEqual((fg_image.width(), fg_image.height()), (240, 240))
+
+        gui_test.menu_exit()
 
 
 def fix_activity_dict(activity):
