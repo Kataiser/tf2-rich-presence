@@ -465,6 +465,8 @@ class TestTF2RichPresense(unittest.TestCase):
 
         settings.access_registry(settings.defaults())
         test_game_state.set_bulk((False, 'cp_catwalk_a5c', 'Soldier', '', 'Queued for Casual', True))
+        self.assertTrue(test_game_state.update_rpc)
+        self.assertEqual(str(test_game_state), 'Soldier on cp_catwalk_a5c, gamemode=control-point, hosting=True, queued="Queued for Casual", server=')
         self.assertEqual(fix_activity_dict(test_game_state.activity()),
                          {'details': 'Map: cp_catwalk_a5c (hosting)',
                           'state': 'Time on map: 0:00',  # this'll be fixed (should be "Queued for Casual")
@@ -473,6 +475,19 @@ class TestTF2RichPresense(unittest.TestCase):
                                      'large_text': 'Control Point - TF2 Rich Presence {tf2rpvnum}',
                                      'small_image': 'soldier',
                                      'small_text': 'Soldier'}})
+        self.assertTrue(test_game_state.update_rpc)
+
+        test_game_state.set_bulk((False, 'ctf_sawmill', 'Engineer', '', 'Not queued', True))
+        self.assertTrue(test_game_state.update_rpc)
+        self.assertEqual(str(test_game_state), 'Engineer on Sawmill (CTF), gamemode=ctf, hosting=True, queued="Not queued", server=')
+        self.assertEqual(fix_activity_dict(test_game_state.activity()),
+                         {'details': 'Map: Sawmill (CTF) (hosting)',
+                          'state': 'Time on map: 0:00',
+                          'timestamps': {'start': 0},
+                          'assets': {'large_image': 'z_koth_sawmill',
+                                     'large_text': 'Sawmill (CTF) - TF2 Rich Presence {tf2rpvnum}',
+                                     'small_image': 'engineer',
+                                     'small_text': 'Engineer'}})
         self.assertTrue(test_game_state.update_rpc)
 
 
