@@ -19,9 +19,9 @@ import utils
 
 
 class Localizer:
-    def __init__(self, log: Optional[logger.Log] = None, language: Optional[str] = None, appending: bool = False):
+    def __init__(self, log: Optional[logger.Log] = None, language: str = settings.get('language'), appending: bool = False):
         self.log: Optional[logger.Log] = log
-        self.language: Optional[str] = language
+        self.language: str = language
         self.missing_lines: List[str] = []  # TODO: ingest from DB.json maybe
         self.appending: bool = appending  # if extending localization.json
 

@@ -33,6 +33,7 @@ def access_registry(save: Optional[dict] = None) -> Optional[dict]:
 
     if save:
         winreg.SetValue(reg_key, 'Settings', winreg.REG_SZ, json.dumps(save, separators=(',', ':')))
+        get.cache_clear()
     else:
         return reg_key_data
 

@@ -27,7 +27,7 @@ class GUI(tk.Frame):
     def __init__(self, log: logger.Log):
         self.log: logger.Log = log
         self.log.info("Initializing main GUI")
-        self.loc: localization.Localizer = localization.Localizer(self.log, settings.get('language'))
+        self.loc: localization.Localizer = localization.Localizer(self.log)
         self.master: tk.Tk = tk.Tk()
         tk.Frame.__init__(self, self.master)
         self.pack(fill=tk.BOTH, expand=1, padx=0, pady=0)

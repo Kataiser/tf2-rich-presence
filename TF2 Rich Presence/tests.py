@@ -64,7 +64,8 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', {'not Kataiser'}, float('inf'), True), (False, 'pl_badwater', 'Pyro', '', 'Not queued', True))
         self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', {'not Kataiser'}, float('inf'), True, recent_time), (True, '', '', '', 'Not queued', False))
         self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', {'not Kataiser'}, 0.2, True), (True, '', '', '', 'Not queued', False))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_custom_map.log', {'not Kataiser'}, float('inf'), True), (False, 'cp_catwalk_a5c', 'Soldier', '', 'Not queued', True))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_custom_map.log', {'not Kataiser'}, float('inf'), True),
+                         (False, 'cp_catwalk_a5c', 'Soldier', '', 'Not queued', True))
         self.assertEqual(app.interpret_console_log('test_resources\\console_soundemitter.log', {'not Kataiser'}, float('inf'), True), (True, '', '', '', 'Not queued', False))
         self.assertEqual(app.interpret_console_log('test_resources\\console_queued_in_game.log', {'not Kataiser'}, float('inf'), True),
                          (False, 'itemtest', 'Heavy', '', 'Queued for Casual', True))
@@ -107,7 +108,7 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual(configs.steam_config_file(app, 'test_resources\\'), {'Kataiser'})
 
     def test_get_match_info(self):
-        test_game_state = game_state.GameState(self.log, localization.Localizer(self.log, 'English'))
+        test_game_state = game_state.GameState()
         test_addresses = ('162.254.194.158:27048',  # valve
                           'us2.uncledane.com:27015',
                           '51.81.49.25:27015',  # creators.tf
@@ -196,25 +197,25 @@ class TestTF2RichPresense(unittest.TestCase):
                 updater.access_github_api(0.0001)
 
     def test_format_changelog(self):
-        unformatted = "## Changes" \
-                      "\n- This is a change or addition of some sort" \
-                      "\n- This is a second change" \
-                      "\n## Fixes" \
-                      "\n- This is a bug fix" \
-                      "\n   - This is a sub-point" \
-                      "\n- This is another bug fix" \
+        unformatted = "## Changes\n" \
+                      "- This is a change or addition of some sort\n" \
+                      "- This is a second change\n" \
+                      "## Fixes\n" \
+                      "- This is a bug fix\n" \
+                      "   - This is a sub-point\n" \
+                      "- This is another bug fix\n" \
                       "\n" \
-                      "\nThis is some extra text"
+                      "This is some extra text"
 
-        formatted = "  Changes" \
-                    "\n   - This is a change or addition of some sort" \
-                    "\n   - This is a second change" \
-                    "\n  Fixes" \
-                    "\n   - This is a bug fix" \
-                    "\n     - This is a sub-point" \
-                    "\n   - This is another bug fix" \
-                    "\n  " \
-                    "\n  This is some extra text"
+        formatted = "  Changes\n" \
+                    "   - This is a change or addition of some sort\n" \
+                    "   - This is a second change\n" \
+                    "  Fixes\n" \
+                    "   - This is a bug fix\n" \
+                    "     - This is a sub-point\n" \
+                    "   - This is another bug fix\n" \
+                    "  \n" \
+                    "  This is some extra text"
 
         self.assertEqual(updater.format_changelog(unformatted), formatted)
 
@@ -247,11 +248,15 @@ class TestTF2RichPresense(unittest.TestCase):
 
     def test_get_api_key(self):
         self.assertEqual(len(utils.get_api_key('discord')), 18)
+        self.assertEqual(len(utils.get_api_key('discord2')), 18)
         self.assertEqual(len(utils.get_api_key('sentry')), 91)
 
     def test_load_maps_db(self):
         maps_db = gamemodes.load_maps_db()
-        self.assertGreater(len(maps_db), 100)
+        self.assertEqual(len(maps_db), 123)
+
+        for map_ in maps_db:
+            self.assertEqual(len(set(maps_db[map_])), 3)
 
     def test_discoipc(self):
         # this test fails if Discord isn't running
@@ -275,24 +280,6 @@ class TestTF2RichPresense(unittest.TestCase):
         client.disconnect()
         client_state = (client.client_id, client.connected, client.ipc_path, isinstance(client.pid, int), client.platform, client.socket)
         self.assertEqual(client_state, ('429389143756374017', False, '\\\\?\\pipe\\discord-ipc-0', True, 'windows', None))
-
-    def test_generate_delta(self):
-        localizer1 = localization.Localizer(language='English')
-        localizer2 = localization.Localizer(language='Spanish')
-
-        self.assertEqual(utils.generate_delta(localizer1, time.time() - 1), ' (+1 second)')
-        self.assertEqual(utils.generate_delta(localizer1, time.time() - 10), ' (+10 seconds)')
-        self.assertEqual(utils.generate_delta(localizer1, time.time() - 100), ' (+1.7 minutes)')
-        self.assertEqual(utils.generate_delta(localizer1, time.time() - 1000), ' (+16.7 minutes)')
-        self.assertEqual(utils.generate_delta(localizer1, time.time() - 10000), ' (+2.8 hours)')
-        self.assertEqual(utils.generate_delta(localizer1, time.time() - 100000), ' (+1.2 days)')
-
-        self.assertEqual(utils.generate_delta(localizer2, time.time() - 1), ' (+1 segundo)')
-        self.assertEqual(utils.generate_delta(localizer2, time.time() - 10), ' (+10 segundos)')
-        self.assertEqual(utils.generate_delta(localizer2, time.time() - 100), ' (+1.7 minutos)')
-        self.assertEqual(utils.generate_delta(localizer2, time.time() - 1000), ' (+16.7 minutos)')
-        self.assertEqual(utils.generate_delta(localizer2, time.time() - 10000), ' (+2.8 horas)')
-        self.assertEqual(utils.generate_delta(localizer2, time.time() - 100000), ' (+1.2 días)')
 
     def test_process_scanning(self):
         process_scanner = processes.ProcessScanner(self.log)
@@ -399,10 +386,109 @@ class TestTF2RichPresense(unittest.TestCase):
         self_process.nice(psutil.NORMAL_PRIORITY_CLASS)
         self_process.ionice(psutil.IOPRIO_NORMAL)
 
+    def test_game_state(self):
+        test_game_state = game_state.GameState()
+        self.assertTrue(test_game_state.update_rpc)
+        self.assertEqual(str(test_game_state), 'in menus, queued="Not queued"')
+
+        test_game_state.set_bulk((True, '', '', '', 'Not queued', False))
+        self.assertTrue(test_game_state.update_rpc)
+        self.assertEqual(str(test_game_state), 'in menus, queued="Not queued"')
+        self.assertEqual(fix_activity_dict(test_game_state.activity()),
+                         {'details': 'In menus',
+                          'state': 'Not queued',
+                          'timestamps': {'start': 0},
+                          'assets': {'large_image': 'main_menu',
+                                     'large_text': 'In menus - TF2 Rich Presence {tf2rpvnum}',
+                                     'small_image': 'tf2_logo',
+                                     'small_text': 'Team Fortress 2'}})
+        self.assertFalse(test_game_state.update_rpc)
+
+        test_game_state.set_bulk((False, 'koth_highpass', 'Demoman', '', 'Not queued', True))
+        self.assertTrue(test_game_state.update_rpc)
+        self.assertEqual(str(test_game_state), 'Demoman on Highpass, gamemode=koth, hosting=True, queued="Not queued", server=')
+        self.assertEqual(fix_activity_dict(test_game_state.activity()),
+                         {'details': 'Map: Highpass (hosting)',
+                          'state': 'Time on map: 0:00',
+                          'timestamps': {'start': 0},
+                          'assets': {'large_image': 'z_koth_highpass',
+                                     'large_text': 'Highpass - TF2 Rich Presence {tf2rpvnum}',
+                                     'small_image': 'demoman',
+                                     'small_text': 'Demoman'}})
+        self.assertTrue(test_game_state.update_rpc)
+
+        temp_settings = settings.defaults()
+        temp_settings['bottom_line'] = 'Class'
+        settings.access_registry(temp_settings)
+        test_game_state.set_bulk((False, 'koth_highpass', 'Demoman', '', 'Not queued', True))
+        self.assertTrue(test_game_state.update_rpc)
+        self.assertEqual(str(test_game_state), 'Demoman on Highpass, gamemode=koth, hosting=True, queued="Not queued", server=')
+        self.assertEqual(fix_activity_dict(test_game_state.activity()),
+                         {'details': 'Map: Highpass (hosting)',
+                          'state': 'Class: Demoman',
+                          'timestamps': {'start': 0},
+                          'assets': {'large_image': 'z_koth_highpass',
+                                     'large_text': 'Highpass - TF2 Rich Presence {tf2rpvnum}',
+                                     'small_image': 'demoman',
+                                     'small_text': 'Demoman'}})
+        self.assertFalse(test_game_state.update_rpc)
+
+        settings.access_registry(settings.defaults())
+        test_game_state.set_bulk((False, 'pl_snowycoast', 'Pyro', '162.254.194.158:27048', 'Not queued', False))
+        self.assertTrue(test_game_state.update_rpc)
+        test_game_state.set_server_data(['Player count'], {'Kataiser'})
+        self.assertEqual(str(test_game_state), 'Pyro on Snowycoast, gamemode=payload, hosting=False, queued="Not queued", server=162.254.194.158:27048')
+        self.assertEqual(fix_activity_dict(test_game_state.activity()),
+                         {'details': 'Players: 0/0',
+                          'state': 'Time on map: 0:00',
+                          'timestamps': {'start': 0},
+                          'assets': {'large_image': 'z_pl_snowycoast',
+                                     'large_text': 'Snowycoast - TF2 Rich Presence {tf2rpvnum}',
+                                     'small_image': 'pyro',
+                                     'small_text': 'Pyro'}})
+        self.assertTrue(test_game_state.update_rpc)
+
+        temp_settings = settings.defaults()
+        temp_settings['bottom_line'] = 'Kills'
+        temp_settings['server_rate_limit'] = 0
+        settings.access_registry(temp_settings)
+        test_game_state.set_server_data(['Player count', 'Kills'], {'Kataiser'})
+        self.assertEqual(fix_activity_dict(test_game_state.activity()),
+                         {'details': 'Players: 0/0',
+                          'state': 'Kills: 0',
+                          'timestamps': {'start': 0},
+                          'assets': {'large_image': 'z_pl_snowycoast',
+                                     'large_text': 'Snowycoast - TF2 Rich Presence {tf2rpvnum}',
+                                     'small_image': 'pyro',
+                                     'small_text': 'Pyro'}})
+        self.assertFalse(test_game_state.update_rpc)
+
+        settings.access_registry(settings.defaults())
+        test_game_state.set_bulk((False, 'cp_catwalk_a5c', 'Soldier', '', 'Queued for Casual', True))
+        self.assertEqual(fix_activity_dict(test_game_state.activity()),
+                         {'details': 'Map: cp_catwalk_a5c (hosting)',
+                          'state': 'Time on map: 0:00',  # this'll be fixed (should be "Queued for Casual")
+                          'timestamps': {'start': 0},
+                          'assets': {'large_image': 'control-point',
+                                     'large_text': 'Control Point - TF2 Rich Presence {tf2rpvnum}',
+                                     'small_image': 'soldier',
+                                     'small_text': 'Soldier'}})
+        self.assertTrue(test_game_state.update_rpc)
+
 
 def fix_activity_dict(activity):
     try:
         activity['timestamps']['start'] = int(activity['timestamps']['start'] * 0)
+
+        if 'Time on map' in activity['state']:
+            activity['state'] = 'Time on map: 0:00'
+        elif 'Players:' in activity['state']:
+            activity['state'] = 'Players: 0/0'
+
+        if 'Time on map' in activity['details']:
+            activity['details'] = 'Time on map: 0:00'
+        elif 'Players:' in activity['details']:
+            activity['details'] = 'Players: 0/0'
     except KeyError:
         pass
 

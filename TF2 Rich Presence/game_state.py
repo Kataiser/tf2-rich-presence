@@ -3,7 +3,7 @@
 # cython: language_level=3
 
 import time
-from typing import Dict, List, Set, Tuple
+from typing import Dict, List, Optional, Set, Tuple
 
 import gamemodes
 import launcher
@@ -15,7 +15,7 @@ import settings
 
 # this could be in main.py due to being so closely linked to the main logic, but I figured this was better for organization
 class GameState:
-    def __init__(self, log: logger.Log, loc: localization.Localizer):
+    def __init__(self, log: Optional[logger.Log] = None, loc: Optional[localization.Localizer] = None):
         self.in_menus: bool = True
         self.tf2_map: str = ''  # these have "tf2_" to avoid conflicting with reserved keywords
         self.tf2_class: str = "unselected"
@@ -32,13 +32,23 @@ class GameState:
         self.map_change_time: int = int(time.time())
         self.map_line: str = ''
 
-        self.log: logger.Log = log
-        self.loc: localization.Localizer = loc
         self.update_rpc: bool = True
         # don't track whether the GUI needs to be updated, main just always calls its updates and lets it handle whether or not it needs to set elements
         self.last_server_request_time: float = 0.0
         self.last_server_request_data: Dict[str, str] = {}
         self.last_server_request_address: str = ''
+
+        if log:
+            self.log: logger.Log = log
+        else:
+            self.log = logger.Log()
+            self.log.error(f"Initialized main.TF2RichPresense without a log, defaulting to one at {self.log.filename}")
+
+        if loc:
+            self.loc: localization.Localizer = loc
+        else:
+            self.loc = localization.Localizer()
+            self.log.error("Initialized main.TF2RichPresense without a localizer")
 
     def __repr__(self) -> str:
         return f"game_state.GameState ({str(self)})"
@@ -96,6 +106,8 @@ class GameState:
             else:
                 top_line = self.get_line('top', True)
                 bottom_line = self.get_line('bottom', True)
+
+            # TODO: fix queued in game
 
         if not top_line:
             self.log.error("Top line is blank")
@@ -156,7 +168,7 @@ class GameState:
             if tf2_map:
                 self.map_change_time = int(time.time())
                 self.map_fancy, self.gamemode, self.gamemode_fancy = gamemodes.get_map_gamemode(self.log, self.tf2_map)
-                self.custom_map = self.map_fancy == self.tf2_map  # TODO: this can actually be triggered by some vanilla maps, need to check if that's actually a problem
+                self.custom_map = self.tf2_map == self.map_fancy and self.tf2_map not in excluded_maps
                 self.map_line = self.loc.text("Map: {0} (hosting)").format(self.map_fancy) if self.hosting else self.loc.text("Map: {0}").format(self.map_fancy)
                 self.log.debug(f"Set map to {(self.tf2_map, self.map_fancy, self.gamemode)}, custom map={self.custom_map}")
 

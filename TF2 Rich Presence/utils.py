@@ -7,7 +7,6 @@ import functools
 import gzip
 import json
 import os
-import time
 from typing import Dict, Optional, Union
 
 
@@ -55,38 +54,3 @@ def get_api_key(service: str) -> str:
                   b'\x08,1\xb1\xc0\x93\xb8\x8b;\xda\xe3\xdc_c\xbd\x9f\xe7\xf3\x98\xa7\xa96Q*- \xa2#j\xcb=/d\x16\x12\xfb\xa5\x90\xf7si\xe3\xdd\xa3\x19/\x84\x948{\x85/\xd5\xbai\x16B\xbe\xfd' \
                   b'\x90\xd7u\x9bhP\x0c\x18\x9a\x7fE\x18"\x01\xe9\x08\x01\x07\x92\xa0\x91\x84\xdc\xe7\x0b)\x81\xb1\xd4\xa7\x00\x00\x00'
     return json.loads(gzip.decompress(data))[service]
-
-
-# generate text that displays the difference between now and old_time
-def generate_delta(loc, old_time: Optional[float]) -> str:
-    if old_time:
-        time_diff: int = round(time.time() - old_time)
-
-        if time_diff > 86400:
-            divided_diff: float = round(time_diff / 86400, 1)
-
-            if divided_diff == 1:
-                return f" (+{divided_diff} {loc.text('day')})"
-            else:
-                return f" (+{divided_diff} {loc.text('days')})"
-        elif time_diff > 3600:
-            divided_diff = round(time_diff / 3600, 1)
-
-            if divided_diff == 1:
-                return f" (+{divided_diff} {loc.text('hour')})"
-            else:
-                return f" (+{divided_diff} {loc.text('hours')})"
-        elif time_diff > 60:
-            divided_diff = round(time_diff / 60, 1)
-
-            if divided_diff == 1:
-                return f" (+{divided_diff} {loc.text('minute')})"
-            else:
-                return f" (+{divided_diff} {loc.text('minutes')})"
-        else:
-            if time_diff == 1:
-                return f" (+{time_diff} {loc.text('second')})"
-            else:
-                return f" (+{time_diff} {loc.text('seconds')})"
-    else:
-        return ""
