@@ -23,10 +23,6 @@ jobs:
         xcopy LICENSE "TF2 Rich Presence"
         xcopy Changelogs.html "TF2 Rich Presence"
         xcopy requirements.txt "TF2 Rich Presence"
-    - name: Run tests
-      run: |
-        cd "TF2 Rich Presence"
-        python tests.py
     - name: Build packages
       run: |
         cd "TF2 Rich Presence"
@@ -36,3 +32,7 @@ jobs:
       with:
         name: tf2_rich_presence_dev
         path: "TF2 Rich Presence/tf2_rich_presence_dev.7z"
+    - name: Run tests
+      run: |
+        cd "TF2 Rich Presence"
+        python tests.py
