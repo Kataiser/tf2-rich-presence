@@ -440,6 +440,7 @@ class GUI(tk.Frame):
     def menu_clean_console_log(self, *args):
         self.log.info("GUI: Cleaning console.log next loop")
         self.clean_console_log = True  # console_log.py will see this and force a cleanup
+        # TODO: do this immediately instead of waiting till next scan
 
     def menu_exit(self, *args):
         self.log.info("GUI: Exiting")

@@ -340,6 +340,7 @@ def main(version_num='v2.0'):
     assert os.listdir(Path(f'{new_build_folder_name}/resources/__pycache__')) != []
     assert os.listdir(Path(f'{new_build_folder_name}/resources/{interpreter_name}')) != []
     assert len(os.listdir(Path(f'{new_build_folder_name}/resources/packages'))) == 22
+    assert len(os.listdir(Path(f'{new_build_folder_name}/resources/packages'))) == 13
     assert os.path.isfile(Path(f'{new_build_folder_name}/Changelogs.html'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/License.txt'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/Readme.txt'))

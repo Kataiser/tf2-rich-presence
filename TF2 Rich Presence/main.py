@@ -238,6 +238,7 @@ class TF2RichPresense:
             window_title_format_main: str = self.loc.text("{0} - {1} on {2}")
 
             # most of this is GUI handling
+            # TODO: move setting GUI from game_state into a separate function
             if self.game_state.in_menus:
                 # in menus mean the main menu
                 self.test_state = 'menus'
