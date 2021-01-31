@@ -307,9 +307,12 @@ class TF2RichPresense:
 
         return self.client_connected, self.rpc_client
 
-    def set_gui_from_game_state(self, tf2_start_time: int):
-        time_elapsed_num: str = str(datetime.timedelta(seconds=int(time.time() - tf2_start_time)))
-        time_elapsed: str = self.loc.text("{0} elapsed").format(time_elapsed_num.removeprefix('0:').removeprefix('0'))
+    def set_gui_from_game_state(self, tf2_start_time: int, zero_time_elapsed: bool = False):
+        if zero_time_elapsed:
+            time_elapsed: str = self.loc.text("{0} elapsed").format('0:00')
+        else:
+            time_elapsed_num: str = str(datetime.timedelta(seconds=int(time.time() - tf2_start_time)))
+            time_elapsed = self.loc.text("{0} elapsed").format(time_elapsed_num.removeprefix('0:').removeprefix('0'))
 
         if self.game_state.in_menus:
             self.gui.set_state_3('main_menu', ("In menus", self.game_state.queued_state, time_elapsed))
