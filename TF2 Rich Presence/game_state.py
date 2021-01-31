@@ -37,6 +37,7 @@ class GameState:
         self.last_server_request_time: float = 0.0
         self.last_server_request_data: Dict[str, str] = {}
         self.last_server_request_address: str = ''
+        self.updated_server_state: bool = False
 
         if log:
             self.log: logger.Log = log
@@ -108,6 +109,10 @@ class GameState:
                 bottom_line = self.get_line('bottom', True)
 
             # TODO: fix queued in game
+
+        if not self.updated_server_state:
+            self.log.error("Haven't updated server data since last activity generation")
+        self.updated_server_state = False
 
         if not top_line:
             self.log.error("Top line is blank")
@@ -201,6 +206,8 @@ class GameState:
 
     # modes can include player count, kills, neither, or both
     def set_server_data(self, modes: List[str], usernames: Set[str]):
+        self.updated_server_state = True
+
         if modes:
             server_data: Dict[str, str] = self.get_match_data(self.server_address, modes, usernames)
 

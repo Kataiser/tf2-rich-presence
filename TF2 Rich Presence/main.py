@@ -231,32 +231,14 @@ class TF2RichPresense:
             if console_log_parsed:
                 self.game_state.set_bulk(console_log_parsed)
 
-            time_elapsed_num: str = str(datetime.timedelta(seconds=int(time.time() - p_data['TF2']['time'])))
-            time_elapsed: str = self.loc.text("{0} elapsed").format(time_elapsed_num.removeprefix('0:').removeprefix('0'))
             base_window_title: str = self.loc.text("TF2 Rich Presence ({0})").format(launcher.VERSION)
             window_title_format_menus: str = self.loc.text("{0} - {1} ({2})")
             window_title_format_main: str = self.loc.text("{0} - {1} on {2}")
 
-            # most of this is GUI handling
-            # TODO: move setting GUI from game_state into a separate function
             if self.game_state.in_menus:
-                # in menus mean the main menu
                 self.test_state = 'menus'
                 window_title: str = window_title_format_menus.format(base_window_title, "In menus", self.loc.text(self.game_state.queued_state))
-
-                self.gui.set_state_3('main_menu', ("In menus", self.game_state.queued_state, time_elapsed))
-                self.gui.clear_fg_image()
-                self.gui.clear_class_image()
-
-                if self.game_state.queued_state == "Queued for Casual":
-                    self.gui.set_fg_image('casual')
-                elif self.game_state.queued_state == "Queued for Competitive":
-                    self.gui.set_fg_image('comp')
-                elif "Queued for MvM" in self.game_state.queued_state:
-                    self.gui.set_fg_image('mvm_queued')
-                else:
-                    self.gui.set_fg_image('tf2_logo')
-            else:  # not in menus = in a match
+            else:
                 self.test_state = 'in game'
                 window_title = window_title_format_main.format(base_window_title, self.game_state.tf2_class, self.game_state.map_fancy)
 
@@ -268,24 +250,7 @@ class TF2RichPresense:
                     server_modes.append(settings.get('bottom_line'))
                 self.game_state.set_server_data(server_modes, self.valid_usernames)
 
-                if self.game_state.gamemode == "Unknown gamemode":
-                    bg_image: str = 'bg_modes/unknown'
-                else:
-                    bg_image = f'bg_modes/{self.game_state.gamemode}'
-
-                self.gui.set_state_4(bg_image, (self.game_state.map_line, self.game_state.get_line('top'), self.game_state.get_line('bottom'), time_elapsed))
-                self.gui.set_class_image(self.game_state.tf2_class)
-
-                if self.game_state.custom_map or self.game_state.tf2_map in game_state.excluded_maps:
-                    if self.game_state.gamemode == 'unknown':
-                        self.gui.set_fg_image('fg_modes/unknown')
-                    else:
-                        self.gui.set_fg_image(f'fg_modes/{self.game_state.gamemode}')
-                else:
-                    if self.game_state.tf2_map in game_state.map_fallbacks:
-                        self.gui.set_fg_image(f'fg_maps/{game_state.map_fallbacks[self.game_state.tf2_map]}')
-                    else:
-                        self.gui.set_fg_image(f'fg_maps/{self.game_state.tf2_map}')
+            self.set_gui_from_game_state(p_data['TF2']['time'])
 
             if self.game_state.update_rpc:
                 self.activity = self.game_state.activity()
@@ -341,6 +306,43 @@ class TF2RichPresense:
             self.log.debug("Enabled GC and collected")
 
         return self.client_connected, self.rpc_client
+
+    def set_gui_from_game_state(self, tf2_start_time: int):
+        time_elapsed_num: str = str(datetime.timedelta(seconds=int(time.time() - tf2_start_time)))
+        time_elapsed: str = self.loc.text("{0} elapsed").format(time_elapsed_num.removeprefix('0:').removeprefix('0'))
+
+        if self.game_state.in_menus:
+            self.gui.set_state_3('main_menu', ("In menus", self.game_state.queued_state, time_elapsed))
+            self.gui.clear_fg_image()
+            self.gui.clear_class_image()
+
+            if self.game_state.queued_state == "Queued for Casual":
+                self.gui.set_fg_image('casual')
+            elif self.game_state.queued_state == "Queued for Competitive":
+                self.gui.set_fg_image('comp')
+            elif "Queued for MvM" in self.game_state.queued_state:
+                self.gui.set_fg_image('mvm_queued')
+            else:
+                self.gui.set_fg_image('tf2_logo')
+        else:
+            if self.game_state.gamemode == "Unknown gamemode":
+                bg_image: str = 'bg_modes/unknown'
+            else:
+                bg_image = f'bg_modes/{self.game_state.gamemode}'
+
+            self.gui.set_state_4(bg_image, (self.game_state.map_line, self.game_state.get_line('top'), self.game_state.get_line('bottom'), time_elapsed))
+            self.gui.set_class_image(self.game_state.tf2_class)
+
+            if self.game_state.custom_map or self.game_state.tf2_map in game_state.excluded_maps:
+                if self.game_state.gamemode == 'unknown':
+                    self.gui.set_fg_image('fg_modes/unknown')
+                else:
+                    self.gui.set_fg_image(f'fg_modes/{self.game_state.gamemode}')
+            else:
+                if self.game_state.tf2_map in game_state.map_fallbacks:
+                    self.gui.set_fg_image(f'fg_maps/{game_state.map_fallbacks[self.game_state.tf2_map]}')
+                else:
+                    self.gui.set_fg_image(f'fg_maps/{self.game_state.tf2_map}')
 
     def necessary_program_not_running(self, program_name: str, name_short: str = ''):
         name_short = program_name if not name_short else name_short
