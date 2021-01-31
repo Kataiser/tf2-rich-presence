@@ -16,10 +16,11 @@
 Discord Rich Presence for Team Fortress 2
 - Detects current game state, queue info, playtime, and more
 - Configurable, reliable, and performance-efficient
+- Version 2 (GUI, map images, maybe more) coming soon™
 
 ![Preview image](preview.png)
 
-(The actual program is nowhere near as nice looking as this)
+(The actual program is nowhere near as nice looking as this, [v2 will be though](https://twitter.com/MechKataiser/status/1350588216043253763))
 
 ## Download
 With 7-Zip's built-in extractor: [tf2_rich_presence_{tf2rpvnum}_self_extracting.exe](https://github.com/Kataiser/tf2-rich-presence/releases/download/{tf2rpvnum}/tf2_rich_presence_{tf2rpvnum}_self_extracting.exe) ({installer_size} MB)  
@@ -48,13 +49,13 @@ Almost certainly. If you don't want to risk it then fair enough, but I've run th
 For making and testing changes, or simply always running the most up-to-date code.
 1. Either clone the repo or [download the source](https://github.com/Kataiser/tf2-rich-presence/archive/master.zip).
 2. Copy the entire source to another location (sorry) and put the files outside of `TF2 Rich Presence` into that folder.
-3. Make sure the `python` and `pip` commands point to Python 3.9.x (other versions might work too)
-4. Install a C compiler (see [Installing Cython](http://docs.cython.org/en/latest/src/quickstart/install.html)). I personally use MinGW.
+3. Make sure the `python` and `pip` commands point to Python 3.9.x (future versions should work too)
+4. Install a C compiler (see [Installing Cython](http://docs.cython.org/en/latest/src/quickstart/install.html)). I personally use MinGW, but it's a pain on Windows.
 5. From within `TF2 Rich Presence`, run `pip install -r requirements.txt`.
 6. Either run `python build.py` to compile and build, or `python launcher.py` to launch in debug mode.
 
 ## Version 2 goals
-- A GUI
+- ~~A GUI~~ (Done)
 	- I'm fairly confident I know how to implement this (it's a bit of work though)
 	- Would require doing RPC with [pypresence](https://github.com/qwertyquerty/pypresence) due to a bug in [discoIPC](https://github.com/k3rn31p4nic/discoIPC)
 	- Would also have the benefit of not requiring two (slow) Python interpreter launches
@@ -62,7 +63,7 @@ For making and testing changes, or simply always running the most up-to-date cod
 - Run as a service
 	- Idea basically stolen from [cyclowns/tf2-discord](https://github.com/cyclowns/tf2-discord)
 	- Alternatively, minimize to taskbar (if possible)
-- Map-specific images, instead of gamemodes
+- ~~Map-specific images, instead of gamemodes~~ (Done)
 	- Would cause all sorts of problems, including removing the class icon style option
 	- Discord art asset limit is 150, the rest of the program uses 47, and there are 118 vanilla maps in the game
 	- So won't be able to get every map, can just limit to the most popular though
