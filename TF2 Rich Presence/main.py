@@ -281,15 +281,15 @@ class TF2RichPresense:
             self.necessary_program_not_running('Steam')
             self.should_mention_steam = False
 
-        if self.custom_functions:
-            self.custom_functions.after_loop(self)
-
         self.gui.safe_update()
         self.init_operations()
 
         if self.no_condebug:
             self.gui.no_condebug_warning()
             self.fast_next_loop = True
+
+        if self.custom_functions:
+            self.custom_functions.after_loop(self)
 
         if not self.has_set_process_priority:
             self_process: psutil.Process = psutil.Process()
