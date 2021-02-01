@@ -110,9 +110,9 @@ class GameState:
 
             # TODO: fix queued in game
 
-        if not self.updated_server_state:
-            self.log.error("Haven't updated server data since last activity generation")
-        self.updated_server_state = False
+            if not self.updated_server_state:
+                self.log.error("Haven't updated server data since last activity generation")
+            self.updated_server_state = False
 
         if not top_line:
             self.log.error("Top line is blank")

@@ -212,10 +212,9 @@ class TF2RichPresense:
         elif p_data['Steam']['pid'] is not None or p_data['Steam']['path'] is not None:
             self.log.error(f"Steam isn't running but its process info is {p_data['Steam']}. WTF?")
 
-        if p_data['TF2']['running'] and p_data['Discord']['running'] and p_data['Steam']['running']:
-            if not p_data['Steam']['running'] and p_data['TF2']['running']:
-                self.log.error("TF2 is running but Steam isn't. WTF?")
-
+        if p_data['TF2']['running'] and not p_data['Steam']['running']:
+            self.log.error("TF2 is running but Steam isn't. WTF?")
+        elif p_data['TF2']['running'] and p_data['Discord']['running'] and p_data['Steam']['running']:
             if not self.has_checked_class_configs:
                 # modifies a few tf2 config files
                 configs.class_config_files(self.log, p_data['TF2']['path'])
