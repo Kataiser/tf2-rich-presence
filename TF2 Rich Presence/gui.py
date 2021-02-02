@@ -510,6 +510,7 @@ class GUI(tk.Frame):
                      f"\nJan200101 - Some cross-platform compatibility" \
                      f"\nYahBoiOven - Testing and feedback" \
                      f"\nThe TF2 Wiki and teamwork.tf - General resources" \
+                     f"\nValve - Game graphics" \
                      f"\nAs well as anyone who's ever submitted bug reports"
 
         self.log.debug(f"Generated about page: {about.splitlines()}")
