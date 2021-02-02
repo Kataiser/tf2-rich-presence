@@ -35,7 +35,7 @@ class GUI(tk.Frame):
         if reload_settings:
             # the GUI was reloaded with a new language, so persist the currently selected (but not saved) settings
             self.sentry_level, self.wait_time, self.wait_time_slow, self.check_updates, self.request_timeout, self.hide_queued_gamemode, self.log_level, self.console_scan_kb, \
-            self.language, self.top_line, self.bottom_line, self.trim_console_log, self.server_rate_limit, self.gui_scale = reload_settings
+            self.language, self.top_line, self.bottom_line, self.trim_console_log, self.server_rate_limit, self.gui_scale, self.drawing_gamemodes = reload_settings
         else:
             # create every setting variable without values
             self.sentry_level: tk.StringVar = tk.StringVar()
@@ -52,6 +52,7 @@ class GUI(tk.Frame):
             self.trim_console_log: tk.BooleanVar = tk.BooleanVar()
             self.server_rate_limit: tk.IntVar = tk.IntVar()
             self.gui_scale: tk.IntVar = tk.IntVar()
+            self.drawing_gamemodes: tk.BooleanVar = tk.BooleanVar()
 
             try:
                 # load settings from registry
@@ -74,6 +75,7 @@ class GUI(tk.Frame):
                 self.trim_console_log.set(self.settings_loaded['trim_console_log'])
                 self.server_rate_limit.set(self.settings_loaded['server_rate_limit'])
                 self.gui_scale.set(self.settings_loaded['gui_scale'])
+                self.drawing_gamemodes.set(self.settings_loaded['drawing_gamemodes'])
             except Exception:
                 # probably a json decode error
                 formatted_exception: str = traceback.format_exc()
@@ -170,6 +172,8 @@ class GUI(tk.Frame):
         setting19_radiobuttons = []
         for rpc_line_text in self.rpc_lines_display:
             setting19_radiobuttons.append(ttk.Radiobutton(setting19_frame, variable=self.top_line, text=rpc_line_text, value=rpc_line_text, command=self.setting_changed))
+        setting20 = ttk.Checkbutton(self.lf_main, variable=self.drawing_gamemodes, command=self.setting_changed, text="{}".format(
+            self.loc.text("Use classic gamemode images in the GUI")))
 
         # more localization compensation
         self.language.set(actual_language)
@@ -212,13 +216,14 @@ class GUI(tk.Frame):
         setting14_frame.grid(row=4, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(3, 0))
         setting18_frame.grid(row=5, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(0, 0))
         setting10_frame.grid(row=6, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(11, 0))
-        setting8.grid(row=7, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
-        setting15.grid(row=8, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
-        setting5.grid(row=9, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 10))
-        setting6_frame.grid(row=10, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
-        setting17_frame.grid(row=11, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(3, 0))
-        setting1_frame.grid(row=12, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
-        setting9_frame.grid(row=13, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 10))
+        setting20.grid(row=7, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
+        setting8.grid(row=8, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
+        setting15.grid(row=9, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
+        setting5.grid(row=10, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 10))
+        setting6_frame.grid(row=11, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
+        setting17_frame.grid(row=12, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(3, 0))
+        setting1_frame.grid(row=13, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
+        setting9_frame.grid(row=14, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 10))
 
         self.lf_main.grid(row=0, padx=30, pady=15, sticky=tk.W + tk.E)
         self.lf_advanced.grid(row=1, padx=30, pady=0, sticky=tk.W + tk.E)
@@ -276,7 +281,8 @@ class GUI(tk.Frame):
             self.bottom_line.set(self.rpc_lines[self.rpc_lines_display.index(self.bottom_line.get())])
 
             selected_settings: tuple = (self.sentry_level, self.wait_time, self.wait_time_slow, self.check_updates, self.request_timeout, self.hide_queued_gamemode, self.log_level,
-                                        self.console_scan_kb, self.language, self.top_line, self.bottom_line, self.trim_console_log, self.server_rate_limit, self.gui_scale)
+                                        self.console_scan_kb, self.language, self.top_line, self.bottom_line, self.trim_console_log, self.server_rate_limit, self.gui_scale,
+                                        self.drawing_gamemodes)
             self.window_x = self.master.winfo_rootx() - 8
             self.window_y = self.master.winfo_rooty() - 31
             self.__init__(self.master, self.log, reload_settings=selected_settings)
@@ -296,7 +302,8 @@ class GUI(tk.Frame):
                 'bottom_line': self.rpc_lines[self.rpc_lines_display.index(self.bottom_line.get())],
                 'trim_console_log': self.trim_console_log.get(),
                 'server_rate_limit': self.server_rate_limit.get(),
-                'gui_scale': self.gui_scale.get()}
+                'gui_scale': self.gui_scale.get(),
+                'drawing_gamemodes': self.drawing_gamemodes.get()}
 
     # set all settings to defaults
     def restore_defaults(self):
@@ -327,6 +334,7 @@ class GUI(tk.Frame):
             self.trim_console_log.set(settings.get_setting_default('trim_console_log'))
             self.server_rate_limit.set(settings.get_setting_default('server_rate_limit'))
             self.gui_scale.set(settings.get_setting_default('gui_scale'))
+            self.drawing_gamemodes.set(settings.get_setting_default('drawing_gamemodes'))
 
             self.localization_compensate()
             self.log.debug("Restored defaults")

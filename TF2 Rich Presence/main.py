@@ -327,10 +327,16 @@ class TF2RichPresense:
             else:
                 self.gui.set_fg_image('tf2_logo')
         else:
+            gamemode_gui: str = self.game_state.gamemode
+
+            if settings.get('drawing_gamemodes') and gamemode_gui in ('attack-defend', 'control-point', 'ctf', 'koth', 'mannpower', 'mvm', 'passtime', 'payload', 'payload-race',
+                                                                      'special-delivery', 'training'):
+                gamemode_gui = f'drawing_{gamemode_gui}'
+
             if self.game_state.gamemode == "Unknown gamemode":
                 bg_image: str = 'bg_modes/unknown'
             else:
-                bg_image = f'bg_modes/{self.game_state.gamemode}'
+                bg_image = f'bg_modes/{gamemode_gui}'
 
             self.gui.set_state_4(bg_image, (self.game_state.map_line, self.game_state.get_line('top'), self.game_state.get_line('bottom'), time_elapsed))
             self.gui.set_class_image(self.game_state.tf2_class)
@@ -339,7 +345,7 @@ class TF2RichPresense:
                 if self.game_state.gamemode == 'unknown':
                     self.gui.set_fg_image('fg_modes/unknown')
                 else:
-                    self.gui.set_fg_image(f'fg_modes/{self.game_state.gamemode}')
+                    self.gui.set_fg_image(f'fg_modes/{gamemode_gui}')
             else:
                 if self.game_state.tf2_map in game_state.map_fallbacks:
                     self.gui.set_fg_image(f'fg_maps/{game_state.map_fallbacks[self.game_state.tf2_map]}')
