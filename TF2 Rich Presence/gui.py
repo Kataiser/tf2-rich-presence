@@ -113,7 +113,7 @@ class GUI(tk.Frame):
         self.update_icon: int = self.canvas.create_image(492 * self.scale, 8 * self.scale, anchor=tk.NE)
         self.paused_overlay: int = self.canvas.create_image(0, 0, anchor=tk.NW)
         self.paused_text: int = self.canvas.create_text(5 * self.scale, 5 * self.scale, font=('TkDefaultFont', round(14 * self.scale)), fill='white', anchor=tk.NW)
-        self.bottom_text: int = self.canvas.create_text(2 * self.scale, 248 * self.scale, font=('TkDefaultFont', round(9 * self.scale)), fill='light gray', anchor=tk.SW)
+        self.bottom_text: int = self.canvas.create_text(2 * self.scale, 248 * self.scale, font=('TkDefaultFont', round(10 * self.scale)), fill='light gray', anchor=tk.SW)
         self.canvas.tag_bind(self.update_text, '<Button-1>', self.show_update_menu)
         self.canvas.tag_bind(self.update_icon, '<Button-1>', self.show_update_menu)
         self.canvas.place(x=0, y=0)
@@ -234,7 +234,8 @@ class GUI(tk.Frame):
                 break
 
         if text != prev_text:
-            self.canvas.itemconfigure(self.bottom_text, text=states[state])
+            self.log.debug(f"Updated GUI bottom text to \"{text}\" (state: {self.bottom_text_state})")
+            self.canvas.itemconfigure(self.bottom_text, text=text)
 
         return text
 

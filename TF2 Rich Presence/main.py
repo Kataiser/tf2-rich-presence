@@ -222,6 +222,7 @@ class TF2RichPresense:
 
             self.game_state.game_start_time = p_data['TF2']['time']
             self.gui.set_clean_console_log_button_state(True)
+            self.gui.set_bottom_text('discord', False)
 
             console_log_path: str = os.path.join(p_data['TF2']['path'], 'tf', 'console.log')
             console_log_parsed: Optional[Tuple[bool, str, str, str, str, bool]] = self.interpret_console_log(console_log_path, self.valid_usernames, tf2_start_time=p_data['TF2']['time'])
@@ -369,7 +370,7 @@ class TF2RichPresense:
             self.rpc_client.disconnect()
             self.client_connected = False
 
-        self.gui.set_state_1('default', "Team Fortress 2 isn't running")
+        self.gui.set_state_1('default', f"{program_name} isn't running")
         self.gui.clear_fg_image()
         self.gui.clear_class_image()
         self.gui.set_clean_console_log_button_state(False)
@@ -393,16 +394,15 @@ class TF2RichPresense:
             self.log.info(f"Sent over RPC: {self.activity}")
             client_state: tuple = (self.rpc_client.client_id, self.rpc_client.connected, self.rpc_client.ipc_path, self.rpc_client.pid, self.rpc_client.platform, self.rpc_client.socket)
             self.log.debug(f"Client state: {client_state}")
+            self.client_connected = True
         except Exception as client_connect_error:
             if str(client_connect_error) in ("Can't send data to Discord via IPC.", "Can't connect to Discord Client."):
                 # often happens when Discord is in the middle of starting up
                 self.log.error(str(client_connect_error), reportable=False)
                 self.gui.set_bottom_text('discord', True)
+                self.game_state.update_rpc = True
             else:
                 raise
-        else:
-            self.client_connected = True
-            self.gui.set_bottom_text('discord', False)
 
     # do stuff that was previously in init.py, but only after one main loop so that the GUI is ready
     def init_operations(self):

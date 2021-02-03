@@ -94,7 +94,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
         self.kataiser_scan_loop = 0
     scan_for_address: bool = any(mode in (settings.get('top_line'), settings.get('bottom_line')) for mode in ('Player count', 'Kills'))
     user_is_kataiser: bool = 'Kataiser' in user_usernames
-    kataiser_seen_on: Optional[str] = None
+    kataiser_seen_on: str = ''
     # TODO: detection for canceling loading into community servers (if possible)
     match_types: Dict[str, str] = {'12v12 Casual Match': 'Casual', 'MvM Practice': 'MvM (Boot Camp)', 'MvM MannUp': 'MvM (Mann Up)', '6v6 Ladder Match': 'Competitive'}
     menus_messages: Tuple[str, ...] = ('For FCVAR_REPLICATED', '[TF Workshop]', 'request to abandon', 'Server shutting down', 'destroyed Lobby', 'Disconnect:', 'destroyed CAsyncWavDataCache',
@@ -114,21 +114,21 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
         # this (probably) improves performance
         # same goes for chat logs, this one's actually to reduce false detections
         if (with_optimization and 'with' in line) or (chat_safety and ' :  ' in line):
-            if not kataiser_scan or user_is_kataiser or 'Kataiser' not in line or self.has_seen_kataiser:
+            if not kataiser_scan or user_is_kataiser or 'Kataiser' not in line:
                 continue
 
         if not in_menus:
             for menus_message in menus_messages:
                 if menus_message in line:
                     in_menus = True
-                    kataiser_seen_on = None
+                    kataiser_seen_on = ''
                     break
 
             # ok this is jank but it's to only trigger on actually closing the map and not just (I think) ending a demo recording
             if not in_menus and 'SoundEmitter:' in line:
                 if int(line.split('[')[1].split()[0]) > 1000:
                     in_menus = True
-                    kataiser_seen_on = None
+                    kataiser_seen_on = ''
 
         if line.endswith(' selected \n'):
             class_possibly: str = line[:-11]
@@ -166,29 +166,27 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
             for user_username in user_usernames:
                 if user_username in line:
                     in_menus = True
-                    kataiser_seen_on = None
+                    kataiser_seen_on = ''
                     break
 
         elif 'SV_ActivateServer' in line:  # full line: "SV_ActivateServer: setting tickrate to 66.7"
             just_started_server = True
 
-        if kataiser_scan and not user_is_kataiser and 'Kataiser' in line and not self.has_seen_kataiser:
+        if kataiser_scan and not user_is_kataiser and 'Kataiser' in line:
             # makes sure no one's just talking about me for some reason
             if not (line.count(' :  ') == 1 and 'Kataiser' not in line.split(' :  ')[0] and 'Kataiser' in line.split(' :  ')[1]):
                 kataiser_seen_on = tf2_map
 
-    if not user_is_kataiser and not self.has_seen_kataiser and not in_menus and kataiser_seen_on == tf2_map:
-        self.has_seen_kataiser = True
+    if not user_is_kataiser and not in_menus and kataiser_seen_on == tf2_map:
         self.log.debug(f"Kataiser located, telling user :D (on {tf2_map})")
         self.gui.set_bottom_text('kataiser', True)
-    else:
-        self.gui.set_bottom_text('kataiser', False)
 
     if in_menus:
         tf2_map = ''
         tf2_class = ''
         server_address = ''
         hosting = False
+        self.gui.set_bottom_text('kataiser', False)
     elif tf2_class != '' and tf2_map == '':
         self.log.error("Have class without map")
 
