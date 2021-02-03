@@ -306,17 +306,18 @@ class TF2RichPresense:
 
         return self.client_connected, self.rpc_client
 
-    def set_gui_from_game_state(self, tf2_start_time: int, zero_time_elapsed: bool = False):
-        if zero_time_elapsed:
-            time_elapsed: str = self.loc.text("{0} elapsed").format('0:00')
-        else:
+    def set_gui_from_game_state(self, tf2_start_time: Optional[int] = None):
+        if tf2_start_time:
             time_elapsed_num: str = str(datetime.timedelta(seconds=int(time.time() - tf2_start_time)))
-            time_elapsed = self.loc.text("{0} elapsed").format(time_elapsed_num.removeprefix('0:').removeprefix('0'))
+            time_elapsed: str = self.loc.text("{0} elapsed").format(time_elapsed_num.removeprefix('0:').removeprefix('0'))
+        else:
+            time_elapsed = self.loc.text("{0} elapsed").format('0:00')
 
         if self.game_state.in_menus:
             self.gui.set_state_3('main_menu', ("In menus", self.game_state.queued_state, time_elapsed))
             self.gui.clear_fg_image()
             self.gui.clear_class_image()
+            self.gui.set_bottom_text('queued', False)
 
             if self.game_state.queued_state == "Queued for Casual":
                 self.gui.set_fg_image('casual')
@@ -352,6 +353,12 @@ class TF2RichPresense:
                 else:
                     self.gui.set_fg_image(f'fg_maps/{self.game_state.tf2_map}')
 
+            if self.game_state.queued_state == "Not queued":
+                self.gui.set_bottom_text('queued', False)
+            else:
+                self.gui.bottom_text_queue_state = self.game_state.queued_state
+                self.gui.set_bottom_text('queued', True)
+
     def necessary_program_not_running(self, program_name: str, name_short: str = ''):
         name_short = program_name if not name_short else name_short
         self.test_state = f'no {name_short.lower()}'
@@ -367,6 +374,7 @@ class TF2RichPresense:
         self.gui.clear_class_image()
         self.gui.set_clean_console_log_button_state(False)
         self.gui.clean_console_log = False
+        self.gui.set_bottom_text('queued', False)
 
         base_window_title: str = self.loc.text("TF2 Rich Presence ({0})").format(launcher.VERSION)
         window_title: str = self.loc.text("{0} - Waiting for {1}").format(base_window_title, program_name)
@@ -385,14 +393,16 @@ class TF2RichPresense:
             self.log.info(f"Sent over RPC: {self.activity}")
             client_state: tuple = (self.rpc_client.client_id, self.rpc_client.connected, self.rpc_client.ipc_path, self.rpc_client.pid, self.rpc_client.platform, self.rpc_client.socket)
             self.log.debug(f"Client state: {client_state}")
-            self.client_connected = True
         except Exception as client_connect_error:
             if str(client_connect_error) in ("Can't send data to Discord via IPC.", "Can't connect to Discord Client."):
                 # often happens when Discord is in the middle of starting up
-                # TODO: maybe show this in the GUI
                 self.log.error(str(client_connect_error), reportable=False)
+                self.gui.set_bottom_text('discord', True)
             else:
                 raise
+        else:
+            self.client_connected = True
+            self.gui.set_bottom_text('discord', False)
 
     # do stuff that was previously in init.py, but only after one main loop so that the GUI is ready
     def init_operations(self):

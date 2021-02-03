@@ -54,8 +54,9 @@ class GUI(tk.Frame):
         self.fg_state: str = ''
         self.class_state: str = ''
         self.available_update_data: Tuple[str, str, str] = ('', '', '')
-        self.showing_kataiser_text: bool = False
         self.update_window_open: bool = False
+        self.bottom_text_state: Dict[str, bool] = {'discord': False, 'kataiser': False, 'queued': False}
+        self.bottom_text_queue_state: str = ""
 
         menu_bar: tk.Menu = tk.Menu(self.master)
         self.file_menu = tk.Menu(menu_bar, tearoff=0)
@@ -112,7 +113,7 @@ class GUI(tk.Frame):
         self.update_icon: int = self.canvas.create_image(492 * self.scale, 8 * self.scale, anchor=tk.NE)
         self.paused_overlay: int = self.canvas.create_image(0, 0, anchor=tk.NW)
         self.paused_text: int = self.canvas.create_text(5 * self.scale, 5 * self.scale, font=('TkDefaultFont', round(14 * self.scale)), fill='white', anchor=tk.NW)
-        self.kataiser_text: int = self.canvas.create_text(2 * self.scale, 248 * self.scale, font=('TkDefaultFont', round(9 * self.scale)), fill='light gray', anchor=tk.SW)
+        self.bottom_text: int = self.canvas.create_text(2 * self.scale, 248 * self.scale, font=('TkDefaultFont', round(9 * self.scale)), fill='light gray', anchor=tk.SW)
         self.canvas.tag_bind(self.update_text, '<Button-1>', self.show_update_menu)
         self.canvas.tag_bind(self.update_icon, '<Button-1>', self.show_update_menu)
         self.canvas.place(x=0, y=0)
@@ -211,6 +212,31 @@ class GUI(tk.Frame):
                 self.log.debug(f"Updated GUI class image to {class_path}")
         else:
             self.clear_class_image()
+
+    # set the smaller text in the bottom left, uses a priority system
+    def set_bottom_text(self, state: str, enabled: bool) -> str:
+        prev_text: str = ""
+        text: str = ""
+        states: dict[str, str] = {'discord': "Can't connect to Discord",
+                                  'kataiser': "Hey, it seems that Kataiser, the developer of TF2 Rich Presence, is in your game!\nSay hi to me if you'd like :)",
+                                  'queued': self.bottom_text_queue_state}
+
+        for state_key in states:
+            if self.bottom_text_state[state_key]:
+                prev_text = states[state_key]
+                break
+
+        self.bottom_text_state[state] = enabled
+
+        for state_key in states:
+            if self.bottom_text_state[state_key]:
+                text = states[state_key]
+                break
+
+        if text != prev_text:
+            self.canvas.itemconfigure(self.bottom_text, text=states[state])
+
+        return text
 
     # only show the "clean console.log" menu button if the game is running
     def set_clean_console_log_button_state(self, enabled: bool):
@@ -337,16 +363,6 @@ class GUI(tk.Frame):
             self.unpause()
         else:
             self.close_window()
-
-    def show_kataiser_in_game(self):
-        if not self.showing_kataiser_text:
-            self.canvas.itemconfigure(self.kataiser_text, text="Hey, it seems that Kataiser, the developer of TF2 Rich Presence, is in your game!\nSay hi to me if you'd like :)")
-            self.showing_kataiser_text = True
-
-    def hide_kataiser_in_game(self):
-        if self.showing_kataiser_text:
-            self.canvas.itemconfigure(self.kataiser_text, text="")
-            self.showing_kataiser_text = False
 
     # load a .webp image from gui_images, mode can be RGBA or RGB. image_name shouldn't have the file extension and can have forward slashes
     @functools.cache

@@ -470,13 +470,13 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual(str(game_state_test), 'Soldier on cp_catwalk_a5c, gamemode=control-point, hosting=True, queued="Queued for Casual", server=')
         self.assertEqual(fix_activity_dict(game_state_test.activity()),
                          {'details': 'Map: cp_catwalk_a5c (hosting)',
-                          'state': 'Time on map: 0:00',  # this'll be fixed (should be "Queued for Casual")
+                          'state': 'Queued for Casual',
                           'timestamps': {'start': 0},
                           'assets': {'large_image': 'control-point',
                                      'large_text': 'Control Point - TF2 Rich Presence {tf2rpvnum}',
                                      'small_image': 'soldier',
                                      'small_text': 'Soldier'}})
-        self.assertTrue(game_state_test.update_rpc)
+        self.assertFalse(game_state_test.update_rpc)
 
         game_state_test.set_bulk((False, 'ctf_sawmill', 'Engineer', '', 'Not queued', True))
         self.assertTrue(game_state_test.update_rpc)
@@ -509,12 +509,16 @@ class TestTF2RichPresense(unittest.TestCase):
 
         self.assertEqual((gui_test.text_state, gui_test.bg_state, gui_test.fg_state, gui_test.class_state), (("Team Fortress 2 isn't running",), ('default', 0, 0), '', ''))
 
+        gui_test.bottom_text_queue_state = "Queued for Casual"
+        self.assertEqual(gui_test.set_bottom_text('queued', True), "Queued for Casual")
+        self.assertEqual(gui_test.set_bottom_text('discord', True), "Can't connect to Discord")
+        self.assertEqual(gui_test.set_bottom_text('discord', False), "Queued for Casual")
+        self.assertEqual(gui_test.set_bottom_text('queued', False), "")
+
         gui_test.pause()
         gui_test.unpause()
         gui_test.enable_update_notification()
         gui_test.check_for_updates(popup=True)
-        gui_test.show_kataiser_in_game()
-        gui_test.hide_kataiser_in_game()
         gui_test.holiday(silent=True)
         gui_test.menu_open_settings()
         gui_test.menu_about(silent=True)
@@ -530,26 +534,26 @@ class TestTF2RichPresense(unittest.TestCase):
 
     def test_set_gui_from_game_state(self):
         app = main.TF2RichPresense(self.log, set_process_priority=False)
-        time_int = int(time.time())
 
         app.game_state.set_bulk((False, 'plr_hightower', 'Heavy', '', 'Not queued', True))
         app.game_state.set_server_data(['Player count'], set())
-        app.set_gui_from_game_state(time_int, True)
+        app.set_gui_from_game_state()
         self.assertEqual((app.gui.text_state, app.gui.bg_state, app.gui.fg_state, app.gui.class_state),
                          (('Map: Hightower (hosting)', 'Players: ?/?', 'Time on map: 0:00', '0:00 elapsed'), ('bg_modes/payload-race', 77, 172), 'fg_maps/plr_hightower', 'classes/heavy'))
 
         app.game_state.set_bulk((False, 'cp_5gorge', 'Scout', '', 'Queued for Casual', True))
-        app.set_gui_from_game_state(time_int, True)
-        # this will be fixed as well
+        app.set_gui_from_game_state()
         self.assertEqual((app.gui.text_state, app.gui.bg_state, app.gui.fg_state, app.gui.class_state),
                          (('Map: 5Gorge (5CP) (hosting)', 'Players: ?/?', 'Time on map: 0:00', '0:00 elapsed'), ('bg_modes/control-point', 77, 172), 'fg_maps/cp_gorge', 'classes/scout'))
+        self.assertEqual(app.gui.bottom_text_state, {'discord': False, 'kataiser': False, 'queued': True})
 
         app.game_state.set_bulk((False, 'cp_steel', 'Medic', '162.254.194.158:27048', 'Not queued', False))
         app.game_state.set_server_data(['Player count'], set())
-        app.set_gui_from_game_state(time_int, True)
+        app.set_gui_from_game_state()
         state = [list(app.gui.text_state), app.gui.bg_state, app.gui.fg_state, app.gui.class_state]
         state[0][1] = 'Players: 0/24' if 'Players: ' in state[0][1] and '/24' in state[0][1] else state[0][1]
         self.assertEqual(state, [['Map: Steel', 'Players: 0/24', 'Time on map: 0:00', '0:00 elapsed'], ('bg_modes/attack-defend', 77, 172), 'fg_maps/cp_steel', 'classes/medic'])
+        self.assertEqual(app.gui.bottom_text_state, {'discord': False, 'kataiser': False, 'queued': False})
 
 
 def fix_activity_dict(activity):

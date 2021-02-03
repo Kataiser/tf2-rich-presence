@@ -180,9 +180,9 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     if not user_is_kataiser and not self.has_seen_kataiser and not in_menus and kataiser_seen_on == tf2_map:
         self.has_seen_kataiser = True
         self.log.debug(f"Kataiser located, telling user :D (on {tf2_map})")
-        self.gui.show_kataiser_in_game()
+        self.gui.set_bottom_text('kataiser', True)
     else:
-        self.gui.hide_kataiser_in_game()
+        self.gui.set_bottom_text('kataiser', False)
 
     if in_menus:
         tf2_map = ''

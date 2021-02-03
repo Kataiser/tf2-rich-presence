@@ -102,11 +102,17 @@ class GameState:
 
             if self.hosting or self.custom_map or self.tf2_map in excluded_maps:
                 top_line = self.map_line
-                bottom_line = self.get_line('bottom' if self.hosting else 'top', True)
-                # yes this means the bottom line can use the top line setting, but I basically consider it to be the lines shifted down by one and truncated
             else:
                 top_line = self.get_line('top', True)
-                bottom_line = self.get_line('bottom', True)
+
+            if self.queued_state == "Not queued":
+                if self.hosting or self.custom_map or self.tf2_map in excluded_maps:
+                    bottom_line = self.get_line('bottom' if self.hosting else 'top', True)
+                    # yes this means the bottom line can use the top line setting, but I basically consider it to be the lines shifted down by one and truncated
+                else:
+                    bottom_line = self.get_line('bottom', True)
+            else:
+                bottom_line = self.queued_state
 
             # TODO: fix queued in game
 
