@@ -16,7 +16,7 @@ import settings
 
 
 class GUI(tk.Frame):
-    def __init__(self, master: Union[tk.Toplevel, tk.Tk], log: logger.Log, reload_settings: Optional[tuple] = None):
+    def __init__(self, master: tk.Toplevel, log: logger.Log, reload_settings: Optional[tuple] = None):
         self.log: logger.Log = log
         self.log.info(f"Opening settings menu for TF2 Rich Presence {launcher.VERSION}")
         self.gui_language: Optional[str] = self.languages[self.languages.index(reload_settings[8].get())] if reload_settings else None
@@ -398,7 +398,7 @@ class GUI(tk.Frame):
 
 # main entry point
 def launch():
-    settings_gui = GUI(tk.Tk(), logger.Log())
+    settings_gui = GUI(tk.Toplevel(), logger.Log())
     settings_gui.mainloop()
 
 
