@@ -38,6 +38,13 @@ def access_registry(save: Optional[dict] = None) -> Optional[dict]:
         return reg_key_data
 
 
+# changes a single setting
+def change(setting: str, value: Union[str, int, bool, float]):
+    current_settings = access_registry()
+    current_settings[setting] = value
+    access_registry(save=current_settings)
+
+
 # either gets a settings default, or if return_dict, returns all defaults as a dict
 def get_setting_default(setting: str = '', return_all: bool = False) -> Union[str, int, bool, dict]:
     default_settings = {'sentry_level': 'All errors',
@@ -93,7 +100,6 @@ def fix_settings(log):
             made_fixes = True
 
         access_registry(save=current)
-        get.cache_clear()
 
     if made_fixes:
         log.error(f"Fixed settings: added {added}, removed {removed}")

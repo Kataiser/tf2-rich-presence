@@ -447,7 +447,6 @@ class GUI(tk.Frame):
 
             if allowed_reset == "yes":
                 settings.access_registry(save=default_settings)
-                settings.get.cache_clear()
                 self.log.debug("Restored default settings")
             else:
                 self.log.debug("Didn't restore default settings")

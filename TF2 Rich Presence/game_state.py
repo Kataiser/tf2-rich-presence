@@ -38,6 +38,7 @@ class GameState:
         self.last_server_request_data: Dict[str, str] = {}
         self.last_server_request_address: str = ''
         self.updated_server_state: bool = False
+        self.force_zero_map_time: bool = False
 
         if log:
             self.log: logger.Log = log
@@ -233,10 +234,13 @@ class GameState:
 
     # convert seconds to a pretty timestamp, keep leading zeros though
     def time_on_map(self) -> str:
-        seconds_on_map: float = time.time() - self.map_change_time
-        time_format: str = '%M:%S' if seconds_on_map <= 3600 else '%H:%M:%S'
-        map_time_formatted: str = time.strftime(time_format, time.gmtime(seconds_on_map)).removeprefix('0')
-        return self.loc.text("Time on map: {0}").format(map_time_formatted)
+        if self.force_zero_map_time:
+            return self.loc.text("Time on map: {0}").format('0:00')
+        else:
+            seconds_on_map: float = time.time() - self.map_change_time
+            time_format: str = '%M:%S' if seconds_on_map <= 3600 else '%H:%M:%S'
+            map_time_formatted: str = time.strftime(time_format, time.gmtime(seconds_on_map)).removeprefix('0')
+            return self.loc.text("Time on map: {0}").format(map_time_formatted)
 
     # get either the top or bottom line, based on user settings
     def get_line(self, line: str = 'top', rpc: bool = False) -> str:

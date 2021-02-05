@@ -134,10 +134,7 @@ def detect_system_language(log: logger.Log):
             log.debug(f"Changed language: {changed_language}")
 
             if changed_language == 'yes':
-                temp_settings: dict = settings.access_registry()
-                temp_settings['language'] = system_language
-                settings.access_registry(save=temp_settings)
-                settings.get.cache_clear()
+                settings.change('language', system_language)
 
 
 if __name__ == '__main__':

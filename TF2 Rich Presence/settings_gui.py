@@ -356,7 +356,6 @@ class GUI(tk.Frame):
         self.log.debug(f"Setting(s) changed: {settings_changed}")
         self.log.info("Saving and closing settings menu")
         settings.access_registry(save=settings_to_save)
-        settings.get.cache_clear()
         self.log.info(f"Settings have been saved as: {settings_to_save}")
 
         if 'gui_scale' in settings_changed and not force:

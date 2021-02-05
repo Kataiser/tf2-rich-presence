@@ -30,9 +30,7 @@ import utils
 class TestTF2RichPresense(unittest.TestCase):
     def setUp(self):
         self.old_settings = settings.access_registry()
-        target_settings = settings.defaults()
-        target_settings['request_timeout'] = 30
-        settings.access_registry(target_settings)
+        settings.change('request_timeout', 30)
 
         self.dir = os.getcwd()
         self.log = logger.Log()
@@ -390,6 +388,7 @@ class TestTF2RichPresense(unittest.TestCase):
 
     def test_game_state(self):
         game_state_test = game_state.GameState()
+        game_state_test.force_zero_map_time = True
         self.assertTrue(game_state_test.update_rpc)
         self.assertEqual(str(game_state_test), 'in menus, queued="Not queued"')
 
@@ -419,9 +418,7 @@ class TestTF2RichPresense(unittest.TestCase):
                                      'small_text': 'Demoman'}})
         self.assertTrue(game_state_test.update_rpc)
 
-        temp_settings = settings.defaults()
-        temp_settings['bottom_line'] = 'Class'
-        settings.access_registry(temp_settings)
+        settings.change('bottom_line', 'Class')
         game_state_test.set_bulk((False, 'koth_highpass', 'Demoman', '', 'Not queued', True))
         self.assertTrue(game_state_test.update_rpc)
         self.assertEqual(str(game_state_test), 'Demoman on Highpass, gamemode=koth, hosting=True, queued="Not queued", server=')
@@ -435,7 +432,7 @@ class TestTF2RichPresense(unittest.TestCase):
                                      'small_text': 'Demoman'}})
         self.assertFalse(game_state_test.update_rpc)
 
-        settings.access_registry(settings.defaults())
+        settings.access_registry(save=settings.defaults())
         game_state_test.set_bulk((False, 'pl_snowycoast', 'Pyro', '162.254.194.158:27048', 'Not queued', False))
         self.assertTrue(game_state_test.update_rpc)
         game_state_test.set_server_data(['Player count'], {'Kataiser'})
@@ -450,10 +447,8 @@ class TestTF2RichPresense(unittest.TestCase):
                                      'small_text': 'Pyro'}})
         self.assertTrue(game_state_test.update_rpc)
 
-        temp_settings = settings.defaults()
-        temp_settings['bottom_line'] = 'Kills'
-        temp_settings['server_rate_limit'] = 0
-        settings.access_registry(temp_settings)
+        settings.change('bottom_line', 'Kills')
+        settings.change('server_rate_limit', 0)
         game_state_test.set_server_data(['Player count', 'Kills'], {'Kataiser'})
         self.assertEqual(fix_activity_dict(game_state_test.activity()),
                          {'details': 'Players: 0/0',
@@ -465,7 +460,7 @@ class TestTF2RichPresense(unittest.TestCase):
                                      'small_text': 'Pyro'}})
         self.assertFalse(game_state_test.update_rpc)
 
-        settings.access_registry(settings.defaults())
+        settings.access_registry(save=settings.defaults())
         game_state_test.set_bulk((False, 'cp_catwalk_a5c', 'Soldier', '', 'Queued for Casual', True))
         self.assertTrue(game_state_test.update_rpc)
         self.assertEqual(str(game_state_test), 'Soldier on cp_catwalk_a5c, gamemode=control-point, hosting=True, queued="Queued for Casual", server=')
@@ -535,6 +530,7 @@ class TestTF2RichPresense(unittest.TestCase):
 
     def test_set_gui_from_game_state(self):
         app = main.TF2RichPresense(self.log, set_process_priority=False)
+        app.game_state.force_zero_map_time = True
 
         app.game_state.set_bulk((False, 'plr_hightower', 'Heavy', '', 'Not queued', True))
         app.game_state.set_server_data(['Player count'], set())
@@ -548,9 +544,6 @@ class TestTF2RichPresense(unittest.TestCase):
                          (('Map: 5Gorge (5CP) (hosting)', 'Players: ?/?', 'Time on map: 0:00', '0:00 elapsed'), ('bg_modes/control-point', 77, 172), 'fg_maps/cp_gorge', 'classes/scout'))
         self.assertEqual(app.gui.bottom_text_state, {'discord': False, 'kataiser': False, 'queued': True})
 
-        temp_settings = settings.defaults()
-        temp_settings['request_timeout'] = 0.1
-        settings.access_registry(temp_settings)
         app.game_state.set_bulk((False, 'cp_steel', 'Medic', '162.254.194.158:27048', 'Not queued', False))
         app.game_state.set_server_data(['Player count'], set())
         app.set_gui_from_game_state()
@@ -564,14 +557,10 @@ def fix_activity_dict(activity):
     try:
         activity['timestamps']['start'] = int(activity['timestamps']['start'] * 0)
 
-        if 'Time on map' in activity['state']:
-            activity['state'] = 'Time on map: 0:00'
-        elif 'Players:' in activity['state']:
+        if 'Players:' in activity['state']:
             activity['state'] = 'Players: 0/0'
 
-        if 'Time on map' in activity['details']:
-            activity['details'] = 'Time on map: 0:00'
-        elif 'Players:' in activity['details']:
+        if 'Players:' in activity['details']:
             activity['details'] = 'Players: 0/0'
     except KeyError:
         pass
