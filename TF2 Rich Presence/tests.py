@@ -121,7 +121,8 @@ class TestTF2RichPresense(unittest.TestCase):
             self.assertIn(server_data['player_count'].split('/')[1], ('24', '30', '32'))
             self.assertEqual(server_data['kills'], "Kills: 0")
 
-        self.assertEqual(test_game_state.get_match_data('', 'Player count', force=True), {'player_count': 'Players: ?/?'})
+        test_game_state.last_server_request_time -= settings.get('server_rate_limit')
+        self.assertEqual(test_game_state.get_match_data('', 'Player count'), {'player_count': 'Players: ?/?'})
 
     def test_get_map_gamemode(self):
         self.assertEqual(gamemodes.get_map_gamemode(self.log, 'cp_dustbowl'), ['Dustbowl', 'attack-defend', 'Attack/Defend'])
@@ -547,6 +548,9 @@ class TestTF2RichPresense(unittest.TestCase):
                          (('Map: 5Gorge (5CP) (hosting)', 'Players: ?/?', 'Time on map: 0:00', '0:00 elapsed'), ('bg_modes/control-point', 77, 172), 'fg_maps/cp_gorge', 'classes/scout'))
         self.assertEqual(app.gui.bottom_text_state, {'discord': False, 'kataiser': False, 'queued': True})
 
+        temp_settings = settings.defaults()
+        temp_settings['request_timeout'] = 0.1
+        settings.access_registry(temp_settings)
         app.game_state.set_bulk((False, 'cp_steel', 'Medic', '162.254.194.158:27048', 'Not queued', False))
         app.game_state.set_server_data(['Player count'], set())
         app.set_gui_from_game_state()

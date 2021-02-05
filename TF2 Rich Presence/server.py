@@ -14,11 +14,11 @@ import settings
 
 
 # get player count and/or user score (kills) from the game server
-def get_match_data(self, address: str, modes: List[str], usernames: Optional[Set[str]] = None, force: bool = False) -> Dict[str, str]:
-    rate_limit: int = int(settings.get('server_rate_limit'))
+def get_match_data(self, address: str, modes: List[str], usernames: Optional[Set[str]] = None) -> Dict[str, str]:
+    rate_limit: int = settings.get('server_rate_limit')
     time_since_last: float = time.time() - self.last_server_request_time
 
-    if time_since_last < rate_limit and self.last_server_request_address == address and not force:
+    if time_since_last < rate_limit and self.last_server_request_address == address:
         self.log.debug(f"Skipping getting server data ({round(time_since_last, 1)} < {rate_limit}), persisting {self.last_server_request_data}")
         return self.last_server_request_data
     else:
@@ -53,7 +53,12 @@ def get_match_data(self, address: str, modes: List[str], usernames: Optional[Set
             self.last_server_request_time -= rate_limit
             return self.last_server_request_data
         except socket.timeout:
-            self.log.debug("Timed out getting server info, persisting previous data")
+            if self.last_server_request_data == {}:
+                self.log.debug("Timed out getting server info")
+                self.last_server_request_data = unknown_data(self.loc, modes)
+            else:
+                self.log.debug("Timed out getting server info, persisting previous data")
+
             self.last_server_request_time -= rate_limit
             return self.last_server_request_data
 
