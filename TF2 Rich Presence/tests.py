@@ -111,7 +111,8 @@ class TestTF2RichPresense(unittest.TestCase):
         test_addresses = ('162.254.194.158:27048',  # valve
                           'us2.uncledane.com:27015',
                           '51.81.49.25:27015',  # creators.tf
-                          '192.223.26.238:27015')  # lazypurple
+                          '192.223.26.238:27015',  # lazypurple
+                          '45.35.1.186:27065')  # blackwonder
 
         for test_address in test_addresses:
             server_data = test_game_state.get_match_data(test_address, ['Player count', 'Kills'])
