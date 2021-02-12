@@ -29,7 +29,6 @@ import utils
 
 class TestTF2RichPresense(unittest.TestCase):
     def setUp(self):
-        self.old_settings = settings.access_registry()
         settings.change('request_timeout', 30)
 
         self.dir = os.getcwd()
@@ -44,7 +43,7 @@ class TestTF2RichPresense(unittest.TestCase):
     def tearDown(self):
         os.chdir(self.dir)
         del self.log
-        settings.access_registry(save=self.old_settings)
+        settings.access_registry(save=settings.defaults())  # sorry if this changes your settings
 
         # fix a failed test_missing_files
         for file in os.listdir():
@@ -115,10 +114,13 @@ class TestTF2RichPresense(unittest.TestCase):
                           '45.35.1.186:27065')  # blackwonder
 
         for test_address in test_addresses:
-            server_data = test_game_state.get_match_data(test_address, ['Player count', 'Kills'])
-            self.assertTrue(server_data['player_count'].startswith("Players: "))
-            self.assertIn(server_data['player_count'].split('/')[1], ('24', '30', '32'))
-            self.assertEqual(server_data['kills'], "Kills: 0")
+            try:
+                server_data = test_game_state.get_match_data(test_address, ['Player count', 'Kills'])
+                self.assertTrue(server_data['player_count'].startswith("Players: "))
+                self.assertIn(server_data['player_count'].split('/')[1], ('24', '30', '32'))
+                self.assertEqual(server_data['kills'], "Kills: 0")
+            except AssertionError as error:
+                raise AssertionError(f'{test_address}, {error}')
 
         test_game_state.last_server_request_time -= settings.get('server_rate_limit')
         self.assertEqual(test_game_state.get_match_data('', 'Player count'), {'player_count': 'Players: ?/?'})
@@ -537,7 +539,7 @@ class TestTF2RichPresense(unittest.TestCase):
         app.game_state.set_server_data(['Player count'], set())
         app.set_gui_from_game_state()
         self.assertEqual((app.gui.text_state, app.gui.bg_state, app.gui.fg_state, app.gui.class_state),
-                         (('Map: Hightower (hosting)', 'Players: ?/?', 'Time on map: 0:00', '0:00 elapsed'), ('bg_modes/payload-race', 77, 172), 'fg_maps/plr_hightower', 'classes/heavy'))
+                         (('Map: Hightower (hosting)', 'Players: ?/?', 'Time on map: 0:00', '0:00 elapsed'),('bg_modes/payload-race', 77, 172), 'fg_maps/plr_hightower', 'classes/heavy'))
 
         app.game_state.set_bulk((False, 'cp_5gorge', 'Scout', '', 'Queued for Casual', True))
         app.set_gui_from_game_state()
@@ -552,6 +554,15 @@ class TestTF2RichPresense(unittest.TestCase):
         state[0][1] = 'Players: 0/24' if 'Players: ' in state[0][1] and '/24' in state[0][1] else state[0][1]
         self.assertEqual(state, [['Map: Steel', 'Players: 0/24', 'Time on map: 0:00', '0:00 elapsed'], ('bg_modes/attack-defend', 77, 172), 'fg_maps/cp_steel', 'classes/medic'])
         self.assertEqual(app.gui.bottom_text_state, {'discord': False, 'kataiser': False, 'queued': False})
+
+        app.game_state.set_bulk((False, 'plr_highertower', 'Engineer', '', 'Not queued', True))
+        app.game_state.set_server_data(['Player count'], set())
+        app.set_gui_from_game_state()
+        state = [list(app.gui.text_state), app.gui.bg_state, app.gui.fg_state, app.gui.class_state]
+        state[0][1] = 'Players: 0/24' if 'Players: ' in state[0][1] and '/24' in state[0][1] else state[0][1]
+        self.assertEqual((app.gui.text_state, app.gui.bg_state, app.gui.fg_state, app.gui.class_state),
+                         (('Map: plr_highertower (hosting)', 'Players: ?/?', 'Time on map: 0:00', '0:00 elapsed'),
+                          ('bg_modes/payload-race', 77, 172), 'fg_modes/payload-race', 'classes/engineer'))
 
 
 def fix_activity_dict(activity):

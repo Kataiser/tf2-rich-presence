@@ -156,7 +156,7 @@ class Log:
         all_logs_sorted: List[str] = [log_pair[0] for log_pair in sorted(all_logs_times, key=itemgetter(1))]
         overshoot: int = max_logs - len(all_logs_sorted)
         deleted_logs: List[str] = []
-        compressed_logs: List[Tuple[str, Optional[float]]] = []
+        compressed_logs: List[Tuple[str, float, float]] = []
 
         while overshoot < 0:
             log_to_delete: str = all_logs_sorted.pop(0)
@@ -184,8 +184,7 @@ class Log:
             except Exception:
                 self.error(f"Couldn't replace log file {log_to_delete}: {traceback.format_exc()}")
 
-            comp_ratio: Optional[float] = round(len(data_out) / len(data_in), 3) if data_in else None  # fixes a ZeroDivisionError
-            compressed_logs.append((old_log, comp_ratio))
+            compressed_logs.append((old_log, round(len(data_in) / 1024, 1), round(len(data_out) / 1024, 1)))
 
         self.debug(f"Compressed {len(compressed_logs)} log(s): {compressed_logs}")
 

@@ -53,11 +53,11 @@ def get_match_data(self, address: str, modes: List[str], usernames: Optional[Set
             self.last_server_request_time -= rate_limit
             return self.last_server_request_data
         except socket.timeout:
-            if self.last_server_request_data == {}:
+            if len(self.last_server_request_data) == len(modes):
+                self.log.debug("Timed out getting server info, persisting previous data")
+            else:
                 self.log.debug("Timed out getting server info")
                 self.last_server_request_data = unknown_data(self.loc, modes)
-            else:
-                self.log.debug("Timed out getting server info, persisting previous data")
 
             self.last_server_request_time -= rate_limit
             return self.last_server_request_data
