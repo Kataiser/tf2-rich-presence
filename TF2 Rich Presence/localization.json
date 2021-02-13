@@ -181,6 +181,20 @@
         "Chinese": "关于我们",
         "Japanese": "について"
     },
+    "1524762595": {
+        "English": "About TF2 Rich Presence",
+        "German": "Über TF2 Reiche Anwesenheit",
+        "French": "À propos de la riche présence de TF2",
+        "Spanish": "Acerca de TF2 Presencia Rica",
+        "Portuguese": "Sobre a rica presença da TF2",
+        "Italian": "Informazioni su TF2 Ricca presenza",
+        "Dutch": "Over TF2 Rijke Aanwezigheid",
+        "Polish": "O TF2 Bogata Obecność",
+        "Russian": "О богатом присутствии TF2",
+        "Korean": "대한 TF2 풍부한 존재",
+        "Chinese": "关于TF2丰富的存在感",
+        "Japanese": "TF2リッチプレゼンスについて"
+    },
     "4251331620": {
         "English": "Achievement",
         "German": "Leistung",
@@ -1081,6 +1095,20 @@
         "Chinese": "地图:{0}",
         "Japanese": "マップ:{0}"
     },
+    "9351347340": {
+        "English": "Map: {0} (hosting)",
+        "German": "Karte: {0} (Hosting)",
+        "French": "Carte : {0} (hébergement)",
+        "Spanish": "Mapa: {0} (alojamiento)",
+        "Portuguese": "Mapa: {0} (hospedagem)",
+        "Italian": "Mappa: {0} (hosting)",
+        "Dutch": "Kaart: {0} (hosting)",
+        "Polish": "Mapa: {0} (hosting)",
+        "Russian": "Карта: {0} (хостинг)",
+        "Korean": "지도:{0}(호스팅)",
+        "Chinese": "地图: {0} (主机)",
+        "Japanese": "地図を表示しています。{0} (ホスティング)"
+    },
     "3316786350": {
         "English": "Mario Kart",
         "German": "Mario Kart",
@@ -1192,6 +1220,20 @@
         "Korean": "지",
         "Chinese": "从来没有",
         "Japanese": "決して"
+    },
+    "1762937400": {
+        "English": "No",
+        "German": "Nein",
+        "French": "Non",
+        "Spanish": "No",
+        "Portuguese": "Não",
+        "Italian": "No",
+        "Dutch": "Geen",
+        "Polish": "Nie",
+        "Russian": "Нет",
+        "Korean": "아니",
+        "Chinese": "没有",
+        "Japanese": "否"
     },
     "3931515170": {
         "English": "No gamemode",
@@ -2109,6 +2151,20 @@
         "Chinese": "你想打开下载页面吗？",
         "Japanese": "ダウンロードページを開きますか？"
     },
+    "3846993800": {
+        "English": "Yes",
+        "German": "Ja",
+        "French": "Oui",
+        "Spanish": "Sí",
+        "Portuguese": "Sim",
+        "Italian": "Sì",
+        "Dutch": "Ja",
+        "Polish": "Tak",
+        "Russian": "Да",
+        "Korean": "예",
+        "Chinese": "是的，是的",
+        "Japanese": "噫"
+    },
     "1638865032": {
         "English": "Your TF2 installation doesn't yet seem to be set up properly. To fix:",
         "German": "Ihre TF2-Installation scheint noch nicht richtig eingerichtet zu sein. Zu reparieren:",
@@ -2276,6 +2332,20 @@
         "Korean": "선택하지 않은",
         "Chinese": "未选中",
         "Japanese": "未選択"
+    },
+    "1900873894": {
+        "English": "{0} - TF2 Rich Presence {1}",
+        "German": "{0} - TF2 Reichhaltige Präsenz {1}",
+        "French": "{0} - TF2 Richesse de la Présence {1}",
+        "Spanish": "{0} - TF2 Presencia Rica {1}",
+        "Portuguese": "{0} - Presença Rica em TF2 {1}",
+        "Italian": "{0} - Presenza Ricca TF2 {1}",
+        "Dutch": "{0} - TF2 Rijke Aanwezigheid {1}",
+        "Polish": "{0} - TF2 Bogata Obecność {1}",
+        "Russian": "{0} - TF2 Богатое присутствие {1}",
+        "Korean": "{0}-TF2 부유한 존재{1}",
+        "Chinese": "{0}-TF2丰富的存在{1}",
+        "Japanese": "{0} - TF2 Rich Presence {1}"
     },
     "1266157337": {
         "English": "{0} - Waiting for {1}",
