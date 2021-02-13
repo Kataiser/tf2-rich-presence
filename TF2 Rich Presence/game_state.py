@@ -212,7 +212,7 @@ class GameState:
             self.update_rpc = True
 
     # modes can include player count, kills, neither, or both
-    def set_server_data(self, modes: List[str], usernames: Set[str]):
+    def update_server_data(self, modes: List[str], usernames: Set[str]):
         self.updated_server_state = True
 
         if modes:

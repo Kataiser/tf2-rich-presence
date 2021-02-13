@@ -248,7 +248,7 @@ class TF2RichPresense:
                     server_modes.append(settings.get('top_line'))
                 if settings.get('bottom_line') in ('Player count', 'Kills'):
                     server_modes.append(settings.get('bottom_line'))
-                self.game_state.set_server_data(server_modes, self.valid_usernames)
+                self.game_state.update_server_data(server_modes, self.valid_usernames)
 
             self.set_gui_from_game_state(p_data['TF2']['time'])
 

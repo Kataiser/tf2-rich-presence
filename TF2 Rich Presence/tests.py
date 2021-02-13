@@ -438,7 +438,7 @@ class TestTF2RichPresense(unittest.TestCase):
         settings.access_registry(save=settings.defaults())
         game_state_test.set_bulk((False, 'pl_snowycoast', 'Pyro', '162.254.194.158:27048', 'Not queued', False))
         self.assertTrue(game_state_test.update_rpc)
-        game_state_test.set_server_data(['Player count'], {'Kataiser'})
+        game_state_test.update_server_data(['Player count'], {'Kataiser'})
         self.assertEqual(str(game_state_test), 'Pyro on Snowycoast, gamemode=payload, hosting=False, queued="Not queued", server=162.254.194.158:27048')
         self.assertEqual(fix_activity_dict(game_state_test.activity()),
                          {'details': 'Players: 0/0',
@@ -452,7 +452,7 @@ class TestTF2RichPresense(unittest.TestCase):
 
         settings.change('bottom_line', 'Kills')
         settings.change('server_rate_limit', 0)
-        game_state_test.set_server_data(['Player count', 'Kills'], {'Kataiser'})
+        game_state_test.update_server_data(['Player count', 'Kills'], {'Kataiser'})
         self.assertEqual(fix_activity_dict(game_state_test.activity()),
                          {'details': 'Players: 0/0',
                           'state': 'Kills: 0',
@@ -536,7 +536,7 @@ class TestTF2RichPresense(unittest.TestCase):
         app.game_state.force_zero_map_time = True
 
         app.game_state.set_bulk((False, 'plr_hightower', 'Heavy', '', 'Not queued', True))
-        app.game_state.set_server_data(['Player count'], set())
+        app.game_state.update_server_data(['Player count'], set())
         app.set_gui_from_game_state()
         self.assertEqual((app.gui.text_state, app.gui.bg_state, app.gui.fg_state, app.gui.class_state),
                          (('Map: Hightower (hosting)', 'Players: ?/?', 'Time on map: 0:00', '0:00 elapsed'),('bg_modes/payload-race', 77, 172), 'fg_maps/plr_hightower', 'classes/heavy'))
@@ -548,7 +548,7 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual(app.gui.bottom_text_state, {'discord': False, 'kataiser': False, 'queued': True})
 
         app.game_state.set_bulk((False, 'cp_steel', 'Medic', '162.254.194.158:27048', 'Not queued', False))
-        app.game_state.set_server_data(['Player count'], set())
+        app.game_state.update_server_data(['Player count'], set())
         app.set_gui_from_game_state()
         state = [list(app.gui.text_state), app.gui.bg_state, app.gui.fg_state, app.gui.class_state]
         state[0][1] = 'Players: 0/24' if 'Players: ' in state[0][1] and '/24' in state[0][1] else state[0][1]
@@ -556,7 +556,7 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual(app.gui.bottom_text_state, {'discord': False, 'kataiser': False, 'queued': False})
 
         app.game_state.set_bulk((False, 'plr_highertower', 'Engineer', '', 'Not queued', True))
-        app.game_state.set_server_data(['Player count'], set())
+        app.game_state.update_server_data(['Player count'], set())
         app.set_gui_from_game_state()
         state = [list(app.gui.text_state), app.gui.bg_state, app.gui.fg_state, app.gui.class_state]
         state[0][1] = 'Players: 0/24' if 'Players: ' in state[0][1] and '/24' in state[0][1] else state[0][1]
