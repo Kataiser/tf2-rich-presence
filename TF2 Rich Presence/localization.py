@@ -88,7 +88,7 @@ def access_localization_file(path: str = 'localization.json', append: Optional[t
         if append_hash not in localization_data:
             localization_data[append_hash] = {}
             localization_data[append_hash]['English'] = append_text
-            print(f"Hash: {append_hash}, element {len(localization_data)}")
+            print(f"Hash: {append_hash}, {len(localization_data)} keys")
 
             for language in ('German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian', 'Korean', 'Chinese', 'Japanese'):
                 localization_data[append_hash][language] = ""

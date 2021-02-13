@@ -61,20 +61,20 @@ class GUI(tk.Frame):
         menu_bar: tk.Menu = tk.Menu(self.master)
         self.file_menu = tk.Menu(menu_bar, tearoff=0)
         help_menu = tk.Menu(menu_bar, tearoff=0)
-        menu_bar.add_cascade(label="File", menu=self.file_menu)
-        menu_bar.add_cascade(label="Help", menu=help_menu)
-        self.file_menu.add_command(label="Change settings", command=self.menu_open_settings, accelerator="Ctrl+S")
-        self.file_menu.add_command(label="Restore default settings", command=self.menu_restore_defaults)
-        self.file_menu.add_command(label="Trim/clean console.log", command=self.menu_clean_console_log, state=tk.DISABLED)
-        self.file_menu.add_command(label="Exit", command=self.menu_exit, accelerator="Ctrl+Q")
-        help_menu.add_command(label="Open Github page", command=self.menu_open_github)
-        help_menu.add_command(label="Open readme", command=self.menu_open_readme)
-        help_menu.add_command(label="Open changelog", command=self.menu_open_changelog)
-        help_menu.add_command(label="Open license", command=self.menu_open_license)
+        menu_bar.add_cascade(label=self.loc.text("File"), menu=self.file_menu)
+        menu_bar.add_cascade(label=self.loc.text("Help"), menu=help_menu)
+        self.file_menu.add_command(label=self.loc.text("Change settings"), command=self.menu_open_settings, accelerator="Ctrl+S")
+        self.file_menu.add_command(label=self.loc.text("Restore default settings"), command=self.menu_restore_defaults)
+        self.file_menu.add_command(label=self.loc.text("Trim/clean console.log"), command=self.menu_clean_console_log, state=tk.DISABLED)
+        self.file_menu.add_command(label=self.loc.text("Exit"), command=self.menu_exit, accelerator="Ctrl+Q")
+        help_menu.add_command(label=self.loc.text("Open Github page"), command=self.menu_open_github)
+        help_menu.add_command(label=self.loc.text("Open readme"), command=self.menu_open_readme)
+        help_menu.add_command(label=self.loc.text("Open changelog"), command=self.menu_open_changelog)
+        help_menu.add_command(label=self.loc.text("Open license"), command=self.menu_open_license)
         help_menu.add_separator()
-        help_menu.add_command(label="Check for updates", command=self.menu_check_updates)
-        help_menu.add_command(label="Report bug/issue", command=self.menu_report_issue)
-        help_menu.add_command(label="About", command=self.menu_about, accelerator="Ctrl+A")
+        help_menu.add_command(label=self.loc.text("Check for updates"), command=self.menu_check_updates)
+        help_menu.add_command(label=self.loc.text("Report bug/issue"), command=self.menu_report_issue)
+        help_menu.add_command(label=self.loc.text("About"), command=self.menu_about, accelerator="Ctrl+A")
         self.master.config(menu=menu_bar)
         self.bind_all('<Control-s>', self.menu_open_settings)
         self.bind_all('<Control-q>', self.menu_exit)
@@ -101,7 +101,7 @@ class GUI(tk.Frame):
         self.fg_shadow: int = self.canvas.create_image(65 * self.scale, 45 * self.scale, anchor=tk.NW)
         self.fg_image: int = self.canvas.create_image(85 * self.scale, 65 * self.scale, anchor=tk.NW)
         self.class_image: int = self.canvas.create_image(90 * self.scale, 180 * self.scale, anchor=tk.CENTER)
-        self.text_1: int = self.canvas.create_text(255 * self.scale, 125 * self.scale, font=('TkDefaultFont', font_size), fill='white', anchor=tk.W)
+        self.text_1: int = self.canvas.create_text(358 * self.scale, 125 * self.scale, font=('TkDefaultFont', font_size), fill='white', anchor=tk.CENTER)
         self.text_3_0: int = self.canvas.create_text(220 * self.scale, 105 * self.scale, font=('TkDefaultFont', font_size), fill='white', anchor=tk.W)
         self.text_3_1: int = self.canvas.create_text(220 * self.scale, 125 * self.scale, font=('TkDefaultFont', font_size), fill='white', anchor=tk.W)
         self.text_3_2: int = self.canvas.create_text(220 * self.scale, 145 * self.scale, font=('TkDefaultFont', font_size), fill='gray', anchor=tk.W)
@@ -286,7 +286,7 @@ class GUI(tk.Frame):
 
     # show the available update text and icon, no need to disable them once enabled
     def enable_update_notification(self):
-        self.canvas.itemconfigure(self.update_text, text=f"{self.available_update_data[0]} update available  ")  # the extra spaces are intentional
+        self.canvas.itemconfigure(self.update_text, text=self.loc.text("{0} update available  ").format(self.available_update_data[0]))  # the extra spaces are intentional
         self.canvas.itemconfigure(self.update_icon, image=self.fg_image_load('dl_icon', 25))
 
     # create and show the available update window
@@ -303,12 +303,12 @@ class GUI(tk.Frame):
 
             # this bit is kinda ugly
             update_window: tk.Toplevel = tk.Toplevel()
-            update_window.title("TF2 Rich Presence")
+            update_window.title(self.loc.text("TF2 Rich Presence"))
             set_window_icon(self.log, update_window, False)
             ttk.Label(update_window, text='\n'.join(window_text)).grid(row=0, column=0, padx=40, pady=20)
             button_frame: ttk.Frame = ttk.Frame(update_window)  # why does this need to exist
-            yes_button: ttk.Button = ttk.Button(button_frame, text="Yes", command=functools.partial(self.update_menu_yes, update_window, downloads_url), default=tk.ACTIVE)
-            no_button: ttk.Button = ttk.Button(button_frame, text="No", command=functools.partial(self.update_menu_no, update_window))
+            yes_button: ttk.Button = ttk.Button(button_frame, text=self.loc.text("Yes"), command=functools.partial(self.update_menu_yes, update_window, downloads_url), default=tk.ACTIVE)
+            no_button: ttk.Button = ttk.Button(button_frame, text=self.loc.text("No"), command=functools.partial(self.update_menu_no, update_window))
             yes_button.grid(row=0, column=0, padx=5)
             no_button.grid(row=0, column=1, padx=5, sticky=tk.W)
             button_frame.grid(row=1, column=0, pady=(0, 15))
@@ -434,7 +434,7 @@ class GUI(tk.Frame):
 
         if current_settings == default_settings:
             self.log.debug("Current settings are default")
-            messagebox.showinfo(self.loc.text("Restore defaults"), "Current settings are already default.")
+            messagebox.showinfo(self.loc.text("Restore defaults"), self.loc.text("Current settings are already default."))
         else:
             changed_settings: dict = {s: current_settings[s] for s in current_settings if current_settings[s] != default_settings[s]}
             self.log.debug(f"Changed settings: {changed_settings}")
@@ -515,6 +515,7 @@ class GUI(tk.Frame):
                     build_time: str = line.removeprefix("Built at: ").rstrip('\n')
                     break
 
+        # yeah not gonna localize this
         about: str = f"TF2 Rich Presence {launcher.VERSION}" \
                      f"\nBuilt: {build_time}" \
                      f"\nLicensed under GNU GPLv3, see License.txt" \
@@ -533,7 +534,7 @@ class GUI(tk.Frame):
 
         if not silent:
             self.pause()
-            messagebox.showinfo("About TF2 Rich Presence", about)
+            messagebox.showinfo(self.loc.text("About TF2 Rich Presence"), about)
             self.unpause()
 
     # cause why not
@@ -542,20 +543,20 @@ class GUI(tk.Frame):
         holiday_text: Optional[str] = None
 
         if now.month == 1 and now.day == 1:
-            holiday_text = "Happy New Years!"
+            holiday_text = self.loc.text("Happy New Years!")
         elif now.month == 4 and now.day == 1:
             age: int = now.year - 2018
             ordinal: str = ('th', 'st', 'nd', 'rd', 'th')[min(divmod(age, 10)[1], 4)]  # divmod instead of % because Cython is being mean
-            holiday_text = f"It's TF2 Rich Presence's {age}{ordinal} birthday today! (Yes, April 1st, seriously)"
+            holiday_text = self.loc.text("It's TF2 Rich Presence's {0}{1} birthday today! (Yes, April 1st, seriously)").format(age, ordinal)
         elif now.month == 12 and now.day == 25:
-            holiday_text = "Merry Christmas!"
+            holiday_text = self.loc.text("Merry Christmas!")
 
         if holiday_text is not None:
             self.log.info(f"Today is {now.year}/{now.month}/{now.day}, so the holiday text is \"{holiday_text}\"")
 
             if not silent:
                 self.pause()
-                messagebox.showinfo(holiday_text)
+                messagebox.showinfo(self.loc.text("TF2 Rich Presence"), holiday_text)
                 self.unpause()
 
     # runs either when the X button is clicked or whenever needed
@@ -601,7 +602,7 @@ def pos_window_by_center(window: Union[tk.Tk, tk.Toplevel], x: int, y: int):
 def main():
     main_gui = GUI(logger.Log())
     main_gui.set_clean_console_log_button_state(True)  # cause main would normally enable it once in game
-    test_state(main_gui, 3)
+    test_state(main_gui, 0)
     main_gui.mainloop()
 
 

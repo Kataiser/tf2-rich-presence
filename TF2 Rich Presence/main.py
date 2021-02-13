@@ -370,7 +370,7 @@ class TF2RichPresense:
             self.rpc_client.disconnect()
             self.client_connected = False
 
-        self.gui.set_state_1('default', f"{program_name} isn't running")
+        self.gui.set_state_1('default', self.loc.text("{0} isn't running").format(program_name))
         self.gui.clear_fg_image()
         self.gui.clear_class_image()
         self.gui.set_clean_console_log_button_state(False)

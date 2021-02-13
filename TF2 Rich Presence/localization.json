@@ -167,6 +167,20 @@
         "Chinese": "6. 重新启动TF2",
         "Japanese": "6. TF2を再起動します"
     },
+    "9207858800": {
+        "English": "About",
+        "German": "Über",
+        "French": "À propos de",
+        "Spanish": "Acerca de",
+        "Portuguese": "Sobre",
+        "Italian": "Informazioni su",
+        "Dutch": "Over",
+        "Polish": "O",
+        "Russian": "О сайте",
+        "Korean": "대한",
+        "Chinese": "关于我们",
+        "Japanese": "について"
+    },
     "4251331620": {
         "English": "Achievement",
         "German": "Leistung",
@@ -251,6 +265,20 @@
         "Chinese": "攻击/防守（中世纪模式)",
         "Japanese": "攻撃/防御(中世モード)"
     },
+    "5765869040": {
+        "English": "Bottom line: ",
+        "German": "Unterm Strich: ",
+        "French": "En résumé : ",
+        "Spanish": "El resultado final: ",
+        "Portuguese": "Resumindo: ",
+        "Italian": "Linea di fondo: ",
+        "Dutch": "Conclusie: ",
+        "Polish": "Na dole: ",
+        "Russian": "Итог: ",
+        "Korean": "하단 라인: ",
+        "Chinese": "底线： ",
+        "Japanese": "肝心なことだが "
+    },
     "1278873395": {
         "English": "Can't connect to Discord for Rich Presence.",
         "German": "Kann keine Verbindung zu Discord for Rich Presence herstellen.",
@@ -293,6 +321,20 @@
         "Chinese": "休闲",
         "Japanese": "カジュアル"
     },
+    "7511751280": {
+        "English": "Change settings",
+        "German": "Einstellungen ändern",
+        "French": "Modifier les paramètres",
+        "Spanish": "Cambiar la configuración",
+        "Portuguese": "Alterar configurações",
+        "Italian": "Cambiare le impostazioni",
+        "Dutch": "Instellingen wijzigen",
+        "Polish": "Zmień ustawienia",
+        "Russian": "Изменить настройки",
+        "Korean": "설정 변경",
+        "Chinese": "更改设置",
+        "Japanese": "設定の変更"
+    },
     "8011814710": {
         "English": "Check for program updates when launching",
         "German": "Überprüfen Sie beim Start auf Programm-Updates",
@@ -306,6 +348,20 @@
         "Korean": "체크인 프로그램 업데이트를 실행할 때",
         "Chinese": "启动时检查程序更新",
         "Japanese": "起動時にプログラムの更新を確認する"
+    },
+    "9210445720": {
+        "English": "Check for updates",
+        "German": "Nach Updates suchen",
+        "French": "Consultez les mises à jour",
+        "Spanish": "Comprobar las actualizaciones",
+        "Portuguese": "Verificar por atualizações",
+        "Italian": "Controlla gli aggiornamenti",
+        "Dutch": "Controleren op updates",
+        "Polish": "Sprawdź aktualizacje",
+        "Russian": "Проверка обновлений",
+        "Korean": "업데이트 확인",
+        "Chinese": "检查更新",
+        "Japanese": "更新情報の確認"
     },
     "1040127901": {
         "English": "Choose your preference between MS Gothic, NSimSun, and SimSun-ExtB.",
@@ -487,6 +543,20 @@
         "Chinese": "关键",
         "Japanese": "クリティカル"
     },
+    "2368506900": {
+        "English": "Current settings are already default.",
+        "German": "Die aktuellen Einstellungen sind bereits voreingestellt.",
+        "French": "Les paramètres actuels sont déjà définis par défaut.",
+        "Spanish": "La configuración actual ya está predeterminada.",
+        "Portuguese": "As configurações atuais já são padrão.",
+        "Italian": "Le impostazioni attuali sono già predefinite.",
+        "Dutch": "De huidige instellingen zijn al standaard.",
+        "Polish": "Obecne ustawienia są już domyślne.",
+        "Russian": "Текущие настройки уже по умолчанию.",
+        "Korean": "현재 설정은 이미 기본값입니다.",
+        "Chinese": "当前的设置已经是默认的。",
+        "Japanese": "現在の設定はすでにデフォルトの状態になっています。"
+    },
     "3535021960": {
         "English": "Deathmatch",
         "German": "Todesspiel",
@@ -571,20 +641,6 @@
         "Chinese": "Demoman",
         "Japanese": "デモマン"
     },
-    "1438386159": {
-        "English": "Discord isn't running",
-        "German": "Discord läuft nicht",
-        "French": "La Discord ne coule pas",
-        "Spanish": "La Discord no está corriendo",
-        "Portuguese": "A Discord não está em curso",
-        "Italian": "La Discord non è in esecuzione",
-        "Dutch": "De Discord is niet aan de gang",
-        "Polish": "Discord nie działa",
-        "Russian": "Дискорд не открыт",
-        "Korean": "불 실행되지 않는",
-        "Chinese": "不和谐不是运行",
-        "Japanese": "Discordが実行されていません"
-    },
     "2843615990": {
         "English": "Dodgeball",
         "German": "Völkerball",
@@ -641,11 +697,53 @@
         "Chinese": "错误",
         "Japanese": "エラー"
     },
+    "6330818700": {
+        "English": "Exit",
+        "German": "Beenden",
+        "French": "Sortie",
+        "Spanish": "Salir",
+        "Portuguese": "Saída",
+        "Italian": "Uscita",
+        "Dutch": "Exit",
+        "Polish": "Wyjście",
+        "Russian": "Выход",
+        "Korean": "출구",
+        "Chinese": "出口",
+        "Japanese": "出口"
+    },
+    "6003136100": {
+        "English": "File",
+        "German": "Datei",
+        "French": "Dossier",
+        "Spanish": "Archivo",
+        "Portuguese": "Arquivo",
+        "Italian": "File",
+        "Dutch": "Bestand",
+        "Polish": "Plik",
+        "Russian": "Файл",
+        "Korean": "파일",
+        "Chinese": "文件",
+        "Japanese": "ファイル"
+    },
     "1004668653": {
         "English": "Font instructions",
         "Korean": "글꼴 지침",
         "Chinese": "字体说明",
         "Japanese": "フォントの説明"
+    },
+    "3487834640": {
+        "English": "GUI scale: ",
+        "German": "GUI-Skala: ",
+        "French": "Échelle GUI : ",
+        "Spanish": "Escala GUI: ",
+        "Portuguese": "Escala GUI: ",
+        "Italian": "Scala GUI: ",
+        "Dutch": "GUI schaal: ",
+        "Polish": "Skala GUI: ",
+        "Russian": "Шкала графического интерфейса: ",
+        "Korean": "GUI 스케일: ",
+        "Chinese": "GUI规模。",
+        "Japanese": "GUIスケール。"
     },
     "4175762252": {
         "English": "Get the update with the download button in settings.",
@@ -661,6 +759,20 @@
         "Chinese": "获取与设置中的下载按钮的更新。",
         "Japanese": "設定でダウンロードボタンで更新を取得します。"
     },
+    "8092399540": {
+        "English": "Happy New Years!",
+        "German": "Frohes neues Jahr!",
+        "French": "Bonne année !",
+        "Spanish": "¡Feliz Año Nuevo!",
+        "Portuguese": "Feliz Ano Novo!",
+        "Italian": "Buon anno!",
+        "Dutch": "Gelukkig Nieuwjaar!",
+        "Polish": "Wszystkiego najlepszego w Nowym Roku!",
+        "Russian": "С Новым годом!",
+        "Korean": "새해 복 많이 받으세요!",
+        "Chinese": "新年快乐",
+        "Japanese": "あけましておめでとうございます"
+    },
     "9286502200": {
         "English": "Heavy",
         "German": "Heavy",
@@ -674,6 +786,20 @@
         "Korean": "무거운",
         "Chinese": "重",
         "Japanese": "ヘビー"
+    },
+    "6049012200": {
+        "English": "Help",
+        "German": "Hilfe",
+        "French": "Aide",
+        "Spanish": "Ayuda",
+        "Portuguese": "Ajuda",
+        "Italian": "Aiuto",
+        "Dutch": "Help",
+        "Polish": "Pomoc",
+        "Russian": "Помощь",
+        "Korean": "도움말",
+        "Chinese": "帮忙",
+        "Japanese": "ヘルプ"
     },
     "1528106792": {
         "English": "Hide game type (Casual, Comp, MvM) queued for",
@@ -744,6 +870,20 @@
         "Korean": "인터넷 연결 시간 초과(업데이트 및 서버 쿼리): ",
         "Chinese": "互联网连接超时（用于更新程序和服务器查询）。",
         "Japanese": "インターネット接続のタイムアウト (アップデータおよびサーバー クエリ用)。"
+    },
+    "3018856828": {
+        "English": "It's TF2 Rich Presence's {0}{1} birthday today! (Yes, April 1st, seriously)",
+        "German": "Heute ist der {0}{1} Geburtstag von TF2 Rich Presence! (Ja, 1. April, ernsthaft)",
+        "French": "C'est le {0}{1} anniversaire de TF2 Rich Presence aujourd'hui ! (Oui, le 1er avril, sérieusement)",
+        "Spanish": "¡Hoy es el {0}{1} cumpleaños de TF2 Rich Presence! (Sí, el 1 de abril, en serio)",
+        "Portuguese": "É o aniversário da TF2 Rich Presence {0}{1} de hoje! (Sim, 1º de abril, a sério)",
+        "Italian": "Oggi è il compleanno di TF2 Rich Presence {0}{1}! (Sì, il 1° aprile, sul serio)",
+        "Dutch": "Het is TF2 Rich Presence's {0}{1} verjaardag vandaag! (Ja, 1 april, serieus)",
+        "Polish": "To TF2 Rich Presence's {0}{1} urodziny dzisiaj! (Tak, 1 kwietnia, poważnie)",
+        "Russian": "Сегодня {0}{1} день рождения TF2 Rich Presence! (Да, 1 апреля, серьезно)",
+        "Korean": "오늘 TF2Rich Presence 의{0}{1}생일입니다! (예,4 월 1 일,진지하게)",
+        "Chinese": "今天是TF2富存在{0}{1}的生日! (是的，4月1日，说真的)",
+        "Japanese": "今日はTF2リッチプレゼンスの{0}{1}の誕生日です (そう、4月1日だよ、マジで)"
     },
     "5367410860": {
         "English": "Jail Breakout",
@@ -997,6 +1137,20 @@
         "Chinese": "医生",
         "Japanese": "メディック"
     },
+    "8623242230": {
+        "English": "Merry Christmas!",
+        "German": "Frohe Weihnachten!",
+        "French": "Joyeux Noël !",
+        "Spanish": "¡Feliz Navidad!",
+        "Portuguese": "Feliz Natal!",
+        "Italian": "Buon Natale!",
+        "Dutch": "Vrolijk Kerstfeest!",
+        "Polish": "Wesołych Świąt!",
+        "Russian": "С Рождеством!",
+        "Korean": "메리 크리스마스!",
+        "Chinese": "圣诞快乐",
+        "Japanese": "メリークリスマス！"
+    },
     "6234451750": {
         "English": "MvM (Boot Camp)",
         "German": "MvM (Boot Camp)",
@@ -1108,6 +1262,62 @@
         "Korean": "륙",
         "Chinese": "关",
         "Japanese": "オフ"
+    },
+    "8197257790": {
+        "English": "Open Github page",
+        "German": "Github-Seite öffnen",
+        "French": "Ouvrir la page Github",
+        "Spanish": "Abrir la página de Github",
+        "Portuguese": "Abrir a página do Github",
+        "Italian": "Aprire la pagina Github",
+        "Dutch": "Open Github-pagina",
+        "Polish": "Otwórz stronę Github",
+        "Russian": "Открыть страницу Github",
+        "Korean": "Github 페이지 열기",
+        "Chinese": "打开Github页面",
+        "Japanese": "Githubページを開く"
+    },
+    "6519534990": {
+        "English": "Open changelog",
+        "German": "Changelog öffnen",
+        "French": "Ouvrir le journal des modifications",
+        "Spanish": "Abrir el registro de cambios",
+        "Portuguese": "Mudança aberta",
+        "Italian": "Aprire il changelog",
+        "Dutch": "Wijzigingsoverzicht openen",
+        "Polish": "Mudança aberta",
+        "Russian": "Открытый журнал изменений",
+        "Korean": "변경 로그 열기",
+        "Chinese": "打开变更日志",
+        "Japanese": "変更履歴を開く"
+    },
+    "4845743580": {
+        "English": "Open license",
+        "German": "Offene Lizenz",
+        "French": "Licence ouverte",
+        "Spanish": "Licencia abierta",
+        "Portuguese": "Licença aberta",
+        "Italian": "Licenza aperta",
+        "Dutch": "Open licentie",
+        "Polish": "Licencja otwarta",
+        "Russian": "Открытая лицензия",
+        "Korean": "오픈 라이센스",
+        "Chinese": "开放许可证",
+        "Japanese": "オープンライセンス"
+    },
+    "4069140810": {
+        "English": "Open readme",
+        "German": "Readme öffnen",
+        "French": "Ouvrez le fichier Readme",
+        "Spanish": "Abrir el Léame",
+        "Portuguese": "Leia-me aberto",
+        "Italian": "Aprire readme",
+        "Dutch": "Leesmij openen",
+        "Polish": "Otwórz plik Readme",
+        "Russian": "Открыть чтение",
+        "Korean": "추가 정보 열기",
+        "Chinese": "打开readme",
+        "Japanese": "READMEを開く"
     },
     "1359878050": {
         "English": "Orange",
@@ -1319,6 +1529,20 @@
         "Chinese": "排队等候派对的比赛",
         "Japanese": "パーティーの試合のキューに入れられた"
     },
+    "8718925310": {
+        "English": "Report bug/issue",
+        "German": "Fehler/Problem melden",
+        "French": "Signaler un bogue ou un problème",
+        "Spanish": "Informar de un error/problema",
+        "Portuguese": "Relatar bug/emissão",
+        "Italian": "Segnala un bug/problema",
+        "Dutch": "Bug/probleem melden",
+        "Polish": "Zgłoś błąd/problem",
+        "Russian": "Сообщить об ошибке/проблеме",
+        "Korean": "버그/문제 신고",
+        "Chinese": "报告错误/问题",
+        "Japanese": "バグ/問題の報告"
+    },
     "2176059654": {
         "English": "Restarting in 2 seconds...",
         "German": "Neustart in 2 Sekunden...",
@@ -1347,6 +1571,34 @@
         "Chinese": "将1更改的设置恢复为默认设置？",
         "Japanese": "1つの変更された設定をデフォルトに復元しますか？"
     },
+    "2660567707": {
+        "English": "Restore 1 setting to default?",
+        "German": "1 Einstellung auf Standard zurücksetzen?",
+        "French": "Rétablir 1 paramètre par défaut ?",
+        "Spanish": "¿Restablecer 1 configuración por defecto?",
+        "Portuguese": "Restaurar 1 configuração como padrão?",
+        "Italian": "Ripristinare 1 impostazione di default?",
+        "Dutch": "Herstel 1 instelling naar standaard?",
+        "Polish": "Przywrócić 1 ustawienie do wartości domyślnej?",
+        "Russian": "Восстановить 1 настройку по умолчанию?",
+        "Korean": "1 설정을 기본값으로 복원 하시겠습니까?",
+        "Chinese": "将1个设置恢复为默认值？",
+        "Japanese": "1の設定をデフォルトに戻す？"
+    },
+    "1956055419": {
+        "English": "Restore default settings",
+        "German": "Standardeinstellungen wiederherstellen",
+        "French": "Rétablir les paramètres par défaut",
+        "Spanish": "Restaurar la configuración por defecto",
+        "Portuguese": "Restaurar as configurações padrão",
+        "Italian": "Ripristinare le impostazioni predefinite",
+        "Dutch": "Standaardinstellingen herstellen",
+        "Polish": "Przywrócenie ustawień domyślnych",
+        "Russian": "Восстановление настроек по умолчанию",
+        "Korean": "기본 설정 복원",
+        "Chinese": "恢复默认设置",
+        "Japanese": "デフォルトの設定に戻す"
+    },
     "8905047970": {
         "English": "Restore defaults",
         "German": "Standardwerte wiederherstellen",
@@ -1374,6 +1626,20 @@
         "Korean": "복원{0}변경된 설정을 기본값은?",
         "Chinese": "将{0}更改的设置恢复为默认值？",
         "Japanese": "{0}つの変更された設定をデフォルトに復元しますか？"
+    },
+    "3554020472": {
+        "English": "Restore {0} settings to defaults?",
+        "German": "Einstellungen {0} auf Standardwerte zurücksetzen?",
+        "French": "Rétablir les paramètres par défaut de {0} ?",
+        "Spanish": "¿Restablecer la configuración de {0} por defecto?",
+        "Portuguese": "Restaurar as configurações {0} para os padrões?",
+        "Italian": "Ripristinare le impostazioni {0} ai valori predefiniti?",
+        "Dutch": "Herstel {0} instellingen naar standaardwaarden?",
+        "Polish": "Przywrócić ustawienia {0} do wartości domyślnych?",
+        "Russian": "Восстановить {0} настройки по умолчанию?",
+        "Korean": "{0}설정을 기본값으로 복원 하시겠습니까?",
+        "Chinese": "将{0}设置恢复为默认值？",
+        "Japanese": "{0}の設定をデフォルトに戻しますか？"
     },
     "9784542030": {
         "English": "Robot Destruction",
@@ -1529,20 +1795,6 @@
         "Chinese": "间谍",
         "Japanese": "スパイ"
     },
-    "1167132449": {
-        "English": "Steam isn't running",
-        "German": "Steam läuft nicht",
-        "French": "Steam ne fonctionne pas",
-        "Spanish": "Steam no está funcionando",
-        "Portuguese": "O Steam não está funcionando",
-        "Italian": "Steam non funziona",
-        "Dutch": "Steam loopt niet",
-        "Polish": "Steam nie działa",
-        "Russian": "Steam не открыт",
-        "Korean": "Steam가 실행되지 않습니다",
-        "Chinese": "Steam没有运行",
-        "Japanese": "Steamは実行されていません"
-    },
     "7395095750": {
         "English": "Stop that Tank!",
         "German": "Stoppt den Panzer!",
@@ -1570,6 +1822,20 @@
         "Korean": "서핑",
         "Chinese": "冲浪",
         "Japanese": "サーフィン"
+    },
+    "7967881680": {
+        "English": "TF2 Rich Presence",
+        "German": "TF2 Reiche Anwesenheit",
+        "French": "La riche présence de TF2",
+        "Spanish": "TF2 Presencia Rica",
+        "Portuguese": "TF2 Presença Rica",
+        "Italian": "TF2 Ricca presenza",
+        "Dutch": "TF2 Rijke Aanwezigheid",
+        "Polish": "TF2 Bogata Obecność",
+        "Russian": "богатое присутствие TF2",
+        "Korean": "Tf2 풍부한 존재",
+        "Chinese": "TF2丰富的存在感",
+        "Japanese": "TF2 リッチプレゼンス"
     },
     "1465190241": {
         "English": "TF2 Rich Presence ({0})",
@@ -1655,20 +1921,6 @@
         "Chinese": "Team Fortress 2",
         "Japanese": "Team Fortress 2"
     },
-    "2584087160": {
-        "English": "Team Fortress 2 isn't running",
-        "German": "Team Fortress 2 läuft nicht",
-        "French": "Team Fortress 2 ne court pas",
-        "Spanish": "Team Fortress 2 no está corriendo",
-        "Portuguese": "A Team Fortress 2 não está funcionando",
-        "Italian": "Il Team Fortress 2 non è in esecuzione",
-        "Dutch": "Team Fortress 2 loopt niet",
-        "Polish": "Team Fortress 2 nie biegnie",
-        "Russian": "Тим Фортрес 2 не открыт",
-        "Korean": "Team Fortress2 가 실행되지 않는",
-        "Chinese": "团队要塞2不运行",
-        "Japanese": "チームフォートレス2"
-    },
     "1270024083": {
         "English": "Territorial Control",
         "German": "Territoriale Kontrolle",
@@ -1745,6 +1997,20 @@
         "Chinese": "若要自行检查更新，请转到{0}",
         "Japanese": "自分で更新プログラムを確認するには,{0}に移動します}"
     },
+    "3298435420": {
+        "English": "Top line: ",
+        "German": "Obere Zeile: ",
+        "French": "En première ligne : ",
+        "Spanish": "Línea superior: ",
+        "Portuguese": "Linha superior: ",
+        "Italian": "Linea superiore: ",
+        "Dutch": "Bovenste regel: ",
+        "Polish": "Górna linia: ",
+        "Russian": "Верхняя линия: ",
+        "Korean": "탑 라인:",
+        "Chinese": "顶线： ",
+        "Japanese": "トップライン。"
+    },
     "1836325860": {
         "English": "Trading",
         "German": "Handel",
@@ -1773,6 +2039,20 @@
         "Chinese": "培训",
         "Japanese": "トレーニング"
     },
+    "1589315666": {
+        "English": "Trim/clean console.log",
+        "German": "console.log trimmen und bereinigen",
+        "French": "Ajuster et nettoyer la console.log",
+        "Spanish": "Recortar/limpiar console.log",
+        "Portuguese": "Aparar/limpar console.log",
+        "Italian": "Tagliare e pulire console.log",
+        "Dutch": "console.log bijknippen en opruimen",
+        "Polish": "Przytnij i wyczyść console.log",
+        "Russian": "Обрезать и очистить console.log",
+        "Korean": "트림/깨끗한 콘솔.로그",
+        "Chinese": "修剪和清理console.log",
+        "Japanese": "console.log のトリムとクリーンアップ"
+    },
     "8988278560": {
         "English": "Unknown gamemode",
         "German": "Unbekannter Spielmodus",
@@ -1787,6 +2067,20 @@
         "Chinese": "未知游戏模式",
         "Japanese": "未知のゲームモード"
     },
+    "2651621140": {
+        "English": "Use classic gamemode images in the GUI",
+        "German": "Klassische Gamemode-Bilder in der GUI verwenden",
+        "French": "Utiliser les images classiques des modes de jeu dans l'interface graphique",
+        "Spanish": "Utilizar las imágenes clásicas del modo de juego en la interfaz gráfica de usuario",
+        "Portuguese": "Usar imagens clássicas de modo de jogo na GUI",
+        "Italian": "Usare le immagini classiche delle gamemode nella GUI",
+        "Dutch": "Gebruik klassieke gamemode afbeeldingen in de GUI",
+        "Polish": "Użyj klasycznych obrazów trybu gry w GUI",
+        "Russian": "Используйте классические изображения режима игры в GUI",
+        "Korean": "GUI 에서 고전 게임 모드 이미지 사용",
+        "Chinese": "在GUI中使用经典的游戏模式图像。",
+        "Japanese": "GUIでクラシックなゲームモードイメージを使用"
+    },
     "1096615616": {
         "English": "Versus Saxton Hale",
         "German": "Gegen Saxton Hale",
@@ -1800,6 +2094,20 @@
         "Korean": "대 헤일",
         "Chinese": "与Saxton Hale",
         "Japanese": "サクストン-ヘイル"
+    },
+    "1011879672": {
+        "English": "Would you like to open the download page?",
+        "German": "Möchten Sie die Download-Seite öffnen?",
+        "French": "Souhaitez-vous ouvrir la page de téléchargement ?",
+        "Spanish": "¿Desea abrir la página de descarga?",
+        "Portuguese": "Você gostaria de abrir a página de download?",
+        "Italian": "Vuoi aprire la pagina di download?",
+        "Dutch": "Wilt u de downloadpagina openen?",
+        "Polish": "Czy chcesz otworzyć stronę pobierania?",
+        "Russian": "Хотите открыть страницу загрузки?",
+        "Korean": "다운로드 페이지를 열고 싶습니까?",
+        "Chinese": "你想打开下载页面吗？",
+        "Japanese": "ダウンロードページを開きますか？"
     },
     "1638865032": {
         "English": "Your TF2 installation doesn't yet seem to be set up properly. To fix:",
@@ -2039,6 +2347,20 @@
         "Chinese": "{0}经过",
         "Japanese": "{0}経過しました"
     },
+    "9156706070": {
+        "English": "{0} isn't running",
+        "German": "{0} läuft nicht",
+        "French": "{0} ne fonctionne pasn",
+        "Spanish": "{0} no está funcionando",
+        "Portuguese": "{0} não está funcionando",
+        "Italian": "{0} non sta funzionando",
+        "Dutch": "{0} draait niet",
+        "Polish": "{0} nie działa",
+        "Russian": "{0} не бежит",
+        "Korean": "{0}이 실행되지 않습니다",
+        "Chinese": "{0}没有运行",
+        "Japanese": "{0}が実行されていない"
+    },
     "3892841625": {
         "English": "{0} settings have been changed. {1}",
         "German": "{0} Einstellungen wurden geändert. {1}",
@@ -2052,5 +2374,19 @@
         "Korean": "{0}설정이 변경되었습니다. {1}",
         "Chinese": "{0}设置已更改。 {1}",
         "Japanese": "{0}の設定が変更されました。 {1}"
+    },
+    "1562970061": {
+        "English": "{0} update available  ",
+        "German": "{0} Update verfügbar  ",
+        "French": "{0} mise à jour disponible  ",
+        "Spanish": "{0} actualización disponible  ",
+        "Portuguese": "{0} atualização disponível  ",
+        "Italian": "{0} aggiornamento disponibile  ",
+        "Dutch": "{0} update beschikbaar  ",
+        "Polish": "{0} aktualizacja dostępna  ",
+        "Russian": "{0} доступно обновление  ",
+        "Korean": "{0}업데이트 가능  ",
+        "Chinese": "{0}有更新  ",
+        "Japanese": "{0}更新可能  "
     }
 }

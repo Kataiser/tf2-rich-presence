@@ -43,13 +43,7 @@ class TestTF2RichPresense(unittest.TestCase):
     def tearDown(self):
         os.chdir(self.dir)
         del self.log
-
-        # fix a failed test_missing_files
-        for file in os.listdir():
-            if file.startswith('.') and os.path.isfile(file):
-                if os.path.isfile(file[1:]):
-                    os.remove(file[1:])
-                os.rename(file, file[1:])
+        settings.access_registry(save=settings.defaults())  # sorry if this changes your settings
 
     def test_interpret_console_log(self):
         recent_time = int(time.time()) - 10
@@ -352,9 +346,12 @@ class TestTF2RichPresense(unittest.TestCase):
                     else:
                         raise
 
-                self.assertNotEqual(line_localized, "")
-                self.assertEqual(line_localized.count('{0}'), line_english.count('{0}'))
-                self.assertEqual(line_localized.count('{1}'), line_english.count('{1}'))
+                try:
+                    self.assertNotEqual(line_localized, "")
+                    self.assertEqual(line_localized.count('{0}'), line_english.count('{0}'))
+                    self.assertEqual(line_localized.count('{1}'), line_english.count('{1}'))
+                except AssertionError as error:
+                    raise AssertionError(f"{error}\n{line_english}\n{line_localized}")
 
                 if line_localized == line_english:
                     num_equal_lines += 1
