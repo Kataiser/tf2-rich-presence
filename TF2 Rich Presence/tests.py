@@ -29,21 +29,20 @@ import utils
 
 class TestTF2RichPresense(unittest.TestCase):
     def setUp(self):
+        settings.access_registry(save=settings.defaults())  # sorry if this changes your settings
         settings.change('request_timeout', 30)
 
         self.dir = os.getcwd()
         self.log = logger.Log()
-        self.log.enabled = False
+        self.log.force_disabled = True
         self.log.to_stderr = False
         self.log.sentry_enabled = False
-        self.log.log_levels_allowed = self.log.log_levels
 
         gc.enable()  # because main may have disabled it
 
     def tearDown(self):
         os.chdir(self.dir)
         del self.log
-        settings.access_registry(save=settings.defaults())  # sorry if this changes your settings
 
         # fix a failed test_missing_files
         for file in os.listdir():
@@ -140,7 +139,7 @@ class TestTF2RichPresense(unittest.TestCase):
         except (FileNotFoundError, PermissionError):
             pass
 
-        self.log.enabled = True
+        self.log.force_disabled = False
         self.log.filename = 'test_resources\\test_self.log'
 
         try:
@@ -152,12 +151,17 @@ class TestTF2RichPresense(unittest.TestCase):
         self.log.info("Test1 饏Ӟ򒚦R៣񘺏1ࠞͳⴺۋ")
         self.log.error(str(SystemError("Test2")), reportable=False)
         self.assertEqual(repr(self.log), r'logger.Log at test_resources\test_self.log (enabled=True, level=Debug, stderr=False)')
+        settings.change('log_level', 'Error')
+        self.log.debug("Gone. Reduced to atoms.")
         self.log.log_file.close()
 
         with open(self.log.filename, 'r', encoding='UTF8') as current_log_file:
             current_log_file_read = current_log_file.readlines()
             self.assertTrue(current_log_file_read[0].endswith("] INFO: Test1 饏Ӟ򒚦R៣񘺏1ࠞͳⴺۋ\n"))
             self.assertTrue(current_log_file_read[1].endswith("] ERROR: Test2\n"))
+
+        with self.assertRaises(IndexError):
+            should_be_empty = current_log_file_read[2]
 
         os.remove(self.log.filename)
 

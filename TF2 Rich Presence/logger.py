@@ -42,12 +42,11 @@ class Log:
         self.last_log_time: float = time.perf_counter()
         self.console_log_path: Optional[str] = None
         self.to_stderr: bool = launcher.DEBUG
-        self.enabled: bool = settings.get('log_level') != 'Off'
+        self.force_disabled: bool = False
         self.log_levels: list = ['Debug', 'Info', 'Error', 'Critical', 'Off']
-        self.log_level: str = settings.get('log_level')
         self.local_error_hashes: List[int] = []  # just in case DB.json breaks
 
-        if self.enabled:
+        if self:
             if not os.path.isdir('logs'):
                 os.mkdir('logs')
                 time.sleep(0.1)  # ensure it gets created
@@ -55,13 +54,10 @@ class Log:
             else:
                 created_logs_dir = False
 
-            self.log_levels_allowed: list = [level for level in self.log_levels if self.log_levels.index(level) >= self.log_levels.index(self.log_level)]
             self.log_file: TextIO = open(self.filename, 'a', encoding='UTF8')
 
             if created_logs_dir:
                 self.debug("Created logs folder")
-        else:
-            self.log_levels_allowed = self.log_levels
 
         db_path: str = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
         if not os.access(db_path, os.W_OK):
@@ -70,19 +66,25 @@ class Log:
         self.debug(f"Created {repr(self)}")
 
     def __repr__(self) -> str:
-        return f"logger.Log at {self.filename} (enabled={self.enabled}, level={self.log_level}, stderr={self.to_stderr})"
+        return f"logger.Log at {self.filename} (enabled={bool(self)}, level={settings.get('log_level')}, stderr={self.to_stderr})"
 
+    # this should be run whenever the program closes
     def __del__(self):
         if not self.log_file.closed:
             self.debug(f"Closing log file ({self.filename}) via destructor")
             self.log_file.close()
 
+    # check if enabled or not
     def __bool__(self):
-        return self.enabled
+        return settings.get('log_level') != 'Off' and not self.force_disabled
+
+    # list of log levels that are higher priority than the log_level setting
+    def log_levels_allowed(self) -> List[str]:
+        return [level for level in self.log_levels if self.log_levels.index(level) >= self.log_levels.index(settings.get('log_level'))]
 
     # adds a line to the current log file
     def write_log(self, level: str, message_out: str, use_errors_file: bool = False):
-        if self.enabled:
+        if self:
             if self.last_log_time:
                 time_since_last: str = f'+{format(time.perf_counter() - self.last_log_time, ".4f")}'  # the format() adds trailing zeroes
             else:
@@ -119,17 +121,17 @@ class Log:
 
     # a log with a level of INFO (not commonly used)
     def info(self, message_in: str):
-        if 'Info' in self.log_levels_allowed:
+        if 'Info' in self.log_levels_allowed():
             self.write_log('INFO', message_in)
 
     # a log with a level of DEBUG (most things)
     def debug(self, message_in: str):
-        if 'Debug' in self.log_levels_allowed:
+        if 'Debug' in self.log_levels_allowed():
             self.write_log('DEBUG', message_in)
 
     # a log with a level of ERROR (caught, non-fatal errors)
     def error(self, message_in: str, reportable: bool = True):
-        if 'Error' in self.log_levels_allowed:
+        if 'Error' in self.log_levels_allowed():
             self.write_log('ERROR', message_in, use_errors_file=reportable)
 
         if reportable and settings.get('sentry_level') == 'All errors':
@@ -146,7 +148,7 @@ class Log:
 
     # a log with a level of CRITICAL (uncaught, fatal errors, probably (hopefully) sent to Sentry)
     def critical(self, message_in: str):
-        if 'Critical' in self.log_levels_allowed:
+        if 'Critical' in self.log_levels_allowed():
             self.write_log('CRITICAL', message_in, use_errors_file=True)
 
     # deletes older log files and compresses the rest
