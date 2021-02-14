@@ -315,7 +315,7 @@ class TF2RichPresense:
             time_elapsed = self.loc.text("{0} elapsed").format('0:00')
 
         if self.game_state.in_menus:
-            self.gui.set_state_3('main_menu', ("In menus", self.game_state.queued_state, time_elapsed))
+            self.gui.set_state_3('main_menu', (self.loc.text("In menus"), self.loc.text(self.game_state.queued_state), time_elapsed))
             self.gui.clear_fg_image()
             self.gui.clear_class_image()
             self.gui.set_bottom_text('queued', False)
@@ -357,7 +357,7 @@ class TF2RichPresense:
             if self.game_state.queued_state == "Not queued":
                 self.gui.set_bottom_text('queued', False)
             else:
-                self.gui.bottom_text_queue_state = self.game_state.queued_state
+                self.gui.bottom_text_queue_state = self.loc.text(self.game_state.queued_state)
                 self.gui.set_bottom_text('queued', True)
 
     def necessary_program_not_running(self, program_name: str, name_short: str = ''):

@@ -66,22 +66,22 @@ class GameState:
         self.update_rpc = False
 
         if self.in_menus:
-            top_line: str = "In menus"
-            bottom_line: str = self.queued_state
+            top_line: str = self.loc.text("In menus")
+            bottom_line: str = self.loc.text(self.queued_state)
             small_image: str = 'tf2_logo'
-            small_text: str = "Team Fortress 2"
+            small_text: str = self.loc.text("Team Fortress 2")
             large_image: str = 'main_menu'
-            large_text_base: str = "In menus"
+            large_text_base: str = self.loc.text("In menus")
 
             if self.queued_state == "Queued for Casual":
                 large_image = 'casual'
-                large_text_base = self.queued_state
+                large_text_base = self.loc.text(self.queued_state)
             elif self.queued_state == "Queued for Competitive":
                 large_image = 'comp'
                 large_text_base = self.queued_state
-            elif "Queued for MvM" in self.queued_state:
+            elif "Queued for MvM" in self.loc.text(self.queued_state):
                 large_image = 'mvm_queued'
-                large_text_base = self.queued_state
+                large_text_base = self.loc.text(self.queued_state)
         else:
             if self.tf2_class == "unselected":
                 small_image = 'tf2_logo'
@@ -92,7 +92,7 @@ class GameState:
 
             if self.custom_map or self.tf2_map in excluded_maps:
                 large_image = self.gamemode
-                large_text_base = self.gamemode_fancy
+                large_text_base = self.loc.text(self.gamemode_fancy)
             else:
                 large_text_base = self.map_fancy
 

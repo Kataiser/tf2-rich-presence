@@ -217,8 +217,8 @@ class GUI(tk.Frame):
     def set_bottom_text(self, state: str, enabled: bool) -> str:
         prev_text: str = ""
         text: str = ""
-        states: dict[str, str] = {'discord': "Can't connect to Discord",
-                                  'kataiser': "Hey, it seems that Kataiser, the developer of TF2 Rich Presence, is in your game!\nSay hi to me if you'd like :)",
+        states: dict[str, str] = {'discord': self.loc.text("Can't connect to Discord"),
+                                  'kataiser': self.loc.text("Hey, it seems that Kataiser, the developer of TF2 Rich Presence, is in your game!\nSay hi to me if you'd like :)"),
                                   'queued': self.bottom_text_queue_state}
 
         for state_key in states:
@@ -602,7 +602,7 @@ def pos_window_by_center(window: Union[tk.Tk, tk.Toplevel], x: int, y: int):
 def main():
     main_gui = GUI(logger.Log())
     main_gui.set_clean_console_log_button_state(True)  # cause main would normally enable it once in game
-    test_state(main_gui, 0)
+    test_state(main_gui, int(input("0-4: ")))
     main_gui.mainloop()
 
 

@@ -293,6 +293,20 @@
         "Chinese": "底线： ",
         "Japanese": "肝心なことだが "
     },
+    "1750272163": {
+        "English": "Can't connect to Discord",
+        "German": "Kann keine Verbindung zu Discord herstellen",
+        "French": "Impossible de se connecter à Discord",
+        "Spanish": "No se puede conectar a Discord",
+        "Portuguese": "Não consegue se conectar com Discord",
+        "Italian": "Impossibile connettersi a Discord",
+        "Dutch": "Kan geen verbinding maken met Discord",
+        "Polish": "Nie można połączyć się z Discord.",
+        "Russian": "Не могу подключиться к Discord",
+        "Korean": "에 연결할 수 없습니다 Discord",
+        "Chinese": "无法连接到Discord",
+        "Japanese": "Discordに接続できません。"
+    },
     "1278873395": {
         "English": "Can't connect to Discord for Rich Presence.",
         "German": "Kann keine Verbindung zu Discord for Rich Presence herstellen.",
@@ -814,6 +828,20 @@
         "Korean": "도움말",
         "Chinese": "帮忙",
         "Japanese": "ヘルプ"
+    },
+    "1458447686": {
+        "English": "Hey, it seems that Kataiser, the developer of TF2 Rich Presence, is in your game!\nSay hi to me if you'd like :)",
+        "German": "Hey, es scheint, dass Kataiser, der Entwickler von TF2 Rich Presence, in Ihrem Spiel ist!\nSagen Sie hallo zu mir, wenn Sie möchten :)",
+        "French": "Hé, il semble que Kataiser, le développeur de TF2 Rich Presence, soit dans votre jeu !\nDites-moi bonjour si vous voulez :)",
+        "Spanish": "¡Hola, parece que Kataiser, el desarrollador de TF2 Rich Presence, está en tu juego!\nSalúdame si quieres :)",
+        "Portuguese": "Ei, parece que Kataiser, a desenvolvedora da TF2 Rich Presence, está em seu jogo!\nDiga olá para mim se quiser :)",
+        "Italian": "Ehi, sembra che Kataiser, lo sviluppatore di TF2 Rich Presence, sia nel tuo gioco!\nSalutami se ti va :)",
+        "Dutch": "Hey, het lijkt erop dat Kataiser, de ontwikkelaar van TF2 Rich Presence, in jullie spel zit!\nDoe me de groeten als je wilt :)",
+        "Polish": "Hej, wygląda na to, że Kataiser, twórca TF2 Rich Presence, jest w Twojej grze!\nPrzywitaj się ze mną, jeśli chcesz :)",
+        "Russian": "Эй, похоже, что Kataiser, разработчик TF2 Rich Presence, в вашей игре!\nПоздоровайтесь со мной, если хотите:)",
+        "Korean": "이봐,Tf2Rich Presence 의 개발자 인 Kataiser 가 게임에있는 것 같습니다!\n네가 원한다면 나에게 인사 해 :)",
+        "Chinese": "嘿，看来TF2丰富的存在感的开发者Kataiser在你的游戏里了!\n如果你愿意的话，请跟我打个招呼:)",
+        "Japanese": "TF2リッチプレゼンスの開発者であるKataiserがあなたのゲームに登場しているようですよ。\nよろしければご挨拶を :)"
     },
     "1528106792": {
         "English": "Hide game type (Casual, Comp, MvM) queued for",

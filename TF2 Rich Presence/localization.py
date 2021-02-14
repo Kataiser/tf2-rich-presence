@@ -142,5 +142,5 @@ if __name__ == '__main__':
     manual_localizer = Localizer(language='English', appending=True)
 
     while True:
-        manual_localizer.text(input(": "))
+        manual_localizer.text(input(": ").replace('\\n', '\n'))
         manual_localizer.text.cache_clear()
