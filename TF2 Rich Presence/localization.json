@@ -363,6 +363,20 @@
         "Chinese": "更改设置",
         "Japanese": "設定の変更"
     },
+    "7995884500": {
+        "English": "Changing language requires a restart to take effect.",
+        "German": "Die Änderung der Sprache erfordert einen Neustart, um wirksam zu werden.",
+        "French": "Le changement de langue nécessite un redémarrage pour prendre effet.",
+        "Spanish": "El cambio de idioma requiere un reinicio para que surta efecto.",
+        "Portuguese": "A mudança de idioma requer um reinício para ter efeito.",
+        "Italian": "Cambiare la lingua richiede un riavvio per avere effetto.",
+        "Dutch": "Het wijzigen van de taal vereist een herstart om effect te hebben.",
+        "Polish": "Zmiana języka wymaga ponownego uruchomienia systemu, aby zaczęła obowiązywać.",
+        "Russian": "Изменение языка требует перезапуска, чтобы вступить в силу.",
+        "Korean": "언어를 변경하면 적용하려면 다시 시작해야합니다.",
+        "Chinese": "更改语言需要重新启动才能生效。",
+        "Japanese": "言語を変更するには再起動が必要です。"
+    },
     "8011814710": {
         "English": "Check for program updates when launching",
         "German": "Überprüfen Sie beim Start auf Programm-Updates",

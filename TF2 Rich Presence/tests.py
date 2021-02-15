@@ -297,7 +297,7 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertFalse(process_scanner.hl2_exe_is_tf2(os.getpid()))
 
     def test_settings_gui(self):
-        root = tk.Tk()
+        root = tk.Toplevel()
         settings_gui_test = settings_gui.GUI(root, self.log)
         settings_gui_test.wait_time.set(3)
         settings_gui_test.setting_changed()
@@ -333,7 +333,7 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual(incorrect_hashes, [])
 
         for language in ['English', 'German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian', 'Korean', 'Chinese', 'Japanese']:
-            localizer = localization.Localizer(language=language)
+            localizer = localization.Localizer(language=language, persist_missing=False)
             self.assertEqual(repr(localizer), f'localization.Localizer ({language}, appending=False, 0 missing lines)')
 
             num_equal_lines = 0

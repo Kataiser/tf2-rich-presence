@@ -19,13 +19,15 @@ import utils
 
 
 class Localizer:
-    def __init__(self, log: Optional[logger.Log] = None, language: str = settings.get('language'), appending: bool = False):
+    def __init__(self, log: Optional[logger.Log] = None, language: str = settings.get('language'), appending: bool = False, persist_missing: bool = True):
         self.log: Optional[logger.Log] = log
         self.language: str = language
         self.appending: bool = appending  # if extending localization.json
         self.text.cache_clear()
 
-        self.missing_lines: List[str] = utils.access_db()['missing_localization']
+        self.missing_lines: List[str] = utils.access_db()['missing_localization'] if persist_missing else []
+        if self.missing_lines and self.log:
+            self.log.debug(f"Loaded previous missing lines: {self.missing_lines}")
 
         if os.path.isdir('resources'):
             self.loc_file_path: str = os.path.join('resources', 'localization.json')
