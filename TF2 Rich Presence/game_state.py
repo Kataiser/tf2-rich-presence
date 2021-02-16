@@ -88,7 +88,7 @@ class GameState:
                 small_text = "Team Fortress 2"
             else:
                 small_image = self.tf2_class.lower()
-                small_text = self.tf2_class
+                small_text = self.loc.text(self.tf2_class)
 
             if self.custom_map or self.tf2_map in excluded_maps:
                 large_image = self.gamemode

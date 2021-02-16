@@ -1585,19 +1585,33 @@
         "Chinese": "排队等待竞争",
         "Japanese": "競争力のためのキュー"
     },
-    "6524776970": {
-        "English": "Queued for MvM",
-        "German": "In der Warteschlange für MvM",
-        "French": "En attente pour MvM",
-        "Spanish": "En cola para MvM",
-        "Portuguese": "Enfileirado para MvM",
-        "Italian": "In coda per MvM",
-        "Dutch": "In de rij staan voor MvM",
-        "Polish": "Stoi w kolejce do MvM",
-        "Russian": "Очередь на MvM",
-        "Korean": "대기를 위한 데이터를 쉽게 마이닝하고 분석",
-        "Chinese": "排队等候MvM",
-        "Japanese": "MvMのキューに登録済み"
+    "2032797863": {
+        "English": "Queued for MvM (Boot Camp)",
+        "German": "Warteschlange für MvM (Boot Camp)",
+        "French": "En file d'attente pour le MvM (Boot Camp)",
+        "Spanish": "En cola para MvM (Boot Camp)",
+        "Portuguese": "Enfileirado para MvM (Boot Camp)",
+        "Italian": "In coda per MvM (Boot Camp)",
+        "Dutch": "In de rij voor MvM (Boot Camp)",
+        "Polish": "Kolejka do MvM (Boot Camp)",
+        "Russian": "Очередь на MvM (Boot Camp)",
+        "Korean": "MvM 대기(부트 캠프)",
+        "Chinese": "排队参加MvM(训练营)",
+        "Japanese": "MvMのキュー（ブートキャンプ"
+    },
+    "1743194081": {
+        "English": "Queued for MvM (Mann Up)",
+        "German": "Warteschlange für MvM (Mann Up)",
+        "French": "En file d'attente pour MvM (Mann Up)",
+        "Spanish": "En cola para MvM (Mann Up)",
+        "Portuguese": "Enfileirado para MvM (Mann Up)",
+        "Italian": "In coda per MvM (Mann Up)",
+        "Dutch": "In de rij voor MvM (Mann Up)",
+        "Polish": "Kolejka do MvM (Mann Up)",
+        "Russian": "Очередь на MvM (Mann Up)",
+        "Korean": "Mvm 대기(Mann Up)",
+        "Chinese": "排队等候MvM(Mann Up)",
+        "Japanese": "MvMへのキューイング（マンアップ"
     },
     "2125859177": {
         "English": "Queued for a party's match",

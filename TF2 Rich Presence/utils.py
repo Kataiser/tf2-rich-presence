@@ -46,7 +46,7 @@ def access_db(write: dict = None) -> Optional[Dict[str, Union[bool, list, str]]]
             return default_db
 
 
-# get API key from the 'APIs' file
+# get an API key
 @functools.cache
 def get_api_key(service: str) -> str:
     # just some very basic obfuscation
