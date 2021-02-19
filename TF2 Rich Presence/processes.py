@@ -69,17 +69,12 @@ class ProcessScanner:
             # all the PIDs are known, so don't use tasklist, saves 0.2 - 0.3 seconds :)
             self.get_all_extended_info()
 
-            p_data_old: Dict[str] = copy.deepcopy(self.process_data)
-
             if not self.process_data['TF2']['running']:
                 self.process_data['TF2'] = self.p_data_default['TF2']
             if not self.process_data['Steam']['running']:
                 self.process_data['Steam'] = self.p_data_default['Steam']
             if not self.process_data['Discord']['running']:
                 self.process_data['Discord'] = self.p_data_default['Discord']
-
-            if self.process_data != p_data_old:
-                self.all_pids_cached = False
 
     # for Linux and MacOS (I think)
     def scan_posix(self):
@@ -114,15 +109,18 @@ class ProcessScanner:
         p_info_nones: Dict[str, Union[str, bool, None, int]] = {'running': False, 'path': None, 'time': None}
 
         if pid is None:
+            self.all_pids_cached = False
             return p_info
 
         try:
             try:
                 process: psutil.Process = psutil.Process(pid=pid)
-                p_info['running'] = [name for name in self.executables[os.name] if name in process.name().lower()] != []
+                running: bool = [name for name in self.executables[os.name] if name in process.name().lower()] != []
+                p_info['running'] = running
 
-                if not p_info['running']:
+                if not running:
                     self.log.error(f"PID {pid} has been recycled as {process.name()}")
+                    self.all_pids_cached = False
                     return p_info_nones
 
                 if 'path' in return_data:
@@ -135,17 +133,20 @@ class ProcessScanner:
                         p_info['path'] = os.path.dirname(process.cmdline()[0])
 
                     if not p_info['path']:
+                        self.all_pids_cached = False
                         return p_info_nones
 
                 if 'time' in return_data:
                     p_info['time'] = int(process.create_time())  # int instead of round to prevent future times
 
                     if not p_info['time']:
+                        self.all_pids_cached = False
                         return p_info_nones
 
                 return p_info
             except psutil.NoSuchProcess:
                 self.log.debug(f"Cached PID {pid} is no longer running")
+                self.all_pids_cached = False
                 return p_info_nones
         except Exception:
             formatted_exception: str = traceback.format_exc()
