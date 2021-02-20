@@ -55,54 +55,61 @@ def steam_config_file(self, exe_location: str) -> Optional[Set[str]]:
     self.log.debug("Scanning Steam config files for -condebug")
     found_condebug: bool = False
     found_usernames: Set[str] = set()
+    user_id_folders: List[str] = os.listdir(os.path.join(exe_location, 'userdata'))
 
-    user_id_folders: List[str] = next(os.walk(os.path.join(exe_location, 'userdata')))[1]
-    self.log.debug(f"User id folders: {user_id_folders}")
+    if user_id_folders:
+        self.log.debug(f"User id folders: {user_id_folders}")
+    else:
+        self.log.error("Steam userdata folder is empty")
+        return None
+
     for user_id_folder in user_id_folders:  # possibly multiple users for the same steam install
-        try:
-            # 'C:\Program Files (x86)\Steam\userdata\*user id number*\config\localconfig.vdf'
-            global_config_file_path: str = os.path.join(exe_location, 'userdata', user_id_folder, 'config', 'localconfig.vdf')
-            self.log.debug(f"Reading {global_config_file_path}")
+        # 'C:\Program Files (x86)\Steam\userdata\*user id number*\config\localconfig.vdf'
+        global_config_file_path: str = os.path.join(exe_location, 'userdata', user_id_folder, 'config', 'localconfig.vdf')
+        self.log.debug(f"Reading {global_config_file_path}")
 
+        try:
             with open(global_config_file_path, 'r', errors='replace') as global_config_file:
                 global_config_file_read: str = global_config_file.read()
                 global_config_file_size: int = os.stat(global_config_file_path).st_size
-
-            if '-condebug' not in global_config_file_read or '"440"' not in global_config_file_read:
-                continue
-
-            self.log.debug(f"-condebug and \"440\" found, parsing file ({global_config_file_size} bytes)")
-            parsed: dict = vdf.loads(global_config_file_read)
-            self.log.debug(f"VDF parse complete ({len(parsed['UserLocalConfigStore'])} keys)")
-            parsed_lowercase: dict = lowercase_keys(parsed)
-            self.log.debug(f"Lowercase complete ({len(parsed['userlocalconfigstore'])} keys)")
-
-            try:
-                possible_username: str = parsed_lowercase['userlocalconfigstore']['friends']['personaname']
-                self.log.debug(f"Possible username: {possible_username}")
-            except KeyError:
-                personaname_exists_in_file: bool = 'personaname' in global_config_file_read.lower()
-                self.log.error(f"Couldn't find PersonaName in config (\"personaname\" in lowercase: {personaname_exists_in_file})")
-                possible_username = ''
-
-            try:
-                tf2_launch_options = parsed_lowercase['userlocalconfigstore']['software']['valve']['steam']['apps']['440']['launchoptions']
-            except KeyError:
-                pass  # (hopefully) -condebug was in some other game
-            else:
-                if '-condebug' in tf2_launch_options:
-                    found_condebug = True
-                    self.log.debug(f"Found -condebug in launch options ({tf2_launch_options})")
-                    config_mtime: int = int(os.stat(global_config_file_path).st_mtime)
-                    self.steam_config_mtimes[global_config_file_path] = config_mtime
-                    self.log.debug(f"Added mtime ({config_mtime})")
-
-                    if possible_username:
-                        found_usernames.add(possible_username)
         except FileNotFoundError:
-            pass
+            self.log.debug(f"Couldn't find {global_config_file_path}")
+            continue
         except PermissionError as error:
             self.log.error(str(error))
+            continue
+
+        if '-condebug' not in global_config_file_read or '"440"' not in global_config_file_read:
+            continue
+
+        self.log.debug(f"-condebug and \"440\" found, parsing file ({global_config_file_size} bytes)")
+        parsed: dict = vdf.loads(global_config_file_read)
+        self.log.debug(f"VDF parse complete ({len(parsed['UserLocalConfigStore'])} keys)")
+        parsed_lowercase: dict = lowercase_keys(parsed)
+        self.log.debug(f"Lowercase complete ({len(parsed['userlocalconfigstore'])} keys)")
+
+        try:
+            possible_username: str = parsed_lowercase['userlocalconfigstore']['friends']['personaname']
+            self.log.debug(f"Possible username: {possible_username}")
+        except KeyError:
+            personaname_exists_in_file: bool = 'personaname' in global_config_file_read.lower()
+            self.log.error(f"Couldn't find PersonaName in config (\"personaname\" in lowercase: {personaname_exists_in_file})")
+            possible_username = ''
+
+        try:
+            tf2_launch_options = parsed_lowercase['userlocalconfigstore']['software']['valve']['steam']['apps']['440']['launchoptions']
+        except KeyError:
+            pass  # (hopefully) -condebug was in some other game
+        else:
+            if '-condebug' in tf2_launch_options:
+                found_condebug = True
+                self.log.debug(f"Found -condebug in launch options ({tf2_launch_options})")
+                config_mtime: int = int(os.stat(global_config_file_path).st_mtime)
+                self.steam_config_mtimes[global_config_file_path] = config_mtime
+                self.log.debug(f"Added mtime ({config_mtime})")
+
+                if possible_username:
+                    found_usernames.add(possible_username)
 
     if not found_condebug:
         self.log.error("-condebug not found, telling user", reportable=False)

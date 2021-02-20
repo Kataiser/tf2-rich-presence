@@ -307,6 +307,7 @@ class TF2RichPresense:
 
         return self.client_connected, self.rpc_client
 
+    # tell the GUI what it needs to look like, based on self.game_state
     def set_gui_from_game_state(self, tf2_start_time: Optional[int] = None):
         if tf2_start_time:
             time_elapsed_num: str = str(datetime.timedelta(seconds=int(time.time() - tf2_start_time)))
