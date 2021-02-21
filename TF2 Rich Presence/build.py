@@ -28,10 +28,12 @@ def main(version_num='v2.0'):
     parser.add_argument('--ide', action='store_true', help="Use IDE-based build.log handling", default=False)
     parser.add_argument('--release', action='store_true', help="Release build, invalidates all caches", default=False)
     parser.add_argument('--artifact', action='store_true', help="Create an artifact package, for CD", default=False)
+    parser.add_argument('--nocython', action='store_true', help="Don't compile modules with Cython", default=False)
     cli_skip_repo = parser.parse_args().n
     ide_build_log_handling = parser.parse_args().ide
     release_build = parser.parse_args().release
     artifact = parser.parse_args().artifact
+    nocython = parser.parse_args().nocython
 
     if not ide_build_log_handling:
         if os.path.isfile('build.log'):
@@ -240,15 +242,20 @@ def main(version_num='v2.0'):
         raise SyntaxError("Whatever the Linux/MacOS equivalent of xcopy is")
 
     # build PYDs using Cython and copy them in
-    compile_command = f'{sys.executable} cython_compile.py build_ext --inplace'
-    if ide_build_log_handling:
-        subprocess.run(compile_command)
+    if not nocython:
+        compile_command = f'{sys.executable} cython_compile.py build_ext --inplace'
+        if ide_build_log_handling:
+            subprocess.run(compile_command)
+        else:
+            print(subprocess.run(compile_command, capture_output=True).stdout.decode('UTF8').replace('\r\n', '\n')[:-1])
+        pyds = [Path(f'cython_build/{file}') for file in os.listdir('cython_build') if file.endswith('.pyd')]
+        print(f"Compiled {len(pyds)} PYDs")
+        for pyd in pyds:
+            print("Copied", shutil.copy(pyd, Path(f'{new_build_folder_name}/resources/')))
     else:
-        print(subprocess.run(compile_command, capture_output=True).stdout.decode('UTF8').replace('\r\n', '\n')[:-1])
-    pyds = [Path(f'cython_build/{file}') for file in os.listdir('cython_build') if file.endswith('.pyd')]
-    print(f"Compiled {len(pyds)} PYDs")
-    for pyd in pyds:
-        print("Copied", shutil.copy(pyd, Path(f'{new_build_folder_name}/resources/')))
+        print("Not compiling modules with Cython")
+        for module in cython_compile.targets:
+            print("Copied", shutil.copy(f'{module}.py', Path(f'{new_build_folder_name}/resources/')))
 
     # creates build_info.txt
     if github_repo_path != 'n':
@@ -358,7 +365,7 @@ def main(version_num='v2.0'):
         assert json.load(assertjson_maps) != {}
     for file in cython_compile.targets:
         pyd_extension = 'cp39-win_amd64.pyd' if sys.maxsize.bit_length() > 32 else 'cp39-win32.pyd'
-        assert os.stat(f'{file}.py').st_mtime < os.stat(Path(f'cython_build/{file}.{pyd_extension}')).st_mtime
+        assert os.stat(f'{file}.py').st_mtime < os.stat(Path(f'cython_build/{file}.{pyd_extension}')).st_mtime or nocython
     try:
         assertions_enabled = False
         assert False

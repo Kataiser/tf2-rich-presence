@@ -49,8 +49,8 @@ Almost certainly. If you don't want to risk it then fair enough, but I've run th
 For making and testing changes, or simply always running the most up-to-date code.
 1. Either clone the repo or [download the source](https://github.com/Kataiser/tf2-rich-presence/archive/master.zip).
 2. Copy the entire source to another location (sorry) and put the files outside of `TF2 Rich Presence` into that folder.
-3. Make sure the `python` and `pip` commands point to Python 3.9.x (future versions should work too)
-4. Install a C compiler (see [Installing Cython](http://docs.cython.org/en/latest/src/quickstart/install.html)). I personally use MinGW, but it's a pain on Windows.
+3. Make sure the `python` and `pip` commands point to Python 3.9.x (future versions should work too).
+4. Install a C compiler (see [Installing Cython](http://docs.cython.org/en/latest/src/quickstart/install.html)). I personally use MinGW, but it's a pain on Windows. Alternatively, use the `--nocython` flag when building to disable compiling.
 5. From within `TF2 Rich Presence`, run `pip install -r requirements.txt`.
 6. Either run `python build.py` to compile and build, or `python launcher.py` to launch in debug mode.
 
