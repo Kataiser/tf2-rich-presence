@@ -540,13 +540,19 @@ class TestTF2RichPresense(unittest.TestCase):
         app.game_state.update_server_data(['Player count'], set())
         app.set_gui_from_game_state()
         self.assertEqual((app.gui.text_state, app.gui.bg_state, app.gui.fg_state, app.gui.class_state),
-                         (('Map: Hightower (hosting)', 'Players: ?/?', 'Time on map: 0:00', '0:00 elapsed'),('bg_modes/payload-race', 77, 172), 'fg_maps/plr_hightower', 'classes/heavy'))
+                         (('Map: Hightower (hosting)', 'Players: ?/?', 'Time on map: 0:00', '0:00 elapsed'), ('bg_modes/payload-race', 77, 172), 'fg_maps/plr_hightower', 'classes/heavy'))
 
         app.game_state.set_bulk((False, 'cp_5gorge', 'Scout', '', 'Queued for Casual', True))
         app.set_gui_from_game_state()
         self.assertEqual((app.gui.text_state, app.gui.bg_state, app.gui.fg_state, app.gui.class_state),
                          (('Map: 5Gorge (5CP) (hosting)', 'Players: ?/?', 'Time on map: 0:00', '0:00 elapsed'), ('bg_modes/control-point', 77, 172), 'fg_maps/cp_gorge', 'classes/scout'))
         self.assertEqual(app.gui.bottom_text_state, {'discord': False, 'kataiser': False, 'queued': True})
+
+        app.game_state.set_bulk((False, 'itemtest', 'Spy', '', 'Not queued', True))
+        app.set_gui_from_game_state()
+        self.assertEqual((app.gui.text_state, app.gui.bg_state, app.gui.fg_state, app.gui.class_state),
+                         (('Map: itemtest (hosting)', 'Players: ?/?', 'Time on map: 0:00', '0:00 elapsed'),
+                          ('bg_modes/unknown', 77, 172), 'fg_modes/unknown', 'classes/spy'))
 
         app.game_state.set_bulk((False, 'cp_steel', 'Medic', '162.254.194.158:27048', 'Not queued', False))
         app.game_state.update_server_data(['Player count'], set())
