@@ -540,12 +540,14 @@ class TestTF2RichPresense(unittest.TestCase):
         app.game_state.update_server_data(['Player count'], set())
         app.set_gui_from_game_state()
         self.assertEqual((app.gui.text_state, app.gui.bg_state, app.gui.fg_state, app.gui.class_state),
-                         (('Map: Hightower (hosting)', 'Players: ?/?', 'Time on map: 0:00', '0:00 elapsed'), ('bg_modes/payload-race', 77, 172), 'fg_maps/plr_hightower', 'classes/heavy'))
+                         (('Map: Hightower (hosting)', 'Players: ?/?', 'Time on map: 0:00', '0:00 elapsed'),
+                          ('bg_modes/payload-race', 77, 172), 'fg_maps/plr_hightower', 'classes/heavy'))
 
         app.game_state.set_bulk((False, 'cp_5gorge', 'Scout', '', 'Queued for Casual', True))
         app.set_gui_from_game_state()
         self.assertEqual((app.gui.text_state, app.gui.bg_state, app.gui.fg_state, app.gui.class_state),
-                         (('Map: 5Gorge (5CP) (hosting)', 'Players: ?/?', 'Time on map: 0:00', '0:00 elapsed'), ('bg_modes/control-point', 77, 172), 'fg_maps/cp_gorge', 'classes/scout'))
+                         (('Map: 5Gorge (5CP) (hosting)', 'Players: ?/?', 'Time on map: 0:00', '0:00 elapsed'),
+                          ('bg_modes/control-point', 77, 172), 'fg_maps/cp_gorge', 'classes/scout'))
         self.assertEqual(app.gui.bottom_text_state, {'discord': False, 'kataiser': False, 'queued': True})
 
         app.game_state.set_bulk((False, 'itemtest', 'Spy', '', 'Not queued', True))
@@ -559,7 +561,8 @@ class TestTF2RichPresense(unittest.TestCase):
         app.set_gui_from_game_state()
         state = [list(app.gui.text_state), app.gui.bg_state, app.gui.fg_state, app.gui.class_state]
         state[0][1] = 'Players: 0/24' if 'Players: ' in state[0][1] and '/24' in state[0][1] else state[0][1]
-        self.assertEqual(state, [['Map: Steel', 'Players: 0/24', 'Time on map: 0:00', '0:00 elapsed'], ('bg_modes/attack-defend', 77, 172), 'fg_maps/cp_steel', 'classes/medic'])
+        self.assertEqual(state, [['Map: Steel', 'Players: 0/24', 'Time on map: 0:00', '0:00 elapsed'],
+                                 ('bg_modes/attack-defend', 77, 172), 'fg_maps/cp_steel', 'classes/medic'])
         self.assertEqual(app.gui.bottom_text_state, {'discord': False, 'kataiser': False, 'queued': False})
 
         app.game_state.set_bulk((False, 'plr_highertower', 'Engineer', '', 'Not queued', True))
@@ -570,6 +573,36 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual((app.gui.text_state, app.gui.bg_state, app.gui.fg_state, app.gui.class_state),
                          (('Map: plr_highertower (hosting)', 'Players: ?/?', 'Time on map: 0:00', '0:00 elapsed'),
                           ('bg_modes/payload-race', 77, 172), 'fg_modes/payload-race', 'classes/engineer'))
+
+    def test_game_state_localized(self):
+        settings.change('language', 'Spanish')
+        game_state_test = game_state.GameState()
+        game_state_test.force_zero_map_time = True
+
+        game_state_test.set_bulk((False, 'pl_thundermountain', 'Engineer', '', 'Not queued', True))
+        self.assertTrue(game_state_test.update_rpc)
+        self.assertEqual(str(game_state_test), 'Engineer on Thunder Mountain, gamemode=payload, hosting=True, queued="Not queued", server=')
+        self.assertEqual(fix_activity_dict(game_state_test.activity()),
+                         {'details': 'Mapa: Thunder Mountain (alojamiento)',
+                          'state': 'El tiempo en el mapa: 0:00',
+                          'timestamps': {'start': 0},
+                          'assets': {'large_image': 'z_pl_thundermountain',
+                                     'large_text': 'Thunder Mountain - TF2 Presencia Rica {tf2rpvnum}',
+                                     'small_image': 'engineer',
+                                     'small_text': 'Engineer'}})
+        self.assertTrue(game_state_test.update_rpc)
+
+    def test_set_gui_from_game_state_localized(self):
+        settings.change('language', 'German')
+        app = main.TF2RichPresense(self.log, set_process_priority=False)
+        app.game_state.force_zero_map_time = True
+
+        app.game_state.set_bulk((False, 'mvm_rottenburg', 'Medic', '', 'Not queued', True))
+        app.game_state.update_server_data(['Player count'], set())
+        app.set_gui_from_game_state()
+        self.assertEqual((app.gui.text_state, app.gui.bg_state, app.gui.fg_state, app.gui.class_state),
+                         (('Karte: Rottenburg (Hosting)', 'Spieler: ?/?', 'Zeit auf der Karte: 0:00', '0:00 verstrichen'),
+                          ('bg_modes/mvm', 77, 172), 'fg_maps/mvm_rottenburg', 'classes/medic'))
 
 
 def fix_activity_dict(activity):

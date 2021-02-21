@@ -19,9 +19,9 @@ import utils
 
 
 class Localizer:
-    def __init__(self, log: Optional[logger.Log] = None, language: str = settings.get('language'), appending: bool = False, persist_missing: bool = True):
+    def __init__(self, log: Optional[logger.Log] = None, language: Optional[str] = None, appending: bool = False, persist_missing: bool = True):
         self.log: Optional[logger.Log] = log
-        self.language: str = language
+        self.language: str = language if language else settings.get('language')
         self.appending: bool = appending  # if extending localization.json
         self.text.cache_clear()
 
