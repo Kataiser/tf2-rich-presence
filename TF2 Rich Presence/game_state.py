@@ -79,7 +79,7 @@ class GameState:
             elif self.queued_state == "Queued for Competitive":
                 large_image = 'comp'
                 large_text_base = self.queued_state
-            elif "Queued for MvM" in self.loc.text(self.queued_state):
+            elif "Queued for MvM" in self.queued_state:
                 large_image = 'mvm_queued'
                 large_text_base = self.loc.text(self.queued_state)
         else:

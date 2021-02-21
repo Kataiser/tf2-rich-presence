@@ -338,13 +338,7 @@ class TestTF2RichPresense(unittest.TestCase):
 
             num_equal_lines = 0
             for line_english in english_lines:
-                try:
-                    line_localized = localizer.text(line_english)
-                except KeyError:
-                    if localization.hash_text(line_english) in ('1040127901', '9411019900', '1004668653', '2473140856'):
-                        continue
-                    else:
-                        raise
+                line_localized = localizer.text(line_english)
 
                 try:
                     self.assertNotEqual(line_localized, "")
@@ -579,15 +573,15 @@ class TestTF2RichPresense(unittest.TestCase):
         game_state_test = game_state.GameState()
         game_state_test.force_zero_map_time = True
 
-        game_state_test.set_bulk((False, 'pl_thundermountain', 'Engineer', '', 'Not queued', True))
+        game_state_test.set_bulk((False, 'ctf_mexico_b4', 'Engineer', '', 'Not queued', True))
         self.assertTrue(game_state_test.update_rpc)
-        self.assertEqual(str(game_state_test), 'Engineer on Thunder Mountain, gamemode=payload, hosting=True, queued="Not queued", server=')
+        self.assertEqual(str(game_state_test), 'Engineer on ctf_mexico_b4, gamemode=ctf, hosting=True, queued="Not queued", server=')
         self.assertEqual(fix_activity_dict(game_state_test.activity()),
-                         {'details': 'Mapa: Thunder Mountain (alojamiento)',
+                         {'details': 'Mapa: ctf_mexico_b4 (alojamiento)',
                           'state': 'El tiempo en el mapa: 0:00',
                           'timestamps': {'start': 0},
-                          'assets': {'large_image': 'z_pl_thundermountain',
-                                     'large_text': 'Thunder Mountain - TF2 Presencia Rica {tf2rpvnum}',
+                          'assets': {'large_image': 'ctf',
+                                     'large_text': 'Capturar la Bandera - TF2 Presencia Rica {tf2rpvnum}',
                                      'small_image': 'engineer',
                                      'small_text': 'Engineer'}})
         self.assertTrue(game_state_test.update_rpc)
@@ -597,12 +591,13 @@ class TestTF2RichPresense(unittest.TestCase):
         app = main.TF2RichPresense(self.log, set_process_priority=False)
         app.game_state.force_zero_map_time = True
 
-        app.game_state.set_bulk((False, 'mvm_rottenburg', 'Medic', '', 'Not queued', True))
+        app.game_state.set_bulk((False, 'mvm_rottenburg', 'Medic', '', 'Queued for MvM (Boot Camp)', True))
         app.game_state.update_server_data(['Player count'], set())
         app.set_gui_from_game_state()
         self.assertEqual((app.gui.text_state, app.gui.bg_state, app.gui.fg_state, app.gui.class_state),
                          (('Karte: Rottenburg (Hosting)', 'Spieler: ?/?', 'Zeit auf der Karte: 0:00', '0:00 verstrichen'),
                           ('bg_modes/mvm', 77, 172), 'fg_maps/mvm_rottenburg', 'classes/medic'))
+        self.assertEqual(app.gui.bottom_text_queue_state, "Warteschlange für MvM (Boot Camp)")
 
 
 def fix_activity_dict(activity):

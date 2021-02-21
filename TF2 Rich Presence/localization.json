@@ -1,46 +1,4 @@
 {
-    "2992382540": {
-        "English": " (hosting)",
-        "German": " (Hosting)",
-        "French": " (hébergement)",
-        "Spanish": " (alojamiento)",
-        "Portuguese": " (hospedagem)",
-        "Italian": " (che ospita)",
-        "Dutch": " (hosting)",
-        "Polish": " (hosting)",
-        "Russian": " (хостинг)",
-        "Korean": "(호스팅)",
-        "Chinese": " (托管)",
-        "Japanese": "(ホスト)"
-    },
-    "1396311933": {
-        "English": " - TF2 Rich Presence {0}",
-        "German": " - TF2 Reichhaltige Präsenz {0}",
-        "French": " - TF2 Richesse de la Présence {0}",
-        "Spanish": " - TF2 Presencia Rica {0}",
-        "Portuguese": " - Presença Rica em TF2 {0}",
-        "Italian": " - Presenza Ricca TF2 {0}",
-        "Dutch": " - TF2 Rijke Aanwezigheid {0}",
-        "Polish": " - TF2 Bogata Obecność {0}",
-        "Russian": " - TF2 Богатое присутствие {0}",
-        "Korean": "-TF2 부유한 존재{0}",
-        "Chinese": "-TF2丰富的存在{0}",
-        "Japanese": " - TF2 Rich Presence {0}"
-    },
-    "1269501808": {
-        "English": " Open {0} download page in default browser ",
-        "German": " Öffnen Sie die {0} Download-Seite im Standardbrowser ",
-        "French": " Ouvrir {0} page de téléchargement dans le navigateur par défaut ",
-        "Spanish": " Abrir {0} página de descarga en el navegador predeterminado ",
-        "Portuguese": " Abrir {0} página de download no navegador padrão ",
-        "Italian": " Aprire {0} pagina di download nel browser predefinito ",
-        "Dutch": " Open {0} downloadpagina in standaardbrowser ",
-        "Polish": " Otwórz stronę pobierania {0} w domyślnej przeglądarce. ",
-        "Russian": " Открыть {0} Страницу загрузки в стандартном браузере ",
-        "Korean": " 기본 브라우저에서{0}다운로드 페이지 열기 ",
-        "Chinese": " 在默认浏览器中打开{0}下载页面 ",
-        "Japanese": " デフォルトのブラウザで{0}ダウンロードページを開きます "
-    },
     "4021625669": {
         "English": "(If you're more than one version out of date, there may have been more changes and fixes than this.)",
         "German": "(Wenn Sie mehr als eine veraltete Version haben, gab es möglicherweise mehr Änderungen und Korrekturen als diese.)",
@@ -54,34 +12,6 @@
         "Korean": "(당신이 더 이상 버전이아웃 날짜가 되었을 수도 있습니다 더 많은 변화하고 수정합니다.)",
         "Chinese": "（如果您有多个版本过时，可能会有更多的更改和修复。)",
         "Japanese": "(複数のバージョンが最新でない場合は,これよりも多くの変更と修正が行われている可能性があります。)"
-    },
-    "3289189286": {
-        "English": "(you are currently running {0}).",
-        "German": "(Sie führen derzeit {0} aus).",
-        "French": "(vous exécutez actuellement {0}).",
-        "Spanish": "(actualmente está ejecutando {0}).",
-        "Portuguese": "(você está correndo atualmente {0}).",
-        "Italian": "(si sta eseguendo {0}).",
-        "Dutch": "(u bent momenteel aan het rennen {0}).",
-        "Polish": "(aktualnie pracujesz {0}).",
-        "Russian": "(у вас сейчас открыто {0}).",
-        "Korean": "(현재 실행 중인{0}).",
-        "Chinese": "（您当前正在运行{0}）。",
-        "Japanese": "(現在,{0}を実行しています)。"
-    },
-    "2894596806": {
-        "English": "1 setting has been changed. {0}",
-        "German": "1 Einstellung wurde geändert. {0}",
-        "French": "1 réglage a été modifié. {0}",
-        "Spanish": "1 se ha cambiado el ajuste. {0}",
-        "Portuguese": "1 configuração foi alterada. {0}",
-        "Italian": "1 impostazione è stata modificata. {0}",
-        "Dutch": "1 instelling is gewijzigd. {0}",
-        "Polish": "1 ustawienie zostało zmienione. {0}",
-        "Russian": "1 настройка была изменена. {0}",
-        "Korean": "1 설정이 변경되었습니다. {0}",
-        "Chinese": "1设置已更改。 {0}",
-        "Japanese": "1設定を変更しました。 {0}"
     },
     "3336272700": {
         "English": "1. Right click on Team Fortress 2 in your Steam library",
@@ -307,20 +237,6 @@
         "Chinese": "无法连接到Discord",
         "Japanese": "Discordに接続できません。"
     },
-    "1278873395": {
-        "English": "Can't connect to Discord for Rich Presence.",
-        "German": "Kann keine Verbindung zu Discord for Rich Presence herstellen.",
-        "French": "Impossible de se connecter à Discord for Rich Presence.",
-        "Spanish": "No se puede conectar con Discord por Presencia Rica.",
-        "Portuguese": "Não se pode conectar à Discord pela Rich Presence.",
-        "Italian": "Non riesco a connettermi a Discord per la Rich Presence.",
-        "Dutch": "Kan geen verbinding maken met Discord for Rich Presence.",
-        "Polish": "Nie da się połączyć z Discord o bogatej obecności.",
-        "Russian": "Нет соединения с Дискордом для Богатого Присутствия",
-        "Korean": "에 연결할 수 없는 불화에 대한 풍부한 존재입니다.",
-        "Chinese": "无法连接到不和谐丰富的存在。",
-        "Japanese": "DiscordのRich Presenceに接続できません。"
-    },
     "8452848160": {
         "English": "Capture the Flag",
         "German": "Erfassen der Flagge",
@@ -334,20 +250,6 @@
         "Korean": "깃발을 캡처",
         "Chinese": "捕获标志",
         "Japanese": "フラグをキャプチャ"
-    },
-    "1314658180": {
-        "English": "Casual",
-        "German": "Lässig",
-        "French": "Décontracté",
-        "Spanish": "Casual",
-        "Portuguese": "Casual",
-        "Italian": "Casuale",
-        "Dutch": "Vrijblijvend",
-        "Polish": "Dorywczy",
-        "Russian": "Кэжуал",
-        "Korean": "캐주얼",
-        "Chinese": "休闲",
-        "Japanese": "カジュアル"
     },
     "7511751280": {
         "English": "Change settings",
@@ -405,12 +307,6 @@
         "Chinese": "检查更新",
         "Japanese": "更新情報の確認"
     },
-    "1040127901": {
-        "English": "Choose your preference between MS Gothic, NSimSun, and SimSun-ExtB.",
-        "Korean": "MS Gothic,NSimSun,SimSun-ExtB 사이의 선호도를 선택하십시오.",
-        "Chinese": "在MS Gothic、NSimSun和SimSun-ExtB之间选择您的偏好。",
-        "Japanese": "MS Gothic、NSimSun、SimSun-ExtBからお好みのものをお選びください。"
-    },
     "9227519100": {
         "English": "Class",
         "German": "Klasse",
@@ -424,20 +320,6 @@
         "Korean": "클래스",
         "Chinese": "级别",
         "Japanese": "クラス"
-    },
-    "3319407880": {
-        "English": "Class Wars",
-        "German": "Klassenkämpfe",
-        "French": "Guerres de Classes",
-        "Spanish": "Guerras de Clase",
-        "Portuguese": "Guerras de Classe",
-        "Italian": "Guerre di Classe",
-        "Dutch": "Klassenoorlogen",
-        "Polish": "Wojny Klasowe",
-        "Russian": "Войны классов",
-        "Korean": "클래스 전쟁",
-        "Chinese": "阶级战争",
-        "Japanese": "クラスウォー"
     },
     "3231589050": {
         "English": "Class: {0}",
@@ -453,12 +335,6 @@
         "Chinese": "类:{0}",
         "Japanese": "クラス:{0}"
     },
-    "9411019900": {
-        "English": "Close",
-        "Korean": "닫기",
-        "Chinese": "关闭",
-        "Japanese": "クローズ"
-    },
     "1351878611": {
         "English": "Close without saving",
         "German": "Schließen ohne zu speichern",
@@ -473,34 +349,6 @@
         "Chinese": "关闭而不保存",
         "Japanese": "保存せずに閉じる"
     },
-    "1487276050": {
-        "English": "Close without saving?",
-        "German": "Schließen ohne zu speichern?",
-        "French": "Fermer sans sauvegarder ?",
-        "Spanish": "¿Cerrar sin ahorrar?",
-        "Portuguese": "Fechar sem economizar?",
-        "Italian": "Chiudere senza salvare?",
-        "Dutch": "Sluiten zonder te sparen?",
-        "Polish": "Zamknąć bez oszczędzania?",
-        "Russian": "Закрыть без сохранения?",
-        "Korean": "저장하지 않고 닫습니다?",
-        "Chinese": "接近而不保存？",
-        "Japanese": "保存せずに閉じますか？"
-    },
-    "4442697060": {
-        "English": "Competitive",
-        "German": "Wettbewerbsfähig",
-        "French": "Compétitif",
-        "Spanish": "Competitivo",
-        "Portuguese": "Competitivo",
-        "Italian": "Competitivo",
-        "Dutch": "Concurrerend",
-        "Polish": "Konkurencyjność",
-        "Russian": "Компэтитив",
-        "Korean": "경쟁력",
-        "Chinese": "竞争力",
-        "Japanese": "Competitive"
-    },
     "5860897400": {
         "English": "Control Point",
         "German": "Kontrollpunkt",
@@ -514,34 +362,6 @@
         "Korean": "제어점",
         "Chinese": "控制点",
         "Japanese": "コントロールポイント"
-    },
-    "3333209180": {
-        "English": "Couldn't connect to GitHub to check for updates ({0}).",
-        "German": "Es konnte keine Verbindung zu GitHub hergestellt werden, um nach Updates zu suchen ({0}).",
-        "French": "Impossible de se connecter à GitHub pour vérifier les mises à jour ({0}).",
-        "Spanish": "No se pudo conectar a GitHub para buscar actualizaciones ({0}).",
-        "Portuguese": "Não foi possível conectar-se ao GitHub para verificar atualizações ({0}).",
-        "Italian": "Non è stato possibile connettersi a GitHub per controllare la presenza di aggiornamenti ({0}).",
-        "Dutch": "Kon geen verbinding maken met GitHub om te controleren op updates ({0}).",
-        "Polish": "Nie można było połączyć się z GitHub w celu sprawdzenia aktualizacji ({0}).",
-        "Russian": "Не удалось подключиться к GitHub для проверки обновлений ({0}).",
-        "Korean": "에 연결할 수 없 GitHub 업데이트를 확인({0}).",
-        "Chinese": "无法连接到GitHub检查更新（{0}）。",
-        "Japanese": "更新を確認するためにGitHubに接続できませんでした({0})。"
-    },
-    "2796884285": {
-        "English": "Couldn't connect to GitHub to check for updates.",
-        "German": "Es konnte keine Verbindung zu GitHub hergestellt werden, um nach Updates zu suchen.",
-        "French": "Impossible de se connecter à GitHub pour vérifier les mises à jour.",
-        "Spanish": "No pude conectarme a GitHub para buscar actualizaciones.",
-        "Portuguese": "Não foi possível conectar-se ao GitHub para verificar atualizações.",
-        "Italian": "Non sono riuscito a connettersi a GitHub per controllare la presenza di aggiornamenti.",
-        "Dutch": "Kon geen verbinding maken met GitHub om te controleren op updates.",
-        "Polish": "Nie mogłem się połączyć z GitHub, żeby sprawdzić aktualizacje.",
-        "Russian": "Не смог подключиться к GitHub, чтобы проверить наличие обновлений.",
-        "Korean": "에 연결할 수 없 GitHub 업데이트를 확인할 수 있습니다.",
-        "Chinese": "无法连接到GitHub检查更新。",
-        "Japanese": "GitHubに接続して更新を確認できませんでした。"
     },
     "3315339845": {
         "English": "Couldn't load settings, reverting to defaults.{0}",
@@ -697,20 +517,6 @@
         "Chinese": "躲避球",
         "Japanese": "ドッジボール"
     },
-    "1305483070": {
-        "English": "Emblem",
-        "German": "Emblem",
-        "French": "Emblème",
-        "Spanish": "Emblema",
-        "Portuguese": "Emblema",
-        "Italian": "Emblema",
-        "Dutch": "Embleem",
-        "Polish": "Emblemat",
-        "Russian": "Эмблема",
-        "Korean": "징",
-        "Chinese": "会徽",
-        "Japanese": "エンブレム"
-    },
     "2314739660": {
         "English": "Engineer",
         "German": "Engineer",
@@ -767,12 +573,6 @@
         "Chinese": "文件",
         "Japanese": "ファイル"
     },
-    "1004668653": {
-        "English": "Font instructions",
-        "Korean": "글꼴 지침",
-        "Chinese": "字体说明",
-        "Japanese": "フォントの説明"
-    },
     "3487834640": {
         "English": "GUI scale: ",
         "German": "GUI-Skala: ",
@@ -786,20 +586,6 @@
         "Korean": "GUI 스케일: ",
         "Chinese": "GUI规模。",
         "Japanese": "GUIスケール。"
-    },
-    "4175762252": {
-        "English": "Get the update with the download button in settings.",
-        "German": "Hol dir das Update mit dem Download-Button in den Einstellungen.",
-        "French": "Obtenez la mise à jour avec le bouton de téléchargement dans les paramètres.",
-        "Spanish": "Obtenga la actualización con el botón de descarga en la configuración.",
-        "Portuguese": "Obtenha a atualização com o botão de download em configurações.",
-        "Italian": "Ottenere l'aggiornamento con il pulsante di download nelle impostazioni.",
-        "Dutch": "Download de update met de downloadknop in de instellingen.",
-        "Polish": "Pobierz aktualizację za pomocą przycisku pobierania w ustawieniach.",
-        "Russian": "Получите обновление с помощью кнопки загрузки в настройках.",
-        "Korean": "이 설정에서 다운로드 버튼을 사용하여 업데이트를 가져옵니다.",
-        "Chinese": "获取与设置中的下载按钮的更新。",
-        "Japanese": "設定でダウンロードボタンで更新を取得します。"
     },
     "8092399540": {
         "English": "Happy New Years!",
@@ -870,20 +656,6 @@
         "Korean": "숨기기 게임 유형(캐주얼하고,경쟁적이고,데이터를 쉽게 마이닝하고 분석)대기",
         "Chinese": "隐藏游戏类型（休闲，竞争，MvM）排队等候",
         "Japanese": "非表示のゲームの種類(カジュアル,競争,MvM)のキューに入れられた"
-    },
-    "6062119400": {
-        "English": "Icon",
-        "German": "Icon",
-        "French": "Icône",
-        "Spanish": "Icono",
-        "Portuguese": "Ícone",
-        "Italian": "Icona",
-        "Dutch": "Pictogram",
-        "Polish": "Ikona",
-        "Russian": "Иконка",
-        "Korean": "아이콘",
-        "Chinese": "图标",
-        "Japanese": "アイコン"
     },
     "2085363200": {
         "English": "In menus",
@@ -1025,34 +797,6 @@
         "Chinese": "语言: ",
         "Japanese": "言語: "
     },
-    "2667713838": {
-        "English": "Launching TF2 with Rich Presence alongside Team Fortress 2...",
-        "German": "Start von TF2 mit reicher Präsenz neben Team Fortress 2...",
-        "French": "Lancement de TF2 avec une présence riche aux côtés de Team Fortress 2....",
-        "Spanish": "Lanzamiento de TF2 con Presencia Rica junto a Team Fortress 2....",
-        "Portuguese": "Lançamento do TF2 com Presença Rica ao lado do Team Fortress 2...",
-        "Italian": "Lancio di TF2 con Rich Presence a fianco di Team Fortress 2...",
-        "Dutch": "Lancering van TF2 met Rich Presence naast Team Fortress 2...",
-        "Polish": "Wystrzelenie TF2 z bogatą obecnością obok Team Fortress 2...",
-        "Russian": "Запуск TF2 с богатым присутствием рядом с Тим Фортресом 2...",
-        "Korean": "실행 팀포 2 와 풍부한 존재와 함께 Team Fortress2...",
-        "Chinese": "启动TF2与丰富的存在与团队要塞2...",
-        "Japanese": "チームフォートレス2とともにTF2を立ち上げる。.."
-    },
-    "7204421990": {
-        "English": "Launching Team Fortress 2 with Rich Presence enabled...",
-        "German": "Starten von Team Fortress 2 mit aktivierter Rich Presence...",
-        "French": "Lancement de Team Fortress 2 avec Rich Presence activé...",
-        "Spanish": "Lanzamiento de Team Fortress 2 con Presencia Rica habilitado....",
-        "Portuguese": "Equipe de Team Fortress 2 com Presença Rica habilitada...",
-        "Italian": "Lancio di Team Fortress 2 con Rich Presence abilitato...",
-        "Dutch": "Lancering van Team Fortress 2 met Rich Presence ingeschakeld...",
-        "Polish": "Uruchomienie zespołu Team Fortress 2 z włączoną bogatą obecnością...",
-        "Russian": "Запуск Team Fortress 2 с богатым присутствием...",
-        "Korean": "실행 Team Fortress2 와 풍부한 존재가 사용되...",
-        "Chinese": "启动团队要塞2与丰富的存在启用。..",
-        "Japanese": "Rich Presenceを有効にしてTeam Fortress 2を起動しています..."
-    },
     "2083457385": {
         "English": "Log reporting frequency: ",
         "German": "Protokollieren Sie die Häufigkeit der Berichterstattung: ",
@@ -1080,20 +824,6 @@
         "Korean": "메인",
         "Chinese": "主",
         "Japanese": "メイン"
-    },
-    "2692882830": {
-        "English": "Main menu",
-        "German": "Hauptmenü",
-        "French": "Menu principal",
-        "Spanish": "Menú principal",
-        "Portuguese": "Menu principal",
-        "Italian": "Menu principale",
-        "Dutch": "Hoofdmenu",
-        "Polish": "Menu główne",
-        "Russian": "Главное меню",
-        "Korean": "메인 메뉴",
-        "Chinese": "主菜单",
-        "Japanese": "メインメニュー"
     },
     "7761442790": {
         "English": "Mann vs. Machine",
@@ -1151,20 +881,6 @@
         "Chinese": "地图: {0} (主机)",
         "Japanese": "地図を表示しています。{0} (ホスティング)"
     },
-    "3316786350": {
-        "English": "Mario Kart",
-        "German": "Mario Kart",
-        "French": "Mario Kart",
-        "Spanish": "Mario Kart",
-        "Portuguese": "Mario Kart",
-        "Italian": "Mario kart",
-        "Dutch": "Mario Kart",
-        "Polish": "Mario Kart",
-        "Russian": "Марио Карт",
-        "Korean": "Mario Kart",
-        "Chinese": "马里奥赛车",
-        "Japanese": "マリオカート"
-    },
     "3295840550": {
         "English": "Max kilobytes of console.log to scan: ",
         "German": "Max. Kilobyte der console.log zum Scannen: ",
@@ -1221,34 +937,6 @@
         "Chinese": "圣诞快乐",
         "Japanese": "メリークリスマス！"
     },
-    "6234451750": {
-        "English": "MvM (Boot Camp)",
-        "German": "MvM (Boot Camp)",
-        "French": "MvM (Boot Camp)",
-        "Spanish": "MvM (Campo de Entrenamiento)",
-        "Portuguese": "MvM (Boot Camp)",
-        "Italian": "MvM (Campo Stivale)",
-        "Dutch": "MvM (Laarzenkamp)",
-        "Polish": "MvM (Boot Camp)",
-        "Russian": "MvM (Boot Camp)",
-        "Korean": "자가 데이터를 쉽게 마이닝하고 분석(Boot Camp)",
-        "Chinese": "MvM(新兵训练营)",
-        "Japanese": "MvM(ブートキャンプ)"
-    },
-    "4659619690": {
-        "English": "MvM (Mann Up)",
-        "German": "MvM (Mann hoch)",
-        "French": "MvM (Mann Up)",
-        "Spanish": "MvM (Mann Up)",
-        "Portuguese": "MvM (Mann Up)",
-        "Italian": "MvM (Mann Up)",
-        "Dutch": "MvM (Mann Up)",
-        "Polish": "MvM (Mann Up)",
-        "Russian": "MvM (Mann Up)",
-        "Korean": "자가 데이터를 쉽게 마이닝하고 분석(만대)",
-        "Chinese": "MvM(曼起来)",
-        "Japanese": "MvM(マンアップ)"
-    },
     "9627289700": {
         "English": "Never",
         "German": "Niemals",
@@ -1290,20 +978,6 @@
         "Korean": "아 게임",
         "Chinese": "没有游戏模式",
         "Japanese": "ゲームモードなし"
-    },
-    "9363143430": {
-        "English": "None, use TF2 logo",
-        "German": "Keine, verwenden Sie das TF2-Logo",
-        "French": "Aucun, utiliser le logo TF2",
-        "Spanish": "Ninguno, utilice el logotipo TF2",
-        "Portuguese": "Nenhum, use o logotipo TF2",
-        "Italian": "Nessuno, utilizzare il logo TF2",
-        "Dutch": "Geen, gebruik het TF2-logo",
-        "Polish": "Brak, użyj logo TF2",
-        "Russian": "Нету, использовать логотип TF2",
-        "Korean": "도를 사용 팀포 2 로고",
-        "Chinese": "无,使用TF2标志",
-        "Japanese": "なし,TF2ロゴを使用"
     },
     "3447858830": {
         "English": "Not queued",
@@ -1501,34 +1175,6 @@
         "Chinese": "选手:{0}/{1}",
         "Japanese": "プレイヤー {0}/{1}"
     },
-    "2465472860": {
-        "English": "Portrait",
-        "German": "Porträt",
-        "French": "Portrait",
-        "Spanish": "Retrato",
-        "Portuguese": "Retrato",
-        "Italian": "Ritratto",
-        "Dutch": "Portret",
-        "Polish": "Portret",
-        "Russian": "Портрет",
-        "Korean": "세",
-        "Chinese": "肖像",
-        "Japanese": "肖像画"
-    },
-    "4155575659": {
-        "English": "Press enter in this window when done",
-        "German": "Drücken Sie die Eingabetaste in diesem Fenster, wenn Sie fertig sind",
-        "French": "Appuyez sur Entrée dans cette fenêtre lorsque vous avez terminé",
-        "Spanish": "Presione Enter en esta ventana cuando haya terminado",
-        "Portuguese": "Pressione enter nesta janela quando estiver pronto",
-        "Italian": "Al termine, premere Invio in questa finestra",
-        "Dutch": "Druk op enter in dit venster wanneer u klaar bent",
-        "Polish": "Po zakończeniu naciśnij Enter w tym oknie",
-        "Russian": "Нажмите enter в этом окне, когда закончите",
-        "Korean": "이 창에 끝낼 때 입력하십시오",
-        "Chinese": "完成后在此窗口中按enter键",
-        "Japanese": "このウィンドウでenterキーを押します"
-    },
     "2768904650": {
         "English": "Prop Hunt",
         "German": "Requisitenjagd",
@@ -1640,20 +1286,6 @@
         "Korean": "버그/문제 신고",
         "Chinese": "报告错误/问题",
         "Japanese": "バグ/問題の報告"
-    },
-    "2176059654": {
-        "English": "Restarting in 2 seconds...",
-        "German": "Neustart in 2 Sekunden...",
-        "French": "Redémarrage dans 2 secondes...",
-        "Spanish": "Reinicio en 2 segundos....",
-        "Portuguese": "Reinício em 2 segundos...",
-        "Italian": "Riavvio in 2 secondi...",
-        "Dutch": "Herstart over twee seconden...",
-        "Polish": "Ponowne uruchomienie za 2 sekundy...",
-        "Russian": "Перезапуск через 2 секунды...",
-        "Korean": "시에 2 초...",
-        "Chinese": "在2秒内重新启动。..",
-        "Japanese": "2秒で再起動します..."
     },
     "4273081733": {
         "English": "Restore 1 changed setting to default?",
@@ -1781,20 +1413,6 @@
         "Chinese": "童子军",
         "Japanese": "スカウト"
     },
-    "5623655670": {
-        "English": "Second line: ",
-        "German": "Zweite Zeile: ",
-        "French": "Deuxième ligne : ",
-        "Spanish": "Segunda línea: ",
-        "Portuguese": "Segunda linha: ",
-        "Italian": "Seconda riga: ",
-        "Dutch": "Tweede regel: ",
-        "Polish": "Druga linia: ",
-        "Russian": "Вторая линия: ",
-        "Korean": "두 번째 줄: ",
-        "Chinese": "第二行: ",
-        "Japanese": "2行目。"
-    },
     "3509849080": {
         "English": "Selected class small image type: ",
         "German": "Ausgewählte Klasse kleiner Bildtyp: ",
@@ -1893,20 +1511,6 @@
         "Chinese": "间谍",
         "Japanese": "スパイ"
     },
-    "7395095750": {
-        "English": "Stop that Tank!",
-        "German": "Stoppt den Panzer!",
-        "French": "Arrêtez ce Tank !",
-        "Spanish": "¡Detengan ese Tanque!",
-        "Portuguese": "Pare esse Tanque!",
-        "Italian": "Fermate quel Carro Armato!",
-        "Dutch": "Stop die Tank!",
-        "Polish": "Zatrzymaj ten Czołg!",
-        "Russian": "Остановите танк!",
-        "Korean": "정지되는 탱크!",
-        "Chinese": "拦住那辆坦克",
-        "Japanese": "Stop that Tank!"
-    },
     "1904483510": {
         "English": "Surfing",
         "German": "Surfen",
@@ -1977,34 +1581,6 @@
         "Chinese": "TF2富存在({0})设置",
         "Japanese": "TF2 Rich Presence({0})の設定"
     },
-    "1595153499": {
-        "English": "TF2 Rich Presence has crashed, and the error has been reported to the developer.",
-        "German": "TF2 Reichhaltige Präsenz ist abgestürzt, und der Fehler wurde dem Entwickler gemeldet.",
-        "French": "TF2 Richesse de la Présence s'est planté et l'erreur a été signalée au développeur.",
-        "Spanish": "TF2 Presencia Rica se ha estrellado, y el error ha sido reportado al desarrollador.",
-        "Portuguese": "Presença Rica em TF2 caiu, e o erro foi relatado ao desenvolvedor.",
-        "Italian": "Presenza Ricca TF2 si è arrestato e l'errore è stato segnalato allo sviluppatore.",
-        "Dutch": "TF2 Rijke Aanwezigheid is gecrasht en de fout is gemeld aan de ontwikkelaar.",
-        "Polish": "TF2 Bogata Obecność uległ awarii, a błąd został zgłoszony deweloperowi.",
-        "Russian": "TF2 Богатое присутствие сломалось, и ошибка была отправлена разработчику.",
-        "Korean": "팀포 2 풍부한 존재가 추락하고,오류 보고 되었습니다.",
-        "Chinese": "TF2丰富的存在已经崩溃，并已向开发人员报告错误。",
-        "Japanese": "TF2Rich Presenceがクラッシュし,エラーが開発者に報告されました。"
-    },
-    "1394418178": {
-        "English": "TF2 Rich Presence is currently running, so it needs to be restarted for changes to take effect.",
-        "German": "TF2 Reichhaltige Präsenz läuft derzeit, daher muss es neu gestartet werden, damit Änderungen wirksam werden.",
-        "French": "TF2 Richesse de la Présence est actuellement en cours d'exécution, il doit donc être redémarré pour que les changements prennent effet.",
-        "Spanish": "TF2 Presencia Rica se está ejecutando actualmente, por lo que es necesario reiniciarlo para que los cambios surtan efecto.",
-        "Portuguese": "Presença Rica em TF2 está atualmente em funcionamento, portanto precisa ser reiniciada para que as mudanças entrem em vigor.",
-        "Italian": "Presenza Ricca TF2 è attualmente in esecuzione, quindi deve essere riavviato affinché le modifiche abbiano effetto.",
-        "Dutch": "TF2 Rijke Aanwezigheid is momenteel in werking, dus het moet opnieuw worden opgestart om de wijzigingen te kunnen doorvoeren.",
-        "Polish": "TF2 Bogata Obecność jest obecnie uruchomiony, więc musi być ponownie uruchomiony, aby zmiany zaczęły obowiązywać.",
-        "Russian": "TF2 Богатое присутствие все еще работает, перезапустите что бы измененные настройки работали.",
-        "Korean": "TF2 풍부한 존재는 현재 실행 중이므로 변경 사항을 적용 할 수 있도록 다시 시작해야합니다.",
-        "Chinese": "存在当前正在运行的丰富的TF2，因此它需要被重启以使更改生效。",
-        "Japanese": "現在,TF2リッチプレゼンスが実行されているため,変更を有効にするには,再起動する必要があります。"
-    },
     "7301379380": {
         "English": "Team Fortress 2",
         "German": "Team Fortress 2",
@@ -2032,12 +1608,6 @@
         "Korean": "영어",
         "Chinese": "领土控制",
         "Japanese": "領土管理"
-    },
-    "2473140856": {
-        "English": "The Windows command prompt's default font doesn't support {0} characters. Here's how to fix it:",
-        "Korean": "Windows 명령 프롬프트의 기본 글꼴은{0}문자를 지원하지 않습니다. 여기에 그것을 해결하는 방법은 다음과 같습니다:",
-        "Chinese": "Windows命令提示符的默认字体不支持{0}字符。下面是如何解决这个问题。",
-        "Japanese": "Windowsのコマンドプロンプトのデフォルトフォントが{0}文字をサポートしていません。これを修正する方法は以下の通りです。"
     },
     "1479218207": {
         "English": "This version ({0}) is out of date (newest version is {1}).",
@@ -2080,20 +1650,6 @@
         "Korean": "지도 시간:{0}",
         "Chinese": "时间在地图上:{0}",
         "Japanese": "マップ上の時間:{0}"
-    },
-    "6890491890": {
-        "English": "To check for updates yourself, go to {0}",
-        "German": "Um selbst nach Updates zu suchen, gehen Sie zu {0}",
-        "French": "Pour vérifier vous-même les mises à jour, allez à {0}",
-        "Spanish": "Para buscar actualizaciones usted mismo, vaya a {0}",
-        "Portuguese": "Para verificar por si mesmo, vá até {0}",
-        "Italian": "Per verificare da soli gli aggiornamenti, andare a {0}",
-        "Dutch": "Om zelf te controleren of er updates zijn, ga naar {0}",
-        "Polish": "Aby samemu sprawdzić aktualizacje, przejdź do {0}",
-        "Russian": "Чтобы проверить наличие обновлений самостоятельно, перейдите по ссылке {0}",
-        "Korean": "업데이트를 확인하기 위해 직접 이동{0}",
-        "Chinese": "若要自行检查更新，请转到{0}",
-        "Japanese": "自分で更新プログラムを確認するには,{0}に移動します}"
     },
     "3298435420": {
         "English": "Top line: ",
@@ -2235,146 +1791,6 @@
         "Chinese": "您的TF2安装似乎尚未正确设置。 来修复:",
         "Japanese": "あなたのTF2インストールはまだ正しく設定されていないようです。 修正するには:"
     },
-    "1440487620": {
-        "English": "casual",
-        "German": "lässig",
-        "French": "décontracté",
-        "Spanish": "esporádico",
-        "Portuguese": "casual",
-        "Italian": "occasionale",
-        "Dutch": "nonchalant",
-        "Polish": "pobieżny",
-        "Russian": "кэжуал",
-        "Korean": "캐주얼",
-        "Chinese": "休闲",
-        "Japanese": "カジュアル"
-    },
-    "4673384100": {
-        "English": "competitive",
-        "German": "wettbewerbsfähig",
-        "French": "compétitif",
-        "Spanish": "competitivos",
-        "Portuguese": "competitivo",
-        "Italian": "agonistica",
-        "Dutch": "concurrerend",
-        "Polish": "konkurencyjny",
-        "Russian": "компэтитив",
-        "Korean": "경쟁력",
-        "Chinese": "竞争力",
-        "Japanese": "competitive"
-    },
-    "4050156700": {
-        "English": "day",
-        "German": "Tag",
-        "French": "journée",
-        "Spanish": "día",
-        "Portuguese": "dia",
-        "Italian": "giorno",
-        "Dutch": "dag",
-        "Polish": "dzień",
-        "Russian": "день",
-        "Korean": "일",
-        "Chinese": "日",
-        "Japanese": "日"
-    },
-    "6894430600": {
-        "English": "days",
-        "German": "Tage",
-        "French": "jours",
-        "Spanish": "días",
-        "Portuguese": "dias",
-        "Italian": "giornate",
-        "Dutch": "dagen",
-        "Polish": "dni",
-        "Russian": "дни",
-        "Korean": "일",
-        "Chinese": "天",
-        "Japanese": "日"
-    },
-    "7215558300": {
-        "English": "hour",
-        "German": "Stunde",
-        "French": "heure",
-        "Spanish": "hora",
-        "Portuguese": "hora",
-        "Italian": "ora",
-        "Dutch": "uur",
-        "Polish": "godzina",
-        "Russian": "час",
-        "Korean": "시간",
-        "Chinese": "小时",
-        "Japanese": "時間"
-    },
-    "1089869300": {
-        "English": "hours",
-        "German": "Stunden",
-        "French": "horaires",
-        "Spanish": "horas",
-        "Portuguese": "horas",
-        "Italian": "orario",
-        "Dutch": "uren",
-        "Polish": "godziny",
-        "Russian": "часы",
-        "Korean": "시간",
-        "Chinese": "小时",
-        "Japanese": "時間"
-    },
-    "1513232830": {
-        "English": "minute",
-        "German": "Minute",
-        "French": "minuscule",
-        "Spanish": "minuto",
-        "Portuguese": "minuto",
-        "Italian": "minuto",
-        "Dutch": "minutieus",
-        "Polish": "minuta",
-        "Russian": "минута",
-        "Korean": "분",
-        "Chinese": "分钟",
-        "Japanese": "分"
-    },
-    "2020482620": {
-        "English": "minutes",
-        "German": "Minuten",
-        "French": "minutes",
-        "Spanish": "minutos",
-        "Portuguese": "minutos",
-        "Italian": "verbale",
-        "Dutch": "notulen",
-        "Polish": "minuty",
-        "Russian": "минуты",
-        "Korean": "분",
-        "Chinese": "分钟",
-        "Japanese": "分"
-    },
-    "1474566370": {
-        "English": "second",
-        "German": "Sekunde",
-        "French": "second",
-        "Spanish": "segundo",
-        "Portuguese": "segundo",
-        "Italian": "attimo",
-        "Dutch": "tweede",
-        "Polish": "sekunda",
-        "Russian": "секунда",
-        "Korean": "두 번째",
-        "Chinese": "二",
-        "Japanese": "第二に"
-    },
-    "1967398240": {
-        "English": "seconds",
-        "German": "Sekunden",
-        "French": "secondes",
-        "Spanish": "segundos",
-        "Portuguese": "segundos",
-        "Italian": "secondi",
-        "Dutch": "seconden",
-        "Polish": "sekundy",
-        "Russian": "секунды",
-        "Korean": "초",
-        "Chinese": "秒",
-        "Japanese": "秒"
-    },
     "3929549250": {
         "English": "unselected",
         "German": "nicht ausgewählt",
@@ -2486,20 +1902,6 @@
         "Korean": "{0}이 실행되지 않습니다",
         "Chinese": "{0}没有运行",
         "Japanese": "{0}が実行されていない"
-    },
-    "3892841625": {
-        "English": "{0} settings have been changed. {1}",
-        "German": "{0} Einstellungen wurden geändert. {1}",
-        "French": "{0} ont été modifiés. {1}",
-        "Spanish": "{0} se han cambiado los ajustes. {1}",
-        "Portuguese": "{0} as configurações foram alteradas. {1}",
-        "Italian": "{0} le impostazioni sono state modificate. {1}",
-        "Dutch": "{0} instellingen zijn gewijzigd. {1}",
-        "Polish": "Zmieniono {0} ustawień. {1}",
-        "Russian": "{0} настройки были изменены. {1}",
-        "Korean": "{0}설정이 변경되었습니다. {1}",
-        "Chinese": "{0}设置已更改。 {1}",
-        "Japanese": "{0}の設定が変更されました。 {1}"
     },
     "1562970061": {
         "English": "{0} update available  ",
