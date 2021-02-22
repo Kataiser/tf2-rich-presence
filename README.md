@@ -40,10 +40,13 @@ For faster launching, you can add the first EXE to your taskbar/start menu/deskt
 - [Releases](https://github.com/Kataiser/tf2-rich-presence/releases)
 
 ## Linux and MacOS support?
-At the moment, both are considered unsupported. They probably work since [Jan200101](https://github.com/Jan200101) did some work on Linux a while ago, but the release builds are formatted for Windows. Contributors are very welcome! Also check out [cyclowns/tf2-discord](https://github.com/cyclowns/tf2-discord), which is confirmed to work on both Windows and Linux, or [EmeraldSnorlax/TF2-RPC](https://github.com/EmeraldSnorlax/TF2-RPC), which is a much less mature program but is built on Linux and theoretically cross-platform too. Alternatively, following most or all of the "building from source" instructions might work, or possibly running `python resources/launcher.py` in a release.
+At the moment, both are considered unsupported. They probably work since [Jan200101](https://github.com/Jan200101) did some work on Linux a while ago, but the release builds are formatted for Windows. Contributors are very welcome! Also check out [cyclowns/tf2-discord](https://github.com/cyclowns/tf2-discord), which is confirmed to work on both Windows and Linux, or [EmeraldSnorlax/TF2-RPC](https://github.com/EmeraldSnorlax/TF2-RPC), which is a much less mature program but is built on Linux and theoretically cross-platform too. Alternatively, following most or all of the "building from source" instructions might work, or possibly running `python resources/launcher.py` in a --nocython build.
 
 ## VAC safe?
-Almost certainly. If you don't want to risk it then fair enough, but I've run this on my main account for years and feel comfortable with it. The game's runtime and memory are never touched in any way to read its state. For transparency, here's the complete list of external files that are read from and/or written to: `\tf\console.log`, `\tf\cfg\*class*.cfg` and `steam_appid.txt` in TF2's install and `\userdata\*id*\config\localconfig.vdf` in Steam's. The game process is also queried for its start time and install path, and the server you're playing on is queried for player count or kill counts.
+Almost certainly. If you don't want to risk it then fair enough, but I've run this on my main account for years and feel comfortable with it. The game's runtime and memory are never touched in any way to read its state. For transparency, here's the complete list of external files that are read from and/or written to: `\tf\console.log`, `\tf\cfg\*class*.cfg` and `steam_appid.txt` in TF2's install and `\userdata\*id*\config\localconfig.vdf` in Steam's. The game process is also queried for its start time and install path, and the server you're playing on is queried for player count or kill counts. RCON is not used.
+
+## Malware detection
+A minority of antivirus vendors see the launcher EXEs as trojans for some reason, which is a problem I haven't been able to solve. Assuming the batch to EXE converter I'm using is safe, these are entirely false positives. See [#126](https://github.com/Kataiser/tf2-rich-presence/issues/126) for more information.
 
 ## Building from source
 For making and testing changes, or simply always running the most up-to-date code.
@@ -55,7 +58,7 @@ For making and testing changes, or simply always running the most up-to-date cod
 6. Either run `python build.py` to compile and build, or `python launcher.py` to launch in debug mode.
 
 ## Version 2 goals
-- ~~A GUI~~ (Done)
+- ~~A GUI~~ (Done, ended up using discoIPC still)
 	- I'm fairly confident I know how to implement this (it's a bit of work though)
 	- Would require doing RPC with [pypresence](https://github.com/qwertyquerty/pypresence) due to a bug in [discoIPC](https://github.com/k3rn31p4nic/discoIPC)
 	- Would also have the benefit of not requiring two (slow) Python interpreter launches
@@ -63,11 +66,11 @@ For making and testing changes, or simply always running the most up-to-date cod
 - Run as a service
 	- Idea basically stolen from [cyclowns/tf2-discord](https://github.com/cyclowns/tf2-discord)
 	- Alternatively, minimize to taskbar (if possible)
-- ~~Map-specific images, instead of gamemodes~~ (Done)
+- ~~Map-specific images, instead of gamemodes~~ (Done, currently at 150/150 assets though)
 	- Would cause all sorts of problems, including removing the class icon style option
 	- Discord art asset limit is 150, the rest of the program uses 47, and there are 118 vanilla maps in the game
 	- So won't be able to get every map, can just limit to the most popular though
 - A proper installer
 	- Also maybe store DB.json and settings in AppData\Roaming
-	- Make a [Chocolatey](https://chocolatey.org/) package as well
+	- Make a [Chocolatey](https://chocolatey.org/) package as well, ideally would need to fix antivirus detection
 	- Possibly include an autoupdater, either [Squirrel](https://github.com/Squirrel/Squirrel.Windows) or rolling my own
