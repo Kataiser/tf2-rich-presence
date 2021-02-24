@@ -24,6 +24,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+        pip install coverage
     - name: Copy files
       run: |
         xcopy LICENSE "TF2 Rich Presence"
@@ -41,4 +42,8 @@ jobs:
     - name: Run tests
       run: |
         cd "TF2 Rich Presence"
-        python tests.py
+        coverage run tests.py
+    - name: "Upload coverage to Codecov"
+      uses: codecov/codecov-action@v1
+      with:
+        fail_ci_if_error: true
