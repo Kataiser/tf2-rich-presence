@@ -10,7 +10,6 @@
 [![Updates](https://pyup.io/repos/github/Kataiser/tf2-rich-presence/shield.svg)](https://pyup.io/repos/github/Kataiser/tf2-rich-presence/)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/18a048d3a05e4815b247d886abef575f)](https://www.codacy.com/app/Kataiser/tf2-rich-presence?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Kataiser/tf2-rich-presence&amp;utm_campaign=Badge_Grade)
 [![Github Actions build](https://img.shields.io/github/workflow/status/Kataiser/tf2-rich-presence/Tests%20&%20CD)](https://github.com/Kataiser/tf2-rich-presence/actions?query=workflow%3A%22Tests+%26+CD%22)
-[![Help wanted tag](https://img.shields.io/github/labels/Kataiser/tf2-rich-presence/help%20wanted?cacheSeconds=100000)](https://github.com/Kataiser/tf2-rich-presence/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22help+wanted%22)
 [![Coverage](https://codecov.io/gh/Kataiser/tf2-rich-presence/branch/master/graph/badge.svg?token=HOWNMW0tXB)](https://codecov.io/gh/Kataiser/tf2-rich-presence)
 
 # TF2 Rich Presence
