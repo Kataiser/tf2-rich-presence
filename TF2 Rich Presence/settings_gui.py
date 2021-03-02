@@ -16,7 +16,7 @@ import settings
 
 
 class GUI(tk.Frame):
-    def __init__(self, master: tk.Toplevel, log: logger.Log, reload_settings: Optional[tuple] = None):
+    def __init__(self, master: tk.Toplevel, log: logger.Log, position: Optional[tuple] = None, reload_settings: Optional[tuple] = None):
         self.log: logger.Log = log
         self.log.info(f"Opening settings menu for TF2 Rich Presence {launcher.VERSION}")
         self.gui_language: Optional[str] = self.languages[self.languages.index(reload_settings[8].get())] if reload_settings else None
@@ -94,6 +94,8 @@ class GUI(tk.Frame):
         # actually create the settings window fairly late to reduce time with a tiny window visible
         self.master: Union[tk.Toplevel, tk.Tk] = master
         tk.Frame.__init__(self, self.master)
+        if position:
+            gui.pos_window_by_center(self.master, *position)
         check_int_command: str = self.register(check_int)
         self.master.protocol('WM_DELETE_WINDOW', self.close_window)
         self.master.title(self.loc.text("TF2 Rich Presence ({0}) settings").format(launcher.VERSION))
@@ -146,7 +148,6 @@ class GUI(tk.Frame):
         setting14_frame = ttk.Frame(self.lf_main)
         setting14_text = ttk.Label(setting14_frame, text="{}".format(
             self.loc.text("Bottom line: ")))
-        # setting14_options = ttk.OptionMenu(setting14_frame, self.bottom_line, self.rpc_lines[0], *self.rpc_lines_display, command=self.setting_changed)
         setting14_radiobuttons = []
         for rpc_line_text in self.rpc_lines_display:
             setting14_radiobuttons.append(ttk.Radiobutton(setting14_frame, variable=self.bottom_line, text=rpc_line_text, value=rpc_line_text, command=self.setting_changed))
@@ -244,6 +245,8 @@ class GUI(tk.Frame):
         self.log.debug(f"Window size: {self.window_dimensions}")
         self.master.focus_force()
         self.master.grab_set()
+        if position:
+            gui.pos_window_by_center(self.master, *position)
 
     def __repr__(self) -> str:
         return f"settings.GUI {self.window_dimensions}"

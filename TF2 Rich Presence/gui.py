@@ -420,8 +420,7 @@ class GUI(tk.Frame):
         self.log.info("GUI: Opening settings menu")
         # no need to show pause overlay
         settings_root: tk.Toplevel = tk.Toplevel()
-        settings_gui.GUI(settings_root, self.log)
-        pos_window_by_center(settings_root, *get_window_center(self.master))
+        settings_gui.GUI(settings_root, self.log, position=get_window_center(self.master))
         set_window_icon(self.log, self.master, False)
 
     def menu_restore_defaults(self, *args):
