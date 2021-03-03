@@ -103,6 +103,8 @@ class TestTF2RichPresense(unittest.TestCase):
     def test_class_config_files(self):
         cfg_path = 'test_resources\\tf\\cfg'
         demo_path = f'{cfg_path}\\demoman.cfg'
+        if not os.path.isdir('test_resources\\tf'):
+            os.mkdir('test_resources\\tf')
         if os.path.isdir(cfg_path):
             shutil.rmtree(cfg_path)
             time.sleep(0.1)
