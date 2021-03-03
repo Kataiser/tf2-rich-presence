@@ -39,7 +39,7 @@ __license__ = "GPL-3.0"
 __email__ = "Mecharon1.gm@gmail.com"
 
 
-def main():
+def main(launch: bool = True):
     try:
         import settings
         enable_sentry: bool = settings.get('sentry_level') != 'Never'
@@ -67,7 +67,9 @@ def main():
                 scope.user = {'username': f'{user_pc_name}_{user_identifier}'}
 
         import main
-        main.launch()
+
+        if launch:
+            main.launch()
     except SystemExit:
         raise
     except Exception:

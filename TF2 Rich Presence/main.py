@@ -158,7 +158,7 @@ class TF2RichPresense:
         else:
             self.log.debug("custom.py doesn't exist")
 
-    def run(self):
+    def run(self, once: bool = False):
         while True:
             self.loop_body()
 
@@ -170,6 +170,9 @@ class TF2RichPresense:
             while time.perf_counter() - sleep_time_started < sleep_time and self.gui.alive and not self.fast_next_loop:
                 time.sleep(1 / 30)  # 30 Hz updates (btw tell me if this is stupid)
                 self.gui.safe_update()
+
+            if once:
+                break
 
     # the main logic. runs every 2 or 5 seconds (by default)
     def loop_body(self):

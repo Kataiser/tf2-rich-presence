@@ -7,6 +7,7 @@ import os
 import shutil
 import time
 import tkinter as tk
+import traceback
 import unittest
 
 import psutil
@@ -17,6 +18,7 @@ import configs
 import game_state
 import gamemodes
 import gui
+import launcher
 import localization
 import logger
 import main
@@ -97,6 +99,23 @@ class TestTF2RichPresense(unittest.TestCase):
     def test_steam_config_file(self):
         app = main.TF2RichPresense(self.log, set_process_priority=False)
         self.assertEqual(configs.steam_config_file(app, 'test_resources\\'), {'Kataiser'})
+
+    def test_class_config_files(self):
+        cfg_path = 'test_resources\\tf\\cfg'
+        demo_path = f'{cfg_path}\\demoman.cfg'
+        if os.path.isdir(cfg_path):
+            shutil.rmtree(cfg_path)
+            time.sleep(0.1)
+        os.mkdir(cfg_path)
+        configs.class_config_files(self.log, 'test_resources')
+        self.assertEqual(len(os.listdir(cfg_path)), 9)
+        open(demo_path, 'w').close()
+        with open(demo_path, 'r') as demo_file:
+            self.assertEqual(demo_file.read(), '')
+        configs.class_config_files(self.log, 'test_resources')
+        with open(demo_path, 'r') as demo_file:
+            self.assertTrue('echo "Demoman selected"' in demo_file.read())
+        shutil.rmtree(cfg_path)
 
     def test_get_match_info(self):
         test_game_state = game_state.GameState()
@@ -323,6 +342,7 @@ class TestTF2RichPresense(unittest.TestCase):
         english_lines = [localization.access_localization_file()[key]['English'] for key in all_keys]
         num_lines_total = len(english_lines)
         incorrect_hashes = []
+        test_text = "This text isn't in the file"
 
         for key in all_keys:
             test_key = localization.hash_text(localization.access_localization_file()[key]['English'])
@@ -355,7 +375,15 @@ class TestTF2RichPresense(unittest.TestCase):
             else:
                 self.assertLess(num_equal_lines, num_lines_total / 4)
 
+            self.assertEqual(localizer.text(test_text), test_text)
+
+        db = utils.access_db()
+        self.assertTrue(test_text in db['missing_localization'])
+        db['missing_localization'] = []
+        utils.access_db(write=db)
+
     def test_main_simple(self):
+        settings.change('wait_time_slow', 1)
         log = logger.Log()
         app = main.TF2RichPresense(log)
         self.assertEqual(repr(app), 'main.TF2RichPresense (state=init)')
@@ -367,7 +395,7 @@ class TestTF2RichPresense(unittest.TestCase):
                                      'large_text': 'In menus - TF2 Rich Presence {tf2rpvnum}',
                                      'small_image': 'tf2_logo',
                                      'small_text': 'Team Fortress 2'}})
-        app.loop_body()
+        app.run(once=True)
         self.assertEqual(repr(app), 'main.TF2RichPresense (state=no tf2)')
         self.assertEqual(fix_activity_dict(app.game_state.activity()),
                          {'details': 'In menus',
@@ -383,6 +411,8 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual(self_process.ionice(), psutil.IOPRIO_LOW)
         self_process.nice(psutil.NORMAL_PRIORITY_CLASS)
         self_process.ionice(psutil.IOPRIO_NORMAL)
+
+        app.send_rpc_activity()
 
     def test_game_state(self):
         game_state_test = game_state.GameState()
@@ -530,6 +560,12 @@ class TestTF2RichPresense(unittest.TestCase):
         app = main.TF2RichPresense(self.log, set_process_priority=False)
         app.game_state.force_zero_map_time = True
 
+        app.game_state.set_bulk((True, '', '', '', 'Not queued', False))
+        app.set_gui_from_game_state()
+        self.assertEqual((app.gui.text_state, app.gui.bg_state, app.gui.fg_state, app.gui.class_state),
+                         (('In menus', 'Not queued', '0:00 elapsed'),
+                          ('main_menu', 85, 164), 'tf2_logo', ''))
+
         app.game_state.set_bulk((False, 'plr_hightower', 'Heavy', '', 'Not queued', True))
         app.game_state.update_server_data(['Player count'], set())
         app.set_gui_from_game_state()
@@ -598,6 +634,14 @@ class TestTF2RichPresense(unittest.TestCase):
                          (('Karte: Rottenburg (Hosting)', 'Spieler: ?/?', 'Zeit auf der Karte: 0:00', '0:00 verstrichen'),
                           ('bg_modes/mvm', 77, 172), 'fg_maps/mvm_rottenburg', 'classes/medic'))
         self.assertEqual(app.gui.bottom_text_queue_state, "Warteschlange für MvM (Boot Camp)")
+
+    def test_launcher(self):
+        launcher.main(launch=False)
+
+        try:
+            raise Exception("test")
+        except Exception:
+            launcher.exc_already_reported(traceback.format_exc())
 
 
 def fix_activity_dict(activity):
