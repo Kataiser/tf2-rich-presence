@@ -254,22 +254,23 @@ class TF2RichPresense:
                     server_modes.append(settings.get('bottom_line'))
                 self.game_state.update_server_data(server_modes, self.valid_usernames)
 
+            if self.custom_functions:
+                self.custom_functions.modify_game_state(self)
+
             self.set_gui_from_game_state(p_data['TF2']['time'])
+
+            if self.custom_functions:
+                self.custom_functions.modify_gui(self)
 
             if self.game_state.update_rpc:
                 self.activity = self.game_state.activity()
 
-                # let this make some last-second adjustments to activity
                 if self.custom_functions:
-                    self.custom_functions.loop_middle(self)
+                    self.custom_functions.modify_rpc_activity(self)
 
                 self.send_rpc_activity()
             else:
                 self.log.debug("Not updating RPC state")
-
-                # not a lot of useful stuff this can do here, but it should still get the chance to run
-                if self.custom_functions:
-                    self.custom_functions.loop_middle(self)
 
             self.gui.master.title(window_title)
             self.log.debug(f"Set window title to \"{window_title}\"")

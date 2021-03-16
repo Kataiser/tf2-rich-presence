@@ -14,16 +14,23 @@ class TF2RPCustom:
         pass
 
     def before_loop(self, app: main.TF2RichPresense):
-        # app.log.debug("Performing custom.before_loop()")
+        # app.log.debug("Running custom.before_loop()")
         pass
 
-    # after TF2RichPresense.game_state is finalized but before it's displayed or sent to Discord (only runs if in game)
-    def loop_middle(self, app: main.TF2RichPresense):
-        # app.log.debug("Performing custom.loop_middle()")
+    def modify_game_state(self, app: main.TF2RichPresense):
+        # app.log.debug("Running custom.modify_game_state()")
+        pass
+
+    def modify_gui(self, app: main.TF2RichPresense):
+        # app.log.debug("Running custom.modify_gui()")
+        pass
+
+    def modify_rpc_activity(self, app: main.TF2RichPresense):
+        # app.log.debug("Running custom.modify_rpc_activity()")
         pass
 
     def after_loop(self, app: main.TF2RichPresense):
-        # app.log.debug("Performing custom.after_loop()")
+        # app.log.debug("Running custom.after_loop()")
         pass
 
 
