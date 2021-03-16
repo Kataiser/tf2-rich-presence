@@ -167,9 +167,10 @@ class TF2RichPresense:
             sleep_time_started: float = time.perf_counter()
             self.log.debug(f"Sleeping for {sleep_time} seconds (slow = {self.slow_sleep_time})")
 
-            while time.perf_counter() - sleep_time_started < sleep_time and self.gui.alive and not self.fast_next_loop:
-                time.sleep(1 / 30)  # 30 Hz updates (btw tell me if this is stupid)
-                self.gui.safe_update()
+            if not self.fast_next_loop:
+                while time.perf_counter() - sleep_time_started < sleep_time and self.gui.alive:
+                    time.sleep(1 / 30)  # 30 Hz updates (btw tell me if this is stupid)
+                    self.gui.safe_update()
 
             if once:
                 break
