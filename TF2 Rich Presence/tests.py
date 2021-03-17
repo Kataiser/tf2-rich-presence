@@ -138,8 +138,9 @@ class TestTF2RichPresense(unittest.TestCase):
             except AssertionError as error:
                 raise AssertionError(f'{test_address}, {error}')
 
-        test_game_state.last_server_request_time -= settings.get('server_rate_limit')
-        self.assertEqual(test_game_state.get_match_data('', 'Player count'), {'player_count': 'Players: ?/?'})
+        settings.change('request_timeout', 0.001)
+        self.assertEqual(test_game_state.get_match_data(test_addresses[-1], ['Player count', 'Kills']), server_data)
+        self.assertEqual(test_game_state.get_match_data('', ['Player count']), {'player_count': 'Players: ?/?'})
 
     def test_get_map_gamemode(self):
         self.assertEqual(gamemodes.get_map_gamemode(self.log, 'cp_dustbowl'), ['Dustbowl', 'attack-defend', 'Attack/Defend'])
