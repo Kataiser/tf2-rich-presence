@@ -146,7 +146,7 @@ class TF2RichPresense:
 
     # import custom functionality
     def import_custom(self):
-        custom_functions_path: str = os.path.join('resources', 'custom.py') if os.path.isdir('resources') else 'custom.py'
+        custom_functions_path: str = 'custom.py' if launcher.DEBUG else os.path.join('resources', 'custom.py')
 
         if os.path.isfile(custom_functions_path):
             with open(custom_functions_path, 'r') as custom_functions_file:

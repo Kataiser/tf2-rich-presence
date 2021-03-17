@@ -24,15 +24,10 @@ class Localizer:
         self.language: str = language if language else settings.get('language')
         self.appending: bool = appending  # if extending localization.json
         self.text.cache_clear()
-
         self.missing_lines: List[str] = utils.access_db()['missing_localization'] if persist_missing else []
-
-        if os.path.isdir('resources'):
-            self.loc_file_path: str = os.path.join('resources', 'localization.json')
-        else:
-            self.loc_file_path = 'localization.json'
-
+        self.loc_file_path = 'localization.json' if launcher.DEBUG else os.path.join('resources', 'localization.json')
         self.loc_file_exists: bool = os.path.isfile(self.loc_file_path)
+
         if not self.loc_file_exists and self.log:
             self.log.error(f"localization.json doesn't exist (should be at {os.path.abspath(self.loc_file_path)})")
 

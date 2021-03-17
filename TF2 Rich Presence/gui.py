@@ -368,7 +368,7 @@ class GUI(tk.Frame):
     # load a .webp image from gui_images, mode can be RGBA or RGB. image_name shouldn't have the file extension and can have forward slashes
     @functools.cache
     def load_image(self, image_name: str, mode: str = 'RGBA') -> Image:
-        images_path: str = os.path.join('resources', 'gui_images') if os.path.isdir('resources') else 'gui_images'
+        images_path: str = 'gui_images' if launcher.DEBUG else os.path.join('resources', 'gui_images')
         image_name_fixed: str = image_name.replace('/', os.path.sep)
         image_path: str = os.path.join(images_path, f'{image_name_fixed}.webp')
 
@@ -576,7 +576,7 @@ class GUI(tk.Frame):
 # hopefully only sets the current window, not any future ones
 def set_window_icon(log: logger.Log, window: Union[tk.Tk, tk.Toplevel], wrench: bool):
     filename: str = 'tf2_logo_blurple_wrench.ico' if wrench else 'tf2_logo_blurple.ico'
-    path: str = os.path.join('resources', filename) if os.path.isdir('resources') else filename
+    path: str = filename if launcher.DEBUG else os.path.join('resources', filename)
 
     try:
         window.iconbitmap(path)

@@ -8,6 +8,7 @@ import os
 from typing import Dict, List, Tuple, Union
 
 import game_state
+import launcher
 import logger
 
 
@@ -59,7 +60,7 @@ def get_map_gamemode(log: logger.Log, map_filename: str) -> Union[Tuple[str, str
 # load maps database from maps.json
 @functools.cache
 def load_maps_db() -> Dict[str, List[str]]:
-    maps_db_path = os.path.join('resources', 'maps.json') if os.path.isdir('resources') else 'maps.json'
+    maps_db_path = 'maps.json' if launcher.DEBUG else os.path.join('resources', 'maps.json')
 
     if os.path.isfile(maps_db_path):
         with open(maps_db_path, 'r') as maps_db:
