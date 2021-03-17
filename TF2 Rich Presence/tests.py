@@ -4,7 +4,9 @@
 import gc
 import io
 import os
+import random
 import shutil
+import sys
 import time
 import tkinter as tk
 import traceback
@@ -386,8 +388,7 @@ class TestTF2RichPresense(unittest.TestCase):
 
     def test_main_simple(self):
         settings.change('wait_time_slow', 1)
-        log = logger.Log()
-        app = main.TF2RichPresense(log)
+        app = main.TF2RichPresense(self.log)
         self.assertEqual(repr(app), 'main.TF2RichPresense (state=init)')
         self.assertEqual(fix_activity_dict(app.game_state.activity()),
                          {'details': 'In menus',
@@ -415,6 +416,32 @@ class TestTF2RichPresense(unittest.TestCase):
         self_process.ionice(psutil.IOPRIO_NORMAL)
 
         app.send_rpc_activity()
+
+    def test_custom(self):
+        settings.change('wait_time_slow', 1)
+        big_number_file = f'test_{random.randint(10000, 99999)}.temp'
+
+        with open('custom.py', 'r+') as custom_file:
+            custom_old = custom_file.read()
+            custom_file.seek(0)
+            custom_file.truncate()
+            custom_file.write("class TF2RPCustom:"
+                              "\n\tdef __init__(self, app): pass"
+                              "\n\tdef before_loop(self, app): pass"
+                              "\n\tdef modify_game_state(self, app): pass"
+                              "\n\tdef modify_gui(self, app): pass"
+                              "\n\tdef modify_rpc_activity(self, app): pass"
+                              f"\n\tdef after_loop(self, app): open('{big_number_file}', 'w').close()")
+            custom_file.flush()
+
+        app = main.TF2RichPresense(self.log, set_process_priority=False)
+        app.run(once=True)
+        self.assertTrue(os.path.isfile(big_number_file))
+        os.remove(big_number_file)
+
+        with open('custom.py', 'r+') as custom_file:
+            custom_file.truncate()
+            custom_file.write(custom_old)
 
     def test_game_state(self):
         game_state_test = game_state.GameState()

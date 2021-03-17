@@ -154,7 +154,7 @@ class TF2RichPresense:
 
             import custom
             self.log.debug(f"Imported custom.py ({custom_functions_lines} lines)")
-            self.custom_functions = custom.TF2RPCustom()  # good naming
+            self.custom_functions = custom.TF2RPCustom(self)  # good naming
         else:
             self.log.debug("custom.py doesn't exist")
 
