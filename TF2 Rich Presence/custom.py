@@ -10,7 +10,8 @@ import main
 
 
 class TF2RPCustom:
-    def __init__(self):
+    def __init__(self, app: main.TF2RichPresense):
+        # app.log.debug("Running custom.__init__()")
         pass
 
     def before_loop(self, app: main.TF2RichPresense):
@@ -36,8 +37,10 @@ class TF2RPCustom:
 
 if __name__ == '__main__':
     test_app = main.TF2RichPresense(logger.Log())
-    test_TF2RPCustom = TF2RPCustom()
+    test_TF2RPCustom = TF2RPCustom(main.TF2RichPresense())
 
     test_TF2RPCustom.before_loop(test_app)
-    test_TF2RPCustom.loop_middle(test_app)
+    test_TF2RPCustom.modify_game_state(test_app)
+    test_TF2RPCustom.modify_gui(test_app)
+    test_TF2RPCustom.modify_rpc_activity(test_app)
     test_TF2RPCustom.after_loop(test_app)

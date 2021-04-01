@@ -158,6 +158,7 @@ class TF2RichPresense:
         else:
             self.log.debug("custom.py doesn't exist")
 
+    # main program loop
     def run(self, once: bool = False):
         while True:
             self.loop_body()
