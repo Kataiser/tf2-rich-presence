@@ -227,6 +227,7 @@ class TF2RichPresense:
 
             self.game_state.game_start_time = p_data['TF2']['time']
             self.gui.set_clean_console_log_button_state(True)
+            self.gui.set_launch_tf2_button_state(False)
             self.gui.set_bottom_text('discord', False)
 
             console_log_path: str = os.path.join(p_data['TF2']['path'], 'tf', 'console.log')
@@ -277,6 +278,7 @@ class TF2RichPresense:
             self.log.debug(f"Set window title to \"{window_title}\"")
 
         elif not p_data['TF2']['running']:
+            self.gui.set_launch_tf2_button_state(p_data['Steam']['running'])
             self.necessary_program_not_running('Team Fortress 2', 'TF2')
             self.should_mention_tf2 = False
         elif not p_data['Discord']['running']:

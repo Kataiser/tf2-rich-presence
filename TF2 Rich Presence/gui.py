@@ -5,6 +5,7 @@
 import datetime
 import functools
 import os
+import subprocess
 import tkinter as tk
 import tkinter.ttk as ttk
 import traceback
@@ -101,7 +102,7 @@ class GUI(tk.Frame):
         self.fg_shadow: int = self.canvas.create_image(65 * self.scale, 45 * self.scale, anchor=tk.NW)
         self.fg_image: int = self.canvas.create_image(85 * self.scale, 65 * self.scale, anchor=tk.NW)
         self.class_image: int = self.canvas.create_image(90 * self.scale, 180 * self.scale, anchor=tk.CENTER)
-        self.text_1: int = self.canvas.create_text(358 * self.scale, 125 * self.scale, font=('TkDefaultFont', font_size), fill='white', anchor=tk.CENTER)
+        self.text_1: int = self.canvas.create_text(358 * self.scale, 110 * self.scale, font=('TkDefaultFont', font_size), fill='white', anchor=tk.CENTER)
         self.text_3_0: int = self.canvas.create_text(220 * self.scale, 105 * self.scale, font=('TkDefaultFont', font_size), fill='white', anchor=tk.W)
         self.text_3_1: int = self.canvas.create_text(220 * self.scale, 125 * self.scale, font=('TkDefaultFont', font_size), fill='white', anchor=tk.W)
         self.text_3_2: int = self.canvas.create_text(220 * self.scale, 145 * self.scale, font=('TkDefaultFont', font_size), fill='gray', anchor=tk.W)
@@ -118,6 +119,8 @@ class GUI(tk.Frame):
         self.canvas.tag_bind(self.update_icon, '<Button-1>', self.show_update_menu)
         self.canvas.place(x=0, y=0)
         self.log.debug("Created canvas elements")
+
+        self.launch_tf2_button = tk.Button(self.master, text=self.loc.text("Launch TF2"), command=self.launch_tf2)
 
         self.safe_update()
         self.window_dimensions = self.master.winfo_width(), self.master.winfo_height()
@@ -243,6 +246,13 @@ class GUI(tk.Frame):
     def set_clean_console_log_button_state(self, enabled: bool):
         self.file_menu.entryconfigure(2, state=tk.ACTIVE if enabled else tk.DISABLED)
 
+    # only show the "launch TF2"  button if Steam is running and the game is not
+    def set_launch_tf2_button_state(self, enabled: bool):
+        if enabled:
+            self.launch_tf2_button.place(x=358 * self.scale, y=142 * self.scale, anchor=tk.CENTER)
+        else:
+            self.launch_tf2_button.place_forget()
+
     # clears any text that isn't blank, set dont_clear to avoid clearing text that will be overwritten anyway
     def clear_text(self, dont_clear: int):
         if len(self.text_state) == 1 and dont_clear != 1:
@@ -365,6 +375,11 @@ class GUI(tk.Frame):
             self.unpause()
         else:
             self.close_window()
+
+    # start the game with guaranteed -condebug
+    def launch_tf2(self):
+        self.log.info("GUI: Launching TF2")
+        subprocess.run('cmd /c start steam://rungameid/440 -condebug')
 
     # load a .webp image from gui_images, mode can be RGBA or RGB. image_name shouldn't have the file extension and can have forward slashes
     @functools.cache
@@ -611,6 +626,7 @@ def test_state(test_gui: GUI, state: int):
         test_gui.set_state_1('default', "Team Fortress 2 isn't running")
         test_gui.clear_fg_image()
         test_gui.clear_class_image()
+        test_gui.set_launch_tf2_button_state(True)
     elif state == 1:
         test_gui.set_state_3('main_menu', ("In menus", "Not queued", "01:21 elapsed"))
         test_gui.set_fg_image('tf2_logo')

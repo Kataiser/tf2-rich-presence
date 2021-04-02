@@ -548,6 +548,7 @@ class TestTF2RichPresense(unittest.TestCase):
     def test_gui(self):
         gui_test = gui.GUI(self.log)
         gui_test.set_clean_console_log_button_state(True)
+        gui_test.set_launch_tf2_button_state(True)
 
         for state in [i for i in range(5)]:
             gui.test_state(gui_test, state)
