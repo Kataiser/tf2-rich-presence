@@ -305,6 +305,7 @@ class GUI(tk.Frame):
             update_window: tk.Toplevel = tk.Toplevel()
             update_window.title(self.loc.text("TF2 Rich Presence"))
             set_window_icon(self.log, update_window, False)
+            update_window.resizable(0, 0)
             ttk.Label(update_window, text='\n'.join(window_text)).grid(row=0, column=0, padx=40, pady=20)
             button_frame: ttk.Frame = ttk.Frame(update_window)  # why does this need to exist
             yes_button: ttk.Button = ttk.Button(button_frame, text=self.loc.text("Yes"), command=functools.partial(self.update_menu_yes, update_window, downloads_url), default=tk.ACTIVE)
