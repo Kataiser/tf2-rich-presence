@@ -121,7 +121,7 @@ class GUI(tk.Frame):
         self.canvas.place(x=0, y=0)
         self.log.debug("Created canvas elements")
 
-        self.launch_tf2_button = tk.Button(self.master, text=self.loc.text("Launch TF2"), command=self.launch_tf2)
+        self.launch_tf2_button = tk.Button(self.master, text=self.loc.text("Launch TF2"), font=('TkDefaultFont', round(9 * self.scale)), command=self.launch_tf2)
 
         self.safe_update()
         self.window_dimensions = self.master.winfo_width(), self.master.winfo_height()
@@ -251,7 +251,7 @@ class GUI(tk.Frame):
     # only show the "launch TF2"  button if Steam is running and the game is not
     def set_launch_tf2_button_state(self, enabled: bool):
         if enabled:
-            self.launch_tf2_button.place(x=358 * self.scale, y=142 * self.scale, anchor=tk.CENTER)
+            self.launch_tf2_button.place(x=358 * self.scale, y=142 * self.scale, width=round(102 * self.scale), height=round(26 * self.scale), anchor=tk.CENTER)
         else:
             self.launch_tf2_button.place_forget()
 
