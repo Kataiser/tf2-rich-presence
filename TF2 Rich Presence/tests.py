@@ -574,7 +574,7 @@ class TestTF2RichPresense(unittest.TestCase):
         gui_test.unpause()
         gui_test.enable_update_notification()
         gui_test.check_for_updates(popup=True)
-        gui_test.holiday(silent=True)
+        gui_test.holiday()
         gui_test.menu_open_settings()
         gui_test.menu_about(silent=True)
 
@@ -609,7 +609,7 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual((app.gui.text_state, app.gui.bg_state, app.gui.fg_state, app.gui.class_state),
                          (('Map: 5Gorge (5CP) (hosting)', 'Players: ?/?', 'Time on map: 0:00', '0:00 elapsed'),
                           ('bg_modes/control-point', 77, 172), 'fg_maps/cp_gorge', 'classes/scout'))
-        self.assertEqual(app.gui.bottom_text_state, {'discord': False, 'kataiser': False, 'queued': True})
+        self.assertEqual(app.gui.bottom_text_state, {'discord': False, 'kataiser': False, 'queued': True, 'holiday': False})
 
         app.game_state.set_bulk((False, 'itemtest', 'Spy', '', 'Not queued', True))
         app.set_gui_from_game_state()
@@ -624,7 +624,7 @@ class TestTF2RichPresense(unittest.TestCase):
         state[0][1] = 'Players: 0/24' if 'Players: ' in state[0][1] and '/24' in state[0][1] else state[0][1]
         self.assertEqual(state, [['Map: Steel', 'Players: 0/24', 'Time on map: 0:00', '0:00 elapsed'],
                                  ('bg_modes/attack-defend', 77, 172), 'fg_maps/cp_steel', 'classes/medic'])
-        self.assertEqual(app.gui.bottom_text_state, {'discord': False, 'kataiser': False, 'queued': False})
+        self.assertEqual(app.gui.bottom_text_state, {'discord': False, 'kataiser': False, 'queued': False, 'holiday': False})
 
         app.game_state.set_bulk((False, 'plr_highertower', 'Engineer', '', 'Not queued', True))
         app.game_state.update_server_data(['Player count'], set())

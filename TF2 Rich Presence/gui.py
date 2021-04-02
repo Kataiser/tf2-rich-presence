@@ -56,8 +56,9 @@ class GUI(tk.Frame):
         self.class_state: str = ''
         self.available_update_data: Tuple[str, str, str] = ('', '', '')
         self.update_window_open: bool = False
-        self.bottom_text_state: Dict[str, bool] = {'discord': False, 'kataiser': False, 'queued': False}
+        self.bottom_text_state: Dict[str, bool] = {'discord': False, 'kataiser': False, 'queued': False, 'holiday': False}
         self.bottom_text_queue_state: str = ""
+        self.holiday_text: str = ""
 
         menu_bar: tk.Menu = tk.Menu(self.master)
         self.file_menu = tk.Menu(menu_bar, tearoff=0)
@@ -222,7 +223,8 @@ class GUI(tk.Frame):
         text: str = ""
         states: dict[str, str] = {'discord': self.loc.text("Can't connect to Discord"),
                                   'kataiser': self.loc.text("Hey, it seems that Kataiser, the developer of TF2 Rich Presence, is in your game!\nSay hi to me if you'd like :)"),
-                                  'queued': self.bottom_text_queue_state}
+                                  'queued': self.bottom_text_queue_state,
+                                  'holiday': self.holiday_text}
 
         for state_key in states:
             if self.bottom_text_state[state_key]:
@@ -553,7 +555,7 @@ class GUI(tk.Frame):
             self.unpause()
 
     # cause why not
-    def holiday(self, silent: bool = False):
+    def holiday(self):
         now: datetime.datetime = datetime.datetime.now()
         holiday_text: Optional[str] = None
 
@@ -568,11 +570,11 @@ class GUI(tk.Frame):
 
         if holiday_text is not None:
             self.log.info(f"Today is {now.year}/{now.month}/{now.day}, so the holiday text is \"{holiday_text}\"")
-
-            if not silent:
-                self.pause()
-                messagebox.showinfo(self.loc.text("TF2 Rich Presence"), holiday_text)
-                self.unpause()
+            self.set_bottom_text('holiday', True)
+            self.holiday_text = holiday_text
+        else:
+            self.set_bottom_text('holiday', False)
+            self.holiday_text = ""
 
     # runs either when the X button is clicked or whenever needed
     def close_window(self):
