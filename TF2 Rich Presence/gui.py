@@ -59,6 +59,7 @@ class GUI(tk.Frame):
         self.bottom_text_state: Dict[str, bool] = {'discord': False, 'kataiser': False, 'queued': False, 'holiday': False}
         self.bottom_text_queue_state: str = ""
         self.holiday_text: str = ""
+        self.launched_tf2_with_button: bool = False
 
         menu_bar: tk.Menu = tk.Menu(self.master)
         self.file_menu = tk.Menu(menu_bar, tearoff=0)
@@ -252,6 +253,7 @@ class GUI(tk.Frame):
     def set_launch_tf2_button_state(self, enabled: bool):
         if enabled:
             self.launch_tf2_button.place(x=358 * self.scale, y=142 * self.scale, width=round(102 * self.scale), height=round(26 * self.scale), anchor=tk.CENTER)
+            self.launched_tf2_with_button = False
         else:
             self.launch_tf2_button.place_forget()
 
@@ -381,7 +383,8 @@ class GUI(tk.Frame):
     # start the game with guaranteed -condebug
     def launch_tf2(self):
         self.log.info("GUI: Launching TF2")
-        subprocess.run('cmd /c start steam://rungameid/440 -condebug')
+        self.launched_tf2_with_button = True
+        subprocess.run('cmd /c start steam://run/440//-condebug')
 
     # load a .webp image from gui_images, mode can be RGBA or RGB. image_name shouldn't have the file extension and can have forward slashes
     @functools.cache

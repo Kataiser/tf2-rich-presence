@@ -186,7 +186,7 @@ class TF2RichPresense:
         self.slow_sleep_time = False
         self.loop_iteration += 1
         self.log.debug(f"Main loop iteration this app session: {self.loop_iteration}")
-        self.no_condebug = False  # this will be updated by either console_log.py or configs.py if need be
+        self.no_condebug = False  # this will be updated if need be
         self.fast_next_loop = False
 
         if self.custom_functions:
@@ -194,7 +194,10 @@ class TF2RichPresense:
 
         p_data: Dict[str, Dict[str, Union[bool, str, int, None]]] = self.process_scanner.scan()
 
-        if p_data['Steam']['pid'] is not None or p_data['Steam']['path'] is not None:
+        if self.process_scanner.tf2_without_condebug:
+            self.no_condebug = True
+
+        if p_data['Steam']['running'] and (p_data['Steam']['pid'] is not None or p_data['Steam']['path'] is not None):
             self.log.error(f"Steam isn't running but its process info is {p_data['Steam']}. WTF?")
 
         if p_data['TF2']['running'] and not p_data['Steam']['running']:
@@ -202,24 +205,25 @@ class TF2RichPresense:
 
         if p_data['TF2']['running'] and p_data['Discord']['running'] and p_data['Steam']['running']:
             # reads steam config files to find usernames with -condebug (on first loop, and if any of them have been modified)
-            config_scan_needed: bool = self.steam_config_mtimes == {}
+            if not self.gui.launched_tf2_with_button:
+                config_scan_needed: bool = self.steam_config_mtimes == {}
 
-            for steam_config in self.steam_config_mtimes:
-                old_mtime: int = self.steam_config_mtimes[steam_config]
-                new_mtime: int = int(os.stat(steam_config).st_mtime)
+                for steam_config in self.steam_config_mtimes:
+                    old_mtime: int = self.steam_config_mtimes[steam_config]
+                    new_mtime: int = int(os.stat(steam_config).st_mtime)
 
-                if new_mtime > old_mtime:
-                    self.log.debug(f"Rescanning Steam config files ({new_mtime} > {old_mtime} for {steam_config})")
-                    config_scan_needed = True
+                    if new_mtime > old_mtime:
+                        self.log.debug(f"Rescanning Steam config files ({new_mtime} > {old_mtime} for {steam_config})")
+                        config_scan_needed = True
 
-            if config_scan_needed:
-                steam_config_results: Optional[Set[str]] = self.steam_config_file(p_data['Steam']['path'])
+                if config_scan_needed:
+                    steam_config_results: Optional[Set[str]] = self.steam_config_file(p_data['Steam']['path'])
 
-                if steam_config_results:
-                    self.valid_usernames.update(steam_config_results)
-                    self.log.debug(f"Usernames with -condebug: {self.valid_usernames}")
-                else:
-                    self.no_condebug = True
+                    if steam_config_results:
+                        self.valid_usernames.update(steam_config_results)
+                        self.log.debug(f"Usernames with -condebug: {self.valid_usernames}")
+                    else:
+                        self.no_condebug = True
 
             # modifies a few tf2 config files
             if not self.has_checked_class_configs:

@@ -6,7 +6,6 @@ import io
 import os
 import random
 import shutil
-import sys
 import time
 import tkinter as tk
 import traceback
