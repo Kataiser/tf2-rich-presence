@@ -108,8 +108,7 @@ def main(version_num='v2.0'):
         print("Copied", shutil.copy('Readme.txt', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('tf2_logo_blurple.ico', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('tf2_logo_blurple_wrench.ico', Path(f'{github_repo_path}/TF2 Rich Presence')))
-        print("Copied", shutil.copy('Launch TF2 with Rich Presence.bat', Path(f'{github_repo_path}/TF2 Rich Presence')))
-        print("Copied", shutil.copy('Launch Rich Presence alongside TF2.bat', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('TF2 Rich Presence.bat', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('README-source.MD', github_repo_path))
         print("Copied", shutil.copy('requirements.txt', github_repo_path))
         print("Copied", shutil.copy('pycs_to_delete.txt', Path(f'{github_repo_path}/TF2 Rich Presence')))
@@ -197,8 +196,7 @@ def main(version_num='v2.0'):
                      ('DB_default.json', Path(f'{new_build_folder_name}/resources/')),
                      ('LICENSE', new_build_folder_name),
                      ('Readme.txt', Path(f'{new_build_folder_name}/')),
-                     ('Launch TF2 with Rich Presence.bat', Path(f'{new_build_folder_name}/')),
-                     ('Launch Rich Presence alongside TF2.bat', Path(f'{new_build_folder_name}/')),
+                     ('TF2 Rich Presence.bat', Path(f'{new_build_folder_name}/')),
                      ('tf2_logo_blurple.ico', Path(f'{new_build_folder_name}/resources/')),
                      ('tf2_logo_blurple_wrench.ico', Path(f'{new_build_folder_name}/resources/')),
                      ('Changelogs.html', Path(f'{new_build_folder_name}/'))]
@@ -338,9 +336,20 @@ def main(version_num='v2.0'):
             missing_pycs.append(str(Path(f'{new_build_folder_name}/resources/{pyc_to_delete}')))
     print(f"Deleted {len(pycs_to_delete) - len(missing_pycs)} unused PYCs")
 
-    # build the launchers
-    convert_bat_to_exe(os.path.abspath(Path(f'{new_build_folder_name}/Launch TF2 with Rich Presence.bat')), version_num, 'tf2_logo_blurple.ico')
-    convert_bat_to_exe(os.path.abspath(Path(f'{new_build_folder_name}/Launch Rich Presence alongside TF2.bat')), version_num, 'tf2_logo_blurple.ico')
+    # build the launcher
+    batch_location = str(os.path.abspath(Path(f'{new_build_folder_name}/TF2 Rich Presence.bat')))
+    exe_location = batch_location.replace('.bat', '.exe')
+    icon_location = os.path.abspath('tf2_logo_blurple.ico')
+    move_location = Path(f'{os.path.dirname(batch_location)}/resources')
+    version_num_windows = version_num[1:].replace('.', ',') + ',0' * (3 - version_num.count('.'))
+    bat2exe_command_1 = f'build_tools{os.path.sep}Bat_To_Exe_Converter.exe /bat "{batch_location}" /exe "{exe_location}" /icon "{icon_location}" /fileversion "{version_num_windows}"'
+    bat2exe_command_2 = f'/productversion "{version_num_windows}" /company "Kataiser" /productname "TF2 Rich Presence" /description "Discord Rich Presence for Team Fortress 2"'
+    print(f"Creating {exe_location}...")
+    assert os.path.isfile(batch_location) and os.path.isfile('tf2_logo_blurple.ico') and os.path.isfile(Path('build_tools/Bat_To_Exe_Converter.exe'))
+    subprocess.run(f'{bat2exe_command_1} {bat2exe_command_2}')
+    print(f"Moved from {batch_location} to {shutil.move(batch_location, move_location)}")
+    assert os.path.isfile(exe_location)
+    assert not os.path.isfile(batch_location)
 
     # ensure everything exists that needs to
     assert os.listdir(Path(f'{new_build_folder_name}/logs')) == []
