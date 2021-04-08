@@ -122,7 +122,7 @@ class GUI(tk.Frame):
         self.canvas.place(x=0, y=0)
         self.log.debug("Created canvas elements")
 
-        self.launch_tf2_button = tk.Button(self.master, text=self.loc.text("Launch TF2"), font=('TkDefaultFont', round(9 * self.scale)), command=self.launch_tf2)
+        self.launch_tf2_button: tk.Button = tk.Button(self.master, text=self.loc.text("Launch TF2"), font=('TkDefaultFont', round(9 * self.scale)), command=self.launch_tf2)
 
         self.safe_update()
         self.window_dimensions = self.master.winfo_width(), self.master.winfo_height()
@@ -249,9 +249,11 @@ class GUI(tk.Frame):
     def set_clean_console_log_button_state(self, enabled: bool):
         self.file_menu.entryconfigure(2, state=tk.ACTIVE if enabled else tk.DISABLED)
 
-    # only show the "launch TF2"  button if Steam is running and the game is not
+    # only show the "launch TF2" button if Steam is running and the game is not
     def set_launch_tf2_button_state(self, enabled: bool):
         if enabled:
+            self.launch_tf2_button['state'] = 'normal'
+            self.launch_tf2_button['text'] = self.loc.text("Launch TF2")
             self.launch_tf2_button.place(x=358 * self.scale, y=142 * self.scale, width=round(102 * self.scale), height=round(26 * self.scale), anchor=tk.CENTER)
             self.launched_tf2_with_button = False
         else:
@@ -383,6 +385,9 @@ class GUI(tk.Frame):
     # start the game with guaranteed -condebug
     def launch_tf2(self):
         self.log.info("GUI: Launching TF2")
+        self.launch_tf2_button['state'] = 'disabled'
+        self.launch_tf2_button['text'] = self.loc.text("Launching...")
+        self.safe_update()
         self.launched_tf2_with_button = True
         subprocess.run('cmd /c start steam://run/440//-condebug')
 

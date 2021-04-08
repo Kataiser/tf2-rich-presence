@@ -811,6 +811,20 @@
         "Chinese": "启动TF2",
         "Japanese": "TF2起動"
     },
+    "4940769640": {
+        "English": "Launching...",
+        "German": "Starten...",
+        "French": "Lancement...",
+        "Spanish": "Lanzamiento...",
+        "Portuguese": "Lançamento...",
+        "Italian": "Lancio...",
+        "Dutch": "Lancering...",
+        "Polish": "Rozpoczynam...",
+        "Russian": "Запуск...",
+        "Korean": "발사...",
+        "Chinese": "发射...",
+        "Japanese": "起動中..."
+    },
     "2083457385": {
         "English": "Log reporting frequency: ",
         "German": "Protokollieren Sie die Häufigkeit der Berichterstattung: ",
