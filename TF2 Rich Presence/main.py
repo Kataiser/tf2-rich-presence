@@ -194,8 +194,14 @@ class TF2RichPresense:
 
         p_data: Dict[str, Dict[str, Union[bool, str, int, None]]] = self.process_scanner.scan()
 
-        # reads steam config files to find usernames with -condebug (on first loop, and if any of them have been modified)
-        if p_data['Steam']['running']:
+        if p_data['Steam']['pid'] is not None or p_data['Steam']['path'] is not None:
+            self.log.error(f"Steam isn't running but its process info is {p_data['Steam']}. WTF?")
+
+        if p_data['TF2']['running'] and not p_data['Steam']['running']:
+            self.log.error("TF2 is running but Steam isn't. WTF?")
+
+        if p_data['TF2']['running'] and p_data['Discord']['running'] and p_data['Steam']['running']:
+            # reads steam config files to find usernames with -condebug (on first loop, and if any of them have been modified)
             config_scan_needed: bool = self.steam_config_mtimes == {}
 
             for steam_config in self.steam_config_mtimes:
@@ -214,14 +220,9 @@ class TF2RichPresense:
                     self.log.debug(f"Usernames with -condebug: {self.valid_usernames}")
                 else:
                     self.no_condebug = True
-        elif p_data['Steam']['pid'] is not None or p_data['Steam']['path'] is not None:
-            self.log.error(f"Steam isn't running but its process info is {p_data['Steam']}. WTF?")
 
-        if p_data['TF2']['running'] and not p_data['Steam']['running']:
-            self.log.error("TF2 is running but Steam isn't. WTF?")
-        elif p_data['TF2']['running'] and p_data['Discord']['running'] and p_data['Steam']['running']:
+            # modifies a few tf2 config files
             if not self.has_checked_class_configs:
-                # modifies a few tf2 config files
                 configs.class_config_files(self.log, p_data['TF2']['path'])
                 self.has_checked_class_configs = True
 
