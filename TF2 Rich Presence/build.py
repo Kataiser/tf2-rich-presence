@@ -63,7 +63,7 @@ def main(version_num='v2.0'):
             with open('last_repo_path.txt', 'w') as last_repo_path_file:
                 last_repo_path_file.write(github_repo_path)
 
-    interpreter_name = 'python-3.9.2-embed-win32'
+    interpreter_name = 'python-3.9.4-embed-win32'
     build_start_time = time.perf_counter()
     print()
 
