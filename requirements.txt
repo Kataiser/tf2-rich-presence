@@ -1,4 +1,4 @@
-Cython==3.0a6
+Cython==3.0a7
 Pillow==8.1.2
 beautifulsoup4==4.9.3
 certifi==2020.12.5
