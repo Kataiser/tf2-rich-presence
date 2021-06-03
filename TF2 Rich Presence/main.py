@@ -207,25 +207,24 @@ class TF2RichPresense:
 
         if p_data['TF2']['running'] and p_data['Discord']['running'] and p_data['Steam']['running']:
             # reads steam config files to find usernames with -condebug (on first loop, and if any of them have been modified)
-            if not self.gui.launched_tf2_with_button:
-                config_scan_needed: bool = self.steam_config_mtimes == {}
+            config_scan_needed: bool = self.steam_config_mtimes == {}
 
-                for steam_config in self.steam_config_mtimes:
-                    old_mtime: int = self.steam_config_mtimes[steam_config]
-                    new_mtime: int = int(os.stat(steam_config).st_mtime)
+            for steam_config in self.steam_config_mtimes:
+                old_mtime: int = self.steam_config_mtimes[steam_config]
+                new_mtime: int = int(os.stat(steam_config).st_mtime)
 
-                    if new_mtime > old_mtime:
-                        self.log.debug(f"Rescanning Steam config files ({new_mtime} > {old_mtime} for {steam_config})")
-                        config_scan_needed = True
+                if new_mtime > old_mtime:
+                    self.log.debug(f"Rescanning Steam config files ({new_mtime} > {old_mtime} for {steam_config})")
+                    config_scan_needed = True
 
-                if config_scan_needed:
-                    steam_config_results: Optional[Set[str]] = self.steam_config_file(p_data['Steam']['path'])
+            if config_scan_needed:
+                steam_config_results: Optional[Set[str]] = self.steam_config_file(p_data['Steam']['path'], not self.gui.launched_tf2_with_button)
 
-                    if steam_config_results:
-                        self.valid_usernames.update(steam_config_results)
-                        self.log.debug(f"Usernames with -condebug: {self.valid_usernames}")
-                    else:
-                        self.no_condebug = True
+                if steam_config_results:
+                    self.valid_usernames.update(steam_config_results)
+                    self.log.debug(f"Usernames: {self.valid_usernames}")
+                else:
+                    self.no_condebug = True
 
             # modifies a few tf2 config files
             if not self.has_checked_class_configs:

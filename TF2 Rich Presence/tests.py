@@ -99,7 +99,8 @@ class TestTF2RichPresense(unittest.TestCase):
 
     def test_steam_config_file(self):
         app = main.TF2RichPresense(self.log, set_process_priority=False)
-        self.assertEqual(configs.steam_config_file(app, 'test_resources\\'), {'Kataiser'})
+        self.assertEqual(configs.steam_config_file(app, 'test_resources\\', False), {'Kataiser'})
+        self.assertEqual(configs.steam_config_file(app, 'test_resources\\', True), None)
 
     def test_class_config_files(self):
         cfg_path = 'test_resources\\tf\\cfg'

@@ -26,7 +26,21 @@
 							"unknowninfouploaded"		"0"
 						}
 						"BadgeData"		"0a000000080e1206080210011800"
-						"LaunchOptions"		"-novid -noipx -refresh 120 -w 1920 -h 1080 -windowed -noborder -useforcedmparms -noforcemaccel -noforcemspd -dxlevel 95 -condebug"
+						"LaunchOptions"		"-novid -noipx -refresh 120 -w 1920 -h 1080 -windowed -noborder -useforcedmparms -noforcemaccel -noforcemspd -dxlevel 95"
+					}
+					"730"
+					{
+						"LastPlayed"		"1620351605"
+						"LaunchOptions"		"-language textmodorel -novid -condebug -d3d9ex +exec autoexec"
+						"BadgeData"		"0a00000008121206080110011800"
+						"DisableUpdatesUntil"		"0"
+						"playTime"		"30792"
+						"Playtime2wks"		"25"
+						"autocloud"
+						{
+							"lastlaunch"		"1620350095"
+							"lastexit"		"1620351605"
+						}
 					}
 				}
 			}

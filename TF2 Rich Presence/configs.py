@@ -51,7 +51,7 @@ def class_config_files(log, exe_location: str):
 
 
 # reads steam's launch options save file to find usernames with -condebug
-def steam_config_file(self, exe_location: str) -> Optional[Set[str]]:
+def steam_config_file(self, exe_location: str, require_condebug: bool) -> Optional[Set[str]]:
     self.log.debug("Scanning Steam config files for -condebug")
     found_condebug: bool = False
     found_usernames: Set[str] = set()
@@ -79,10 +79,14 @@ def steam_config_file(self, exe_location: str) -> Optional[Set[str]]:
             self.log.error(str(error))
             continue
 
-        if '-condebug' not in global_config_file_read or '"440"' not in global_config_file_read:
-            continue
+        if require_condebug:
+            if '-condebug' not in global_config_file_read or '"440"' not in global_config_file_read:
+                continue
+            else:
+                self.log.debug(f"-condebug and \"440\" found, parsing file ({global_config_file_size} bytes)")
+        else:
+            self.log.debug(f"Parsing file ({global_config_file_size} bytes)")
 
-        self.log.debug(f"-condebug and \"440\" found, parsing file ({global_config_file_size} bytes)")
         parsed: dict = vdf.loads(global_config_file_read)
         self.log.debug(f"VDF parse complete ({len(parsed['UserLocalConfigStore'])} keys)")
         parsed_lowercase: dict = lowercase_keys(parsed)
@@ -96,22 +100,30 @@ def steam_config_file(self, exe_location: str) -> Optional[Set[str]]:
             self.log.error(f"Couldn't find PersonaName in config (\"personaname\" in lowercase: {personaname_exists_in_file})")
             possible_username = ''
 
-        try:
-            tf2_launch_options = parsed_lowercase['userlocalconfigstore']['software']['valve']['steam']['apps']['440']['launchoptions']
-        except KeyError:
-            pass  # (hopefully) -condebug was in some other game
+        if require_condebug:
+            try:
+                tf2_launch_options = parsed_lowercase['userlocalconfigstore']['software']['valve']['steam']['apps']['440']['launchoptions']
+            except KeyError:
+                pass  # (hopefully) -condebug was in some other game
+            else:
+                if '-condebug' in tf2_launch_options:
+                    found_condebug = True
+                    self.log.debug(f"Found -condebug in launch options ({tf2_launch_options})")
+                    config_mtime: int = int(os.stat(global_config_file_path).st_mtime)
+                    self.steam_config_mtimes[global_config_file_path] = config_mtime
+                    self.log.debug(f"Added mtime ({config_mtime})")
+
+                    if possible_username:
+                        found_usernames.add(possible_username)
         else:
-            if '-condebug' in tf2_launch_options:
-                found_condebug = True
-                self.log.debug(f"Found -condebug in launch options ({tf2_launch_options})")
-                config_mtime: int = int(os.stat(global_config_file_path).st_mtime)
-                self.steam_config_mtimes[global_config_file_path] = config_mtime
-                self.log.debug(f"Added mtime ({config_mtime})")
+            config_mtime = int(os.stat(global_config_file_path).st_mtime)
+            self.steam_config_mtimes[global_config_file_path] = config_mtime
+            self.log.debug(f"Added mtime ({config_mtime})")
 
-                if possible_username:
-                    found_usernames.add(possible_username)
+            if possible_username:
+                found_usernames.add(possible_username)
 
-    if not found_condebug:
+    if not found_condebug and require_condebug:
         self.log.error("-condebug not found, telling user", reportable=False)
         # yell at the user to fix their settings
         self.no_condebug = False
