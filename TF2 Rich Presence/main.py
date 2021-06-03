@@ -116,6 +116,7 @@ class TF2RichPresense:
         self.did_init_operations: bool = False
         self.no_condebug: bool = False
         self.fast_next_loop: bool = False
+        self.reset_launched_with_button: bool = False
 
         try:
             self.log.cleanup(20 if launcher.DEBUG else 10)
@@ -197,11 +198,12 @@ class TF2RichPresense:
         if self.process_scanner.tf2_without_condebug:
             self.no_condebug = True
 
-        if p_data['Steam']['running'] and (p_data['Steam']['pid'] is not None or p_data['Steam']['path'] is not None):
-            self.log.error(f"Steam isn't running but its process info is {p_data['Steam']}. WTF?")
+        if not p_data['Steam']['running']:
+            if p_data['Steam']['pid'] is not None or p_data['Steam']['path'] is not None:
+                self.log.error(f"Steam isn't running but its process info is {p_data['Steam']}. WTF?")
 
-        if p_data['TF2']['running'] and not p_data['Steam']['running']:
-            self.log.error("TF2 is running but Steam isn't. WTF?")
+            if p_data['TF2']['running']:
+                self.log.error("TF2 is running but Steam isn't. WTF?")
 
         if p_data['TF2']['running'] and p_data['Discord']['running'] and p_data['Steam']['running']:
             # reads steam config files to find usernames with -condebug (on first loop, and if any of them have been modified)
@@ -234,6 +236,7 @@ class TF2RichPresense:
             self.gui.set_clean_console_log_button_state(True)
             self.gui.set_launch_tf2_button_state(False)
             self.gui.set_bottom_text('discord', False)
+            self.reset_launched_with_button = True
 
             console_log_path: str = os.path.join(p_data['TF2']['path'], 'tf', 'console.log')
             console_log_parsed: Optional[Tuple[bool, str, str, str, str, bool]] = self.interpret_console_log(console_log_path, self.valid_usernames, tf2_start_time=p_data['TF2']['time'])
@@ -283,7 +286,17 @@ class TF2RichPresense:
             self.log.debug(f"Set window title to \"{window_title}\"")
 
         elif not p_data['TF2']['running']:
-            self.gui.set_launch_tf2_button_state(p_data['Steam']['running'])
+            # there's probably a better way to do this
+
+            if self.reset_launched_with_button:
+                self.gui.launched_tf2_with_button = False
+                self.reset_launched_with_button = False
+
+            if self.gui.launched_tf2_with_button:
+                self.log.debug("Skipping possibly resetting launch button due to game hopefully launching")
+            else:
+                self.gui.set_launch_tf2_button_state(p_data['Steam']['running'])
+
             self.necessary_program_not_running('Team Fortress 2', 'TF2')
             self.should_mention_tf2 = False
         elif not p_data['Discord']['running']:

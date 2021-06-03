@@ -122,7 +122,7 @@ class TestTF2RichPresense(unittest.TestCase):
 
     def test_get_match_info(self):
         test_game_state = game_state.GameState()
-        test_addresses = ('162.254.194.158:27048',  # valve
+        test_addresses = ('162.254.192.155:27053',  # valve
                           'us2.uncledane.com:27015',
                           '51.81.49.25:27015',  # creators.tf
                           '192.223.26.238:27015',  # lazypurple
@@ -490,10 +490,10 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertFalse(game_state_test.update_rpc)
 
         settings.access_registry(save=settings.defaults())
-        game_state_test.set_bulk((False, 'pl_snowycoast', 'Pyro', '162.254.194.158:27048', 'Not queued', False))
+        game_state_test.set_bulk((False, 'pl_snowycoast', 'Pyro', '162.254.192.155:27053', 'Not queued', False))
         self.assertTrue(game_state_test.update_rpc)
         game_state_test.update_server_data(['Player count'], {'Kataiser'})
-        self.assertEqual(str(game_state_test), 'Pyro on Snowycoast, gamemode=payload, hosting=False, queued="Not queued", server=162.254.194.158:27048')
+        self.assertEqual(str(game_state_test), 'Pyro on Snowycoast, gamemode=payload, hosting=False, queued="Not queued", server=162.254.192.155:27053')
         self.assertEqual(fix_activity_dict(game_state_test.activity()),
                          {'details': 'Players: 0/0',
                           'state': 'Time on map: 0:00',
@@ -616,7 +616,7 @@ class TestTF2RichPresense(unittest.TestCase):
                          (('Map: itemtest (hosting)', 'Players: ?/?', 'Time on map: 0:00', '0:00 elapsed'),
                           ('bg_modes/unknown', 77, 172), 'fg_modes/unknown', 'classes/spy'))
 
-        app.game_state.set_bulk((False, 'cp_steel', 'Medic', '162.254.194.158:27048', 'Not queued', False))
+        app.game_state.set_bulk((False, 'cp_steel', 'Medic', '162.254.192.155:27053', 'Not queued', False))
         app.game_state.update_server_data(['Player count'], set())
         app.set_gui_from_game_state()
         state = [list(app.gui.text_state), app.gui.bg_state, app.gui.fg_state, app.gui.class_state]
