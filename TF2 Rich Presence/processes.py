@@ -192,7 +192,10 @@ class ProcessScanner:
 
             for ref_name in ('hl2.exe', 'Steam.exe', 'steam.exe', 'Discord'):
                 if ref_name in process[0]:
-                    self.parsed_tasklist[ref_name.lower()] = int(process[1])
+                    try:
+                        self.parsed_tasklist[ref_name.lower()] = int(process[1])
+                    except ValueError:
+                        self.log.error(f"Couldn't parse PID from process {process}")
 
         self.process_data['TF2']['running'] = 'hl2.exe' in self.parsed_tasklist
         self.process_data['Steam']['running'] = 'steam.exe' in self.parsed_tasklist
