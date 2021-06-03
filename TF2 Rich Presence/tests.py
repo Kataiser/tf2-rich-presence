@@ -438,7 +438,10 @@ class TestTF2RichPresense(unittest.TestCase):
         app = main.TF2RichPresense(self.log, set_process_priority=False)
         app.run(once=True)
         self.assertTrue(os.path.isfile(big_number_file))
-        os.remove(big_number_file)
+
+        for file in os.listdir():
+            if file.startswith('test_') and file.endswith('.temp'):
+                os.remove(file)
 
         with open('custom.py', 'r+') as custom_file:
             custom_file.truncate()

@@ -374,6 +374,7 @@ class GUI(tk.Frame):
         if tf2_is_running:
             warning.append(self.loc.text("6. Restart TF2"))
 
+        warning.extend(('\n', self.loc.text("Alternatively, launch the game via the \"Launch TF2\" button.")))
         self.pause()
         user_retried: bool = messagebox.askretrycancel("TF2 Rich Presence", '\n'.join(warning))
 

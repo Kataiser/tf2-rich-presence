@@ -218,12 +218,13 @@ class TF2RichPresense:
                     config_scan_needed = True
 
             if config_scan_needed:
-                steam_config_results: Optional[Set[str]] = self.steam_config_file(p_data['Steam']['path'], not self.gui.launched_tf2_with_button)
+                need_condebug: bool = not self.gui.launched_tf2_with_button and self.process_scanner.tf2_without_condebug
+                steam_config_results: Optional[Set[str]] = self.steam_config_file(p_data['Steam']['path'], need_condebug)
 
                 if steam_config_results:
                     self.valid_usernames.update(steam_config_results)
                     self.log.debug(f"Usernames: {self.valid_usernames}")
-                else:
+                elif self.process_scanner.tf2_without_condebug:
                     self.no_condebug = True
 
             # modifies a few tf2 config files
@@ -309,7 +310,7 @@ class TF2RichPresense:
         self.gui.safe_update()
         self.init_operations()
 
-        if self.no_condebug:
+        if self.no_condebug and not self.gui.launched_tf2_with_button:
             self.gui.no_condebug_warning()
             self.fast_next_loop = True
 
@@ -394,6 +395,7 @@ class TF2RichPresense:
         self.gui.set_clean_console_log_button_state(False)
         self.gui.clean_console_log = False
         self.gui.set_bottom_text('queued', False)
+        self.gui.set_bottom_text('kataiser', False)
 
         base_window_title: str = self.loc.text("TF2 Rich Presence ({0})").format(launcher.VERSION)
         window_title: str = self.loc.text("{0} - Waiting for {1}").format(base_window_title, program_name)
