@@ -79,8 +79,8 @@ def main():
                         image_cropped = image_loaded.crop((crop_left, 0, crop_right, (image_loaded.size[1])))
                         color_mean = sum(ImageStat.Stat(image_cropped).mean)
 
-                        if color_mean < 200:
-                            brighten = 1 + ((200 - color_mean) / 200)
+                        if color_mean < 300:
+                            brighten = 1 + ((300 - color_mean) / 300)
                             brightener = ImageEnhance.Brightness(image_cropped)
                             image_cropped = brightener.enhance(brighten)
                             print(f" {int(color_mean)}", end='')
