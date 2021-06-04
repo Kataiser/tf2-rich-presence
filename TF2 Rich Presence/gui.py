@@ -390,7 +390,7 @@ class GUI(tk.Frame):
         self.launch_tf2_button['text'] = self.loc.text("Launching...")
         self.safe_update()
         self.launched_tf2_with_button = True
-        subprocess.run('cmd /c start steam://run/440//-condebug')
+        subprocess.run('cmd /c start steam://run/440//-condebug', creationflags=0x08000000)
 
     # load a .webp image from gui_images, mode can be RGBA or RGB. image_name shouldn't have the file extension and can have forward slashes
     @functools.cache
