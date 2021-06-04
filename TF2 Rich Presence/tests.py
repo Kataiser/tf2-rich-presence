@@ -312,7 +312,7 @@ class TestTF2RichPresense(unittest.TestCase):
         process_scanner.executables['nt'].append('python')
 
         self.assertEqual(len(process_scanner.scan()), 3)
-        p_info = process_scanner.get_info_from_pid(os.getpid(), ('path', 'time'))
+        p_info = process_scanner.get_process_info(os.getpid(), ('path', 'time'))
 
         self.assertEqual(p_info['running'], True)
         self.assertTrue('python' in p_info['path'].lower())  # hope your Python installation is sane

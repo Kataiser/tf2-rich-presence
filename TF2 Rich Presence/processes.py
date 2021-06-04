@@ -98,23 +98,27 @@ class ProcessScanner:
 
     # get only the needed info (exe path and process start time) for each, and then apply it to self.p_data
     def get_all_extended_info(self):
-        tf2_data: Dict[str, Union[str, bool, int, None]] = self.get_info_from_pid(self.process_data['TF2']['pid'], ('path', 'time'), True)
-        steam_data: Dict[str, Union[str, bool, int, None]] = self.get_info_from_pid(self.process_data['Steam']['pid'], ('path', 'cwd'))
-        discord_data: Dict[str, Union[str, bool, int, None]] = self.get_info_from_pid(self.process_data['Discord']['pid'], ())
+        tf2_data: Dict[str, Union[str, bool, int, None]] = self.get_process_info('TF2', ('path', 'time'), True)
+        steam_data: Dict[str, Union[str, bool, int, None]] = self.get_process_info('Steam', ('path', 'cwd'))
+        discord_data: Dict[str, Union[str, bool, int, None]] = self.get_process_info('Discord', ())
 
         # ugly
         self.process_data['TF2']['running'], self.process_data['TF2']['path'], self.process_data['TF2']['time'] = tf2_data['running'], tf2_data['path'], tf2_data['time']
         self.process_data['Steam']['running'], self.process_data['Steam']['path'] = steam_data['running'], steam_data['path']
         self.process_data['Discord']['running'] = discord_data['running']
 
-    # a mess of logic that gives process info from a PID
-    def get_info_from_pid(self, pid: int, return_data: Tuple[str, ...], validate_condebug: bool = False) -> Dict[str, Union[str, bool, int, None]]:
+    # a mess of logic that gives process info from a process name (not exe name) or PID
+    def get_process_info(self, process: Union[str, int], return_data: Tuple[str, ...], validate_condebug: bool = False) -> Dict[str, Union[str, bool, int, None]]:
         p_info: Dict[str, Union[str, bool, None, int]] = {'running': False, 'path': None, 'time': None}
         p_info_nones: Dict[str, Union[str, bool, None, int]] = {'running': False, 'path': None, 'time': None}
 
-        if pid is None:
+        if process is None:
             self.all_pids_cached = False
             return p_info
+        elif isinstance(process, str):
+            pid: int = self.process_data[process]['pid']
+        else:
+            pid = process
 
         try:
             try:
@@ -123,7 +127,7 @@ class ProcessScanner:
                 p_info['running'] = running
 
                 if not running:
-                    self.log.error(f"PID {pid} has been recycled as {process.name()}")
+                    self.log.error(f"PID {pid} ({process}) has been recycled as {process.name()}")
                     self.all_pids_cached = False
                     return p_info_nones
 
@@ -155,7 +159,7 @@ class ProcessScanner:
 
                 return p_info
             except psutil.NoSuchProcess:
-                self.log.debug(f"Cached PID {pid} is no longer running")
+                self.log.debug(f"Cached PID {pid} ({process}) is no longer running")
                 self.all_pids_cached = False
                 return p_info_nones
         except Exception:
@@ -210,7 +214,7 @@ class ProcessScanner:
     # makes sure a process's path is a TF2 install, not some other game
     @functools.cache
     def hl2_exe_is_tf2(self, hl2_exe_pid: int) -> bool:
-        hl2_exe_path: str = self.get_info_from_pid(hl2_exe_pid, ('path',))['path']
+        hl2_exe_path: str = self.get_process_info(hl2_exe_pid, ('path',))['path']
         is_tf2: bool = False
 
         if hl2_exe_path and 'team fortress 2' in hl2_exe_path.lower():
