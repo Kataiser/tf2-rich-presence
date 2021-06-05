@@ -287,7 +287,6 @@ class TF2RichPresense:
 
         elif not p_data['TF2']['running']:
             # there's probably a better way to do this
-
             if self.reset_launched_with_button:
                 self.gui.launched_tf2_with_button = False
                 self.reset_launched_with_button = False

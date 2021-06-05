@@ -34,8 +34,20 @@ class Log:
         if path:
             self.filename: str = path
         else:
-            days_since_epoch_local = int((time.time() + time.localtime().tm_gmtoff) / 86400)  # 86400 seconds in a day
-            self.filename = os.path.join('logs', f'TF2RP_{user_pc_name}_{user_identifier}_{launcher.VERSION}_{days_since_epoch_local}.log')
+            existing_logs: List[str] = sorted(os.listdir('logs'))
+            log_index: int = 0
+
+            while True:
+                filename: str = f'TF2RP_{user_pc_name}_{user_identifier}_{launcher.VERSION}_{log_index}.log'
+                log_index += 1
+
+                if filename not in existing_logs:
+                    break
+
+            self.filename = os.path.join('logs', filename)
+
+        if 'tests' not in self.filename:
+            print()
 
         # setup
         self.filename_errors: str = os.path.join('logs', f'TF2RP_{user_pc_name}_{user_identifier}_{launcher.VERSION}.errors.log')
@@ -46,7 +58,7 @@ class Log:
         self.log_levels: list = ['Debug', 'Info', 'Error', 'Critical', 'Off']
         self.local_error_hashes: List[int] = []  # just in case DB.json breaks
 
-        if self:
+        if self.enabled():
             if not os.path.isdir('logs'):
                 os.mkdir('logs')
                 time.sleep(0.1)  # ensure it gets created
@@ -74,8 +86,7 @@ class Log:
             self.debug(f"Closing log file ({self.filename}) via destructor")
             self.log_file.close()
 
-    # check if enabled or not
-    def __bool__(self):
+    def enabled(self) -> bool:
         return settings.get('log_level') != 'Off' and not self.force_disabled
 
     # list of log levels that are higher priority than the log_level setting
@@ -184,7 +195,7 @@ class Log:
             try:
                 os.remove(old_log)
             except Exception:
-                self.error(f"Couldn't replace log file {log_to_delete}: {traceback.format_exc()}")
+                self.error(f"Couldn't replace log file {old_log}: {traceback.format_exc()}")
 
             compressed_logs.append((old_log, round(len(data_in) / 1024, 1), round(len(data_out) / 1024, 1)))
 

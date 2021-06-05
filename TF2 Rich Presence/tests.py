@@ -36,10 +36,11 @@ class TestTF2RichPresense(unittest.TestCase):
         settings.change('request_timeout', 30)
 
         self.dir = os.getcwd()
-        self.log = logger.Log()
+        self.log = logger.Log('logs\\tests.log')
         self.log.force_disabled = True
         self.log.to_stderr = False
         self.log.sentry_enabled = False
+        self.log.info(f"Starting test: {self.id()}")
 
         gc.enable()  # because main may have disabled it
 
@@ -122,7 +123,7 @@ class TestTF2RichPresense(unittest.TestCase):
         shutil.rmtree(cfg_path)
 
     def test_get_match_info(self):
-        test_game_state = game_state.GameState()
+        test_game_state = game_state.GameState(self.log)
         test_addresses = ('162.254.192.155:27053',  # valve
                           'us2.uncledane.com:27015',
                           '51.81.49.25:27015',  # creators.tf
@@ -448,7 +449,7 @@ class TestTF2RichPresense(unittest.TestCase):
             custom_file.write(custom_old)
 
     def test_game_state(self):
-        game_state_test = game_state.GameState()
+        game_state_test = game_state.GameState(self.log)
         game_state_test.force_zero_map_time = True
         self.assertTrue(game_state_test.update_rpc)
         self.assertEqual(str(game_state_test), 'in menus, queued="Not queued"')
@@ -640,7 +641,7 @@ class TestTF2RichPresense(unittest.TestCase):
 
     def test_game_state_localized(self):
         settings.change('language', 'Spanish')
-        game_state_test = game_state.GameState()
+        game_state_test = game_state.GameState(self.log)
         game_state_test.force_zero_map_time = True
 
         game_state_test.set_bulk((False, 'ctf_mexico_b4', 'Engineer', '', 'Not queued', True))
