@@ -112,11 +112,12 @@ class ProcessScanner:
         p_info: Dict[str, Union[str, bool, None, int]] = {'running': False, 'path': None, 'time': None}
         p_info_nones: Dict[str, Union[str, bool, None, int]] = {'running': False, 'path': None, 'time': None}
 
-        if process is None:
-            self.all_pids_cached = False
-            return p_info
-        elif isinstance(process, str):
+        if isinstance(process, str):
             pid: int = self.process_data[process]['pid']
+
+            if pid is None:
+                self.all_pids_cached = False
+                return p_info
         else:
             pid = process
 
