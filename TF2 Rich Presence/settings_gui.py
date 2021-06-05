@@ -361,6 +361,9 @@ class GUI(tk.Frame):
         settings.access_registry(save=settings_to_save)
         self.log.info(f"Settings have been saved as: {settings_to_save}")
 
+        if 'top_line' in settings_changed or 'bottom_line' in settings_changed:
+            self.master.game_state.clear_server_data_cache()
+
         if not force:
             if 'gui_scale' in settings_changed:
                 messagebox.showinfo(self.loc.text("TF2 Rich Presence"), self.loc.text("Changing GUI scale requires a restart to take effect."))

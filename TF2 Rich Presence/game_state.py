@@ -232,6 +232,12 @@ class GameState:
             self.set_player_count('')
             self.set_kills('')
 
+    # for changing server data modes mid-game
+    def clear_server_data_cache(self):
+        self.last_server_request_time = 0.0
+        self.last_server_request_data = {}
+        self.last_server_request_address = ''
+
     # convert seconds to a pretty timestamp, keep leading zeros though
     def time_on_map(self) -> str:
         if self.force_zero_map_time:
