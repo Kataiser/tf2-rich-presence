@@ -46,9 +46,6 @@ class Log:
 
             self.filename = os.path.join('logs', filename)
 
-        if 'tests' not in self.filename:
-            print()
-
         # setup
         self.filename_errors: str = os.path.join('logs', f'TF2RP_{user_pc_name}_{user_identifier}_{launcher.VERSION}.errors.log')
         self.last_log_time: float = time.perf_counter()

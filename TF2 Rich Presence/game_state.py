@@ -216,6 +216,10 @@ class GameState:
         self.updated_server_state = True
 
         if modes:
+            if ('Player count' in modes and 'player_count' not in self.last_server_request_data) or ('Kills' in modes and 'kills' not in self.last_server_request_data):
+                # for changing server data modes mid-game
+                self.clear_server_data_cache()
+
             server_data: Dict[str, str] = self.get_match_data(self.server_address, modes, usernames)
 
             # get_match_data doesn't set these (but it could)
@@ -232,8 +236,9 @@ class GameState:
             self.set_player_count('')
             self.set_kills('')
 
-    # for changing server data modes mid-game
+    # force new server query
     def clear_server_data_cache(self):
+        self.log.debug("Clearing server data cache")
         self.last_server_request_time = 0.0
         self.last_server_request_data = {}
         self.last_server_request_address = ''
