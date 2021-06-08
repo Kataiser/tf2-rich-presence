@@ -41,7 +41,7 @@ class Log:
                 filename: str = f'TF2RP_{user_pc_name}_{user_identifier}_{launcher.VERSION}_{log_index}.log'
                 log_index += 1
 
-                if filename not in existing_logs:
+                if filename not in existing_logs and f'{filename}.gz' not in existing_logs:
                     break
 
             self.filename = os.path.join('logs', filename)
