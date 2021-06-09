@@ -303,7 +303,7 @@ def main(version_num='v2.0'):
     else:
         raise SystemError("Python interpreter missing")
 
-    # copies the requirement packages (no longer part of the interpreter folder or zip
+    # copies the requirement packages (no longer part of the interpreter folder or zip)
     new_packages_dir = Path(f'{new_build_folder_name}/resources/packages')
     os.mkdir(new_packages_dir)
     venv_packages_dir = site.getsitepackages()[1]

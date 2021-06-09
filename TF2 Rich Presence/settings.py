@@ -61,7 +61,8 @@ def get_setting_default(setting: str = '', return_all: bool = False) -> Union[st
                         'trim_console_log': True,
                         'server_rate_limit': 10,
                         'gui_scale': 100,
-                        'drawing_gamemodes': False}
+                        'drawing_gamemodes': False,
+                        'preserve_window_pos': True}
 
     if return_all:
         return default_settings

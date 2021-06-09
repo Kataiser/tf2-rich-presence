@@ -85,7 +85,7 @@ class GUI(tk.Frame):
         self.log.debug("Created menu bar")
 
         previous_gui_position: List[int] = utils.access_db()['gui_position']
-        if previous_gui_position == [0, 0]:
+        if previous_gui_position == [0, 0] or not settings.get('preserve_window_pos'):
             # center the window on the screen
             window_x: int = round(self.winfo_screenwidth() / 2)
             window_y: int = round(self.winfo_screenheight() / 2) - 40
@@ -589,6 +589,7 @@ class GUI(tk.Frame):
     def close_window(self):
         try:
             db: Dict[str, Union[bool, list, str]] = utils.access_db()
+            # save position regardless of preserve_window_pos setting
             save_pos = get_window_center(self.master)
             db['gui_position'] = list(save_pos)
             utils.access_db(db)
