@@ -24,6 +24,13 @@ import utils
 # TODO: replace this whole thing with a real logger
 class Log:
     def __init__(self, path: Optional[str] = None):
+        if not os.path.isdir('logs'):
+            os.mkdir('logs')
+            time.sleep(0.1)  # ensure it gets created
+            created_logs_dir: bool = True
+        else:
+            created_logs_dir = False
+
         # find user's pc and account name
         user_pc_name: str = socket.gethostname()
         try:
@@ -56,13 +63,6 @@ class Log:
         self.local_error_hashes: List[int] = []  # just in case DB.json breaks
 
         if self.enabled():
-            if not os.path.isdir('logs'):
-                os.mkdir('logs')
-                time.sleep(0.1)  # ensure it gets created
-                created_logs_dir: bool = True
-            else:
-                created_logs_dir = False
-
             self.log_file: TextIO = open(self.filename, 'a', encoding='UTF8')
 
             if created_logs_dir:
