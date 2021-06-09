@@ -27,12 +27,12 @@ def main(version_num='v2.0'):
     parser.add_argument('--n', action='store_true', help="Skip copying to an repo location", default=False)
     parser.add_argument('--ide', action='store_true', help="Use IDE-based build.log handling", default=False)
     parser.add_argument('--release', action='store_true', help="Release build, invalidates all caches", default=False)
-    parser.add_argument('--artifact', action='store_true', help="Create an artifact package, for CD", default=False)
+    parser.add_argument('--rename_dev', action='store_true', help="Rename the package dir for CD", default=False)
     parser.add_argument('--nocython', action='store_true', help="Don't compile modules with Cython", default=False)
     cli_skip_repo = parser.parse_args().n
     ide_build_log_handling = parser.parse_args().ide
     release_build = parser.parse_args().release
-    artifact = parser.parse_args().artifact
+    rename_dev = parser.parse_args().rename_dev
     nocython = parser.parse_args().nocython
 
     if not ide_build_log_handling:
@@ -455,15 +455,14 @@ def main(version_num='v2.0'):
         launcher_py_write.write(new_data)
     print(f"Set Sentry version to {version_num}-dev")
 
-    # create an artifact package, for CD
-    if artifact:
-        print(f"Creating artifact package...")
-        package7zip_command_artifact = f'build_tools{os.path.sep}7za.exe u tf2_rich_presence_dev.7z "{new_build_folder_name}{os.path.sep}" -ssw -mx=9 -myx=9 -mmt=2 -m0=LZMA2:d=8m'
-        subprocess.run(package7zip_command_artifact, stdout=subprocess.DEVNULL)
-
     # HyperBubs
     if os.path.isfile('custom_kataiser.py'):
         shutil.copy('custom_kataiser.py', Path(f'{new_build_folder_name}/resources/custom.py'))
+
+    # support for creating an artifact package, for CD
+    if rename_dev:
+        os.rename(new_build_folder_name, 'tf2_rich_presence_dev')
+        print("Renamed build folder")
 
     # prepares display of time since last build
     if last_build_time:
