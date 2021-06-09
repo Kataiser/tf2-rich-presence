@@ -38,7 +38,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: tf2_rich_presence_dev
-        path: tf2_rich_presence_dev
+        path: tf2_rich_presence_dev/
     - name: Run tests
       run: |
         cd "TF2 Rich Presence"
