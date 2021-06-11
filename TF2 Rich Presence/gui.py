@@ -421,7 +421,7 @@ class GUI(tk.Frame):
             image = image.resize(self.size)
 
         if image_name == 'default':  # don't blur, adjust vignette center
-            image.paste(self.vignette, (round(-70 * self.scale), 0), mask=self.vignette)
+            image.paste(self.vignette, (round(-140 * self.scale), 0), mask=self.vignette)
         else:
             image = image.filter(ImageFilter.GaussianBlur(10 * self.scale))
             image.paste(self.vignette, (0, 0), mask=self.vignette)
