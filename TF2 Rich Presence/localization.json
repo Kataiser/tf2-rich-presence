@@ -1301,6 +1301,20 @@
         "Chinese": "排队等候派对的比赛",
         "Japanese": "パーティーの試合のキューに入れられた"
     },
+    "3679915290": {
+        "English": "Remember previous window position",
+        "German": "Vorherige Fensterposition speichern",
+        "French": "Mémoriser la position précédente de la fenêtre",
+        "Spanish": "Recordar la posición anterior de la ventana",
+        "Portuguese": "Lembrar posição anterior na janela",
+        "Italian": "Ricorda la posizione precedente della finestra",
+        "Dutch": "Onthoud vorige vensterpositie",
+        "Polish": "Zapamiętaj poprzednią pozycję okna",
+        "Russian": "Запомнить предыдущее положение окна",
+        "Korean": "이전 창 위치 기억",
+        "Chinese": "记住以前的窗口位置",
+        "Japanese": "前のウィンドウの位置を記憶する"
+    },
     "8718925310": {
         "English": "Report bug/issue",
         "German": "Fehler/Problem melden",
