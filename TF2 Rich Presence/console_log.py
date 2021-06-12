@@ -51,6 +51,13 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     consolelog_file_size: int = os.stat(console_log_path).st_size
     byte_limit: float = kb_limit * 1024.0
 
+    if self.last_console_log_size is not None:
+        if consolelog_file_size < self.last_console_log_size:
+            self.log.error("console.log seems to have been externally shortened (possibly TF2BD)")
+            # TODO: try to account for this somehow
+
+        self.last_console_log_size = consolelog_file_size
+
     with open(console_log_path, 'r', errors='replace') as consolelog_file:
         if consolelog_file_size > byte_limit:
             skip_to_byte: int = consolelog_file_size - int(byte_limit)
@@ -247,6 +254,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
                 for line in console_log_lines_out:
                     console_log_write.write(line)
 
+            self.last_console_log_size = os.stat(console_log_path).st_size
             self.log.debug(f"Removed {line_count_text} from console.log")
         else:
             self.log.debug(f"Didn't remove {line_count_text} from console.log")

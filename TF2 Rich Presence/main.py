@@ -117,6 +117,7 @@ class TF2RichPresense:
         self.no_condebug: bool = False
         self.fast_next_loop: bool = False
         self.reset_launched_with_button: bool = False
+        self.last_console_log_size: Optional[int] = None
 
         try:
             self.log.cleanup(20 if launcher.DEBUG else 10)
@@ -296,6 +297,7 @@ class TF2RichPresense:
             else:
                 self.gui.set_launch_tf2_button_state(p_data['Steam']['running'])
 
+            self.last_console_log_size = None
             self.necessary_program_not_running('Team Fortress 2', 'TF2')
             self.should_mention_tf2 = False
         elif not p_data['Discord']['running']:
