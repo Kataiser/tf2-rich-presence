@@ -122,47 +122,46 @@ class ProcessScanner:
             pid = process
 
         try:
-            try:
-                process: psutil.Process = psutil.Process(pid=pid)
-                running: bool = [name for name in self.executables[os.name] if name in process.name().lower()] != []
-                p_info['running'] = running
+            process: psutil.Process = psutil.Process(pid=pid)
+            running: bool = [name for name in self.executables[os.name] if name in process.name().lower()] != []
+            p_info['running'] = running
 
-                if not running:
-                    self.log.error(f"PID {pid} ({process}) has been recycled as {process.name()}")
+            if not running:
+                self.log.error(f"PID {pid} ({process}) has been recycled as {process.name()}")
+                self.all_pids_cached = False
+                return p_info_nones
+
+            if 'path' in return_data:
+                if os.name == 'posix':
+                    if 'cwd' in return_data:
+                        p_info['path'] = os.path.dirname(process.cwd()) + '/Steam'
+                    else:
+                        cmdline: List[str] = process.cmdline()
+                        p_info['path'] = os.path.dirname(cmdline[0])
+                else:
+                    cmdline = process.cmdline()
+                    p_info['path'] = os.path.dirname(cmdline[0])
+
+                if validate_condebug and '-condebug' not in cmdline:
+                    self.log.debug(f"TF2 is running without -condebug in cmdline: {cmdline}")
+                    self.tf2_without_condebug = True
+
+                if not p_info['path']:
                     self.all_pids_cached = False
                     return p_info_nones
 
-                if 'path' in return_data:
-                    if os.name == 'posix':
-                        if 'cwd' in return_data:
-                            p_info['path'] = os.path.dirname(process.cwd()) + '/Steam'
-                        else:
-                            cmdline: List[str] = process.cmdline()
-                            p_info['path'] = os.path.dirname(cmdline[0])
-                    else:
-                        cmdline = process.cmdline()
-                        p_info['path'] = os.path.dirname(cmdline[0])
+            if 'time' in return_data:
+                p_info['time'] = int(process.create_time())  # int instead of round to prevent future times
 
-                    if validate_condebug and '-condebug' not in cmdline:
-                        self.log.debug(f"TF2 is running without -condebug in cmdline: {cmdline}")
-                        self.tf2_without_condebug = True
+                if not p_info['time']:
+                    self.all_pids_cached = False
+                    return p_info_nones
 
-                    if not p_info['path']:
-                        self.all_pids_cached = False
-                        return p_info_nones
-
-                if 'time' in return_data:
-                    p_info['time'] = int(process.create_time())  # int instead of round to prevent future times
-
-                    if not p_info['time']:
-                        self.all_pids_cached = False
-                        return p_info_nones
-
-                return p_info
-            except psutil.NoSuchProcess:
-                self.log.debug(f"Cached PID {pid} ({process}) is no longer running")
-                self.all_pids_cached = False
-                return p_info_nones
+            return p_info
+        except psutil.NoSuchProcess:
+            self.log.debug(f"Cached PID {pid} ({process}) is no longer running")
+            self.all_pids_cached = False
+            return p_info_nones
         except Exception:
             formatted_exception: str = traceback.format_exc()
 
