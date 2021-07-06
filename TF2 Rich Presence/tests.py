@@ -16,6 +16,7 @@ import requests
 from discoIPC import ipc
 
 import configs
+import console_log
 import game_state
 import gamemodes
 import gui
@@ -97,6 +98,10 @@ class TestTF2RichPresense(unittest.TestCase):
             self.assertFalse('DataTable warning' in errorstest_small_cleaned.read())
         self.assertEqual(app.interpret_console_log(errorstest_small, {'not Kataiser'}, float('inf')), (True, '', '', '', 'Not queued', False))
         os.remove(errorstest_small)
+
+    def test_non_ascii_in_usernames(self):
+        self.assertFalse(console_log.non_ascii_in_usernames({'Hyde', 'Chocolate Thunder89', 'Sleepy'}))
+        self.assertTrue(console_log.non_ascii_in_usernames({'Hyde', 'Chocolate Thunder89', '✿Sleepy✿'}))
 
     def test_steam_config_file(self):
         app = main.TF2RichPresense(self.log, set_process_priority=False)

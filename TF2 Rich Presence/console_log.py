@@ -2,7 +2,9 @@
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 # cython: language_level=3
 
+import functools
 import os
+import re
 from tkinter import messagebox
 from typing import Dict, List, Optional, Set, Tuple
 
@@ -58,7 +60,13 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
 
         self.last_console_log_size = consolelog_file_size
 
-    with open(console_log_path, 'r', errors='replace') as consolelog_file:
+    # decode console.log with UTF8 if any usernames need it
+    if non_ascii_in_usernames(user_usernames):
+        decode_mode: Optional[str] = 'UTF8'
+    else:
+        decode_mode = None
+
+    with open(console_log_path, 'r', errors='replace', encoding=decode_mode) as consolelog_file:
         if consolelog_file_size > byte_limit:
             skip_to_byte: int = consolelog_file_size - int(byte_limit)
             consolelog_file.seek(skip_to_byte, 0)  # skip to last few KBs
@@ -273,4 +281,14 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     return scan_results
 
 
+# check if any characters outside of ASCII exist in any usernames
+def non_ascii_in_usernames(usernames: Set[str]) -> bool:
+    for username in usernames:
+        if non_ascii_regex.search(username) is not None:
+            return True
+
+    return False
+
+
 tf2_classes: Tuple[str, ...] = ('Scout', 'Soldier', 'Pyro', 'Demoman', 'Heavy', 'Engineer', 'Medic', 'Sniper', 'Spy')
+non_ascii_regex = re.compile('[^\x00-\x7F]')
