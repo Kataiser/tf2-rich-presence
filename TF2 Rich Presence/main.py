@@ -91,7 +91,7 @@ class TF2RichPresense:
         self.gui: gui.GUI = gui.GUI(self.log)
         self.process_scanner: processes.ProcessScanner = processes.ProcessScanner(self.log)
         self.loc: localization.Localizer = localization.Localizer(self.log)
-        self.game_state = game_state.GameState(self.log, self.loc)
+        self.game_state: game_state.GameState = game_state.GameState(self.log, self.loc)
         self.rpc_client: Optional[ipc.DiscordIPC] = None
         self.client_connected: bool = False
         self.rpc_connected: bool = False

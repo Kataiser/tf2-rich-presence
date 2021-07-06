@@ -59,7 +59,7 @@ class Log:
         self.console_log_path: Optional[str] = None
         self.to_stderr: bool = launcher.DEBUG
         self.force_disabled: bool = False
-        self.log_levels: list = ['Debug', 'Info', 'Error', 'Critical', 'Off']
+        self.log_levels: List[str] = ['Debug', 'Info', 'Error', 'Critical', 'Off']
         self.local_error_hashes: List[int] = []  # just in case DB.json breaks
 
         if self.enabled():

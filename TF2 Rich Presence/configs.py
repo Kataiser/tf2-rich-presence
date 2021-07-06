@@ -8,7 +8,7 @@ from typing import List, Optional, Set, Tuple, Union
 import vdf
 
 
-# allows the console to output 'class selected' on class choose
+# allows for detecting which class the user is playing as
 def class_config_files(log, exe_location: str):
     log.debug(f"Reading (and possibly modifying) class configs at {exe_location}")
     tf2_classes: List[str] = ['Scout', 'Soldier', 'Pyro', 'Demoman', 'Heavy', 'Engineer', 'Medic', 'Sniper', 'Spy']

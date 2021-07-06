@@ -27,7 +27,7 @@ class GameState:
         self.kills: str = ''
         self.gamemode: str = ''
         self.gamemode_fancy: str = ''
-        self.custom_map = False
+        self.custom_map: bool = False
         self.game_start_time: int = int(time.time())
         self.map_change_time: int = int(time.time())
         self.map_line: str = ''
@@ -44,13 +44,13 @@ class GameState:
             self.log: logger.Log = log
         else:
             self.log = logger.Log()
-            self.log.error(f"Initialized main.TF2RichPresense without a log, defaulting to one at {self.log.filename}")
+            self.log.error(f"Initialized GameState without a log, defaulting to one at {self.log.filename}")
 
         if loc:
             self.loc: localization.Localizer = loc
         else:
             self.loc = localization.Localizer()
-            self.log.error("Initialized main.TF2RichPresense without a localizer")
+            self.log.error("Initialized GameState without a localizer")
 
     def __repr__(self) -> str:
         return f"game_state.GameState ({str(self)})"
@@ -156,7 +156,7 @@ class GameState:
         self.set_queued_state(state[4])
         self.server_address = state[3]  # this isn't a setter because it doesn't directly mean changed server data
 
-        if str(self) != prev_state:  # don't use self.update_rpc because
+        if str(self) != prev_state:  # don't use self.update_rpc because of server data changes not mattering here
             self.log.debug(f"Game state updated from ({prev_state}) to ({str(self)})")
 
     def set_in_menus(self, in_menus: bool):
