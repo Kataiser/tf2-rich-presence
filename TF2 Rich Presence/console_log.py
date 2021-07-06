@@ -158,16 +158,17 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
         elif scan_for_address and line.startswith('Connected to '):
             server_address = line[13:-1]
 
-        elif '[PartyClient] L' in line:  # full line: "[PartyClient] Leaving queue"
-            # queueing is not necessarily only in menus
-            queued_state = "Not queued"
+        elif '[P' in line:
+            if '[PartyClient] L' in line:  # full line: "[PartyClient] Leaving queue"
+                # queueing is not necessarily only in menus
+                queued_state = "Not queued"
 
-        elif '[PartyClient] Entering q' in line:  # full line: "[PartyClient] Entering queue for match group " + whatever mode
-            match_type: str = line.split('match group ')[-1][:-1]
-            queued_state = f"Queued for {match_types[match_type]}"
+            elif '[PartyClient] Entering q' in line:  # full line: "[PartyClient] Entering queue for match group " + whatever mode
+                match_type: str = line.split('match group ')[-1][:-1]
+                queued_state = f"Queued for {match_types[match_type]}"
 
-        elif '[PartyClient] Entering s' in line:  # full line: "[PartyClient] Entering standby queue"
-            queued_state = 'Queued for a party\'s match'
+            elif '[PartyClient] Entering s' in line:  # full line: "[PartyClient] Entering standby queue"
+                queued_state = 'Queued for a party\'s match'
 
         elif 'Disconnect by user' in line:
             for user_username in user_usernames:
