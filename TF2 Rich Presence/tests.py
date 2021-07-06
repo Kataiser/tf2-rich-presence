@@ -134,7 +134,7 @@ class TestTF2RichPresense(unittest.TestCase):
             try:
                 server_data = test_game_state.get_match_data(test_address, ['Player count', 'Kills'])
                 self.assertTrue(server_data['player_count'].startswith("Players: "))
-                self.assertIn(server_data['player_count'].split('/')[1], ('24', '30', '32'))
+                self.assertIn(server_data['player_count'].split('/')[1], ('24', '26', '30', '32'))
                 self.assertEqual(server_data['kills'], "Kills: 0")
             except AssertionError as error:
                 raise AssertionError(f'{test_address}, {error}')
