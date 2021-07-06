@@ -172,10 +172,13 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual(repr(self.log), r'logger.Log at test_resources\test_self.log (enabled=True, level=Debug, stderr=False)')
         settings.change('log_level', 'Error')
         self.log.debug("Gone. Reduced to atoms.")
+        settings.change('log_level', 'Off')
+        self.assertFalse(self.log.enabled())
         self.log.log_file.close()
 
         with open(self.log.filename, 'r', encoding='UTF8') as current_log_file:
             current_log_file_read = current_log_file.readlines()
+            self.assertEqual(len(current_log_file_read), 2)
             self.assertTrue(current_log_file_read[0].endswith("] INFO: Test1 饏Ӟ򒚦R៣񘺏1ࠞͳⴺۋ\n"))
             self.assertTrue(current_log_file_read[1].endswith("] ERROR: Test2\n"))
 
