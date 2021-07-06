@@ -92,7 +92,7 @@ class Log:
 
     # adds a line to the current log file
     def write_log(self, level: str, message_out: str, use_errors_file: bool = False):
-        if self:
+        if self.enabled():
             if self.last_log_time:
                 time_since_last: str = f'+{format(time.perf_counter() - self.last_log_time, ".4f")}'  # the format() adds trailing zeroes
             else:
