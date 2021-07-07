@@ -344,7 +344,6 @@ class TF2RichPresense:
 
         if self.game_state.in_menus:
             self.gui.set_state_3('main_menu', (self.loc.text("In menus"), self.loc.text(self.game_state.queued_state), time_elapsed))
-            self.gui.clear_fg_image()
             self.gui.clear_class_image()
             self.gui.set_bottom_text('queued', False)
 
