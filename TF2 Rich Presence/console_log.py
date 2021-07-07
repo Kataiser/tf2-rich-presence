@@ -2,7 +2,6 @@
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 # cython: language_level=3
 
-import functools
 import os
 import re
 from tkinter import messagebox
@@ -63,6 +62,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     # decode console.log with UTF8 if any usernames need it
     if non_ascii_in_usernames(user_usernames):
         decode_mode: Optional[str] = 'UTF8'
+        self.log.debug("Decoding console.log with UTF8")
     else:
         decode_mode = None
 
@@ -146,7 +146,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
                     kataiser_seen_on = ''
 
         if line.endswith(' selected \n'):
-            class_possibly: str = line[:-11]
+            class_possibly: str = line[:-11].split()[-1]
 
             if class_possibly in tf2_classes:
                 tf2_class = class_possibly
@@ -163,8 +163,8 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
                 just_started_server = False
                 server_still_running = False
 
-        elif scan_for_address and line.startswith('Connected to '):
-            server_address = line[13:-1]
+        elif scan_for_address and 'Connected to ' in line:
+            server_address = line.split()[-1]
 
         elif '[P' in line:
             if '[PartyClient] L' in line:  # full line: "[PartyClient] Leaving queue"
@@ -209,6 +209,8 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     if server_still_running and not in_menus:
         hosting = True
         server_address = ''
+    elif server_address == '':
+        self.log.error("Server address is blank but user isn't hosting")
 
     if settings.get('hide_queued_gamemode') and "Queued" in queued_state:
         self.log.debug(f"Hiding queued state (\"{queued_state}\" to \"Queued\")")

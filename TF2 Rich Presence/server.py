@@ -26,7 +26,7 @@ def get_match_data(self, address: str, modes: List[str], usernames: Optional[Set
         self.last_server_request_address = address
         self.log.debug(f"Getting match data from server ({address}) with mode(s) {modes}")
 
-        if ':' not in address:
+        if ':' not in address or ' ' in address:
             if address:
                 self.log.error(f"Server address ({address}) is invalid")
             else:
