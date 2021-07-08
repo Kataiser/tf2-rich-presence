@@ -203,14 +203,15 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
         server_address = ''
         hosting = False
         self.gui.set_bottom_text('kataiser', False)
-    elif tf2_class != '' and tf2_map == '':
-        self.log.error("Have class without map")
+    else:
+        if tf2_class != '' and tf2_map == '':
+            self.log.error("Have class without map")
 
-    if server_still_running and not in_menus:
-        hosting = True
-        server_address = ''
-    elif server_address == '':
-        self.log.error("Server address is blank but user isn't hosting")
+        if server_still_running:
+            hosting = True
+            server_address = ''
+        elif server_address == '':
+            self.log.error("Server address is blank but user isn't hosting")
 
     if settings.get('hide_queued_gamemode') and "Queued" in queued_state:
         self.log.debug(f"Hiding queued state (\"{queued_state}\" to \"Queued\")")
