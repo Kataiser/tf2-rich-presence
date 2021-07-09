@@ -365,7 +365,7 @@ class TF2RichPresense:
             self.gui.set_state_4(f'bg_modes/{gamemode_gui}', (self.game_state.map_line, self.game_state.get_line('top'), self.game_state.get_line('bottom'), time_elapsed))
             self.gui.set_class_image(self.game_state.tf2_class)
 
-            if self.game_state.custom_map or self.game_state.tf2_map in game_state.excluded_maps:
+            if self.game_state.custom_map:
                 self.gui.set_fg_image(f'fg_modes/{gamemode_gui}')
             else:
                 if self.game_state.tf2_map in game_state.map_fallbacks:

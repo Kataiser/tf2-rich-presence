@@ -35,24 +35,27 @@ def main():
     os.mkdir('gui_images\\fg_maps')
     os.mkdir('map_pics_discord')
 
-    excluded = ('cp_5gorge', 'cp_granary', 'arena_nucleus', 'ctf_foundry', 'arena_sawmill', 'ctf_sawmill', 'arena_badlands', 'koth_badlands', 'tr_dustbowl', 'ctf_thundermountain', 'ctf_well',
-                'arena_well', 'background01', 'devtest', 'ctf_hellfire', 'pass_brickyard', 'pass_district', 'pass_timbertown', 'itemtest', 'mvm_example')
+    map_datas = [('background01', '/wiki/Background01'), ('devtest', '/wiki/Devtest')]
+    excluded = ('cp_5gorge', 'cp_granary', 'arena_nucleus', 'ctf_foundry', 'arena_sawmill', 'ctf_sawmill', 'arena_badlands', 'koth_badlands', 'tr_dustbowl', 'ctf_thundermountain',
+                'ctf_well', 'arena_well')
     overrides = {'mvm_coaltown': '/wiki/File:Coal_Town_base.png', 'mvm_decoy': '/wiki/File:Decoy_left_lane.png', 'mvm_mannworks': '/wiki/File:Mannworks_left_lane.jpg'}
 
     list_page_r = requests.get('https://wiki.teamfortress.com/wiki/List_of_maps')
     list_page = BeautifulSoup(list_page_r.text, 'lxml')
     map_entries = list_page.find_all('table')[1].find_all('tr')[1:]
 
-    for map_entry in enumerate(map_entries):
-        map_file = map_entry[1].find('code').text
-        print(f"\n({map_entry[0] + 1}/{len(map_entries)}) {map_file}", end=' ')
+    for map_entry in map_entries:
+        map_datas.append((map_entry.find('code').text, map_entry.find_all('a')[1].get('href')))
+
+    for map_data in enumerate(map_datas):
+        map_file = map_data[1][0]
+        print(f"\n({map_data[0] + 1}/{len(map_datas)}) {map_file}", end=' ')
 
         if map_file in excluded:
             print("(skipped)", end='')
             continue
 
-        map_page_url = map_entry[1].find_all('a')[1].get('href')
-        map_page_r = requests.get(f'https://wiki.teamfortress.com{map_page_url}')
+        map_page_r = requests.get(f'https://wiki.teamfortress.com{map_data[1][1]}')
         map_page = BeautifulSoup(map_page_r.text, 'lxml')
         found_image = False
 

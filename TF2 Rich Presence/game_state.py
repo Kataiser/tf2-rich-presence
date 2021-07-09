@@ -90,7 +90,7 @@ class GameState:
                 small_image = self.tf2_class.lower()
                 small_text = self.loc.text(self.tf2_class)
 
-            if self.custom_map or self.tf2_map in excluded_maps:
+            if self.custom_map:
                 large_image = self.gamemode
                 large_text_base = self.loc.text(self.gamemode_fancy)
             else:
@@ -101,13 +101,13 @@ class GameState:
                 else:
                     large_image = f'z_{self.tf2_map}'
 
-            if self.hosting or self.custom_map or self.tf2_map in excluded_maps:
+            if self.hosting or self.custom_map:
                 top_line = self.map_line
             else:
                 top_line = self.get_line('top', True)
 
             if self.queued_state == "Not queued":
-                if self.hosting or self.custom_map or self.tf2_map in excluded_maps:
+                if self.hosting or self.custom_map:
                     bottom_line = self.get_line('bottom' if self.hosting else 'top', True)
                     # yes this means the bottom line can use the top line setting, but I basically consider it to be the lines shifted down by one and truncated
                 else:
@@ -180,7 +180,7 @@ class GameState:
             if tf2_map:
                 self.map_change_time = int(time.time())
                 self.map_fancy, self.gamemode, self.gamemode_fancy = gamemodes.get_map_gamemode(self.log, self.tf2_map)
-                self.custom_map = self.tf2_map == self.map_fancy and self.tf2_map not in excluded_maps
+                self.custom_map = self.tf2_map == self.map_fancy
                 self.map_line = self.loc.text("Map: {0} (hosting)").format(self.map_fancy) if self.hosting else self.loc.text("Map: {0}").format(self.map_fancy)
                 self.log.debug(f"Set map to {(self.tf2_map, self.map_fancy, self.gamemode)}, custom map={self.custom_map}")
 
@@ -274,7 +274,6 @@ class GameState:
 
 
 # because Discord limits to 150 RPC images
-excluded_maps: Tuple[str, ...] = ('background01', 'devtest', 'ctf_hellfire', 'pass_brickyard', 'pass_district', 'pass_timbertown', 'itemtest', 'mvm_example')
 map_fallbacks: Dict[str, str] = {'cp_5gorge': 'cp_gorge', 'cp_granary': 'arena_granary', 'arena_nucleus': 'koth_nucleus', 'ctf_foundry': 'cp_foundry', 'arena_sawmill': 'koth_sawmill',
                                  'ctf_sawmill': 'koth_sawmill', 'arena_badlands': 'cp_badlands', 'koth_badlands': 'cp_badlands', 'tr_dustbowl': 'cp_dustbowl',
                                  'ctf_thundermountain': 'pl_thundermountain', 'ctf_well': 'cp_well', 'arena_well': 'cp_well'}
