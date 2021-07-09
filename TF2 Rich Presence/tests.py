@@ -546,15 +546,15 @@ class TestTF2RichPresense(unittest.TestCase):
                                      'small_text': 'Soldier'}})
         self.assertFalse(game_state_test.update_rpc)
 
-        game_state_test.set_bulk((False, 'ctf_sawmill', 'Engineer', '', 'Not queued', True))
+        game_state_test.set_bulk((False, 'arena_badlands', 'Engineer', '', 'Not queued', True))
         self.assertTrue(game_state_test.update_rpc)
-        self.assertEqual(str(game_state_test), 'Engineer on Sawmill (CTF), gamemode=ctf, hosting=True, queued="Not queued", server=')
+        self.assertEqual(str(game_state_test), 'Engineer on Badlands (Arena), gamemode=arena, hosting=True, queued="Not queued", server=')
         self.assertEqual(fix_activity_dict(game_state_test.activity()),
-                         {'details': 'Map: Sawmill (CTF) (hosting)',
+                         {'details': 'Map: Badlands (Arena) (hosting)',
                           'state': 'Time on map: 0:00',
                           'timestamps': {'start': 0},
-                          'assets': {'large_image': 'z_koth_sawmill',
-                                     'large_text': 'Sawmill (CTF) - TF2 Rich Presence {tf2rpvnum}',
+                          'assets': {'large_image': 'z_cp_badlands',
+                                     'large_text': 'Badlands (Arena) - TF2 Rich Presence {tf2rpvnum}',
                                      'small_image': 'engineer',
                                      'small_text': 'Engineer'}})
         self.assertTrue(game_state_test.update_rpc)
@@ -618,11 +618,11 @@ class TestTF2RichPresense(unittest.TestCase):
                          (('Map: Hightower (hosting)', 'Players: ?/?', 'Time on map: 0:00', '0:00 elapsed'),
                           ('bg_modes/payload-race', 77, 172), 'fg_maps/plr_hightower', 'classes/heavy'))
 
-        app.game_state.set_bulk((False, 'cp_5gorge', 'Scout', '', 'Queued for Casual', True))
+        app.game_state.set_bulk((False, 'tr_dustbowl', 'Scout', '', 'Queued for Casual', True))
         app.set_gui_from_game_state()
         self.assertEqual((app.gui.text_state, app.gui.bg_state, app.gui.fg_state, app.gui.class_state),
-                         (('Map: 5Gorge (5CP) (hosting)', 'Players: ?/?', 'Time on map: 0:00', '0:00 elapsed'),
-                          ('bg_modes/control-point', 77, 172), 'fg_maps/cp_gorge', 'classes/scout'))
+                         (('Map: Dustbowl (Training) (hosting)', 'Players: ?/?', 'Time on map: 0:00', '0:00 elapsed'),
+                          ('bg_modes/training', 77, 172), 'fg_maps/cp_dustbowl', 'classes/scout'))
         self.assertEqual(app.gui.bottom_text_state, {'discord': False, 'kataiser': False, 'queued': True, 'holiday': False})
 
         app.game_state.set_bulk((False, 'itemtest', 'Spy', '', 'Not queued', True))
