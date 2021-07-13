@@ -199,14 +199,7 @@ class TF2RichPresense:
         if self.process_scanner.tf2_without_condebug:
             self.no_condebug = True
 
-        if not p_data['Steam']['running']:
-            if p_data['Steam']['pid'] is not None or p_data['Steam']['path'] is not None:
-                self.log.error(f"Steam isn't running but its process info is {p_data['Steam']}. WTF?")
-
-            if p_data['TF2']['running']:
-                self.log.error("TF2 is running but Steam isn't. WTF?")
-
-        if p_data['TF2']['running'] and p_data['Discord']['running'] and p_data['Steam']['running']:
+        if p_data['Steam']['running']:
             # reads steam config files to find usernames with -condebug (on first loop, and if any of them have been modified)
             config_scan_needed: bool = self.steam_config_mtimes == {}
 
@@ -219,15 +212,28 @@ class TF2RichPresense:
                     config_scan_needed = True
 
             if config_scan_needed:
+                # to be clear, this scan is always needed but doesn't need to be re-done every loop
+                tf2_exe_path: str = self.find_tf2_exe(p_data['Steam']['path'])
                 need_condebug: bool = not self.gui.launched_tf2_with_button and self.process_scanner.tf2_without_condebug
-                steam_config_results: Optional[Set[str]] = self.steam_config_file(p_data['Steam']['path'], need_condebug)
+                steam_config_results: Optional[Tuple[str, Set[str]]] = self.steam_config_file(p_data['Steam']['path'], need_condebug)
 
                 if steam_config_results:
-                    self.valid_usernames.update(steam_config_results)
-                    self.log.debug(f"Usernames: {self.valid_usernames}")
+                    self.gui.tf2_launch_cmd = (tf2_exe_path, steam_config_results[0])
+                    self.log.debug(f"Set launch TF2 command to \"{self.gui.tf2_launch_cmd}\"")
+
+                    if steam_config_results[1]:
+                        self.valid_usernames.update(steam_config_results[1])
+                        self.log.debug(f"Usernames: {self.valid_usernames}")
                 elif self.process_scanner.tf2_without_condebug:
                     self.no_condebug = True
+        else:
+            if p_data['Steam']['pid'] is not None or p_data['Steam']['path'] is not None:
+                self.log.error(f"Steam isn't running but its process info is {p_data['Steam']}. WTF?")
 
+            if p_data['TF2']['running']:
+                self.log.error("TF2 is running but Steam isn't. WTF?")
+
+        if p_data['TF2']['running'] and p_data['Discord']['running'] and p_data['Steam']['running']:
             # modifies a few tf2 config files
             if not self.has_checked_class_configs:
                 configs.class_config_files(self.log, p_data['TF2']['path'])
@@ -443,8 +449,12 @@ class TF2RichPresense:
         return console_log.interpret(self, *args, **kwargs)
 
     # reads steam's launch options save file to find usernames with -condebug
-    def steam_config_file(self, *args, **kwargs) -> Optional[Set[str]]:
+    def steam_config_file(self, *args, **kwargs) -> Optional[Tuple[str, Set[str]]]:
         return configs.steam_config_file(self, *args, **kwargs)
+
+    # given Steam's install, find a TF2 install
+    def find_tf2_exe(self, *args, **kwargs) -> str:
+        return configs.find_tf2_exe(self, *args, **kwargs)
 
 
 if __name__ == '__main__':

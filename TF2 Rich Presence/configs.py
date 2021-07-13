@@ -3,9 +3,11 @@
 # cython: language_level=3
 
 import os
-from typing import List, Optional, Set, Tuple, Union
+from typing import Callable, List, Optional, Set, Tuple, Union
 
 import vdf
+
+import logger
 
 
 # allows for detecting which class the user is playing as
@@ -50,12 +52,13 @@ def class_config_files(log, exe_location: str):
     log.debug(f"Classes with echo added: {classes_not_found}")
 
 
-# reads steam's launch options save file to find usernames with -condebug
-def steam_config_file(self, exe_location: str, require_condebug: bool) -> Optional[Set[str]]:
-    self.log.debug("Scanning Steam config files for -condebug")
+# reads steam's launch options save file to find TF2 launch options and usernames with -condebug
+def steam_config_file(self, exe_location: str, require_condebug: bool) -> Optional[Tuple[str, Set[str]]]:
+    self.log.debug(f"Scanning Steam config files{' for -condebug' if require_condebug else ''}")
     found_condebug: bool = False
     found_usernames: Set[str] = set()
     user_id_folders: List[str] = os.listdir(os.path.join(exe_location, 'userdata'))
+    most_likely_args: Tuple[int, str] = (-1, '')
 
     if user_id_folders:
         self.log.debug(f"User id folders: {user_id_folders}")
@@ -80,10 +83,10 @@ def steam_config_file(self, exe_location: str, require_condebug: bool) -> Option
             continue
 
         if require_condebug:
-            if '-condebug' not in global_config_file_read or '"440"' not in global_config_file_read:
+            if '"440"' not in global_config_file_read:
                 continue
             else:
-                self.log.debug(f"-condebug and \"440\" found, parsing file ({global_config_file_size} bytes)")
+                self.log.debug(f"\"440\" found, parsing file ({global_config_file_size} bytes)")
         else:
             self.log.debug(f"Parsing file ({global_config_file_size} bytes)")
 
@@ -100,28 +103,26 @@ def steam_config_file(self, exe_location: str, require_condebug: bool) -> Option
             self.log.error(f"Couldn't find PersonaName in config (\"personaname\" in lowercase: {personaname_exists_in_file})")
             possible_username = ''
 
-        if require_condebug:
-            try:
-                tf2_launch_options = parsed_lowercase['userlocalconfigstore']['software']['valve']['steam']['apps']['440']['launchoptions']
-            except KeyError:
-                pass  # (hopefully) -condebug was in some other game
-            else:
-                if '-condebug' in tf2_launch_options:
-                    found_condebug = True
-                    self.log.debug(f"Found -condebug in launch options ({tf2_launch_options})")
-                    config_mtime: int = int(os.stat(global_config_file_path).st_mtime)
-                    self.steam_config_mtimes[global_config_file_path] = config_mtime
-                    self.log.debug(f"Added mtime ({config_mtime})")
-
-                    if possible_username:
-                        found_usernames.add(possible_username)
+        try:
+            tf2_savedata = parsed_lowercase['userlocalconfigstore']['software']['valve']['steam']['apps']['440']
+        except KeyError:
+            pass  # (hopefully) -condebug was in some other game
         else:
-            config_mtime = int(os.stat(global_config_file_path).st_mtime)
-            self.steam_config_mtimes[global_config_file_path] = config_mtime
-            self.log.debug(f"Added mtime ({config_mtime})")
+            last_played_time: int = int(tf2_savedata['lastplayed'])
 
-            if possible_username:
-                found_usernames.add(possible_username)
+            if last_played_time > most_likely_args[0]:
+                most_likely_args = (last_played_time, tf2_savedata['launchoptions'])
+
+            if require_condebug and 'launchoptions' in tf2_savedata and '-condebug' in tf2_savedata['launchoptions']:
+                found_condebug = True
+                self.log.debug(f"Found -condebug in launch options ({tf2_savedata['launchoptions']})")
+
+        if possible_username or not require_condebug:
+            found_usernames.add(possible_username)
+
+        config_mtime: int = int(os.stat(global_config_file_path).st_mtime)
+        self.steam_config_mtimes[global_config_file_path] = config_mtime
+        self.log.debug(f"Added mtime ({config_mtime})")
 
     if not found_condebug and require_condebug:
         self.log.error("-condebug not found, telling user", reportable=False)
@@ -129,12 +130,62 @@ def steam_config_file(self, exe_location: str, require_condebug: bool) -> Option
         self.no_condebug = False
         return None
     else:
-        return found_usernames
+        return most_likely_args[1], found_usernames
+
+
+# given Steam's install, find a TF2 install
+def find_tf2_exe(self, steam_location: str) -> str:
+    extend_path: Callable[[str], str] = lambda path: os.path.join(path, 'steamapps', 'common', 'Team Fortress 2', 'hl2.exe')
+    default_path: str = extend_path(steam_location)
+
+    if is_tf2_install(self.log, default_path):
+        return default_path
+
+    self.log.debug("Reading libraryfolders.vdf for TF2 installation")
+
+    with open(os.path.join(steam_location, 'steamapps', 'libraryfolders.vdf'), 'r', encoding='UTF8', errors='replace') as libraryfolders_vdf:
+        libraryfolders_vdf_read: dict = vdf.load(libraryfolders_vdf)['LibraryFolders']
+
+    for library_folder_key in libraryfolders_vdf_read:
+        if len(library_folder_key) < 4:
+            potentional_install: str = extend_path(libraryfolders_vdf_read[library_folder_key])
+
+            if is_tf2_install(self.log, potentional_install):
+                return potentional_install
+
+    self.log.error(f"Couldn't find a TF2 installation in any Steam library folders (libraryfolders.vdf: {libraryfolders_vdf_read})")
+
+
+# makes sure a path to hl2.exe exists and is TF2 and not some other game
+def is_tf2_install(log: logger.Log, exe_location: str) -> bool:
+    if not os.path.isfile(exe_location):
+        return False
+
+    is_tf2: bool = False
+    appid_path: str = os.path.join(os.path.dirname(exe_location), 'steam_appid.txt')
+
+    if os.path.isfile(appid_path):
+        with open(appid_path, 'rb') as appid_file:
+            appid_read: bytes = appid_file.read()
+
+            if appid_read.startswith(b'440\n'):
+                is_tf2 = True
+            else:
+                log.debug(f"steam_appid.txt contains \"{appid_read}\" ")
+    else:
+        log.debug(f"steam_appid.txt doesn't exist (install folder: {os.listdir(os.path.dirname(exe_location))})")
+
+    if is_tf2:
+        log.debug(f"Found TF2 hl2.exe at {exe_location}")
+        return True
+    else:
+        log.error(f"Found non-TF2 hl2.exe at {exe_location}")
+        return False
 
 
 # adapted from https://www.popmartian.com/tipsntricks/2014/11/20/how-to-lower-case-all-dictionary-keys-in-a-complex-python-dictionary/
 def lowercase_keys(mixed_case: Union[dict, list]) -> Union[dict, list]:
-    allowed_keys: Tuple[str, ...] = ('userlocalconfigstore', 'friends', 'personaname', 'userlocalconfigstore', 'software', 'valve', 'steam', 'apps', '440', 'launchoptions')
+    allowed_keys: Tuple[str, ...] = ('userlocalconfigstore', 'friends', 'personaname', 'userlocalconfigstore', 'software', 'valve', 'steam', 'apps', '440', 'launchoptions', 'lastplayed')
     key: str
 
     for key in list(mixed_case):

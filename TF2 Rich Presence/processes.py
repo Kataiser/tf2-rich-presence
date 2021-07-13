@@ -12,6 +12,7 @@ from typing import Dict, List, Tuple, Union
 
 import psutil
 
+import configs
 import logger
 
 
@@ -208,35 +209,15 @@ class ProcessScanner:
         # don't detect gmod (or any other program named hl2.exe)
         if self.process_data['TF2']['running']:
             if not self.hl2_exe_is_tf2(self.parsed_tasklist['hl2.exe']):
+                self.log.debug(f"Found running non-TF2 hl2.exe with PID {self.parsed_tasklist['hl2.exe']}")
                 self.process_data['TF2'] = copy.deepcopy(self.p_data_default['TF2'])
                 del self.parsed_tasklist['hl2.exe']
 
     # makes sure a process's path is a TF2 install, not some other game
     @functools.cache
     def hl2_exe_is_tf2(self, hl2_exe_pid: int) -> bool:
-        hl2_exe_path: str = self.get_process_info(hl2_exe_pid, ('path',))['path']
-        is_tf2: bool = False
-
-        if hl2_exe_path and 'team fortress 2' in hl2_exe_path.lower():
-            appid_path: str = os.path.join(hl2_exe_path, 'steam_appid.txt')
-
-            if os.path.isfile(appid_path):
-                with open(appid_path, 'rb') as appid_file:
-                    appid_read: bytes = appid_file.read()
-
-                    if appid_read.startswith(b'440\n'):
-                        is_tf2 = True
-                    else:
-                        self.log.debug(f"steam_appid.txt contains \"{appid_read}\" ")
-            else:
-                self.log.debug(f"steam_appid.txt doesn't exist (install folder: {os.listdir(hl2_exe_path)})")
-
-        if is_tf2:
-            self.log.debug(f"Found TF2 hl2.exe at {hl2_exe_path}")
-            return True
-        else:
-            self.log.error(f"Found non-TF2 hl2.exe at {hl2_exe_path}")
-            return False
+        hl2_exe_dir: str = self.get_process_info(hl2_exe_pid, ('path',))['path']
+        return configs.is_tf2_install(self.log, os.path.join(hl2_exe_dir, 'hl2.exe'))
 
 
 if __name__ == '__main__':

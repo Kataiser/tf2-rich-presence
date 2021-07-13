@@ -60,6 +60,7 @@ class GUI(tk.Frame):
         self.bottom_text_queue_state: str = ""
         self.holiday_text: str = ""
         self.launched_tf2_with_button: bool = False
+        self.tf2_launch_cmd: Optional[Tuple[str, str]] = None
 
         menu_bar: tk.Menu = tk.Menu(self.master)
         self.file_menu = tk.Menu(menu_bar, tearoff=0)
@@ -390,7 +391,7 @@ class GUI(tk.Frame):
         self.launch_tf2_button['text'] = self.loc.text("Launching...")
         self.safe_update()
         self.launched_tf2_with_button = True
-        subprocess.run('cmd /c start steam://run/440//-condebug', creationflags=0x08000000)
+        subprocess.Popen(f'"{self.tf2_launch_cmd[0]}" {self.tf2_launch_cmd[1]} -game tf -steam -secure -condebug', creationflags=0x08000000)
 
     # load a .webp image from gui_images, mode can be RGBA or RGB. image_name shouldn't have the file extension and can have forward slashes
     @functools.cache
