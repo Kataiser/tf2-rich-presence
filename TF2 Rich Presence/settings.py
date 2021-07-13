@@ -7,6 +7,8 @@ import json
 import winreg
 from typing import Optional, Union
 
+import logger
+
 
 # access a setting from any file, with a string that is the same as the variable name (cached, so settings changes won't be rechecked right away)
 # TODO: access settings as a class with type hinted members
@@ -34,6 +36,7 @@ def access_registry(save: Optional[dict] = None) -> Optional[dict]:
     if save:
         winreg.SetValue(reg_key, 'Settings', winreg.REG_SZ, json.dumps(save, separators=(',', ':')))
         get.cache_clear()
+        logger.Log.log_level_allowed.cache_clear()
     else:
         return reg_key_data
 

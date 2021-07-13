@@ -3,6 +3,7 @@
 # cython: language_level=3
 
 import datetime
+import functools
 import getpass
 import gzip
 import os
@@ -90,6 +91,10 @@ class Log:
     def log_levels_allowed(self) -> List[str]:
         return [level for level in self.log_levels if self.log_levels.index(level) >= self.log_levels.index(settings.get('log_level'))]
 
+    @functools.cache
+    def log_level_allowed(self, level: str):
+        return level in self.log_levels_allowed()
+
     # adds a line to the current log file
     def write_log(self, level: str, message_out: str, use_errors_file: bool = False):
         if self.enabled():
@@ -129,17 +134,17 @@ class Log:
 
     # a log with a level of INFO (not commonly used)
     def info(self, message_in: str):
-        if 'Info' in self.log_levels_allowed():
+        if self.log_level_allowed('Info'):
             self.write_log('INFO', message_in)
 
     # a log with a level of DEBUG (most things)
     def debug(self, message_in: str):
-        if 'Debug' in self.log_levels_allowed():
+        if self.log_level_allowed('Debug'):
             self.write_log('DEBUG', message_in)
 
     # a log with a level of ERROR (caught, non-fatal errors)
     def error(self, message_in: str, reportable: bool = True):
-        if 'Error' in self.log_levels_allowed():
+        if self.log_level_allowed('Error'):
             self.write_log('ERROR', message_in, use_errors_file=reportable)
 
         if reportable and settings.get('sentry_level') == 'All errors':
@@ -156,7 +161,7 @@ class Log:
 
     # a log with a level of CRITICAL (uncaught, fatal errors, probably (hopefully) sent to Sentry)
     def critical(self, message_in: str):
-        if 'Critical' in self.log_levels_allowed():
+        if self.log_level_allowed('Critical'):
             self.write_log('CRITICAL', message_in, use_errors_file=True)
 
     # deletes older log files and compresses the rest
