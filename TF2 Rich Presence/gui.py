@@ -5,6 +5,7 @@
 import datetime
 import functools
 import os
+import statistics
 import subprocess
 import tkinter as tk
 import tkinter.ttk as ttk
@@ -61,6 +62,7 @@ class GUI(tk.Frame):
         self.holiday_text: str = ""
         self.launched_tf2_with_button: bool = False
         self.tf2_launch_cmd: Optional[Tuple[str, str]] = None
+        self.main_loop_body_times: List[float] = []
 
         menu_bar: tk.Menu = tk.Menu(self.master)
         self.file_menu = tk.Menu(menu_bar, tearoff=0)
@@ -600,7 +602,8 @@ class GUI(tk.Frame):
             save_pos = get_window_center(self.master)
             db['gui_position'] = list(save_pos)
             utils.access_db(db)
-            self.log.info(f"Closing main window and exiting program (saving pos as {save_pos})")
+            self.log.info(f"Closing main window and exiting program (saving pos as {save_pos}, loop body time stats are {min(self.main_loop_body_times)} min, "
+                          f"{statistics.median(self.main_loop_body_times)} median, {max(self.main_loop_body_times)} max)")
             self.master.destroy()
         except Exception:
             pass  # we really do need the program to close now

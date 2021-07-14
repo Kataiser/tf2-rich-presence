@@ -185,6 +185,7 @@ class TF2RichPresense:
             del self.log
             raise SystemExit
 
+        loop_start_time: float = time.perf_counter()
         self.slow_sleep_time = False
         self.loop_iteration += 1
         self.log.debug(f"Main loop iteration this app session: {self.loop_iteration}")
@@ -339,6 +340,7 @@ class TF2RichPresense:
             gc.collect()
             self.log.debug("Enabled GC and collected")
 
+        self.gui.main_loop_body_times.append(round(time.perf_counter() - loop_start_time, 2))
         return self.client_connected, self.rpc_client
 
     # tell the GUI what it needs to look like, based on self.game_state
@@ -386,6 +388,7 @@ class TF2RichPresense:
                 self.gui.bottom_text_queue_state = self.loc.text(self.game_state.queued_state)
                 self.gui.set_bottom_text('queued', True)
 
+    # handle one or more of the three programs we need not running
     def necessary_program_not_running(self, program_name: str, name_short: str = ''):
         name_short = program_name if not name_short else name_short
         self.test_state = f'no {name_short.lower()}'
