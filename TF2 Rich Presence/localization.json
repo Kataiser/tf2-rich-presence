@@ -377,6 +377,20 @@
         "Chinese": "控制点",
         "Japanese": "コントロールポイント"
     },
+    "1795231764": {
+        "English": "Couldn't find a Team Fortress 2 installation.",
+        "German": "Konnte keine Team Fortress 2-Installation finden.",
+        "French": "Je n'ai pas trouvé d'installation de Team Fortress 2.",
+        "Spanish": "No pude encontrar una instalación de Team Fortress 2.",
+        "Portuguese": "Não foi possível encontrar uma instalação da Team Fortress 2.",
+        "Italian": "Non ho potuto trovare un'installazione di Team Fortress 2.",
+        "Dutch": "Ik kon geen Team Fortress 2 installatie vinden.",
+        "Polish": "Nie mogę znaleźć instalacji Team Fortress 2.",
+        "Russian": "Не удалось найти установку Team Fortress 2.",
+        "Korean": "팀 포트리스 2 설치를 찾을 수 없습니다.",
+        "Chinese": "找不到团队要塞2的安装。",
+        "Japanese": "Team Fortress 2のインストールが見つかりませんでした。"
+    },
     "3315339845": {
         "English": "Couldn't load settings, reverting to defaults.{0}",
         "German": "Konnte die Einstellungen nicht laden und auf die Standardeinstellungen zurückkehren.{0}",
