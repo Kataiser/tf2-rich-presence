@@ -110,6 +110,10 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual(configs.steam_config_file(app, 'test_resources\\', False)[1], {'Kataiser'})
         self.assertEqual(configs.steam_config_file(app, 'test_resources\\', True), None)
 
+    def test_find_tf2_exe(self):
+        app = main.TF2RichPresense(self.log, set_process_priority=False)
+        self.assertEqual(app.find_tf2_exe('test_resources\\very real steam'), r'test_resources\very real steam 2\steamapps\common\Team Fortress 2\hl2.exe')
+
     def test_class_config_files(self):
         cfg_path = 'test_resources\\tf\\cfg'
         demo_path = f'{cfg_path}\\demoman.cfg'
@@ -449,6 +453,7 @@ class TestTF2RichPresense(unittest.TestCase):
         app = main.TF2RichPresense(self.log, set_process_priority=False)
         app.run(once=True)
         self.assertTrue(os.path.isfile(big_number_file))
+        time.sleep(0.2)
 
         for file in os.listdir():
             if file.startswith('test_') and file.endswith('.temp'):
