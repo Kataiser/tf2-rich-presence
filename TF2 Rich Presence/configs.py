@@ -83,7 +83,7 @@ def steam_config_file(self, exe_location: str, require_condebug: bool) -> Option
             continue
 
         if require_condebug:
-            if '"440"' not in global_config_file_read:
+            if '"440"' not in global_config_file_read or '-condebug' not in global_config_file_read:
                 continue
             else:
                 self.log.debug(f"\"440\" found, parsing file ({global_config_file_size} bytes)")
@@ -104,7 +104,7 @@ def steam_config_file(self, exe_location: str, require_condebug: bool) -> Option
             possible_username = ''
 
         try:
-            tf2_savedata = parsed_lowercase['userlocalconfigstore']['software']['valve']['steam']['apps']['440']
+            tf2_savedata: dict = parsed_lowercase['userlocalconfigstore']['software']['valve']['steam']['apps']['440']
         except KeyError:
             pass  # (hopefully) -condebug was in some other game
         else:
@@ -153,7 +153,7 @@ def find_tf2_exe(self, steam_location: str) -> str:
             if is_tf2_install(self.log, potentional_install):
                 return potentional_install
 
-    self.log.error(f"Couldn't find a TF2 installation in any Steam library folders (libraryfolders.vdf: {libraryfolders_vdf_read})")
+    self.log.error(f"Couldn't find a TF2 installation in any Steam library folders, will continually scan for it (libraryfolders.vdf: {libraryfolders_vdf_read})")
 
 
 # makes sure a path to hl2.exe exists and is TF2 and not some other game

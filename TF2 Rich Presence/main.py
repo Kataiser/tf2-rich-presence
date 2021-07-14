@@ -201,7 +201,7 @@ class TF2RichPresense:
 
         if p_data['Steam']['running']:
             # reads steam config files to find usernames with -condebug (on first loop, and if any of them have been modified)
-            config_scan_needed: bool = self.steam_config_mtimes == {}
+            config_scan_needed: bool = self.steam_config_mtimes == {} or not self.gui.tf2_launch_cmd
 
             for steam_config in self.steam_config_mtimes:
                 old_mtime: int = self.steam_config_mtimes[steam_config]
@@ -218,8 +218,9 @@ class TF2RichPresense:
                 steam_config_results: Optional[Tuple[str, Set[str]]] = self.steam_config_file(p_data['Steam']['path'], need_condebug)
 
                 if steam_config_results:
-                    self.gui.tf2_launch_cmd = (tf2_exe_path, steam_config_results[0])
-                    self.log.debug(f"Set launch TF2 command to \"{self.gui.tf2_launch_cmd}\"")
+                    if tf2_exe_path:
+                        self.gui.tf2_launch_cmd = (tf2_exe_path, steam_config_results[0])
+                        self.log.debug(f"Set launch TF2 command to {self.gui.tf2_launch_cmd}")
 
                     if steam_config_results[1]:
                         self.valid_usernames.update(steam_config_results[1])
