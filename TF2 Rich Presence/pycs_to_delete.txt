@@ -6,7 +6,6 @@ packages\PIL\__pycache__\GdImageFile.cpython-39.pyc
 packages\PIL\__pycache__\ImageCms.cpython-39.pyc
 packages\PIL\__pycache__\ImageDraw2.cpython-39.pyc
 packages\PIL\__pycache__\ImageEnhance.cpython-39.pyc
-packages\PIL\__pycache__\ImageFont.cpython-39.pyc
 packages\PIL\__pycache__\ImageGrab.cpython-39.pyc
 packages\PIL\__pycache__\ImageMath.cpython-39.pyc
 packages\PIL\__pycache__\ImageMorph.cpython-39.pyc
@@ -28,12 +27,8 @@ packages\a2s\__pycache__\a2sasync.cpython-39.pyc
 packages\a2s\__pycache__\a2sfragment.cpython-39.pyc
 packages\a2s\__pycache__\a2sstream.cpython-39.pyc
 packages\certifi\__pycache__\__main__.cpython-39.pyc
-packages\chardet\__pycache__\compat.cpython-39.pyc
-packages\chardet\__pycache__\langhungarianmodel.cpython-39.pyc
-packages\chardet\cli\__pycache__\__init__.cpython-39.pyc
-packages\chardet\cli\__pycache__\chardetect.cpython-39.pyc
-packages\chardet\metadata\__pycache__\__init__.cpython-39.pyc
-packages\chardet\metadata\__pycache__\languages.cpython-39.pyc
+packages\charset_normalizer\cli\__pycache__\__init__.cpython-39.pyc
+packages\charset_normalizer\cli\__pycache__\normalizer.cpython-39.pyc
 packages\idna\__pycache__\codec.cpython-39.pyc
 packages\idna\__pycache__\compat.cpython-39.pyc
 packages\idna\__pycache__\uts46data.cpython-39.pyc
@@ -51,6 +46,7 @@ packages\sentry_sdk\integrations\__pycache__\chalice.cpython-39.pyc
 packages\sentry_sdk\integrations\__pycache__\executing.cpython-39.pyc
 packages\sentry_sdk\integrations\__pycache__\gcp.cpython-39.pyc
 packages\sentry_sdk\integrations\__pycache__\gnu_backtrace.cpython-39.pyc
+packages\sentry_sdk\integrations\__pycache__\httpx.cpython-39.pyc
 packages\sentry_sdk\integrations\__pycache__\pure_eval.cpython-39.pyc
 packages\sentry_sdk\integrations\__pycache__\pyramid.cpython-39.pyc
 packages\sentry_sdk\integrations\__pycache__\redis.cpython-39.pyc

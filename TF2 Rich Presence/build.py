@@ -308,7 +308,7 @@ def main(version_num='v2.0'):
     os.mkdir(new_packages_dir)
     venv_packages_dir = site.getsitepackages()[1]
     assert 'site-packages' in venv_packages_dir.lower()
-    needed_packages = ['PIL', 'Pillow', 'a2s', 'certifi', 'chardet', 'idna', 'psutil', 'python-a2s', 'requests', 'sentry_sdk', 'urllib3', 'vdf', 'discoIPC']
+    needed_packages = ['PIL', 'Pillow', 'a2s', 'certifi', 'charset_normalizer', 'idna', 'psutil', 'python-a2s', 'requests', 'sentry_sdk', 'urllib3', 'vdf', 'discoIPC']
     for site_package in os.listdir(venv_packages_dir):
         for needed_package in needed_packages:
             if needed_package in site_package and 'requests_cache' not in site_package:
