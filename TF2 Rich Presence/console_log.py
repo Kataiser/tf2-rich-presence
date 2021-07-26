@@ -146,10 +146,10 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
                     kataiser_seen_on = ''
 
         if line.endswith(' selected \n'):
-            class_possibly: str = line[:-11].split()[-1]
+            class_line_possibly: List[str] = line[:-11].split()
 
-            if class_possibly in tf2_classes:
-                tf2_class = class_possibly
+            if class_line_possibly and class_line_possibly[-1] in tf2_classes:
+                tf2_class = class_line_possibly[-1]
 
         elif line.startswith('Map:'):
             in_menus = False
