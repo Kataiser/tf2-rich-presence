@@ -69,7 +69,6 @@ def steam_config_file(self, exe_location: str, require_condebug: bool) -> Option
     for user_id_folder in user_id_folders:  # possibly multiple users for the same steam install
         # 'C:\Program Files (x86)\Steam\userdata\*user id number*\config\localconfig.vdf'
         global_config_file_path: str = os.path.join(exe_location, 'userdata', user_id_folder, 'config', 'localconfig.vdf')
-        self.log.debug(f"Reading {global_config_file_path}")
 
         try:
             with open(global_config_file_path, 'r', errors='replace') as global_config_file:
@@ -79,8 +78,10 @@ def steam_config_file(self, exe_location: str, require_condebug: bool) -> Option
             self.log.debug(f"Couldn't find {global_config_file_path}")
             continue
         except PermissionError as error:
-            self.log.error(str(error))
+            self.log.error(f"Couldn't read {global_config_file_path}: {str(error)}")
             continue
+
+        self.log.debug(f"Reading {global_config_file_path}")
 
         if require_condebug:
             if '"440"' not in global_config_file_read or '-condebug' not in global_config_file_read:
