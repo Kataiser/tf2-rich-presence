@@ -451,15 +451,15 @@ def main(version_num='v2.0'):
     if github_repo_path != 'n':
         old_dir = os.getcwd()
         os.chdir(github_repo_path)
-    commit_hash = subprocess.run('git log -n 1', capture_output=True).stdout.decode('UTF8')[7:14]
+    commit_count = subprocess.run('git rev-list --count master', capture_output=True).stdout.decode('UTF8')
     if github_repo_path != 'n':
         os.chdir(old_dir)
     with open(Path(f'{new_build_folder_name}/resources/launcher.py'), 'r') as launcher_py_read:
         old_data = launcher_py_read.read()
     with open(Path(f'{new_build_folder_name}/resources/launcher.py'), 'w') as launcher_py_write:
-        new_data = old_data.replace("release=VERSION", "release=f'{VERSION}" + f"-dev-{commit_hash}'")
+        new_data = old_data.replace("release=VERSION", "release=f'{VERSION}" + f"-dev-{commit_count}'")
         launcher_py_write.write(new_data)
-    print(f"Set Sentry version to {version_num}-dev-{commit_hash}")
+    print(f"Set Sentry version to {version_num}-dev-{commit_count}")
 
     # HyperBubs
     if os.path.isfile('custom_kataiser.py'):
