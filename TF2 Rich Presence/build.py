@@ -451,7 +451,7 @@ def main(version_num='v2.0'):
     if github_repo_path != 'n':
         old_dir = os.getcwd()
         os.chdir(github_repo_path)
-    commit_count = subprocess.run('git rev-list --count master', capture_output=True).stdout.decode('UTF8')
+    commit_count = subprocess.run('git rev-list --count master', capture_output=True).stdout.decode('UTF8').rstrip('\n')
     if github_repo_path != 'n':
         os.chdir(old_dir)
     with open(Path(f'{new_build_folder_name}/resources/launcher.py'), 'r') as launcher_py_read:
