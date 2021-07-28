@@ -25,12 +25,18 @@ import utils
 # TODO: replace this whole thing with a real logger
 class Log:
     def __init__(self, path: Optional[str] = None):
-        if not os.path.isdir('logs'):
-            os.mkdir('logs')
-            time.sleep(0.1)  # ensure it gets created
-            created_logs_dir: bool = True
+        if os.path.isdir('logs'):
+            self.logs_path: str = 'logs'
+            created_logs_dir: bool = False
         else:
-            created_logs_dir = False
+            self.logs_path = os.path.join(os.getenv('APPDATA'), 'TF2 Rich Presence', 'logs')
+
+            if not os.path.isdir(self.logs_path):
+                os.mkdir(self.logs_path)
+                time.sleep(0.1)  # ensure it gets created
+                created_logs_dir = True
+            else:
+                created_logs_dir = False
 
         # find user's pc and account name
         user_pc_name: str = socket.gethostname()
@@ -42,7 +48,7 @@ class Log:
         if path:
             self.filename: str = path
         else:
-            existing_logs: List[str] = sorted(os.listdir('logs'))
+            existing_logs: List[str] = sorted(os.listdir(self.logs_path))
             log_index: int = 0
 
             while True:
@@ -52,10 +58,10 @@ class Log:
                 if filename not in existing_logs and f'{filename}.gz' not in existing_logs:
                     break
 
-            self.filename = os.path.join('logs', filename)
+            self.filename = os.path.join(self.logs_path, filename)
 
         # setup
-        self.filename_errors: str = os.path.join('logs', f'TF2RP_{user_pc_name}_{user_identifier}_{launcher.VERSION}.errors.log')
+        self.filename_errors: str = os.path.join(self.logs_path, f'TF2RP_{user_pc_name}_{user_identifier}_{launcher.VERSION}.errors.log')
         self.last_log_time: float = time.perf_counter()
         self.console_log_path: Optional[str] = None
         self.to_stderr: bool = launcher.DEBUG
@@ -67,7 +73,7 @@ class Log:
             self.log_file: TextIO = open(self.filename, 'a', encoding='UTF8')
 
             if created_logs_dir:
-                self.debug("Created logs folder")
+                self.debug(f"Created logs folder at {os.path.abspath(self.logs_path)}")
 
         db_path: str = 'DB.json' if launcher.DEBUG else os.path.join('resources', 'DB.json')
         if not os.access(db_path, os.W_OK):
@@ -166,7 +172,7 @@ class Log:
 
     # deletes older log files and compresses the rest
     def cleanup(self, max_logs: int):
-        all_logs: List[str] = [os.path.join('logs', log) for log in os.listdir('logs') if not log.endswith('.errors.log')]
+        all_logs: List[str] = [os.path.join(self.logs_path, log) for log in os.listdir(self.logs_path) if not log.endswith('.errors.log')]
         all_logs_times: List[Tuple[str, int]] = [(log_filename, os.stat(log_filename).st_mtime_ns) for log_filename in all_logs]
         all_logs_sorted: List[str] = [log_pair[0] for log_pair in sorted(all_logs_times, key=itemgetter(1))]
         overshoot: int = max_logs - len(all_logs_sorted)

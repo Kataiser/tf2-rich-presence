@@ -22,6 +22,7 @@ def get(setting: str) -> Union[str, int, bool]:
 
 # either reads the settings key and returns it as a dict, or if a dict is provided, saves it
 # note that settings are saved as JSON in a single string key
+# could do this as a file in AppData\Roaming\TF2 Rich Presence, but it would likely be slower for no benefit AFAIK
 def access_registry(save: Optional[dict] = None) -> Optional[dict]:
     reg_key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, r'Software\TF2 Rich Presence')
 

@@ -22,18 +22,10 @@ Discord Rich Presence for Team Fortress 2
 
 (The actual program is nowhere near as nice looking as this, [v2 will be though](https://twitter.com/MechKataiser/status/1350588216043253763))
 
-## Download
-With 7-Zip's built-in extractor: [tf2_rich_presence_{tf2rpvnum}_self_extracting.exe](https://github.com/Kataiser/tf2-rich-presence/releases/download/{tf2rpvnum}/tf2_rich_presence_{tf2rpvnum}_self_extracting.exe) ({installer_size} MB)  
-Extract it yourself: [tf2_rich_presence_{tf2rpvnum}.zip](https://github.com/Kataiser/tf2-rich-presence/releases/download/{tf2rpvnum}/tf2_rich_presence_{tf2rpvnum}.zip) ({zip_size} MB)  
-Alternatively, get the latest autobuild (may be untested/buggy): [tf2_rich_presence_dev.zip](https://nightly.link/Kataiser/tf2-rich-presence/workflows/Tests.CD/master/tf2_rich_presence_dev.zip)
-
-## Installation and running
-1. Extract `tf2_rich_presence_{tf2rpvnum}.zip` OR run `tf2_rich_presence_{tf2rpvnum}_self_extracting.exe`, whichever you downloaded.
-2. Run `Launch TF2 with Rich Presence.exe`.
-	- OR run `Launch Rich Presence alongside TF2.exe`. This one doesn't automatically start Team Fortress 2.
-	- Both require Discord and Steam to be running as well and will wait until the game and both programs are running. 
-
-For faster launching, you can add the first EXE to your taskbar/start menu/desktop/etc or to Steam as a non-Steam game. Note that having Python installed is not required.
+## Download and install
+Installer: [Install TF2 Rich Presence v2.0.exe](https://github.com/Kataiser/tf2-rich-presence/releases/download/{tf2rpvnum}/Install%20TF2%20Rich%20Presence%20v2.0.exe) ({installer_size} MB)  
+Alternatively, get the latest autobuild (no installer, may be untested/buggy): [tf2_rich_presence_dev.zip](https://nightly.link/Kataiser/tf2-rich-presence/workflows/Tests.CD/master/tf2_rich_presence_dev.zip)  
+Note that having Python installed is not required. Requires Discord and Steam to be running as well, and will wait until the game and both programs are running.
 
 ## Changelogs
 - [Changelogs.html](https://htmlpreview.github.io/?https://github.com/Kataiser/tf2-rich-presence/blob/master/Changelogs.html)
@@ -44,9 +36,6 @@ At the moment, both are considered unsupported. They probably work since [Jan200
 
 ## VAC safe?
 Almost certainly. If you don't want to risk it then fair enough, but I've run this on my main account for years and feel comfortable with it. The game's runtime and memory are never touched in any way to read its state. For transparency, here's the complete list of external files that are read from and/or written to: `\tf\console.log`, `\tf\cfg\*class*.cfg` and `steam_appid.txt` in TF2's install and `\userdata\*id*\config\localconfig.vdf` in Steam's. The game process is also queried for its start time and install path, and the server you're playing on is queried for player count or kill counts. RCON is not used.
-
-## Malware detection
-A minority of antivirus vendors see the launcher EXEs as trojans for some reason, which is a problem I haven't been able to solve. Assuming the batch to EXE converter I'm using is safe, these are entirely false positives. See [#126](https://github.com/Kataiser/tf2-rich-presence/issues/126) for more information.
 
 ## Building from source
 For making and testing changes, or simply always running the most up-to-date code.
@@ -70,7 +59,7 @@ For making and testing changes, or simply always running the most up-to-date cod
 	- Would cause all sorts of problems, including removing the class icon style option
 	- Discord art asset limit is 150, the rest of the program uses 47, and there are 118 vanilla maps in the game
 	- So won't be able to get every map, can just limit to the most popular though
-- A proper installer
+- ~~A proper installer~~ (Done with Inno Setup, no autoupdater though)
 	- Also maybe store DB.json and settings in AppData\Roaming
 	- Make a [Chocolatey](https://chocolatey.org/) package as well, ideally would need to fix antivirus detection
 	- Possibly include an autoupdater, either [Squirrel](https://github.com/Squirrel/Squirrel.Windows) or rolling my own

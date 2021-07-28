@@ -27,12 +27,12 @@ def main(version_num='v2.0'):
     parser.add_argument('--n', action='store_true', help="Skip copying to an repo location", default=False)
     parser.add_argument('--ide', action='store_true', help="Use IDE-based build.log handling", default=False)
     parser.add_argument('--release', action='store_true', help="Release build, invalidates all caches", default=False)
-    parser.add_argument('--rename_dev', action='store_true', help="Rename the package dir for CD", default=False)
+    parser.add_argument('--dev_package', action='store_true', help="Build a dev package for CD", default=False)
     parser.add_argument('--nocython', action='store_true', help="Don't compile modules with Cython", default=False)
     cli_skip_repo = parser.parse_args().n
     ide_build_log_handling = parser.parse_args().ide
     release_build = parser.parse_args().release
-    rename_dev = parser.parse_args().rename_dev
+    dev_package = parser.parse_args().dev_package
     nocython = parser.parse_args().nocython
 
     if not ide_build_log_handling:
@@ -41,6 +41,7 @@ def main(version_num='v2.0'):
             time.sleep(0.1)
         sys.stdout = Logger()
 
+    assert len(version_num) <= 10 and 'v' in version_num and '.' in version_num
     print(f"Building TF2 Rich Presence {version_num}{' for release' if release_build else ''}")
 
     if cli_skip_repo:
@@ -174,7 +175,9 @@ def main(version_num='v2.0'):
         ratelimit_remaining = 100
 
     last_build_time = None
-    for file in os.listdir('.'):
+    files_here = os.listdir('.')
+    assert f'Install TF2 Rich Presence {version_num}.exe' in files_here
+    for file in files_here:
         if file.startswith('tf2_rich_presence_'):
             if file.endswith('_self_extracting.exe') or file.endswith('.zip'):
                 last_build_time = os.stat(file).st_mtime
@@ -336,27 +339,13 @@ def main(version_num='v2.0'):
             missing_pycs.append(str(Path(f'{new_build_folder_name}/resources/{pyc_to_delete}')))
     print(f"Deleted {len(pycs_to_delete) - len(missing_pycs)} unused PYCs")
 
-    # build the launcher
-    batch_location = str(os.path.abspath(Path(f'{new_build_folder_name}/TF2 Rich Presence.bat')))
-    exe_location = batch_location.replace('.bat', '.exe')
-    icon_location = os.path.abspath('tf2_logo_blurple.ico')
-    move_location = Path(f'{os.path.dirname(batch_location)}/resources')
-    version_num_windows = version_num[1:].replace('.', ',') + ',0' * (3 - version_num.count('.'))
-    bat2exe_command_1 = f'build_tools{os.path.sep}Bat_To_Exe_Converter.exe /bat "{batch_location}" /exe "{exe_location}" /icon "{icon_location}" /fileversion "{version_num_windows}"'
-    bat2exe_command_2 = f'/productversion "{version_num_windows}" /company "Kataiser" /productname "TF2 Rich Presence" /description "Discord Rich Presence for Team Fortress 2"'
-    print(f"Creating {exe_location}...")
-    assert os.path.isfile(batch_location) and os.path.isfile('tf2_logo_blurple.ico') and os.path.isfile(Path('build_tools/Bat_To_Exe_Converter.exe'))
-    subprocess.run(f'{bat2exe_command_1} {bat2exe_command_2}')
-    print(f"Moved from {batch_location} to {shutil.move(batch_location, move_location)}")
-    assert os.path.isfile(exe_location)
-    assert not os.path.isfile(batch_location)
-
     # ensure everything exists that needs to
     assert os.listdir(Path(f'{new_build_folder_name}/logs')) == []
     assert os.listdir(Path(f'{new_build_folder_name}/resources/__pycache__')) != []
     assert os.listdir(Path(f'{new_build_folder_name}/resources/{interpreter_name}')) != []
     assert len(os.listdir(Path(f'{new_build_folder_name}/resources/packages'))) == 22
     assert len(os.listdir(Path(f'{new_build_folder_name}/resources/gui_images'))) == 13
+    assert os.path.isfile(Path(f'{new_build_folder_name}/TF2 Rich Presence.bat'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/Changelogs.html'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/License.txt'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/Readme.txt'))
@@ -397,32 +386,12 @@ def main(version_num='v2.0'):
         with open(build_info_path, 'a') as build_info_txt:
             build_info_txt.write(f"\n\nBuild log{' (IDE handled)' if ide_build_log_handling else ''}:\n{build_log}")
 
-    # generates zip package and an "installer" (a self extracting .7z as an exe), both with 7zip
-    exe_path = f'tf2_rich_presence_{version_num}_self_extracting.exe'
-    zip_path = f'tf2_rich_presence_{version_num}.zip'
-    if release_build:
-        if os.path.isfile(exe_path):
-            os.remove(exe_path)
-            print(f"Deleted {exe_path}")
-        if os.path.isfile(zip_path):
-            os.remove(zip_path)
-            print(f"Deleted {zip_path}")
-    time.sleep(0.2)  # just to make sure everything is updated
-    if os.path.isfile(f'tf2_rich_presence_{version_num}_self_extracting.exe.tmp'):
-        os.remove(f'tf2_rich_presence_{version_num}_self_extracting.exe.tmp')
-        print(f"Deleted tf2_rich_presence_{version_num}_self_extracting.exe.tmp")
-    if os.path.isfile(f'tf2_rich_presence_{version_num}.zip.tmp'):
-        os.remove(f'tf2_rich_presence_{version_num}.zip.tmp')
-        print(f"Deleted tf2_rich_presence_{version_num}.zip.tmp")
-    package7zip_command_exe_1 = f'build_tools{os.path.sep}7za.exe u {exe_path} -up1q0r2x1y2z1w2 "{new_build_folder_name}{os.path.sep}"'
-    package7zip_command_exe_2 = '-sfx7z.sfx -ssw -mx=9 -myx=9 -mmt=2 -m0=LZMA2:d=8m'
-    package7zip_command_zip = f'build_tools{os.path.sep}7za.exe u {zip_path} -up1q0r2x1y2z1w2 "{new_build_folder_name}{os.path.sep}" -ssw -mx=9 -m0=Deflate64 -mmt=2'
-    print(f"Creating {exe_path}...")
-    assert len(version_num) <= 10 and 'v' in version_num and '.' in version_num
-    subprocess.run(f'{package7zip_command_exe_1} {package7zip_command_exe_2}', stdout=subprocess.DEVNULL)
-    subprocess.run(f'{package7zip_command_exe_1} {package7zip_command_exe_2}', stdout=subprocess.DEVNULL)
-    print(f"Creating {zip_path}...")
-    subprocess.run(package7zip_command_zip, stdout=subprocess.DEVNULL)
+    # generates zip package for CD
+    if dev_package:
+        time.sleep(0.2)  # just to make sure everything is updated
+        package7zip_command_zip = f'build_tools{os.path.sep}7za.exe u tf2_rich_presence_dev.zip -up1q0r2x1y2z1w2 "{new_build_folder_name}{os.path.sep}" -ssw -mx=9 -m0=Deflate64 -mmt=2'
+        print("Creating tf2_rich_presence_dev.zip...")
+        subprocess.run(package7zip_command_zip, stdout=subprocess.DEVNULL)
 
     # creates README.md from README-source.md
     if os.path.isfile('README-source.md'):
@@ -435,10 +404,9 @@ def main(version_num='v2.0'):
         if old_readme_has_this_version:
             print("Old README.md is not outdated, skipping modifying it")
         else:
-            exe_size_mb = round(os.stat(exe_path).st_size / 1048576, 1)  # 1048576 is 1024^2
-            zip_size_mb = round(os.stat(zip_path).st_size / 1048576, 1)
+            installer_size_mb = round(os.stat(f'Install TF2 Rich Presence {version_num}.exe').st_size / 1048576, 1)  # 1048576 is 1024^2
             with open('README-source.md', 'r') as readme_md_source:
-                modified_readme_md = readme_md_source.read().replace('{tf2rpvnum}', version_num).replace('{installer_size}', str(exe_size_mb)).replace('{zip_size}', str(zip_size_mb))
+                modified_readme_md = readme_md_source.read().replace('{tf2rpvnum}', version_num).replace('{installer_size}', str(installer_size_mb))
             with open('README.md', 'w') as readme_md_target:
                 readme_md_target.write(modified_readme_md)
             print("Created README.md from modified README-source.md")
@@ -464,11 +432,6 @@ def main(version_num='v2.0'):
     # HyperBubs
     if os.path.isfile('custom_kataiser.py'):
         shutil.copy('custom_kataiser.py', Path(f'{new_build_folder_name}/resources/custom.py'))
-
-    # support for creating an artifact package, for CD
-    if rename_dev:
-        os.rename(new_build_folder_name, 'tf2_rich_presence_dev')
-        print("Renamed build folder")
 
     # prepares display of time since last build
     if last_build_time:
@@ -517,23 +480,6 @@ def main(version_num='v2.0'):
     with open('Changelogs.html') as changelogs_html:
         if version_num not in changelogs_html.read():
             print(f"'{version_num}' not in Changelogs.html", file=sys.stderr)
-
-
-# converts a batch file to an exe with Bat To Exe Converter (https://web.archive.org/web/20190513133413/http://www.f2ko.de/en/b2e.php)
-def convert_bat_to_exe(batch_location: str, vnum: str, icon_path: str):
-    exe_location = batch_location.replace('.bat', '.exe')
-    icon_location = os.path.abspath(icon_path)
-    move_location = Path(f'{os.path.dirname(batch_location)}/resources')
-    version_num_windows = vnum[1:].replace('.', ',') + ',0' * (3 - vnum.count('.'))
-    bat2exe_command_1 = f'build_tools{os.path.sep}Bat_To_Exe_Converter.exe /bat "{batch_location}" /exe "{exe_location}" /icon "{icon_location}" /fileversion "{version_num_windows}"'
-    bat2exe_command_2 = f'/productversion "{version_num_windows}" /company "Kataiser" /productname "TF2 Rich Presence" /description "Discord Rich Presence for Team Fortress 2"'
-    print(f"Creating {exe_location}...")
-    assert os.path.isfile(batch_location) and os.path.isfile(icon_path) and os.path.isfile(Path('build_tools/Bat_To_Exe_Converter.exe'))
-    subprocess.run(f'{bat2exe_command_1} {bat2exe_command_2}')
-    print(f"Moved from {batch_location} to {shutil.move(batch_location, move_location)}")
-    assert os.path.isfile(exe_location)
-    assert not os.path.isfile(batch_location)
-
 
 # copy a directory to the git repo
 def copy_dir_to_git(source, target):

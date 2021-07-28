@@ -11,9 +11,8 @@ from typing import Dict, Optional, Union
 
 
 # read from or write to DB.json (intentionally uncached)
-# TODO: have this be placed in AppData\Roaming and include settings
 def access_db(write: dict = None) -> Optional[Dict[str, Union[bool, list, str]]]:
-    db_path: str = os.path.join('resources', 'DB.json') if os.path.isdir('resources') else 'DB.json'
+    db_path: str = 'DB.json' if os.path.isfile('DB.json') else os.path.join(os.getenv('APPDATA'), 'TF2 Rich Presence', 'DB.json')
     default_db: dict = {'tb_hashes': [],
                         'error_hashes': [],
                         'has_asked_language': False,
