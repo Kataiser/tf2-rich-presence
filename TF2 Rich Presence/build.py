@@ -113,6 +113,7 @@ def main(version_num='v2.0'):
         print("Copied", shutil.copy('README-source.MD', github_repo_path))
         print("Copied", shutil.copy('requirements.txt', github_repo_path))
         print("Copied", shutil.copy('pycs_to_delete.txt', Path(f'{github_repo_path}/TF2 Rich Presence')))
+        print("Copied", shutil.copy('TF2RP.iss', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy(f'{interpreter_name}.zip', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copyfile(Path(f'{github_repo_path}/TF2 Rich Presence/DB_default.json'), Path(f'{github_repo_path}/TF2 Rich Presence/DB.json')))
 
@@ -176,7 +177,6 @@ def main(version_num='v2.0'):
 
     last_build_time = None
     files_here = os.listdir('.')
-    assert f'Install TF2 Rich Presence {version_num}.exe' in files_here
     for file in files_here:
         if file.startswith('tf2_rich_presence_'):
             if file.endswith('_self_extracting.exe') or file.endswith('.zip'):
@@ -385,6 +385,14 @@ def main(version_num='v2.0'):
             build_log = build_log_file.read().replace(getpass.getuser(), 'USER')
         with open(build_info_path, 'a') as build_info_txt:
             build_info_txt.write(f"\n\nBuild log{' (IDE handled)' if ide_build_log_handling else ''}:\n{build_log}")
+
+    # compile installer
+    if os.path.isfile('TF2RP.iss'):
+        print("Compiling installer...")
+        assert b"Successful compile" in subprocess.check_output('ISCC.exe TF2RP.iss')
+        assert f'Install TF2 Rich Presence {version_num}.exe' in files_here
+    else:
+        print("Skipping compiling installer")
 
     # generates zip package for CD
     if dev_package:
