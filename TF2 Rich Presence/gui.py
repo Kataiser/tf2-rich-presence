@@ -548,7 +548,8 @@ class GUI(tk.Frame):
     def menu_report_issue(self, *args):
         self.log.info("GUI: reporting issue")
         # would be nice if there was a way to auto upload the log file
-        webbrowser.open('https://github.com/Kataiser/tf2-rich-presence/issues/new?body=Please%20remember%20to%20add%20your%20most%20recent%20log%20file')
+        webbrowser.open('https://github.com/Kataiser/tf2-rich-presence/issues/new?body=Please%20include%20the%20most%20recent%20(or%20at%20least%20most%20relevant)%20file%20in%20the%20%22'
+                        'logs%22%20folder%2C%20which%20you%20can%20get%20to%20with%20Help%20-%3E%20Open%20logs%20directory.')
 
     def menu_about(self, *args, silent: bool = False):
         self.log.info("GUI: opening about window")

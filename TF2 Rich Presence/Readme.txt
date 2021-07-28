@@ -3,11 +3,8 @@ https://github.com/Kataiser/tf2-rich-presence
 Built at {built}
 Licensed under GNU GPLv3, see License.txt
 
-Installation and running:
-  1. Extract "tf2_rich_presence_{tf2rpvnum}.zip" OR run "tf2_rich_presence_{tf2rpvnum}_self_extracting.exe", whichever you downloaded.
-  2. Run "TF2 Rich Presence.exe" (doesn't automatically start Team Fortress 2). Requires Discord and Steam to be running as well and will wait until the game and both programs are running.
-
-For faster launching, you can add it to your taskbar/start menu/desktop/etc or to Steam as a non-Steam game. Note that having Python installed is not required.
+Rrunning instructions:
+The installer should have added shortcuts to your start menu and potentially desktop. The program won't automatically launch TF2, but does require Discord and Steam to be running as well, and will wait until the game and both programs are running. Note that having Python installed is not required.
 
 HELP! It broke! (Or otherwise functioned incorrectly)
-Feel free to create an issue over at https://github.com/Kataiser/tf2-rich-presence/issues. Be sure to include the most recent file in the "logs" folder.
+Feel free to create an issue over at https://github.com/Kataiser/tf2-rich-presence/issues. Be sure to include the most recent (or at least relevant) file in the "logs" folder, which you can get to with Help -> Open logs directory.
