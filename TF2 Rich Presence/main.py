@@ -88,7 +88,7 @@ class TF2RichPresense:
         else:
             self.log.debug(f"Non-default settings: {settings.compare_settings(default_settings, current_settings)}")
 
-        self.gui: gui.GUI = gui.GUI(self.log)
+        self.gui: gui.GUI = gui.GUI(self.log, main_controlled=True)
         self.process_scanner: processes.ProcessScanner = processes.ProcessScanner(self.log)
         self.loc: localization.Localizer = localization.Localizer(self.log)
         self.game_state: game_state.GameState = game_state.GameState(self.log, self.loc)

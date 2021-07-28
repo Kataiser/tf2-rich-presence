@@ -26,7 +26,8 @@ import utils
 
 
 class GUI(tk.Frame):
-    def __init__(self, log: logger.Log):
+    def __init__(self, log: logger.Log, main_controlled: bool = False):
+        self.main_controlled: bool = main_controlled
         self.log: logger.Log = log
         self.log.info("Initializing main GUI")
         self.loc: localization.Localizer = localization.Localizer(self.log)
@@ -623,7 +624,11 @@ class GUI(tk.Frame):
         except Exception:
             pass  # we really do need the program to close now
 
-        self.alive = False  # this makes main raise SystemExit ASAP
+        if self.main_controlled:
+            self.alive = False  # this makes main raise SystemExit ASAP
+        else:
+            del self.log
+            raise SystemExit
 
 
 # hopefully only sets the current window, not any future ones

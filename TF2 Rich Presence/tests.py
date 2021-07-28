@@ -604,7 +604,8 @@ class TestTF2RichPresense(unittest.TestCase):
         fg_image = gui_test.fg_image_load('tf2_logo', 120)
         self.assertEqual((fg_image.width(), fg_image.height()), (240, 240))
 
-        gui_test.menu_exit()
+        with self.assertRaises(SystemExit):
+            gui_test.menu_exit()
 
     def test_set_gui_from_game_state(self):
         app = main.TF2RichPresense(self.log, set_process_priority=False)
