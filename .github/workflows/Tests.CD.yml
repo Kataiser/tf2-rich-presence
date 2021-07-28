@@ -42,6 +42,7 @@ jobs:
     - name: Run tests
       run: |
         cd "TF2 Rich Presence"
+        mkdir logs
         coverage run tests.py
     - name: "Upload coverage to Codecov"
       uses: codecov/codecov-action@v1
