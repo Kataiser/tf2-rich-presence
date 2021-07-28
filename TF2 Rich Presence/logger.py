@@ -25,6 +25,7 @@ import utils
 # TODO: replace this whole thing with a real logger
 class Log:
     def __init__(self, path: Optional[str] = None):
+        # make sure there's actually somewhere to put the log
         if os.path.isdir('logs'):
             self.logs_path: str = 'logs'
             created_logs_dir: bool = False
@@ -87,7 +88,7 @@ class Log:
 
     # this should be run whenever the program closes
     def __del__(self):
-        if not self.log_file.closed:
+        if self.enabled() and not self.log_file.closed:
             self.debug(f"Closing log file ({self.filename}) via destructor")
             self.log_file.close()
 
