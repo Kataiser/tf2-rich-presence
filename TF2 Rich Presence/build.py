@@ -381,6 +381,7 @@ def main(version_num='v2.0'):
     # compile installer
     if os.path.isfile('TF2RP.iss'):
         print("Compiling installer...")
+        time.sleep(0.2)  # just to make sure everything is updated
         assert b"Successful compile" in subprocess.check_output('ISCC.exe TF2RP.iss')
         assert f'Install TF2 Rich Presence {version_num}.exe' in os.listdir()
     else:
@@ -388,7 +389,6 @@ def main(version_num='v2.0'):
 
     # generates zip package for CD
     if dev_package:
-        time.sleep(0.2)  # just to make sure everything is updated
         package7zip_command_zip = f'build_tools{os.path.sep}7za.exe u tf2_rich_presence_dev.zip -up1q0r2x1y2z1w2 "{new_build_folder_name}{os.path.sep}" -ssw -mx=9 -m0=Deflate64 -mmt=2'
         print("Creating tf2_rich_presence_dev.zip...")
         subprocess.run(package7zip_command_zip, stdout=subprocess.DEVNULL)

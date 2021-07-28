@@ -12,7 +12,11 @@ from typing import Dict, Optional, Union
 
 # read from or write to DB.json (intentionally uncached)
 def access_db(write: dict = None) -> Optional[Dict[str, Union[bool, list, str]]]:
-    db_path: str = 'DB.json' if os.path.isfile('DB.json') else os.path.join(os.getenv('APPDATA'), 'TF2 Rich Presence', 'DB.json')
+    if os.path.isdir(os.path.join(os.getenv('APPDATA'), 'TF2 Rich Presence')):
+        db_path = os.path.join(os.getenv('APPDATA'), 'TF2 Rich Presence', 'DB.json')
+    else:
+        db_path = 'DB.json'
+
     default_db: dict = {'tb_hashes': [],
                         'error_hashes': [],
                         'has_asked_language': False,
