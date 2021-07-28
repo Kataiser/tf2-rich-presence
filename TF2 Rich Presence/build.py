@@ -176,8 +176,7 @@ def main(version_num='v2.0'):
         ratelimit_remaining = 100
 
     last_build_time = None
-    files_here = os.listdir('.')
-    for file in files_here:
+    for file in os.listdir():
         if file.startswith('tf2_rich_presence_'):
             if file.endswith('_self_extracting.exe') or file.endswith('.zip'):
                 last_build_time = os.stat(file).st_mtime
@@ -390,7 +389,7 @@ def main(version_num='v2.0'):
     if os.path.isfile('TF2RP.iss'):
         print("Compiling installer...")
         assert b"Successful compile" in subprocess.check_output('ISCC.exe TF2RP.iss')
-        assert f'Install TF2 Rich Presence {version_num}.exe' in files_here
+        assert f'Install TF2 Rich Presence {version_num}.exe' in os.listdir()
     else:
         print("Skipping compiling installer")
 
