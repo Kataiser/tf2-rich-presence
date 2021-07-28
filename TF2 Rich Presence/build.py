@@ -98,7 +98,6 @@ def main(version_num='v2.0'):
         print("Copied", shutil.copy('Changelogs_source.html', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('maps.json', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('localization.json', Path(f'{github_repo_path}/TF2 Rich Presence')))
-        print("Copied", shutil.copy('DB_default.json', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('main menu.png', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('casual.png', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('comp.png', Path(f'{github_repo_path}/TF2 Rich Presence')))
@@ -115,7 +114,6 @@ def main(version_num='v2.0'):
         print("Copied", shutil.copy('pycs_to_delete.txt', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('TF2RP.iss', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy(f'{interpreter_name}.zip', Path(f'{github_repo_path}/TF2 Rich Presence')))
-        print("Copied", shutil.copyfile(Path(f'{github_repo_path}/TF2 Rich Presence/DB_default.json'), Path(f'{github_repo_path}/TF2 Rich Presence/DB.json')))
 
         copy_dir_to_git('gui_images', Path(f'{github_repo_path}/TF2 Rich Presence/gui_images'))
         copy_dir_to_git('test_resources', Path(f'{github_repo_path}/TF2 Rich Presence/test_resources'))
@@ -195,7 +193,6 @@ def main(version_num='v2.0'):
                      ('custom.py', Path(f'{new_build_folder_name}/resources/')),
                      ('maps.json', Path(f'{new_build_folder_name}/resources/')),
                      ('localization.json', Path(f'{new_build_folder_name}/resources/')),
-                     ('DB_default.json', Path(f'{new_build_folder_name}/resources/')),
                      ('LICENSE', new_build_folder_name),
                      ('Readme.txt', Path(f'{new_build_folder_name}/')),
                      ('TF2 Rich Presence.bat', Path(f'{new_build_folder_name}/')),
@@ -229,8 +226,6 @@ def main(version_num='v2.0'):
                 file_target.write(modified_file)
                 print(f"Copied{' (and modified)' if modified else ''} {file_dest_pair[0]}")
 
-    # rename a couple files
-    os.rename(Path(f'{new_build_folder_name}/resources/DB_default.json'), Path(f'{new_build_folder_name}/resources/DB.json'))
     os.rename(Path(f'{new_build_folder_name}/LICENSE'), Path(f'{new_build_folder_name}/License.txt'))
 
     # copy in GUI images
@@ -354,8 +349,6 @@ def main(version_num='v2.0'):
     assert os.path.isfile(Path(f'{new_build_folder_name}/resources/custom.py'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/resources/launcher.py'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/resources/build_info.txt'))
-    with open(Path(f'{new_build_folder_name}/resources/DB.json'), 'r') as assertjson_db:
-        assert json.load(assertjson_db) != {}
     with open(Path(f'{new_build_folder_name}/resources/localization.json'), 'r', encoding='UTF8') as assertjson_loc:
         assert json.load(assertjson_loc) != {}
     with open(Path(f'{new_build_folder_name}/resources/maps.json'), 'r') as assertjson_maps:

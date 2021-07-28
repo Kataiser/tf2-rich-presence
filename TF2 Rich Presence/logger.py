@@ -32,6 +32,7 @@ class Log:
             self.logs_path = os.path.join(os.getenv('APPDATA'), 'TF2 Rich Presence', 'logs')
 
             if not os.path.isdir(self.logs_path):
+                os.mkdir(os.path.join(os.getenv('APPDATA'), 'TF2 Rich Presence'))
                 os.mkdir(self.logs_path)
                 time.sleep(0.1)  # ensure it gets created
                 created_logs_dir = True
