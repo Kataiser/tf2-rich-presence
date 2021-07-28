@@ -25,6 +25,7 @@ Discord Rich Presence for Team Fortress 2
 ## Download
 With 7-Zip's built-in extractor: [tf2_rich_presence_v1.15_self_extracting.exe](https://github.com/Kataiser/tf2-rich-presence/releases/download/v1.15/tf2_rich_presence_v1.15_self_extracting.exe) (8.8 MB)  
 Extract it yourself: [tf2_rich_presence_v1.15.zip](https://github.com/Kataiser/tf2-rich-presence/releases/download/v1.15/tf2_rich_presence_v1.15.zip) (11.9 MB)  
+Alternatively, get the latest autobuild (may be untested/buggy): [Install TF2 Rich Presence v2.0.exe](https://nightly.link/Kataiser/tf2-rich-presence/workflows/Tests.CD/master/Install%20TF2%20Rich%20Presence%20v2.0.exe.zip) 
 
 ## Installation and running
 1. Extract `tf2_rich_presence_v1.15.zip` OR run `tf2_rich_presence_v1.15_self_extracting.exe`, whichever you downloaded.
@@ -32,8 +33,7 @@ Extract it yourself: [tf2_rich_presence_v1.15.zip](https://github.com/Kataiser/t
 	- OR run `Launch Rich Presence alongside TF2.exe`. This one doesn't automatically start Team Fortress 2.
 	- Both require Discord and Steam to be running as well and will wait until the game and both programs are running. 
 
-For faster launching, you can add the first EXE to your taskbar/start menu/desktop/etc or to Steam as a non-Steam game. Note that having Python installed is not required.
-Alternatively, get the latest autobuild (may be untested/buggy): [Install TF2 Rich Presence v2.0.exe](https://nightly.link/Kataiser/tf2-rich-presence/workflows/Tests.CD/master/Install%20TF2%20Rich%20Presence%20v2.0.exe.zip)  
+For faster launching, you can add the first EXE to your taskbar/start menu/desktop/etc or to Steam as a non-Steam game. Note that having Python installed is not required. 
 
 ## Changelogs
 - [Changelogs.html](https://htmlpreview.github.io/?https://github.com/Kataiser/tf2-rich-presence/blob/master/Changelogs.html)
