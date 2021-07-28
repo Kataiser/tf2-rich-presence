@@ -27,12 +27,10 @@ def main(version_num='v2.0'):
     parser.add_argument('--n', action='store_true', help="Skip copying to an repo location", default=False)
     parser.add_argument('--ide', action='store_true', help="Use IDE-based build.log handling", default=False)
     parser.add_argument('--release', action='store_true', help="Release build, invalidates all caches", default=False)
-    parser.add_argument('--dev_package', action='store_true', help="Build a dev package for CD", default=False)
     parser.add_argument('--nocython', action='store_true', help="Don't compile modules with Cython", default=False)
     cli_skip_repo = parser.parse_args().n
     ide_build_log_handling = parser.parse_args().ide
     release_build = parser.parse_args().release
-    dev_package = parser.parse_args().dev_package
     nocython = parser.parse_args().nocython
 
     if not ide_build_log_handling:
@@ -63,6 +61,8 @@ def main(version_num='v2.0'):
         if github_repo_path != 'n' and os.path.isdir(github_repo_path):
             with open('last_repo_path.txt', 'w') as last_repo_path_file:
                 last_repo_path_file.write(github_repo_path)
+
+        assert version_num in open(Path(f'{github_repo_path}/.github/workflows/Tests.CD.yml'), 'r').read()
 
     interpreter_name = 'python-3.9.4-embed-win32'
     build_start_time = time.perf_counter()
@@ -117,7 +117,6 @@ def main(version_num='v2.0'):
 
         copy_dir_to_git('gui_images', Path(f'{github_repo_path}/TF2 Rich Presence/gui_images'))
         copy_dir_to_git('test_resources', Path(f'{github_repo_path}/TF2 Rich Presence/test_resources'))
-        copy_dir_to_git('build_tools', Path(f'{github_repo_path}/TF2 Rich Presence/build_tools'))
 
     # clear caches if releasing
     if release_build:
@@ -387,12 +386,6 @@ def main(version_num='v2.0'):
     else:
         print("Skipping compiling installer")
 
-    # generates zip package for CD
-    if dev_package:
-        package7zip_command_zip = f'build_tools{os.path.sep}7za.exe u tf2_rich_presence_dev.zip -up1q0r2x1y2z1w2 "{new_build_folder_name}{os.path.sep}" -ssw -mx=9 -m0=Deflate64 -mmt=2'
-        print("Creating tf2_rich_presence_dev.zip...")
-        subprocess.run(package7zip_command_zip, stdout=subprocess.DEVNULL)
-
     # creates README.md from README-source.md
     if os.path.isfile('README-source.md'):
         readme_source_exists = True
@@ -414,20 +407,6 @@ def main(version_num='v2.0'):
                 print("Copied", shutil.copy('README.MD', github_repo_path))
     else:
         readme_source_exists = False
-
-    # append '-dev' to Sentry version
-    if github_repo_path != 'n':
-        old_dir = os.getcwd()
-        os.chdir(github_repo_path)
-    commit_count = subprocess.run('git rev-list --count master', capture_output=True).stdout.decode('UTF8').rstrip('\n')
-    if github_repo_path != 'n':
-        os.chdir(old_dir)
-    with open(Path(f'{new_build_folder_name}/resources/launcher.py'), 'r') as launcher_py_read:
-        old_data = launcher_py_read.read()
-    with open(Path(f'{new_build_folder_name}/resources/launcher.py'), 'w') as launcher_py_write:
-        new_data = old_data.replace("release=VERSION", "release=f'{VERSION}" + f"-dev-{commit_count}'")
-        launcher_py_write.write(new_data)
-    print(f"Set Sentry version to {version_num}-dev-{commit_count}")
 
     # HyperBubs
     if os.path.isfile('custom_kataiser.py'):
@@ -474,12 +453,13 @@ def main(version_num='v2.0'):
         print("build.log doesn't exist (or is old), consider setting up your IDE to save the console to a file or just not using --ide", file=sys.stderr)
     if not assertions_enabled:
         print("Assertions are disabled, build is probably fine but please run without -O or -OO)", file=sys.stderr)
-    if git_username != 'Kataiser':
+    if git_username and git_username != 'Kataiser':
         print(f"Please note that your git username ({git_username}) has been included in {build_info_path}")
 
     with open('Changelogs.html') as changelogs_html:
         if version_num not in changelogs_html.read():
             print(f"'{version_num}' not in Changelogs.html", file=sys.stderr)
+
 
 # copy a directory to the git repo
 def copy_dir_to_git(source, target):
