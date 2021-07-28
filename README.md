@@ -25,7 +25,6 @@ Discord Rich Presence for Team Fortress 2
 ## Download
 With 7-Zip's built-in extractor: [tf2_rich_presence_v1.15_self_extracting.exe](https://github.com/Kataiser/tf2-rich-presence/releases/download/v1.15/tf2_rich_presence_v1.15_self_extracting.exe) (8.8 MB)  
 Extract it yourself: [tf2_rich_presence_v1.15.zip](https://github.com/Kataiser/tf2-rich-presence/releases/download/v1.15/tf2_rich_presence_v1.15.zip) (11.9 MB)  
-Alternatively, get the latest autobuild (may be buggy): [tf2_rich_presence_dev.zip](https://nightly.link/Kataiser/tf2-rich-presence/workflows/Tests.CD/master/tf2_rich_presence_dev.zip)
 
 ## Installation and running
 1. Extract `tf2_rich_presence_v1.15.zip` OR run `tf2_rich_presence_v1.15_self_extracting.exe`, whichever you downloaded.
@@ -34,6 +33,7 @@ Alternatively, get the latest autobuild (may be buggy): [tf2_rich_presence_dev.z
 	- Both require Discord and Steam to be running as well and will wait until the game and both programs are running. 
 
 For faster launching, you can add the first EXE to your taskbar/start menu/desktop/etc or to Steam as a non-Steam game. Note that having Python installed is not required.
+Alternatively, get the latest autobuild (may be untested/buggy): [Install TF2 Rich Presence v2.0.exe](https://nightly.link/Kataiser/tf2-rich-presence/workflows/Tests.CD/master/Install%20TF2%20Rich%20Presence%20v2.0.exe.zip)  
 
 ## Changelogs
 - [Changelogs.html](https://htmlpreview.github.io/?https://github.com/Kataiser/tf2-rich-presence/blob/master/Changelogs.html)
@@ -70,7 +70,7 @@ For making and testing changes, or simply always running the most up-to-date cod
 	- Would cause all sorts of problems, including removing the class icon style option
 	- Discord art asset limit is 150, the rest of the program uses 47, and there are 118 vanilla maps in the game
 	- So won't be able to get every map, can just limit to the most popular though
-- A proper installer
+- ~~A proper installer~~ (Done with Inno Setup, no autoupdater though)
 	- Also maybe store DB.json and settings in AppData\Roaming
 	- Make a [Chocolatey](https://chocolatey.org/) package as well, ideally would need to fix antivirus detection
 	- Possibly include an autoupdater, either [Squirrel](https://github.com/Squirrel/Squirrel.Windows) or rolling my own
