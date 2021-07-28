@@ -30,6 +30,8 @@ Compression=lzma
 SolidCompression=yes
 WizardStyle=modern             
 WizardImageFile=tf2_logo_blurple_installer.bmp
+RestartApplications=no
+ExtraDiskSpaceRequired=250
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
