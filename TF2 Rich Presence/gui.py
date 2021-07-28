@@ -77,6 +77,7 @@ class GUI(tk.Frame):
         help_menu.add_command(label=self.loc.text("Open readme"), command=self.menu_open_readme)
         help_menu.add_command(label=self.loc.text("Open changelog"), command=self.menu_open_changelog)
         help_menu.add_command(label=self.loc.text("Open license"), command=self.menu_open_license)
+        help_menu.add_command(label=self.loc.text("Open save directory"), command=self.menu_open_save_directory)
         help_menu.add_separator()
         help_menu.add_command(label=self.loc.text("Check for updates"), command=self.menu_check_updates)
         help_menu.add_command(label=self.loc.text("Report bug/issue"), command=self.menu_report_issue)
@@ -526,6 +527,19 @@ class GUI(tk.Frame):
         except FileNotFoundError:
             self.log.error("Couldn't open license, file doesn't exist (falling back to Github)")
             webbrowser.open('https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE')
+
+    def menu_open_save_directory(self, *args):
+        appdata_path: str = os.path.join(os.getenv('APPDATA'), 'TF2 Rich Presence')
+        logs_path: str = os.path.abspath(self.log.logs_path)
+
+        if os.path.isdir(appdata_path):
+            self.log.info(f"GUI: Opening save directory at {appdata_path}")
+            os.startfile(appdata_path)
+        elif os.path.isdir(logs_path):
+            self.log.info(f"GUI: Opening save directory at {logs_path} (log fallback)")
+            os.startfile(logs_path)
+        else:
+            self.log.error("GUI: Opening save directory failed")
 
     def menu_check_updates(self, *args):
         self.log.info("GUI: checking for updates")

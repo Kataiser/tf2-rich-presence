@@ -1133,6 +1133,20 @@
         "Chinese": "打开readme",
         "Japanese": "READMEを開く"
     },
+    "1179387735": {
+        "English": "Open save directory",
+        "German": "Speicherverzeichnis öffnen",
+        "French": "Ouvrir le répertoire de sauvegarde",
+        "Spanish": "Abrir el directorio de guardado",
+        "Portuguese": "Abrir diretório de salvamento",
+        "Italian": "Aprire la directory di salvataggio",
+        "Dutch": "Open de bewaarmap",
+        "Polish": "Otwórz katalog zapisu",
+        "Russian": "Открыть директорию сохранения",
+        "Korean": "저장 디렉토리 열기",
+        "Chinese": "打开保存目录",
+        "Japanese": "保存先を開く"
+    },
     "1359878050": {
         "English": "Orange",
         "German": "Orange",
