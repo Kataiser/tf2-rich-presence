@@ -77,8 +77,7 @@ class Log:
             if created_logs_dir:
                 self.debug(f"Created logs folder at {os.path.abspath(self.logs_path)}")
 
-        db_path: str = 'DB.json' if launcher.DEBUG else os.path.join('resources', 'DB.json')
-        if not os.access(db_path, os.W_OK):
+        if not os.access(utils.db_json_path(), os.W_OK):
             self.error("DB.json can't be written to. This could cause crashes")
 
         self.debug(f"Created {repr(self)}")
