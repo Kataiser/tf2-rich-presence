@@ -110,13 +110,14 @@ def steam_config_file(self, exe_location: str, require_condebug: bool) -> Option
             pass  # (hopefully) -condebug was in some other game
         else:
             last_played_time: int = int(tf2_savedata['lastplayed'])
+            launch_options: str = tf2_savedata['launchoptions'] if 'launchoptions' in tf2_savedata else ''
 
             if last_played_time > most_likely_args[0]:
-                most_likely_args = (last_played_time, tf2_savedata['launchoptions'])
+                most_likely_args = (last_played_time, launch_options)
 
-            if require_condebug and 'launchoptions' in tf2_savedata and '-condebug' in tf2_savedata['launchoptions']:
+            if require_condebug and '-condebug' in tf2_savedata['launchoptions']:
                 found_condebug = True
-                self.log.debug(f"Found -condebug in launch options ({tf2_savedata['launchoptions']})")
+                self.log.debug(f"Found -condebug in launch options ({launch_options})")
 
         if possible_username or not require_condebug:
             found_usernames.add(possible_username)
