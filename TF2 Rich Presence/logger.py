@@ -87,9 +87,12 @@ class Log:
 
     # this should be run whenever the program closes
     def __del__(self):
-        if self.enabled() and not self.log_file.closed:
-            self.debug(f"Closing log file ({self.filename}) via destructor")
-            self.log_file.close()
+        try:
+            if self.enabled() and not self.log_file.closed:
+                self.debug(f"Closing log file ({self.filename}) via destructor")
+                self.log_file.close()
+        except Exception as error:
+            print(f"Couldn't safely close log: {error}'")
 
     def enabled(self) -> bool:
         return settings.get('log_level') != 'Off' and not self.force_disabled
