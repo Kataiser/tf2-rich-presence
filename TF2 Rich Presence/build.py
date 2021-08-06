@@ -28,10 +28,12 @@ def main(version_num='v2.0'):
     parser.add_argument('--ide', action='store_true', help="Use IDE-based build.log handling", default=False)
     parser.add_argument('--release', action='store_true', help="Release build, invalidates all caches", default=False)
     parser.add_argument('--nocython', action='store_true', help="Don't compile modules with Cython", default=False)
+    parser.add_argument('--noinstall', action='store_true', help="Don't automatically run the installer after finishing", default=False)
     cli_skip_repo = parser.parse_args().n
     ide_build_log_handling = parser.parse_args().ide
     release_build = parser.parse_args().release
     nocython = parser.parse_args().nocython
+    noinstall = parser.parse_args().noinstall
 
     if not ide_build_log_handling:
         if os.path.isfile('build.log'):
@@ -378,11 +380,12 @@ def main(version_num='v2.0'):
             build_info_txt.write(f"\n\nBuild log{' (IDE handled)' if ide_build_log_handling else ''}:\n{build_log}")
 
     # compile installer
+    installer_name = f'Install TF2 Rich Presence {version_num}.exe'
     if os.path.isfile('TF2RP.iss'):
         print("Compiling installer...")
         time.sleep(0.2)  # just to make sure everything is updated
         assert b"Successful compile" in subprocess.check_output('ISCC.exe TF2RP.iss')
-        assert f'Install TF2 Rich Presence {version_num}.exe' in os.listdir()
+        assert installer_name in os.listdir()
     else:
         print("Skipping compiling installer")
 
@@ -397,7 +400,7 @@ def main(version_num='v2.0'):
         if old_readme_has_this_version:
             print("Old README.md is not outdated, skipping modifying it")
         else:
-            installer_size_mb = round(os.stat(f'Install TF2 Rich Presence {version_num}.exe').st_size / 1048576, 1)  # 1048576 is 1024^2
+            installer_size_mb = round(os.stat(installer_name).st_size / 1048576, 1)  # 1048576 is 1024^2
             with open('README-source.md', 'r') as readme_md_source:
                 modified_readme_md = readme_md_source.read().replace('{tf2rpvnum}', version_num).replace('{installer_size}', str(installer_size_mb))
             with open('README.md', 'w') as readme_md_target:
@@ -411,6 +414,12 @@ def main(version_num='v2.0'):
     # HyperBubs
     if os.path.isfile('custom_kataiser.py'):
         shutil.copy('custom_kataiser.py', Path(f'{new_build_folder_name}/resources/custom.py'))
+
+    if not noinstall:
+        print("Running installer...")
+        assert subprocess.run(f'{installer_name} /VERYSILENT /CURRENTUSER /LOG="installer.log"', capture_output=True).stdout == b''
+        with open('installer.log', 'r', errors='replace') as installer_log:
+            assert 'Installation process succeeded.' in installer_log.read()
 
     # prepares display of time since last build
     if last_build_time:
