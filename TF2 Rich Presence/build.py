@@ -415,11 +415,16 @@ def main(version_num='v2.0'):
     if os.path.isfile('custom_kataiser.py'):
         shutil.copy('custom_kataiser.py', Path(f'{new_build_folder_name}/resources/custom.py'))
 
+    # automatically install too, why not
+    warn_no_installer_log = False
     if not noinstall:
         print("Running installer...")
-        assert subprocess.run(f'{installer_name} /VERYSILENT /CURRENTUSER /LOG="installer.log"', capture_output=True).stdout == b''
-        with open('installer.log', 'r', errors='replace') as installer_log:
-            assert 'Installation process succeeded.' in installer_log.read()
+        subprocess.run(f'{installer_name} /VERYSILENT /CURRENTUSER /LOG="installer.log"')
+        if os.path.isfile('installer.log'):
+            with open('installer.log', 'rb') as installer_log:
+                assert b'Installation process succeeded.' in installer_log.read()
+        else:
+            warn_no_installer_log = True
 
     # prepares display of time since last build
     if last_build_time:
@@ -462,6 +467,8 @@ def main(version_num='v2.0'):
         print("build.log doesn't exist (or is old), consider setting up your IDE to save the console to a file or just not using --ide", file=sys.stderr)
     if not assertions_enabled:
         print("Assertions are disabled, build is probably fine but please run without -O or -OO)", file=sys.stderr)
+    if warn_no_installer_log:
+        print("Installer didn't create an installer.log", file=sys.stderr)
     if git_username and git_username != 'Kataiser':
         print(f"Please note that your git username ({git_username}) has been included in {build_info_path}")
 
