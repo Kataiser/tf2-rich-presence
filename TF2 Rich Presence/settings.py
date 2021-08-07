@@ -24,21 +24,23 @@ def get(setting: str) -> Union[str, int, bool]:
 # note that settings are saved as JSON in a single string key
 # could do this as a file in AppData\Roaming\TF2 Rich Presence, but it would likely be slower for no benefit AFAIK
 def access_registry(save: Optional[dict] = None) -> Optional[dict]:
-    reg_key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, r'Software\TF2 Rich Presence')
+    reg_key: winreg.HKEYType = winreg.CreateKey(winreg.HKEY_CURRENT_USER, r'Software\TF2 Rich Presence')
 
     try:
-        reg_key_data = json.loads(winreg.QueryValue(reg_key, 'Settings'))
+        reg_key_data: dict = json.loads(winreg.QueryValue(reg_key, 'Settings'))
     except FileNotFoundError:  # means that the key hasn't been initialized
         # assume no key means default settings. might not be true but whatever
-        default_settings = defaults()
+        default_settings: dict = defaults()
         winreg.SetValue(reg_key, 'Settings', winreg.REG_SZ, json.dumps(default_settings, separators=(',', ':')))
-        reg_key_data = default_settings
+        reg_key_data: dict = default_settings
 
     if save:
         winreg.SetValue(reg_key, 'Settings', winreg.REG_SZ, json.dumps(save, separators=(',', ':')))
+        reg_key.Close()
         get.cache_clear()
         logger.Log.log_level_allowed.cache_clear()
     else:
+        reg_key.Close()
         return reg_key_data
 
 
