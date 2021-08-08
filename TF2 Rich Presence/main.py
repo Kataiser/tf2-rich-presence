@@ -200,12 +200,12 @@ class TF2RichPresense:
         if self.process_scanner.tf2_without_condebug:
             self.no_condebug = True
 
-        username_count: int = len(self.usernames)
-        self.usernames.add(configs.get_steam_username())
-        if len(self.usernames) != username_count:
-            self.log.debug(f"Username(s) updated: {self.usernames}")
-
         if p_data['Steam']['running']:
+            username_count: int = len(self.usernames)
+            self.usernames.add(configs.get_steam_username())
+            if len(self.usernames) != username_count:
+                self.log.debug(f"Username(s) updated: {self.usernames}")
+
             if not p_data['TF2']['running']:
                 # reads steam config files to find TF2 launch options (on first loop, and if any of them have been modified)
                 config_scan_needed: bool = self.steam_config_mtimes == {} or not self.gui.tf2_launch_cmd
