@@ -107,7 +107,8 @@ class TestTF2RichPresense(unittest.TestCase):
 
     def test_steam_config_file(self):
         app = main.TF2RichPresense(self.log, set_process_priority=False)
-        self.assertEqual(configs.steam_config_file(app, 'test_resources\\', False)[1], {'Kataiser'})
+        ref_launch_options = '-novid -noipx -refresh 120 -w 1920 -h 1080 -windowed -noborder -useforcedmparms -noforcemaccel -noforcemspd -dxlevel 95'
+        self.assertEqual(configs.steam_config_file(app, 'test_resources\\', False), ref_launch_options)
         self.assertEqual(configs.steam_config_file(app, 'test_resources\\', True), None)
 
     def test_find_tf2_exe(self):
@@ -132,6 +133,12 @@ class TestTF2RichPresense(unittest.TestCase):
         with open(demo_path, 'r') as demo_file:
             self.assertTrue('echo "Demoman selected"' in demo_file.read())
         shutil.rmtree(cfg_path)
+
+    def test_get_steam_username(self):
+        if processes.ProcessScanner(self.log).scan()['Steam']['running']:
+            self.assertNotEqual(configs.get_steam_username(), '')
+        else:
+            self.skipTest("Steam isn't running, assuming it's not installed")
 
     def test_get_match_info(self):
         test_game_state = game_state.GameState(self.log)

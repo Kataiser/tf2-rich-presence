@@ -3,7 +3,8 @@
 # cython: language_level=3
 
 import os
-from typing import Callable, List, Optional, Set, Tuple, Union
+import winreg
+from typing import Callable, List, Optional, Tuple, Union
 
 import vdf
 
@@ -52,11 +53,10 @@ def class_config_files(log, exe_location: str):
     log.debug(f"Classes with echo added: {classes_not_found}")
 
 
-# reads steam's launch options save file to find TF2 launch options and usernames with -condebug
-def steam_config_file(self, exe_location: str, require_condebug: bool) -> Optional[Tuple[str, Set[str]]]:
+# reads steam's launch options save file to find TF2 launch options
+def steam_config_file(self, exe_location: str, require_condebug: bool) -> Optional[str]:
     self.log.debug(f"Scanning Steam config files{' for -condebug' if require_condebug else ''}")
     found_condebug: bool = False
-    found_usernames: Set[str] = set()
     user_id_folders: List[str] = os.listdir(os.path.join(exe_location, 'userdata'))
     most_likely_args: Tuple[int, str] = (-1, '')
 
@@ -97,12 +97,9 @@ def steam_config_file(self, exe_location: str, require_condebug: bool) -> Option
         self.log.debug(f"Lowercase complete ({len(parsed['userlocalconfigstore'])} keys)")
 
         try:
-            possible_username: str = parsed_lowercase['userlocalconfigstore']['friends']['personaname']
-            self.log.debug(f"Possible username: {possible_username}")
+            username: Optional[str] = parsed_lowercase['userlocalconfigstore']['friends']['personaname']
         except KeyError:
-            personaname_exists_in_file: bool = 'personaname' in global_config_file_read.lower()
-            self.log.error(f"Couldn't find PersonaName in config (\"personaname\" in lowercase: {personaname_exists_in_file})")
-            possible_username = ''
+            username = None
 
         try:
             tf2_savedata: dict = parsed_lowercase['userlocalconfigstore']['software']['valve']['steam']['apps']['440']
@@ -112,15 +109,12 @@ def steam_config_file(self, exe_location: str, require_condebug: bool) -> Option
             last_played_time: int = int(tf2_savedata['lastplayed'])
             launch_options: str = tf2_savedata['launchoptions'] if 'launchoptions' in tf2_savedata else ''
 
-            if last_played_time > most_likely_args[0]:
+            if username in self.usernames or last_played_time > most_likely_args[0]:
                 most_likely_args = (last_played_time, launch_options)
 
             if require_condebug and '-condebug' in tf2_savedata['launchoptions']:
                 found_condebug = True
                 self.log.debug(f"Found -condebug in launch options ({launch_options})")
-
-        if possible_username or not require_condebug:
-            found_usernames.add(possible_username)
 
         config_mtime: int = int(os.stat(global_config_file_path).st_mtime)
         self.steam_config_mtimes[global_config_file_path] = config_mtime
@@ -132,7 +126,7 @@ def steam_config_file(self, exe_location: str, require_condebug: bool) -> Option
         self.no_condebug = False
         return None
     else:
-        return most_likely_args[1], found_usernames
+        return most_likely_args[1]
 
 
 # given Steam's install, find a TF2 install
@@ -183,6 +177,14 @@ def is_tf2_install(log: logger.Log, exe_location: str) -> bool:
     else:
         log.error(f"Found non-TF2 hl2.exe at {exe_location}")
         return False
+
+
+# Steam seems to update this often enough
+def get_steam_username() -> str:
+    key: winreg.HKEYType = winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"SOFTWARE\\Valve\\Steam\\")
+    username: str = winreg.QueryValueEx(key, 'LastGameNameUsed')[0]
+    key.Close()
+    return username
 
 
 # adapted from https://www.popmartian.com/tipsntricks/2014/11/20/how-to-lower-case-all-dictionary-keys-in-a-complex-python-dictionary/
