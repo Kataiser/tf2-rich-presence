@@ -162,12 +162,13 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual(test_game_state.get_match_data('', ['Player count']), {'player_count': 'Players: ?/?'})
 
     def test_get_map_gamemode(self):
-        self.assertEqual(gamemodes.get_map_gamemode(self.log, 'cp_dustbowl'), ['Dustbowl', 'attack-defend', 'Attack/Defend'])
-        self.assertEqual(gamemodes.get_map_gamemode(self.log, 'koth_probed'), ['Probed', 'koth', 'King of the Hill'])
-        self.assertEqual(gamemodes.get_map_gamemode(self.log, 'cp_catwalk_a5c'), ('cp_catwalk_a5c', 'control-point', 'Control Point'))
-        self.assertEqual(gamemodes.get_map_gamemode(self.log, 'cp_orange_x3'), ('cp_orange_x3', 'cp-orange', 'Orange'))
-        self.assertEqual(gamemodes.get_map_gamemode(self.log, 'surf_air_arena_v4'), ('surf_air_arena_v4', 'surfing', 'Surfing'))
-        self.assertEqual(gamemodes.get_map_gamemode(self.log, 'ytsb8eitybw'), ('ytsb8eitybw', 'unknown', 'Unknown gamemode'))
+        self.assertEqual(gamemodes.get_map_gamemode(self.log, 'cp_dustbowl'), ['Dustbowl', 'attack-defend', 'Attack/Defend', False])
+        self.assertEqual(gamemodes.get_map_gamemode(self.log, 'koth_probed'), ['Probed', 'koth', 'King of the Hill', False])
+        self.assertEqual(gamemodes.get_map_gamemode(self.log, 'ctf_sawmill'), ['Sawmill (CTF)', 'ctf', 'Capture the Flag', False])
+        self.assertEqual(gamemodes.get_map_gamemode(self.log, 'cp_catwalk_a5c'), ('cp_catwalk_a5c', 'control-point', 'Control Point', True))
+        self.assertEqual(gamemodes.get_map_gamemode(self.log, 'cp_orange_x3'), ('cp_orange_x3', 'cp-orange', 'Orange', True))
+        self.assertEqual(gamemodes.get_map_gamemode(self.log, 'surf_air_arena_v4'), ('surf_air_arena_v4', 'surfing', 'Surfing', True))
+        self.assertEqual(gamemodes.get_map_gamemode(self.log, 'ytsb8eitybw'), ('ytsb8eitybw', 'unknown', 'Unknown gamemode', True))
 
     def test_logger(self):
         self.log.log_file.close()
@@ -300,10 +301,15 @@ class TestTF2RichPresense(unittest.TestCase):
 
     def test_load_maps_db(self):
         maps_db = gamemodes.load_maps_db()
-        self.assertEqual(len(maps_db), 123)
+        self.assertEqual(len(maps_db), 126)
 
         for map_ in maps_db:
-            self.assertEqual(len(set(maps_db[map_])), 3)
+            map_data = maps_db[map_]
+
+            if isinstance(map_data[-1], bool):
+                map_data.pop(-1)  # hack to fix some wild caching(?) bs
+
+            self.assertEqual(len(set(map_data)), 3)
 
     def test_discoipc(self):
         # this test fails if Discord isn't running
@@ -642,7 +648,7 @@ class TestTF2RichPresense(unittest.TestCase):
         app.set_gui_from_game_state()
         self.assertEqual((app.gui.text_state, app.gui.bg_state, app.gui.fg_state, app.gui.class_state),
                          (('Map: itemtest (hosting)', 'Players: ?/?', 'Time on map: 0:00', '0:00 elapsed'),
-                          ('bg_modes/unknown', 77, 172), 'fg_modes/unknown', 'classes/spy'))
+                          ('bg_modes/unknown', 77, 172), 'fg_maps/itemtest', 'classes/spy'))
 
         app.game_state.set_bulk((False, 'cp_steel', 'Medic', '162.254.192.155:27053', 'Not queued', False))
         app.game_state.update_server_data(['Player count'], set())

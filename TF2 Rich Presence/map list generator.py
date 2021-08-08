@@ -15,7 +15,9 @@ def main():
     gamemodes_reversed['Control Point (Domination)'] = 'control-point'
     gamemodes_reversed['No gamemode'] = 'beta-map'
     gamemode_replacements = [('d(M', 'd (M'), ('t(D', 't (D'), (' Mode', ''), ('Developer aidTest', 'No gamemode'), ('Developer aidControl Point', 'Control Point')]
-    map_gamemodes = {}
+    map_gamemodes = {'itemtest': ('itemtest', 'unknown', 'Unknown gamemode'),
+                     'devtest': ('devtest', 'unknown', 'Unknown gamemode'),
+                     'background01': ('background01', 'unknown', 'Unknown gamemode')}
 
     r = requests.get('https://wiki.teamfortress.com/wiki/List_of_maps')
     soup = BeautifulSoup(r.text, 'lxml')

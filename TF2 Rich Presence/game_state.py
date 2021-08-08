@@ -179,8 +179,7 @@ class GameState:
 
             if tf2_map:
                 self.map_change_time = int(time.time())
-                self.map_fancy, self.gamemode, self.gamemode_fancy = gamemodes.get_map_gamemode(self.log, self.tf2_map)
-                self.custom_map = self.tf2_map == self.map_fancy
+                self.map_fancy, self.gamemode, self.gamemode_fancy, self.custom_map = gamemodes.get_map_gamemode(self.log, self.tf2_map)
                 self.map_line = self.loc.text("Map: {0} (hosting)").format(self.map_fancy) if self.hosting else self.loc.text("Map: {0}").format(self.map_fancy)
                 self.log.debug(f"Set map to {(self.tf2_map, self.map_fancy, self.gamemode)}, custom map={self.custom_map}")
 
@@ -274,6 +273,7 @@ class GameState:
 
 
 # because Discord limits to 150 RPC images
+# ^ update: 300 now, but still might as well keep the image count down a little
 map_fallbacks: Dict[str, str] = {'cp_granary': 'arena_granary', 'arena_nucleus': 'koth_nucleus', 'arena_sawmill': 'koth_sawmill', 'arena_badlands': 'cp_badlands',
                                  'koth_badlands': 'cp_badlands', 'tr_dustbowl': 'cp_dustbowl', 'ctf_thundermountain': 'pl_thundermountain', 'ctf_well': 'cp_well', 'arena_well': 'cp_well'}
 ambiguous_maps: Tuple[str, ...] = ('cp_5gorge', 'cp_gorge', 'arena_granary', 'arena_nucleus', 'ctf_foundry', 'arena_sawmill', 'koth_sawmill', 'ctf_sawmill',  'arena_badlands', 'cp_badlands',

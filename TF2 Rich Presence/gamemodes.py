@@ -14,15 +14,16 @@ import logger
 
 # get the gamemode of either a vanilla or a custom map
 @functools.cache
-def get_map_gamemode(log: logger.Log, map_filename: str) -> Union[Tuple[str, str, str], List[str]]:
+def get_map_gamemode(log: logger.Log, map_filename: str) -> Union[Tuple[str, str, str, bool], list]:
     if map_filename == '':
         log.error("Map filename is blank")
-        return map_filename, 'unknown', 'Unknown gamemode'
+        return map_filename, 'unknown', 'Unknown gamemode', False
 
     map_gamemodes: Dict[str, List[str]] = load_maps_db()
 
     if map_filename in map_gamemodes:
-        map_data: List[str] = map_gamemodes[map_filename]
+        map_data: list = map_gamemodes[map_filename]
+        map_data.append(False)
 
         # add some formatting for maps with multiple gamemodes
         if map_filename in game_state.ambiguous_maps:
@@ -43,7 +44,7 @@ def get_map_gamemode(log: logger.Log, map_filename: str) -> Union[Tuple[str, str
             gamemode: str = substrings[gamemode_substring]
             gamemode_fancy: str = modes[gamemode]
             log.debug(f"Determined gamemode to be {(gamemode, gamemode_fancy)}) based on substring ({gamemode_substring}_)")
-            return map_filename, gamemode, gamemode_fancy
+            return map_filename, gamemode, gamemode_fancy, True
 
     # determine based on the map prefix
     map_prefix: str = map_filename.split('_')[0]
@@ -51,10 +52,10 @@ def get_map_gamemode(log: logger.Log, map_filename: str) -> Union[Tuple[str, str
         gamemode = prefixes[map_prefix]
         gamemode_fancy = modes[gamemode]
         log.debug(f"Determined gamemode to be {(gamemode, gamemode_fancy)}) based on prefix ({map_prefix}_)")
-        return map_filename, gamemode, gamemode_fancy
+        return map_filename, gamemode, gamemode_fancy, True
 
     log.debug("Couldn't determine map gamemode from filename")  # probably trading
-    return map_filename, 'unknown', 'Unknown gamemode'
+    return map_filename, 'unknown', 'Unknown gamemode', True
 
 
 # load maps database from maps.json
@@ -80,6 +81,7 @@ prefixes: Dict[str, str] = {'ctf': 'ctf', 'tc': 'territorial-control', 'pl': 'pa
                             'pass': 'passtime', 'pd': 'player-destruction', 'arena': 'arena', 'tr': 'training', 'surf': 'surfing', 'cp': 'control-point', 'trade': 'trading', 'jump': 'jumping',
                             'dm': 'deathmatch', 'vsh': 'versus-saxton-hale', 'dr': 'deathrun', 'achievement': 'achievement', 'jb': 'breakout', 'slender': 'slender', 'tfdb': 'dodgeball',
                             'zs': 'zombie', 'ze': 'zombie', 'zf': 'zombie', 'zm': 'zombie', 'duel': 'deathmatch', 'sn': 'deathmatch', 'ba': 'breakout', 'jail': 'breakout', 'idle': 'trading'}
+
 substrings: Dict[str, str] = {'cp_orange': 'cp-orange', 'training': 'training'}
 modes_short: Dict[str, str] = {'ctf': 'CTF', 'control-point': '5CP', 'attack-defend': 'A/D', 'medieval-mode': 'A/D (Medieval)',
                                'koth': 'KotH', 'mvm': 'MvM'}  # yes there are some unused ones but hey, futureproofing
