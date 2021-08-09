@@ -444,7 +444,7 @@
         "Polish": "Obecne ustawienia są już domyślne.",
         "Russian": "Текущие настройки уже по умолчанию.",
         "Korean": "현재 설정은 이미 기본값입니다.",
-        "Chinese": "当前的设置已是默认值。",
+        "Chinese": "当前设置已是默认值。",
         "Japanese": "現在の設定はすでにデフォルトの状態になっています。"
     },
     "3535021960": {
@@ -668,7 +668,7 @@
         "Polish": "Hej, wygląda na to, że Kataiser, twórca TF2 Rich Presence, jest w Twojej grze!\nPrzywitaj się ze mną, jeśli chcesz :)",
         "Russian": "Эй, похоже, что Kataiser, разработчик TF2 Rich Presence, в вашей игре!\nПоздоровайтесь со мной, если хотите:)",
         "Korean": "이봐,Tf2Rich Presence 의 개발자 인 Kataiser 가 게임에있는 것 같습니다!\n네가 원한다면 나에게 인사 해 :)",
-        "Chinese": "嘿，TF2 Rich Presence 的开发者 Kataiser 加入了你现在的游戏！\n如果你愿意的话，可以跟我打个招呼 :)",
+        "Chinese": "嘿，TF2 Rich Presence 的开发者 Kataiser 正在你现在的服务器中！\n如果你愿意的话，快和他打个招呼吧 :)",
         "Japanese": "TF2リッチプレゼンスの開発者であるKataiserがあなたのゲームに登場しているようですよ。\nよろしければご挨拶を :)"
     },
     "1528106792": {
@@ -682,7 +682,7 @@
         "Polish": "Ukryć typ gry (Casual, Konkurencyjny, MvM) ustawiony w kolejce do",
         "Russian": "Скрыть тип игры (Кэжуал, Комп, MvM) для которй вы в очереди",
         "Korean": "숨기기 게임 유형(캐주얼하고,경쟁적이고,데이터를 쉽게 마이닝하고 분석)대기",
-        "Chinese": "隐藏排队时的游戏模式（休闲，竞争，MvM）",
+        "Chinese": "隐藏正在排队时的游戏模式（休闲，竞技，MvM）",
         "Japanese": "非表示のゲームの種類(カジュアル,競争,MvM)のキューに入れられた"
     },
     "2085363200": {
@@ -724,7 +724,7 @@
         "Polish": "Timeout połączenia internetowego (dla aktualizacji i zapytań do serwera): ",
         "Russian": "Тайм-аут подключения к Интернету (для обновления и запроса к серверу): ",
         "Korean": "인터넷 연결 시간 초과(업데이트 및 서버 쿼리): ",
-        "Chinese": "互联网连接超时（用于更新和服务器查询）。",
+        "Chinese": "网络连接超时（用于更新和服务器查询）：",
         "Japanese": "インターネット接続のタイムアウト (アップデータおよびサーバー クエリ用)。"
     },
     "3018856828": {
@@ -1116,7 +1116,7 @@
         "Polish": "Licencja otwarta",
         "Russian": "Открытая лицензия",
         "Korean": "오픈 라이센스",
-        "Chinese": "查看许可证",
+        "Chinese": "查看开源许可",
         "Japanese": "オープンライセンス"
     },
     "4069140810": {
@@ -1326,7 +1326,7 @@
         "Polish": "Stoi w kolejce do meczu na przyjęcie",
         "Russian": "В очереди на матч лобби",
         "Korean": "파티 경기 대기 중",
-        "Chinese": "排队进入组队的比赛",
+        "Chinese": "排队进入 Party 的比赛",
         "Japanese": "パーティーの試合のキューに入れられた"
     },
     "3679915290": {
@@ -1690,7 +1690,7 @@
         "Polish": "Ta wersja ({0}) jest nieaktualna (najnowsza wersja to {1}).",
         "Russian": "Эта версия ({0}) устарела (новейшая версия {1}).",
         "Korean": "이 버전({0})가 최신이(새로운 버전은{1}).",
-        "Chinese": "当前版本（{0}）已过期（最新版本为 {1}）。",
+        "Chinese": "当前版本（{0}）已过时（最新版本为 {1}）。",
         "Japanese": "このバージョン({0})は最新ではありません(最新バージョンは{1})。"
     },
     "3915786030": {
