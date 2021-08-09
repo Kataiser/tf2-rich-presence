@@ -234,7 +234,7 @@
         "Polish": "Na dole: ",
         "Russian": "Итог: ",
         "Korean": "하단 라인: ",
-        "Chinese": "Bottom line：",
+        "Chinese": "底线： ",
         "Japanese": "肝心なことだが "
     },
     "1750272163": {
@@ -867,6 +867,20 @@
         "Chinese": "日志报告频率: ",
         "Japanese": "ログの報告頻度: "
     },
+    "1309414660": {
+        "English": "MGE Mod",
+        "German": "MGE Mod",
+        "French": "MGE Mod",
+        "Spanish": "MGE Mod",
+        "Portuguese": "MGE Mod",
+        "Italian": "MGE Mod",
+        "Dutch": "MGE Mod",
+        "Polish": "MGE Mod",
+        "Russian": "MGE Mod",
+        "Korean": "MGE 모",
+        "Chinese": "MGE 模型",
+        "Japanese": "MGE Mod"
+    },
     "6049011800": {
         "English": "Main",
         "German": "Haupt",
@@ -936,6 +950,20 @@
         "Korean": "지도:{0}(호스팅)",
         "Chinese": "地图: {0} (主机)",
         "Japanese": "地図を表示しています。{0} (ホスティング)"
+    },
+    "3316786350": {
+        "English": "Mario Kart",
+        "German": "Mario Kart",
+        "French": "Mario Kart",
+        "Spanish": "Mario Kart",
+        "Portuguese": "Mario Kart",
+        "Italian": "Mario kart",
+        "Dutch": "Mario Kart",
+        "Polish": "Mario Kart",
+        "Russian": "Марио Карт",
+        "Korean": "Mario Kart",
+        "Chinese": "马里奥赛车",
+        "Japanese": "マリオカート"
     },
     "3295840550": {
         "English": "Max kilobytes of console.log to scan: ",
@@ -1244,6 +1272,20 @@
         "Korean": "플레이어:{0}/{1}",
         "Chinese": "玩家：{0}/{1}",
         "Japanese": "プレイヤー {0}/{1}"
+    },
+    "2768904650": {
+        "English": "Prop Hunt",
+        "German": "Requisitenjagd",
+        "French": "Chasse à L'hélice",
+        "Spanish": "Caza de Objetos",
+        "Portuguese": "Caça ao Adereço",
+        "Italian": "Caccia All'elica",
+        "Dutch": "Prop Hunt",
+        "Polish": "Polowanie na śmigłowce",
+        "Russian": "Пропхант",
+        "Korean": "소품 사냥",
+        "Chinese": "道具亨特",
+        "Japanese": "プロップハント"
     },
     "6724036300": {
         "English": "Pyro",
@@ -1732,7 +1774,7 @@
         "Polish": "Górna linia: ",
         "Russian": "Верхняя линия: ",
         "Korean": "탑 라인:",
-        "Chinese": "Top line：",
+        "Chinese": "顶线： ",
         "Japanese": "トップライン。"
     },
     "1836325860": {
