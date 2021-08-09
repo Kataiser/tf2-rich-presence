@@ -575,6 +575,7 @@ class GUI(tk.Frame):
                      f"\nNyanZak and Tobiased - Gamemode SFMs" \
                      f"\nforusu (Mia) - Russian localization improvements" \
                      f"\nhinata_aki - Japanese localization improvements" \
+                     f"\nKotoki1337 - Chinese localization improvements" \
                      f"\nJan200101 - Some cross-platform compatibility" \
                      f"\nYahBoiOven - Testing and feedback" \
                      f"\nThe TF2 Wiki and teamwork.tf - General resources" \
