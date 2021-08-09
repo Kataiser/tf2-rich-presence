@@ -10,7 +10,7 @@
         "Polish": "(Jeśli masz więcej niż jedną nieaktualną wersję, mogło być więcej zmian i poprawek niż to.)",
         "Russian": "(Если вы устарели более чем на одну версию, возможно, было внесено больше изменений и исправлений чем в этой.)",
         "Korean": "(당신이 더 이상 버전이아웃 날짜가 되었을 수도 있습니다 더 많은 변화하고 수정합니다.)",
-        "Chinese": "（如果您有多个版本过时，可能会有更多的更改和修复。)",
+        "Chinese": "（如果你落后多个版本，你可能会错过许多更新。)",
         "Japanese": "(複数のバージョンが最新でない場合は,これよりも多くの変更と修正が行われている可能性があります。)"
     },
     "3336272700": {
@@ -24,7 +24,7 @@
         "Polish": "1. Kliknij prawym przyciskiem myszy na Team Fortress 2 w swojej bibliotece Steam",
         "Russian": "1. Щелкните правой кнопкой мыши на Team Fortress 2 в вашей библиотеке Steam",
         "Korean": "1. 에서 오른쪽 클릭하여 Team Fortress2 에 스팀 라이브러리",
-        "Chinese": "1. 右键单击团队要塞2在你的蒸汽库",
+        "Chinese": "1. 在你的 Steam 库中右键 Team Fortress 2",
         "Japanese": "1. SteamライブラリでTeam Fortress 2を右クリックします"
     },
     "3034581868": {
@@ -38,7 +38,7 @@
         "Polish": "2. Otwarte właściwości (bardzo niskie)",
         "Russian": "2. Открыть свойства (на самом низу)",
         "Korean": "2. 속성을 열고(하단)",
-        "Chinese": "2. 打开属性（极底)",
+        "Chinese": "2. 打开属性",
         "Japanese": "2. プロパティを開く(非常に下)"
     },
     "2781874761": {
@@ -52,7 +52,7 @@
         "Polish": "3. Kliknąć \"Ustaw opcje uruchamiania...\"",
         "Russian": "3. Нажмите кнопку \"Set launch options...\"",
         "Korean": "3. 설정\"을 클릭합 시작 옵션을...\"",
-        "Chinese": "3. 单击\"设置启动选项。..\"",
+        "Chinese": "3. 找到\"启动选项\"",
         "Japanese": "3. 「起動オプションを設定...」をクリックします"
     },
     "2276072520": {
@@ -66,7 +66,7 @@
         "Polish": "4. Dodaj {0}",
         "Russian": "4. Добавить {0}",
         "Korean": "4. 추가{0}",
-        "Chinese": "4. 添加{0}",
+        "Chinese": "4. 添加 {0}",
         "Japanese": "4. {0}を追加"
     },
     "5268450630": {
@@ -80,7 +80,7 @@
         "Polish": "5. OK i Zamknij",
         "Russian": "5. OK и Закрыть",
         "Korean": "5. 확인 닫기",
-        "Chinese": "5. 好的，关闭",
+        "Chinese": "5. 确认并关闭",
         "Japanese": "5. OKで閉じる"
     },
     "5334641500": {
@@ -94,7 +94,7 @@
         "Polish": "6. Ponowne uruchomienie TF2",
         "Russian": "6. Перезапуск TF2",
         "Korean": "6. 다시 시작 팀포 2",
-        "Chinese": "6. 重新启动TF2",
+        "Chinese": "6. 重新启动 TF2",
         "Japanese": "6. TF2を再起動します"
     },
     "9207858800": {
@@ -122,7 +122,7 @@
         "Polish": "O TF2 Bogata Obecność",
         "Russian": "О богатом присутствии TF2",
         "Korean": "대한 TF2 풍부한 존재",
-        "Chinese": "关于TF2丰富的存在感",
+        "Chinese": "关于 TF2 Rich Presence",
         "Japanese": "TF2リッチプレゼンスについて"
     },
     "4251331620": {
@@ -150,7 +150,7 @@
         "Polish": "Zaawansowane",
         "Russian": "Продвинуто",
         "Korean": "고급",
-        "Chinese": "进阶",
+        "Chinese": "进阶设置",
         "Japanese": "アドバンスド"
     },
     "3295159910": {
@@ -164,7 +164,7 @@
         "Polish": "Wszystkie błędy",
         "Russian": "Все ошибки",
         "Korean": "모든 오류",
-        "Chinese": "所有错误",
+        "Chinese": "全部错误",
         "Japanese": "すべてのエラー"
     },
     "2212631709": {
@@ -178,7 +178,7 @@
         "Polish": "Możesz też uruchomić grę za pomocą przycisku \"Launch TF2\".",
         "Russian": "Или же запустите игру с помощью кнопки \"Launch TF2\".",
         "Korean": "또는\"Launch TF2\"버튼을 통해 게임을 시작하십시오.",
-        "Chinese": "或者，通过 \"Launch TF2\"按钮启动游戏。",
+        "Chinese": "或者，使用 \"Launch TF2\" 按钮启动游戏。",
         "Japanese": "または、「Launch TF2」ボタンでゲームを起動してください。"
     },
     "9214410400": {
@@ -206,7 +206,7 @@
         "Polish": "Atak/Obrona",
         "Russian": "Нападение/защита",
         "Korean": "공격/어",
-        "Chinese": "攻击/防守",
+        "Chinese": "进攻/防御",
         "Japanese": "攻撃/防御"
     },
     "2570455563": {
@@ -220,7 +220,7 @@
         "Polish": "Atak/Obrona (Tryb średniowieczny)",
         "Russian": "Нападение/оборона (средневековый режим)",
         "Korean": "공격을 방어(중세 형태)",
-        "Chinese": "攻击/防守（中世纪模式)",
+        "Chinese": "进攻/防御（中世纪)",
         "Japanese": "攻撃/防御(中世モード)"
     },
     "5765869040": {
@@ -234,7 +234,7 @@
         "Polish": "Na dole: ",
         "Russian": "Итог: ",
         "Korean": "하단 라인: ",
-        "Chinese": "底线： ",
+        "Chinese": "Bottom line：",
         "Japanese": "肝心なことだが "
     },
     "1750272163": {
@@ -248,7 +248,7 @@
         "Polish": "Nie można połączyć się z Discord.",
         "Russian": "Не могу подключиться к Discord",
         "Korean": "에 연결할 수 없습니다 Discord",
-        "Chinese": "无法连接到Discord",
+        "Chinese": "无法连接到 Discord",
         "Japanese": "Discordに接続できません。"
     },
     "8452848160": {
@@ -262,7 +262,7 @@
         "Polish": "Złap Flagę",
         "Russian": "Захвати флаг",
         "Korean": "깃발을 캡처",
-        "Chinese": "捕获标志",
+        "Chinese": "夺旗",
         "Japanese": "フラグをキャプチャ"
     },
     "7511751280": {
@@ -290,7 +290,7 @@
         "Polish": "Zmiana języka wymaga ponownego uruchomienia systemu, aby zaczęła obowiązywać.",
         "Russian": "Изменение языка требует перезапуска, чтобы вступить в силу.",
         "Korean": "언어를 변경하면 적용하려면 다시 시작해야합니다.",
-        "Chinese": "更改语言需要重新启动才能生效。",
+        "Chinese": "语言更改需要重新启动才能生效。",
         "Japanese": "言語を変更するには再起動が必要です。"
     },
     "8011814710": {
@@ -304,7 +304,7 @@
         "Polish": "Sprawdź, czy podczas uruchamiania nie ma aktualizacji programu",
         "Russian": "Проверьте наличие обновлений программы при запуске",
         "Korean": "체크인 프로그램 업데이트를 실행할 때",
-        "Chinese": "启动时检查程序更新",
+        "Chinese": "启动时自动检查更新",
         "Japanese": "起動時にプログラムの更新を確認する"
     },
     "9210445720": {
@@ -332,7 +332,7 @@
         "Polish": "Klasa",
         "Russian": "Класс",
         "Korean": "클래스",
-        "Chinese": "级别",
+        "Chinese": "兵种",
         "Japanese": "クラス"
     },
     "3231589050": {
@@ -346,7 +346,7 @@
         "Polish": "Klasa: {0}",
         "Russian": "Класс: {0}",
         "Korean": "클래스:{0}",
-        "Chinese": "类:{0}",
+        "Chinese": "兵种：{0}",
         "Japanese": "クラス:{0}"
     },
     "1351878611": {
@@ -360,7 +360,7 @@
         "Polish": "Zamknij bez oszczędzania",
         "Russian": "Закрыть без сохранения",
         "Korean": "저장하지 않고 닫습니다",
-        "Chinese": "关闭而不保存",
+        "Chinese": "不保存并关闭",
         "Japanese": "保存せずに閉じる"
     },
     "5860897400": {
@@ -388,7 +388,7 @@
         "Polish": "Nie mogę znaleźć instalacji Team Fortress 2.",
         "Russian": "Не удалось найти установку Team Fortress 2.",
         "Korean": "팀 포트리스 2 설치를 찾을 수 없습니다.",
-        "Chinese": "找不到团队要塞2的安装。",
+        "Chinese": "找不到 Team Fortress 2 的安装位置。",
         "Japanese": "Team Fortress 2のインストールが見つかりませんでした。"
     },
     "3315339845": {
@@ -402,7 +402,7 @@
         "Polish": "Nie można było załadować ustawień, powracając do ustawień domyślnych.{0}",
         "Russian": "Не смог загрузить настройки, вернулся к настройкам по умолчанию.{0}",
         "Korean": "기본값으로 되돌리는 설정을로드 할 수 없습니다.{0}",
-        "Chinese": "无法加载设置，还原为默认值。{0}",
+        "Chinese": "无法加载设置，已还原为默认值。{0}",
         "Japanese": "デフォルトに戻す、設定を読み込めませんでした。{0}"
     },
     "1791761380": {
@@ -444,7 +444,7 @@
         "Polish": "Obecne ustawienia są już domyślne.",
         "Russian": "Текущие настройки уже по умолчанию.",
         "Korean": "현재 설정은 이미 기본값입니다.",
-        "Chinese": "当前的设置已经是默认的。",
+        "Chinese": "当前设置已是默认值。",
         "Japanese": "現在の設定はすでにデフォルトの状態になっています。"
     },
     "3535021960": {
@@ -486,7 +486,7 @@
         "Polish": "Debug",
         "Russian": "Отладка",
         "Korean": "디버그",
-        "Chinese": "调试",
+        "Chinese": "Debug",
         "Japanese": "デバッグ"
     },
     "2898597302": {
@@ -500,7 +500,7 @@
         "Polish": "Opóźnienie pomiędzy odświeżaniem, gdy TF2 i Discord nie działają: ",
         "Russian": "Задержка между освежениями, когда не работает TF2 и Discord: ",
         "Korean": "TF2 와 불화가 실행되지 않을 때 새로 고침 사이의 지연: ",
-        "Chinese": "TF2和Discord不运行时，刷新之间的延迟: ",
+        "Chinese": "TF2 和 Discord 没有运行时，持续刷新之间的延迟: ",
         "Japanese": "TF2とDiscordが起動していないときのリフレッシュの遅延: "
     },
     "8054718100": {
@@ -514,7 +514,7 @@
         "Polish": "Opóźnienie pomiędzy odświeżaniem, w sekundach: ",
         "Russian": "Задержка между рефрешами, в секундах: ",
         "Korean": "지연 사이에 새로 고침,에서 초: ",
-        "Chinese": "刷新之间的延迟，以秒为单位: ",
+        "Chinese": "持续刷新之间的延迟（秒）: ",
         "Japanese": "更新間の遅延（秒単位）: "
     },
     "1775377300": {
@@ -542,7 +542,7 @@
         "Polish": "Dodgeball",
         "Russian": "Доджбол",
         "Korean": "피구",
-        "Chinese": "躲避球",
+        "Chinese": "Dodgeball",
         "Japanese": "ドッジボール"
     },
     "2314739660": {
@@ -584,7 +584,7 @@
         "Polish": "Wyjście",
         "Russian": "Выход",
         "Korean": "출구",
-        "Chinese": "出口",
+        "Chinese": "退出",
         "Japanese": "出口"
     },
     "6003136100": {
@@ -612,7 +612,7 @@
         "Polish": "Skala GUI: ",
         "Russian": "Шкала графического интерфейса: ",
         "Korean": "GUI 스케일: ",
-        "Chinese": "GUI规模。",
+        "Chinese": "GUI 大小：",
         "Japanese": "GUIスケール。"
     },
     "8092399540": {
@@ -626,7 +626,7 @@
         "Polish": "Wszystkiego najlepszego w Nowym Roku!",
         "Russian": "С Новым годом!",
         "Korean": "새해 복 많이 받으세요!",
-        "Chinese": "新年快乐",
+        "Chinese": "新年快乐！",
         "Japanese": "あけましておめでとうございます"
     },
     "9286502200": {
@@ -640,7 +640,7 @@
         "Polish": "Heavy",
         "Russian": "Хэви",
         "Korean": "무거운",
-        "Chinese": "重",
+        "Chinese": "机枪手",
         "Japanese": "ヘビー"
     },
     "6049012200": {
@@ -654,7 +654,7 @@
         "Polish": "Pomoc",
         "Russian": "Помощь",
         "Korean": "도움말",
-        "Chinese": "帮忙",
+        "Chinese": "帮助",
         "Japanese": "ヘルプ"
     },
     "1458447686": {
@@ -668,7 +668,7 @@
         "Polish": "Hej, wygląda na to, że Kataiser, twórca TF2 Rich Presence, jest w Twojej grze!\nPrzywitaj się ze mną, jeśli chcesz :)",
         "Russian": "Эй, похоже, что Kataiser, разработчик TF2 Rich Presence, в вашей игре!\nПоздоровайтесь со мной, если хотите:)",
         "Korean": "이봐,Tf2Rich Presence 의 개발자 인 Kataiser 가 게임에있는 것 같습니다!\n네가 원한다면 나에게 인사 해 :)",
-        "Chinese": "嘿，看来TF2丰富的存在感的开发者Kataiser在你的游戏里了!\n如果你愿意的话，请跟我打个招呼:)",
+        "Chinese": "嘿，TF2 Rich Presence 的开发者 Kataiser 正在你现在的服务器中！\n如果你愿意的话，快和他打个招呼吧 :)",
         "Japanese": "TF2リッチプレゼンスの開発者であるKataiserがあなたのゲームに登場しているようですよ。\nよろしければご挨拶を :)"
     },
     "1528106792": {
@@ -682,7 +682,7 @@
         "Polish": "Ukryć typ gry (Casual, Konkurencyjny, MvM) ustawiony w kolejce do",
         "Russian": "Скрыть тип игры (Кэжуал, Комп, MvM) для которй вы в очереди",
         "Korean": "숨기기 게임 유형(캐주얼하고,경쟁적이고,데이터를 쉽게 마이닝하고 분석)대기",
-        "Chinese": "隐藏游戏类型（休闲，竞争，MvM）排队等候",
+        "Chinese": "隐藏正在排队时的游戏模式（休闲，竞技，MvM）",
         "Japanese": "非表示のゲームの種類(カジュアル,競争,MvM)のキューに入れられた"
     },
     "2085363200": {
@@ -696,7 +696,7 @@
         "Polish": "W menu",
         "Russian": "В меню",
         "Korean": "메뉴",
-        "Chinese": "在菜单中",
+        "Chinese": "主菜单",
         "Japanese": "メニュー内"
     },
     "6166977300": {
@@ -724,7 +724,7 @@
         "Polish": "Timeout połączenia internetowego (dla aktualizacji i zapytań do serwera): ",
         "Russian": "Тайм-аут подключения к Интернету (для обновления и запроса к серверу): ",
         "Korean": "인터넷 연결 시간 초과(업데이트 및 서버 쿼리): ",
-        "Chinese": "互联网连接超时（用于更新程序和服务器查询）。",
+        "Chinese": "网络连接超时（用于更新和服务器查询）：",
         "Japanese": "インターネット接続のタイムアウト (アップデータおよびサーバー クエリ用)。"
     },
     "3018856828": {
@@ -738,7 +738,7 @@
         "Polish": "To TF2 Rich Presence's {0}{1} urodziny dzisiaj! (Tak, 1 kwietnia, poważnie)",
         "Russian": "Сегодня {0}{1} день рождения TF2 Rich Presence! (Да, 1 апреля, серьезно)",
         "Korean": "오늘 TF2Rich Presence 의{0}{1}생일입니다! (예,4 월 1 일,진지하게)",
-        "Chinese": "今天是TF2富存在{0}{1}的生日! (是的，4月1日，说真的)",
+        "Chinese": "今天是 TF2 Rich Presence 的 {0}{1} 生日! (是的，四月一号，没骗你)",
         "Japanese": "今日はTF2リッチプレゼンスの{0}{1}の誕生日です (そう、4月1日だよ、マジで)"
     },
     "5367410860": {
@@ -766,7 +766,7 @@
         "Polish": "Skoki",
         "Russian": "Джамп",
         "Korean": "점프",
-        "Chinese": "跳跃",
+        "Chinese": "Jumping",
         "Japanese": "飛び降りる"
     },
     "9535539200": {
@@ -780,7 +780,7 @@
         "Polish": "Liczba zabitych",
         "Russian": "Количество убитых",
         "Korean": "킬 카운트",
-        "Chinese": "杀人数",
+        "Chinese": "击杀数",
         "Japanese": "キルカウント"
     },
     "3291882260": {
@@ -794,7 +794,7 @@
         "Polish": "Zabija: {0}",
         "Russian": "Убивает: {0}",
         "Korean": "살인:{0}",
-        "Chinese": "杀。{0}",
+        "Chinese": "击杀：{0}",
         "Japanese": "殺す。{0}"
     },
     "7819769690": {
@@ -808,7 +808,7 @@
         "Polish": "Królu Wzgórza",
         "Russian": "Король холма",
         "Korean": "왕의 언덕",
-        "Chinese": "山之王",
+        "Chinese": "山丘之王",
         "Japanese": "キングオブザヒル"
     },
     "3469484790": {
@@ -836,7 +836,7 @@
         "Polish": "Uruchom TF2",
         "Russian": "Запуск TF2",
         "Korean": "TF2 출시",
-        "Chinese": "启动TF2",
+        "Chinese": "启动 TF2",
         "Japanese": "TF2起動"
     },
     "4940769640": {
@@ -850,7 +850,7 @@
         "Polish": "Rozpoczynam...",
         "Russian": "Запуск...",
         "Korean": "발사...",
-        "Chinese": "发射...",
+        "Chinese": "启动中...",
         "Japanese": "起動中..."
     },
     "2083457385": {
@@ -878,7 +878,7 @@
         "Polish": "Główny",
         "Russian": "Главный",
         "Korean": "메인",
-        "Chinese": "主",
+        "Chinese": "主要设置",
         "Japanese": "メイン"
     },
     "7761442790": {
@@ -892,7 +892,7 @@
         "Polish": "Mann Kontra Maszyna",
         "Russian": "Манн против машины",
         "Korean": "맨 대 기계",
-        "Chinese": "曼与机器",
+        "Chinese": "曼恩 Vs. 机器",
         "Japanese": "Mann vs. Machine"
     },
     "3004835120": {
@@ -906,7 +906,7 @@
         "Polish": "Mannpower",
         "Russian": "Мэнпауэр",
         "Korean": "인력충만",
-        "Chinese": "Mannpower",
+        "Chinese": "曼恩之力",
         "Japanese": "Mannpower"
     },
     "1954945610": {
@@ -920,7 +920,7 @@
         "Polish": "Mapa: {0}",
         "Russian": "Карта {0}",
         "Korean": "지도:{0}",
-        "Chinese": "地图:{0}",
+        "Chinese": "地图：{0}",
         "Japanese": "マップ:{0}"
     },
     "9351347340": {
@@ -948,7 +948,7 @@
         "Polish": "Maks. kilobajty pliku console.log do skanowania: ",
         "Russian": "Максимальное количество килобайт для сканирования файла console.log: ",
         "Korean": "최대 킬로바이트 console.log 스캔하기: ",
-        "Chinese": "最大千字节console.log要扫描: ",
+        "Chinese": "扫描 console.log 的最大千字节数: ",
         "Japanese": "キロバイトの最大値console.logをスキャンするには: "
     },
     "7065449230": {
@@ -990,7 +990,7 @@
         "Polish": "Wesołych Świąt!",
         "Russian": "С Рождеством!",
         "Korean": "메리 크리스마스!",
-        "Chinese": "圣诞快乐",
+        "Chinese": "圣诞快乐！",
         "Japanese": "メリークリスマス！"
     },
     "9627289700": {
@@ -1032,7 +1032,7 @@
         "Polish": "Brak trybu gry",
         "Russian": "Нет режима игры",
         "Korean": "아 게임",
-        "Chinese": "没有游戏模式",
+        "Chinese": "无游戏模式",
         "Japanese": "ゲームモードなし"
     },
     "3447858830": {
@@ -1046,7 +1046,7 @@
         "Polish": "Nie oczekując w kolejce",
         "Russian": "Вне очереди",
         "Korean": "대기지",
-        "Chinese": "没有排队",
+        "Chinese": "闲置",
         "Japanese": "キューに入れない"
     },
     "2293570909": {
@@ -1060,7 +1060,7 @@
         "Polish": "Sporadycznie ograniczaj rozmiar console.log i usuwaj puste linie i typowe błędy",
         "Russian": "Иногда ограничивать размер console.log и удалять пустые строки и типичные ошибки",
         "Korean": "때때로 콘솔을 제한하십시오.로그의 크기와 빈 줄 및 공통 오류 제거",
-        "Chinese": "偶尔限制 console.log 的大小，并删除空行和常见错误",
+        "Chinese": "偶尔限制 console.log 的大小，并自动删除空行和常见错误",
         "Japanese": "時々 console.log のサイズを制限し、空行や一般的なエラーを削除します"
     },
     "3578294000": {
@@ -1074,7 +1074,7 @@
         "Polish": "Wyłączony",
         "Russian": "Выключен",
         "Korean": "륙",
-        "Chinese": "关",
+        "Chinese": "关闭",
         "Japanese": "オフ"
     },
     "8197257790": {
@@ -1088,7 +1088,7 @@
         "Polish": "Otwórz stronę Github",
         "Russian": "Открыть страницу Github",
         "Korean": "Github 페이지 열기",
-        "Chinese": "打开Github页面",
+        "Chinese": "打开 Github 页面",
         "Japanese": "Githubページを開く"
     },
     "6519534990": {
@@ -1102,7 +1102,7 @@
         "Polish": "Mudança aberta",
         "Russian": "Открытый журнал изменений",
         "Korean": "변경 로그 열기",
-        "Chinese": "打开变更日志",
+        "Chinese": "查看更新日志",
         "Japanese": "変更履歴を開く"
     },
     "4845743580": {
@@ -1116,7 +1116,7 @@
         "Polish": "Licencja otwarta",
         "Russian": "Открытая лицензия",
         "Korean": "오픈 라이센스",
-        "Chinese": "开放许可证",
+        "Chinese": "查看开源许可",
         "Japanese": "オープンライセンス"
     },
     "4069140810": {
@@ -1130,7 +1130,7 @@
         "Polish": "Otwórz plik Readme",
         "Russian": "Открыть чтение",
         "Korean": "추가 정보 열기",
-        "Chinese": "打开readme",
+        "Chinese": "查看 README",
         "Japanese": "READMEを開く"
     },
     "1179387735": {
@@ -1172,7 +1172,7 @@
         "Polish": "PASS Time",
         "Russian": "ПАСС Тайм",
         "Korean": "통과 시간",
-        "Chinese": "消磨时间",
+        "Chinese": "手球时刻",
         "Japanese": "PASS Time"
     },
     "1843534830": {
@@ -1186,7 +1186,7 @@
         "Polish": "Ładowność",
         "Russian": "Груз",
         "Korean": "페이로드",
-        "Chinese": "有效载荷",
+        "Chinese": "推车",
         "Japanese": "ペイロード"
     },
     "4892929020": {
@@ -1200,7 +1200,7 @@
         "Polish": "Ładowność Wyścig",
         "Russian": "Гонка грузов",
         "Korean": "페이로드 레이스",
-        "Chinese": "有效载荷竞赛",
+        "Chinese": "推车竞赛",
         "Japanese": "ペイロードレース"
     },
     "1098909474": {
@@ -1214,7 +1214,7 @@
         "Polish": "Zniszczenie gracza",
         "Russian": "Уничтожение игроков",
         "Korean": "플레이어 파괴",
-        "Chinese": "玩家销毁",
+        "Chinese": "Player Destruction",
         "Japanese": "プレイヤーの破壊"
     },
     "5008928550": {
@@ -1228,7 +1228,7 @@
         "Polish": "Liczba graczy",
         "Russian": "Количество игроков",
         "Korean": "플레이어 수",
-        "Chinese": "玩家数量",
+        "Chinese": "玩家数",
         "Japanese": "プレイヤー数"
     },
     "8385345870": {
@@ -1242,7 +1242,7 @@
         "Polish": "Gracze: {0}/{1}",
         "Russian": "Игроки: {0}/{1}",
         "Korean": "플레이어:{0}/{1}",
-        "Chinese": "选手:{0}/{1}",
+        "Chinese": "玩家：{0}/{1}",
         "Japanese": "プレイヤー {0}/{1}"
     },
     "6724036300": {
@@ -1256,7 +1256,7 @@
         "Polish": "Pyro",
         "Russian": "Пиро",
         "Korean": "파이",
-        "Chinese": "火",
+        "Chinese": "火焰兵",
         "Japanese": "パイロ"
     },
     "9462759140": {
@@ -1270,7 +1270,7 @@
         "Polish": "W kolejce do \"Casual\"",
         "Russian": "В очереди на Кэжуал",
         "Korean": "대기주",
-        "Chinese": "排队休闲",
+        "Chinese": "排队进入休闲模式",
         "Japanese": "カジュアル用キュー"
     },
     "1589381242": {
@@ -1284,7 +1284,7 @@
         "Polish": "Stoi w kolejce do Konkurencyjny",
         "Russian": "В очереди на Компэтитив",
         "Korean": "대기를 위해 경쟁",
-        "Chinese": "排队等待竞争",
+        "Chinese": "排队进入竞技模式",
         "Japanese": "競争力のためのキュー"
     },
     "2032797863": {
@@ -1298,7 +1298,7 @@
         "Polish": "Kolejka do MvM (Boot Camp)",
         "Russian": "Очередь на MvM (Boot Camp)",
         "Korean": "MvM 대기(부트 캠프)",
-        "Chinese": "排队参加MvM(训练营)",
+        "Chinese": "排队进入 MvM（新兵训练营）",
         "Japanese": "MvMのキュー（ブートキャンプ"
     },
     "1743194081": {
@@ -1312,7 +1312,7 @@
         "Polish": "Kolejka do MvM (Mann Up)",
         "Russian": "Очередь на MvM (Mann Up)",
         "Korean": "Mvm 대기(Mann Up)",
-        "Chinese": "排队等候MvM(Mann Up)",
+        "Chinese": "排队进入 MvM（曼恩奇现）",
         "Japanese": "MvMへのキューイング（マンアップ"
     },
     "2125859177": {
@@ -1326,7 +1326,7 @@
         "Polish": "Stoi w kolejce do meczu na przyjęcie",
         "Russian": "В очереди на матч лобби",
         "Korean": "파티 경기 대기 중",
-        "Chinese": "排队等候派对的比赛",
+        "Chinese": "排队进入 Party 的比赛",
         "Japanese": "パーティーの試合のキューに入れられた"
     },
     "3679915290": {
@@ -1368,7 +1368,7 @@
         "Polish": "Przywrócenie domyślnego ustawienia 1 zmienionego na domyślne?",
         "Russian": "Восстановить 1 измененную настройку по умолчанию?",
         "Korean": "복원 1 로 변경된 설정을 기본?",
-        "Chinese": "将1更改的设置恢复为默认设置？",
+        "Chinese": "将一个已更改的设置恢复为默认值？",
         "Japanese": "1つの変更された設定をデフォルトに復元しますか？"
     },
     "2660567707": {
@@ -1382,7 +1382,7 @@
         "Polish": "Przywrócić 1 ustawienie do wartości domyślnej?",
         "Russian": "Восстановить 1 настройку по умолчанию?",
         "Korean": "1 설정을 기본값으로 복원 하시겠습니까?",
-        "Chinese": "将1个设置恢复为默认值？",
+        "Chinese": "将一个设置恢复为默认值？",
         "Japanese": "1の設定をデフォルトに戻す？"
     },
     "1956055419": {
@@ -1396,7 +1396,7 @@
         "Polish": "Przywrócenie ustawień domyślnych",
         "Russian": "Восстановление настроек по умолчанию",
         "Korean": "기본 설정 복원",
-        "Chinese": "恢复默认设置",
+        "Chinese": "恢复默认值",
         "Japanese": "デフォルトの設定に戻す"
     },
     "8905047970": {
@@ -1424,7 +1424,7 @@
         "Polish": "Przywrócić {0} zmienione ustawienia na domyślne?",
         "Russian": "Восстановить {0} измененные настройки по умолчанию?",
         "Korean": "복원{0}변경된 설정을 기본값은?",
-        "Chinese": "将{0}更改的设置恢复为默认值？",
+        "Chinese": "将 {0} 个已更改的设置恢复为默认值？",
         "Japanese": "{0}つの変更された設定をデフォルトに復元しますか？"
     },
     "3554020472": {
@@ -1438,7 +1438,7 @@
         "Polish": "Przywrócić ustawienia {0} do wartości domyślnych?",
         "Russian": "Восстановить {0} настройки по умолчанию?",
         "Korean": "{0}설정을 기본값으로 복원 하시겠습니까?",
-        "Chinese": "将{0}设置恢复为默认值？",
+        "Chinese": "将 {0} 个设置恢复为默认值？",
         "Japanese": "{0}の設定をデフォルトに戻しますか？"
     },
     "9784542030": {
@@ -1452,7 +1452,7 @@
         "Polish": "Zniszczenie Robota",
         "Russian": "Уничтожение роботов",
         "Korean": "로봇 파괴",
-        "Chinese": "机器人破坏",
+        "Chinese": "Robot Destruction",
         "Japanese": "ロボット破壊"
     },
     "6239040250": {
@@ -1480,7 +1480,7 @@
         "Polish": "Scout",
         "Russian": "скаут",
         "Korean": "스",
-        "Chinese": "童子军",
+        "Chinese": "侦察兵",
         "Japanese": "スカウト"
     },
     "3509849080": {
@@ -1494,7 +1494,7 @@
         "Polish": "Wybrany typ małego obrazu klasy: ",
         "Russian": "Тип изображения малой иконки выбранного класса: ",
         "Korean": "선택한 클래스를 작은 이미지 유형: ",
-        "Chinese": "选定的类小图像类型: ",
+        "Chinese": "选择兵种的 small image 类型：",
         "Japanese": "選択したクラスの小さな画像タイプ: "
     },
     "2639727217": {
@@ -1508,7 +1508,7 @@
         "Polish": "Limit częstotliwości zapytań serwera: ",
         "Russian": "Ограничение скорости запроса сервера: ",
         "Korean": "서버 쿼리 속도 제한: ",
-        "Chinese": "服务器查询速率限制。",
+        "Chinese": "服务器查询速率限制：",
         "Japanese": "サーバーがレート制限を照会しています。"
     },
     "1833049100": {
@@ -1522,7 +1522,7 @@
         "Polish": "Smukła",
         "Russian": "Слэндер",
         "Korean": "슬",
-        "Chinese": "纤细",
+        "Chinese": "Slender",
         "Japanese": "細い"
     },
     "1393301620": {
@@ -1592,7 +1592,7 @@
         "Polish": "Surfing",
         "Russian": "серфинг",
         "Korean": "서핑",
-        "Chinese": "冲浪",
+        "Chinese": "Surfing",
         "Japanese": "サーフィン"
     },
     "7967881680": {
@@ -1606,7 +1606,7 @@
         "Polish": "TF2 Bogata Obecność",
         "Russian": "богатое присутствие TF2",
         "Korean": "Tf2 풍부한 존재",
-        "Chinese": "TF2丰富的存在感",
+        "Chinese": "TF2 Rich Presence",
         "Japanese": "TF2 リッチプレゼンス"
     },
     "1465190241": {
@@ -1620,7 +1620,7 @@
         "Polish": "TF2 Bogata Obecność ({0})",
         "Russian": "TF2 Богатое присутствие ({0})",
         "Korean": "팀포 2 부자재({0})",
-        "Chinese": "TF2富存在({0})",
+        "Chinese": "TF2 Rich Presence ({0})",
         "Japanese": "TF2Rich Presence({0})"
     },
     "3376810928": {
@@ -1634,7 +1634,7 @@
         "Polish": "TF2 Bogata Obecność ({0}) autorstwa Kataiser.",
         "Russian": "TF2 Богатое присутствие ({0}) от Катайзера",
         "Korean": "팀포 2 부자재({0})의 Kataiser",
-        "Chinese": "TF2富存在({0})由Kataiser",
+        "Chinese": "TF2 Rich Presence ({0}) by Kataiser",
         "Japanese": "TF2Rich Presence({0})by Kataiser"
     },
     "2858683122": {
@@ -1648,7 +1648,7 @@
         "Polish": "Ustawienia TF2 Bogata Obecność ({0})",
         "Russian": "TF2 Богатое присутствие ({0}) настройки",
         "Korean": "팀포 2 부자재({0})설정",
-        "Chinese": "TF2富存在({0})设置",
+        "Chinese": "TF2 Rich Presence ({0}) 设置",
         "Japanese": "TF2 Rich Presence({0})の設定"
     },
     "7301379380": {
@@ -1661,7 +1661,7 @@
         "Dutch": "Team Fortress 2",
         "Polish": "Team Fortress 2",
         "Russian": "Team Fortress 2",
-        "Korean": "Team Fortress2",
+        "Korean": "Team Fortress 2",
         "Chinese": "Team Fortress 2",
         "Japanese": "Team Fortress 2"
     },
@@ -1690,7 +1690,7 @@
         "Polish": "Ta wersja ({0}) jest nieaktualna (najnowsza wersja to {1}).",
         "Russian": "Эта версия ({0}) устарела (новейшая версия {1}).",
         "Korean": "이 버전({0})가 최신이(새로운 버전은{1}).",
-        "Chinese": "此版本（{0}）已过期（最新版本为{1}）。",
+        "Chinese": "当前版本（{0}）已过时（最新版本为 {1}）。",
         "Japanese": "このバージョン({0})は最新ではありません(最新バージョンは{1})。"
     },
     "3915786030": {
@@ -1704,7 +1704,7 @@
         "Polish": "Czas na mapie",
         "Russian": "Время на карте",
         "Korean": "지도 시간",
-        "Chinese": "地图上的时间",
+        "Chinese": "游戏内时间",
         "Japanese": "地図上の時間"
     },
     "7863023170": {
@@ -1718,7 +1718,7 @@
         "Polish": "Czas na mapie: {0}",
         "Russian": "Время на карте: {0}",
         "Korean": "지도 시간:{0}",
-        "Chinese": "时间在地图上:{0}",
+        "Chinese": "游戏内时间：{0}",
         "Japanese": "マップ上の時間:{0}"
     },
     "3298435420": {
@@ -1732,7 +1732,7 @@
         "Polish": "Górna linia: ",
         "Russian": "Верхняя линия: ",
         "Korean": "탑 라인:",
-        "Chinese": "顶线： ",
+        "Chinese": "Top line：",
         "Japanese": "トップライン。"
     },
     "1836325860": {
@@ -1746,7 +1746,7 @@
         "Polish": "Handel",
         "Russian": "Торговля",
         "Korean": "거래",
-        "Chinese": "交易",
+        "Chinese": "交易中",
         "Japanese": "取引"
     },
     "2400591970": {
@@ -1760,7 +1760,7 @@
         "Polish": "Szkolenie",
         "Russian": "Обучение",
         "Korean": "교육",
-        "Chinese": "培训",
+        "Chinese": "训练中",
         "Japanese": "トレーニング"
     },
     "1589315666": {
@@ -1774,7 +1774,7 @@
         "Polish": "Przytnij i wyczyść console.log",
         "Russian": "Обрезать и очистить console.log",
         "Korean": "트림/깨끗한 콘솔.로그",
-        "Chinese": "修剪和清理console.log",
+        "Chinese": "清理 console.log",
         "Japanese": "console.log のトリムとクリーンアップ"
     },
     "8988278560": {
@@ -1802,7 +1802,7 @@
         "Polish": "Użyj klasycznych obrazów trybu gry w GUI",
         "Russian": "Используйте классические изображения режима игры в GUI",
         "Korean": "GUI 에서 고전 게임 모드 이미지 사용",
-        "Chinese": "在GUI中使用经典的游戏模式图像。",
+        "Chinese": "在 GUI 中使用经典游戏模式图像。",
         "Japanese": "GUIでクラシックなゲームモードイメージを使用"
     },
     "1096615616": {
@@ -1816,7 +1816,7 @@
         "Polish": "Versus Saxton Hale",
         "Russian": "Против Сакстона Хейла",
         "Korean": "대 헤일",
-        "Chinese": "与Saxton Hale",
+        "Chinese": "决战萨克斯顿·霍尔",
         "Japanese": "サクストン-ヘイル"
     },
     "1011879672": {
@@ -1844,7 +1844,7 @@
         "Polish": "Tak",
         "Russian": "Да",
         "Korean": "예",
-        "Chinese": "是的，是的",
+        "Chinese": "是",
         "Japanese": "噫"
     },
     "1638865032": {
@@ -1858,7 +1858,7 @@
         "Polish": "Twoja instalacja TF2 nie została jeszcze prawidłowo skonfigurowana. Aby naprawić:",
         "Russian": "Ваша установка TF2 еще не настроена правильно. Чтобы исправить:",
         "Korean": "귀하의 팀포 2 설치하지 않은 것이 올바르게 설정되어. 정:",
-        "Chinese": "您的TF2安装似乎尚未正确设置。 来修复:",
+        "Chinese": "你的 TF2 安装似乎尚未正确设置。 修复方法：",
         "Japanese": "あなたのTF2インストールはまだ正しく設定されていないようです。 修正するには:"
     },
     "3929549250": {
@@ -1886,7 +1886,7 @@
         "Polish": "{0} - TF2 Bogata Obecność {1}",
         "Russian": "{0} - TF2 Богатое присутствие {1}",
         "Korean": "{0}-TF2 부유한 존재{1}",
-        "Chinese": "{0}-TF2丰富的存在{1}",
+        "Chinese": "{0} - TF2 Rich Presence {1}",
         "Japanese": "{0} - TF2 Rich Presence {1}"
     },
     "1266157337": {
@@ -1900,7 +1900,7 @@
         "Polish": "{0} - Czekając na {1}",
         "Russian": "{0} - Ждет {1}",
         "Korean": "{0} - 대기 중{1}",
-        "Chinese": "{0} - 等待着{1}",
+        "Chinese": "{0} - 正在等待 {1}",
         "Japanese": "{0} - 대기 중{1}"
     },
     "5934295940": {
@@ -1928,7 +1928,7 @@
         "Polish": "{0} - {1} na {2}",
         "Russian": "{0} - {1} на {2}",
         "Korean": "{0} - {1}에{2}",
-        "Chinese": "{0} - {1}上{2}",
+        "Chinese": "{0} - {1} 在 {2} 上",
         "Japanese": "{0} - {1}に{2}"
     },
     "6446134190": {
@@ -1942,7 +1942,7 @@
         "Polish": "{0} dziennik zmian:",
         "Russian": "{0} журнал изменений:",
         "Korean": "{0}changelog:",
-        "Chinese": "{0}changelog:",
+        "Chinese": "{0} 更新日志:",
         "Japanese": "{0} 変更履歴:"
     },
     "4037028230": {
@@ -1956,7 +1956,7 @@
         "Polish": "{0} upłynęło",
         "Russian": "{0} Истекло",
         "Korean": "{0}경과",
-        "Chinese": "{0}经过",
+        "Chinese": "经过了 {0}",
         "Japanese": "{0}経過しました"
     },
     "9156706070": {
@@ -1970,7 +1970,7 @@
         "Polish": "{0} nie działa",
         "Russian": "{0} не бежит",
         "Korean": "{0}이 실행되지 않습니다",
-        "Chinese": "{0}没有运行",
+        "Chinese": "{0} 没有运行",
         "Japanese": "{0}が実行されていない"
     },
     "1562970061": {
@@ -1984,7 +1984,7 @@
         "Polish": "{0} aktualizacja dostępna  ",
         "Russian": "{0} доступно обновление  ",
         "Korean": "{0}업데이트 가능  ",
-        "Chinese": "{0}有更新  ",
+        "Chinese": "{0} 更新可用",
         "Japanese": "{0}更新可能  "
     }
 }
