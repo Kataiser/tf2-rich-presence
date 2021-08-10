@@ -105,6 +105,8 @@ def main(version_num='v2.0'):
         print("Copied", shutil.copy('comp.png', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('mvm_queued.png', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('preview.png', github_repo_path))
+        print("Copied", shutil.copy('preview new.png', github_repo_path))
+        print("Copied", shutil.copy('gui preview.webp', github_repo_path))
         print("Copied", shutil.copy('Tf2-logo.png', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('unknown_map.png', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('Readme.txt', Path(f'{github_repo_path}/TF2 Rich Presence')))
