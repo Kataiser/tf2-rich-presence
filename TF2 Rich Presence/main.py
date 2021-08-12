@@ -312,10 +312,14 @@ class TF2RichPresense:
         elif not p_data['Discord']['running']:
             self.necessary_program_not_running('Discord')
             self.should_mention_discord = False
+            self.gui.set_launch_tf2_button_state(p_data['Steam']['running'])
+            self.gui.launch_tf2_button['state'] = 'disabled'
         else:
             # last but not least, Steam
             self.necessary_program_not_running('Steam')
             self.should_mention_steam = False
+            self.gui.set_launch_tf2_button_state(p_data['Steam']['running'])
+            self.gui.launch_tf2_button['state'] = 'disabled'
 
         self.gui.safe_update()
         self.init_operations()
