@@ -397,8 +397,13 @@ class TF2RichPresense:
 
         if self.client_connected:
             self.log.debug("Disconnecting RPC client")
-            self.rpc_client.disconnect()
             self.client_connected = False
+
+            try:
+                self.rpc_client.disconnect()
+            except Exception as client_connect_error:
+                if program_name == 'Discord' and str(client_connect_error) in ("Can't send data to Discord via IPC.", "Can't connect to Discord Client."):
+                    self.log.error("RPC client disconnect failed, ignoring cause Discord is closed", reportable=False)
 
         self.gui.set_state_1('default', self.loc.text("{0} isn't running").format(program_name))
         self.gui.clear_fg_image()
@@ -420,6 +425,7 @@ class TF2RichPresense:
                 # connects to Discord
                 self.rpc_client = ipc.DiscordIPC(utils.get_api_key('discord2'))
                 self.rpc_client.connect()
+                self.game_state.update_rpc = True
 
             self.rpc_client.update_activity(self.activity)
             self.log.info(f"Sent over RPC: {self.activity}")
