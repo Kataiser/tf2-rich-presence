@@ -55,7 +55,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     if self.last_console_log_size is not None:
         if consolelog_file_size < self.last_console_log_size:
             self.log.error("console.log seems to have been externally shortened (possibly TF2BD)")
-            # TODO: try to account for this somehow
+            # TODO: try to account for this somehow, if need be
 
         self.last_console_log_size = consolelog_file_size
 

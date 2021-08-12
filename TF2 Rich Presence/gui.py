@@ -397,7 +397,7 @@ class GUI(tk.Frame):
 
         if self.tf2_launch_cmd:
             self.launched_tf2_with_button = True
-            subprocess.Popen(f'"{self.tf2_launch_cmd[0]}" {self.tf2_launch_cmd[1]} -game tf -steam -secure -condebug', creationflags=0x08000000)
+            subprocess.Popen(f'"{self.tf2_launch_cmd[0]}" {self.tf2_launch_cmd[1]} -game tf -steam -secure -condebug -conclearlog', creationflags=0x08000000)
         else:
             messagebox.showerror(self.loc.text("TF2 Rich Presence"), self.loc.text("Couldn't find a Team Fortress 2 installation."))
             self.launch_tf2_button['state'] = 'normal'
