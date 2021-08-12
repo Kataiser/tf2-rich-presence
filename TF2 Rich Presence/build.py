@@ -413,10 +413,6 @@ def main(version_num='v2.0'):
     else:
         readme_source_exists = False
 
-    # HyperBubs
-    if os.path.isfile('custom_kataiser.py'):
-        shutil.copy('custom_kataiser.py', Path(f'{new_build_folder_name}/resources/custom.py'))
-
     # automatically install too, why not
     warn_no_installer_log = False
     if not noinstall:
@@ -427,6 +423,11 @@ def main(version_num='v2.0'):
                 assert b'Installation process succeeded.' in installer_log.read()
         else:
             warn_no_installer_log = True
+
+    # HyperBubs
+    if os.path.isfile('custom_kataiser.py'):
+        shutil.copy('custom_kataiser.py', Path(f'{new_build_folder_name}/resources/custom.py'))
+        shutil.copy('custom_kataiser.py', Path(f"{os.getenv('LOCALAPPDATA')}/Programs/TF2 Rich Presence/resources/custom.py"))
 
     # prepares display of time since last build
     if last_build_time:
