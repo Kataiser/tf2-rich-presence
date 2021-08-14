@@ -231,9 +231,15 @@ class TestTF2RichPresense(unittest.TestCase):
 
         os.chdir(old_dir)
 
-    def test_access_github_api(self):
+    def test_update_checker(self):
+        update_checker = updater.UpdateChecker(self.log)
+        update_checker.initiate_update_check(False)
+
+        while not update_checker.update_check_ready():
+            time.sleep(0.2)
+
         try:
-            newest_version, downloads_url, changelog = updater.access_github_api(10)
+            newest_version, downloads_url, changelog = update_checker.receive_update_check()
         except updater.RateLimitError as error:
             self.skipTest(error)
         else:
@@ -242,7 +248,8 @@ class TestTF2RichPresense(unittest.TestCase):
             self.assertTrue(len(changelog) > 0)
 
             with self.assertRaises(requests.Timeout):
-                updater.access_github_api(0.0001)
+                update_checker.initiate_update_check(False, timeout=0.0001)
+                update_checker.api_future.result()
 
     def test_format_changelog(self):
         unformatted = "## Changes\n" \
@@ -605,10 +612,14 @@ class TestTF2RichPresense(unittest.TestCase):
         gui_test.pause()
         gui_test.unpause()
         gui_test.enable_update_notification()
-        gui_test.check_for_updates(popup=True)
         gui_test.holiday()
         gui_test.menu_open_settings()
         gui_test.menu_about(silent=True)
+
+        gui_test.update_checker.initiate_update_check(True)
+        while not gui_test.update_checker.update_check_ready():
+            time.sleep(0.2)
+        gui_test.handle_update_check(gui_test.update_checker.receive_update_check())
 
         fg_image = gui_test.fg_image_load('tf2_logo', 120)
         self.assertEqual((fg_image.width(), fg_image.height()), (120, 120))

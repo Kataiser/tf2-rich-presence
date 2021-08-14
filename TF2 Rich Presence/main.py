@@ -328,6 +328,9 @@ class TF2RichPresense:
             self.gui.no_condebug_warning()
             self.fast_next_loop = True
 
+        if self.gui.update_checker.update_check_ready():
+            self.gui.handle_update_check(self.gui.update_checker.receive_update_check())
+
         if self.custom_functions:
             self.custom_functions.after_loop(self)
 
@@ -448,16 +451,17 @@ class TF2RichPresense:
     # do stuff that was previously in init.py, but only after one main loop so that the GUI is ready
     def init_operations(self):
         if not self.did_init_operations:
-            self.did_init_operations = True
             self.gui.safe_update()
             self.log.debug("Performing init operations")
-            localization.detect_system_language(self.log)
-            self.gui.holiday()
 
             if settings.get('check_updates'):
-                self.gui.check_for_updates(False)
+                self.gui.update_checker.initiate_update_check(False)
             else:
                 self.log.debug("Updater is disabled, skipping")
+
+            localization.detect_system_language(self.log)
+            self.gui.holiday()
+            self.did_init_operations = True
 
     # reads a console.log and returns current map and class
     def interpret_console_log(self, *args, **kwargs) -> Optional[Tuple[bool, str, str, str, str, bool]]:

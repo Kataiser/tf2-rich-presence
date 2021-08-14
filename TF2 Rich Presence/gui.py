@@ -64,6 +64,7 @@ class GUI(tk.Frame):
         self.launched_tf2_with_button: bool = False
         self.tf2_launch_cmd: Optional[Tuple[str, str]] = None
         self.main_loop_body_times: List[float] = []
+        self.update_checker: updater.UpdateChecker = updater.UpdateChecker(self.log)
 
         menu_bar: tk.Menu = tk.Menu(self.master)
         self.file_menu = tk.Menu(menu_bar, tearoff=0)
@@ -352,17 +353,15 @@ class GUI(tk.Frame):
         self.log.debug("Didn't open download page")
         self.update_window_open = False
 
-    # this is here instead of main because it's hard to reach main.TF2RichPresense from the check for updates menu method, kinda dumb though
-    def check_for_updates(self, popup: bool):
-        update_data: Optional[Tuple[str, str, str]] = updater.check_for_update(self.log, launcher.VERSION, float(settings.get('request_timeout')))
-
+    # run by main when the update checker finishes
+    def handle_update_check(self, update_data: Tuple[str, str, str]):
         if update_data:
             self.available_update_data = update_data
             self.enable_update_notification()
 
-            if popup:
+            if self.update_checker.popup:
                 self.show_update_menu()
-        elif popup:
+        elif self.update_checker.popup:
             self.pause()
             messagebox.showinfo(self.loc.text("TF2 Rich Presence"), self.loc.text("No update available, this version ({0}) is the latest version available.").format(launcher.VERSION))
             self.unpause()
@@ -544,7 +543,7 @@ class GUI(tk.Frame):
 
     def menu_check_updates(self, *args):
         self.log.info("GUI: checking for updates")
-        self.check_for_updates(True)
+        self.update_checker.initiate_update_check(True)
 
     def menu_report_issue(self, *args):
         self.log.info("GUI: reporting issue")
