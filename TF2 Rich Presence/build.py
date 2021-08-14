@@ -417,7 +417,7 @@ def main(version_num='v2.0'):
     warn_no_installer_log = False
     if not noinstall:
         print("Running installer...")
-        subprocess.run(f"{installer_name} /VERYSILENT /CURRENTUSER /LOG=\"{os.path.abspath('installer.log')}\"")
+        subprocess.run(f"{installer_name} /VERYSILENT /CURRENTUSER /MERGETASKS=\"!desktopicon\" /LOG=\"{os.path.abspath('installer.log')}\"")
         if os.path.isfile('installer.log'):
             with open('installer.log', 'rb') as installer_log:
                 assert b'Installation process succeeded.' in installer_log.read()
