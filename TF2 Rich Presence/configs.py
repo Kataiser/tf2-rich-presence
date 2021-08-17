@@ -130,7 +130,7 @@ def steam_config_file(self, exe_location: str, require_condebug: bool) -> Option
 
 
 # given Steam's install, find a TF2 install
-def find_tf2_exe(self, steam_location: str) -> str:
+def find_tf2_exe(self, steam_location: str) -> Optional[str]:
     extend_path: Callable[[str], str] = lambda path: os.path.join(path, 'steamapps', 'common', 'Team Fortress 2', 'hl2.exe')
     default_path: str = extend_path(steam_location)
 
@@ -140,11 +140,19 @@ def find_tf2_exe(self, steam_location: str) -> str:
     self.log.debug("Reading libraryfolders.vdf for TF2 installation")
 
     with open(os.path.join(steam_location, 'steamapps', 'libraryfolders.vdf'), 'r', encoding='UTF8', errors='replace') as libraryfolders_vdf:
-        libraryfolders_vdf_read: dict = vdf.load(libraryfolders_vdf)['LibraryFolders']
+        libraryfolders_vdf_read: dict = vdf.load(libraryfolders_vdf)
 
-    for library_folder_key in libraryfolders_vdf_read:
+    if 'LibraryFolders' in libraryfolders_vdf_read:
+        libraryfolders_data: dict = libraryfolders_vdf_read['LibraryFolders']
+    elif 'libraryfolders' in libraryfolders_vdf_read:
+        libraryfolders_data = libraryfolders_vdf_read['libraryfolders']
+    else:
+        self.log.error(f"libraryfolders.vdf seems broken, contains: {libraryfolders_vdf_read}")
+        return
+
+    for library_folder_key in libraryfolders_data:
         if len(library_folder_key) < 4:
-            potentional_install: str = extend_path(libraryfolders_vdf_read[library_folder_key])
+            potentional_install: str = extend_path(libraryfolders_data[library_folder_key])
 
             if is_tf2_install(self.log, potentional_install):
                 return potentional_install
