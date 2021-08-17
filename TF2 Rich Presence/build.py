@@ -105,7 +105,6 @@ def main(version_num='v2.0'):
         print("Copied", shutil.copy('comp.png', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('mvm_queued.png', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('preview.png', github_repo_path))
-        print("Copied", shutil.copy('preview new.png', github_repo_path))
         print("Copied", shutil.copy('gui preview.webp', github_repo_path))
         print("Copied", shutil.copy('Tf2-logo.png', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('unknown_map.png', Path(f'{github_repo_path}/TF2 Rich Presence')))
@@ -142,14 +141,6 @@ def main(version_num='v2.0'):
         if os.path.isfile(Path(f'{new_build_folder_name}/Changelogs.html')):
             with open(Path(f'{new_build_folder_name}/Changelogs.html'), 'r') as old_changelogs:
                 update_changelogs = version_num not in old_changelogs.read()
-        logs_path = Path(f'{new_build_folder_name}/logs')
-        if os.path.isdir(logs_path):
-            # potentially create a mess, but it's better than them being lost
-            for file in os.listdir(logs_path):
-                if file.endswith('.errors.log'):
-                    if not os.path.isdir('error_logs'):
-                        os.mkdir('error_logs')
-                    print("Copied", shutil.copy(Path(f'{new_build_folder_name}/logs/{file}'), 'error_logs'))
         try:
             shutil.rmtree(new_build_folder_name)
         except (OSError, PermissionError):
@@ -382,7 +373,7 @@ def main(version_num='v2.0'):
             build_info_txt.write(f"\n\nBuild log{' (IDE handled)' if ide_build_log_handling else ''}:\n{build_log}")
 
     # compile installer
-    installer_name = f'Install TF2 Rich Presence {version_num}.exe'
+    installer_name = f'TF2RichPresence_{version_num}_setup.exe'
     if os.path.isfile('TF2RP.iss'):
         print("Compiling installer...")
         time.sleep(0.2)  # just to make sure everything is updated

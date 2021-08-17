@@ -38,7 +38,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: Install TF2 Rich Presence v2.0.exe
-        path: TF2 Rich Presence/Install TF2 Rich Presence v2.0.exe
+        path: TF2 Rich Presence/TF2RichPresence_v2.0_setup.exe
     - name: Run tests
       run: |
         cd "TF2 Rich Presence"

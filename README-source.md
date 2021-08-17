@@ -16,15 +16,15 @@
 Discord Rich Presence for Team Fortress 2
 - Detects current game state, queue info, playtime, and more
 - Configurable, reliable, and performance-efficient
-- Version 2 (GUI, map images, and more) coming soon™
+- Version 2 (GUI, map images, and more): out now!
 
 ![Preview image](preview.png)
 
-(The actual program is nowhere near as nice looking as this, [v2 will be though](https://twitter.com/MechKataiser/status/1350588216043253763))
+![GUI preview image](gui%20preview.webp)
 
 ## Download and install
-Installer: [Install TF2 Rich Presence v2.0.exe](https://github.com/Kataiser/tf2-rich-presence/releases/download/{tf2rpvnum}/Install%20TF2%20Rich%20Presence%20v2.0.exe) ({installer_size} MB)  
-Alternatively, get the latest autobuild (may be untested/buggy): [Install TF2 Rich Presence v2.0.exe](https://nightly.link/Kataiser/tf2-rich-presence/workflows/Tests.CD/master/Install%20TF2%20Rich%20Presence%20v2.0.exe.zip)  
+Installer: [TF2RichPresence_{tf2rpvnum}_setup](https://github.com/Kataiser/tf2-rich-presence/releases/download/{tf2rpvnum}/TF2RichPresence_{tf2rpvnum}_setup.exe) ({installer_size} MB)  
+Alternatively, get the latest autobuild (may be untested/buggy): [TF2RichPresence_{tf2rpvnum}_setup](https://nightly.link/Kataiser/tf2-rich-presence/workflows/Tests.CD/master/TF2RichPresence_{tf2rpvnum}_setup.exe.zip)  
 Note that having Python installed is not required. Requires Discord and Steam to be running as well, and will wait until the game and both programs are running.
 
 ## Changelogs
