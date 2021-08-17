@@ -131,7 +131,7 @@ class Log:
             except PermissionError as error:
                 self.error(f"Couldn't write log due to PermissionError: {error}")
             except OSError as error:
-                if str(error) == 'No space left on device':
+                if "No space left on device" in str(error):
                     # not my problem
                     pass
                 else:
