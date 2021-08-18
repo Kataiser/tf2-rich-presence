@@ -152,7 +152,10 @@ def find_tf2_exe(self, steam_location: str) -> Optional[str]:
 
     for library_folder_key in libraryfolders_data:
         if len(library_folder_key) < 4:
-            potentional_install: str = extend_path(libraryfolders_data[library_folder_key])
+            potentional_install: Union[str, dict] = extend_path(libraryfolders_data[library_folder_key])
+
+            if isinstance(potentional_install, dict) and 'path' in potentional_install:
+                potentional_install = potentional_install['path']
 
             if is_tf2_install(self.log, potentional_install):
                 return potentional_install
