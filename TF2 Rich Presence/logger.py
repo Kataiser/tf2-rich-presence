@@ -77,8 +77,10 @@ class Log:
             if created_logs_dir:
                 self.debug(f"Created logs folder at {os.path.abspath(self.logs_path)}")
 
-        if not os.access(utils.db_json_path(), os.W_OK):
-            self.error("DB.json can't be written to. This could cause crashes")
+        try:
+            utils.access_db(write=utils.access_db(), pass_permission_error=False)
+        except PermissionError:
+            self.error("DB.json can't be written to, due to permissions. This could cause crashes")
 
         self.debug(f"Created {repr(self)}")
 

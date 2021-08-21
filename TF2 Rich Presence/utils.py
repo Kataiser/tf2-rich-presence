@@ -11,7 +11,7 @@ from typing import Dict, Optional, Union
 
 
 # read from or write to DB.json (intentionally uncached)
-def access_db(write: dict = None) -> Optional[Dict[str, Union[bool, list, str]]]:
+def access_db(write: dict = None, pass_permission_error: bool = True) -> Optional[Dict[str, Union[bool, list, str]]]:
     db_path: str = db_json_path()
     default_db: dict = {'tb_hashes': [],
                         'error_hashes': [],
@@ -29,8 +29,11 @@ def access_db(write: dict = None) -> Optional[Dict[str, Union[bool, list, str]]]
                 db_data: dict = write
                 db_json.truncate(0)
                 json.dump(db_data, db_json, indent=4, ensure_ascii=False)
-        except (UnicodeEncodeError, PermissionError):
+        except UnicodeEncodeError:
             pass
+        except PermissionError:
+            if not pass_permission_error:
+                raise
         except OSError as error:
             if str(error) == 'No space left on device':
                 pass
