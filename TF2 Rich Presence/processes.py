@@ -74,13 +74,6 @@ class ProcessScanner:
             # all the PIDs are known, so don't use tasklist, saves 0.2 - 0.3 seconds :)
             self.get_all_extended_info()
 
-            if not self.process_data['TF2']['running']:
-                self.process_data['TF2'] = self.p_data_default['TF2']
-            if not self.process_data['Steam']['running']:
-                self.process_data['Steam'] = self.p_data_default['Steam']
-            if not self.process_data['Discord']['running']:
-                self.process_data['Discord'] = self.p_data_default['Discord']
-
     # for Linux and MacOS (I think)
     def scan_posix(self):
         for proc in psutil.process_iter():
@@ -107,6 +100,13 @@ class ProcessScanner:
         self.process_data['TF2']['running'], self.process_data['TF2']['path'], self.process_data['TF2']['time'] = tf2_data['running'], tf2_data['path'], tf2_data['time']
         self.process_data['Steam']['running'], self.process_data['Steam']['path'] = steam_data['running'], steam_data['path']
         self.process_data['Discord']['running'] = discord_data['running']
+
+        if not self.process_data['TF2']['running']:
+            self.process_data['TF2'] = self.p_data_default['TF2']
+        if not self.process_data['Steam']['running']:
+            self.process_data['Steam'] = self.p_data_default['Steam']
+        if not self.process_data['Discord']['running']:
+            self.process_data['Discord'] = self.p_data_default['Discord']
 
     # a mess of logic that gives process info from a process name (not exe name) or PID
     def get_process_info(self, process: Union[str, int], return_data: Tuple[str, ...], validate_condebug: bool = False) -> Dict[str, Union[str, bool, int, None]]:
