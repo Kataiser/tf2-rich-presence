@@ -47,7 +47,7 @@ def get_match_data(self, address: str, modes: List[str], usernames: Optional[Set
                 # there's a decent amount of extra data here that isn't used but could be (server name, bot count, tags, etc.)
             if 'Kills' in modes:
                 players_info = a2s.players((ip, int(ip_socket)), timeout=settings.get('request_timeout'))
-        except (a2s.BrokenMessageError, a2s.BrokenMessageError, socket.gaierror, ConnectionRefusedError):
+        except (a2s.BrokenMessageError, a2s.BrokenMessageError, socket.gaierror, ConnectionRefusedError, ConnectionResetError):
             self.log.error(f"Couldn't get server info: {traceback.format_exc()}")
             self.last_server_request_data = unknown_data(self.loc, modes)
             self.last_server_request_time -= rate_limit
