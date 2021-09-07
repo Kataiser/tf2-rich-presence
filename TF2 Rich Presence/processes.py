@@ -178,15 +178,15 @@ class ProcessScanner:
         try:
             processes_command = subprocess.check_output('tasklist /fi "STATUS eq running" /fi "MEMUSAGE gt 10000" /nh', creationflags=0x08000000)
             processes: List[str] = str(processes_command).split(r'\r\n')
-        except subprocess.CalledProcessError as error:
-            self.log.error(f"tasklist failed: CalledProcessError ({error})")
-            processes = []
         except OSError as error:
             if "Insufficient system resources" in str(error):
                 self.log.error(f"tasklist failed: {error}")
                 processes = []
             else:
                 raise
+        except Exception as error:
+            self.log.error(f"tasklist failed: {repr(error)}")
+            processes = []
 
         self.parsed_tasklist = {}
 
