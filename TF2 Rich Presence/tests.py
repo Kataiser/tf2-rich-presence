@@ -143,14 +143,14 @@ class TestTF2RichPresense(unittest.TestCase):
     def test_get_match_info(self):
         test_game_state = game_state.GameState(self.log)
         test_addresses = ('162.254.192.155:27053',  # valve
-                          'us2.uncledane.com:27015',
+                          'dal-1.us.uncletopia.com:27015',
                           '51.81.49.25:27015',  # creators.tf
                           '192.223.26.238:27015',  # lazypurple
                           '45.35.1.186:27065')  # blackwonder
 
         for test_address in test_addresses:
             try:
-                server_data = test_game_state.get_match_data(test_address, ['Player count', 'Kills'])
+                server_data = test_game_state.get_match_data(test_address, ['Player count', 'Kills'], allow_network_errors=False)
                 self.assertTrue(server_data['player_count'].startswith("Players: "))
                 self.assertIn(server_data['player_count'].split('/')[1], ('24', '26', '30', '32'))
                 self.assertEqual(server_data['kills'], "Kills: 0")

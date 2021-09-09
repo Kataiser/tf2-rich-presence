@@ -14,7 +14,7 @@ import settings
 
 
 # get player count and/or user score (kills) from the game server
-def get_match_data(self, address: str, modes: List[str], usernames: Optional[Set[str]] = None) -> Dict[str, str]:
+def get_match_data(self, address: str, modes: List[str], usernames: Optional[Set[str]] = None, allow_network_errors: bool = True) -> Dict[str, str]:
     rate_limit: int = settings.get('server_rate_limit')
     time_since_last: float = time.time() - self.last_server_request_time
 
@@ -48,11 +48,17 @@ def get_match_data(self, address: str, modes: List[str], usernames: Optional[Set
             if 'Kills' in modes:
                 players_info = a2s.players((ip, int(ip_socket)), timeout=settings.get('request_timeout'))
         except (a2s.BrokenMessageError, a2s.BrokenMessageError, socket.gaierror, ConnectionRefusedError, ConnectionResetError):
+            if not allow_network_errors:
+                raise
+
             self.log.error(f"Couldn't get server info: {traceback.format_exc()}")
             self.last_server_request_data = unknown_data(self.loc, modes)
             self.last_server_request_time -= rate_limit
             return self.last_server_request_data
         except socket.timeout:
+            if not allow_network_errors:
+                raise
+
             if len(self.last_server_request_data) == len(modes):
                 self.log.debug("Timed out getting server info, persisting previous data")
             else:
