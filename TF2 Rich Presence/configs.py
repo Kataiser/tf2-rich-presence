@@ -152,10 +152,9 @@ def find_tf2_exe(self, steam_location: str) -> Optional[str]:
 
     for library_folder_key in libraryfolders_data:
         if len(library_folder_key) < 4:
-            potentional_install: Union[str, dict] = extend_path(libraryfolders_data[library_folder_key])
-
-            if isinstance(potentional_install, dict) and 'path' in potentional_install:
-                potentional_install = potentional_install['path']
+            library_folder_entry: Union[dict, str] = libraryfolders_data[library_folder_key]
+            library_folder_path: str = library_folder_entry['path'] if 'path' in library_folder_entry else library_folder_entry
+            potentional_install: str = extend_path(library_folder_path)
 
             if is_tf2_install(self.log, potentional_install):
                 return potentional_install
@@ -166,6 +165,7 @@ def find_tf2_exe(self, steam_location: str) -> Optional[str]:
 # makes sure a path to hl2.exe exists and is TF2 and not some other game
 def is_tf2_install(log: logger.Log, exe_location: str) -> bool:
     if not os.path.isfile(exe_location):
+        log.debug(f"No TF2 installation found at {exe_location}")
         return False
 
     is_tf2: bool = False
