@@ -144,7 +144,7 @@ class TestTF2RichPresense(unittest.TestCase):
         test_game_state = game_state.GameState(self.log)
         test_addresses = ('162.254.192.155:27053',  # valve
                           'dal-1.us.uncletopia.com:27015',
-                          '51.81.49.25:27015',  # creators.tf
+                          '134.195.12.137:27015',  # creators.tf
                           '192.223.26.238:27015',  # lazypurple
                           '45.35.1.186:27065')  # blackwonder
 
@@ -154,8 +154,8 @@ class TestTF2RichPresense(unittest.TestCase):
                 self.assertTrue(server_data['player_count'].startswith("Players: "))
                 self.assertIn(server_data['player_count'].split('/')[1], ('24', '26', '30', '32'))
                 self.assertEqual(server_data['kills'], "Kills: 0")
-            except AssertionError as error:
-                raise AssertionError(f'{test_address}, {error}')
+            except Exception as error:
+                raise AssertionError(f'{test_address}, {repr(error)}')
 
         settings.change('request_timeout', 0.001)
         self.assertEqual(test_game_state.get_match_data(test_addresses[-1], ['Player count', 'Kills']), server_data)

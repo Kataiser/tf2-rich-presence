@@ -1,7 +1,25 @@
-"LibraryFolders"
+"libraryfolders"
 {
-	"TimeNextStatsReport"		"1623184948"
-	"ContentStatsID"		"-1790930283475362586"
-	"1"		"nonexistent folder"
-	"2"		"test_resources\\very real steam 2"
+	"contentstatsid"		"-1790930283475362586"
+	"1"
+	{
+		"path"		"nonexistent folder"
+		"label"		""
+		"contentid"		"8456573034278918371"
+		"totalsize"		"1000202039296"
+		"apps"
+		{
+		}
+	}
+	"2"
+	{
+		"path"		"test_resources\\very real steam 2"
+		"label"		""
+		"contentid"		"7252815017285945761"
+		"totalsize"		"750154272768"
+		"apps"
+		{
+			"440"		"23817536508"
+		}
+	}
 }
