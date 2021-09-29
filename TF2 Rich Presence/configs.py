@@ -53,9 +53,9 @@ def class_config_files(log, exe_location: str):
     log.debug(f"Classes with echo added: {classes_not_found}")
 
 
-# reads steam's launch options save file to find TF2 launch options
+# reads steam's launch options save file to find TF2 launch options, and if condebug is needed, warn if it's not found
 def steam_config_file(self, exe_location: str, require_condebug: bool) -> Optional[str]:
-    self.log.debug(f"Scanning Steam config files{' for -condebug' if require_condebug else ''}")
+    self.log.debug(f"Scanning Steam config files, {require_condebug=}")
     found_condebug: bool = False
     user_id_folders: List[str] = os.listdir(os.path.join(exe_location, 'userdata'))
     most_likely_args: Tuple[int, str] = (-1, '')
@@ -91,8 +91,13 @@ def steam_config_file(self, exe_location: str, require_condebug: bool) -> Option
         else:
             self.log.debug(f"Parsing file ({global_config_file_size} bytes)")
 
-        parsed: dict = vdf.loads(global_config_file_read)
-        self.log.debug(f"VDF parse complete ({len(parsed['UserLocalConfigStore'])} keys)")
+        try:
+            parsed: dict = vdf.loads(global_config_file_read)
+        except SyntaxError as error:
+            self.log.error(f"Couldn't parse user VDF ({error})'")
+            continue
+
+        self.log.debug(f"User VDF parse complete ({len(parsed['UserLocalConfigStore'])} keys)")
         parsed_lowercase: dict = lowercase_keys(parsed)
         self.log.debug(f"Lowercase complete ({len(parsed['userlocalconfigstore'])} keys)")
 
