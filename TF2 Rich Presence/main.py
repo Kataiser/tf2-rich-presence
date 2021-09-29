@@ -224,7 +224,7 @@ class TF2RichPresense:
                     need_condebug: bool = not self.gui.launched_tf2_with_button and self.process_scanner.tf2_without_condebug
                     tf2_launch_cmd: Optional[str] = self.steam_config_file(p_data['Steam']['path'], need_condebug)
 
-                    if tf2_launch_cmd and tf2_exe_path:
+                    if tf2_exe_path and tf2_launch_cmd is not None:
                         self.gui.tf2_launch_cmd = (tf2_exe_path, tf2_launch_cmd)
                         self.log.debug(f"Set launch TF2 command to {self.gui.tf2_launch_cmd}")
                     elif self.process_scanner.tf2_without_condebug:
