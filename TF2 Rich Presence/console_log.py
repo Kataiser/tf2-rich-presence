@@ -114,6 +114,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     match_types: Dict[str, str] = {'12v12 Casual Match': 'Casual', 'MvM Practice': 'MvM (Boot Camp)', 'MvM MannUp': 'MvM (Mann Up)', '6v6 Ladder Match': 'Competitive'}
     menus_messages: Tuple[str, ...] = ('For FCVAR_REPLICATED', '[TF Workshop]', 'request to abandon', 'Server shutting down', 'destroyed Lobby', 'Disconnect:', 'destroyed CAsyncWavDataCache',
                                        'Connection failed after', 'Missing map', 'Host_Error')
+    menus_message_used: Optional[str] = ''
     menus_message: str
 
     for username in user_usernames:
@@ -136,14 +137,15 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
             for menus_message in menus_messages:
                 if menus_message in line:
                     in_menus = True
+                    menus_message_used = line
                     kataiser_seen_on = ''
                     break
 
             # ok this is jank but it's to only trigger on actually closing the map and not just (I think) ending a demo recording
-            if not in_menus and 'SoundEmitter:' in line:
-                if int(line.split('[')[1].split()[0]) > 1000:
-                    in_menus = True
-                    kataiser_seen_on = ''
+            if not in_menus and 'SoundEmitter:' in line and int(line.split('[')[1].split()[0]) > 1000:
+                in_menus = True
+                menus_message_used = line
+                kataiser_seen_on = ''
 
         if line.endswith(' selected \n'):
             class_line_possibly: List[str] = line[:-11].split()
@@ -182,6 +184,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
             for user_username in user_usernames:
                 if user_username in line:
                     in_menus = True
+                    menus_message_used = line
                     kataiser_seen_on = ''
                     break
 
@@ -203,6 +206,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
         server_address = ''
         hosting = False
         self.gui.set_bottom_text('kataiser', False)
+        self.log.debug(f"Menus message used: \"{menus_message_used.strip()}\"")
     else:
         if tf2_class != '' and tf2_map == '':
             self.log.error("Have class without map")
