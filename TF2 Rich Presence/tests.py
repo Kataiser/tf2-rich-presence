@@ -72,6 +72,9 @@ class TestTF2RichPresense(unittest.TestCase):
                          (False, 'pl_snowycoast', 'Pyro', '162.254.194.158:27048', 'Not queued', False))
         self.assertEqual(app.interpret_console_log('test_resources\\console_tf2bd.log', {'Kataiser'}, float('inf'), True),
                          (False, 'ctf_turbine', 'Soldier', '45.141.52.51:27015', 'Not queued', False))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_community_disconnect.log', {'not Kataiser'}, float('inf'), True), (True, '', '', '', 'Not queued', False))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_community_disconnect2.log', {'not Kataiser'}, float('inf'), True),
+                         (False, 'vsh_military_area_se6', 'Heavy', '45.235.98.47:27070', 'Not queued', False))
 
         # tests trimming
         trimtest_small = 'test_resources\\console_badwater.log'

@@ -1,0 +1,332 @@
+For FCVAR_REPLICATED, ConVar must be defined in client and game .dlls (sv_use_steam_voice)
+[TF Workshop] Got 9 subscribed maps, 9 new
+ProtoDefs post data loaded.
+ProtoDefs loaded. 24.69 MB used
+ProtoDefs post data loaded.
+ProtoDefs loaded. 24.69 MB used
+maxplayers set to 24
+Steam config directory: F:\Steam\steamapps\common\Team Fortress 2\platform\config
+CClientSteamContext logged on = 1
+Parent cvar in server.dll not allowed (tf_flamethrower_new_flame_offset)
+ProtoDefs post data loaded.
+ProtoDefs loaded. 24.69 MB used
+ProtoDefs post data loaded.
+ProtoDefs loaded. 24.69 MB used
+Cleaning up unneeded replay block data...
+Replay cleanup done.
+Loading default settings for high sensitivity
+ProtoDefs post data loaded.
+ProtoDefs post data loaded.
+Connection to game coordinator established.
+Current item schema is up-to-date with version 8DA2CC22.
+CTFGCClientSystem::PostInitGC
+CTFGCClientSystem - adding listener
+ProtoDefs post data loaded.
+ProtoDefs post data loaded.
+Unknown command "("
+Can't use cheat cvar default_fov in multiplayer, unless the server has sv_cheats set to 1.
+Unknown command "("
+Unknown command "("
+Unknown command "("
+Unknown command "R_drawdeatailprops"
+map load failed: preload_room not found or invalid
+[TF Workshop] Got updated information for map [ workshop/plr_highertower_extended.ugc1428907188 ]
+[TF Workshop] Got updated information for map [ workshop/ctf_2bine_v1.ugc918607198 ]
+[TF Workshop] Got updated information for map [ workshop/vsh_2fortdesk_v8.ugc685020170 ]
+[TF Workshop] Got updated information for map [ workshop/vsh_dr_office_v5.ugc1415871192 ]
+[TF Workshop] Got updated information for map [ workshop/plr_highertower.ugc899335714 ]
+[TF Workshop] Got updated information for map [ workshop/vsh_05_2fortdesk_nemesis_v01.ugc1384626464 ]
+[TF Workshop] Got updated information for map [ workshop/dr_bank_v12a.ugc454119813 ]
+[TF Workshop] Got updated information for map [ workshop/hhd_bigcity.ugc1299919295 ]
+[TF Workshop] Got updated information for map [ workshop/dr_berlin_redux_v7_fix.ugc2170585658 ]
+[SteamNetworkingSockets] SDR network config fetch first attempt failed.  HTTP 504.  .  Trying again.
+Can't use cheat cvar fog_start in multiplayer, unless the server has sv_cheats set to 1.
+Can't use cheat cvar fog_end in multiplayer, unless the server has sv_cheats set to 1.
+Can't use cheat cvar fog_startskybox in multiplayer, unless the server has sv_cheats set to 1.
+Can't use cheat cvar fog_endskybox in multiplayer, unless the server has sv_cheats set to 1.
+Can't use cheat cvar r_farz in multiplayer, unless the server has sv_cheats set to 1.
+Network: IP 192.168.0.10, mode MP, dedicated No, ports 27015 SV / 27005 CL
+Connecting to 45.235.98.47:27070...
+Connected to 45.235.98.47:27070
+
+Team Fortress
+Map: vsh_military_area_se6
+Players: 14 / 32
+Build: 6774624
+Server Number: 18
+
+Client reached server_spawn.
+Recognizing MM server id [A:1:597781509:18470]
+Attemped to precache unknown particle system "K_Pre_BoltsBlue"!
+Attemped to precache unknown particle system "K_Pre_BloodSpray"!
+Attemped to precache unknown particle system "K_Pre_ChargeBlue"!
+Attemped to precache unknown particle system "1VA_Win_Sparkle"!
+Attemped to precache unknown particle system "Micro_Bird_Feather_Fall"!
+Attemped to precache unknown particle system "Micro_Cheer_Parkourer"!
+Attemped to precache unknown particle system "Micro_Cheer_Proscunt"!
+Attemped to precache unknown particle system "Micro_Cheer_LabRat"!
+Attemped to precache unknown particle system "Micro_Cloud_Bubbles"!
+Attemped to precache unknown particle system "Micro_Cloud_Bubbles3"!
+Attemped to precache unknown particle system "Micro_Cloud_Bubbles4"!
+Attemped to precache unknown particle system "Micro_Cloud_Bubbles2"!
+Attemped to precache unknown particle system "Micro_Cheer_Rambo"!
+Attemped to precache unknown particle system "Micro_Pipe_WaterLeak"!
+Attemped to precache unknown particle system "K_Pre_BoltsRed"!
+Attemped to precache unknown particle system "Micro_Cloud_Skybox"!
+Attemped to precache unknown particle system "Micro_Cloud_Skybox2"!
+Attemped to precache unknown particle system "Micro_Cloud_Skybox3"!
+Attemped to precache unknown particle system "Micro_Cloud_Ground"!
+Attemped to precache unknown particle system "K_Kamikaze"!
+Attemped to precache unknown particle system "K_Kamikaze_Flash"!
+Attemped to precache unknown particle system "K_Kamikaze_Flashred"!
+Attemped to precache unknown particle system "K_Kamikaze_Clouds"!
+Attemped to precache unknown particle system "Micro_Win_Red"!
+Attemped to precache unknown particle system "Micro_Win_Red_Wave"!
+Attemped to precache unknown particle system "Micro_Cheer_BarrelMaster"!
+Attemped to precache unknown particle system "Micro_Skybox_ParentBuilding"!
+Attemped to precache unknown particle system "Micro_Skybox_GiftBuilding"!
+Attemped to precache unknown particle system "Micro_Skybox_PencilBuilding"!
+Attemped to precache unknown particle system "Micro_Cheer_FatJogger"!
+Attemped to precache unknown particle system "Micro_Cheer_Winner"!
+Attemped to precache unknown particle system "Micro_Cheer_RocketJumper"!
+Attemped to precache unknown particle system "Micro_Oil_Drips"!
+Attemped to precache unknown particle system "Micro_Win_Blue"!
+Attemped to precache unknown particle system "Micro_Win_Blue_Wave"!
+Attemped to precache unknown particle system "Micro_Ground_Bubbles"!
+Attemped to precache unknown particle system "Micro_Ground_Bubbles4"!
+Attemped to precache unknown particle system "K_Kamikaze_Blue"!
+Attemped to precache unknown particle system "Micro_Win_Sparkle"!
+Attemped to precache unknown particle system "Micro_Win_Yellow"!
+Attemped to precache unknown particle system "Micro_Win_Yellow_Wave"!
+Attemped to precache unknown particle system "Micro_Win_Green"!
+Attemped to precache unknown particle system "Micro_Win_Green_Wave"!
+Attemped to precache unknown particle system "Micro_Win_Purple_Wave"!
+Attemped to precache unknown particle system "Micro_Win_Purple"!
+Attemped to precache unknown particle system "Micro_Win_Rainbow"!
+Attemped to precache unknown particle system "Micro_Win_Rainbow_Wave"!
+Attemped to precache unknown particle system "remote_sparkle"!
+Attemped to precache unknown particle system "remote_pickup"!
+Attemped to precache unknown particle system "star_explode"!
+Attemped to precache unknown particle system "rez_bolt"!
+Attemped to precache unknown particle system "blood_cooler_break"!
+Attemped to precache unknown particle system "cooler_break1"!
+Attemped to precache unknown particle system "number_1"!
+Attemped to precache unknown particle system "cooler_break2"!
+Attemped to precache unknown particle system "cooler_break3"!
+Attemped to precache unknown particle system "cooler_break4"!
+Attemped to precache unknown particle system "cooler_break5"!
+Attemped to precache unknown particle system "axe_sparks"!
+Attemped to precache unknown particle system "chand_light"!
+Attemped to precache unknown particle system "chand_light2"!
+Attemped to precache unknown particle system "chand_light3"!
+Attemped to precache unknown particle system "chand_light4"!
+Attemped to precache unknown particle system "chand_light5"!
+Attemped to precache unknown particle system "chand_light6"!
+Attemped to precache unknown particle system "chand_light7"!
+Attemped to precache unknown particle system "chand_light8"!
+Attemped to precache unknown particle system "chand_light9"!
+Attemped to precache unknown particle system "chand_light10"!
+Attemped to precache unknown particle system "chand_light11"!
+Attemped to precache unknown particle system "skull_smash"!
+Attemped to precache unknown particle system "skull_flame"!
+Attemped to precache unknown particle system "electric_bolt"!
+Attemped to precache unknown particle system "test123"!
+Attemped to precache unknown particle system "electric_bolt_small"!
+Attemped to precache unknown particle system "electric_bolt_large"!
+Attemped to precache unknown particle system "electric_burst"!
+Attemped to precache unknown particle system "electric_flash"!
+Attemped to precache unknown particle system "vent_flame"!
+Attemped to precache unknown particle system "wind_whirl"!
+Attemped to precache unknown particle system "wind_whirl_small"!
+Attemped to precache unknown particle system "wind_whirl_side"!
+Attemped to precache unknown particle system "Wind_whirl_tiny"!
+Attemped to precache unknown particle system "wind_whirl_side_big"!
+Attemped to precache unknown particle system "vent_flame_big"!
+Attemped to precache unknown particle system "wind_whirl_big"!
+Attemped to precache unknown particle system "zurg_flash"!
+Attemped to precache unknown particle system "zurg_ball"!
+Attemped to precache unknown particle system "zurg_ball_fizz"!
+Attemped to precache unknown particle system "druid_spell"!
+Attemped to precache unknown particle system "druid_spell_cast"!
+Attemped to precache unknown particle system "spyro_flame"!
+Attemped to precache unknown particle system "toxic_bubbles"!
+Attemped to precache unknown particle system "toxic_splash"!
+Attemped to precache unknown particle system "toxic_splodge"!
+Attemped to precache unknown particle system "thruster"!
+Attemped to precache unknown particle system "thruster_beam"!
+Attemped to precache unknown particle system "rez_bolt_charge"!
+Attemped to precache unknown particle system "bot_explode"!
+Attemped to precache unknown particle system "glass_shards"!
+Attemped to precache unknown particle system "glass_crash"!
+Attemped to precache unknown particle system "cutter_debris"!
+Attemped to precache unknown particle system "cutter_debris_small"!
+Attemped to precache unknown particle system "cutter_debris_grey"!
+Attemped to precache unknown particle system "cutter_debris_small_grey"!
+Attemped to precache unknown particle system "cutter_debris_bud"!
+Attemped to precache unknown particle system "cutter_debris_bud_dead"!
+Attemped to precache unknown particle system "electric_bolt_sec"!
+Attemped to precache unknown particle system "electric_bolt_8"!
+Attemped to precache unknown particle system "tooter"!
+Attemped to precache unknown particle system "wind_whirl_multi"!
+Attemped to precache unknown particle system "zurg_glow"!
+Attemped to precache unknown particle system "zurg_fizz"!
+Attemped to precache unknown particle system "electro_bolt"!
+Attemped to precache unknown particle system "electro_bolt_trail"!
+Attemped to precache unknown particle system "electro_bolt_zap"!
+Attemped to precache unknown particle system "electro_bolt_static2"!
+Attemped to precache unknown particle system "electro_bolt_trail2"!
+Attemped to precache unknown particle system "missile_lock"!
+Attemped to precache unknown particle system "missile_lock_1"!
+Attemped to precache unknown particle system "missile_lock_2"!
+Attemped to precache unknown particle system "missile_lock_3"!
+Attemped to precache unknown particle system "missile_lock_4"!
+Attemped to precache unknown particle system "missile_lock_5"!
+Attemped to precache unknown particle system "missile_lock_6"!
+Attemped to precache unknown particle system "missile_lock_7"!
+Attemped to precache unknown particle system "powerup_base"!
+Attemped to precache unknown particle system "powerup_electrobolt"!
+Attemped to precache unknown particle system "powerup_speedboost"!
+Attemped to precache unknown particle system "powerup_missile"!
+Attemped to precache unknown particle system "powerup_mines"!
+Attemped to precache unknown particle system "powerup_shield"!
+Attemped to precache unknown particle system "powerup_rocket"!
+Attemped to precache unknown particle system "stungun"!
+Attemped to precache unknown particle system "wartime_mine_explosion"!
+Attemped to precache unknown particle system "wartime_mine_explosion_smoke"!
+Attemped to precache unknown particle system "wartime_mine_explosion_dustup"!
+Attemped to precache unknown particle system "wartime_mine_explosion_dirt"!
+Attemped to precache unknown particle system "wartime_mine_explosion_dirt_2"!
+Attemped to precache unknown particle system "wartime_mine_explosion_debris"!
+Attemped to precache unknown particle system "wartime_mine_explosion_smoke_cloud"!
+Attemped to precache unknown particle system "wartime_mine_explosion_flashup"!
+Attemped to precache unknown particle system "wartime_mine_explosion_fire"!
+Attemped to precache unknown particle system "wartime_mine_explosion_sparks"!
+Attemped to precache unknown particle system "wartime_mine_explosion_embers"!
+Attemped to precache unknown particle system "wartime_sea_mine_explosion"!
+Attemped to precache unknown particle system "wartime_sea_mine_explosion_foam"!
+Attemped to precache unknown particle system "wartime_sea_mine_explosion_fire"!
+Attemped to precache unknown particle system "wartime_sea_mine_explosion_foam_slow"!
+Attemped to precache unknown particle system "wartime_sea_mine_explosion_bubbles"!
+Attemped to precache unknown particle system "wartime_sea_mine_explosion_flashup"!
+Attemped to precache unknown particle system "wartime_sea_mine_explosion_debris"!
+Attemped to precache unknown particle system "wartime_sea_mine_explosion_smoke"!
+Attemped to precache unknown particle system "wartime_sea_mine_surface_explosion"!
+Attemped to precache unknown particle system "wartime_sea_mine_surface_explosion_splash"!
+Attemped to precache unknown particle system "wartime_sea_mine_surface_explosion_foam"!
+Attemped to precache unknown particle system "wartime_sea_mine_surface_explosion_froth"!
+Attemped to precache unknown particle system "wartime_sea_mine_surface_explosion_smoke"!
+Attemped to precache unknown particle system "wartime_barrel_explo"!
+Attemped to precache unknown particle system "wartime_barrel_explo_base"!
+Attemped to precache unknown particle system "wartime_barrel_explo_guide"!
+Attemped to precache unknown particle system "wartime_barrel_explo_smoke_column"!
+Attemped to precache unknown particle system "wartime_barrel_explo_smoke"!
+Attemped to precache unknown particle system "wartime_barrel_explo_smoke_glow"!
+Attemped to precache unknown particle system "wartime_barrel_explo_smoke_column_glow"!
+Attemped to precache unknown particle system "wartime_tank_fire"!
+Attemped to precache unknown particle system "wartime_tank_fire_flashup"!
+Attemped to precache unknown particle system "wartime_tank_fire_flashup_b"!
+Attemped to precache unknown particle system "wartime_tank_fire_sparks"!
+Attemped to precache unknown particle system "wartime_tank_fire_sparks_flitter"!
+Attemped to precache unknown particle system "wartime_tank_exhaust"!
+Attemped to precache unknown particle system "wartime_tank_smallexhaust"!
+Attemped to precache unknown particle system "wartime_tank_smallexhaust_sparks"!
+Attemped to precache unknown particle system "firework_purple_stars"!
+Attemped to precache unknown particle system "firework_purple_sparkler"!
+Attemped to precache unknown particle system "firework_purple_trail"!
+Attemped to precache unknown particle system "firework_blue_stars"!
+Attemped to precache unknown particle system "firework_blue_trail"!
+Attemped to precache unknown particle system "firework_green_stars"!
+Attemped to precache unknown particle system "firework_green_trail"!
+Attemped to precache unknown particle system "firework_yellow_stars"!
+Attemped to precache unknown particle system "firework_yellow_trail"!
+Attemped to precache unknown particle system "firework_orange_stars"!
+Attemped to precache unknown particle system "firework_orange_trail"!
+Attemped to precache unknown particle system "firework_red_stars"!
+Attemped to precache unknown particle system "firework_red_trail"!
+Attemped to precache unknown particle system "firework_white_stars"!
+Attemped to precache unknown particle system "firework_white_trail"!
+Attemped to precache unknown particle system "spookytoad_bell_ring_halloween"!
+Attemped to precache unknown particle system "hammer_bell_ring_shockwave_halloween"!
+Attemped to precache unknown particle system "hammer_bell_ring_shockwave_halloween2"!
+Attemped to precache unknown particle system "spookytoad_bell_ring_holidays"!
+Attemped to precache unknown particle system "hammer_bell_ring_shockwave_holidays"!
+Attemped to precache unknown particle system "hammer_bell_ring_shockwave_holidays2"!
+Attemped to precache unknown particle system "blood_impact_red"!
+The server is using sv_pure 1.  (Custom pure server rules.)
+Error! Variable "$basetexture" is multiply defined in material "models/player/jotaro/jotaro"!
+Error! Variable "$basetexture" is multiply defined in material "models/player/jotaro/jotaro_blue"!
+freak_fortress_2/shadow93/dmedic/d_soldier.mdl/player/soldier_user_animations.mdl : missmatched parent bones on "weapon_bone_1"
+freak_fortress_2/shadow93/dmedic/d_soldier.mdl/player/soldier_user_animations.mdl : missmatched parent bones on "prp_coat_front_1_L"
+freak_fortress_2/shadow93/dmedic/d_soldier.mdl/player/soldier_user_animations.mdl : missmatched parent bones on "prp_coat_back_1_L"
+freak_fortress_2/shadow93/dmedic/d_soldier.mdl/player/soldier_animations.mdl : missmatched parent bones on "weapon_bone_1"
+freak_fortress_2/shadow93/dmedic/d_soldier.mdl/player/soldier_animations.mdl : missmatched parent bones on "prp_coat_front_1_L"
+freak_fortress_2/shadow93/dmedic/d_soldier.mdl/player/soldier_animations.mdl : missmatched parent bones on "prp_coat_back_1_L"
+freak_fortress_2/shadow93/dmedic/d_soldier.mdl/workshop/player/animations/soldier_workshop_animations.mdl : missmatched parent bones on "weapon_bone_1"
+freak_fortress_2/shadow93/dmedic/d_soldier.mdl/workshop/player/animations/soldier_workshop_animations.mdl : missmatched parent bones on "prp_coat_front_1_L"
+freak_fortress_2/shadow93/dmedic/d_soldier.mdl/workshop/player/animations/soldier_workshop_animations.mdl : missmatched parent bones on "prp_coat_back_1_L"
+No such variable "$yellow" for material "freak_fortress_2/daftpunk2/dphelm"
+Error: Material "freak_fortress_2/daftpunk2/dphelm" : proxy "YellowLevel" unable to initialize!
+No such variable "$yellow" for material "freak_fortress_2/daftpunk2/dphelm"
+Error: Material "freak_fortress_2/daftpunk2/dphelm" : proxy "Equals" unable to initialize!
+No such variable "$glowcolor" for material "freak_fortress_2/travis/beam"
+Error: Material "freak_fortress_2/travis/beam" : proxy "ModelGlowColor" unable to initialize!
+No such variable "$glowcolor" for material "freak_fortress_2/travis/beam"
+Error: Material "freak_fortress_2/travis/beam" : proxy "Equals" unable to initialize!
+No such variable "$glowcolor" for material "freak_fortress_2/travis/beam"
+Error: Material "freak_fortress_2/travis/beam" : proxy "Equals" unable to initialize!
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_2fort/telephonepole001_skybox.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_spytech/radio_tower_skybox001.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_skybox/farm_windmill.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_skybox/farm_barn.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_skybox/farm_house.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_2fort/telephonepole001_skybox.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_2fort/telephonepole001_skybox.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_2fort/telephonepole001_skybox.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_2fort/telephonepole001_skybox.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_skybox/train_tunnel_skybox001.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_skybox/train_tunnel_skybox001.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_mvm/mvm_upgrade_tools.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_mining/billboard_skybox001.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_mining/billboard_skybox001.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_skybox/train_building007_skybox.mdl)
+ArmorKeik se ha conectado
+CAsyncWavDataCache:  5 .wavs total 0 bytes, 0.00 % of capacity
+Particles: Missing 'particles/teleport_status.pcf'
+Particles: Missing 'particles/explosion.pcf'
+Particles: Missing 'particles/player_recent_teleport.pcf'
+Particles: Missing 'particles/burningplayer.pcf'
+Particles: Missing 'particles/teleported_fx.pcf'
+Particles: Missing 'particles/cig_smoke.pcf'
+Particles: Missing 'particles/water.pcf'
+Particles: Missing 'particles/speechbubbles.pcf'
+Particles: Missing 'particles/bullet_tracers.pcf'
+Particles: Missing 'particles/nemesis.pcf'
+Particles: Missing 'particles/disguise.pcf'
+Particles: Missing 'particles/flag_particles.pcf'
+Compact freed 647168 bytes
+JOY_AXIS_X:  mapped to Turn (absolute)
+JOY_AXIS_Y:  mapped to Look (absolute)
+JOY_AXIS_Z:  unmapped
+JOY_AXIS_R:  mapped to Forward (absolute)
+JOY_AXIS_U:  mapped to Side (absolute)
+JOY_AXIS_V:  unmapped
+Advanced Joystick settings initialized
+Redownloading all lightmaps
+  [Welcome] Bienvenido al menu de Reglas .
+*DEAD* E L I A L F :  como que tenes un mod para que el pyro sea un fempyro?
+Iñaqui el Ñoqui suicided.
+[FF2] Easter Bunny (Asdfs402) won with 3573 out of 10130 HP left.
+38.315273 BlockingGetDataPointer:  Async I/O Force weapons\bat_draw_swoosh2.wav (   46.73 msec /   215.41 msec total )
+Asdfs402 suicided.
+Say /amp as engineer to select 2nd building. Say /amp_help to show info.
+Download file 'user_custom/c1/c12cc55b.dat' already exists!
+Tomasote :  que
+[FF2] You are currently in the Boss queue. Want to disable queue points? Do /ff2toggle.
+Heavy selected 
+E L I A L F :  pasi
+[Tienda-Poot] ❤ Acabas de recibir 2 ColdestCoins!
+E L I A L F :  pasu**
+[Amongas] P a s u :  quepa mono?
+[FF2] Iñaqui el Ñoqui became Gaben with 7474x2 HP
+FFD700[RTD] FF4040Webi Wabo rolled 32CD32Powerful Hits.
+[Vip Inframundo]Webi Wabo :  !rtd

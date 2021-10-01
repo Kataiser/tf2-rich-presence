@@ -101,6 +101,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     # setup
     just_started_server: bool = False
     server_still_running: bool = False
+    found_first_wav_cache: bool = False
     with_optimization: bool = True  # "with" optimization, not "with optimization"
     chat_safety: bool = True
     self.kataiser_scan_loop += 1
@@ -157,6 +158,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
             in_menus = False
             tf2_map = line[5:-1]
             tf2_class = ''
+            found_first_wav_cache = False
 
             if just_started_server:
                 server_still_running = True
@@ -179,6 +181,17 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
 
             elif '[PartyClient] Entering s' in line:  # full line: "[PartyClient] Entering standby queue"
                 queued_state = 'Queued for a party\'s match'
+
+        elif 'CAsyncWavDataCache' in line:
+            if found_first_wav_cache:
+                # it's the one after disconnecting
+                in_menus = True
+                menus_message_used = line
+                kataiser_seen_on = ''
+                found_first_wav_cache = False
+            else:
+                # it's the one after loading in
+                found_first_wav_cache = True
 
         elif 'Disconnect by user' in line:
             for user_username in user_usernames:
