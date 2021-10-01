@@ -66,7 +66,11 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     else:
         decode_mode = None
 
+    # actually open the file finally
     with open(console_log_path, 'r', errors='replace', encoding=decode_mode) as consolelog_file:
+        # update this again last moment
+        self.console_log_mtime = int(os.stat(console_log_path).st_mtime)
+
         if consolelog_file_size > byte_limit:
             skip_to_byte: int = consolelog_file_size - int(byte_limit)
             consolelog_file.seek(skip_to_byte, 0)  # skip to last few KBs
@@ -142,11 +146,19 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
                     kataiser_seen_on = ''
                     break
 
-            # ok this is jank but it's to only trigger on actually closing the map and not just (I think) ending a demo recording
-            if not in_menus and 'SoundEmitter:' in line and int(line.split('[')[1].split()[0]) > 1000:
-                in_menus = True
-                menus_message_used = line
-                kataiser_seen_on = ''
+            if not in_menus:
+                if 'Disconnect by user' in line:
+                    for user_username in user_usernames:
+                        if user_username in line:
+                            in_menus = True
+                            menus_message_used = line
+                            kataiser_seen_on = ''
+                            break
+                # ok this is jank but it's to only trigger on actually closing the map and not just (I think) ending a demo recording
+                elif 'SoundEmitter:' in line and int(line.split('[')[1].split()[0]) > 1000:
+                    in_menus = True
+                    menus_message_used = line
+                    kataiser_seen_on = ''
 
         if line.endswith(' selected \n'):
             class_line_possibly: List[str] = line[:-11].split()
@@ -192,14 +204,6 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
             else:
                 # it's the one after loading in
                 found_first_wav_cache = True
-
-        elif 'Disconnect by user' in line:
-            for user_username in user_usernames:
-                if user_username in line:
-                    in_menus = True
-                    menus_message_used = line
-                    kataiser_seen_on = ''
-                    break
 
         elif 'SV_ActivateServer' in line:  # full line: "SV_ActivateServer: setting tickrate to 66.7"
             just_started_server = True
