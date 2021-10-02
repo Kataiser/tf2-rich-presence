@@ -105,6 +105,8 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     # setup
     just_started_server: bool = False
     server_still_running: bool = False
+    using_wav_cache: bool = False
+    connecting_to_matchmaking: bool = False
     found_first_wav_cache: bool = False
     with_optimization: bool = True  # "with" optimization, not "with optimization"
     chat_safety: bool = True
@@ -170,7 +172,13 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
             in_menus = False
             tf2_map = line[5:-1]
             tf2_class = ''
-            found_first_wav_cache = False
+
+            if connecting_to_matchmaking:
+                connecting_to_matchmaking = False
+                using_wav_cache = False
+            else:
+                using_wav_cache = True
+                found_first_wav_cache = False
 
             if just_started_server:
                 server_still_running = True
@@ -194,13 +202,21 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
             elif '[PartyClient] Entering s' in line:  # full line: "[PartyClient] Entering standby queue"
                 queued_state = 'Queued for a party\'s match'
 
-        elif 'CAsyncWavDataCache' in line:
+        elif 'matchmaking server' in line:
+            connecting_to_matchmaking = True
+
+        elif using_wav_cache and 'CAsyncWavDataCache' in line:
             if found_first_wav_cache:
                 # it's the one after disconnecting
-                in_menus = True
-                menus_message_used = line
-                kataiser_seen_on = ''
-                found_first_wav_cache = False
+
+                if in_menus:
+                    # ...unless it isn't?
+                    self.log.error("Found CAsyncWavDataCache despite being in menus already")
+                else:
+                    in_menus = True
+                    menus_message_used = line
+                    kataiser_seen_on = ''
+                    found_first_wav_cache = False
             else:
                 # it's the one after loading in
                 found_first_wav_cache = True
@@ -223,7 +239,9 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
         server_address = ''
         hosting = False
         self.gui.set_bottom_text('kataiser', False)
-        self.log.debug(f"Menus message used: \"{menus_message_used.strip()}\"")
+
+        if menus_message_used:
+            self.log.debug(f"Menus message used: \"{menus_message_used.strip()}\"")
     else:
         if tf2_class != '' and tf2_map == '':
             self.log.error("Have class without map")
