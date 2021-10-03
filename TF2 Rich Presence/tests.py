@@ -75,6 +75,8 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual(app.interpret_console_log('test_resources\\console_community_disconnect.log', {'not Kataiser'}, float('inf'), True), (True, '', '', '', 'Not queued', False))
         self.assertEqual(app.interpret_console_log('test_resources\\console_community_disconnect2.log', {'not Kataiser'}, float('inf'), True),
                          (False, 'vsh_military_area_se6', 'Heavy', '45.235.98.47:27070', 'Not queued', False))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_blanks.log', {'not Kataiser'}, float('inf'), True),
+                         (False, 'sd_doomsday_event', 'Pyro', '162.254.195.114:27046', 'Not queued', False))
 
         # tests trimming
         trimtest_small = 'test_resources\\console_badwater.log'

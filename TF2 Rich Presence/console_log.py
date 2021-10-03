@@ -103,6 +103,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
             self.log.error(f"Failed to trim console.log: {error}")
 
     # setup
+    now_in_menus: bool = False
     just_started_server: bool = False
     server_still_running: bool = False
     using_wav_cache: bool = False
@@ -114,7 +115,6 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     kataiser_scan: bool = self.kataiser_scan_loop == KATAISER_LOOP_FREQ if not force else True
     if kataiser_scan:
         self.kataiser_scan_loop = 0
-    scan_for_address: bool = any(mode in (settings.get('top_line'), settings.get('bottom_line')) for mode in ('Player count', 'Kills'))
     user_is_kataiser: bool = 'Kataiser' in user_usernames
     kataiser_seen_on: str = ''
     # TODO: detection for canceling loading into community servers (if possible)
@@ -143,24 +143,18 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
         if not in_menus:
             for menus_message in menus_messages:
                 if menus_message in line:
-                    in_menus = True
-                    menus_message_used = line
-                    kataiser_seen_on = ''
+                    now_in_menus = True
                     break
 
             if not in_menus:
                 if 'Disconnect by user' in line:
                     for user_username in user_usernames:
                         if user_username in line:
-                            in_menus = True
-                            menus_message_used = line
-                            kataiser_seen_on = ''
+                            now_in_menus = True
                             break
                 # ok this is jank but it's to only trigger on actually closing the map and not just (I think) ending a demo recording
                 elif 'SoundEmitter:' in line and int(line.split('[')[1].split()[0]) > 1000:
-                    in_menus = True
-                    menus_message_used = line
-                    kataiser_seen_on = ''
+                    now_in_menus = True
 
         if line.endswith(' selected \n'):
             class_line_possibly: List[str] = line[:-11].split()
@@ -173,13 +167,6 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
             tf2_map = line[5:-1]
             tf2_class = ''
 
-            if connecting_to_matchmaking:
-                connecting_to_matchmaking = False
-                using_wav_cache = False
-            else:
-                using_wav_cache = True
-                found_first_wav_cache = False
-
             if just_started_server:
                 server_still_running = True
                 just_started_server = False
@@ -187,8 +174,13 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
                 just_started_server = False
                 server_still_running = False
 
-        elif scan_for_address and 'Connected to ' in line:
+        elif 'Connected to' in line:
             server_address = line.split()[-1]
+
+            if not connecting_to_matchmaking:
+                using_wav_cache = True
+                found_first_wav_cache = False
+                connecting_to_matchmaking = False
 
         elif '[P' in line:
             if '[PartyClient] L' in line:  # full line: "[PartyClient] Leaving queue"
@@ -213,10 +205,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
                     # ...unless it isn't?
                     self.log.error("Found CAsyncWavDataCache despite being in menus already")
                 else:
-                    in_menus = True
-                    menus_message_used = line
-                    kataiser_seen_on = ''
-                    found_first_wav_cache = False
+                    now_in_menus = True
             else:
                 # it's the one after loading in
                 found_first_wav_cache = True
@@ -228,6 +217,15 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
             # makes sure no one's just talking about me for some reason
             if not (line.count(' :  ') == 1 and 'Kataiser' not in line.split(' :  ')[0] and 'Kataiser' in line.split(' :  ')[1]):
                 kataiser_seen_on = tf2_map
+
+        if now_in_menus:
+            now_in_menus = False
+            in_menus = True
+            menus_message_used = line
+            kataiser_seen_on = ''
+            connecting_to_matchmaking = False
+            using_wav_cache = False
+            found_first_wav_cache = False
 
     if not user_is_kataiser and not in_menus and kataiser_seen_on == tf2_map:
         self.log.debug(f"Kataiser located, telling user :D (on {tf2_map})")

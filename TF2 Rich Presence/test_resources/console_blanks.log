@@ -1,0 +1,2393 @@
+For FCVAR_REPLICATED, ConVar must be defined in client and game .dlls (sv_use_steam_voice)
+[TF Workshop] Got 0 subscribed maps, 0 new
+ProtoDefs post data loaded.
+ProtoDefs loaded. 24.69 MB used
+ProtoDefs post data loaded.
+ProtoDefs loaded. 24.69 MB used
+maxplayers set to 24
+Steam config directory: E:\Steam\steamapps\common\Team Fortress 2\platform\config
+CClientSteamContext logged on = 1
+Parent cvar in server.dll not allowed (tf_flamethrower_new_flame_offset)
+ProtoDefs post data loaded.
+ProtoDefs loaded. 24.69 MB used
+ProtoDefs post data loaded.
+ProtoDefs loaded. 24.69 MB used
+Cleaning up unneeded replay block data...
+Replay cleanup done.
+Loading default settings for high sensitivity
+Unable to bind a key for command "+attack3" after 107 attempt(s).
+Unable to bind a key for command "say_party" after 107 attempt(s).
+ProtoDefs post data loaded.
+ProtoDefs post data loaded.
+Connection to game coordinator established.
+Current item schema is up-to-date with version 8DA2CC22.
+CTFGCClientSystem::PostInitGC
+CTFGCClientSystem - adding listener
+ProtoDefs post data loaded.
+ProtoDefs post data loaded.
+------------------------------------------------------------------------------------------------------------- 
+Unknown command "gl_pow2_tempmem"
+Unknown command "gl_radar7954721_workaround_mixed"
+Unknown command "gl_batch_tex_creates"
+Unknown command "gl_batch_tex_destroys"
+Unknown command "gl_minimize_all_tex"
+Unknown command "gl_minimize_rt_tex"
+Unknown command "gl_nullqueries"
+Unknown command "gl_mtglflush_at_tof"
+Unknown command "gl_debug_output"
+Unknown command "gl_magnify_resolve_mode"
+Unknown command "gl_paircache_rows_lg2"
+Unknown command "gl_paircache_ways_lg2"
+  
+  
+  
+  
+    ***************************     
+    ***************************     
+  ** mastercomfig 6.5.5 loaded **   
+    ***************************     
+    ***************************     
+  
+  
+  
+  
+    ******************************************************     
+    ******************************************************     
+    ******************************************************     
+    ******************************************************     
+=> Having issues in local servers, like being unable to fire or move? Set host_thread_mode 0. 
+=> Remember to set host_thread_mode 1 once you are done with your local server. 
+    ******************************************************     
+    ******************************************************     
+    ******************************************************     
+    ******************************************************     
+  
+  
+  
+  
+Compact freed 536576 bytes
+Unknown command "cl_playerspraydisable"
+Unknown command "messages_enable"
+Unknown command "hud_player_model_on"
+Client settings initiated 
+Can't use cheat cvar mat_fullbright in multiplayer, unless the server has sv_cheats set to 1.
+Can't use cheat cvar mat_drawwater in multiplayer, unless the server has sv_cheats set to 1.
+Aliases initiated 
+Various binds initiated 
+Network settings initiated 
+Blood toggle initiated 
+Hitsound initiated 
+Scoreboard toggle initiated 
+Numpad binds initiated 
+Movie rendering initiated 
+------------------------------------------------------------------------------------------------------------- 
+KeyValues Error: LoadFromBuffer: missing { in file scripts/CharacterBackgrounds.txt
+Changing resolutions from (1920, 1080) -> (1920, 1080)
+Unable to remove e:\steam\steamapps\common\team fortress 2\tf\textwindow_temp.html!
+Can't use cheat cvar fog_start in multiplayer, unless the server has sv_cheats set to 1.
+Can't use cheat cvar fog_end in multiplayer, unless the server has sv_cheats set to 1.
+Can't use cheat cvar fog_startskybox in multiplayer, unless the server has sv_cheats set to 1.
+Can't use cheat cvar fog_endskybox in multiplayer, unless the server has sv_cheats set to 1.
+Can't use cheat cvar r_farz in multiplayer, unless the server has sv_cheats set to 1.
+[SteamNetworkingSockets] SteamNetworkingSockets lock held for 18.4ms.  (Performance warning.)  ServiceThread,RecvUDPPacket
+This is usually a symptom of a general performance problem such as thread starvation.
+[SteamNetworkingSockets] Waited 8.8ms for SteamNetworkingSockets lock
+[PartyClient] Requesting queue for 12v12 Casual Match
+[PartyClient] Entering queue for match group 12v12 Casual Match
+[PartyClient] Joining party 553968991569532
+[PartyClient] Re-joining party 553968991569532 we previously had queued messages for.  Triggering full resend of options.
+[PartyClient] Leaving queue for match group 12v12 Casual Match
+Lobby created
+Differing lobby received. Lobby: [A:1:1445291013:18562]/Match64379279/Lobby553968968874954 CurrentlyAssigned: [I:0:0]/Match0/Lobby0 ConnectedToMatchServer: 0 HasLobby: 1 AssignedMatchEnded: 0
+Connecting to matchmaking server 162.254.195.114:27046
+Connecting to 162.254.195.114:27046
+[SteamNetworkingSockets] SteamNetworkingSockets lock held for 11.4ms.  (Performance warning.)  CreateFakeUDPPort,CMessagesEndPoint::BInit
+This is usually a symptom of a general performance problem such as thread starvation.
+Network: IP 192.168.1.183, mode MP, dedicated No, ports 27015 SV / 27005 CL
+Connecting to matchmaking server 162.254.195.114:27046
+Connecting to 162.254.195.114:27046
+Connecting to 162.254.195.114:27046...
+Connected to 162.254.195.114:27046
+
+Team Fortress
+Map: koth_megalo
+Players: 24 / 32
+Build: 6791595
+Server Number: 3
+
+Attemped to precache unknown particle system "Explosions_MA_Dustup_2"!
+Attemped to precache unknown particle system "Explosions_UW_Debris001"!
+Attemped to precache unknown particle system "projectile_fireball_center"!
+Attemped to precache unknown particle system "projectile_fireball_ring_fire"!
+Attemped to precache unknown particle system "projectile_fireball_smoke"!
+Attemped to precache unknown particle system "projectile_fireball_end"!
+Attemped to precache unknown particle system "projectile_fireball_end_ring_fire"!
+Attemped to precache unknown particle system "projectile_fireball_end_ring_smoke"!
+Attemped to precache unknown particle system "dragons_fury_FloatieEmbers"!
+Attemped to precache unknown particle system "projectile_fireball_fireball_pyrovision"!
+Attemped to precache unknown particle system "projectile_fireball_smokeball_pyrovision"!
+Attemped to precache unknown particle system "projectile_fireball_smokepuff_pyrovision"!
+Attemped to precache unknown particle system "projectile_fireball_trail_pyrovision"!
+Attemped to precache unknown particle system "cauldron_rumble"!
+Attemped to precache unknown particle system "cauldron_smoke_rumble"!
+Attemped to precache unknown particle system "cauldron_bubbles_rumble"!
+Attemped to precache unknown particle system "cauldron_sparkles_rumble"!
+Attemped to precache unknown particle system "cauldron_embers_rumble"!
+Attemped to precache unknown particle system "cauldron_pop"!
+Attemped to precache unknown particle system "cauldron_smoke_explode"!
+Attemped to precache unknown particle system "cauldron_rays"!
+Attemped to precache unknown particle system "cauldron_flash"!
+Attemped to precache unknown particle system "cauldron_bubbles"!
+Attemped to precache unknown particle system "cauldron_bubbles_float"!
+Attemped to precache unknown particle system "cauldron_sparkles_float"!
+Attemped to precache unknown particle system "cauldron_sparkles"!
+Attemped to precache unknown particle system "cauldron_embers_2"!
+Attemped to precache unknown particle system "cauldron_sparkles_explode"!
+Attemped to precache unknown particle system "cauldron_bubbles_explode"!
+Attemped to precache unknown particle system "cauldron_drips"!
+Attemped to precache unknown particle system "cauldron_embers_rumble_old"!
+Attemped to precache unknown particle system "ics_cart_drip"!
+Attemped to precache unknown particle system "ics_cart_bubbles"!
+Attemped to precache unknown particle system "ics_skull_fx"!
+Attemped to precache unknown particle system "ics_skull_fx_embers"!
+Attemped to precache unknown particle system "ics_skull_fx_sparkles"!
+Attemped to precache unknown particle system "ics_skull_fx_glow"!
+Attemped to precache unknown particle system "ics_skull_fx_bats"!
+Attemped to precache unknown particle system "ics_cauldron_boil"!
+Attemped to precache unknown particle system "ics_cauldron_smoke"!
+Attemped to precache unknown particle system "ics_cauldron_embers"!
+Attemped to precache unknown particle system "ics_cauldron_sparkles_float"!
+Attemped to precache unknown particle system "ics_cauldron_bubbles"!
+Attemped to precache unknown particle system "ics_cauldron_bubbles_float"!
+Attemped to precache unknown particle system "potion_fx_smoke"!
+Attemped to precache unknown particle system "potion_fx_embers"!
+Attemped to precache unknown particle system "potion_fx_sparkles"!
+Attemped to precache unknown particle system "potion_fx_bubble"!
+Attemped to precache unknown particle system "potion_fx_ghosts_3"!
+Attemped to precache unknown particle system "potion_fx_ghosts"!
+Attemped to precache unknown particle system "potion_fx_ghosts_2"!
+Attemped to precache unknown particle system "megalo_train"!
+Attemped to precache unknown particle system "megalo_train_smoke"!
+Attemped to precache unknown particle system "megalo_train_body_smoke"!
+Attemped to precache unknown particle system "megalo_train_head_smoke"!
+Attemped to precache unknown particle system "megalo_train_body_sparkles"!
+Attemped to precache unknown particle system "megalo_train_glow"!
+Attemped to precache unknown particle system "megalo_train_eyes"!
+Attemped to precache unknown particle system "megalo_train_eyes_fire"!
+Attemped to precache unknown particle system "megalo_train_eyes_glow"!
+Attemped to precache unknown particle system "megalo_train_smoke_trail"!
+Attemped to precache unknown particle system "megalo_train_wheel"!
+Attemped to precache unknown particle system "megalo_train_wheel_fire_trail"!
+Attemped to precache unknown particle system "megalo_train_mouth_fire_left_smoke"!
+Attemped to precache unknown particle system "megalo_train_eyes_swirl"!
+Attemped to precache unknown particle system "megalo_train_mouth"!
+Attemped to precache unknown particle system "megalo_train_mouth_fire_left"!
+Attemped to precache unknown particle system "megalo_train_mouth_fire_right"!
+Attemped to precache unknown particle system "torch_fire"!
+Attemped to precache unknown particle system "torch_smoke"!
+Attemped to precache unknown particle system "torch_fire_nosmoke"!
+Attemped to precache unknown particle system "fireflies_256"!
+Attemped to precache unknown particle system "fireflies_128"!
+Attemped to precache unknown particle system "fireflies_64"!
+Attemped to precache unknown particle system "fireflies_512"!
+Attemped to precache unknown particle system "blood_impact_red"!
+The server is using sv_pure 1.  (Custom pure server rules.)
+Requesting texture value from var "$basetexture" which is not a texture value (material: skybox/sky_nightfall_01rt)
+Requesting texture value from var "$basetexture" which is not a texture value (material: skybox/sky_nightfall_01bk)
+Requesting texture value from var "$basetexture" which is not a texture value (material: skybox/sky_nightfall_01lf)
+Requesting texture value from var "$basetexture" which is not a texture value (material: skybox/sky_nightfall_01ft)
+Requesting texture value from var "$basetexture" which is not a texture value (material: skybox/sky_nightfall_01up)
+Requesting texture value from var "$basetexture" which is not a texture value (material: skybox/sky_nightfall_01dn)
+Voice_Init: Using Steam voice optimal sample rate 24000
+Kataiser connected
+CMaterial::PrecacheVars: error loading vmt file for effects/jumper_arrow
+CMaterial::PrecacheVars: error loading vmt file for effects/animatedlargeshell/animated_large_shell
+CMaterial::PrecacheVars: error loading vmt file for effects/animatedsmallshell/animated_small_shell
+CAsyncWavDataCache:  8 .wavs total 0 bytes, 0.00 % of capacity
+Compact freed 307200 bytes
+Using joystick 'Xbox360 controller' configuration
+JOY_AXIS_X:  mapped to Side (absolute)
+JOY_AXIS_Y:  mapped to Forward (absolute)
+JOY_AXIS_Z:  unmapped
+JOY_AXIS_R:  mapped to Look (absolute)
+JOY_AXIS_U:  mapped to Turn (absolute)
+JOY_AXIS_V:  unmapped
+Advanced Joystick settings initialized
+--- Missing Vgui material vgui/..\vgui\maps\menu_thumb_Missing
+--- Missing Vgui material vgui/..\vgui\maps\menu_thumb_Missing
+--- Missing Vgui material vgui/..\vgui\maps\menu_thumb_Missing
+Redownloading all lightmaps
+Mr. OLE´S killed scout7889 with degreaser.
+Mr. OLE´S killed Toaster Bog with degreaser.
+McSpanky's killed dong with world.
+dong killed McSpanky's with world.
+doomernification_ killed Mr. OLE´S with world.
+bananaknight killed Microsoft Word with world.
+Microsoft Word killed TheM3dicFromTF2 with quake_rl.
+acr75 suicided.
+Soldier selected 
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Pumpkin Headington‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠red please kick squeeshhhh﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+bananaknight killed Napoleon Dynamite with scattergun.
+Cannot update control point 0 for effect 'player_sparkles_blue'.
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+doomernification_ killed Ju 87 stuka dive bomber with minigun. (crit)
+doomernification_ killed supergoblinboy with minigun.
+SetupBones: invalid bone array size (2 - needs 3)
+SetupBones: invalid bone array size (2 - needs 3)
+SetupBones: invalid bone array size (2 - needs 3)
+SetupBones: invalid bone array size (2 - needs 3)
+SetupBones: invalid bone array size (2 - needs 3)
+SetupBones: invalid bone array size (2 - needs 3)
+SetupBones: invalid bone array size (2 - needs 3)
+SetupBones: invalid bone array size (2 - needs 3)
+SetupBones: invalid bone array size (2 - needs 3)
+SetupBones: invalid bone array size (2 - needs 3)
+SetupBones: invalid bone array size (2 - needs 3)
+SetupBones: invalid bone array size (2 - needs 3)
+SetupBones: invalid bone array size (2 - needs 3)
+SetupBones: invalid bone array size (2 - needs 3)
+SetupBones: invalid bone array size (2 - needs 3)
+SetupBones: invalid bone array size (2 - needs 3)
+SetupBones: invalid bone array size (2 - needs 3)
+SetupBones: invalid bone array size (2 - needs 3)
+SetupBones: invalid bone array size (2 - needs 3)
+SetupBones: invalid bone array size (2 - needs 3)
+SetupBones: invalid bone array size (2 - needs 3)
+SetupBones: invalid bone array size (2 - needs 3)
+SetupBones: invalid bone array size (2 - needs 3)
+SetupBones: invalid bone array size (2 - needs 3)
+SetupBones: invalid bone array size (2 - needs 3)
+Pablo.Gonzalez.2005 killed scout7889 with scattergun. (crit)
+ivo4722, (S) BigBrainSentry captured the Turntable for team #2
+Cannot update control point 0 for effect 'player_sparkles_blue'.
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+Cannot update control point 0 for effect 'player_sparkles_blue'.
+scout7889 killed Pablo.Gonzalez.2005 with obj_sentrygun.
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+bananaknight killed tikicreeper with atomizer. (crit)
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+zlego212 killed + Ara + with crusaders_crossbow.
+Microsoft Word killed TheM3dicFromTF2 with quake_rl.
+Cannot update control point 0 for effect 'player_sparkles_blue'.
+McSpanky's killed dong with tf_pumpkin_bomb.
+Kataiser killed Microsoft Word with tf_projectile_rocket. (crit)
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+zlego212 killed (S) BigBrainSentry with crusaders_crossbow. (crit)
+acr75 killed ivo4722 with iron_bomber.
+Ju 87 stuka dive bomber killed Giantbob with minigun.
+Mr. OLE´S killed Toaster Bog with powerjack. (crit)
+Cannot update control point 0 for effect 'player_sparkles_blue'.
+Napoleon Dynamite killed Mr. OLE´S with tomislav.
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+Kataiser killed doomernification_ with tf_projectile_rocket.
+Cannot update control point 0 for effect 'player_sparkles_blue'.
+acr75 suicided.
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+Napoleon Dynamite killed McSpanky's with tomislav.
+Kataiser killed Napoleon Dynamite with tf_projectile_rocket. (crit)
+Kataiser captured the Turntable for team #3
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+Pablo.Gonzalez.2005 killed tikicreeper with scattergun.
+The Cleaner connected
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+bananaknight killed + Ara + with scattergun.
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+dong killed Pablo.Gonzalez.2005 with flaregun. (crit)
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+Kataiser killed Giantbob with tf_projectile_rocket.
+TheM3dicFromTF2 killed dong with tf_projectile_arrow.
+Microsoft Word killed bananaknight with quake_rl.
+(S) BigBrainSentry killed Kataiser with solemn_vow.
+Microsoft Word killed Ju 87 stuka dive bomber with quake_rl. (crit)
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+Pumpkin Headington killed doomernification_ with knife. (crit)
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+zlego212 killed (S) BigBrainSentry with ubersaw.
+(S) BigBrainSentry killed acr75 with world.
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+Napoleon Dynamite killed Pumpkin Headington with tomislav.
+TheM3dicFromTF2 defended the Turntable for team #3
+TheM3dicFromTF2 killed ivo4722 with tf_projectile_arrow.
+Toaster Bog killed TheM3dicFromTF2 with sniperrifle. (crit)
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+Cannot update control point 0 for effect 'player_sparkles_blue'.
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+Cannot update control point 0 for effect 'player_sparkles_blue'.
+Cannot update control point 0 for effect 'player_sparkles_blue'.
+Giantbob suicided.
+Cannot update control point 0 for effect 'player_sparkles_blue'.
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+Napoleon Dynamite killed Kataiser with tomislav.
+Kataiser defended the Turntable for team #3
+Kataiser killed The Cleaner with tf_projectile_rocket.
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+McSpanky's killed (S) BigBrainSentry with backburner. (crit)
+Cannot update control point 0 for effect 'player_sparkles_blue'.
+bananaknight killed Napoleon Dynamite with pep_pistol.
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+Microsoft Word killed chayanne with quake_rl.
+McSpanky's killed ivo4722 with backburner.
+Pablo.Gonzalez.2005 killed dong with scattergun.
+bananaknight killed tikicreeper with scattergun.
+Pablo.Gonzalez.2005 killed Toaster Bog with scattergun.
+Cannot update control point 0 for effect 'player_sparkles_blue'.
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+supergoblinboy killed Giantbob with panic_attack.
+Kataiser killed doomernification_ with tf_projectile_rocket.
+Sponge_Me_Boy connected
+acr75 suicided.
+Napoleon Dynamite killed Pumpkin Headington with tomislav.
+Ju 87 stuka dive bomber killed ivo4722 with minigun.
+Ju 87 stuka dive bomber killed dong with minigun.
+Ju 87 stuka dive bomber killed (S) BigBrainSentry with minigun.
+McSpanky's killed The Cleaner with backburner. (crit)
+bananaknight killed doomernification_ with scattergun.
+TheM3dicFromTF2 killed Microsoft Word with smg.
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+McSpanky's killed Toaster Bog with backburner.
+Ju 87 stuka dive bomber killed Napoleon Dynamite with minigun.
+Ju 87 stuka dive bomber killed ivo4722 with minigun.
+Giantbob killed Ju 87 stuka dive bomber with scattergun.
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+Pablo.Gonzalez.2005 killed Sponge_Me_Boy with scattergun.
+McSpanky's killed Giantbob with backburner.
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+(S) BigBrainSentry suicided.
+mover cacharro connected
+acr75 killed ivo4722 with scotland_shard.
+McSpanky's killed Giantbob with backburner. (crit)
+acr75 killed Microsoft Word with scotland_shard. (crit)
+Pablo.Gonzalez.2005 killed Sponge_Me_Boy with scattergun. (crit)
+Pumpkin Headington killed Toaster Bog with ambassador. (crit)
+McSpanky's killed Napoleon Dynamite with backburner. (crit)
+bananaknight killed tikicreeper with scattergun. (crit)
+Pablo.Gonzalez.2005 killed doomernification_ with fryingpan. (crit)
+Pumpkin Headington killed dong with ambassador. (crit)
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​tikicreeper‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠o o f﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+chayanne suicided.
+TheM3dicFromTF2 suicided.
+Galaxy cat connected
+supergoblinboy suicided.
+yes gaming connected
+Differing lobby received. Lobby: [A:1:1445291013:18562]/Match64379989/Lobby553968968874954 CurrentlyAssigned: [A:1:1445291013:18562]/Match64379279/Lobby553968968874954 ConnectedToMatchServer: 1 HasLobby: 1 AssignedMatchEnded: 0
+
+Team Fortress
+Map: sd_doomsday_event
+Players: 16 / 32
+Build: 6791595
+Server Number: 4
+
+CAsyncWavDataCache:  720 .wavs total 0 bytes, 0.00 % of capacity
+Attemped to precache unknown particle system "cauldron_rumble"!
+Attemped to precache unknown particle system "cauldron_smoke_rumble"!
+Attemped to precache unknown particle system "cauldron_bubbles_rumble"!
+Attemped to precache unknown particle system "cauldron_sparkles_rumble"!
+Attemped to precache unknown particle system "cauldron_embers_rumble"!
+Attemped to precache unknown particle system "cauldron_pop"!
+Attemped to precache unknown particle system "cauldron_smoke_explode"!
+Attemped to precache unknown particle system "cauldron_rays"!
+Attemped to precache unknown particle system "cauldron_flash"!
+Attemped to precache unknown particle system "cauldron_bubbles"!
+Attemped to precache unknown particle system "cauldron_bubbles_float"!
+Attemped to precache unknown particle system "cauldron_sparkles_float"!
+Attemped to precache unknown particle system "cauldron_sparkles"!
+Attemped to precache unknown particle system "cauldron_embers_2"!
+Attemped to precache unknown particle system "cauldron_sparkles_explode"!
+Attemped to precache unknown particle system "cauldron_bubbles_explode"!
+Attemped to precache unknown particle system "cauldron_drips"!
+Attemped to precache unknown particle system "cauldron_embers_rumble_old"!
+Attemped to precache unknown particle system "ics_cart_drip"!
+Attemped to precache unknown particle system "ics_cart_bubbles"!
+Attemped to precache unknown particle system "ics_skull_fx"!
+Attemped to precache unknown particle system "ics_skull_fx_embers"!
+Attemped to precache unknown particle system "ics_skull_fx_sparkles"!
+Attemped to precache unknown particle system "ics_skull_fx_glow"!
+Attemped to precache unknown particle system "ics_skull_fx_bats"!
+Attemped to precache unknown particle system "ics_cauldron_boil"!
+Attemped to precache unknown particle system "ics_cauldron_smoke"!
+Attemped to precache unknown particle system "ics_cauldron_embers"!
+Attemped to precache unknown particle system "ics_cauldron_sparkles_float"!
+Attemped to precache unknown particle system "ics_cauldron_bubbles"!
+Attemped to precache unknown particle system "ics_cauldron_bubbles_float"!
+Attemped to precache unknown particle system "potion_fx_smoke"!
+Attemped to precache unknown particle system "potion_fx_embers"!
+Attemped to precache unknown particle system "potion_fx_sparkles"!
+Attemped to precache unknown particle system "potion_fx_bubble"!
+Attemped to precache unknown particle system "potion_fx_ghosts_3"!
+Attemped to precache unknown particle system "potion_fx_ghosts"!
+Attemped to precache unknown particle system "potion_fx_ghosts_2"!
+Attemped to precache unknown particle system "blood_impact_red"!
+The server is using sv_pure 1.  (Custom pure server rules.)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_halloween/big_top_banners_ripped.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_halloween/big_top_carts_lights_ripped.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_halloween/hwn_tent_pole01.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_halloween/big_top_scaffolding_ripped.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_halloween/big_top_banners_ripped.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_halloween/big_top_carts_lights_ripped.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_halloween/hwn_tent_pole01.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_halloween/big_top_scaffolding_ripped.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_halloween/bell_frame.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_halloween/bell_floor.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_halloween/big_top_carts_ballgame.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_halloween/big_top_carts_lights_ballgame.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_halloween/big_top_banners_ballgame.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_halloween/big_top_scaffolding_ballgame.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_halloween/halloween_arena_wall_center.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_halloween/halloween_arena_wall_center.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_halloween/big_top_carts_lights.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_halloween/big_top_banners.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_halloween/big_top_scaffolding.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_halloween/hwn_kart_track04_turbo.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_viaduct_event/spooky_tree_cards01.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_viaduct_event/spooky_tree_cards01.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_viaduct_event/spooky_tree_cards01.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_viaduct_event/spooky_tree_cards01.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_halloween/halloween_arena_goal.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_halloween/halloween_arena_goal.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_halloween/halloween_arena_goal_flags.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_urban/urban_entrance_gate_medium.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_urban/urban_entrance_gate_medium.mdl)
+Requesting texture value from var "$basetexture" which is not a texture value (material: skybox/sky_halloween_night2014_01rt)
+Requesting texture value from var "$basetexture" which is not a texture value (material: skybox/sky_halloween_night2014_01bk)
+Requesting texture value from var "$basetexture" which is not a texture value (material: skybox/sky_halloween_night2014_01lf)
+Requesting texture value from var "$basetexture" which is not a texture value (material: skybox/sky_halloween_night2014_01ft)
+Voice_Init: Using Steam voice optimal sample rate 24000
+Kataiser connected
+--- Missing Vgui material vgui/..\vgui\maps\menu_thumb_Missing
+--- Missing Vgui material vgui/..\vgui\maps\menu_thumb_Missing
+--- Missing Vgui material vgui/..\vgui\maps\menu_thumb_Missing
+CMaterial::PrecacheVars: error loading vmt file for effects/jumper_arrow
+CMaterial::PrecacheVars: error loading vmt file for effects/animatedlargeshell/animated_large_shell
+CMaterial::PrecacheVars: error loading vmt file for effects/animatedsmallshell/animated_small_shell
+CAsyncWavDataCache:  720 .wavs total 0 bytes, 0.00 % of capacity
+Compact freed 741376 bytes
+Redownloading all lightmaps
+chilis baby back ribs connected
+doomernification_ connected
+MAN WITH PAN connected
+mover cacharro killed Mr. OLE´S with ubersaw. (crit)
+Napoleon Dynamite connected
+Pyro selected 
+supergoblinboy killed Microsoft Word with panic_attack.
+Toaster Bog suicided. (crit)
+Kataiser killed supergoblinboy with powerjack.
+Mr. OLE´S killed Kataiser with ubersaw.
+Mr. OLE´S killed mover cacharro with ubersaw. (crit)
+Ju 87 stuka dive bomber killed doomernification_ with minigun.
+Stanky Sally connected
+LMSparrow | End the Bots connected
+scontrer100 killed acr75 with tf_projectile_pipe.
+yes gaming killed Toaster Bog with the_winger.
+MAN WITH PAN suicided.
+bananaknight killed Stanky Sally with pep_pistol.
+Microsoft Word killed Napoleon Dynamite with quake_rl. (crit)
+TheM3dicFromTF2 killed bananaknight with spellbook_lightning.
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+supergoblinboy killed doomernification_ with tomislav.
+Pumpkin Headington connected
+Microsoft Word killed LMSparrow | End the Bots with quake_rl.
+Microsoft Word killed scontrer100 with tf_pumpkin_bomb.
+scontrer100 killed Microsoft Word with world.
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+supergoblinboy killed mover cacharro with tomislav.
+Kataiser killed Mr. OLE´S with backburner.
+Ju 87 stuka dive bomber killed acr75 with minigun.
+Kataiser killed supergoblinboy with backburner.
+typical paramore fanั connected
+tasali17 connected
+Cannot update control point 0 for effect 'player_sparkles_blue'.
+Toaster Bog killed typical paramore fan with sniperrifle.
+‏‌⁠​‏​⁠‏‎‌‍*DEAD* ⁠⁠‎‍﻿​‍‏﻿⁠‎typical paramore fanั‬⁠​‬‌‎‏﻿⁠‌‍ :  ​‎‍‬﻿‎​﻿‍‏‏
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+YOU'VE NEED TO JOIN NOW matrix.to/#/#govnovoz:ru-matrix.org‏‏‌‌‌​‬‏‬‬⁠‍‏⁠⁠‏​⁠‎﻿‌​
+yes gaming killed Ju 87 stuka dive bomber with soda_popper.
+Sponge_Me_Boy killed Kataiser with world.
+TheM3dicFromTF2 killed LMSparrow | End the Bots with spellbook_meteor.
+Kataiser killed Sponge_Me_Boy with backburner.
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​typical paramore fanั‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+matrix.to/#/#govnovoz:ru-matrix.org﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+bananaknight killed yes gaming with scattergun.
+typical paramore fanั killed bananaknight with sniperrifle. (crit)
+MAN WITH PAN killed doomernification_ with panic_attack.
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​typical paramore fanั‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+YOU'VE NEED TO JOIN NOW matrix.to/#/#govnovoz:ru-matrix.org﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+Mr.Awesome.EXE connected
+‏‌⁠​‏​⁠‏‎‌‍*DEAD* ⁠⁠‎‍﻿​‍‏﻿⁠‎bananaknight‬⁠​‬‌‎‏﻿⁠‌‍ :  ​‎‍‬﻿‎​﻿‍‏‏bot‏‏‌‌‌​‬‏‬‬⁠‍‏⁠⁠‏​⁠‎﻿‌​
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​typical paramore fanั‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+matrix.to/#/#govnovoz:ru-matrix.org﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+Cannot update control point 0 for effect 'player_sparkles_blue'.
+typical paramore fanั killed Napoleon Dynamite with sniperrifle. (crit)
+scontrer100 killed mover cacharro with scattergun.
+typical paramore fanั killed scontrer100 with sniperrifle. (crit)
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​typical paramore fanั‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+YOU'VE NEED TO JOIN NOW matrix.to/#/#govnovoz:ru-matrix.org﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+typical paramore fanั killed Sponge_Me_Boy with sniperrifle. (crit)
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​typical paramore fanั‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+matrix.to/#/#govnovoz:ru-matrix.org﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+‏‌⁠​‏​⁠‏‎‌‍*DEAD* ⁠⁠‎‍﻿​‍‏﻿⁠‎Sponge_Me_Boy‬⁠​‬‌‎‏﻿⁠‌‍ :  ​‎‍‬﻿‎​﻿‍‏‏bot‏‏‌‌‌​‬‏‬‬⁠‍‏⁠⁠‏​⁠‎﻿‌​
+Mr. OLE´S killed acr75 with spellbook_fireball.
+typical paramore fanั killed Mr. OLE´S with sniperrifle.
+supergoblinboy killed Stanky Sally with tomislav.
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​typical paramore fanั‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+YOU'VE NEED TO JOIN NOW matrix.to/#/#govnovoz:ru-matrix.org﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+typical paramore fanั killed scontrer100 with sniperrifle. (crit)
+supergoblinboy killed doomernification_ with tomislav. (crit)
+TheM3dicFromTF2 killed supergoblinboy with spellbook_athletic.
+Kataiser killed MAN WITH PAN with backburner.
+MAN WITH PAN was moved to the other team for game balance
+Kataiser killed bananaknight with world.
+Napoleon Dynamite suicided. (crit)
+TheM3dicFromTF2 suicided.
+Sponge_Me_Boy killed Mr.Awesome.EXE with scattergun.
+supergoblinboy killed yes gaming with tomislav.
+MAN WITH PAN killed Mr. OLE´S with southern_hospitality.
+TheM3dicFromTF2 killed Sponge_Me_Boy with spellbook_athletic. (crit)
+Stanky Sally killed tasali17 with world.
+Mr. OLE´S died.
+doomernification_ killed LMSparrow | End the Bots with spellbook_athletic. (crit)
+Kataiser killed supergoblinboy with spellbook_athletic. (crit)
+scontrer100 suicided. (crit)
+doomernification_ suicided.
+Napoleon Dynamite killed Stanky Sally with player.
+yes gaming killed Sponge_Me_Boy with player.
+Mr. OLE´S suicided.
+TheM3dicFromTF2 killed bananaknight with spellbook_lightning.
+TheM3dicFromTF2 killed Toaster Bog with spellbook_lightning.
+Napoleon Dynamite killed yes gaming with iron_bomber.
+bananaknight was moved to the other team for game balance
+acr75 killed Napoleon Dynamite with iron_bomber. (crit)
+acr75 killed Ju 87 stuka dive bomber with iron_bomber. (crit)
+tasali17 killed TheM3dicFromTF2 with world.
+Microsoft Word killed LMSparrow | End the Bots with quake_rl.
+acr75 killed Mr. OLE´S with iron_bomber.
+MAN WITH PAN killed scontrer100 with obj_sentrygun.
+Microsoft Word killed Toaster Bog with world.
+Kataiser killed Sponge_Me_Boy with backburner.
+Sponge_Me_Boy killed Kataiser with scattergun.
+Microsoft Word killed Ju 87 stuka dive bomber with spellbook_athletic.
+supergoblinboy killed bananaknight with world.
+MAN WITH PAN killed Mr. OLE´S with panic_attack.
+Sponge_Me_Boy killed Stanky Sally with scattergun.
+LMSparrow | End the Bots killed doomernification_ with tf_pumpkin_bomb.
+Mr. OLE´S killed MAN WITH PAN with kunai. (crit)
+Mr. OLE´S killed mover cacharro with diamondback. (crit)
+TheM3dicFromTF2 killed Toaster Bog with spellbook_athletic. (crit)
+scontrer100 killed acr75 with bottle.
+Kataiser killed Mr. OLE´S with backburner.
+supergoblinboy killed TheM3dicFromTF2 with tomislav.
+Kataiser killed scontrer100 with backburner.
+supergoblinboy killed Kataiser with tomislav.
+Mr. OLE´S killed Microsoft Word with diamondback.
+Mr. OLE´S killed TheM3dicFromTF2 with kunai. (crit)
+supergoblinboy killed Stanky Sally with tomislav.
+supergoblinboy killed yes gaming with tomislav.
+tasali17 killed doomernification_ with spellbook_meteor.
+LMSparrow | End the Bots killed bananaknight with spellbook_fireball.
+Mr. OLE´S killed acr75 with diamondback. (crit)
+tasali17 killed MAN WITH PAN with spellbook_meteor.
+acr75 killed LMSparrow | End the Bots with iron_bomber.
+Timmy connected
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+Microsoft Word killed Mr. OLE´S with quake_rl.
+scontrer100 killed yes gaming with tf_projectile_rocket. (crit)
+Over connected
+b;u;rner connected
+mover cacharro killed Mr. OLE´S with ambassador.
+Sponge_Me_Boy killed mover cacharro with scattergun.
+scontrer100 killed acr75 with tf_projectile_rocket. (crit)
+Sponge_Me_Boy killed Microsoft Word with pistol_scout.
+yes gaming killed LMSparrow | End the Bots with soda_popper.
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+Timmy killed Kataiser with kunai. (crit)
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Timmy‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠oh﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+supergoblinboy killed MAN WITH PAN with tomislav.
+Bio connected
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+‏‌⁠​‏​⁠‏‎‌‍*DEAD* ⁠⁠‎‍﻿​‍‏﻿⁠‎Kataiser‬⁠​‬‌‎‏﻿⁠‌‍ :  ​‎‍‬﻿‎​﻿‍‏‏yeah‏‏‌‌‌​‬‏‬‬⁠‍‏⁠⁠‏​⁠‎﻿‌​
+bananaknight killed Sponge_Me_Boy with scattergun.
+[SteamNetworkingSockets] Waited 2.6ms for SteamNetworkingSockets lock
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+acr75 killed Ju 87 stuka dive bomber with iron_bomber.
+nasty connected
+mover cacharro suicided.
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Timmy‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠just kill me﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+b;u;rner killed scontrer100 with sniperrifle.
+Microsoft Word killed Timmy with quake_rl.
+Mr. OLE´S killed Stanky Sally with diamondback.
+‏‌⁠​‏​⁠‏‎‌‍*DEAD* ⁠⁠‎‍﻿​‍‏﻿⁠‎Timmy‬⁠​‬‌‎‏﻿⁠‌‍ :  ​‎‍‬﻿‎​﻿‍‏‏thank you microsoft word‏‏‌‌‌​‬‏‬‬⁠‍‏⁠⁠‏​⁠‎﻿‌​
+Microsoft Word killed Mr. OLE´S with quake_rl.
+yes gaming killed supergoblinboy with spellbook_boss.
+‏‌⁠​‏​⁠‏‎‌‍*DEAD* ⁠⁠‎‍﻿​‍‏﻿⁠‎Timmy‬⁠​‬‌‎‏﻿⁠‌‍ :  ​‎‍‬﻿‎​﻿‍‏‏from microsoft‏‏‌‌‌​‬‏‬‬⁠‍‏⁠⁠‏​⁠‎﻿‌​
+Sponge_Me_Boy killed yes gaming with scattergun.
+Kataiser killed Napoleon Dynamite with backburner.
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+Kataiser killed Mr. OLE´S with scorch_shot.
+PR0T0TYPX connected
+LMSparrow | End the Bots killed Microsoft Word with world.
+b;u;rner killed Sponge_Me_Boy with tribalkukri. (crit)
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+acr75 killed Toaster Bog with tf_projectile_pipe_remote.
+Kataiser killed scontrer100 with scorch_shot. (crit)
+Timmy killed Kataiser with spellbook_meteor.
+Timmy killed MAN WITH PAN with spellbook_meteor.
+LMSparrow | End the Bots killed doomernification_ with detonator.
+Timmy killed acr75 with spellbook_meteor.
+Timmy killed yes gaming with spellbook_meteor.
+LMSparrow | End the Bots killed bananaknight with flamethrower.
+nasty killed supergoblinboy with scattergun. (crit)
+Mr. OLE´S killed nasty with kunai. (crit)
+Sponge_Me_Boy killed Stanky Sally with phlogistinator.
+Kataiser killed LMSparrow | End the Bots with backburner. (crit)
+Mr. OLE´S killed mover cacharro with diamondback.
+MAN WITH PAN killed Over with force_a_nature.
+bananaknight killed Mr. OLE´S with tf_pumpkin_bomb.
+scontrer100 killed yes gaming with tf_projectile_rocket.
+MAN WITH PAN killed scontrer100 with force_a_nature. (crit)
+Microsoft Word killed Sponge_Me_Boy with quake_rl.
+bananaknight killed Bio with scattergun.
+MAN WITH PAN killed Ju 87 stuka dive bomber with pep_pistol.
+supergoblinboy killed bananaknight with tomislav.
+PR0T0TYPX killed Napoleon Dynamite with force_a_nature.
+Kataiser killed supergoblinboy with backburner. (crit)
+Kataiser killed LMSparrow | End the Bots with backburner.
+Mr. OLE´S killed PR0T0TYPX with kunai. (crit)
+Microsoft Word killed Mr. OLE´S with quake_rl.
+MAN WITH PAN killed Timmy with spellbook_athletic.
+Sponge_Me_Boy killed Kataiser with tf_projectile_rocket.
+Microsoft Word killed Toaster Bog with spellbook_lightning.
+Microsoft Word killed tasali17 with quake_rl.
+mover cacharro killed Mr. OLE´S with ambassador.
+b;u;rner killed scontrer100 with scattergun.
+Sponge_Me_Boy killed yes gaming with tf_projectile_rocket. (crit)
+Bio killed Stanky Sally with sharp_dresser. (crit)
+b;u;rner killed Bio with scattergun.
+LMSparrow | End the Bots killed b;u;rner with flamethrower.
+bananaknight killed LMSparrow | End the Bots with scattergun.
+Over killed nasty with pro_rifle.
+tasali17 killed PR0T0TYPX with soda_popper.
+Microsoft Word killed Toaster Bog with quake_rl.
+Microsoft Word killed Over with spellbook_meteor.
+Microsoft Word killed Sponge_Me_Boy with spellbook_meteor.
+Microsoft Word killed LMSparrow | End the Bots with spellbook_meteor.
+Microsoft Word killed Mr. OLE´S with spellbook_meteor.
+Microsoft Word killed Napoleon Dynamite with spellbook_meteor.
+Microsoft Word killed Mr. OLE´S with spellbook_meteor.
+tasali17 killed mover cacharro with spellbook_meteor.
+tasali17 killed doomernification_ with spellbook_meteor.
+tasali17 killed Microsoft Word with spellbook_meteor.
+tasali17 killed bananaknight with spellbook_meteor.
+Timmy killed acr75 with spellbook_lightning.
+Microsoft Word killed supergoblinboy with spellbook_meteor.
+nasty killed Bio with scattergun.
+nasty killed Ju 87 stuka dive bomber with scattergun.
+PR0T0TYPX killed scontrer100 with force_a_nature.
+nasty killed Timmy with scattergun.
+nasty killed Toaster Bog with scattergun.
+nasty killed tasali17 with scattergun.
+Stanky Sally suicided.
+Ju 87 stuka dive bomber killed nasty with sniperrifle. (crit)
+mover cacharro killed Mr. OLE´S with ambassador.
+b;u;rner killed supergoblinboy with scattergun.
+Sponge_Me_Boy killed mover cacharro with tf_projectile_rocket.
+Bio killed acr75 with spellbook_fireball.
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​bananaknight‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠ ﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+Kataiser killed Ju 87 stuka dive bomber with backburner.
+MAN WITH PAN killed LMSparrow | End the Bots with force_a_nature.
+Sponge_Me_Boy killed b;u;rner with tf_projectile_rocket.
+tasali17 killed Kataiser with spellbook_lightning.
+MAN WITH PAN killed Mr. OLE´S with force_a_nature.
+MAN WITH PAN killed Sponge_Me_Boy with spellbook_boss.
+PR0T0TYPX killed scontrer100 with force_a_nature.
+Microsoft Word killed Bio with quake_rl.
+PR0T0TYPX killed Napoleon Dynamite with force_a_nature.
+Timmy killed MAN WITH PAN with kunai. (crit)
+​‌‌﻿‎​⁠‌‌*DEAD*(TEAM) ‍﻿﻿‏‎‍‬‌‎MAN WITH PAN‍‌⁠‬‎﻿﻿‬⁠ :  ‏​​⁠﻿﻿‎﻿‌scout wtf⁠‏‬﻿⁠‏​​‍‌⁠﻿‌⁠‌‎‎​
+LMSparrow | End the Bots killed bananaknight with detonator.
+Microsoft Word killed Over with quake_rl.
+Microsoft Word killed Ju 87 stuka dive bomber with quake_rl.
+PR0T0TYPX killed LMSparrow | End the Bots with force_a_nature.
+Toaster Bog killed doomernification_ with scattergun.
+​‌‌﻿‎​⁠‌‌*DEAD*(TEAM) ‍﻿﻿‏‎‍‬‌‎MAN WITH PAN‍‌⁠‬‎﻿﻿‬⁠ :  ‏​​⁠﻿﻿‎﻿‌doom⁠‏‬﻿⁠‏​​‍‌⁠﻿‌⁠‌‎‎​
+scontrer100 killed acr75 with tf_projectile_rocket.
+Kataiser killed Timmy with backburner.
+mover cacharro killed Toaster Bog with ambassador.
+Mr. OLE´S killed nasty with spellbook_fireball.
+Microsoft Word killed Sponge_Me_Boy with quake_rl.
+scontrer100 killed Stanky Sally with tf_projectile_rocket.
+Microsoft Word killed scontrer100 with quake_rl.
+Kataiser killed Mr. OLE´S with backburner.
+Microsoft Word killed Bio with quake_rl.
+tasali17 killed mover cacharro with spellbook_lightning.
+tasali17 killed b;u;rner with spellbook_lightning.
+supergoblinboy killed Microsoft Word with world.
+Kataiser killed Napoleon Dynamite with tf_pumpkin_bomb.
+Napoleon Dynamite killed Kataiser with backburner.
+supergoblinboy killed doomernification_ with tomislav.
+tasali17 killed MAN WITH PAN with world.
+nasty killed tasali17 with world.
+StateSixscream connected
+Philster connected
+Mr. OLE´S killed Microsoft Word with sword. (crit)
+Bio killed acr75 with spellbook_fireball.
+‏‌⁠​‏​⁠‏‎‌‍*DEAD* ⁠⁠‎‍﻿​‍‏﻿⁠‎tasali17‬⁠​‬‌‎‏﻿⁠‌‍ :  ​‎‍‬﻿‎​﻿‍‏‏nasty CAN YOU NOT!‏‏‌‌‌​‬‏‬‬⁠‍‏⁠⁠‏​⁠‎﻿‌​
+acr75 killed supergoblinboy with world.
+Timmy killed doomernification_ with spellbook_athletic. (crit)
+Mr. OLE´S killed Kataiser with sword.
+Napoleon Dynamite killed nasty with detonator.
+b;u;rner killed LMSparrow | End the Bots with scattergun.
+Napoleon Dynamite died.
+Ju 87 stuka dive bomber killed PR0T0TYPX with obj_sentrygun2.
+Timmy killed mover cacharro with spellbook_fireball.
+Microsoft Word killed Bio with quake_rl.
+acr75 killed Mr. OLE´S with spellbook_fireball.
+Ju 87 stuka dive bomber killed Philster with spellbook_athletic.
+acr75 killed StateSixscream with iron_bomber.
+Mr. OLE´S killed acr75 with world.
+b;u;rner killed supergoblinboy with scattergun.
+Ju 87 stuka dive bomber killed nasty with spellbook_athletic.
+mover cacharro killed Timmy with scattergun.
+scontrer100 killed Stanky Sally with tf_projectile_rocket.
+scontrer100 killed mover cacharro with tf_projectile_rocket.
+Timmy killed mover cacharro with spellbook_meteor.
+Timmy killed b;u;rner with spellbook_meteor.
+Timmy killed acr75 with spellbook_meteor.
+Timmy killed Stanky Sally with spellbook_meteor.
+Timmy killed PR0T0TYPX with spellbook_meteor.
+Timmy killed doomernification_ with spellbook_meteor.
+Timmy killed nasty with spellbook_meteor.
+Timmy killed MAN WITH PAN with world.
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Timmy‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠yeah that can happen﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Kataiser‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠ok﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+‏‌⁠​‏​⁠‏‎‌‍*DEAD* ⁠⁠‎‍﻿​‍‏﻿⁠‎MAN WITH PAN‬⁠​‬‌‎‏﻿⁠‌‍ :  ​‎‍‬﻿‎​﻿‍‏‏bruh‏‏‌‌‌​‬‏‬‬⁠‍‏⁠⁠‏​⁠‎﻿‌​
+supergoblinboy killed Kataiser with tomislav.
+supergoblinboy killed Microsoft Word with tomislav.
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Timmy‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠it's bullshit﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Timmy‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠yet funny﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+‏‌⁠​‏​⁠‏‎‌‍*DEAD* ⁠⁠‎‍﻿​‍‏﻿⁠‎Kataiser‬⁠​‬‌‎‏﻿⁠‌‍ :  ​‎‍‬﻿‎​﻿‍‏‏underwater ffs I'm a pyro‏‏‌‌‌​‬‏‬‬⁠‍‏⁠⁠‏​⁠‎﻿‌​
+Over suicided.
+Over was moved to the other team for game balance
+LMSparrow | End the Bots died.
+Bio killed acr75 with sharp_dresser. (crit)
+scontrer100 killed MAN WITH PAN with tf_projectile_rocket.
+Timmy killed Microsoft Word with spellbook_athletic.
+Mr. OLE´S killed doomernification_ with sword.
+Timmy killed Over with spellbook_athletic.
+Napoleon Dynamite killed PR0T0TYPX with backburner.
+supergoblinboy killed Kataiser with tomislav.
+nasty killed Napoleon Dynamite with scattergun.
+SoulReaver connected
+Mr. OLE´S killed mover cacharro with sword.
+Mr. OLE´S killed nasty with sword.
+Bio killed acr75 with sharp_dresser. (crit)
+Toaster Bog suicided.
+Mr. OLE´S killed doomernification_ with sword.
+Ju 87 stuka dive bomber killed Kataiser with spellbook_lightning.
+Saturn connected
+Timmy killed PR0T0TYPX with spellbook_lightning.
+Over killed scontrer100 with world.
+Timmy killed Over with ambassador. (crit)
+Error! Variable "$yellow" is multiply defined in material "models/workshop_partner/player/items/all_class/jackbadge/jackbadge_limited"!
+Error! Variable "$yellow" is multiply defined in material "models/workshop_partner/player/items/all_class/jackbadge/jackbadge_limited"!
+doomernification_ killed Timmy with tf_projectile_pipe.
+LMSparrow | End the Bots killed acr75 with flamethrower.
+Mr. OLE´S killed SoulReaver with sword.
+LMSparrow | End the Bots killed doomernification_ with flamethrower. (crit)
+Microsoft Word killed Toaster Bog with spellbook_athletic.
+Microsoft Word killed Ju 87 stuka dive bomber with spellbook_athletic.
+Microsoft Word killed Napoleon Dynamite with spellbook_athletic.
+Microsoft Word killed StateSixscream with spellbook_athletic. (crit)
+Microsoft Word killed supergoblinboy with spellbook_athletic. (crit)
+LMSparrow | End the Bots killed PR0T0TYPX with flamethrower. (crit)
+Shutdown 7 predictable entities and 0 client-created entities
+Dank Hill connected
+Rinbow connected
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Kataiser‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠lol﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+Microsoft Word killed Bio with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(-98551072.000000,81285256.000000,78615496.000000) on class C_TFRagdoll
+Mr. OLE´S killed Over with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(109799664.000000,-64070020.000000,79618256.000000) on class C_TFRagdoll
+It's Garfield Time connected
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​LMSparrow | End the Bots‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠New Rocket League update looks sick﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+Dank Hill suicided.
+Microsoft Word killed Napoleon Dynamite with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(133550936.000000,-36850852.000000,57499188.000000) on class C_TFRagdoll
+Timmy killed SoulReaver with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(115577936.000000,-78630728.000000,54396236.000000) on class C_TFRagdoll
+LMSparrow | End the Bots killed doomernification_ with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(130188304.000000,51151580.000000,54171232.000000) on class C_TFRagdoll
+doomernification_ killed LMSparrow | End the Bots with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(-4340500.000000,127746184.000000,78498872.000000) on class C_TFRagdoll
+supergoblinboy suicided.
+Discarding ApplyAbsVelocityImpulse(-125446776.000000,-61641688.000000,54437248.000000) on class C_TFRagdoll
+Mr. OLE´S suicided.
+Discarding ApplyAbsVelocityImpulse(117214360.000000,78887464.000000,50374184.000000) on class C_TFRagdoll
+StateSixscream suicided.
+Over suicided.
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Timmy‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠hhh gaming?﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+Discarding ApplyAbsVelocityImpulse(124528176.000000,-65269032.000000,52275108.000000) on class C_TFRagdoll
+Reinitialized 7 predictable entities
+Kataiser suicided.
+Ju 87 stuka dive bomberั connected
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​LMSparrow | End the Bots‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠Gaming.﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+‏‌⁠​‏​⁠‏‎‌‍*DEAD* ⁠⁠‎‍﻿​‍‏﻿⁠‎Ju 87 stuka dive bomberั‬⁠​‬‌‎‏﻿⁠‌‍ :  ​‎‍‬﻿‎​﻿‍‏‏
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+YOU'VE NEED TO JOIN NOW matrix.to/#/#govnovoz:ru-matrix.org‏‏‌‌‌​‬‏‬‬⁠‍‏⁠⁠‏​⁠‎﻿‌​
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Ju 87 stuka dive bomberั‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+matrix.to/#/#govnovoz:ru-matrix.org﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Ju 87 stuka dive bomberั‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+YOU'VE NEED TO JOIN NOW matrix.to/#/#govnovoz:ru-matrix.org﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+LMSparrow | End the Bots killed Microsoft Word with flamethrower.
+Mr. OLE´S killed acr75 with sword.
+scontrer100 killed Rinbow with tf_projectile_rocket.
+MAN WITH PAN killed Toaster Bog with spellbook_fireball.
+Ju 87 stuka dive bomberั killed Kataiser with sniperrifle. (crit)
+Kai connected
+Saturn killed Ju 87 stuka dive bomber with diamondback.
+Bio killed Dank Hill with sharp_dresser. (crit)
+MAN WITH PAN killed LMSparrow | End the Bots with minigun.
+StateSixscream killed SoulReaver with proto_syringe.
+Bio killed doomernification_ with sharp_dresser. (crit)
+PR0T0TYPX killed Napoleon Dynamite with force_a_nature.
+Timmy killed Saturn with kunai.
+Bio killed PR0T0TYPX with spellbook_fireball.
+Timmy killed MAN WITH PAN with ambassador. (crit)
+Toaster Bog killed Over with scattergun.
+Big Oof connected
+Ju 87 stuka dive bomber killed Dank Hill with obj_sentrygun.
+Microsoft Word killed Kai with quake_rl. (crit)
+scontrer100 killed Kataiser with tf_projectile_rocket.
+Rinbow killed LMSparrow | End the Bots with scattergun. (crit)
+MAN WITH PAN killed supergoblinboy with minigun.
+Rinbow killed scontrer100 with scattergun.
+Rinbow killed Bio with scattergun.
+Toaster Bog killed Saturn with scattergun.
+Toaster Bog killed doomernification_ with scattergun.
+Over killed Mr. OLE´S with fryingpan. (crit)
+Microsoft Word killed StateSixscream with spellbook_athletic.
+Horsless Headless Horseman connected
+Microsoft Word killed Napoleon Dynamite with spellbook_athletic.
+Rinbow killed Toaster Bog with spellbook_fireball.
+Rinbow killed Timmy with scattergun.
+Dank Hill killed Kai with scattergun.
+LMSparrow | End the Bots killed PR0T0TYPX with world.
+‏‌⁠​‏​⁠‏‎‌‍*DEAD* ⁠⁠‎‍﻿​‍‏﻿⁠‎Timmy‬⁠​‬‌‎‏﻿⁠‌‍ :  ​‎‍‬﻿‎​﻿‍‏‏that was unfortunate‏‏‌‌‌​‬‏‬‬⁠‍‏⁠⁠‏​⁠‎﻿‌​
+scontrer100 killed Dank Hill with tf_projectile_rocket. (crit)
+Ju 87 stuka dive bomber killed Microsoft Word with shotgun_primary.
+MAN WITH PAN killed LMSparrow | End the Bots with minigun.
+LMSparrow | End the Bots killed MAN WITH PAN with world.
+Ju 87 stuka dive bomber killed Big Oof with shotgun_primary. (crit)
+Bio killed doomernification_ with sharp_dresser. (crit)
+SoulReaver killed scontrer100 with tf_pumpkin_bomb.
+Over killed Bio with pro_rifle.
+Saturn killed Mr. OLE´S with spellbook_fireball.
+Saturn killed Ju 87 stuka dive bomber with diamondback.
+Timmy killed Dank Hill with spellbook_meteor.
+Timmy killed PR0T0TYPX with spellbook_meteor.
+Timmy killed Big Oof with spellbook_meteor.
+Timmy killed Saturn with spellbook_meteor.
+Timmy killed Over with spellbook_meteor.
+Timmy killed SoulReaver with spellbook_meteor.
+Timmy killed Rinbow with spellbook_meteor.
+Timmy killed Dank Hill with spellbook_meteor.
+Timmy killed acr75 with spellbook_meteor.
+Timmy killed MAN WITH PAN with spellbook_meteor.
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Kataiser‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠timmy moment﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+Kataiser killed Bio with spellbook_athletic.
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Timmy‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠Timmy gaming﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+supergoblinboy killed Kataiser with world.
+Toaster Bog suicided.
+Saturn killed LMSparrow | End the Bots with spellbook_athletic. (crit)
+Ju 87 stuka dive bomber killed Big Oof with spellbook_athletic.
+Saturn killed StateSixscream with world.
+doomernification_ suicided.
+acr75 suicided.
+Timmy killed Dank Hill with spellbook_meteor.
+Mr. OLE´S killed Over with sword.
+Microsoft Word killed Kai with quake_rl.
+Mr. OLE´S killed Rinbow with sword. (crit)
+supergoblinboy killed Microsoft Word with world.
+MAN WITH PAN killed Bio with minigun.
+Horsless Headless Horseman suicided.
+Kataiser killed supergoblinboy with scorch_shot.
+Saturn killed Napoleon Dynamite with diamondback. (crit)
+Mr. OLE´S killed PR0T0TYPX with sword. (crit)
+Kataiser killed Timmy with backburner.
+scontrer100 killed Kataiser with tf_projectile_rocket. (crit)
+Saturn killed Mr. OLE´S with kunai. (crit)
+MAN WITH PAN killed scontrer100 with minigun.
+Mr. OLE´S killed Big Oof with world.
+Ju 87 stuka dive bomber killed MAN WITH PAN with obj_sentrygun.
+Rinbow killed StateSixscream with scattergun.
+Bio killed Saturn with sharp_dresser. (crit)
+Toaster Bog killed acr75 with spellbook_lightning.
+Kai killed doomernification_ with degreaser.
+Kataiser killed Toaster Bog with backburner.
+SoulReaver killed Napoleon Dynamite with scorch_shot.
+Rinbow killed Kai with world.
+Microsoft Word killed Bio with spellbook_athletic.
+Dank Hill killed Ju 87 stuka dive bomber with spellbook_fireball.
+PR0T0TYPX killed LMSparrow | End the Bots with spellbook_fireball.
+Mr. OLE´S killed SoulReaver with spellbook_fireball.
+Big Oof killed Timmy with pep_brawlerblaster.
+Mr. OLE´S killed Saturn with sword.
+Mr. OLE´S killed doomernification_ with sword. (crit)
+Hatfam connected
+drib connected
+scontrer100 killed Kataiser with bottle. (crit)
+scontrer100 killed Rinbow with tf_projectile_pipe.
+scontrer100 killed acr75 with tf_projectile_pipe.
+Microsoft Word killed Ju 87 stuka dive bomber with quake_rl.
+Kai killed PR0T0TYPX with degreaser.
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Timmy‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠imagine if an 'effect' came every 10 seconds﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+Big Oof died.
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Timmy‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠by merasmus﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+Bio killed Microsoft Word with spellbook_fireball.
+Microsoft Word killed Bio with spellbook_fireball.
+SoulReaver killed LMSparrow | End the Bots with phlogistinator.
+Mr. OLE´S killed SoulReaver with sword.
+StateSixscream suicided.
+Mr. OLE´S killed Rinbow with sword. (crit)
+Dank Hill killed Mr. OLE´S with scattergun.
+Timmy killed Saturn with kunai. (crit)
+Kataiser killed Kai with backburner.
+acr75 killed drib with tf_projectile_pipe_remote.
+doomernification_ killed scontrer100 with world.
+acr75 killed Napoleon Dynamite with tf_projectile_pipe_remote.
+Kataiser killed Bio with backburner.
+Rinbow killed Toaster Bog with scattergun.
+Kataiser killed StateSixscream with backburner.
+Timmy killed Dank Hill with spellbook_meteor.
+Timmy killed Microsoft Word with spellbook_meteor.
+Timmy killed Saturn with spellbook_meteor.
+Timmy killed acr75 with spellbook_meteor.
+Timmy killed Big Oof with spellbook_meteor.
+Timmy killed Over with spellbook_meteor.
+Timmy killed PR0T0TYPX with spellbook_meteor.
+Timmy killed Rinbow with spellbook_meteor.
+Timmy killed doomernification_ with spellbook_meteor.
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Timmy‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠THIS IS SUCH BULLSHIT﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+Bio suicided. (crit)
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Timmy‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠WHY IS THIS WORKING?﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+Mr. OLE´S killed Hatfam with spellbook_athletic.
+SoulReaver suicided. (crit)
+doomernification_ killed LMSparrow | End the Bots with spellbook_athletic. (crit)
+Kataiser killed Timmy with spellbook_athletic. (crit)
+Timmyั connected
+‏‌⁠​‏​⁠‏‎‌‍*DEAD* ⁠⁠‎‍﻿​‍‏﻿⁠‎Timmy‬⁠​‬‌‎‏﻿⁠‌‍ :  ​‎‍‬﻿‎​﻿‍‏‏I deserved that‏‏‌‌‌​‬‏‬‬⁠‍‏⁠⁠‏​⁠‎﻿‌​
+‏‌⁠​‏​⁠‏‎‌‍*DEAD* ⁠⁠‎‍﻿​‍‏﻿⁠‎Timmyั‬⁠​‬‌‎‏﻿⁠‌‍ :  ​‎‍‬﻿‎​﻿‍‏‏
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+matrix.to/#/#govnovoz:ru-matrix.org‏‏‌‌‌​‬‏‬‬⁠‍‏⁠⁠‏​⁠‎﻿‌​
+scontrer100 suicided.
+Over suicided.
+doomernification_ suicided.
+Mr. OLE´S suicided.
+PR0T0TYPX suicided.
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Kataiser‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠maybe idk﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+Over killed Toaster Bog with bleed_kill.
+Dank Hill killed drib with scattergun.
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Timmyั‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+YOU'VE NEED TO JOIN NOW matrix.to/#/#govnovoz:ru-matrix.org﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+Hatfam killed StateSixscream with tomislav.
+Napoleon Dynamite killed acr75 with spellbook_fireball.
+Napoleon Dynamite killed Rinbow with spellbook_fireball.
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Timmyั‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+matrix.to/#/#govnovoz:ru-matrix.org﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+Dank Hill killed Napoleon Dynamite with scattergun.
+Timmyั killed Saturn with sniperrifle. (crit)
+‏‌⁠​‏​⁠‏‎‌‍*DEAD* ⁠⁠‎‍﻿​‍‏﻿⁠‎Saturn‬⁠​‬‌‎‏﻿⁠‌‍ :  ​‎‍‬﻿‎​﻿‍‏‏timmy sniper bot‏‏‌‌‌​‬‏‬‬⁠‍‏⁠⁠‏​⁠‎﻿‌​
+Cosmic connected
+LMSparrow | End the Bots killed Hatfam with spellbook_lightning.
+SoulReaver died.
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Timmyั‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+YOU'VE NEED TO JOIN NOW matrix.to/#/#govnovoz:ru-matrix.org﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+Kataiser killed LMSparrow | End the Bots with spellbook_fireball.
+Microsoft Word killed Bio with spellbook_lightning.
+Microsoft Word died.
+SoulReaver was moved to the other team for game balance
+‏‌⁠​‏​⁠‏‎‌‍*DEAD* ⁠⁠‎‍﻿​‍‏﻿⁠‎Saturn‬⁠​‬‌‎‏﻿⁠‌‍ :  ​‎‍‬﻿‎​﻿‍‏‏nice‏‏‌‌‌​‬‏‬‬⁠‍‏⁠⁠‏​⁠‎﻿‌​
+PR0T0TYPX killed scontrer100 with spellbook_boss.
+scontrer100 killed Dank Hill with world.
+PR0T0TYPX killed StateSixscream with spellbook_boss.
+acr75 killed SoulReaver with iron_bomber.
+Ju 87 stuka dive bomber killed Rinbow with obj_sentrygun.
+Ju 87 stuka dive bomber killed Big Oof with obj_sentrygun.
+Timmy killed doomernification_ with spellbook_athletic. (crit)
+Saturn killed Napoleon Dynamite with kunai.
+Timmy killed Saturn with spellbook_athletic.
+Mr. OLE´S killed Over with sword.
+Kataiser killed LMSparrow | End the Bots with backburner. (crit)
+SaberAsuna connected
+Shutdown 7 predictable entities and 0 client-created entities
+Haunted Nobody connected
+Discarding ApplyAbsVelocityImpulse(60349008.000000,-102801504.000000,91048592.000000) on class C_TFRagdoll
+Napoleon Dynamite killed PR0T0TYPX with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(112157448.000000,-35535948.000000,93047848.000000) on class C_TFRagdoll
+Bio suicided.
+Kataiser killed Bio with trigger_hurt.
+Mr. OLE´S killed Big Oof with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(75594680.000000,82079888.000000,100241384.000000) on class C_TFRagdoll
+PR0T0TYPX killed Cosmic with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(-23324580.000000,-15818486.000000,147328656.000000) on class C_TFRagdoll
+Saturn killed StateSixscream with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(-101596920.000000,95288336.000000,55661464.000000) on class C_TFRagdoll
+PR0T0TYPX killed Ju 87 stuka dive bomber with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(-107369760.000000,55260124.000000,88983456.000000) on class C_TFRagdoll
+Discarding ApplyAbsVelocityImpulse(-44644768.000000,127104952.000000,65963424.000000) on class C_TFRagdoll
+Saturn killed Toaster Bog with trigger_hurt.
+SoulReaver killed PR0T0TYPX with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(114619104.000000,49171232.000000,83334584.000000) on class C_TFRagdoll
+Kataiser killed Mr. OLE´S with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(-10256837.000000,15799161.000000,148812576.000000) on class C_TFRagdoll
+Saturn killed StateSixscream with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(74930488.000000,62084156.000000,114153328.000000) on class C_TFRagdoll
+Big Oof killed Napoleon Dynamite with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(-98377736.000000,-102626872.000000,47849192.000000) on class C_TFRagdoll
+Discarding ApplyAbsVelocityImpulse(139292816.000000,1395075.875000,55637780.000000) on class C_TFRagdoll
+Bio killed Hatfam with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(127752336.000000,70844232.000000,34065080.000000) on class C_TFRagdoll
+Kataiser killed SaberAsuna with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(-132074112.000000,5908245.500000,70862672.000000) on class C_TFRagdoll
+Haunted Nobody killed Bio with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(142222672.000000,19016590.000000,43715904.000000) on class C_TFRagdoll
+scontrer100 suicided.
+Kataiser killed scontrer100 with trigger_hurt.
+Cannot update control point 4 for effect 'rocketjump_smoke'.
+Cannot update control point 5 for effect 'rocketjump_smoke'.
+Cannot update control point 5 for effect 'rocketjump_smoke'.
+Cannot update control point 4 for effect 'rocketjump_smoke'.
+Cannot update control point 5 for effect 'rocketjump_smoke'.
+Cannot update control point 4 for effect 'rocketjump_smoke'.
+Discarding ApplyAbsVelocityImpulse(-28475578.000000,0.000000,147272352.000000) on class C_TFRagdoll
+Toaster Bog killed doomernification_ with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(-126450136.000000,76907768.000000,24404010.000000) on class C_TFRagdoll
+Microsoft Word killed LMSparrow | End the Bots with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(-140857584.000000,-38141980.000000,34703504.000000) on class C_TFRagdoll
+Timmy killed Haunted Nobody with trigger_hurt.
+SaberAsuna killed Over with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(-144047552.000000,1857586.125000,41795388.000000) on class C_TFRagdoll
+Timmy killed PR0T0TYPX with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(97692960.000000,91060200.000000,68294368.000000) on class C_TFRagdoll
+Discarding ApplyAbsVelocityImpulse(105102760.000000,9266189.000000,106618688.000000) on class C_TFRagdoll
+Napoleon Dynamite killed acr75 with trigger_hurt.
+Cosmic suicided.
+Discarding ApplyAbsVelocityImpulse(-141922144.000000,32543662.000000,36041856.000000) on class C_TFRagdoll
+Reinitialized 7 predictable entities
+SaberAsuna killed Kataiser with trigger_hurt.
+PR0T0TYPX killed Timmy with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(40652620.000000,120186304.000000,80016368.000000) on class C_TFRagdoll
+Ju 87 stuka dive bomber killed PR0T0TYPX with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(-141948768.000000,32463212.000000,36009484.000000) on class C_TFRagdoll
+Bio killed Rinbow with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(111178416.000000,-74080680.000000,68201288.000000) on class C_TFRagdoll
+Shutdown 7 predictable entities and 0 client-created entities
+Discarding ApplyAbsVelocityImpulse(137993696.000000,47352996.000000,34863048.000000) on class C_TFRagdoll
+Saturn killed StateSixscream with trigger_hurt.
+Over killed Timmy with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(-142433696.000000,30705918.000000,35634044.000000) on class C_TFRagdoll
+Haunted Nobody suicided.
+Microsoft Word killed Napoleon Dynamite with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(-8894541.000000,139161824.000000,55270912.000000) on class C_TFRagdoll
+Discarding ApplyAbsVelocityImpulse(145902880.000000,-13912219.000000,31918606.000000) on class C_TFRagdoll
+Kataiser killed LMSparrow | End the Bots with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(-146284416.000000,2493007.500000,33085546.000000) on class C_TFRagdoll
+PR0T0TYPX killed Cosmic with trigger_hurt.
+Big Oof suicided.
+Toaster Bog killed Big Oof with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(114791000.000000,55226608.000000,79202576.000000) on class C_TFRagdoll
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​LMSparrow | End the Bots‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠gg﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+doomernification_ suicided.
+StateSixscream killed doomernification_ with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(-138300832.000000,-45651652.000000,35899936.000000) on class C_TFRagdoll
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Timmy‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠I topscored by bullshit means﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​doomernification_‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠gg﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+Dank Hill suicided.
+Discarding ApplyAbsVelocityImpulse(-55777332.000000,95429080.000000,101401072.000000) on class C_TFRagdoll
+Bio killed acr75 with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(-97137240.000000,93264296.000000,66076676.000000) on class C_TFRagdoll
+Napoleon Dynamite killed Over with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(116041248.000000,53094936.000000,78837528.000000) on class C_TFRagdoll
+Reinitialized 7 predictable entities
+Unknown command: tr_teleport
+Unknown command: tr_teleport
+Microsoft Word suicided.
+Saturn killed StateSixscream with kunai. (crit)
+LMSparrow | End the Bots killed Big Oof with mailbox.
+acr75 killed Mr. OLE´S with scotland_shard. (crit)
+Microsoft Word killed Timmy with tf_pumpkin_bomb.
+Ju 87 stuka dive bomber killed doomernification_ with obj_sentrygun.
+Toaster Bog killed PR0T0TYPX with scattergun.
+‏‌⁠​‏​⁠‏‎‌‍*DEAD* ⁠⁠‎‍﻿​‍‏﻿⁠‎Timmy‬⁠​‬‌‎‏﻿⁠‌‍ :  ​‎‍‬﻿‎​﻿‍‏‏I am dead‏‏‌‌‌​‬‏‬‬⁠‍‏⁠⁠‏​⁠‎﻿‌​
+Ju 87 stuka dive bomber killed Rinbow with obj_sentrygun.
+Saturn killed Napoleon Dynamite with kunai. (crit)
+Saturn killed SoulReaver with kunai. (crit)
+Over killed scontrer100 with pro_rifle. (crit)
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Haunted Nobody‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠nice unbox!﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+Saturn killed Bio with spellbook_fireball.
+Cosmic killed Saturn with tomislav.
+Microsoft Word killed LMSparrow | End the Bots with quake_rl.
+Kataiser killed Toaster Bog with scorch_shot.
+Timmy killed Microsoft Word with ambassador. (crit)
+Hatfam killed Cosmic with shotgun_hwg.
+‏‌⁠​‏​⁠‏‎‌‍*DEAD* ⁠⁠‎‍﻿​‍‏﻿⁠‎LMSparrow | End the Bots‬⁠​‬‌‎‏﻿⁠‌‍ :  ​‎‍‬﻿‎​﻿‍‏‏Oh now that's a good unboxing‏‏‌‌‌​‬‏‬‬⁠‍‏⁠⁠‏​⁠‎﻿‌​
+StateSixscream killed acr75 with scattergun.
+Ju 87 stuka dive bomber killed Dank Hill with the_capper.
+Kataiser killed Ju 87 stuka dive bomber with backburner.
+Kataiser killed Timmy with backburner.
+Bio killed PR0T0TYPX with ambassador.
+Failed to load sound "items\itembk2.wav", file probably missing from disk/repository
+Saturn killed StateSixscream with kunai.
+SoulReaver killed Over with sword.
+MP3 initialized with no sound cache, this may cause janking. [ vo\halloween_merasmus\hall2015_garg_gone_05.mp3 ]
+Failed to create decoder for MP3 [ vo\halloween_merasmus\hall2015_garg_gone_05.mp3 ]
+MP3 initialized with no sound cache, this may cause janking. [ vo\halloween_merasmus\hall2015_garg_gone_05.mp3 ]
+Failed to create decoder for MP3 [ vo\halloween_merasmus\hall2015_garg_gone_05.mp3 ]
+*** Invalid sample rate (0) for sound 'vo\halloween_merasmus\hall2015_garg_gone_05.mp3'.
+Saturn killed Napoleon Dynamite with kunai. (crit)
+Mr. OLE´S suicided. (crit)
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Haunted Nobody‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠I think the best I ever got was a strange haunted vampire makeover , or the chicken kiev﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+acr75 killed scontrer100 with iron_bomber.
+Hatfam killed Cosmic with tomislav. (crit)
+Hatfam killed SoulReaver with tomislav.
+Kataiser killed StateSixscream with backburner.
+Rinbow killed Bio with pistol_scout.
+Model '(null)' doesn't have attachment 'backblast' to attach particle system 'rocketbackblast' to.
+Hatfam killed Ju 87 stuka dive bomber with tomislav.
+Dank Hill killed Timmy with scattergun.
+Kataiser killed SaberAsuna with scorch_shot.
+Mr. OLE´S killed acr75 with world.
+‏‌⁠​‏​⁠‏‎‌‍*DEAD* ⁠⁠‎‍﻿​‍‏﻿⁠‎Timmy‬⁠​‬‌‎‏﻿⁠‌‍ :  ​‎‍‬﻿‎​﻿‍‏‏Wait there was a gargoyle?‏‏‌‌‌​‬‏‬‬⁠‍‏⁠⁠‏​⁠‎﻿‌​
+Cosmic killed Big Oof with tf_projectile_rocket.
+Mr. OLE´S killed Haunted Nobody with sword.
+Microsoft Word killed LMSparrow | End the Bots with spellbook_athletic.
+Shutdown 7 predictable entities and 0 client-created entities
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Kataiser‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠it's per person, sort of﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+SoulReaver suicided.
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​LMSparrow | End the Bots‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠My best is a strange snowcapped﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+Ju 87 stuka dive bomber suicided.
+LMSparrow | End the Bots suicided.
+Big Oof killed Mr. OLE´S with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(-26567166.000000,62614564.000000,133692184.000000) on class C_TFRagdoll
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Timmy‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠I know what they do﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+Dank Hill suicided.
+SaberAsuna killed Haunted Nobody with trigger_hurt.
+Microsoft Word suicided. (crit)
+StateSixscream killed acr75 with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(-60613912.000000,-64903836.000000,120886072.000000) on class C_TFRagdoll
+Discarding ApplyAbsVelocityImpulse(-68532904.000000,-50581608.000000,123469584.000000) on class C_TFRagdoll
+Discarding ApplyAbsVelocityImpulse(-20375596.000000,-74694944.000000,128473736.000000) on class C_TFRagdoll
+Discarding ApplyAbsVelocityImpulse(-46110696.000000,-37284520.000000,137781232.000000) on class C_TFRagdoll
+Timmy suicided.
+Kataiser killed SaberAsuna with trigger_hurt.
+StateSixscream suicided.
+Bio suicided.
+Kataiser suicided.
+Dank Hill killed Napoleon Dynamite with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(-99402008.000000,0.000000,112335384.000000) on class C_TFRagdoll
+Discarding ApplyAbsVelocityImpulse(17666508.000000,11770440.000000,148490256.000000) on class C_TFRagdoll
+Reinitialized 7 predictable entities
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_red' to.
+scontrer100 suicided.
+Toaster Bog suicided.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_red' to.
+Over suicided.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_red' to.
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Timmy‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠But I had no idea there was one﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_red' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_red' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_red' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_red' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_red' to.
+Shutdown 7 predictable entities and 0 client-created entities
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_red' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_red' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_red' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_red' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Saturn suicided.
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Timmy‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠I just simply﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Timmy‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠Forgot﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Timmy‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠wait﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Timmy‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠forgor﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​Timmy‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠not forgot﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+SaberAsuna suicided.
+Discarding ApplyAbsVelocityImpulse(20894826.000000,-55374056.000000,137830032.000000) on class C_TFRagdoll
+Discarding ApplyAbsVelocityImpulse(-72914952.000000,38128352.000000,125417848.000000) on class C_TFRagdoll
+Discarding ApplyAbsVelocityImpulse(3379438.000000,-85044616.000000,123515152.000000) on class C_TFRagdoll
+Reinitialized 7 predictable entities
+Ju 87 stuka dive bomber killed Kataiser with trigger_hurt.
+Big Oof killed Toaster Bog with trigger_hurt.
+Bio killed doomernification_ with trigger_hurt.
+Dank Hill killed SoulReaver with trigger_hurt.
+scontrer100 suicided.
+Mr. OLE´S suicided.
+Ju 87 stuka dive bomber killed acr75 with trigger_hurt.
+Bio killed PR0T0TYPX with trigger_hurt.
+Rinbow killed LMSparrow | End the Bots with trigger_hurt.
+Ju 87 stuka dive bomber suicided.
+Discarding ApplyAbsVelocityImpulse(5042808.000000,-31299322.000000,146611456.000000) on class C_TFRagdoll
+Discarding ApplyAbsVelocityImpulse(12833501.000000,-65097848.000000,134527216.000000) on class C_TFRagdoll
+Discarding ApplyAbsVelocityImpulse(-28572676.000000,13568850.000000,146627040.000000) on class C_TFRagdoll
+Discarding ApplyAbsVelocityImpulse(-53429224.000000,-65647708.000000,123837376.000000) on class C_TFRagdoll
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Microsoft Word killed StateSixscream with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(-30528122.000000,6162192.500000,146731248.000000) on class C_TFRagdoll
+Big Oof suicided.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Dank Hill suicided.
+Bio killed Saturn with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(-13463033.000000,92140656.000000,117596128.000000) on class C_TFRagdoll
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Bio suicided.
+Hatfam killed Cosmic with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(-34863364.000000,-86419984.000000,117542040.000000) on class C_TFRagdoll
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Microsoft Word suicided. (crit)
+Timmy suicided.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_red' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_red' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_red' to.
+Haunted Nobody killed Napoleon Dynamite with trigger_hurt.
+Discarding ApplyAbsVelocityImpulse(53414612.000000,79076640.000000,115731440.000000) on class C_TFRagdoll
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_red' to.
+Shutdown 7 predictable entities and 0 client-created entities
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_red' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'achieved' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'achieved' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_red' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_red' to.
+‏‏‍‎‬‏‬‬‏‌⁠‏⁠‍​‎⁠‬‏​‌⁠‌‏‏‌‌‌‬​LMSparrow | End the Bots‬‌‍‎⁠‌‎‬‎‌⁠‎⁠﻿⁠ :  ​‌‍‎​⁠⁠‎​​⁠⁠​‍⁠gg﻿‏‬﻿﻿‬‎﻿‬﻿⁠‍‍‬​‎‎‬‏‎‬⁠⁠‎‍‏‏‏‍‏
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_red' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_red' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_red' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_red' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_red' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_red' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Hatfam suicided.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Kataiser suicided.
+Reinitialized 7 predictable entities
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
+Rinbow suicided.
+Model '(null)' doesn't have attachment 'head' to attach particle system 'healthgained_blu' to.
