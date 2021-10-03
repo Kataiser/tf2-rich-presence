@@ -146,23 +146,31 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
                     now_in_menus = True
                     break
 
-            if not in_menus:
-                if 'Disconnect by user' in line:
-                    for user_username in user_usernames:
-                        if user_username in line:
-                            now_in_menus = True
-                            break
-                # ok this is jank but it's to only trigger on actually closing the map and not just (I think) ending a demo recording
-                elif 'SoundEmitter:' in line and int(line.split('[')[1].split()[0]) > 1000:
-                    now_in_menus = True
+            if line.endswith(' selected \n'):
+                class_line_possibly: List[str] = line[:-11].split()
 
-        if line.endswith(' selected \n'):
-            class_line_possibly: List[str] = line[:-11].split()
+                if class_line_possibly and class_line_possibly[-1] in tf2_classes:
+                    tf2_class = class_line_possibly[-1]
 
-            if class_line_possibly and class_line_possibly[-1] in tf2_classes:
-                tf2_class = class_line_possibly[-1]
+            elif 'Disconnect by user' in line:
+                for user_username in user_usernames:
+                    if user_username in line:
+                        now_in_menus = True
+                        break
 
-        elif line.startswith('Map:'):
+            # ok this is jank but it's to only trigger on actually closing the map and not just (I think) ending a demo recording
+            elif 'SoundEmitter:' in line and int(line.split('[')[1].split()[0]) > 1000:
+                now_in_menus = True
+
+            if kataiser_scan and not user_is_kataiser and 'Kataiser' in line:
+                # makes sure no one's just talking about me for some reason
+                if not (line.count(' :  ') == 1 and 'Kataiser' not in line.split(' :  ')[0] and 'Kataiser' in line.split(' :  ')[1]):
+                    kataiser_seen_on = tf2_map
+
+        elif 'SV_ActivateServer' in line:  # full line: "SV_ActivateServer: setting tickrate to 66.7"
+            just_started_server = True
+
+        if line.startswith('Map:'):
             in_menus = False
             tf2_map = line[5:-1]
             tf2_class = ''
@@ -178,21 +186,10 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
             server_address = line.split()[-1]
 
             if not connecting_to_matchmaking:
+                # joined a community server, so must use CAsyncWavDataCache method to detect disconnects
                 using_wav_cache = True
                 found_first_wav_cache = False
                 connecting_to_matchmaking = False
-
-        elif '[P' in line:
-            if '[PartyClient] L' in line:  # full line: "[PartyClient] Leaving queue"
-                # queueing is not necessarily only in menus
-                queued_state = "Not queued"
-
-            elif '[PartyClient] Entering q' in line:  # full line: "[PartyClient] Entering queue for match group " + whatever mode
-                match_type: str = line.split('match group ')[-1][:-1]
-                queued_state = f"Queued for {match_types[match_type]}"
-
-            elif '[PartyClient] Entering s' in line:  # full line: "[PartyClient] Entering standby queue"
-                queued_state = 'Queued for a party\'s match'
 
         elif 'matchmaking server' in line:
             connecting_to_matchmaking = True
@@ -210,13 +207,17 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
                 # it's the one after loading in
                 found_first_wav_cache = True
 
-        elif 'SV_ActivateServer' in line:  # full line: "SV_ActivateServer: setting tickrate to 66.7"
-            just_started_server = True
+        elif '[P' in line:
+            if '[PartyClient] L' in line:  # full line: "[PartyClient] Leaving queue"
+                # queueing is not necessarily only in menus
+                queued_state = "Not queued"
 
-        if kataiser_scan and not user_is_kataiser and 'Kataiser' in line:
-            # makes sure no one's just talking about me for some reason
-            if not (line.count(' :  ') == 1 and 'Kataiser' not in line.split(' :  ')[0] and 'Kataiser' in line.split(' :  ')[1]):
-                kataiser_seen_on = tf2_map
+            elif '[PartyClient] Entering q' in line:  # full line: "[PartyClient] Entering queue for match group " + whatever mode
+                match_type: str = line.split('match group ')[-1][:-1]
+                queued_state = f"Queued for {match_types[match_type]}"
+
+            elif '[PartyClient] Entering s' in line:  # full line: "[PartyClient] Entering standby queue"
+                queued_state = 'Queued for a party\'s match'
 
         if now_in_menus:
             now_in_menus = False
