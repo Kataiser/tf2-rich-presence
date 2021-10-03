@@ -68,9 +68,6 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
 
     # actually open the file finally
     with open(console_log_path, 'r', errors='replace', encoding=decode_mode) as consolelog_file:
-        # update this again last moment
-        self.console_log_mtime = int(os.stat(console_log_path).st_mtime)
-
         if consolelog_file_size > byte_limit:
             skip_to_byte: int = consolelog_file_size - int(byte_limit)
             consolelog_file.seek(skip_to_byte, 0)  # skip to last few KBs
@@ -80,6 +77,9 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
         else:
             lines = consolelog_file.readlines()
             self.log.debug(f"console.log: {consolelog_file_size} bytes, {len(lines)} lines (didn't skip lines)")
+
+    # update this again late, fixes wrong detections but may cause a duplicate scan
+    self.console_log_mtime = int(os.stat(console_log_path).st_mtime)
 
     # limit the file size, for better readlines performance
     if consolelog_file_size > byte_limit * SIZE_LIMIT_MULTIPLE_TRIGGER and len(lines) > SIZE_LIMIT_MIN_LINES and settings.get('trim_console_log') and not force:
@@ -121,7 +121,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     match_types: Dict[str, str] = {'12v12 Casual Match': 'Casual', 'MvM Practice': 'MvM (Boot Camp)', 'MvM MannUp': 'MvM (Mann Up)', '6v6 Ladder Match': 'Competitive'}
     menus_messages: Tuple[str, ...] = ('For FCVAR_REPLICATED', '[TF Workshop]', 'request to abandon', 'Server shutting down', 'Lobby destroyed', 'Disconnect:', 'destroyed CAsyncWavDataCache',
                                        'ShutdownGC', 'Connection failed after', 'Missing map', 'Host_Error')
-    menus_message_used: Optional[str] = ''
+    menus_message_used: Optional[str] = None
     menus_message: str
 
     for username in user_usernames:
