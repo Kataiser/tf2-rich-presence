@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "TF2 Rich Presence"
-#define MyAppVersion "2.0"
+#define MyAppVersion "2.1"
 #define MyAppPublisher "Kataiser"
 #define MyAppURL "https://github.com/Kataiser/tf2-rich-presence"
 #define MyAppExeName "TF2 Rich Presence.bat"
@@ -24,7 +24,7 @@ DisableProgramGroupPage=yes
 PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
 OutputDir=.
-OutputBaseFilename=TF2RichPresence_v2.0_setup
+OutputBaseFilename=TF2RichPresence_v2.1_setup
 SetupIconFile=tf2_logo_blurple.ico
 Compression=lzma
 SolidCompression=yes
@@ -53,11 +53,11 @@ Name: "{userappdata}\TF2 Rich Presence"; Flags: setntfscompression
 Name: "{userappdata}\TF2 Rich Presence\logs"; Flags: setntfscompression
 
 [Files]
-Source: "TF2 Rich Presence v2.0\License.txt"; DestDir: "{app}"; Flags: ignoreversion
-Source: "TF2 Rich Presence v2.0\Readme.txt"; DestDir: "{app}"; Flags: ignoreversion
-Source: "TF2 Rich Presence v2.0\Changelogs.html"; DestDir: "{app}"; Flags: ignoreversion
-Source: "TF2 Rich Presence v2.0\TF2 Rich Presence.bat"; DestDir: "{app}"; Flags: ignoreversion
-Source: "TF2 Rich Presence v2.0\resources\*"; DestDir: "{app}\resources"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "TF2 Rich Presence v2.1\License.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "TF2 Rich Presence v2.1\Readme.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "TF2 Rich Presence v2.1\Changelogs.html"; DestDir: "{app}"; Flags: ignoreversion
+Source: "TF2 Rich Presence v2.1\TF2 Rich Presence.bat"; DestDir: "{app}"; Flags: ignoreversion
+Source: "TF2 Rich Presence v2.1\resources\*"; DestDir: "{app}\resources"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]

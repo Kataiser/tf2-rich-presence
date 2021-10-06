@@ -22,7 +22,7 @@ import cython_compile
 
 
 # TODO: don't do this separate locations nonsense, convert to using a repo properly
-def main(version_num='v2.0'):
+def main(version_num='v2.1'):
     parser = argparse.ArgumentParser()
     parser.add_argument('--n', action='store_true', help="Skip copying to an repo location", default=False)
     parser.add_argument('--ide', action='store_true', help="Use IDE-based build.log handling", default=False)
