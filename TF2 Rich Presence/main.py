@@ -35,6 +35,7 @@ from discoIPC import ipc
 import configs
 import console_log
 import game_state
+import gamemodes
 import gui
 import launcher
 import localization
@@ -375,8 +376,7 @@ class TF2RichPresense:
         else:
             gamemode_gui: str = self.game_state.gamemode
 
-            if settings.get('drawing_gamemodes') and gamemode_gui in ('attack-defend', 'control-point', 'ctf', 'koth', 'mannpower', 'mvm', 'passtime', 'payload', 'payload-race',
-                                                                      'special-delivery', 'training'):
+            if settings.get('drawing_gamemodes') and gamemode_gui in gamemodes.have_drawing:
                 gamemode_gui = f'drawing_{gamemode_gui}'
 
             self.gui.set_state_4(f'bg_modes/{gamemode_gui}', (self.game_state.map_line, self.game_state.get_line('top'), self.game_state.get_line('bottom'), time_elapsed))

@@ -14,6 +14,7 @@ import unittest
 import psutil
 import requests
 from discoIPC import ipc
+from PIL import Image
 
 import configs
 import console_log
@@ -683,6 +684,50 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertEqual((app.gui.text_state, app.gui.bg_state, app.gui.fg_state, app.gui.class_state),
                          (('Map: plr_highertower (hosting)', 'Players: ?/?', 'Time on map: 0:00', '0:00 elapsed'),
                           ('bg_modes/payload-race', 77, 172), 'fg_modes/payload-race', 'classes/engineer'))
+
+    def test_gui_images(self):
+        images_to_test = []
+        map_pics_discord_exists = os.path.isdir('map_pics_discord')
+        self.assertEqual(len(console_log.tf2_classes), len(os.listdir('gui_images\\classes')))
+        self.assertEqual(len(gamemodes.modes) + len(gamemodes.have_drawing) + 1, len(os.listdir('gui_images\\bg_modes')), len(os.listdir('gui_images\\fg_modes')))
+        self.assertEqual(len(gamemodes.load_maps_db()) - len(game_state.map_fallbacks), len(os.listdir('gui_images\\fg_maps')))
+
+        if map_pics_discord_exists:
+            self.assertEqual(len(gamemodes.load_maps_db()) - len(game_state.map_fallbacks), len(os.listdir('map_pics_discord')))
+
+        for item in os.listdir('gui_images'):
+            if os.path.isfile(f'gui_images\\{item}'):
+                images_to_test.append((f'gui_images\\{item}', None))
+
+        for gamemode in gamemodes.modes:
+            images_to_test.append((f'gui_images\\bg_modes\\{gamemode}.webp', 2.0))
+            images_to_test.append((f'gui_images\\fg_modes\\{gamemode}.webp', 1.0))
+
+            if gamemode in gamemodes.have_drawing:
+                images_to_test.append((f'gui_images\\bg_modes\\drawing_{gamemode}.webp', 2.0))
+                images_to_test.append((f'gui_images\\fg_modes\\drawing_{gamemode}.webp', (240, 240)))
+
+        for tf2_class in console_log.tf2_classes:
+            images_to_test.append((f'gui_images\\classes\\{tf2_class}.webp', (90, 90)))
+
+        for tf2_map in gamemodes.load_maps_db():
+            if tf2_map not in game_state.map_fallbacks:
+                images_to_test.append((f'gui_images\\fg_maps\\{tf2_map}.webp', (240, 240)))
+
+                if map_pics_discord_exists:
+                    images_to_test.append((f'map_pics_discord\\z_{tf2_map}.jpg', (512, 512)))
+
+        for image_data in images_to_test:
+            print(image_data)
+            self.assertTrue(os.path.isfile(image_data[0]))
+            image = Image.open(image_data[0])
+            image.load()
+
+            if isinstance(image_data[1], float):
+                self.assertAlmostEqual(image.size[0] / image.size[1], float(image_data[1]), 1)
+            elif isinstance(image_data[1], tuple):
+                self.assertEqual(image.size[0], image_data[1][0])
+                self.assertEqual(image.size[1], image_data[1][1])
 
     def test_game_state_localized(self):
         settings.change('language', 'Spanish')

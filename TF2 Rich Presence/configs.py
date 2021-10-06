@@ -8,13 +8,13 @@ from typing import Callable, List, Optional, Tuple, Union
 
 import vdf
 
+import console_log
 import logger
 
 
 # allows for detecting which class the user is playing as
 def class_config_files(log, exe_location: str):
     log.debug(f"Reading (and possibly modifying) class configs at {exe_location}")
-    tf2_classes: List[str] = ['Scout', 'Soldier', 'Pyro', 'Demoman', 'Heavy', 'Engineer', 'Medic', 'Sniper', 'Spy']
     classes_found: List[str] = []
     classes_not_found: List[str] = []
     cfg_path: str = os.path.join(exe_location, 'tf', 'cfg')
@@ -26,7 +26,7 @@ def class_config_files(log, exe_location: str):
         else:
             log.error(f"{exe_location} doesn't exist, can't read/modify class config files")
 
-    for tf2_class in tf2_classes:
+    for tf2_class in console_log.tf2_classes:
         # 'echo' means 'output to console' in source-speak
         selected_line: str = f'\n// Added by TF2 Rich Presence, please don\'t remove\necho "{tf2_class} selected"\n'
 
