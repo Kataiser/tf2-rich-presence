@@ -1,7 +1,7 @@
 Cython==3.0a9
 Pillow==8.3.2
 beautifulsoup4==4.10.0
-certifi==2021.5.30
+certifi==2021.10.8
 charset-normalizer==2.0.6
 discoIPC==1.0.0
 idna==3.2
