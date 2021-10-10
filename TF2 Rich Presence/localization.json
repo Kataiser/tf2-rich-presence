@@ -1133,6 +1133,20 @@
         "Chinese": "查看更新日志",
         "Japanese": "変更履歴を開く"
     },
+    "8559017180": {
+        "English": "Open console.log",
+        "German": "console.log öffnen",
+        "French": "console.log öffnen",
+        "Spanish": "Abrir console.log",
+        "Portuguese": "console.log aberto",
+        "Italian": "Aprire console.log",
+        "Dutch": "Open console.log",
+        "Polish": "Otwórz console.log",
+        "Russian": "Откройте файл console.log",
+        "Korean": "console.log 를 여십시오",
+        "Chinese": "打开console.log",
+        "Japanese": "console.logを開く"
+    },
     "4845743580": {
         "English": "Open license",
         "German": "Offene Lizenz",

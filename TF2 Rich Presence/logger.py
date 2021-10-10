@@ -65,7 +65,6 @@ class Log:
         # setup
         self.filename_errors: str = os.path.join(self.logs_path, f'TF2RP_{user_pc_name}_{user_identifier}_{launcher.VERSION}.errors.log')
         self.last_log_time: float = time.perf_counter()
-        self.console_log_path: Optional[str] = None
         self.to_stderr: bool = launcher.DEBUG
         self.force_disabled: bool = False
         self.log_levels: List[str] = ['Debug', 'Info', 'Error', 'Critical', 'Off']

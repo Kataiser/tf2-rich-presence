@@ -65,6 +65,7 @@ class GUI(tk.Frame):
         self.tf2_launch_cmd: Optional[Tuple[str, str]] = None
         self.main_loop_body_times: List[float] = []
         self.update_checker: updater.UpdateChecker = updater.UpdateChecker(self.log)
+        self.console_log_path: Optional[str] = None
 
         menu_bar: tk.Menu = tk.Menu(self.master)
         self.file_menu = tk.Menu(menu_bar, tearoff=0)
@@ -73,6 +74,7 @@ class GUI(tk.Frame):
         menu_bar.add_cascade(label=self.loc.text("Help"), menu=help_menu)
         self.file_menu.add_command(label=self.loc.text("Change settings"), command=self.menu_open_settings, accelerator="Ctrl+S")
         self.file_menu.add_command(label=self.loc.text("Restore default settings"), command=self.menu_restore_defaults)
+        self.file_menu.add_command(label=self.loc.text("Open console.log"), command=self.menu_open_console_log, state=tk.DISABLED)
         self.file_menu.add_command(label=self.loc.text("Trim/clean console.log"), command=self.menu_clean_console_log, state=tk.DISABLED)
         self.file_menu.add_command(label=self.loc.text("Open save directory"), command=self.menu_open_save_directory)
         self.file_menu.add_command(label=self.loc.text("Exit"), command=self.menu_exit, accelerator="Ctrl+Q")
@@ -251,8 +253,8 @@ class GUI(tk.Frame):
 
         return text
 
-    # only show the "clean console.log" menu button if the game is running
-    def set_clean_console_log_button_state(self, enabled: bool):
+    # only show the console.log menu buttons if the game is running
+    def set_console_log_button_states(self, enabled: bool):
         self.file_menu.entryconfigure(2, state=tk.ACTIVE if enabled else tk.DISABLED)
 
     # only show the "launch TF2" button if Steam is running and the game is not
@@ -541,6 +543,13 @@ class GUI(tk.Frame):
         else:
             self.log.error("GUI: Opening save directory failed")
 
+    def menu_open_console_log(self):
+        if self.console_log_path and os.path.isfile(self.console_log_path):
+            self.log.info(f"GUI: Opening console.log at {self.console_log_path}")
+            os.startfile(self.console_log_path)
+        else:
+            self.log.error(f"GUI: Opening console.log failed, path is {self.console_log_path}")
+
     def menu_check_updates(self, *args):
         self.log.info("GUI: checking for updates")
         self.update_checker.initiate_update_check(True)
@@ -658,7 +667,7 @@ def pos_window_by_center(window: Union[tk.Tk, tk.Toplevel], x: int, y: int):
 
 def main():
     main_gui = GUI(logger.Log())
-    main_gui.set_clean_console_log_button_state(True)  # cause main would normally enable it once in game
+    main_gui.set_console_log_button_states(True)  # cause main would normally enable it once in game
     test_state(main_gui, int(input("0-4: ")))
     main_gui.mainloop()
 

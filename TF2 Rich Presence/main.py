@@ -244,12 +244,13 @@ class TF2RichPresense:
                 self.has_checked_class_configs = True
 
             self.game_state.game_start_time = p_data['TF2']['time']
-            self.gui.set_clean_console_log_button_state(True)
+            self.gui.set_console_log_button_states(True)
             self.gui.set_launch_tf2_button_state(False)
             self.gui.set_bottom_text('discord', False)
             self.reset_launched_with_button = True
 
             console_log_path: str = os.path.join(p_data['TF2']['path'], 'tf', 'console.log')
+            self.gui.console_log_path = console_log_path
             console_log_parsed: Optional[Tuple[bool, str, str, str, str, bool]] = self.interpret_console_log(console_log_path, self.usernames, tf2_start_time=p_data['TF2']['time'])
             self.old_console_log_mtime = self.console_log_mtime
 
@@ -415,7 +416,7 @@ class TF2RichPresense:
         self.gui.set_state_1('default', self.loc.text("{0} isn't running").format(program_name))
         self.gui.clear_fg_image()
         self.gui.clear_class_image()
-        self.gui.set_clean_console_log_button_state(False)
+        self.gui.set_console_log_button_states(False)
         self.gui.clean_console_log = False
         self.gui.set_bottom_text('queued', False)
         self.gui.set_bottom_text('kataiser', False)
