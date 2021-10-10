@@ -78,6 +78,8 @@ class TestTF2RichPresense(unittest.TestCase):
                          (False, 'vsh_military_area_se6', 'Heavy', '45.235.98.47:27070', 'Not queued', False))
         self.assertEqual(app.interpret_console_log('test_resources\\console_blanks.log', {'not Kataiser'}, float('inf'), True),
                          (False, 'sd_doomsday_event', 'Pyro', '162.254.195.114:27046', 'Not queued', False))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_map_material.log', {'not Kataiser'}, float('inf'), True),
+                         (False, 'koth_slaughter_event', '', '162.254.192.150:27051', 'Queued for Casual', False))
 
         # tests trimming
         trimtest_small = 'test_resources\\console_badwater.log'

@@ -1,0 +1,178 @@
+For FCVAR_REPLICATED, ConVar must be defined in client and game .dlls (sv_use_steam_voice)
+[TF Workshop] Got 0 subscribed maps, 0 new
+ProtoDefs post data loaded.
+ProtoDefs loaded. 27.27 MB used
+ProtoDefs post data loaded.
+ProtoDefs loaded. 27.27 MB used
+maxplayers set to 24
+Steam config directory: E:\Steam\steamapps\common\Team Fortress 2\platform\config
+CClientSteamContext logged on = 1
+Parent cvar in server.dll not allowed (tf_flamethrower_new_flame_offset)
+[SteamNetworkingSockets] Waited 4.4ms for SteamNetworkingSockets lock [ServiceThread]
+ProtoDefs post data loaded.
+ProtoDefs loaded. 27.27 MB used
+ProtoDefs post data loaded.
+ProtoDefs loaded. 27.27 MB used
+Cleaning up unneeded replay block data...
+Replay cleanup done.
+Loading default settings for high sensitivity
+Unable to bind a key for command "+attack3" after 107 attempt(s).
+Unable to bind a key for command "say_party" after 107 attempt(s).
+ProtoDefs post data loaded.
+ProtoDefs post data loaded.
+Connection to game coordinator established.
+Current item schema is up-to-date with version 17DD1D7C.
+CTFGCClientSystem::PostInitGC
+CTFGCClientSystem - adding listener
+ProtoDefs post data loaded.
+ProtoDefs post data loaded.
+------------------------------------------------------------------------------------------------------------- 
+Unknown command "gl_pow2_tempmem"
+Unknown command "gl_radar7954721_workaround_mixed"
+Unknown command "gl_batch_tex_creates"
+Unknown command "gl_batch_tex_destroys"
+Unknown command "gl_minimize_all_tex"
+Unknown command "gl_minimize_rt_tex"
+Unknown command "gl_nullqueries"
+Unknown command "gl_mtglflush_at_tof"
+Unknown command "gl_debug_output"
+Unknown command "gl_magnify_resolve_mode"
+Unknown command "gl_paircache_rows_lg2"
+Unknown command "gl_paircache_ways_lg2"
+  
+  
+  
+  
+    ***************************     
+    ***************************     
+  ** mastercomfig 6.5.5 loaded **   
+    ***************************     
+    ***************************     
+  
+  
+  
+  
+    ******************************************************     
+    ******************************************************     
+    ******************************************************     
+    ******************************************************     
+=> Having issues in local servers, like being unable to fire or move? Set host_thread_mode 0. 
+=> Remember to set host_thread_mode 1 once you are done with your local server. 
+    ******************************************************     
+    ******************************************************     
+    ******************************************************     
+    ******************************************************     
+  
+  
+  
+  
+Compact freed 630784 bytes
+Unknown command "cl_playerspraydisable"
+Unknown command "messages_enable"
+Unknown command "hud_player_model_on"
+Client settings initiated 
+Can't use cheat cvar mat_fullbright in multiplayer, unless the server has sv_cheats set to 1.
+Can't use cheat cvar mat_drawwater in multiplayer, unless the server has sv_cheats set to 1.
+Aliases initiated 
+Various binds initiated 
+Network settings initiated 
+Blood toggle initiated 
+Hitsound initiated 
+Scoreboard toggle initiated 
+Numpad binds initiated 
+Movie rendering initiated 
+------------------------------------------------------------------------------------------------------------- 
+KeyValues Error: LoadFromBuffer: missing { in file scripts/CharacterBackgrounds.txt
+Changing resolutions from (1920, 1080) -> (1920, 1080)
+Unable to remove e:\steam\steamapps\common\team fortress 2\tf\textwindow_temp.html!
+Can't use cheat cvar fog_start in multiplayer, unless the server has sv_cheats set to 1.
+Can't use cheat cvar fog_end in multiplayer, unless the server has sv_cheats set to 1.
+Can't use cheat cvar fog_startskybox in multiplayer, unless the server has sv_cheats set to 1.
+Can't use cheat cvar fog_endskybox in multiplayer, unless the server has sv_cheats set to 1.
+Can't use cheat cvar r_farz in multiplayer, unless the server has sv_cheats set to 1.
+[SteamNetworkingSockets] SDR network config fetch first attempt failed.  HTTP 504.  .  Trying again.
+[SteamNetworkingSockets] SteamNetworkingSockets lock held for 58.5ms.  (Performance warning.)  ServiceThread,RecvUDPPacket
+This is usually a symptom of a general performance problem such as thread starvation.
+[SteamNetworkingSockets] Waited 13.8ms for SteamNetworkingSockets lock
+[PartyClient] Sending request to join [U:1:374886490] party (current party 0)
+[PartyClient] Joining party 554875015877315
+[PartyClient] Requesting queue to join party's lobby
+[PartyClient] Entering standby queue to join party
+[PartyClient] Leaving standby queue
+Lobby created
+Differing lobby received. Lobby: [A:1:1084075018:18612]/Match64692933/Lobby554875017079755 CurrentlyAssigned: [I:0:0]/Match0/Lobby0 ConnectedToMatchServer: 0 HasLobby: 1 AssignedMatchEnded: 0
+Connecting to matchmaking server 162.254.192.150:27051
+Connecting to 162.254.192.150:27051
+Connecting to matchmaking server 162.254.192.150:27051
+Connecting to 162.254.192.150:27051
+[SteamNetworkingSockets] SteamNetworkingSockets lock held for 10.3ms.  (Performance warning.)  CreateFakeUDPPort,CMessagesEndPoint::BInit
+This is usually a symptom of a general performance problem such as thread starvation.
+Network: IP 192.168.1.183, mode MP, dedicated No, ports 27015 SV / 27005 CL
+Connecting to 162.254.192.150:27051...
+Connected to 162.254.192.150:27051
+
+Team Fortress
+Map: koth_slaughter_event
+Players: 23 / 32
+Build: 6819039
+Server Number: 6
+
+Attemped to precache unknown particle system "Explosions_MA_Dustup_2"!
+Attemped to precache unknown particle system "Explosions_UW_Debris001"!
+Attemped to precache unknown particle system "projectile_fireball_center"!
+Attemped to precache unknown particle system "projectile_fireball_ring_fire"!
+Attemped to precache unknown particle system "projectile_fireball_smoke"!
+Attemped to precache unknown particle system "projectile_fireball_end"!
+Attemped to precache unknown particle system "projectile_fireball_end_ring_fire"!
+Attemped to precache unknown particle system "projectile_fireball_end_ring_smoke"!
+Attemped to precache unknown particle system "dragons_fury_FloatieEmbers"!
+Attemped to precache unknown particle system "projectile_fireball_fireball_pyrovision"!
+Attemped to precache unknown particle system "projectile_fireball_smokeball_pyrovision"!
+Attemped to precache unknown particle system "projectile_fireball_smokepuff_pyrovision"!
+Attemped to precache unknown particle system "projectile_fireball_trail_pyrovision"!
+Attemped to precache unknown particle system "rings_of_fire_fx"!
+Attemped to precache unknown particle system "rings_of_fire_fx_bits"!
+Attemped to precache unknown particle system "funhouse_parent_large"!
+Attemped to precache unknown particle system "funhouse_sparkles_large"!
+Attemped to precache unknown particle system "funhouse_vortex_large"!
+Attemped to precache unknown particle system "funhouse_smoke_large"!
+Attemped to precache unknown particle system "blood_impact_red"!
+Missing map material: CONCRETE/BROKENTILE004
+The server is using sv_pure 1.  (Custom pure server rules.)
+KeyValues Error: RecursiveLoadFromBuffer:  got EOF instead of keyname in file materials/models/props_frontline/cans_4.vmt
+VertexLitGeneric, 
+Requesting texture value from var "$basetexture" which is not a texture value (material: skybox/sky_halloween_night_01rt)
+Requesting texture value from var "$basetexture" which is not a texture value (material: skybox/sky_halloween_night_01bk)
+Requesting texture value from var "$basetexture" which is not a texture value (material: skybox/sky_halloween_night_01lf)
+Requesting texture value from var "$basetexture" which is not a texture value (material: skybox/sky_halloween_night_01ft)
+Requesting texture value from var "$basetexture" which is not a texture value (material: skybox/sky_halloween_night_01up)
+Requesting texture value from var "$basetexture" which is not a texture value (material: skybox/sky_halloween_night_01dn)
+Voice_Init: Using Steam voice optimal sample rate 24000
+Kataiser connected
+CMaterial::PrecacheVars: error loading vmt file for effects/jumper_arrow
+CMaterial::PrecacheVars: error loading vmt file for effects/animatedlargeshell/animated_large_shell
+CMaterial::PrecacheVars: error loading vmt file for effects/animatedsmallshell/animated_small_shell
+CAsyncWavDataCache:  4 .wavs total 0 bytes, 0.00 % of capacity
+Compact freed 212992 bytes
+Using joystick 'Xbox360 controller' configuration
+JOY_AXIS_X:  mapped to Side (absolute)
+JOY_AXIS_Y:  mapped to Forward (absolute)
+JOY_AXIS_Z:  unmapped
+JOY_AXIS_R:  mapped to Look (absolute)
+JOY_AXIS_U:  mapped to Turn (absolute)
+JOY_AXIS_V:  unmapped
+Advanced Joystick settings initialized
+--- Missing Vgui material vgui/..\vgui\maps\menu_thumb_Missing
+--- Missing Vgui material vgui/..\vgui\maps\menu_thumb_Missing
+--- Missing Vgui material vgui/..\vgui\maps\menu_thumb_Missing
+Redownloading all lightmaps
+GamerfanS.C killed CEO of Zorua with tf_projectile_rocket.
+Nitro_Kill killed bstempi with scorch_shot.
+Funny Guy killed Spooky NEO with headtaker. (crit)
+ZxE_Totinos defended the Pier for team #3
+ZxE_Totinos killed Bismarcking with brass_beast.
+Scout Gaming killed GamerfanS.C with quake_rl.
+Galahax killed ZxE_Totinos with flamethrower.
+Galahax defended the Pier for team #2
+Galahax killed naenaed with flamethrower. (crit)
+[PartyClient] Entering queue for match group 12v12 Casual Match

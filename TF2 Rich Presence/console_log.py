@@ -120,7 +120,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     # TODO: detection for canceling loading into community servers (if possible)
     match_types: Dict[str, str] = {'12v12 Casual Match': 'Casual', 'MvM Practice': 'MvM (Boot Camp)', 'MvM MannUp': 'MvM (Mann Up)', '6v6 Ladder Match': 'Competitive'}
     menus_messages: Tuple[str, ...] = ('For FCVAR_REPLICATED', '[TF Workshop]', 'request to abandon', 'Server shutting down', 'Lobby destroyed', 'Disconnect:', 'destroyed CAsyncWavDataCache',
-                                       'ShutdownGC', 'Connection failed after', 'Missing map', 'Host_Error')
+                                       'ShutdownGC', 'Connection failed after', 'Host_Error')
     menus_message_used: Optional[str] = None
     menus_message: str
 
@@ -157,6 +157,9 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
                     if user_username in line:
                         now_in_menus = True
                         break
+
+            elif 'Missing map' in line and 'Missing map material' not in line:
+                now_in_menus = True
 
             # ok this is jank but it's to only trigger on actually closing the map and not just (I think) ending a demo recording
             elif 'SoundEmitter:' in line and int(line.split('[')[1].split()[0]) > 1000:
