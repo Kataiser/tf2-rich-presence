@@ -17,13 +17,7 @@ def main():
     gamemode_replacements = [('d(M', 'd (M'), ('t(D', 't (D'), (' Mode', ''), ('Developer aidTest', 'No gamemode'), ('Developer aidControl Point', 'Control Point')]
     map_gamemodes = {'itemtest': ('itemtest', 'unknown', 'Unknown gamemode'),
                      'devtest': ('devtest', 'unknown', 'Unknown gamemode'),
-                     'background01': ('background01', 'unknown', 'Unknown gamemode'),
-                     'pd_farmageddon': ('Farmageddon', 'player-destruction', 'Player Destruction'),
-                     'koth_synthetic_event': ('Sinthetic', 'koth', 'King of the Hill'),
-                     'koth_los_muertos': ('Los Muertos', 'koth', 'King of the Hill'),
-                     'cp_ambush_event': ('Erebus', 'attack-defend', 'Attack/Defend'),
-                     'pl_terror_event': ('Terror', 'payload', 'Payload'),
-                     'arena_lumberyard_event': ('Graveyard', 'arena', 'Arena')}
+                     'background01': ('background01', 'unknown', 'Unknown gamemode')}
 
     r = requests.get('https://wiki.teamfortress.com/wiki/List_of_maps')
     soup = BeautifulSoup(r.text, 'lxml')

@@ -20,28 +20,20 @@ def main():
     # downloads a screenshot of every map and then crops and resizes it for Discord and the GUI
     # maybe don't read this code if you don't need to
 
-    if requests_cache:
-        print("Using DL cache")
-        requests_cache.install_cache('tf2maps_dl_cache')
-    else:
-        print("Not using DL cache, install requests_cache")
-
-    if os.path.isdir('gui_images\\fg_maps'):
-        shutil.rmtree('gui_images\\fg_maps')
-    if os.path.isdir('map_pics_discord'):
-        shutil.rmtree('map_pics_discord')
-
-    time.sleep(0.1)
-    os.mkdir('gui_images\\fg_maps')
-    os.mkdir('map_pics_discord')
-
     map_datas = [('background01', '/wiki/Background01'), ('devtest', '/wiki/Devtest')]
-    excluded = ('cp_granary', 'arena_nucleus', 'arena_sawmill', 'arena_badlands', 'koth_badlands', 'tr_dustbowl', 'ctf_thundermountain', 'ctf_well', 'arena_well')
+    excluded = ('cp_granary', 'arena_nucleus', 'arena_sawmill', 'arena_badlands', 'koth_badlands', 'tr_dustbowl', 'ctf_thundermountain', 'ctf_well', 'arena_well', 'pd_farmageddon',
+                'koth_synthetic_event', 'koth_los_muertos', 'cp_ambush_event', 'pl_terror_event', 'arena_lumberyard_event')
     overrides = {'mvm_coaltown': '/wiki/File:Coal_Town_base.png', 'mvm_decoy': '/wiki/File:Decoy_left_lane.png', 'mvm_mannworks': '/wiki/File:Mannworks_left_lane.jpg'}
 
     list_page_r = requests.get('https://wiki.teamfortress.com/wiki/List_of_maps')
     list_page = BeautifulSoup(list_page_r.text, 'lxml')
     map_entries = list_page.find_all('table')[1].find_all('tr')[1:]
+
+    if requests_cache:
+        print("Using DL cache")
+        requests_cache.install_cache('tf2maps_dl_cache')
+    else:
+        print("Not using DL cache, install requests_cache")
 
     for map_entry in map_entries:
         map_datas.append((map_entry.find('code').text, map_entry.find_all('a')[1].get('href')))
