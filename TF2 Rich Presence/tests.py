@@ -32,7 +32,7 @@ import updater
 import utils
 
 
-class TestTF2RichPresense(unittest.TestCase):
+class TestTF2RichPresence(unittest.TestCase):
     def setUp(self):
         settings.access_registry(save=settings.defaults())  # sorry if this changes your settings
         settings.change('request_timeout', 30)
@@ -152,7 +152,7 @@ class TestTF2RichPresense(unittest.TestCase):
         test_game_state = game_state.GameState(self.log)
         test_addresses = ('162.254.192.155:27053',  # valve
                           'dal-1.us.uncletopia.com:27015',
-                          '134.195.12.137:27015',  # creators.tf
+                          '135.125.188.102:27015',  # creators.tf
                           '192.223.26.238:27015',  # lazypurple
                           '45.35.1.186:27065')  # blackwonder
 
@@ -386,26 +386,30 @@ class TestTF2RichPresense(unittest.TestCase):
         self.assertGreaterEqual(new_dimensions[1], 200)
 
     def test_localization(self):
-        all_keys = tuple(localization.access_localization_file().keys())
-        english_lines = [localization.access_localization_file()[key]['English'] for key in all_keys]
-        num_lines_total = len(english_lines)
+        english_lines = localization.access_localization_data()['English']
+        num_lines_total = len(english_lines) - 4
         incorrect_hashes = []
         test_text = "This text isn't in the file"
+        meta_keys = ('name_localized', 'code', 'credits', 'notes')
 
-        for key in all_keys:
-            test_key = localization.hash_text(localization.access_localization_file()[key]['English'])
+        for key in english_lines:
+            test_key = localization.hash_text(localization.access_localization_data()['English'][key])
 
-            if key != test_key:
-                incorrect_hashes.append((key, test_key, localization.access_localization_file()[key]['English']))
+            if key != test_key and key not in meta_keys:
+                incorrect_hashes.append((key, test_key, localization.access_localization_data()['English'][key]))
 
         self.assertEqual(incorrect_hashes, [])
 
-        for language in ['English', 'German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian', 'Korean', 'Chinese', 'Japanese']:
+        for language in localization.langs:
             localizer = localization.Localizer(language=language, persist_missing=False)
             self.assertEqual(repr(localizer), f'localization.Localizer ({language}, appending=False, 0 missing lines)')
 
             num_equal_lines = 0
-            for line_english in english_lines:
+            for key_english in english_lines:
+                if key_english in meta_keys:
+                    continue
+
+                line_english = localization.access_localization_data()['English'][key_english]
                 line_localized = localizer.text(line_english)
 
                 try:

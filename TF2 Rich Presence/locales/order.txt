@@ -1,0 +1,12 @@
+English
+German
+French
+Spanish
+Portuguese
+Italian
+Dutch
+Polish
+Russian
+Korean
+Chinese
+Japanese

@@ -19,18 +19,16 @@ class GUI(tk.Frame):
     def __init__(self, master: tk.Toplevel, log: logger.Log, position: Optional[tuple] = None, reload_settings: Optional[tuple] = None):
         self.log: logger.Log = log
         self.log.info(f"Opening settings menu for TF2 Rich Presence {launcher.VERSION}")
-        self.gui_language: Optional[str] = self.languages[self.languages.index(reload_settings[8].get())] if reload_settings else None
+        self.gui_language: Optional[str] = localization.langs[localization.langs.index(reload_settings[8].get())] if reload_settings else None
         self.loc: localization.Localizer = localization.Localizer(self.log, self.gui_language if self.gui_language else settings.get('language'))
 
         self.log_levels: Tuple[str, ...] = ('Debug', 'Info', 'Error', 'Critical', 'Off')
         self.sentry_levels: Tuple[str, ...] = ('All errors', 'Crashes', 'Never')
-        self.languages: Tuple[str, ...] = ('English', 'German', 'French', 'Spanish', 'Portuguese', 'Italian', 'Dutch', 'Polish', 'Russian', 'Korean', 'Chinese', 'Japanese')
         self.rpc_lines: Tuple[str, ...] = ('Player count', 'Time on map', 'Kills', 'Class')
 
         self.log_levels_display: List[str] = [self.loc.text(item) for item in self.log_levels]
         self.sentry_levels_display: List[str] = [self.loc.text(item) for item in self.sentry_levels]
         self.rpc_lines_display: List[str] = [self.loc.text(item) for item in self.rpc_lines]
-        self.languages_display: Tuple[str, ...] = ('English', 'Deutsch', 'Français', 'Español', 'Português Brasileiro', 'Italiano', 'Nederlands', 'Polski', 'русский язык', '한국어', '汉语', '日本語')
 
         if reload_settings:
             # the GUI was reloaded with a new language, so persist the currently selected (but not saved) settings
@@ -146,7 +144,7 @@ class GUI(tk.Frame):
         setting13_frame = ttk.Frame(self.lf_main)
         setting13_text = ttk.Label(setting13_frame, text="{}".format(
             self.loc.text("Language: ")))
-        setting13_options = ttk.OptionMenu(setting13_frame, self.language, self.languages[0], *self.languages_display, command=self.update_language)
+        setting13_options = ttk.OptionMenu(setting13_frame, self.language, localization.langs[0], *localization.langs_localized, command=self.update_language)
         setting14_frame = ttk.Frame(self.lf_main)
         setting14_text = ttk.Label(setting14_frame, text="{}".format(
             self.loc.text("Bottom line: ")))
@@ -273,7 +271,7 @@ class GUI(tk.Frame):
 
     # runs every time the language setting is changed
     def update_language(self, language_selected: str):
-        language_selected_normal: str = self.languages[self.languages_display.index(language_selected)]
+        language_selected_normal: str = localization.langs[localization.langs_localized.index(language_selected)]
 
         if language_selected_normal != self.gui_language:
             self.log.debug(f"Reloading settings menu with language {language_selected_normal}")
@@ -284,7 +282,7 @@ class GUI(tk.Frame):
             # normalize some settings to english so that the reload will be converted back
             self.log_level.set(self.log_levels[self.log_levels_display.index(self.log_level.get())])
             self.sentry_level.set(self.sentry_levels[self.sentry_levels_display.index(self.sentry_level.get())])
-            self.language.set(self.languages[self.languages_display.index(self.language.get())])
+            self.language.set(localization.langs[localization.langs_localized.index(self.language.get())])
             self.top_line.set(self.rpc_lines[self.rpc_lines_display.index(self.top_line.get())])
             self.bottom_line.set(self.rpc_lines[self.rpc_lines_display.index(self.bottom_line.get())])
 
@@ -305,7 +303,7 @@ class GUI(tk.Frame):
                 'hide_queued_gamemode': self.hide_queued_gamemode.get(),
                 'log_level': self.log_levels[self.log_levels_display.index(self.log_level.get())],
                 'console_scan_kb': self.console_scan_kb.get(),
-                'language': self.languages[self.languages_display.index(self.language.get())],
+                'language': localization.langs[localization.langs_localized.index(self.language.get())],
                 'top_line': self.rpc_lines[self.rpc_lines_display.index(self.top_line.get())],
                 'bottom_line': self.rpc_lines[self.rpc_lines_display.index(self.bottom_line.get())],
                 'trim_console_log': self.trim_console_log.get(),
@@ -398,7 +396,7 @@ class GUI(tk.Frame):
     def localization_compensate(self):
         self.log_level.set(self.log_levels_display[self.log_levels.index(self.log_level.get())])
         self.sentry_level.set(self.sentry_levels_display[self.sentry_levels.index(self.sentry_level.get())])
-        self.language.set(self.languages_display[self.languages.index(self.language.get())])
+        self.language.set(localization.langs_localized[localization.langs.index(self.language.get())])
         self.bottom_line.set(self.rpc_lines_display[self.rpc_lines.index(self.bottom_line.get())])
         self.top_line.set(self.rpc_lines_display[self.rpc_lines.index(self.top_line.get())])
 
