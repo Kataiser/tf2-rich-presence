@@ -102,11 +102,11 @@ class ProcessScanner:
         self.process_data['Discord']['running'] = discord_data['running']
 
         if not self.process_data['TF2']['running']:
-            self.process_data['TF2'] = self.p_data_default['TF2']
+            self.process_data['TF2'] = copy.deepcopy(self.p_data_default['TF2'])
         if not self.process_data['Steam']['running']:
-            self.process_data['Steam'] = self.p_data_default['Steam']
+            self.process_data['Steam'] = copy.deepcopy(self.p_data_default['Steam'])
         if not self.process_data['Discord']['running']:
-            self.process_data['Discord'] = self.p_data_default['Discord']
+            self.process_data['Discord'] = copy.deepcopy(self.p_data_default['Discord'])
 
     # a mess of logic that gives process info from a process name (not exe name) or PID
     def get_process_info(self, process: Union[str, int], return_data: Tuple[str, ...], validate_condebug: bool = False) -> Dict[str, Union[str, bool, int, None]]:
