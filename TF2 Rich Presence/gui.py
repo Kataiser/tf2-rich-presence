@@ -10,6 +10,7 @@ import subprocess
 import tkinter as tk
 import tkinter.ttk as ttk
 import traceback
+import urllib.parse
 import webbrowser
 from tkinter import messagebox
 from typing import Dict, List, Optional, Tuple, Union
@@ -556,9 +557,10 @@ class GUI(tk.Frame):
 
     def menu_report_issue(self, *args):
         self.log.info("GUI: reporting issue")
+        base_body: str = "Please include the most recent (or at least most relevant) file in the \"logs\" folder, which you can get to with File -> Open save directory. If you're having a " \
+                         "game state detection issue, also include the file at File -> Open console.log."
         # would be nice if there was a way to auto upload the log file
-        webbrowser.open('https://github.com/Kataiser/tf2-rich-presence/issues/new?body=Please%20include%20the%20most%20recent%20(or%20at%20least%20most%20relevant)%20file%20in%20the%20%22'
-                        'logs%22%20folder%2C%20which%20you%20can%20get%20to%20with%20Help%20-%3E%20Open%20logs%20directory.')
+        webbrowser.open(f'https://github.com/Kataiser/tf2-rich-presence/issues/new?body={urllib.parse.quote(base_body)}')
 
     def menu_about(self, *args, silent: bool = False):
         self.log.info("GUI: opening about window")
