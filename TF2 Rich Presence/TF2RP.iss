@@ -24,7 +24,7 @@ DisableProgramGroupPage=yes
 PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
 OutputDir=.
-OutputBaseFilename=TF2RichPresence_v2.1_setup
+OutputBaseFilename=TF2RichPresence_v{#MyAppVersion}_setup
 SetupIconFile=tf2_logo_blurple.ico
 Compression=lzma
 SolidCompression=yes
@@ -53,11 +53,12 @@ Name: "{userappdata}\TF2 Rich Presence"; Flags: setntfscompression
 Name: "{userappdata}\TF2 Rich Presence\logs"; Flags: setntfscompression
 
 [Files]
-Source: "TF2 Rich Presence v2.1\License.txt"; DestDir: "{app}"; Flags: ignoreversion
-Source: "TF2 Rich Presence v2.1\Readme.txt"; DestDir: "{app}"; Flags: ignoreversion
-Source: "TF2 Rich Presence v2.1\Changelogs.html"; DestDir: "{app}"; Flags: ignoreversion
-Source: "TF2 Rich Presence v2.1\TF2 Rich Presence.bat"; DestDir: "{app}"; Flags: ignoreversion
-Source: "TF2 Rich Presence v2.1\resources\*"; DestDir: "{app}\resources"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "TF2 Rich Presence v{#MyAppVersion}\License.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "TF2 Rich Presence v{#MyAppVersion}\Readme.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "TF2 Rich Presence v{#MyAppVersion}\Changelogs.html"; DestDir: "{app}"; Flags: ignoreversion
+Source: "TF2 Rich Presence v{#MyAppVersion}\TF2 Rich Presence.bat"; DestDir: "{app}"; Flags: ignoreversion
+Source: "TF2 Rich Presence v{#MyAppVersion}\resources\*"; DestDir: "{app}\resources"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "TF2 Rich Presence v{#MyAppVersion}\locales\*"; DestDir: "{app}\locales"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
