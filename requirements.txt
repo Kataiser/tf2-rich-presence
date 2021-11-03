@@ -5,7 +5,7 @@ certifi==2021.5.30
 charset-normalizer==2.0.6
 discoIPC==1.0.0
 idna==3.2
-lxml==4.6.3
+lxml==4.6.4
 psutil==5.8.0
 python-a2s==1.3.0
 requests-futures==1.0.0
