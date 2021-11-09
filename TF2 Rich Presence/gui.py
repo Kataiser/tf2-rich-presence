@@ -611,7 +611,7 @@ class GUI(tk.Frame):
             ordinal: str = ('th', 'st', 'nd', 'rd', 'th')[min(divmod(age, 10)[1], 4)]  # divmod instead of % because Cython is being mean
             holiday_text = self.loc.text("It's TF2 Rich Presence's {0}{1} birthday today! (Yes, April 1st, seriously)").format(age, ordinal)
         elif now.month == 12 and now.day == 25:
-            holiday_text = self.loc.text("Merry Christmas!")
+            holiday_text = self.loc.text("Merry Smissmas!")
 
         if holiday_text is not None:
             self.log.info(f"Today is {now.year}/{now.month}/{now.day}, so the holiday text is \"{holiday_text}\"")
