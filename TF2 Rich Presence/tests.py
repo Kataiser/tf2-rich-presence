@@ -151,9 +151,9 @@ class TestTF2RichPresence(unittest.TestCase):
     def test_get_match_info(self):
         test_game_state = game_state.GameState(self.log)
         test_addresses = ('162.254.192.155:27053',  # valve
-                          'dal-1.us.uncletopia.com:27015',
+                          'dal-1.us.uncletopia.com:27025',
                           '135.125.188.102:27015',  # creators.tf
-                          '192.223.26.238:27015',  # lazypurple
+                          '192.223.26.238:27017',  # lazypurple
                           '45.35.1.186:27065')  # blackwonder
 
         for test_address in test_addresses:
