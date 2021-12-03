@@ -431,8 +431,10 @@ class TF2RichPresense:
         try:
             if not self.client_connected:
                 # connects to Discord
+                self.log.debug("Connecting to Discord IPC...")
                 self.rpc_client = ipc.DiscordIPC(utils.get_api_key('discord2'))
                 self.rpc_client.connect()
+                self.log.debug("Connection successful")
                 self.game_state.update_rpc = True
 
             self.rpc_client.update_activity(self.activity)

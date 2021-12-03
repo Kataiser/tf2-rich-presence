@@ -2,9 +2,6 @@
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 
 import io
-import os
-import shutil
-import time
 
 import requests
 from bs4 import BeautifulSoup
