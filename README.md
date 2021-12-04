@@ -24,7 +24,7 @@ Discord Rich Presence for Team Fortress 2
 
 ## Download and install
 Installer: [TF2RichPresence_v2.1_setup](https://github.com/Kataiser/tf2-rich-presence/releases/download/v2.1/TF2RichPresence_v2.1_setup.exe) (14.6 MB)  
-Alternatively, get the latest autobuild (may be untested/buggy): [TF2RichPresence_v2.1_setup](https://nightly.link/Kataiser/tf2-rich-presence/workflows/Tests.CD/master/TF2RichPresence_v2.1_setup.exe.zip)  
+Alternatively, get the latest autobuild (may be untested/buggy): [TF2RichPresence_v2.1.1_setup](https://nightly.link/Kataiser/tf2-rich-presence/workflows/Tests.CD/master/TF2RichPresence_v2.1.1_setup.exe.zip)  
 Note that having Python installed is not required. Requires Discord and Steam to be running as well, and will wait until the game and both programs are running.
 
 ## Changelogs
