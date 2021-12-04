@@ -585,7 +585,7 @@ class GUI(tk.Frame):
                      f"\n\nCredits:" \
                      f"\nKataiser - Lead developer" \
                      f"\nNyanZak and Tobiased - Gamemode SFMs" \
-                     f"\nforusu (Mia) - Russian localization improvements" \
+                     f"\nforusu (Mia) and Blueberryy - Russian localization improvements" \
                      f"\nhinata_aki - Japanese localization improvements" \
                      f"\nKotoki1337 - Chinese localization improvements" \
                      f"\nJan200101 - Some cross-platform compatibility" \
