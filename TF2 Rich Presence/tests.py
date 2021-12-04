@@ -152,7 +152,7 @@ class TestTF2RichPresence(unittest.TestCase):
         test_game_state = game_state.GameState(self.log)
         test_addresses = ('162.254.192.155:27053',  # valve
                           'dal-1.us.uncletopia.com:27025',
-                          '135.125.188.102:27015',  # creators.tf
+                          'chi.servers.creators.tf:27015',
                           '192.223.26.238:27017',  # lazypurple
                           '45.35.1.186:27065')  # blackwonder
 
@@ -316,7 +316,7 @@ class TestTF2RichPresence(unittest.TestCase):
 
     def test_load_maps_db(self):
         maps_db = gamemodes.load_maps_db()
-        self.assertEqual(len(maps_db), 132)
+        self.assertEqual(len(maps_db), 138)
 
         for map_ in maps_db:
             map_data = maps_db[map_]
