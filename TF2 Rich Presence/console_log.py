@@ -301,7 +301,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
 
         line_count_text: str = f"{error_line_count} error lines and {blank_line_count} blank lines (total: {total_line_count})"
 
-        if total_line_count >= (1 if self.gui.clean_console_log else 50) and len(console_log_lines_out) > SIZE_LIMIT_MIN_LINES:
+        if total_line_count >= (1 if self.gui.clean_console_log else 50):
             with open(console_log_path, 'w', encoding='UTF8') as console_log_write:
                 for line in console_log_lines_out:
                     console_log_write.write(line)

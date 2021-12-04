@@ -99,7 +99,7 @@ class GUI(tk.Frame):
         check_int_command: str = self.register(check_int)
         self.master.protocol('WM_DELETE_WINDOW', self.close_window)
         self.master.title(self.loc.text("TF2 Rich Presence ({0}) settings").format(launcher.VERSION))
-        self.master.resizable(0, 0)  # disables resizing
+        self.master.resizable(False, False)  # disables resizing
         gui.set_window_icon(self.log, self.master, True)
         if not reload_settings:
             self.window_x: Optional[int] = None

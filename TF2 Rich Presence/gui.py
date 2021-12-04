@@ -42,7 +42,7 @@ class GUI(tk.Frame):
         self.master.geometry(f'{self.size[0]}x{self.size[1] + 20}')  # the +20 is for the menu bar
         self.master.title(self.loc.text("TF2 Rich Presence").format(launcher.VERSION))
         set_window_icon(self.log, self.master, False)
-        self.master.resizable(0, 0)  # disables resizing
+        self.master.resizable(False, False)  # disables resizing
         self.master.protocol('WM_DELETE_WINDOW', self.close_window)
         self.log.debug("Set up main window")
 
@@ -79,6 +79,7 @@ class GUI(tk.Frame):
         self.file_menu.add_command(label=self.loc.text("Trim/clean console.log"), command=self.menu_clean_console_log, state=tk.DISABLED)
         self.file_menu.add_command(label=self.loc.text("Open save directory"), command=self.menu_open_save_directory)
         self.file_menu.add_command(label=self.loc.text("Exit"), command=self.menu_exit, accelerator="Ctrl+Q")
+        self.console_log_command_indices: Tuple[int, int] = (2, 3)
         help_menu.add_command(label=self.loc.text("Open Github page"), command=self.menu_open_github)
         help_menu.add_command(label=self.loc.text("Open readme"), command=self.menu_open_readme)
         help_menu.add_command(label=self.loc.text("Open changelog"), command=self.menu_open_changelog)
@@ -256,7 +257,8 @@ class GUI(tk.Frame):
 
     # only show the console.log menu buttons if the game is running
     def set_console_log_button_states(self, enabled: bool):
-        self.file_menu.entryconfigure(2, state=tk.ACTIVE if enabled else tk.DISABLED)
+        self.file_menu.entryconfigure(self.console_log_command_indices[0], state=tk.ACTIVE if enabled else tk.DISABLED)
+        self.file_menu.entryconfigure(self.console_log_command_indices[1], state=tk.ACTIVE if enabled else tk.DISABLED)
 
     # only show the "launch TF2" button if Steam is running and the game is not
     def set_launch_tf2_button_state(self, enabled: bool):
@@ -330,7 +332,7 @@ class GUI(tk.Frame):
             update_window: tk.Toplevel = tk.Toplevel()
             update_window.title(self.loc.text("TF2 Rich Presence"))
             set_window_icon(self.log, update_window, False)
-            update_window.resizable(0, 0)
+            update_window.resizable(False, False)
             ttk.Label(update_window, text='\n'.join(window_text)).grid(row=0, column=0, padx=40, pady=20)
             button_frame: ttk.Frame = ttk.Frame(update_window)  # why does this need to exist
             yes_button: ttk.Button = ttk.Button(button_frame, text=self.loc.text("Yes"), command=functools.partial(self.update_menu_yes, update_window, downloads_url), default=tk.ACTIVE)
