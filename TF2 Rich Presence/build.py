@@ -7,6 +7,7 @@ import datetime
 import getpass
 import json
 import os
+import re
 import shutil
 import site
 import subprocess
@@ -64,11 +65,24 @@ def main(version_num='v2.1'):
             with open('last_repo_path.txt', 'w') as last_repo_path_file:
                 last_repo_path_file.write(github_repo_path)
 
-            assert version_num in open(Path(f'{github_repo_path}/.github/workflows/Tests.CD.yml'), 'r').read()
+            vnum_in_action = version_num in open(Path(f'{github_repo_path}/.github/workflows/Tests.CD.yml'), 'r').read()
 
     interpreter_name = 'python-3.9.4-embed-win32'
     build_start_time = time.perf_counter()
     print()
+
+    # update version number in installer
+    if os.path.isfile('TF2RP.iss'):
+        with open('TF2RP.iss', 'r+') as installer_code:
+            version_line = f"#define MyAppVersion \"{version_num.removeprefix('v')}\""
+            installer_code_read = installer_code.read()
+
+            if version_line not in installer_code_read:
+                print("Updating version number in TF2RP.iss")
+                installer_code_fixed = re.sub(r'#define MyAppVersion "[^"]*"', version_line, installer_code_read)
+                installer_code.seek(0)
+                installer_code.truncate()
+                installer_code.write(installer_code_fixed)
 
     # copies stuff to the Github repo
     if github_repo_path != 'n':
@@ -458,6 +472,8 @@ def main(version_num='v2.1'):
         print("Assertions are disabled, build is probably fine but please run without -O or -OO)", file=sys.stderr)
     if warn_no_installer_log:
         print("Installer didn't create an installer.log", file=sys.stderr)
+    if not cli_skip_repo and not vnum_in_action:
+        print(f"\"{version_num}\" not in Tests.CD.yml", file=sys.stderr)
     if git_username and git_username != 'Kataiser':
         print(f"Please note that your git username ({git_username}) has been included in {build_info_path}")
 
