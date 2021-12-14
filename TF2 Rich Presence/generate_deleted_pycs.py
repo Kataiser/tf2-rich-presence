@@ -1,13 +1,13 @@
 def main():
     # build with deleting pycs disabled
     # search for pycs, export to pycs_all.txt
-    # delete all pycs and run program
+    # delete all pycs and run program (remove -B from cmd)
     # search for pycs, export to pycs_to_keep.txt
     # run this script (make sure the trim path is correct)
     # done, enable pyc deleting again
 
     pycs_to_delete = []
-    trim_path = r'C:\Users\trial\PycharmProjects\tf2 rich presence\TF2 Rich Presence v2.0\resources'
+    trim_path = r'C:\Users\trial\PycharmProjects\tf2 rich presence\TF2 Rich Presence v2.1.1\resources'
 
     with open('pycs_all.txt', 'r') as pyc_all_file:
         pycs_all = [path.rstrip('\n') for path in pyc_all_file.readlines()]

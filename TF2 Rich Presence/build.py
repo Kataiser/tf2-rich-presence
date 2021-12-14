@@ -67,7 +67,7 @@ def main(version_num='v2.1.1'):
 
             vnum_in_action = version_num in open(Path(f'{github_repo_path}/.github/workflows/Tests.CD.yml'), 'r').read()
 
-    interpreter_name = 'python-3.9.4-embed-win32'
+    interpreter_name = 'python-3.10.1-embed-win32'
     build_start_time = time.perf_counter()
     print()
 
@@ -356,8 +356,8 @@ def main(version_num='v2.1.1'):
     assert os.path.isfile(Path(f'{new_build_folder_name}/resources/build_info.txt'))
     with open(Path(f'{new_build_folder_name}/resources/maps.json'), 'r') as assertjson_maps:
         assert json.load(assertjson_maps) != {}
+    pyd_extension = 'cp310-win_amd64.pyd' if sys.maxsize.bit_length() > 32 else 'cp310-win32.pyd'
     for file in cython_compile.targets:
-        pyd_extension = 'cp39-win_amd64.pyd' if sys.maxsize.bit_length() > 32 else 'cp39-win32.pyd'
         assert os.stat(f'{file}.py').st_mtime < os.stat(Path(f'cython_build/{file}.{pyd_extension}')).st_mtime or nocython
     try:
         assertions_enabled = False

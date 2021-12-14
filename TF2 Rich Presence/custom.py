@@ -3,7 +3,7 @@
 
 # Add some custom functionality to TF2 Rich Presence if you'd like
 # Quite limited but someone may find a use it (I know I have)
-# Also you can replace a .pyd file here with a .py of the same name (sans .cp39-win32) and it'll import
+# Also you can replace a .pyd file here with a .py of the same name (sans .cp310-win32) and it'll import
 
 import logger
 import main

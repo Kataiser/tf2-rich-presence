@@ -247,7 +247,7 @@ class TestTF2RichPresence(unittest.TestCase):
             time.sleep(0.2)
 
         try:
-            newest_version, downloads_url, changelog = update_checker.receive_update_check()
+            newest_version, downloads_url, changelog = update_checker.receive_update_check(True)
         except updater.RateLimitError as error:
             self.skipTest(error)
         else:

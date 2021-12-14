@@ -41,7 +41,7 @@ class UpdateChecker:
         return self.api_future is not None and self.api_future.done() and not self.checked_response
 
     # parse API result or handle errors
-    def receive_update_check(self) -> Optional[Tuple[str, str, str]]:
+    def receive_update_check(self, raise_exceptions: bool = False) -> Optional[Tuple[str, str, str]]:
         import requests
         self.checked_response = True
 
@@ -49,8 +49,14 @@ class UpdateChecker:
             result = self.api_future.result()
         except (requests.Timeout, requests.exceptions.ReadTimeout):
             self.log.error(f"Update check timed out", reportable=False)
+
+            if raise_exceptions:
+                raise
         except requests.RequestException:
             self.log.error(f"Connection error in updater: {traceback.format_exc()}", reportable=False)
+
+            if raise_exceptions:
+                raise
         except Exception:
             self.log.error(f"Non-connection based update error: {traceback.format_exc()}")
         else:
