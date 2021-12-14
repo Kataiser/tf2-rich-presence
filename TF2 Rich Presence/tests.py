@@ -109,6 +109,8 @@ class TestTF2RichPresence(unittest.TestCase):
         self.assertEqual(app.interpret_console_log(errorstest_small, {'not Kataiser'}, float('inf')), (True, '', '', '', 'Not queued', False))
         os.remove(errorstest_small)
 
+        app.gui.master.destroy()
+
     def test_non_ascii_in_usernames(self):
         self.assertFalse(console_log.non_ascii_in_usernames({'Hyde', 'Chocolate Thunder89', 'Sleepy'}))
         self.assertTrue(console_log.non_ascii_in_usernames({'Hyde', 'Chocolate Thunder89', '✿Sleepy✿'}))
@@ -118,10 +120,12 @@ class TestTF2RichPresence(unittest.TestCase):
         ref_launch_options = '-novid -noipx -refresh 120 -w 1920 -h 1080 -windowed -noborder -useforcedmparms -noforcemaccel -noforcemspd -dxlevel 95'
         self.assertEqual(configs.steam_config_file(app, 'test_resources\\', False), ref_launch_options)
         self.assertEqual(configs.steam_config_file(app, 'test_resources\\', True), None)
+        app.gui.master.destroy()
 
     def test_find_tf2_exe(self):
         app = main.TF2RichPresense(self.log, set_process_priority=False)
         self.assertEqual(app.find_tf2_exe('test_resources\\very real steam'), r'test_resources\very real steam 2\steamapps\common\Team Fortress 2\hl2.exe')
+        app.gui.master.destroy()
 
     def test_class_config_files(self):
         cfg_path = 'test_resources\\tf\\cfg'
@@ -484,6 +488,7 @@ class TestTF2RichPresence(unittest.TestCase):
 
         app = main.TF2RichPresense(self.log, set_process_priority=False)
         app.run(once=True)
+        app.gui.master.destroy()
         self.assertTrue(os.path.isfile(big_number_file))
         time.sleep(0.2)
 
@@ -643,6 +648,8 @@ class TestTF2RichPresence(unittest.TestCase):
         with self.assertRaises(SystemExit):
             gui_test.menu_exit()
 
+        gui_test.master.destroy()
+
     def test_set_gui_from_game_state(self):
         app = main.TF2RichPresense(self.log, set_process_priority=False)
         app.game_state.force_zero_map_time = True
@@ -690,6 +697,8 @@ class TestTF2RichPresence(unittest.TestCase):
         self.assertEqual((app.gui.text_state, app.gui.bg_state, app.gui.fg_state, app.gui.class_state),
                          (('Map: plr_highertower (hosting)', 'Players: ?/?', 'Time on map: 0:00', '0:00 elapsed'),
                           ('bg_modes/payload-race', 77, 172), 'fg_modes/payload-race', 'classes/engineer'))
+
+        app.gui.master.destroy()
 
     def test_gui_images(self):
         images_to_test = []
@@ -765,6 +774,7 @@ class TestTF2RichPresence(unittest.TestCase):
                          (('Karte: Rottenburg (Hosting)', 'Spieler: ?/?', 'Zeit auf der Karte: 0:00', '0:00 verstrichen'),
                           ('bg_modes/mvm', 77, 172), 'fg_maps/mvm_rottenburg', 'classes/medic'))
         self.assertEqual(app.gui.bottom_text_queue_state, "Warteschlange für MvM (Boot Camp)")
+        app.gui.master.destroy()
 
     def test_launcher(self):
         launcher.main(launch=False)

@@ -166,6 +166,10 @@ class TF2RichPresense:
         while True:
             self.loop_body()
 
+            if once:
+                self.gui.safe_update()
+                break
+
             # rich presence only updates every 15 seconds, but it listens constantly so sending every 2 or 5 seconds (by default) is probably fine
             sleep_time: int = settings.get('wait_time_slow') if self.slow_sleep_time else settings.get('wait_time')
             sleep_time_started: float = time.perf_counter()
@@ -175,9 +179,6 @@ class TF2RichPresense:
                 while time.perf_counter() - sleep_time_started < sleep_time and self.gui.alive:
                     time.sleep(1 / 30)  # 30 Hz updates (btw tell me if this is stupid)
                     self.gui.safe_update()
-
-            if once:
-                break
 
     # the main logic. runs every 2 or 5 seconds (by default)
     def loop_body(self):
