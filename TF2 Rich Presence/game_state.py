@@ -92,7 +92,11 @@ class GameState:
 
             if self.custom_map:
                 large_image = self.gamemode
-                large_text_base = self.loc.text(self.gamemode_fancy)
+
+                if self.gamemode in gamemodes.localization_excluded:
+                    large_text_base = self.gamemode_fancy
+                else:
+                    large_text_base = self.loc.text(self.gamemode_fancy)
             else:
                 large_text_base = self.map_fancy
 

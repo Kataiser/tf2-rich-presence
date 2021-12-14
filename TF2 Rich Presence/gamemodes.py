@@ -87,6 +87,8 @@ substrings: Dict[str, str] = {'cp_orange': 'cp-orange', 'training': 'training'}
 modes_short: Dict[str, str] = {'ctf': 'CTF', 'control-point': '5CP', 'attack-defend': 'A/D', 'medieval-mode': 'A/D (Medieval)',
                                'koth': 'KotH', 'mvm': 'MvM'}  # yes there are some unused ones but hey, futureproofing
 have_drawing: tuple[str, ...] = ('attack-defend', 'control-point', 'ctf', 'koth', 'mannpower', 'mvm', 'passtime', 'payload', 'payload-race', 'special-delivery', 'training')
+localization_excluded: tuple[str, ...] = ('surfing', 'trading', 'jumping', 'deathmatch', 'cp-orange', 'versus-saxton-hale', 'deathrun', 'achievement', 'breakout', 'slender', 'dodgeball',
+                                          'zombie', 'mario-kart', 'prophunt', 'mge-mod')
 
 if __name__ == '__main__':
     print(get_map_gamemode(logger.Log(), 'pl_borneo'))

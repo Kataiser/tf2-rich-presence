@@ -177,6 +177,7 @@ class TestTF2RichPresence(unittest.TestCase):
         self.assertEqual(gamemodes.get_map_gamemode(self.log, 'cp_dustbowl'), ['Dustbowl', 'attack-defend', 'Attack/Defend', False])
         self.assertEqual(gamemodes.get_map_gamemode(self.log, 'koth_probed'), ['Probed', 'koth', 'King of the Hill', False])
         self.assertEqual(gamemodes.get_map_gamemode(self.log, 'ctf_sawmill'), ['Sawmill (CTF)', 'ctf', 'Capture the Flag', False])
+        self.assertEqual(gamemodes.get_map_gamemode(self.log, 'itemtest'), ['itemtest', 'unknown', 'Unknown gamemode', False])
         self.assertEqual(gamemodes.get_map_gamemode(self.log, 'cp_catwalk_a5c'), ('cp_catwalk_a5c', 'control-point', 'Control Point', True))
         self.assertEqual(gamemodes.get_map_gamemode(self.log, 'cp_orange_x3'), ('cp_orange_x3', 'cp-orange', 'Orange', True))
         self.assertEqual(gamemodes.get_map_gamemode(self.log, 'surf_air_arena_v4'), ('surf_air_arena_v4', 'surfing', 'Surfing', True))
@@ -393,7 +394,7 @@ class TestTF2RichPresence(unittest.TestCase):
         english_lines = localization.access_localization_data()['English']
         num_lines_total = len(english_lines) - 4
         incorrect_hashes = []
-        test_text = "This text isn't in the file"
+        test_text = "This text isn't in the localization files"
         meta_keys = ('name_localized', 'code', 'credits', 'notes')
 
         for key in english_lines:
