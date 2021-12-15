@@ -3,11 +3,13 @@
 # cython: language_level=3
 
 # note: don't import anything outside of the standard library, in order to avoid unreportable crashes when running the launcher
+import _thread
 import functools
 import gzip
 import json
 import os
-from typing import Dict, Optional, Union
+import threading
+from typing import Any, Callable, Dict, Optional, Union
 
 
 # read from or write to DB.json (intentionally uncached)
@@ -64,3 +66,20 @@ def get_api_key(service: str) -> str:
                   b'\x08,1\xb1\xc0\x93\xb8\x8b;\xda\xe3\xdc_c\xbd\x9f\xe7\xf3\x98\xa7\xa96Q*- \xa2#j\xcb=/d\x16\x12\xfb\xa5\x90\xf7si\xe3\xdd\xa3\x19/\x84\x948{\x85/\xd5\xbai\x16B\xbe\xfd' \
                   b'\x90\xd7u\x9bhP\x0c\x18\x9a\x7fE\x18"\x01\xe9\x08\x01\x07\x92\xa0\x91\x84\xdc\xe7\x0b)\x81\xb1\xd4\xa7\x00\x00\x00'
     return json.loads(gzip.decompress(data))[service]
+
+
+# decorator to kill a syncronous function after some time
+def timeout(seconds: float):
+    def outer(func: Callable):
+        def inner(*args, **kwargs):
+            timer: threading.Timer = threading.Timer(seconds, _thread.interrupt_main)
+            timer.start()
+
+            try:
+                result: Any = func(*args, **kwargs)
+            finally:
+                timer.cancel()
+
+            return result
+        return inner
+    return outer

@@ -319,6 +319,16 @@ class TestTF2RichPresence(unittest.TestCase):
         self.assertEqual(len(utils.get_api_key('discord2')), 18)
         self.assertEqual(len(utils.get_api_key('sentry')), 91)
 
+    def test_timeout(self):
+        start_time = time.perf_counter()
+
+        with self.assertRaises(KeyboardInterrupt):
+            slow_func(5)
+
+        elapsed = time.perf_counter() - start_time
+        self.assertGreaterEqual(elapsed, 0.5)
+        self.assertLess(elapsed, 5)
+
     def test_load_maps_db(self):
         maps_db = gamemodes.load_maps_db()
         self.assertEqual(len(maps_db), 138)
@@ -799,6 +809,17 @@ def fix_activity_dict(activity):
         pass
 
     return activity
+
+
+@utils.timeout(0.5)
+def slow_func(limit):
+    start_time = time.perf_counter()
+
+    while True:
+        time.sleep(0.2)
+
+        if time.perf_counter() - start_time > limit:
+            break
 
 
 if __name__ == '__main__':

@@ -21,10 +21,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import _thread
 import datetime
 import gc
 import os
 import platform
+import threading
 import time
 import traceback
 from typing import Any, Dict, Optional, Set, Tuple, Union
@@ -291,7 +293,10 @@ class TF2RichPresense:
                 if self.custom_functions:
                     self.custom_functions.modify_rpc_activity(self)
 
-                self.send_rpc_activity()
+                try:
+                    self.send_rpc_activity()
+                except KeyboardInterrupt:
+                    self.handle_rpc_error("Timed out sending RPC activity")
             else:
                 self.log.debug("Not updating RPC state")
 
@@ -428,6 +433,7 @@ class TF2RichPresense:
         self.log.debug(f"Set window title to \"{window_title}\"")
 
     # sends RPC data, connecting to Discord initially if need be
+    @utils.timeout(2.0)
     def send_rpc_activity(self):
         try:
             if not self.client_connected:
@@ -446,11 +452,15 @@ class TF2RichPresense:
         except Exception as client_connect_error:
             if str(client_connect_error) in ("Can't send data to Discord via IPC.", "Can't connect to Discord Client."):
                 # often happens when Discord is in the middle of starting up
-                self.log.error(str(client_connect_error), reportable=False)
-                self.gui.set_bottom_text('discord', True)
-                self.game_state.update_rpc = True
+                self.handle_rpc_error(str(client_connect_error))
             else:
                 raise
+
+    # seperate handler because it may be called by the timeout
+    def handle_rpc_error(self, error_text: str):
+        self.log.error(error_text)
+        self.gui.set_bottom_text('discord', True)
+        self.game_state.update_rpc = True
 
     # do stuff that was previously in init.py, but only after one main loop so that the GUI is ready
     def init_operations(self):
@@ -478,6 +488,9 @@ class TF2RichPresense:
     # given Steam's install, find a TF2 install
     def find_tf2_exe(self, *args, **kwargs) -> str:
         return configs.find_tf2_exe(self, *args, **kwargs)
+
+
+
 
 
 if __name__ == '__main__':
