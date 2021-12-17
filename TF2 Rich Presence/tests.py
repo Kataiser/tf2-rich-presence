@@ -26,6 +26,7 @@ import localization
 import logger
 import main
 import processes
+import server
 import settings
 import settings_gui
 import updater
@@ -162,16 +163,25 @@ class TestTF2RichPresence(unittest.TestCase):
 
         for test_address in test_addresses:
             try:
-                server_data = test_game_state.get_match_data(test_address, ['Player count', 'Kills'], allow_network_errors=False)
+                server_data = test_game_state.get_match_data(test_address, ['Server name', 'Player count', 'Kills'], allow_network_errors=False)
                 self.assertTrue(server_data['player_count'].startswith("Players: "))
                 self.assertIn(server_data['player_count'].split('/')[1], ('24', '26', '30', '32'))
                 self.assertEqual(server_data['kills'], "Kills: 0")
+
+                if "Valve" in server_data['server_name']:
+                    self.assertEqual(server_data['server_name'], "Valve Matchmaking Server (Virginia)")
             except Exception as error:
                 raise AssertionError(f'{test_address}, {repr(error)}')
 
         settings.change('request_timeout', 0.001)
-        self.assertEqual(test_game_state.get_match_data(test_addresses[-1], ['Player count', 'Kills']), server_data)
+        self.assertEqual(test_game_state.get_match_data(test_addresses[-1], ['Server name', 'Player count', 'Kills']), server_data)
         self.assertEqual(test_game_state.get_match_data('', ['Player count']), {'player_count': 'Players: ?/?'})
+
+    def test_cleanup_server_name(self):
+        self.assertEqual(server.cleanup_server_name("Valve Matchmaking Server (Virginia srcds3155-iad2 #4)"), "Valve Matchmaking Server (Virginia)")
+        self.assertEqual(server.cleanup_server_name("Valve Matchmaking Server (LA srcds1153-lax2 #35)"), "Valve Matchmaking Server (LA)")
+        self.assertEqual(server.cleanup_server_name("D .U .S .T .B .O .W .L - BEGINNERS - FRAGMASTERS.CO.UK"), "D .U .S .T .B .O .W .L - BEGIN…")
+        self.assertEqual(server.cleanup_server_name("UGC.TF | 2FORT | US | Fast"), "UGC.TF | 2FORT | US | Fast")
 
     def test_get_map_gamemode(self):
         self.assertEqual(gamemodes.get_map_gamemode(self.log, 'cp_dustbowl'), ['Dustbowl', 'attack-defend', 'Attack/Defend', False])

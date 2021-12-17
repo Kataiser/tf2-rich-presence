@@ -2,10 +2,12 @@
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 # cython: language_level=3
 
+import functools
+import re
 import socket
 import time
 import traceback
-from typing import Dict, List, Optional, Set
+from typing import Dict, List, Optional, Pattern, Set
 
 import a2s
 
@@ -13,7 +15,7 @@ import localization
 import settings
 
 
-# get player count and/or user score (kills) from the game server
+# get server name, player count, and/or user score (kills) from the game server
 def get_match_data(self, address: str, modes: List[str], usernames: Optional[Set[str]] = None, allow_network_errors: bool = True) -> Dict[str, str]:
     rate_limit: int = settings.get('server_rate_limit')
     time_since_last: float = time.time() - self.last_server_request_time
@@ -40,11 +42,12 @@ def get_match_data(self, address: str, modes: List[str], usernames: Optional[Set
         ip_socket: str
         ip, ip_socket = address.split(':')
         server_data: Dict[str, str] = {}
+        need_server_info: bool = 'Player count' in modes or 'Server name' in modes
 
         try:
-            if 'Player count' in modes:
+            if need_server_info:
                 server_info = a2s.info((ip, int(ip_socket)), timeout=settings.get('request_timeout'))
-                # there's a decent amount of extra data here that isn't used but could be (server name, bot count, tags, etc.)
+                # there's a decent amount of extra data here that isn't used but could be (bot count, tags, etc.)
             if 'Kills' in modes:
                 players_info = a2s.players((ip, int(ip_socket)), timeout=settings.get('request_timeout'))
         except socket.timeout:
@@ -71,7 +74,7 @@ def get_match_data(self, address: str, modes: List[str], usernames: Optional[Set
             self.last_server_request_time -= rate_limit
             return self.last_server_request_data
 
-        if 'Player count' in modes:
+        if need_server_info:
             # do some validation, probably not worth doing an extra request each time if only using kills mode
             if server_info.protocol != 17:
                 self.log.error(f"Server protocol is {server_info.protocol}, not 17")
@@ -80,6 +83,12 @@ def get_match_data(self, address: str, modes: List[str], usernames: Optional[Set
             if server_info.folder != 'tf':
                 self.log.error(f"Server game is {server_info.folder}, not tf")
 
+        if 'Server name' in modes:
+            server_name_formatted: str = cleanup_server_name(server_info.server_name.strip())
+            self.log.debug(f"Got server name: \"{server_name_formatted}\"")
+            server_data['server_name'] = server_name_formatted
+
+        if 'Player count' in modes:
             if 'valve' in server_info.keywords:
                 max_players: int = 24
             else:
@@ -116,9 +125,32 @@ def get_match_data(self, address: str, modes: List[str], usernames: Optional[Set
 def unknown_data(loc: localization.Localizer, modes: List[str]) -> Dict[str, str]:
     server_data = {}
 
+    if 'Server name' in modes:
+        server_data['server_name'] = loc.text("Unknown server name")
     if 'Player count' in modes:
         server_data['player_count'] = loc.text("Players: {0}/{1}").format("?", "?")
     if 'Kills' in modes:
         server_data['kills'] = loc.text("Kills: {0}").format("?")
 
     return server_data
+
+
+# make server names look a bit nicer
+@functools.cache
+def cleanup_server_name(name: str) -> str:
+    if valve_server_re.match(name):
+        return valve_server_remove_re.sub("", name)
+    elif len(name) > 32:
+        # TODO: would prefer to use actual text width here
+        return f'{name[:30]}…'
+    else:
+        return name
+
+
+valve_server_re: Pattern[str] = re.compile(r'Valve Matchmaking Server \([a-zA-Z]+ srcds[0-9]+-[a-zA-Z]+\d #[0-9]+\)')
+valve_server_remove_re: Pattern[str] = re.compile(r' srcds[0-9]+-[a-zA-Z]+\d #[0-9]+')
+
+
+if __name__ == '__main__':
+    import game_state
+    print(game_state.GameState().get_match_data('162.254.192.155:27053', ['Server name', 'Player count', 'Kills']))

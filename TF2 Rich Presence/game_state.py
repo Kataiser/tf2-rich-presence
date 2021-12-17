@@ -23,6 +23,7 @@ class GameState:
         self.server_address: str = ''
         self.queued_state: str = "Not queued"
         self.hosting: bool = False
+        self.server_name: str = ''
         self.player_count: str = ''
         self.kills: str = ''
         self.gamemode: str = ''
@@ -194,6 +195,11 @@ class GameState:
             self.tf2_class = tf2_class
             self.update_rpc = True
 
+    def set_server_name(self, server_name: str):
+        if server_name != self.server_name:
+            self.server_name = server_name
+            self.update_rpc = True
+
     def set_player_count(self, player_count: str):
         if player_count != self.player_count:
             self.player_count = player_count
@@ -214,18 +220,25 @@ class GameState:
             self.hosting = hosting
             self.update_rpc = True
 
-    # modes can include player count, kills, neither, or both
+    # modes can include server name, player count, and/or kills
     def update_server_data(self, modes: List[str], usernames: Set[str]):
         self.updated_server_state = True
 
         if modes:
-            if ('Player count' in modes and 'player_count' not in self.last_server_request_data) or ('Kills' in modes and 'kills' not in self.last_server_request_data):
+            if ('Server name' in modes and 'server_name' not in self.last_server_request_data) \
+                    or ('Player count' in modes and 'player_count' not in self.last_server_request_data) \
+                    or ('Kills' in modes and 'kills' not in self.last_server_request_data):
                 # for changing server data modes mid-game
                 self.clear_server_data_cache()
 
             server_data: Dict[str, str] = self.get_match_data(self.server_address, modes, usernames)
 
             # get_match_data doesn't set these (but it could)
+            if 'Server name' in modes:
+                self.set_server_name(server_data['server_name'])
+            else:
+                self.set_server_name('')
+
             if 'Player count' in modes:
                 self.set_player_count(server_data['player_count'])
             else:
@@ -236,6 +249,7 @@ class GameState:
             else:
                 self.set_kills('')
         else:
+            self.set_server_name('')
             self.set_player_count('')
             self.set_kills('')
 
@@ -260,7 +274,9 @@ class GameState:
     def get_line(self, line: str = 'top', rpc: bool = False) -> str:
         line_setting: str = settings.get('top_line' if line == 'top' else 'bottom_line')
 
-        if line_setting == 'Player count':
+        if line_setting == 'Server name':
+            return self.server_name
+        elif line_setting == 'Player count':
             return self.player_count
         elif line_setting == 'Kills':
             return self.kills
@@ -271,7 +287,7 @@ class GameState:
         elif line_setting == 'Class':
             return self.loc.text("Class: {0}").format(self.loc.text(self.tf2_class))
 
-    # get player count and/or user score (kills) from the game server (not actually a getter method)
+    # get server name, player count, and/or user score (kills) from the game server (not actually a getter method)
     def get_match_data(self, *args, **kwargs):
         return server.get_match_data(self, *args, **kwargs)
 

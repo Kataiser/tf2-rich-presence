@@ -21,12 +21,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import _thread
 import datetime
 import gc
 import os
 import platform
-import threading
 import time
 import traceback
 from typing import Any, Dict, Optional, Set, Tuple, Union
@@ -273,9 +271,9 @@ class TF2RichPresense:
 
                 # get server data, if needed (game_state doesn't handle it itself)
                 server_modes = []
-                if settings.get('top_line') in ('Player count', 'Kills'):
+                if settings.get('top_line') in ('Server name', 'Player count', 'Kills'):
                     server_modes.append(settings.get('top_line'))
-                if settings.get('bottom_line') in ('Player count', 'Kills'):
+                if settings.get('bottom_line') in ('Server name', 'Player count', 'Kills'):
                     server_modes.append(settings.get('bottom_line'))
                 self.game_state.update_server_data(server_modes, self.usernames)
 
