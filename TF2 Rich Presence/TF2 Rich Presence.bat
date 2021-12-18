@@ -5,16 +5,17 @@
 
 @echo off
 TITLE TF2 Rich Presence ({tf2rpvnum})
+cd "%~dp0"
 
-if not exist "%~dp0\resources\" (
+if not exist resources\ (
     cd ..
-    if not exist "%~dp0\resources\" (
+    if not exist resources\ (
         echo Resources folder missing, exiting
         goto bail
     )
 )
 
-start "" "%~dp0\resources\python-3.10.1-embed-win32\pythonw.exe" -I -B "%~dp0\resources\launcher.py"
+start "" "resources\python-3.10.1-embed-win32\pythonw.exe" -I -B "resources\launcher.py"
 goto close
 
 :bail
