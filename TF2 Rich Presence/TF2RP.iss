@@ -65,6 +65,12 @@ Source: "TF2 Rich Presence v{#MyAppVersion}\locales\*"; DestDir: "{app}\locales"
 Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\resources\tf2_logo_blurple.ico"
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\resources\tf2_logo_blurple.ico"; Tasks: desktopicon
 
+[InstallDelete]
+Type: files; Name: "{app}\resources\*.pyd"
+Type: filesandordirs; Name: "{app}\resources\gui_images"
+Type: filesandordirs; Name: "{app}\resources\packages"
+Type: filesandordirs; Name: "{app}\resources\python-*-embed-win32"
+
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 
