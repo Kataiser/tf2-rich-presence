@@ -3,7 +3,7 @@
 # TF2 Rich Presence
 # https://github.com/Kataiser/tf2-rich-presence
 #
-# Copyright (C) 2018-2021 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
+# Copyright (C) 2018-2022 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 #
 # This program is free software: you can redistribute it and/or modify
@@ -34,7 +34,7 @@ import sentry_sdk
 import utils
 
 __author__ = "Kataiser"
-__copyright__ = "Copyright (C) 2018-2021 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors"
+__copyright__ = "Copyright (C) 2018-2022 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors"
 __license__ = "GPL-3.0"
 __email__ = "Mecharon1.gm@gmail.com"
 
