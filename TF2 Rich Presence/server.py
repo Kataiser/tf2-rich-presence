@@ -84,7 +84,7 @@ def get_match_data(self, address: str, modes: List[str], usernames: Optional[Set
                 self.log.error(f"Server game is {server_info.folder}, not tf")
 
         if 'Server name' in modes:
-            server_name_formatted: str = cleanup_server_name(server_info.server_name.strip())
+            server_name_formatted: str = cleanup_server_name(server_info.server_name)
             self.log.debug(f"Got server name: \"{server_name_formatted}\"")
             server_data['server_name'] = server_name_formatted
 
@@ -138,17 +138,22 @@ def unknown_data(loc: localization.Localizer, modes: List[str]) -> Dict[str, str
 # make server names look a bit nicer
 @functools.cache
 def cleanup_server_name(name: str) -> str:
-    if valve_server_re.match(name):
-        return valve_server_remove_re.sub("", name)
-    elif len(name) > 32:
-        # TODO: would prefer to use actual text width here
-        return f'{name[:30]}…'
+    if re_valve_server.match(name):
+        return re_valve_server_remove.sub("", name)
     else:
-        return name
+        name = ''.join(c for c in name if c.isprintable() and c not in ('█', '▟', '▙')).strip()  # removes unprintable/ugly characters
+        name = re_double_space.sub(' ', name)  # removes double space
+
+        if len(name) > 32:
+            # TODO: would prefer to use actual text width here
+            return f'{name[:30]}…'
+        else:
+            return name
 
 
-valve_server_re: Pattern[str] = re.compile(r'Valve Matchmaking Server \([a-zA-Z]+ srcds[0-9]+-[a-zA-Z]+\d #[0-9]+\)')
-valve_server_remove_re: Pattern[str] = re.compile(r' srcds[0-9]+-[a-zA-Z]+\d #[0-9]+')
+re_valve_server: Pattern[str] = re.compile(r'Valve Matchmaking Server \([a-zA-Z]+ srcds[0-9]+-[a-zA-Z]+\d #[0-9]+\)')
+re_valve_server_remove: Pattern[str] = re.compile(r' srcds[0-9]+-[a-zA-Z]+\d #[0-9]+')
+re_double_space: Pattern[str] = re.compile(r' {2,}')
 
 
 if __name__ == '__main__':

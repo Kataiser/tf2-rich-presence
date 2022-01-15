@@ -181,6 +181,8 @@ class TestTF2RichPresence(unittest.TestCase):
         self.assertEqual(server.cleanup_server_name("Valve Matchmaking Server (Virginia srcds3155-iad2 #4)"), "Valve Matchmaking Server (Virginia)")
         self.assertEqual(server.cleanup_server_name("Valve Matchmaking Server (LA srcds1153-lax2 #35)"), "Valve Matchmaking Server (LA)")
         self.assertEqual(server.cleanup_server_name("D .U .S .T .B .O .W .L - BEGINNERS - FRAGMASTERS.CO.UK"), "D .U .S .T .B .O .W .L - BEGIN…")
+        self.assertEqual(server.cleanup_server_name("  ►  BlackWonder LA | 2Fort  ◄ "), "► BlackWonder LA | 2Fort ◄")
+        self.assertEqual(server.cleanup_server_name("▟█▙ ZOMBIE ESCAPE AC ▟█ Otaku.TF █▙ ▟"), "ZOMBIE ESCAPE AC Otaku.TF")
         self.assertEqual(server.cleanup_server_name("UGC.TF | 2FORT | US | Fast"), "UGC.TF | 2FORT | US | Fast")
 
     def test_get_map_gamemode(self):
