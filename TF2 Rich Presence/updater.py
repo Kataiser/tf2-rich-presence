@@ -52,7 +52,7 @@ class UpdateChecker:
 
             if raise_exceptions:
                 raise
-        except requests.RequestException:
+        except (requests.RequestException, requests.ConnectionError):
             self.log.error(f"Connection error in updater: {traceback.format_exc()}", reportable=False)
 
             if raise_exceptions:
