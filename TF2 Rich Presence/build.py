@@ -259,7 +259,7 @@ def main(version_num='v2.1.1'):
     # creates build_info.txt
     if github_repo_path != 'n':
         try:
-            commits_info = json.loads(requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/commits', timeout=5).text)
+            commits_info = json.loads(requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/commits', timeout=5, params={'accept': 'application/vnd.github.v3+json'}).text)
             latest_commit_message = commits_info[0]['commit']['message'].split('\n')[0]
             latest_commit = f"\"{latest_commit_message}\" @\n\t{commits_info[0]['html_url'][:60]}"
             got_latest_commit = True

@@ -14,8 +14,10 @@ def main(silent=False):
     with open('Changelogs_source.html', 'r') as changelogs_source_html:
         source_html = changelogs_source_html.read()
 
-    api_response = requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/releases', headers={'User-Agent': 'Kataiser-TF2-Rich-Presence'})
-    api_response_p2 = requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/releases', headers={'User-Agent': 'Kataiser-TF2-Rich-Presence'}, params={'page': '2'})
+    api_response = requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/releases', headers={'User-Agent': 'Kataiser-TF2-Rich-Presence'},
+                                params={'accept': 'application/vnd.github.v3+json'})
+    api_response_p2 = requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/releases', headers={'User-Agent': 'Kataiser-TF2-Rich-Presence'},
+                                   params={'accept': 'application/vnd.github.v3+json', 'page': '2'})
     api_response_json = api_response.json() + api_response_p2.json()
     check_rate_limited(str(api_response_json))
     releases = []
@@ -36,7 +38,8 @@ def main(silent=False):
 
     bodies_combined = '\n\nSPLITTER\n\n'.join(bodies)
 
-    as_html_response = requests.post('https://api.github.com/markdown/raw', data=bodies_combined, headers={'User-Agent': 'Kataiser-TF2-Rich-Presence', 'Content-Type': 'text/plain'})
+    as_html_response = requests.post('https://api.github.com/markdown/raw', data=bodies_combined, headers={'User-Agent': 'Kataiser-TF2-Rich-Presence', 'Content-Type': 'text/plain'},
+                                     params={'accept': 'application/vnd.github.v3+json'})
     as_html = as_html_response.text.replace('h2', 'h3')
     ratelimit_remaining = int(as_html_response.headers['X-RateLimit-Remaining']) - 1
     check_rate_limited(as_html)

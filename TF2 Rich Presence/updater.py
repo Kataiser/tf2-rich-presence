@@ -34,7 +34,8 @@ class UpdateChecker:
         self.popup = popup
         self.checked_response = False
         from requests_futures.sessions import FuturesSession
-        self.api_future = FuturesSession(max_workers=1).get('https://api.github.com/repos/Kataiser/tf2-rich-presence/releases/latest', timeout=timeout, headers={'Connection': 'close'})
+        self.api_future = FuturesSession(max_workers=1).get('https://api.github.com/repos/Kataiser/tf2-rich-presence/releases/latest', timeout=timeout,
+                                                            params={'accept': 'application/vnd.github.v3+json'}, headers={'Connection': 'close'})
 
     # request either finished or failed
     def update_check_ready(self) -> bool:
