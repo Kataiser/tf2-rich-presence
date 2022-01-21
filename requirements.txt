@@ -10,6 +10,6 @@ psutil==5.9.0
 python-a2s==1.3.0
 requests-futures==1.0.0
 requests==2.27.1
-sentry_sdk==1.5.2
+sentry_sdk==1.5.3
 urllib3==1.26.8
 vdf==3.4
