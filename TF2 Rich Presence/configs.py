@@ -3,13 +3,17 @@
 # cython: language_level=3
 
 import os
-import winreg
+try:
+    import winreg
+except ImportError:
+    import unixreg as winreg
 from typing import Callable, List, Optional, Tuple, Union
 
 import vdf
 
 import console_log
 import logger
+import getpass
 
 
 # allows for detecting which class the user is playing as
@@ -136,7 +140,7 @@ def steam_config_file(self, exe_location: str, require_condebug: bool) -> Option
 
 # given Steam's install, find a TF2 install
 def find_tf2_exe(self, steam_location: str) -> Optional[str]:
-    extend_path: Callable[[str], str] = lambda path: os.path.join(path, 'steamapps', 'common', 'Team Fortress 2', 'hl2.exe')
+    extend_path: Callable[[str], str] = lambda path: os.path.join(path, 'steamapps', 'common', 'Team Fortress 2', 'hl2.' + ('exe' if os.name == "nt" else 'sh'))
     default_path: str = extend_path(steam_location)
 
     if is_tf2_install(self.log, default_path):
@@ -198,7 +202,12 @@ def is_tf2_install(log: logger.Log, exe_location: str) -> bool:
 # Steam seems to update this often enough
 def get_steam_username() -> str:
     key: winreg.HKEYType = winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"SOFTWARE\\Valve\\Steam\\")
-    username: str = winreg.QueryValueEx(key, 'LastGameNameUsed')[0]
+    username: str
+    try:
+        username = winreg.QueryValueEx(key, 'LastGameNameUsed')[0]
+    except FileNotFoundError:
+        # not the steam username but still uniquie
+        username = getpass.getuser()
     key.Close()
     return username
 

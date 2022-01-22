@@ -2,7 +2,6 @@
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 # cython: language_level=3
 
-import ctypes
 import functools
 import json
 import locale
@@ -119,7 +118,7 @@ def detect_system_language(log: logger.Log):
 
     if not db['has_asked_language']:
         language_codes: dict = {read_localization_files()[lang]['code']: lang for lang in langs[1:]}
-        system_locale: str = locale.windows_locale[ctypes.windll.kernel32.GetUserDefaultUILanguage()]
+        system_locale: str = locale.getlocale()[0]
         system_language_code: str = system_locale.split('_')[0]
         is_brazilian_port: bool = system_locale == 'pt_BR'
 

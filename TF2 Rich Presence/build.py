@@ -291,10 +291,7 @@ def main(version_num='v2.1.1'):
         python_target = os.path.abspath(Path(f'{new_build_folder_name}/resources/{interpreter_name}'))
         print(f"Copying from {python_source}\n\tto {python_target}: ", end='')
         assert os.path.isdir(python_source) and not os.path.isdir(python_target)
-        if sys.platform == 'win32':
-            subprocess.run(f'xcopy \"{python_source}\" \"{python_target}\\\" /E /Q')
-        else:
-            raise SyntaxError("Whatever the Linux/MacOS equivalent of xcopy is")
+        subprocess.run(f'xcopy \"{python_source}\" \"{python_target}\\\" /E /Q')
     elif os.path.isfile(python_source_zip):
         python_target = os.path.abspath(Path(f'{new_build_folder_name}/resources'))
         print(f"Extracting from {python_source_zip}\n\tto {python_target}")
@@ -490,10 +487,7 @@ def copy_dir(source, target):
         pass
 
     print(f"Copying from {source} to {target}: ", end='')
-    if sys.platform == 'win32':
-        subprocess.run(f'xcopy \"{source}\" \"{target}{os.path.sep}\" /E /Q')
-    else:
-        raise SyntaxError("Whatever the Linux/MacOS equivalent of xcopy is")
+    subprocess.run(f'xcopy \"{source}\" \"{target}{os.path.sep}\" /E /Q')
 
 
 # log all prints to a file
@@ -515,4 +509,7 @@ class Logger(object):
 
 
 if __name__ == '__main__':
-    main()
+    if os.name == 'nt':
+        main()
+    else:
+        print("Build is not available on non Windows systems")

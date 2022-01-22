@@ -11,6 +11,10 @@ import os
 import threading
 from typing import Any, Callable, Dict, Optional, Union
 
+if os.name == "nt":
+    APPDATA = os.getenv('APPDATA')
+else:
+    APPDATA = os.path.join(os.getenv("HOME"), ".config")
 
 # read from or write to DB.json (intentionally uncached)
 def access_db(write: dict = None, pass_permission_error: bool = True) -> Optional[Dict[str, Union[bool, list, str]]]:
@@ -52,8 +56,8 @@ def access_db(write: dict = None, pass_permission_error: bool = True) -> Optiona
 
 @functools.cache
 def db_json_path() -> str:
-    if os.path.isdir(os.path.join(os.getenv('APPDATA'), 'TF2 Rich Presence')):
-        return os.path.join(os.getenv('APPDATA'), 'TF2 Rich Presence', 'DB.json')
+    if os.path.isdir(os.path.join(APPDATA, 'TF2 Rich Presence')):
+        return os.path.join(APPDATA, 'TF2 Rich Presence', 'DB.json')
     else:
         return 'DB.json'
 
