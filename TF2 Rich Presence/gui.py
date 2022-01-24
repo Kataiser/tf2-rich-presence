@@ -549,7 +549,7 @@ class GUI(tk.Frame):
     def menu_open_console_log(self):
         if self.console_log_path and os.path.isfile(self.console_log_path):
             self.log.info(f"GUI: Opening console.log at {self.console_log_path}")
-            os.startfile(self.console_log_path)
+            subprocess.run(f'explorer.exe /select,"{self.console_log_path}"')
         else:
             self.log.error(f"GUI: Opening console.log failed, path is {self.console_log_path}")
 
