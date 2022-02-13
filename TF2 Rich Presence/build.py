@@ -67,7 +67,7 @@ def main(version_num='v2.1.1'):
 
             vnum_in_action = version_num in open(Path(f'{github_repo_path}/.github/workflows/Tests.CD.yml'), 'r').read()
 
-    interpreter_name = 'python-3.10.1-embed-win32'
+    interpreter_name = 'python-3.10.2-embed-win32'
     build_start_time = time.perf_counter()
     print()
 
