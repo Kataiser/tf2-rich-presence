@@ -1,4 +1,4 @@
-# Copyright (C) 2021 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
+# Copyright (C) 2021-2022 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 # cython: language_level=3
 
