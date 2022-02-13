@@ -5,6 +5,7 @@
 import datetime
 import functools
 import os
+import platform
 import statistics
 import subprocess
 import tkinter as tk
@@ -568,10 +569,13 @@ class GUI(tk.Frame):
         self.log.info("GUI: opening about window")
         build_info_path: str = os.path.join('resources', 'build_info.txt')
         build_time: str = ""
+        using_cython: bool = False
 
         if os.path.isfile(build_info_path):
             with open(build_info_path, 'r') as build_info_file:
                 build_info_lines: List[str] = build_info_file.readlines()
+
+            using_cython = "Not compiling modules with Cython\n" not in build_info_lines
 
             for line in build_info_lines:
                 if line.startswith("Built at"):
@@ -581,6 +585,7 @@ class GUI(tk.Frame):
         # yeah not gonna localize this
         about: str = f"TF2 Rich Presence {launcher.VERSION}" \
                      f"\nBuilt: {build_time}" \
+                     f"\nPython: {platform.python_version()} {platform.architecture()[0]} {'' if using_cython else '(nocython)'}" \
                      f"\nLicensed under GNU GPLv3, see License.txt" \
                      f"\n\nCredits:" \
                      f"\nKataiser - Lead developer" \

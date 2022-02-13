@@ -472,7 +472,7 @@ def main(version_num='v2.1.1'):
         print("Assertions are disabled, build is probably fine but please run without -O or -OO)", file=sys.stderr)
     if warn_no_installer_log:
         print("Installer didn't create an installer.log", file=sys.stderr)
-    if not cli_skip_repo and not vnum_in_action:
+    if github_repo_path != 'n' and not vnum_in_action:
         print(f"\"{version_num}\" not in Tests.CD.yml", file=sys.stderr)
     if git_username and git_username != 'Kataiser':
         print(f"Please note that your git username ({git_username}) has been included in {build_info_path}")
