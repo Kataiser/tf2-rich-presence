@@ -127,7 +127,9 @@ def detect_system_language(log: logger.Log):
             system_language: str = language_codes[system_language_code]
             can_localize: bool = True
         else:
-            log.error(f"System locale {system_locale} is not localizable")
+            if system_language_code != 'en':
+                log.error(f"System locale {system_locale} is not localizable")
+
             can_localize = False
 
         if can_localize and settings.get('language') != system_language:
