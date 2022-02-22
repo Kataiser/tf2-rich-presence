@@ -122,6 +122,8 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
                                        'ShutdownGC', 'Connection failed after', 'Host_Error')
     menus_message_used: Optional[str] = None
     menus_message: str
+    gui_update: int = 0
+    gui_updates: int = 0
 
     for username in user_usernames:
         if 'with' in username:
@@ -132,6 +134,14 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     # iterates though 0 (initially) to roughly 16000 lines from console.log and learns (almost) everything from them
     line: str
     for line in lines:
+        gui_update += 1
+
+        if gui_update == 1500:
+            # update the GUI occasionally, to prevent UI lag
+            self.gui.safe_update()
+            gui_update = 0
+            gui_updates += 1
+
         # lines that have "with" in them are basically always kill logs and can be safely ignored
         # this (probably) improves performance
         # same goes for chat logs, this one's actually to reduce false detections
@@ -259,6 +269,9 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
 
     scan_results = (in_menus, tf2_map, tf2_class, server_address, queued_state, hosting)
     self.log.debug(f"console.log parse results: {scan_results}")
+
+    if gui_updates != 0:
+        self.log.debug(f"Mid-parse GUI updates: {gui_updates}")
 
     # remove empty lines (bot spam probably) and some error logs
     # TODO: move this into a function
