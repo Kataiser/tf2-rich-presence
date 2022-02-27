@@ -194,7 +194,6 @@ def main(version_num='v2.1.1'):
     os.mkdir(Path(f'{new_build_folder_name}/resources'))
     os.mkdir(Path(f'{new_build_folder_name}/resources/gui_images'))
     os.mkdir(Path(f'{new_build_folder_name}/locales'))
-    os.mkdir(Path(f'{new_build_folder_name}/logs'))
     print(f"Created new build folder: {new_build_folder_name}")
 
     missing_files = []
@@ -338,7 +337,6 @@ def main(version_num='v2.1.1'):
     print(f"Deleted {len(pycs_to_delete) - len(missing_pycs)} unused PYCs")
 
     # ensure everything exists that needs to
-    assert os.listdir(Path(f'{new_build_folder_name}/logs')) == []
     assert os.listdir(Path(f'{new_build_folder_name}/resources/__pycache__')) != []
     assert os.listdir(Path(f'{new_build_folder_name}/resources/{interpreter_name}')) != []
     assert len(os.listdir(Path(f'{new_build_folder_name}/resources/packages'))) == 24

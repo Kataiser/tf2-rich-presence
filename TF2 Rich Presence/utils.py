@@ -68,7 +68,7 @@ def get_api_key(service: str) -> str:
     return json.loads(gzip.decompress(data))[service]
 
 
-# decorator to kill a syncronous function after some time
+# decorator to kill a synchronous function after some time
 def timeout(seconds: float):
     def outer(func: Callable):
         def inner(*args, **kwargs):
