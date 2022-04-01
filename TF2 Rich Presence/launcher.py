@@ -121,7 +121,7 @@ def out_of_date_warning() -> str:
         available_version: str = utils.access_db()['available_version']
 
         if available_version:
-            return f"\nBTW an newer version for TF2 Rich Presence is available ({available_version}), which may have fixed this crash."
+            return f"\n\nBTW an newer version for TF2 Rich Presence is available ({available_version}), which may have fixed this crash."
         else:
             return ""
     except Exception:
