@@ -158,4 +158,4 @@ re_double_space: Pattern[str] = re.compile(r' {2,}')
 
 if __name__ == '__main__':
     import game_state
-    print(game_state.GameState().get_match_data('169.254.27.216:23176', ['Server name', 'Player count', 'Kills'], allow_network_errors=False))
+    print(game_state.GameState().get_match_data('169.254.225.11:18384', ['Server name', 'Player count', 'Kills'], allow_network_errors=False))

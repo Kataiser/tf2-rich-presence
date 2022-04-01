@@ -622,11 +622,11 @@ class GUI(tk.Frame):
 
         if holiday_text is not None:
             self.log.info(f"Today is {now.year}/{now.month}/{now.day}, so the holiday text is \"{holiday_text}\"")
-            self.set_bottom_text('holiday', True)
             self.holiday_text = holiday_text
+            self.set_bottom_text('holiday', True)
         else:
-            self.set_bottom_text('holiday', False)
             self.holiday_text = ""
+            self.set_bottom_text('holiday', False)
 
     # runs either when the X button is clicked or whenever needed
     def close_window(self):
