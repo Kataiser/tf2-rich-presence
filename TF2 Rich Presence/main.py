@@ -162,13 +162,9 @@ class TF2RichPresense:
             self.log.debug("custom.py doesn't exist")
 
     # main program loop
-    def run(self, once: bool = False):
+    def run(self):
         while True:
             self.loop_body()
-
-            if once:
-                self.gui.safe_update()
-                break
 
             # rich presence only updates every 15 seconds, but it listens constantly so sending every 2 or 5 seconds (by default) is probably fine
             sleep_time: int = settings.get('wait_time_slow') if self.slow_sleep_time else settings.get('wait_time')

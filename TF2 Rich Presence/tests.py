@@ -473,7 +473,8 @@ class TestTF2RichPresence(unittest.TestCase):
                                      'large_text': 'In menus - TF2 Rich Presence {tf2rpvnum}',
                                      'small_image': 'tf2_logo',
                                      'small_text': 'Team Fortress 2'}})
-        app.run(once=True)
+        app.loop_body()
+        app.gui.safe_update()
         self.assertEqual(repr(app), 'main.TF2RichPresense (state=no tf2)')
         self.assertEqual(fix_activity_dict(app.game_state.activity()),
                          {'details': 'In menus',
@@ -510,7 +511,7 @@ class TestTF2RichPresence(unittest.TestCase):
             custom_file.flush()
 
         app = main.TF2RichPresense(self.log, set_process_priority=False)
-        app.run(once=True)
+        app.loop_body()
         app.gui.master.destroy()
         self.assertTrue(os.path.isfile(big_number_file))
         time.sleep(0.2)
