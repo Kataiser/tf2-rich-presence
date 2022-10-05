@@ -87,12 +87,12 @@ def handle_crash():
     except Exception:
         # Sentry has failed us :(
         messagebox.showerror("TF2 Rich Presence",
-                             f"\n{formatted_exception}"
+                             f"{formatted_exception}"
                              f"\nTF2 Rich Presence {VERSION} has crashed, and the error can't be reported to the developer."
                              f"\n(Consider opening an issue at https://github.com/Kataiser/tf2-rich-presence/issues){out_of_date_warning()}")
     else:
         messagebox.showerror("TF2 Rich Presence",
-                             f"\n{formatted_exception}"
+                             f"{formatted_exception}"
                              f"\nTF2 Rich Presence {VERSION} has crashed, and the error has been reported to the developer."
                              f"\n(Consider opening an issue at https://github.com/Kataiser/tf2-rich-presence/issues){out_of_date_warning()}")
 

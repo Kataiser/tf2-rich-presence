@@ -360,7 +360,7 @@ class GUI(tk.Frame):
         self.update_window_open = False
 
     # run by main when the update checker finishes
-    def handle_update_check(self, update_data: Tuple[str, str, str]):
+    def handle_update_check(self, update_data: Optional[Tuple[str, str, str]]):
         if update_data:
             self.available_update_data = update_data
             self.enable_update_notification()
