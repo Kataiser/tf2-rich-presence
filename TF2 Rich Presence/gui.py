@@ -369,7 +369,7 @@ class GUI(tk.Frame):
                 self.show_update_menu()
         elif self.update_checker.popup:
             self.pause()
-            messagebox.showinfo(self.loc.text("TF2 Rich Presence"), self.loc.text("No update available, this version ({0}) is the latest version available.").format(launcher.VERSION))
+            messagebox.showinfo(self.loc.text("TF2 Rich Presence"), self.loc.text("No update available, this version ({0}) is the latest version.").format(launcher.VERSION))
             self.unpause()
 
     # alerts the user that they don't seem to have -condebug
