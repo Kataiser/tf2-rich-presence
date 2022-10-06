@@ -2,6 +2,7 @@
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 # cython: language_level=3
 
+import os
 import time
 from typing import Dict, List, Optional, Set, Tuple
 
@@ -91,7 +92,13 @@ class GameState:
                 small_image = self.tf2_class.lower()
                 small_text = self.loc.text(self.tf2_class)
 
-            if self.custom_map:
+            if not os.path.isfile(os.path.join('gui_images', 'fg_maps', f'{self.tf2_map}.webp')):
+                self.log.error(f"fg_maps/{self.tf2_map}.webp doesn't exist, using gamemode image for Discord")
+                force_gamemode_image = True
+            else:
+                force_gamemode_image = False
+
+            if self.custom_map or force_gamemode_image:
                 large_image = self.gamemode
 
                 if self.gamemode in gamemodes.localization_excluded:
@@ -106,13 +113,13 @@ class GameState:
                 else:
                     large_image = f'z_{self.tf2_map}'
 
-            if self.hosting or self.custom_map:
+            if self.hosting or self.custom_map or force_gamemode_image:
                 top_line = self.map_line
             else:
                 top_line = self.get_line('top', True)
 
             if self.queued_state == "Not queued":
-                if self.hosting or self.custom_map:
+                if self.hosting or self.custom_map or force_gamemode_image:
                     bottom_line = self.get_line('bottom' if self.hosting else 'top', True)
                     # yes this means the bottom line can use the top line setting, but I basically consider it to be the lines shifted down by one and truncated
                 else:
