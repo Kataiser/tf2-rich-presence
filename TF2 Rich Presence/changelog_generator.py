@@ -26,7 +26,8 @@ def main(silent=False):
     for found_release in api_response_json:
         version_num = found_release['tag_name']
         body = found_release['body']
-        published = found_release['published_at'][:10]
+        published_datetime = datetime.datetime.fromisoformat(f"{found_release['published_at'][:-1]}+00:00")
+        published = published_datetime.astimezone(tz=None).strftime('%Y-%m-%d')
         releases.append({'version_num': version_num, 'published': published})
         bodies.append(body)
 
