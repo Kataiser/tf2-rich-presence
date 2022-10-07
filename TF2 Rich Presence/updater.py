@@ -76,8 +76,6 @@ class UpdateChecker:
                 else:
                     raise
 
-            changelog_formatted: str = format_changelog(changelog)
-
             if launcher.VERSION == newest_version:
                 self.log.debug(f"Up to date ({launcher.VERSION})")
             else:  # out of date
@@ -88,6 +86,7 @@ class UpdateChecker:
                 db['available_version'] = newest_version
                 utils.access_db(db)
 
+                changelog_formatted: str = format_changelog(changelog)
                 return newest_version, downloads_url, changelog_formatted
 
 
