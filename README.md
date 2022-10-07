@@ -23,8 +23,8 @@ Discord Rich Presence for Team Fortress 2
 ![GUI preview image](gui%20preview.webp)
 
 ## Download and install
-Installer: [TF2RichPresence_v2.1.1_setup](https://github.com/Kataiser/tf2-rich-presence/releases/download/v2.1.1/TF2RichPresence_v2.1.1_setup.exe) (14.7 MB)  
-Alternatively, get the latest autobuild (may be untested/buggy): [TF2RichPresence_v2.1.1_setup](https://nightly.link/Kataiser/tf2-rich-presence/workflows/Tests.CD/master/TF2RichPresence_v2.1.1_setup.exe.zip)  
+Installer: [TF2RichPresence_v2.1.2_setup](https://github.com/Kataiser/tf2-rich-presence/releases/download/v2.1.2/TF2RichPresence_v2.1.2_setup.exe) (14.6 MB)  
+Alternatively, get the latest autobuild (may be untested/buggy): [TF2RichPresence_v2.1.2_setup](https://nightly.link/Kataiser/tf2-rich-presence/workflows/Tests.CD/master/TF2RichPresence_v2.1.2_setup.exe.zip)  
 Note that having Python installed is not required. Requires Discord and Steam to be running as well, and will wait until the game and both programs are running.
 
 ## Changelogs
@@ -35,7 +35,7 @@ Note that having Python installed is not required. Requires Discord and Steam to
 At the moment, both are considered unsupported. They probably work since [Jan200101](https://github.com/Jan200101) did some work on Linux a while ago, but the release builds are formatted for Windows. Contributors are very welcome! Also check out [cyclowns/tf2-discord](https://github.com/cyclowns/tf2-discord), which is confirmed to work on both Windows and Linux, or [EmeraldSnorlax/TF2-RPC](https://github.com/EmeraldSnorlax/TF2-RPC), which is a much less mature program but is built on Linux and theoretically cross-platform too. Alternatively, following most or all of the "building from source" instructions might work, or possibly running `python resources/launcher.py` in a --nocython build.
 
 ## VAC safe?
-Almost certainly. If you don't want to risk it then fair enough, but I've run this on my main account for years and feel comfortable with it. The game's runtime and memory are never touched in any way to read its state. For transparency, here's the complete list of external files that are read from and/or written to: `\tf\console.log`, `\tf\cfg\*class*.cfg` and `steam_appid.txt` in TF2's install, and `\userdata\*id*\config\localconfig.vdf` and `\steamapps\libraryfolders.vdf` in Steam's. The game process is also queried for its start time and install path, and the server you're playing on is queried for player count or kill counts. RCON is not used.
+Almost certainly. If you don't want to risk it then fair enough, but I've run this on my main account for years and feel comfortable with it. The game's runtime and memory are never touched in any way to read its state. For transparency, here's the complete list of external files that are read from and/or written to: `\tf\console.log`, `\tf\cfg\*class*.cfg` and `steam_appid.txt` in TF2's install, and `\userdata\*id*\config\localconfig.vdf` and `\steamapps\libraryfolders.vdf` in Steam's. The game process is also queried for its start time and install path, and the server you're playing on is queried for player count, server name, or kill counts. RCON is not used.
 
 ## Building from source
 For making and testing changes, or simply always running the most up-to-date code.
