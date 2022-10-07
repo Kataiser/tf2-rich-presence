@@ -92,8 +92,8 @@ class GameState:
                 small_image = self.tf2_class.lower()
                 small_text = self.loc.text(self.tf2_class)
 
-            if not os.path.isfile(os.path.join('gui_images', 'fg_maps', f'{self.tf2_map}.webp')):
-                self.log.error(f"fg_maps/{self.tf2_map}.webp doesn't exist, using gamemode image for Discord")
+            if not os.path.isfile(os.path.join('resources', 'gui_images', 'fg_maps', f'{self.tf2_map}.webp')):
+                self.log.error(f"resources/gui_images/fg_maps/{self.tf2_map}.webp doesn't exist, using gamemode image for Discord")
                 force_gamemode_image = True
             else:
                 force_gamemode_image = False
