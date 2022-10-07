@@ -38,6 +38,9 @@ def get_match_data(self, address: str, modes: List[str], usernames: Optional[Set
             self.last_server_request_time -= rate_limit  # ignores rate limit
             return self.last_server_request_data
 
+        if address.startswith('169.254.'):
+            self.log.error(f"Address is link-local, will probably time out ({address})", reportable=False)
+
         ip: str
         ip_socket: str
         ip, ip_socket = address.split(':')
