@@ -4,7 +4,10 @@
 
 import functools
 import json
-import winreg
+try:
+    import winreg
+except ImportError:
+    import unixreg as winreg
 from typing import Optional, Union
 
 import logger

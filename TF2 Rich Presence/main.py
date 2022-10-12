@@ -339,8 +339,9 @@ class TF2RichPresense:
         if not self.has_set_process_priority:
             self_process: psutil.Process = psutil.Process()
             priorities_before: tuple = (self_process.nice(), self_process.ionice())
-            self_process.nice(psutil.BELOW_NORMAL_PRIORITY_CLASS)
-            self_process.ionice(psutil.IOPRIO_LOW)
+            if os.name == "nt":
+                self_process.nice(psutil.BELOW_NORMAL_PRIORITY_CLASS)
+                self_process.ionice(psutil.IOPRIO_LOW)
             priorities_after: tuple = (self_process.nice(), self_process.ionice())
             self.log.debug(f"Set process priorities from {priorities_before} to {priorities_after}")
             self.has_set_process_priority = True
@@ -485,4 +486,7 @@ class TF2RichPresense:
 
 
 if __name__ == '__main__':
-    launch()
+    try:
+        launch()
+    except KeyboardInterrupt:
+        pass

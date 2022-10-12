@@ -13,3 +13,4 @@ requests==2.28.1
 sentry_sdk==1.9.10
 urllib3==1.26.12
 vdf==3.4
+unixreg; sys_platform != 'win32'
