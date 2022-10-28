@@ -4,13 +4,14 @@
 
 import ctypes
 import functools
-import json
 import locale
 import os
 import zlib
 from tkinter import messagebox
 from typing import Dict, Optional, Tuple, Union
 from typing import List
+
+import ujson
 
 import launcher
 import logger
@@ -87,7 +88,7 @@ def access_localization_data(append: Optional[tuple] = None) -> Optional[dict]:
                         localization_data_out[key] = ""
 
                 with open(os.path.join('locales', f'{lang}.json'), 'w', encoding='UTF8') as localization_file:
-                    json.dump(localization_data_out, localization_file, indent=4, ensure_ascii=False)
+                    ujson.dump(localization_data_out, localization_file, indent=4, ensure_ascii=False, escape_forward_slashes=False)
         else:
             print(f"Already exists with hash {append_hash}")
 
@@ -104,7 +105,7 @@ def read_localization_files() -> dict:
             lang_name: str = file_split[0]
 
             with open(file_path, 'r', encoding='UTF8') as localization_file:
-                locale_datas[lang_name] = json.load(localization_file)
+                locale_datas[lang_name] = ujson.load(localization_file)
 
     return locale_datas
 

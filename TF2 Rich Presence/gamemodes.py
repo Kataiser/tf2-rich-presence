@@ -3,9 +3,10 @@
 # cython: language_level=3
 
 import functools
-import json
 import os
 from typing import Dict, List, Tuple, Union
+
+import ujson
 
 import game_state
 import launcher
@@ -65,7 +66,7 @@ def load_maps_db() -> Dict[str, List[str]]:
 
     if os.path.isfile(maps_db_path):
         with open(maps_db_path, 'r') as maps_db:
-            return json.load(maps_db)
+            return ujson.load(maps_db)
     else:
         return {}
 

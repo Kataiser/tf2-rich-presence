@@ -7,6 +7,8 @@ import json
 import winreg
 from typing import Optional, Union
 
+import ujson
+
 import logger
 
 
@@ -27,7 +29,7 @@ def access_registry(save: Optional[dict] = None) -> Optional[dict]:
     reg_key: winreg.HKEYType = winreg.CreateKey(winreg.HKEY_CURRENT_USER, r'Software\TF2 Rich Presence')
 
     try:
-        reg_key_data: dict = json.loads(winreg.QueryValue(reg_key, 'Settings'))
+        reg_key_data: dict = ujson.loads(winreg.QueryValue(reg_key, 'Settings'))
     except FileNotFoundError:  # means that the key hasn't been initialized
         # assume no key means default settings. might not be true but whatever
         default_settings: dict = defaults()
