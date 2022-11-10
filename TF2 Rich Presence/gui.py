@@ -412,8 +412,9 @@ class GUI(tk.Frame):
     @functools.cache
     def load_image(self, image_name: str, mode: str = 'RGBA') -> Image:
         images_path: str = 'gui_images' if launcher.DEBUG else os.path.join('resources', 'gui_images')
-        image_name_fixed: str = image_name.replace('c', os.path.sep)
+        image_name_fixed: str = image_name.replace('/', os.path.sep)
         image_path: str = os.path.join(images_path, f'{image_name_fixed}.webp')
+        tf2_map: Optional[str] = image_name.split('/')[1] if image_name.startswith('fg_maps/') else None
 
         if os.path.isfile(image_path):
             image_loaded: Image = Image.open(image_path)
@@ -421,14 +422,14 @@ class GUI(tk.Frame):
             if image_loaded.mode != mode:
                 image_loaded = image_loaded.convert(mode)
 
-            if 'fg_maps' in image_name:
-                missing_fg_maps.remove(image_name.split('/')[1])
+            if tf2_map and tf2_map in missing_fg_maps:
+                missing_fg_maps.remove(tf2_map)
 
             self.log.debug(f"Loaded GUI image from {image_path} (mode={mode})")
             return image_loaded
         else:
-            if 'fg_maps' in image_name:
-                missing_fg_maps.add(image_name.split('/')[1])
+            if tf2_map and tf2_map in missing_fg_maps:
+                missing_fg_maps.add(tf2_map)
 
             self.log.error(f"Couldn't find GUI image \"{image_name}\"")
             return Image.new(mode=mode, size=self.size)
