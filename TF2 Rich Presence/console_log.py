@@ -170,10 +170,6 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
             elif 'Missing map' in line and 'Missing map material' not in line:
                 now_in_menus = True
 
-            # ok this is jank but it's to only trigger on actually closing the map and not just (I think) ending a demo recording
-            elif 'SoundEmitter:' in line and int(line.split('[')[1].split()[0]) > 1000:
-                now_in_menus = True
-
             if kataiser_scan and not user_is_kataiser and 'Kataiser' in line:
                 # makes sure no one's just talking about me for some reason
                 if not (line.count(' :  ') == 1 and 'Kataiser' not in line.split(' :  ')[0] and 'Kataiser' in line.split(' :  ')[1]):
