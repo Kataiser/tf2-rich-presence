@@ -17,7 +17,12 @@ def main():
     gamemode_replacements = [('d(M', 'd (M'), ('t(D', 't (D'), (' Mode', ''), ('Developer aidTest', 'No gamemode'), ('Developer aidControl Point', 'Control Point')]
     map_gamemodes = {'itemtest': ('itemtest', 'unknown', 'Unknown gamemode'),
                      'devtest': ('devtest', 'unknown', 'Unknown gamemode'),
-                     'background01': ('background01', 'unknown', 'Unknown gamemode')}
+                     'background01': ('background01', 'unknown', 'Unknown gamemode'),
+                     'cp_gravelpit_snowy': ('Coal Pit', 'attack-defend', 'Attack/Defend'),
+                     'pl_frostcliff': ('Frostcliff', 'payload', 'Payload'),
+                     'cp_frostwatch': ('Frostwatch', 'attack-defend', 'Attack/Defend'),
+                     'ctf_frosty': ('Snowfall', 'ctf', 'Capture the Flag'),
+                     'pl_rumford_event': ('Rumford', 'payload', 'Payload')}
 
     r = requests.get('https://wiki.teamfortress.com/wiki/List_of_maps')
     soup = BeautifulSoup(r.text, 'lxml')

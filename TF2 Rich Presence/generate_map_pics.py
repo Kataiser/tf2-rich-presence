@@ -2,6 +2,7 @@
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 
 import io
+import os
 
 import requests
 from bs4 import BeautifulSoup
@@ -17,8 +18,8 @@ def main():
     # downloads a screenshot of every map and then crops and resizes it for Discord and the GUI
     # maybe don't read this code if you don't need to
 
-    map_datas = [('background01', '/wiki/Background01'), ('devtest', '/wiki/Devtest'), ('koth_sawmill_event', '/wiki/Soul-Mill'), ('ctf_helltrain_event', '/wiki/Helltrain'),
-                 ('plr_hacksaw_event', '/wiki/Bonesaw_(map)'), ('ctf_crasher', '/wiki/Crasher'), ('pl_sludgepit_event', '/wiki/Ghoulpit'), ('cp_spookeyridge', '/wiki/Spookeyridge')]
+    map_datas = [('background01', '/wiki/Background01'), ('devtest', '/wiki/Devtest'), ('cp_gravelpit_snowy', '/wiki/Coal_Pit'), ('pl_frostcliff', '/wiki/Frostcliff'),
+                 ('cp_frostwatch', '/wiki/Frostwatch'), ('ctf_frosty', '/wiki/Frosty'), ('pl_rumford_event', '/wiki/Rumford')]
     excluded = ('cp_granary', 'arena_nucleus', 'arena_sawmill', 'arena_badlands', 'koth_badlands', 'tr_dustbowl', 'ctf_thundermountain', 'ctf_well', 'arena_well')
     overrides = {'mvm_coaltown': '/wiki/File:Coal_Town_base.png', 'mvm_decoy': '/wiki/File:Decoy_left_lane.png', 'mvm_mannworks': '/wiki/File:Mannworks_left_lane.jpg'}
 
@@ -28,7 +29,11 @@ def main():
 
     if requests_cache:
         print("Using DL cache")
-        requests_cache.install_cache('tf2maps_dl_cache')
+
+        if os.path.isdir(r'E:\Big downloads'):
+            requests_cache.install_cache(r'E:\Big downloads\tf2maps_dl_cache')
+        else:
+            requests_cache.install_cache('tf2maps_dl_cache')
     else:
         print("Not using DL cache, install requests_cache")
 
