@@ -21,7 +21,7 @@ def main():
                      'cp_gravelpit_snowy': ('Coal Pit', 'attack-defend', 'Attack/Defend'),
                      'pl_frostcliff': ('Frostcliff', 'payload', 'Payload'),
                      'cp_frostwatch': ('Frostwatch', 'attack-defend', 'Attack/Defend'),
-                     'ctf_frosty': ('Snowfall', 'ctf', 'Capture the Flag'),
+                     'ctf_frosty': ('Frosty', 'ctf', 'Capture the Flag'),
                      'pl_rumford_event': ('Rumford', 'payload', 'Payload')}
 
     r = requests.get('https://wiki.teamfortress.com/wiki/List_of_maps')

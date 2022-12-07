@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "TF2 Rich Presence"
-#define MyAppVersion "2.1.3"
+#define MyAppVersion "2.1.4"
 #define MyAppPublisher "Kataiser"
 #define MyAppURL "https://github.com/Kataiser/tf2-rich-presence"
 #define MyAppExeName "TF2 Rich Presence.bat"
