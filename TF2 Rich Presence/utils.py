@@ -6,7 +6,6 @@
 import _thread
 import functools
 import gzip
-import json
 import os
 import threading
 from typing import Any, Callable, Dict, Optional, Union
@@ -47,7 +46,7 @@ def access_db(write: dict = None, pass_permission_error: bool = True) -> Optiona
         try:
             with open(db_path, 'r', encoding='UTF8') as db_json:
                 return ujson.load(db_json)
-        except json.JSONDecodeError:
+        except ujson.JSONDecodeError:
             access_db(write=default_db)
             return default_db
 
