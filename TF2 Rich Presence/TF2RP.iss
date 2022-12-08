@@ -67,6 +67,7 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilen
 
 [InstallDelete]
 Type: files; Name: "{app}\resources\*.pyd"
+Type: files; Name: "{app}\resources\*.py"
 Type: filesandordirs; Name: "{app}\resources\gui_images"
 Type: filesandordirs; Name: "{app}\resources\packages"
 Type: filesandordirs; Name: "{app}\resources\python-*-embed-win32"
