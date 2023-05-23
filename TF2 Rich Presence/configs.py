@@ -4,7 +4,7 @@
 
 import os
 import winreg
-from typing import Callable, List, Optional, Tuple, Union
+from typing import Callable, List, Optional, Tuple, Union, Set
 
 import vdf
 
@@ -99,7 +99,7 @@ def steam_config_file(self, exe_location: str, require_condebug: bool) -> Option
 
         self.log.debug(f"User VDF parse complete ({len(parsed['UserLocalConfigStore'])} keys)")
         parsed_lowercase: dict = lowercase_keys(parsed)
-        self.log.debug(f"Lowercase complete ({len(parsed['userlocalconfigstore'])} keys)")
+        self.log.debug(f"Lowercase complete ({len(parsed_lowercase['userlocalconfigstore'])} keys)")
 
         try:
             username: Optional[str] = parsed_lowercase['userlocalconfigstore']['friends']['personaname']
@@ -203,9 +203,8 @@ def get_steam_username() -> str:
     return username
 
 
-# adapted from https://www.popmartian.com/tipsntricks/2014/11/20/how-to-lower-case-all-dictionary-keys-in-a-complex-python-dictionary/
+# lowercases all the keys in a complex dictionary
 def lowercase_keys(mixed_case: Union[dict, list]) -> Union[dict, list]:
-    allowed_keys: Tuple[str, ...] = ('userlocalconfigstore', 'friends', 'personaname', 'userlocalconfigstore', 'software', 'valve', 'steam', 'apps', '440', 'launchoptions', 'lastplayed')
     key: str
 
     for key in list(mixed_case):
@@ -220,3 +219,6 @@ def lowercase_keys(mixed_case: Union[dict, list]) -> Union[dict, list]:
             del mixed_case[key]
 
     return mixed_case
+
+
+allowed_keys: Set[str] = {'userlocalconfigstore', 'friends', 'personaname', 'userlocalconfigstore', 'software', 'valve', 'steam', 'apps', '440', 'launchoptions', 'lastplayed'}
