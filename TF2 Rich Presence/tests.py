@@ -781,7 +781,7 @@ class TestTF2RichPresence(unittest.TestCase):
                           'state': 'El tiempo en el mapa: 0:00',
                           'timestamps': {'start': 0},
                           'assets': {'large_image': 'ctf',
-                                     'large_text': 'Capturar la Bandera - TF2 Presencia Rica {tf2rpvnum}',
+                                     'large_text': 'Capturar la Bandera - TF2 Rich Presence {tf2rpvnum}',
                                      'small_image': 'engineer',
                                      'small_text': 'Engineer'}})
         self.assertTrue(game_state_test.update_rpc)
