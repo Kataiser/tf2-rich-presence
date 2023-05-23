@@ -342,7 +342,7 @@ class GUI(tk.Frame):
             no_button.grid(row=0, column=1, padx=5, sticky=tk.W)
             button_frame.grid(row=1, column=0, pady=(0, 15))
             update_window.update()
-            pos_window_by_center(update_window, *get_window_center(self.master))
+            pos_window_by_center(update_window, *get_window_center(self.log, self.master))
             update_window.focus_force()
             update_window.grab_set()
             update_window.protocol('WM_DELETE_WINDOW', functools.partial(self.update_menu_no, update_window))  # closing the window counts as a no
@@ -470,7 +470,7 @@ class GUI(tk.Frame):
         self.log.info("GUI: Opening settings menu")
         # no need to show pause overlay
         settings_root: tk.Toplevel = tk.Toplevel()
-        settings_gui.GUI(settings_root, self.log, position=get_window_center(self.master))
+        settings_gui.GUI(settings_root, self.log, position=get_window_center(self.log, self.master))
         set_window_icon(self.log, self.master, False)
 
     def menu_restore_defaults(self, *args):
@@ -641,7 +641,7 @@ class GUI(tk.Frame):
         try:
             db: Dict[str, Union[bool, list, str]] = utils.access_db()
             # save position regardless of preserve_window_pos setting
-            save_pos = get_window_center(self.master)
+            save_pos = get_window_center(self.log, self.master)
             db['gui_position'] = list(save_pos)
             utils.access_db(db)
             self.log.info(f"Closing main window and exiting program (saving pos as {save_pos}, loop body time stats are {min(self.main_loop_body_times)} min, "
@@ -669,10 +669,17 @@ def set_window_icon(log: logger.Log, window: Union[tk.Tk, tk.Toplevel], wrench: 
 
 
 # calculate the center of a window
-def get_window_center(window: Union[tk.Tk, tk.Toplevel]) -> Tuple[int, int]:
-    x: int = round(window.winfo_rootx() + (window.winfo_width() / 2))
-    y: int = round(window.winfo_rooty() + (window.winfo_height() / 2))
-    return x, y
+def get_window_center(log: logger.Log, window: Union[tk.Tk, tk.Toplevel]) -> Tuple[int, int]:
+    root_x = window.winfo_rootx()
+    root_y = window.winfo_rooty()
+
+    if root_x == -32000 and root_y == -32000:
+        log.error("Fixed invalid window center (probably minimized)", reportable=False)
+        return 0, 0
+    else:
+        x: int = round(root_x + (window.winfo_width() / 2))
+        y: int = round(root_y + (window.winfo_height() / 2))
+        return x, y
 
 
 # position a window such that its center is x and y
@@ -682,6 +689,7 @@ def pos_window_by_center(window: Union[tk.Tk, tk.Toplevel], x: int, y: int):
     window.geometry(f'+{root_x}+{root_y}')
 
 
+# for testing only
 def main():
     main_gui = GUI(logger.Log())
     main_gui.set_console_log_button_states(True)  # cause main would normally enable it once in game
