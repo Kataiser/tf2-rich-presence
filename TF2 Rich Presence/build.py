@@ -67,7 +67,7 @@ def main(version_num='v2.1.4'):
 
             vnum_in_action = version_num in open(Path(f'{github_repo_path}/.github/workflows/Tests.CD.yml'), 'r').read()
 
-    interpreter_name = 'python-3.10.7-embed-win32'
+    interpreter_name, interpreter_prefix = ('python-3.11.3-embed-win32', 'cp311')
     build_start_time = time.perf_counter()
     print()
 
@@ -316,7 +316,7 @@ def main(version_num='v2.1.4'):
                 new_package_dir = Path(f'{new_packages_dir}/{site_package}')
                 shutil.copytree(site_package_path, new_package_dir)
                 break
-    shutil.copy(Path(f'{venv_packages_dir}/ujson.cp310-win32.pyd'), new_packages_dir)
+    shutil.copy(Path(f'{venv_packages_dir}/ujson.{interpreter_prefix}-win32.pyd'), new_packages_dir)
     print(f"Copied {len(needed_packages) + 1} packages from {venv_packages_dir} to {new_packages_dir}")
     shutil.rmtree(Path(f'{new_packages_dir}/psutil/tests'))
     print("Deleted psutil tests")
@@ -355,7 +355,7 @@ def main(version_num='v2.1.4'):
     assert os.path.isfile(Path(f'{new_build_folder_name}/resources/build_info.txt'))
     with open(Path(f'{new_build_folder_name}/resources/maps.json'), 'r') as assertjson_maps:
         assert ujson.load(assertjson_maps) != {}
-    pyd_extension = 'cp310-win_amd64.pyd' if sys.maxsize.bit_length() > 32 else 'cp310-win32.pyd'
+    pyd_extension = f'{interpreter_prefix}-win_amd64.pyd' if sys.maxsize.bit_length() > 32 else f'{interpreter_prefix}-win32.pyd'
     for file in cython_compile.targets:
         assert os.stat(f'{file}.py').st_mtime < os.stat(Path(f'cython_build/{file}.{pyd_extension}')).st_mtime or nocython
     try:
