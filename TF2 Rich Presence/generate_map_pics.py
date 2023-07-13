@@ -21,6 +21,15 @@ def main():
     map_datas = [('background01', '/wiki/Background01'), ('devtest', '/wiki/Devtest')]
     excluded = ('cp_granary', 'arena_nucleus', 'arena_sawmill', 'arena_badlands', 'koth_badlands', 'tr_dustbowl', 'ctf_thundermountain', 'ctf_well', 'arena_well')
     overrides = {'mvm_coaltown': '/wiki/File:Coal_Town_base.png', 'mvm_decoy': '/wiki/File:Decoy_left_lane.png', 'mvm_mannworks': '/wiki/File:Mannworks_left_lane.jpg'}
+    local_images = ('koth_sharkbay', 'koth_rotunda', 'pl_phoenix', 'pl_cashworks', 'pl_venice', 'cp_reckoner', 'cp_sulfur', 'cp_hardwood_final', 'ctf_pelican_peak', 'pd_selbyen',
+                    'vsh_tinyrock', 'vsh_distillery', 'vsh_skirmish', 'vsh_nucleus')
+
+    for local_image in local_images:
+        print(local_image, end='')
+
+        with open(f'local_map_pics\\{local_image}.png', 'rb') as local_image_file:
+            process_and_save_image(local_image_file.read(), local_image)
+            print()
 
     list_page_r = requests.get('https://wiki.teamfortress.com/wiki/List_of_maps')
     list_page = BeautifulSoup(list_page_r.text, 'lxml')
@@ -67,30 +76,33 @@ def main():
                         image_url = f"https://wiki.teamfortress.com{a2.get('href')}"
                         print(image_url, end='')
                         image_dl = requests.get(image_url).content
-                        image_loaded = Image.open(io.BytesIO(image_dl)).convert('RGB')
-                        print(f" {len(image_dl)} b {image_loaded.size}", end='')
-                        crop_left = (image_loaded.size[0] / 2) - (image_loaded.size[1] / 2)
-                        crop_right = (image_loaded.size[0] / 2) + (image_loaded.size[1] / 2)
-                        image_cropped = image_loaded.crop((crop_left, 0, crop_right, (image_loaded.size[1])))
-                        color_mean = sum(ImageStat.Stat(image_cropped).mean)
-
-                        if color_mean < 300:
-                            brighten = 1 + ((300 - color_mean) / 300)
-                            brightener = ImageEnhance.Brightness(image_cropped)
-                            image_cropped = brightener.enhance(brighten)
-                            print(f" {int(color_mean)}", end='')
-
-                        image_scaled_gui = image_cropped.resize((240, 240), resample=Image.LANCZOS)
-                        image_scaled_discord = image_cropped.resize((512, 512), resample=Image.LANCZOS)
-                        image_scaled_gui.save(f'gui_images\\fg_maps\\{map_file}.webp', lossless=False, quality=85, method=6)
-                        image_scaled_discord.save(f'map_pics_discord\\z_{map_file}.jpg', quality=95, optimize=True, progressive=True, subsampling=0)
-
+                        process_and_save_image(image_dl, map_file)
                         break
 
                 break
 
         if not found_image:
             raise SystemError
+
+
+def process_and_save_image(image_data: bytes, map_file: str):
+    image_loaded = Image.open(io.BytesIO(image_data)).convert('RGB')
+    print(f" {len(image_data)} b {image_loaded.size}", end='')
+    crop_left = (image_loaded.size[0] / 2) - (image_loaded.size[1] / 2)
+    crop_right = (image_loaded.size[0] / 2) + (image_loaded.size[1] / 2)
+    image_cropped = image_loaded.crop((crop_left, 0, crop_right, (image_loaded.size[1])))
+    color_mean = sum(ImageStat.Stat(image_cropped).mean)
+
+    if color_mean < 300:
+        brighten = 1 + ((300 - color_mean) / 300)
+        brightener = ImageEnhance.Brightness(image_cropped)
+        image_cropped = brightener.enhance(brighten)
+        print(f" {int(color_mean)}", end='')
+
+    image_scaled_gui = image_cropped.resize((240, 240), resample=Image.LANCZOS)
+    image_scaled_discord = image_cropped.resize((512, 512), resample=Image.LANCZOS)
+    image_scaled_gui.save(f'gui_images\\fg_maps\\{map_file}.webp', lossless=False, quality=85, method=6)
+    image_scaled_discord.save(f'map_pics_discord\\z_{map_file}.jpg', quality=95, optimize=True, progressive=True, subsampling=0)
 
 
 if __name__ == '__main__':
