@@ -1,4 +1,4 @@
-Cython==3.0.0rc1
+Cython==3.0.0
 Pillow==9.5.0
 beautifulsoup4==4.12.2
 certifi==2023.5.7
