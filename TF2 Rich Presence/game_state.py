@@ -304,4 +304,4 @@ class GameState:
 map_fallbacks: Dict[str, str] = {'cp_granary': 'arena_granary', 'arena_nucleus': 'koth_nucleus', 'arena_sawmill': 'koth_sawmill', 'arena_badlands': 'cp_badlands',
                                  'koth_badlands': 'cp_badlands', 'tr_dustbowl': 'cp_dustbowl', 'ctf_thundermountain': 'pl_thundermountain', 'ctf_well': 'cp_well', 'arena_well': 'cp_well'}
 ambiguous_maps: Tuple[str, ...] = ('cp_5gorge', 'cp_gorge', 'arena_granary', 'arena_nucleus', 'ctf_foundry', 'arena_sawmill', 'koth_sawmill', 'ctf_sawmill',  'arena_badlands', 'cp_badlands',
-                                   'koth_badlands',  'tr_dustbowl', 'ctf_thundermountain', 'ctf_well', 'cp_well', 'arena_well')
+                                   'koth_badlands',  'tr_dustbowl', 'ctf_thundermountain', 'ctf_well', 'cp_well', 'arena_well', 'vsh_nucleus')
