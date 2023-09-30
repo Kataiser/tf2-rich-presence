@@ -2,7 +2,7 @@ Cython==3.0.0rc1
 Pillow==9.5.0
 beautifulsoup4==4.12.2
 certifi==2023.5.7
-charset-normalizer==3.2.0
+charset-normalizer==3.3.0
 discoIPC==1.0.0
 idna==3.4
 lxml==4.9.3
