@@ -12,5 +12,5 @@ requests-futures==1.0.1
 requests==2.31.0
 sentry_sdk==1.28.0
 ujson==5.8.0
-urllib3==1.26.16
+urllib3==2.0.6
 vdf==3.4
