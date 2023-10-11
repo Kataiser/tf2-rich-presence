@@ -14,24 +14,10 @@ def main():
     gamemodes_reversed['Attack/Defend (Medieval)'] = 'attack-defend'
     gamemodes_reversed['Control Point (Domination)'] = 'control-point'
     gamemodes_reversed['No gamemode'] = 'beta-map'
-    gamemode_replacements = [('d(M', 'd (M'), ('t(D', 't (D'), (' Mode', ''), ('Developer aidTest', 'No gamemode'), ('Developer aidControl Point', 'Control Point')]
+    gamemode_replacements = [('d(M', 'd (M'), ('t(D', 't (D'), (' Mode', ''), ('Developer aidTest', 'No gamemode'), ('Developer aidControl Point', 'Control Point'), ('Capture point', 'Control Point')]
     map_gamemodes = {'itemtest': ('itemtest', 'unknown', 'Unknown gamemode'),
                      'devtest': ('devtest', 'unknown', 'Unknown gamemode'),
-                     'background01': ('background01', 'unknown', 'Unknown gamemode'),
-                     'koth_sharkbay': ('Sharkbay', 'koth', 'King of the Hill'),
-                     'koth_rotunda': ('Rotunda', 'koth', 'King of the Hill'),
-                     'pl_phoenix': ('Phoenix', 'payload', 'Payload'),
-                     'pl_cashworks': ('Cashworks', 'payload', 'Payload'),
-                     'pl_venice': ('Venice', 'payload', 'Payload'),
-                     'cp_reckoner': ('Reckoner', 'control-point', 'Control Point'),
-                     'cp_sulfur': ('Sulfur', 'attack-defend', 'Attack/Defend'),
-                     'cp_hardwood_final': ('Hardwood', 'attack-defend', 'Attack/Defend'),
-                     'ctf_pelican_peak': ('Pelican Peak', 'ctf', 'Capture the Flag'),
-                     'pd_selbyen': ('Selbyen', "player-destruction", "Player Destruction"),
-                     'vsh_tinyrock': ('Tiny Rock', 'versus-saxton-hale', 'Versus Saxton Hale'),
-                     'vsh_distillery': ('Distillery', 'versus-saxton-hale', 'Versus Saxton Hale'),
-                     'vsh_skirmish': ('Skirmish', 'versus-saxton-hale', 'Versus Saxton Hale'),
-                     'vsh_nucleus': ('Nucleus', 'versus-saxton-hale', 'Versus Saxton Hale')}
+                     'background01': ('background01', 'unknown', 'Unknown gamemode')}
 
     r = requests.get('https://wiki.teamfortress.com/wiki/List_of_maps')
     soup = BeautifulSoup(r.text, 'lxml')

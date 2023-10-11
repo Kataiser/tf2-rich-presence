@@ -23,8 +23,14 @@ def main():
     overrides = {'mvm_coaltown': '/wiki/File:Coal_Town_base.png', 'mvm_decoy': '/wiki/File:Decoy_left_lane.png', 'mvm_mannworks': '/wiki/File:Mannworks_left_lane.jpg'}
     local_images = ('koth_sharkbay', 'koth_rotunda', 'pl_phoenix', 'pl_cashworks', 'pl_venice', 'cp_reckoner', 'cp_sulfur', 'cp_hardwood_final', 'ctf_pelican_peak', 'pd_selbyen',
                     'vsh_tinyrock', 'vsh_distillery', 'vsh_skirmish', 'vsh_nucleus')
+    whitelist = ('arena_perks', 'cp_lavapit_final', 'cp_degrootkeep_rats', 'pl_corruption', 'pl_spineyard', 'koth_slime', 'pd_mannsylvania', 'zi_atoll', 'zi_devastation_final1',
+                 'zi_murky', 'zi_sanitarium', 'zi_woods')  # make empty to disable
 
     for local_image in local_images:
+        if whitelist and local_image not in whitelist:
+            print(f"{local_image} (skipped)")
+            continue
+
         print(local_image, end='')
 
         with open(f'local_map_pics\\{local_image}.png', 'rb') as local_image_file:
@@ -52,7 +58,7 @@ def main():
         map_file = map_data[1][0].strip()
         print(f"\n({map_data[0] + 1}/{len(map_datas)}) {map_file}", end=' ')
 
-        if map_file in excluded:
+        if map_file in excluded or (whitelist and map_file not in whitelist):
             print("(skipped)", end='')
             continue
 
