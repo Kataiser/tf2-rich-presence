@@ -1,8 +1,8 @@
-Cython==3.0.0rc1
+Cython==3.0.3
 Pillow==9.5.0
 beautifulsoup4==4.12.2
-certifi==2023.5.7
-charset-normalizer==3.2.0
+certifi==2023.7.22
+charset-normalizer==3.3.0
 discoIPC==1.0.0
 idna==3.4
 lxml==4.9.3
@@ -10,7 +10,7 @@ psutil==5.9.5
 python-a2s==1.3.0
 requests-futures==1.0.1
 requests==2.31.0
-sentry_sdk==1.28.0
+sentry-sdk==1.32.0
 ujson==5.8.0
-urllib3==1.26.16
+urllib3==2.0.6
 vdf==3.4

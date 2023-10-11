@@ -28,7 +28,7 @@ OutputBaseFilename=TF2RichPresence_v{#MyAppVersion}_setup
 SetupIconFile=tf2_logo_blurple.ico
 Compression=lzma
 SolidCompression=yes
-WizardStyle=modern             
+WizardStyle=modern
 WizardImageFile=tf2_logo_blurple_installer.bmp
 RestartApplications=no
 ExtraDiskSpaceRequired=250
@@ -74,4 +74,3 @@ Type: filesandordirs; Name: "{app}\resources\python-*-embed-win32"
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
-
