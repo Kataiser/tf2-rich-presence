@@ -146,8 +146,8 @@ class TF2RichPresense:
         self.import_custom()
 
         parser = argparse.ArgumentParser()
-        parser.add_argument('--launch', action='store_true', help="Automatically launch the game on opening the program", default=False)
-        self.auto_launch = parser.parse_args().launch
+        parser.add_argument('--launch', action='store_true', help="Automatically launch TF2 when opening the program", default=False)
+        self.auto_launch_tf2 = parser.parse_args().launch
 
     def __repr__(self) -> str:
         return f"main.TF2RichPresense (state={self.test_state})"
@@ -311,9 +311,8 @@ class TF2RichPresense:
             if self.gui.launched_tf2_with_button:
                 self.log.debug("Skipping possibly resetting launch button due to game hopefully launching")
             else:
-                if self.auto_launch:
+                if self.auto_launch_tf2:
                     self.log.debug("Auto launching TF2")
-                    self.auto_launch = False
                     self.gui.set_launch_tf2_button_state(True)
                     self.gui.launch_tf2()
                 else:
@@ -334,6 +333,7 @@ class TF2RichPresense:
             self.gui.set_launch_tf2_button_state(p_data['Steam']['running'])
             self.gui.launch_tf2_button['state'] = 'disabled'
 
+        self.auto_launch_tf2 = False
         self.gui.safe_update()
         self.init_operations()
 
