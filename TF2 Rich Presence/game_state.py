@@ -290,9 +290,14 @@ class GameState:
         elif line_setting == 'Time on map':
             if rpc:
                 self.update_rpc = True  # because new time on map guarantees changed RPC
+
             return self.time_on_map()
         elif line_setting == 'Class':
             return self.loc.text("Class: {0}").format(self.loc.text(self.tf2_class))
+        elif line_setting == 'Map':
+            return self.map_fancy
+        else:
+            self.log.error(f"Couldn't get {line} line for activity ({line_setting=})")
 
     # get server name, player count, and/or user score (kills) from the game server (not actually a getter method)
     def get_match_data(self, *args, **kwargs):
