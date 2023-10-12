@@ -37,8 +37,8 @@ jobs:
     - name: Upload installer artifact
       uses: actions/upload-artifact@v2
       with:
-        name: TF2RichPresence_v2.1.5_setup.exe
-        path: TF2 Rich Presence/TF2RichPresence_v2.1.5_setup.exe
+        name: TF2RichPresence_v2.1.6_setup.exe
+        path: TF2 Rich Presence/TF2RichPresence_v2.1.6_setup.exe
     - name: Run tests
       run: |
         cd "TF2 Rich Presence"
