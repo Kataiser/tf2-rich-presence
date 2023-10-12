@@ -21,6 +21,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import argparse
 import datetime
 import gc
 import os
@@ -143,6 +144,10 @@ class TF2RichPresense:
             self.log.error("Looks like the OS doesn't support unicode filenames. This might cause problems")
 
         self.import_custom()
+
+        parser = argparse.ArgumentParser()
+        parser.add_argument('--launch', action='store_true', help="Automatically launch the game on opening the program", default=False)
+        self.auto_launch = parser.parse_args().launch
 
     def __repr__(self) -> str:
         return f"main.TF2RichPresense (state={self.test_state})"
@@ -306,7 +311,13 @@ class TF2RichPresense:
             if self.gui.launched_tf2_with_button:
                 self.log.debug("Skipping possibly resetting launch button due to game hopefully launching")
             else:
-                self.gui.set_launch_tf2_button_state(p_data['Steam']['running'])
+                if self.auto_launch:
+                    self.log.debug("Auto launching TF2")
+                    self.auto_launch = False
+                    self.gui.set_launch_tf2_button_state(True)
+                    self.gui.launch_tf2()
+                else:
+                    self.gui.set_launch_tf2_button_state(p_data['Steam']['running'])
 
             self.last_console_log_size = None
             self.necessary_program_not_running('Team Fortress 2', 'TF2')
