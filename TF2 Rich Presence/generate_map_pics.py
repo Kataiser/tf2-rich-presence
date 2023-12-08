@@ -21,12 +21,11 @@ def main():
     map_datas = [('background01', '/wiki/Background01'), ('devtest', '/wiki/Devtest')]
     excluded = ('cp_granary', 'arena_nucleus', 'arena_sawmill', 'arena_badlands', 'koth_badlands', 'tr_dustbowl', 'ctf_thundermountain', 'ctf_well', 'arena_well')
     overrides = {'mvm_coaltown': '/wiki/File:Coal_Town_base.png', 'mvm_decoy': '/wiki/File:Decoy_left_lane.png', 'mvm_mannworks': '/wiki/File:Mannworks_left_lane.jpg'}
-    local_images = ('koth_sharkbay', 'koth_rotunda', 'pl_phoenix', 'pl_cashworks', 'pl_venice', 'cp_reckoner', 'cp_sulfur', 'cp_hardwood_final', 'ctf_pelican_peak', 'pd_selbyen',
-                    'vsh_tinyrock', 'vsh_distillery', 'vsh_skirmish', 'vsh_nucleus')
-    whitelist = ('arena_perks', 'cp_lavapit_final', 'cp_degrootkeep_rats', 'pl_corruption', 'pl_spineyard', 'koth_slime', 'pd_mannsylvania', 'zi_atoll', 'zi_devastation_final1',
-                 'zi_murky', 'zi_sanitarium', 'zi_woods')  # make empty to disable
+    whitelist = ()  # make empty to disable
 
-    for local_image in local_images:
+    for local_image in os.listdir('local_map_pics'):
+        local_image = local_image.removesuffix('.png')
+
         if whitelist and local_image not in whitelist:
             print(f"{local_image} (skipped)")
             continue

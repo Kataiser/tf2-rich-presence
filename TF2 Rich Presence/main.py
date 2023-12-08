@@ -361,7 +361,7 @@ class TF2RichPresense:
             gc.collect()
             self.log.debug("Enabled GC and collected")
 
-        self.gui.main_loop_body_times.append(round(time.perf_counter() - loop_start_time, 2))
+        self.gui.main_loop_body_times.append(round(time.perf_counter() - loop_start_time, 3))
         return self.client_connected, self.rpc_client
 
     # tell the GUI what it needs to look like, based on self.game_state
