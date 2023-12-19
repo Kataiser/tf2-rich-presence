@@ -72,7 +72,7 @@
     "ctf_sawmill": ["Sawmill", "ctf", "Capture the Flag"],
     "ctf_snowfall_final": ["Snowfall", "ctf", "Capture the Flag"],
     "ctf_thundermountain": ["Thunder Mountain", "mannpower", "Mannpower"],
-    "ctf_turbine": ["Turbine", "prophunt", "Prop Hunt"],
+    "ctf_turbine": ["Turbine", "ctf", "Capture the Flag"],
     "ctf_turbine_winter": ["Turbine Center", "ctf", "Capture the Flag"],
     "ctf_well": ["Well", "ctf", "Capture the Flag"],
     "devtest": ["devtest", "unknown", "Unknown gamemode"],
