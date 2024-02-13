@@ -67,7 +67,7 @@ def main(version_num='v2.1.7'):
 
             vnum_in_action = version_num in open(Path(f'{github_repo_path}/.github/workflows/Tests.CD.yml'), 'r').read()
 
-    interpreter_name, interpreter_prefix = ('python-3.11.3-embed-win32', 'cp311')
+    interpreter_name, interpreter_prefix = ('python-3.12.2-embed-amd64', 'cp312')
     build_start_time = time.perf_counter()
     print()
 
@@ -308,7 +308,7 @@ def main(version_num='v2.1.7'):
     os.mkdir(new_packages_dir)
     venv_packages_dir = site.getsitepackages()[1]
     assert 'site-packages' in venv_packages_dir.lower()
-    needed_packages = ('PIL', 'Pillow', 'a2s', 'certifi', 'charset_normalizer', 'idna', 'psutil', 'python-a2s', 'requests', 'requests_futures', 'sentry_sdk', 'urllib3', 'vdf', 'discoIPC')
+    needed_packages = ('PIL', 'pillow', 'a2s', 'certifi', 'charset_normalizer', 'idna', 'psutil', 'python-a2s', 'requests', 'requests_futures', 'sentry_sdk', 'urllib3', 'vdf', 'discoIPC')
     for site_package in os.listdir(venv_packages_dir):
         for needed_package in needed_packages:
             if needed_package in site_package and 'requests_cache' not in site_package:
@@ -316,7 +316,7 @@ def main(version_num='v2.1.7'):
                 new_package_dir = Path(f'{new_packages_dir}/{site_package}')
                 shutil.copytree(site_package_path, new_package_dir)
                 break
-    shutil.copy(Path(f'{venv_packages_dir}/ujson.{interpreter_prefix}-win32.pyd'), new_packages_dir)
+    shutil.copy(Path(f'{venv_packages_dir}/ujson.{interpreter_prefix}-win_amd64.pyd'), new_packages_dir)
     print(f"Copied {len(needed_packages) + 1} packages from {venv_packages_dir} to {new_packages_dir}")
     shutil.rmtree(Path(f'{new_packages_dir}/psutil/tests'))
     print("Deleted psutil tests")

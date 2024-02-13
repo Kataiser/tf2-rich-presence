@@ -70,7 +70,7 @@ Type: files; Name: "{app}\resources\*.pyd"
 Type: files; Name: "{app}\resources\*.py"
 Type: filesandordirs; Name: "{app}\resources\gui_images"
 Type: filesandordirs; Name: "{app}\resources\packages"
-Type: filesandordirs; Name: "{app}\resources\python-*-embed-win32"
+Type: filesandordirs; Name: "{app}\resources\python-*-embed-amd64"
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent

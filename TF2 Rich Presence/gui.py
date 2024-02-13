@@ -592,7 +592,7 @@ class GUI(tk.Frame):
         # yeah not gonna localize this
         about: str = f"TF2 Rich Presence {launcher.VERSION}" \
                      f"\nBuilt: {build_time}" \
-                     f"\nPython: {platform.python_version()} {platform.architecture()[0]} {'' if using_cython else '(nocython)'}" \
+                     f"\nPython: {platform.python_version()} {platform.architecture()[0]} {'' if using_cython else '(no cython)'}" \
                      f"\nLicensed under GNU GPLv3, see License.txt" \
                      f"\n\nCredits:" \
                      f"\nKataiser - Lead developer" \
