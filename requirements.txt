@@ -1,4 +1,4 @@
-Cython==3.0.8
+Cython==3.0.9
 beautifulsoup4==4.12.3
 certifi==2024.2.2
 charset-normalizer==3.3.2
