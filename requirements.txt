@@ -4,7 +4,7 @@ certifi==2024.2.2
 charset-normalizer==3.3.2
 discoIPC==1.0.0
 idna==3.6
-lxml==5.1.0
+lxml==5.1.1
 pillow==10.2.0
 psutil==5.9.8
 python-a2s==1.3.0
