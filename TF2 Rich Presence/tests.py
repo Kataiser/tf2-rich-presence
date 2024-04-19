@@ -13,8 +13,8 @@ import unittest
 
 import psutil
 import requests
-from discoIPC import ipc
 from PIL import Image
+from discoIPC import ipc
 
 import configs
 import console_log
@@ -125,7 +125,7 @@ class TestTF2RichPresence(unittest.TestCase):
 
     def test_find_tf2_exe(self):
         app = main.TF2RichPresense(self.log, set_process_priority=False)
-        self.assertEqual(app.find_tf2_exe('test_resources\\very real steam'), r'test_resources\very real steam 2\steamapps\common\Team Fortress 2\tf.exe')
+        self.assertEqual(app.find_tf2_exe('test_resources\\very real steam'), r'test_resources\very real steam 2\steamapps\common\Team Fortress 2\tf_win64.exe')
         app.gui.master.destroy()
 
     def test_class_config_files(self):

@@ -24,7 +24,7 @@ class ProcessScanner:
         self.tf2_without_condebug: bool = False
         self.parsed_tasklist: Dict[str, int] = {}
         self.executables: Dict[str, list] = {'posix': ['hl2_linux', 'steam', 'Discord'],
-                                             'nt': ['tf.exe', 'steam.exe', 'discord'],
+                                             'nt': ['tf_win64.exe', 'steam.exe', 'discord'],
                                              'order': ['TF2', 'Steam', 'Discord']}
         self.process_data: Dict[str, dict] = {'TF2': {'running': False, 'pid': None, 'path': None, 'time': None},
                                               'Steam': {'running': False, 'pid': None, 'path': None},
@@ -65,7 +65,7 @@ class ProcessScanner:
             if len(self.parsed_tasklist) == 3:
                 self.all_pids_cached = True
 
-            self.process_data['TF2']['pid'] = self.parsed_tasklist['tf.exe'] if 'tf.exe' in self.parsed_tasklist else None
+            self.process_data['TF2']['pid'] = self.parsed_tasklist['tf_win64.exe'] if 'tf_win64.exe' in self.parsed_tasklist else None
             self.process_data['Steam']['pid'] = self.parsed_tasklist['steam.exe'] if 'steam.exe' in self.parsed_tasklist else None
             self.process_data['Discord']['pid'] = self.parsed_tasklist['discord'] if 'discord' in self.parsed_tasklist else None
 
@@ -195,21 +195,21 @@ class ProcessScanner:
         for process_line in processes:
             process: list = process_line.split()
 
-            for ref_name in ('tf.exe', 'Steam.exe', 'steam.exe', 'Discord'):
+            for ref_name in ('tf_win64.exe', 'Steam.exe', 'steam.exe', 'Discord'):
                 if ref_name in process[0]:
                     try:
                         self.parsed_tasklist[ref_name.lower()] = int(process[1])
                     except ValueError:
                         self.log.error(f"Couldn't parse PID from process {process}")
 
-        self.process_data['TF2']['running'] = 'tf.exe' in self.parsed_tasklist
+        self.process_data['TF2']['running'] = 'tf_win64.exe' in self.parsed_tasklist
         self.process_data['Steam']['running'] = 'steam.exe' in self.parsed_tasklist
         self.process_data['Discord']['running'] = 'discord' in self.parsed_tasklist
 
-        # don't detect gmod (or any other program named tf.exe)
+        # don't detect gmod (or any other program named tf_win64.exe)
         if self.process_data['TF2']['running']:
-            if not self.hl2_exe_is_tf2(self.parsed_tasklist['tf.exe']):
-                self.log.debug(f"Found running non-TF2 tf.exe with PID {self.parsed_tasklist['tf.exe']}")
+            if not self.hl2_exe_is_tf2(self.parsed_tasklist['tf_win64.exe']):
+                self.log.debug(f"Found running non-TF2 tf_win64.exe with PID {self.parsed_tasklist['tf.exe']}")
                 self.process_data['TF2'] = copy.deepcopy(self.p_data_default['TF2'])
                 del self.parsed_tasklist['tf.exe']
 
@@ -217,7 +217,7 @@ class ProcessScanner:
     @functools.cache
     def hl2_exe_is_tf2(self, hl2_exe_pid: int) -> bool:
         hl2_exe_dir: str = self.get_process_info(hl2_exe_pid, ('path',))['path']
-        return configs.is_tf2_install(self.log, os.path.join(hl2_exe_dir, 'tf.exe'))
+        return configs.is_tf2_install(self.log, os.path.join(hl2_exe_dir, 'tf_win64.exe'))
 
 
 if __name__ == '__main__':

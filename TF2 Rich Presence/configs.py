@@ -136,7 +136,7 @@ def steam_config_file(self, exe_location: str, require_condebug: bool) -> Option
 
 # given Steam's install, find a TF2 install
 def find_tf2_exe(self, steam_location: str) -> Optional[str]:
-    extend_path: Callable[[str], str] = lambda path: os.path.join(path, 'steamapps', 'common', 'Team Fortress 2', 'tf.exe')
+    extend_path: Callable[[str], str] = lambda path: os.path.join(path, 'steamapps', 'common', 'Team Fortress 2', 'tf_win64.exe')
     default_path: str = extend_path(steam_location)
 
     if is_tf2_install(self.log, default_path):
@@ -167,7 +167,7 @@ def find_tf2_exe(self, steam_location: str) -> Optional[str]:
     self.log.error(f"Couldn't find a TF2 installation in any Steam library folders, will continually scan for it (libraryfolders.vdf: {libraryfolders_vdf_read})")
 
 
-# makes sure a path to tf.exe exists and is TF2 and not some other game or process
+# makes sure a path to tf_win64.exe exists and is TF2 and not some other game or process
 def is_tf2_install(log: logger.Log, exe_location: str) -> bool:
     if not os.path.isfile(exe_location):
         log.debug(f"No TF2 installation found at {exe_location}")
@@ -188,10 +188,10 @@ def is_tf2_install(log: logger.Log, exe_location: str) -> bool:
         log.debug(f"steam_appid.txt doesn't exist (install folder: {os.listdir(os.path.dirname(exe_location))})")
 
     if is_tf2:
-        log.debug(f"Found TF2 tf.exe at {exe_location}")
+        log.debug(f"Found TF2 tf_win64.exe at {exe_location}")
         return True
     else:
-        log.error(f"Found non-TF2 tf.exe at {exe_location}")
+        log.error(f"Found non-TF2 tf_win64.exe at {exe_location}")
         return False
 
 
