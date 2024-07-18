@@ -22,9 +22,10 @@ def main():
     excluded = ('cp_granary', 'arena_nucleus', 'arena_sawmill', 'arena_badlands', 'koth_badlands', 'tr_dustbowl', 'ctf_thundermountain', 'ctf_well', 'arena_well')
     overrides = {'mvm_coaltown': '/wiki/File:Coal_Town_base.png', 'mvm_decoy': '/wiki/File:Decoy_left_lane.png', 'mvm_mannworks': '/wiki/File:Mannworks_left_lane.jpg'}
     whitelist = ()  # make empty to disable
+    local_images = [f.removesuffix('.png') for f in os.listdir('local_map_pics')]
 
-    for local_image in os.listdir('local_map_pics'):
-        local_image = local_image.removesuffix('.png')
+    for local_image in local_images:
+        local_image = local_image
 
         if whitelist and local_image not in whitelist:
             print(f"{local_image} (skipped)")
@@ -42,13 +43,9 @@ def main():
 
     if requests_cache:
         print("Using DL cache")
-
-        if os.path.isdir(r'E:\Big downloads'):
-            requests_cache.install_cache(r'E:\Big downloads\tf2maps_dl_cache')
-        else:
-            requests_cache.install_cache('tf2maps_dl_cache')
+        requests_cache.install_cache('tf2maps_dl_cache')
     else:
-        print("Not using DL cache, install requests_cache")
+        print("Not using DL cache, install requests-cache")
 
     for map_entry in map_entries:
         map_datas.append((map_entry.find('code').text, map_entry.find_all('a')[1].get('href')))
@@ -57,7 +54,7 @@ def main():
         map_file = map_data[1][0].strip()
         print(f"\n({map_data[0] + 1}/{len(map_datas)}) {map_file}", end=' ')
 
-        if map_file in excluded or (whitelist and map_file not in whitelist):
+        if map_file in excluded or map_file in local_images or (whitelist and map_file not in whitelist):
             print("(skipped)", end='')
             continue
 
