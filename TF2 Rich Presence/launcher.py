@@ -54,8 +54,7 @@ def main(launch: bool = True):
                             attach_stacktrace=True,
                             max_breadcrumbs=50,
                             debug=DEBUG,
-                            environment="Debug build" if DEBUG else "Release",
-                            request_bodies='small')
+                            environment="Debug build" if DEBUG else "Release")
 
             with sentry_sdk.configure_scope() as scope:
                 user_pc_name: str = socket.gethostname()
