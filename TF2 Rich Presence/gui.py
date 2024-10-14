@@ -596,7 +596,7 @@ class GUI(tk.Frame):
                      f"\nLicensed under GNU GPLv3, see License.txt" \
                      f"\n\nCredits:" \
                      f"\nKataiser - Lead developer" \
-                     f"\nNyanZak and Tobiased - Gamemode SFMs" \
+                     f"\nNyanZak, Tobiased, darty - Gamemode SFMs" \
                      f"\nforusu (Mia) and Blueberryy - Russian localization improvements" \
                      f"\nhinata_aki - Japanese localization improvements" \
                      f"\nKotoki1337 - Chinese localization improvements" \

@@ -20,7 +20,7 @@ def main():
 
     map_datas = [('background01', '/wiki/Background01'), ('devtest', '/wiki/Devtest')]
     excluded = ('cp_granary', 'arena_nucleus', 'arena_sawmill', 'arena_badlands', 'koth_badlands', 'tr_dustbowl', 'ctf_thundermountain', 'ctf_well', 'arena_well')
-    overrides = {'mvm_coaltown': '/wiki/File:Coal_Town_base.png', 'mvm_decoy': '/wiki/File:Decoy_left_lane.png', 'mvm_mannworks': '/wiki/File:Mannworks_left_lane.jpg'}
+    overrides = {'mvm_coaltown': '/wiki/File:Coal_Town_base.png', 'mvm_decoy': '/wiki/File:Decoy_left_lane.png', 'mvm_mannworks': '/wiki/File:Mannworks_left_lane.png'}
     whitelist = ()  # make empty to disable
     local_images = [f.removesuffix('.png') for f in os.listdir('local_map_pics')]
 

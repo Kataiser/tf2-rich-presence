@@ -11,8 +11,9 @@ import gamemodes
 
 def main():
     gamemodes_reversed = {gamemodes.modes[key]: key for key in gamemodes.modes}
-    gamemodes_reversed['Attack/Defend (Medieval)'] = 'attack-defend'
-    gamemodes_reversed['Control Point (Domination)'] = 'control-point'
+    gamemodes_reversed['Attack/Defend (Medieval)'] = 'medieval-mode'
+    gamemodes_reversed['Medieval'] = 'medieval-mode'
+    gamemodes_reversed['Domination'] = 'control-point'
     gamemodes_reversed['N/A'] = 'control-point'
     gamemode_replacements = [('d(M', 'd (M'), ('t(D', 't (D'), (' Mode', ''), ('Developer aidTest', 'No gamemode'), ('Developer aidControl Point', 'Control Point'), ('Capture point', 'Control Point')]
     gamemode_overrides = {'tc_hydro': ('territorial-control', 'Territorial Control'),
@@ -22,17 +23,7 @@ def main():
                           'cp_cloak': ('control-point', 'Control Point')}
     map_gamemodes = {'itemtest': ('itemtest', 'unknown', 'Unknown gamemode'),
                      'devtest': ('devtest', 'unknown', 'Unknown gamemode'),
-                     'background01': ('background01', 'unknown', 'Unknown gamemode'),
-                     'pl_embargo': ('Embargo', 'payload', 'Payload'),
-                     'pl_odyssey': ('Odyssey', 'payload', 'Payload'),
-                     'koth_megaton': ('Megaton', 'koth', 'King of the Hill'),
-                     'koth_cachoeira': ('Cachoeira', 'koth', 'King of the Hill'),
-                     'cp_overgrown': ('Overgrown', 'attack-defend', 'Attack/Defend'),
-                     'cp_hadal': ('Hadal', 'attack-defend', 'Attack/Defend'),
-                     'ctf_applejack': ('Applejack', 'ctf', 'Capture the Flag'),
-                     'pd_atom_smash': ('Atom Smash', 'player-destruction', 'Player Destruction'),
-                     'cp_canaveral_5cp': ('Canaveral', 'control-point', 'Control Point'),
-                     'cp_burghausen': ('Burghausen', 'attack-defend', 'Attack/Defend (Medieval)')}
+                     'background01': ('background01', 'unknown', 'Unknown gamemode')}
 
     r = requests.get('https://wiki.teamfortress.com/wiki/List_of_maps')
     soup = BeautifulSoup(r.text, 'lxml')
