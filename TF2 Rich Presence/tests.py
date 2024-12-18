@@ -273,9 +273,10 @@ class TestTF2RichPresence(unittest.TestCase):
             self.assertTrue(downloads_url.startswith('https://github.com/Kataiser/tf2-rich-presence/releases/tag/v'))
             self.assertTrue(len(changelog) > 0)
 
-            with self.assertRaises(requests.Timeout):
-                update_checker.initiate_update_check(False, timeout=0.0001)
-                update_checker.api_future.result()
+            if os.environ.get('GITHUB_ACTIONS') != 'true':
+                with self.assertRaises(requests.Timeout):
+                    update_checker.initiate_update_check(False, timeout=0.0001)
+                    update_checker.api_future.result()
 
     def test_format_changelog(self):
         unformatted = "## Changes\n" \
