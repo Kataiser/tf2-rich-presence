@@ -5,7 +5,7 @@ charset-normalizer==3.4.0
 discoIPC==1.0.0
 idna==3.10
 lxml==5.3.0
-pillow==11.0.0
+pillow==11.3.0
 psutil==6.1.0
 python-a2s==1.4.1
 requests-futures==1.0.2
