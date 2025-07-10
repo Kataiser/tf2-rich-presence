@@ -1,6 +1,6 @@
 Cython==3.0.11
 beautifulsoup4==4.12.3
-certifi==2024.12.14
+certifi==2025.7.9
 charset-normalizer==3.4.0
 discoIPC==1.0.0
 idna==3.10
