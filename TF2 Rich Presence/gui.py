@@ -601,7 +601,7 @@ class GUI(tk.Frame):
                      f"\nhinata_aki - Japanese localization improvements" \
                      f"\nKotoki1337 - Chinese localization improvements" \
                      f"\nDznDani - Spanish localization improvements" \
-                     f"\nDarkyyu - French localization improvements"
+                     f"\nDarkyyu - French localization improvements" \
                      f"\nJan200101 - Some cross-platform compatibility" \
                      f"\nYahBoiOven - Testing and feedback" \
                      f"\nThe TF2 Wiki and teamwork.tf - General resources" \
