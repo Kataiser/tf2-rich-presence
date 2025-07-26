@@ -49,10 +49,10 @@ def get_match_data(self, address: str, modes: List[str], usernames: Optional[Set
 
         try:
             if need_server_info:
-                server_info = a2s.info((ip, int(ip_socket)), timeout=settings.get('request_timeout'))
+                server_info = a2s.info((ip, int(ip_socket)), timeout=settings.get('request_timeout'), encoding='UTF8')
                 # there's a decent amount of extra data here that isn't used but could be (bot count, tags, etc.)
             if 'Kills' in modes:
-                players_info = a2s.players((ip, int(ip_socket)), timeout=settings.get('request_timeout'))
+                players_info = a2s.players((ip, int(ip_socket)), timeout=settings.get('request_timeout'), encoding='UTF8')
         except socket.timeout:
             if not allow_network_errors:
                 raise
