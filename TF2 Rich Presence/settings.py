@@ -56,7 +56,7 @@ def change(setting: str, value: Union[str, int, bool, float]):
 # either gets a settings default, or if return_dict, returns all defaults as a dict
 def get_setting_default(setting: str = '', return_all: bool = False) -> Union[str, int, bool, dict]:
     default_settings = {'sentry_level': 'All errors',
-                        'wait_time': 2,
+                        'wait_time': 1,
                         'wait_time_slow': 5,
                         'check_updates': True,
                         'request_timeout': 2,
