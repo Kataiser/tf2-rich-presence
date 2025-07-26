@@ -18,7 +18,9 @@ def main(silent=False):
                                 params={'accept': 'application/vnd.github.v3+json'})
     api_response_p2 = requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/releases', headers={'User-Agent': 'Kataiser-TF2-Rich-Presence'},
                                    params={'accept': 'application/vnd.github.v3+json', 'page': '2'})
-    api_response_json = api_response.json() + api_response_p2.json()
+    api_response_p3 = requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/releases', headers={'User-Agent': 'Kataiser-TF2-Rich-Presence'},
+                                   params={'accept': 'application/vnd.github.v3+json', 'page': '3'})
+    api_response_json = api_response.json() + api_response_p2.json() + api_response_p3.json()
     check_rate_limited(str(api_response_json))
     releases = []
     bodies = []
