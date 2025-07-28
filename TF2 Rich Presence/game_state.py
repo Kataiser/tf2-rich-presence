@@ -60,7 +60,7 @@ class GameState:
         if self.in_menus:
             return f"in menus, queued=\"{self.queued_state}\""
         else:
-            return f"{self.tf2_class} on {self.map_fancy}, gamemode={self.gamemode}, hosting={self.hosting}, queued=\"{self.queued_state}\", server={self.server_address}"
+            return f"{self.tf2_class} on {self.map_fancy}, gamemode={self.gamemode}, hosting={self.hosting}, queued=\"{self.queued_state}\", server=\"{self.server_name}\""
 
     # mess of logic that generates an activity dict for RPC
     def activity(self) -> dict:
@@ -213,7 +213,9 @@ class GameState:
 
         if player_count != self.player_count:
             self.player_count = player_count
-            self.update_rpc = True
+
+            if 'Player count' in (settings.get('top_line'), settings.get('bottom_line')):
+                self.update_rpc = True
 
     def set_queued_state(self, queued_state: str):
         if queued_state != self.queued_state:
@@ -236,7 +238,7 @@ class GameState:
             return self.loc.text("Time on map: {0}").format(map_time_formatted)
 
     # get either the top or bottom line, based on user settings
-    def get_line(self, line: str = 'top', rpc: bool = False) -> str:
+    def get_line(self, line: str = 'top', rpc: bool = False) -> Optional[str]:
         line_setting: str = settings.get('top_line' if line == 'top' else 'bottom_line')
 
         if line_setting == 'Server name':
