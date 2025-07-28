@@ -37,7 +37,11 @@ class GameState:
         self.update_rpc: bool = True
         # don't track whether the GUI needs to be updated, main just always calls its updates and lets it handle whether or not it needs to set elements
         self.force_zero_map_time: bool = False
-        self.console_log_file_position: int = 0
+
+        default_console_log_parsed = console_log.ConsoleLogParsed()
+        self.console_log_file_position: int = default_console_log_parsed.file_position
+        self.console_log_just_started_server: bool = default_console_log_parsed.just_started_server
+        self.console_log_server_still_running: bool = default_console_log_parsed.server_still_running
 
         if log:
             self.log: logger.Log = log

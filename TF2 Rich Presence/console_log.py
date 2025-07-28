@@ -22,6 +22,8 @@ class ConsoleLogParsed:
     server_players: int = 0
     server_players_max: int = 0
     file_position: int = 0
+    just_started_server: bool = False
+    server_still_running: bool = False
 
 
 # reads a console.log and returns as much game state as possible, alternatively None if whether an old scan was reused
@@ -39,6 +41,8 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
     server_players: int = parse_results.server_players
     server_players_max: int = parse_results.server_players_max
     file_position: int = 0
+    just_started_server: bool = False
+    server_still_running: bool = False
 
     # console.log is a log of tf2's console (duh), only exists if tf2 has -condebug (see no_condebug_warning() in GUI)
     self.log.debug(f"Looking for console.log at {console_log_path}")
@@ -71,6 +75,8 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
         server_players = from_game_state.server_players[0]
         server_players_max = from_game_state.server_players[1]
         file_position = from_game_state.console_log_file_position
+        just_started_server = from_game_state.console_log_just_started_server
+        server_still_running = from_game_state.console_log_server_still_running
 
     is_initial_parse = file_position == 0
     consolelog_file_size: int = os.stat(console_log_path).st_size
@@ -95,8 +101,6 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
 
     # setup
     now_in_menus: bool = False
-    just_started_server: bool = False
-    server_still_running: bool = False
     using_wav_cache: bool = False
     connecting_to_matchmaking: bool = False
     found_first_wav_cache: bool = False
@@ -225,6 +229,8 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
             connecting_to_matchmaking = False
             using_wav_cache = False
             found_first_wav_cache = False
+            just_started_server = False
+            server_still_running = False
 
     if not user_is_kataiser and not in_menus and kataiser_seen_on == tf2_map:
         self.log.debug(f"Kataiser located, telling user :D (on {tf2_map})")
@@ -257,7 +263,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
         self.log.debug(f"Hiding queued state (\"{queued_state}\" to \"Queued\")")
         queued_state = "Queued"
 
-    parse_results = ConsoleLogParsed(in_menus, tf2_map, tf2_class, queued_state, hosting, server_name, server_players, server_players_max, file_position)
+    parse_results = ConsoleLogParsed(in_menus, tf2_map, tf2_class, queued_state, hosting, server_name, server_players, server_players_max, file_position, just_started_server, server_still_running)
     self.log.debug(f"console.log parse results (initial = {is_initial_parse}): {parse_results}")
 
     if gui_updates != 0:

@@ -42,7 +42,7 @@ def class_config_files(log, exe_location: str):
                               f'echo "{tf2_class} selected"\n'
                               f'alias status_loop\n'
                               f'wait 20\n'
-                              f'alias status_loop "status; wait 1500; status_loop"\n'
+                              f'alias status_loop "status; wait 1000; status_loop"\n'
                               f'status_loop\n')
 
         config_filename: str = tf2_class.lower().replace('heavy', 'heavyweapons')  # valve why

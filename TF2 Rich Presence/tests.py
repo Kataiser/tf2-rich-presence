@@ -60,19 +60,19 @@ class TestTF2RichPresence(unittest.TestCase):
         self.assertEqual(app.interpret_console_log('test_resources\\console_queued_casual.log', {'not Kataiser'}, True),
                          console_log.ConsoleLogParsed(True, '', '', 'Queued for Casual', False, file_position=9330226))
         self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', {'not Kataiser'}, True),
-                         console_log.ConsoleLogParsed(False, 'pl_badwater', 'Pyro', 'Not queued', True, file_position=9333634))
+                         console_log.ConsoleLogParsed(False, 'pl_badwater', 'Pyro', 'Not queued', True, file_position=9333634, server_still_running=True))
         self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', {'not Kataiser'}, True, tf2_start_time=recent_time),
                          console_log.ConsoleLogParsed(True, '', '', 'Not queued', False))
         self.assertEqual(app.interpret_console_log('test_resources\\console_custom_map.log', {'not Kataiser'}, True),
-                         console_log.ConsoleLogParsed(False, 'cp_catwalk_a5c', 'Soldier', 'Not queued', True, file_position=9328261))
+                         console_log.ConsoleLogParsed(False, 'cp_catwalk_a5c', 'Soldier', 'Not queued', True, file_position=9328261, server_still_running=True))
         self.assertEqual(app.interpret_console_log('test_resources\\console_soundemitter.log', {'not Kataiser'}, True),
                          console_log.ConsoleLogParsed(True, '', '', 'Not queued', False, file_position=2915843))
         self.assertEqual(app.interpret_console_log('test_resources\\console_queued_in_game.log', {'not Kataiser'}, True),
-                         console_log.ConsoleLogParsed(False, 'itemtest', 'Heavy', 'Queued for Casual', True, file_position=4965728))
+                         console_log.ConsoleLogParsed(False, 'itemtest', 'Heavy', 'Queued for Casual', True, file_position=4965728, server_still_running=True))
         self.assertEqual(app.interpret_console_log('test_resources\\console_canceled_load.log', {'not Kataiser'}, True),
                          console_log.ConsoleLogParsed(True, '', '', 'Not queued', False, file_position=3270628))
         self.assertEqual(app.interpret_console_log('test_resources\\console_chat.log', {'not Kataiser'}, True),
-                         console_log.ConsoleLogParsed(False, 'itemtest', 'Scout', 'Not queued', True, file_position=3276283))
+                         console_log.ConsoleLogParsed(False, 'itemtest', 'Scout', 'Not queued', True, file_position=3276283, server_still_running=True))
         self.assertEqual(app.interpret_console_log('test_resources\\console_empty.log', {'not Kataiser'}, True),
                          console_log.ConsoleLogParsed(True, '', '',  'Not queued', False, file_position=67))
         self.assertEqual(app.interpret_console_log('test_resources\\console_tf2bd.log', {'Kataiser'}, True),
@@ -90,9 +90,13 @@ class TestTF2RichPresence(unittest.TestCase):
         self.assertEqual(app.interpret_console_log('test_resources\\console_community_server.log', {'not Kataiser'}, True),
                          console_log.ConsoleLogParsed(False, 'pl_swiftwater_final1', 'Soldier', 'Not queued', False, 'Uncletopia | Montréal | 3 | On…', 62, 64, file_position=483227))
         self.assertEqual(app.interpret_console_log('test_resources\\console_file_position_1.log', {'not Kataiser'}, True),
-                         console_log.ConsoleLogParsed(False, 'koth_mannhole', 'Sniper', 'Not queued', True, 'Team Fortress', 18, 24, file_position=27014))
+                         console_log.ConsoleLogParsed(False, 'koth_mannhole', 'Sniper', 'Not queued', True, 'Team Fortress', 18, 24, file_position=27014, server_still_running=True))
         self.assertEqual(app.interpret_console_log('test_resources\\console_file_position_2.log', {'not Kataiser'}, True, from_game_state=app.game_state),
-                         console_log.ConsoleLogParsed(False, 'koth_mannhole', 'Scout', 'Not queued', True, 'Team Fortress', 16, 24, file_position=194861))
+                         console_log.ConsoleLogParsed(False, 'koth_mannhole', 'Scout', 'Not queued', True, 'Team Fortress', 16, 24, file_position=194861, server_still_running=True))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_hosting_1.log', {'not Kataiser'}, True),
+                         console_log.ConsoleLogParsed(True, '', '', 'Not queued', False, file_position=332939, just_started_server=True))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_hosting_2.log', {'not Kataiser'}, True, from_game_state=app.game_state),
+                         console_log.ConsoleLogParsed(False, 'pl_aquarius', 'Scout', 'Not queued', True, 'Team Fortress', 1, 24, file_position=388130, server_still_running=True))
 
         app.gui.master.destroy()
 
