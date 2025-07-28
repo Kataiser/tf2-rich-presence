@@ -7,7 +7,6 @@ idna==3.10
 lxml==6.0.0
 pillow==11.3.0
 psutil==7.0.0
-python-a2s==1.4.1
 requests-futures==1.0.2
 requests==2.32.4
 sentry-sdk==2.33.2

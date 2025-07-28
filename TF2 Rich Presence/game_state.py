@@ -3,14 +3,14 @@
 # cython: language_level=3
 
 import time
-from typing import Dict, List, Optional, Set, Tuple
+from typing import Dict, Optional, Tuple
 
+import console_log
 import gamemodes
 import gui
 import launcher
 import localization
 import logger
-import server
 import settings
 
 
@@ -26,7 +26,6 @@ class GameState:
         self.hosting: bool = False
         self.server_name: str = ''
         self.player_count: str = ''
-        self.kills: str = ''
         self.gamemode: str = ''
         self.gamemode_fancy: str = ''
         self.custom_map: bool = False
@@ -158,15 +157,16 @@ class GameState:
                 'assets': {'large_image': large_image, 'large_text': large_text, 'small_image': small_image, 'small_text': small_text}}
 
     # set everything straight from console.log parse results
-    def set_bulk(self, state: Tuple[bool, str, str, str, str, bool]):
+    def set_bulk(self, state: console_log.ConsoleLogParsed):
         prev_state: str = str(self)
 
-        self.set_in_menus(state[0])
-        self.set_hosting(state[5])
-        self.set_tf2_map(state[1])
-        self.set_tf2_class(state[2])
-        self.set_queued_state(state[4])
-        self.server_address = state[3]  # this isn't a setter because it doesn't directly mean changed server data
+        self.set_in_menus(state.in_menus)
+        self.set_hosting(state.hosting)
+        self.set_tf2_map(state.tf2_map)
+        self.set_tf2_class(state.tf2_class)
+        self.set_queued_state(state.queued_state)
+        self.set_server_name(state.server_name)
+        self.set_player_count(state.server_players, state.server_players_max)
 
         if str(self) != prev_state:  # don't use self.update_rpc because of server data changes not mattering here
             self.log.debug(f"Game state updated from ({prev_state}) to ({str(self)})")
@@ -181,8 +181,9 @@ class GameState:
                 self.set_tf2_map('')
                 self.set_tf2_class('')
                 self.set_hosting(False)
+                self.set_server_name('')
+                self.set_player_count(0, 0)
                 self.custom_map = False
-                self.server_address = ''
 
     def set_tf2_map(self, tf2_map: str):
         if tf2_map != self.tf2_map:
@@ -207,14 +208,11 @@ class GameState:
             self.server_name = server_name
             self.update_rpc = True
 
-    def set_player_count(self, player_count: str):
+    def set_player_count(self, server_players: int, server_players_max: int):
+        player_count = self.loc.text("Players: {0}/{1}").format(server_players, server_players_max)
+
         if player_count != self.player_count:
             self.player_count = player_count
-            self.update_rpc = True
-
-    def set_kills(self, kills: str):
-        if kills != self.kills:
-            self.kills = kills
             self.update_rpc = True
 
     def set_queued_state(self, queued_state: str):
@@ -226,46 +224,6 @@ class GameState:
         if hosting != self.hosting:
             self.hosting = hosting
             self.update_rpc = True
-
-    # modes can include server name, player count, and/or kills
-    def update_server_data(self, modes: List[str], usernames: Set[str]):
-        self.updated_server_state = True
-
-        if modes:
-            if ('Server name' in modes and 'server_name' not in self.last_server_request_data) \
-                    or ('Player count' in modes and 'player_count' not in self.last_server_request_data) \
-                    or ('Kills' in modes and 'kills' not in self.last_server_request_data):
-                # for changing server data modes mid-game
-                self.clear_server_data_cache()
-
-            server_data: Dict[str, str] = self.get_match_data(self.server_address, modes, usernames)
-
-            # get_match_data doesn't set these (but it could)
-            if 'Server name' in modes:
-                self.set_server_name(server_data['server_name'])
-            else:
-                self.set_server_name('')
-
-            if 'Player count' in modes:
-                self.set_player_count(server_data['player_count'])
-            else:
-                self.set_player_count('')
-
-            if 'Kills' in modes:
-                self.set_kills(server_data['kills'])
-            else:
-                self.set_kills('')
-        else:
-            self.set_server_name('')
-            self.set_player_count('')
-            self.set_kills('')
-
-    # force new server query
-    def clear_server_data_cache(self):
-        self.log.debug("Clearing server data cache")
-        self.last_server_request_time = 0.0
-        self.last_server_request_data = {}
-        self.last_server_request_address = ''
 
     # convert seconds to a pretty timestamp, keep leading zeros though
     def time_on_map(self) -> str:
@@ -285,8 +243,6 @@ class GameState:
             return self.server_name
         elif line_setting == 'Player count':
             return self.player_count
-        elif line_setting == 'Kills':
-            return self.kills
         elif line_setting == 'Time on map':
             if rpc:
                 self.update_rpc = True  # because new time on map guarantees changed RPC
@@ -298,10 +254,6 @@ class GameState:
             return self.map_fancy
         else:
             self.log.error(f"Couldn't get {line} line for activity ({line_setting=})")
-
-    # get server name, player count, and/or user score (kills) from the game server (not actually a getter method)
-    def get_match_data(self, *args, **kwargs):
-        return server.get_match_data(self, *args, **kwargs)
 
 
 # because Discord limits to 150 RPC images

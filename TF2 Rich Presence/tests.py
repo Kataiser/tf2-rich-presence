@@ -56,31 +56,45 @@ class TestTF2RichPresence(unittest.TestCase):
         recent_time = int(time.time()) - 10
         app = main.TF2RichPresense(self.log, set_process_priority=False)
 
-        self.assertEqual(app.interpret_console_log('test_resources\\console_in_menus.log', {'not Kataiser'}, float('inf'), True), (True, '', '', '', 'Not queued', False))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_in_menus.log', {'not Kataiser'}, 4, True), (True, '', '', '', 'Not queued', False))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_queued_casual.log', {'not Kataiser'}, float('inf'), True), (True, '', '', '', 'Queued for Casual', False))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', {'not Kataiser'}, float('inf'), True), (False, 'pl_badwater', 'Pyro', '', 'Not queued', True))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', {'not Kataiser'}, float('inf'), True, recent_time), (True, '', '', '', 'Not queued', False))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', {'not Kataiser'}, 0.2, True), (True, '', '', '', 'Not queued', False))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_in_menus.log', {'not Kataiser'}, float('inf'), True),
+                         console_log.ConsoleLogParsed(True, '', '', 'Not queued', False))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_in_menus.log', {'not Kataiser'}, 4, True),
+                         console_log.ConsoleLogParsed(True, '', '', 'Not queued', False))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_queued_casual.log', {'not Kataiser'}, float('inf'), True),
+                         console_log.ConsoleLogParsed(True, '', '', 'Queued for Casual', False))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', {'not Kataiser'}, float('inf'), True),
+                         console_log.ConsoleLogParsed(False, 'pl_badwater', 'Pyro', 'Not queued', True))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', {'not Kataiser'}, float('inf'), True, recent_time),
+                         console_log.ConsoleLogParsed(True, '', '', 'Not queued', False))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', {'not Kataiser'}, 0.2, True),
+                         console_log.ConsoleLogParsed(True, '', '', 'Not queued', False))
         self.assertEqual(app.interpret_console_log('test_resources\\console_custom_map.log', {'not Kataiser'}, float('inf'), True),
-                         (False, 'cp_catwalk_a5c', 'Soldier', '', 'Not queued', True))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_soundemitter.log', {'not Kataiser'}, float('inf'), True), (True, '', '', '', 'Not queued', False))
+                         console_log.ConsoleLogParsed(False, 'cp_catwalk_a5c', 'Soldier', 'Not queued', True))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_soundemitter.log', {'not Kataiser'}, float('inf'), True),
+                         console_log.ConsoleLogParsed(True, '', '', 'Not queued', False))
         self.assertEqual(app.interpret_console_log('test_resources\\console_queued_in_game.log', {'not Kataiser'}, float('inf'), True),
-                         (False, 'itemtest', 'Heavy', '', 'Queued for Casual', True))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_canceled_load.log', {'not Kataiser'}, float('inf'), True), (True, '', '', '', 'Not queued', False))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_chat.log', {'not Kataiser'}, float('inf'), True), (False, 'itemtest', 'Scout', '', 'Not queued', True))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_empty.log', {'not Kataiser'}, float('inf'), True), (True, '', '', '', 'Not queued', False))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_valve_server.log', {'not Kataiser'}, float('inf'), True),
-                         (False, 'pl_snowycoast', 'Pyro', '162.254.194.158:27048', 'Not queued', False))
+                         console_log.ConsoleLogParsed(False, 'itemtest', 'Heavy', 'Queued for Casual', True))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_canceled_load.log', {'not Kataiser'}, float('inf'), True),
+                         console_log.ConsoleLogParsed(True, '', '', 'Not queued', False))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_chat.log', {'not Kataiser'}, float('inf'), True),
+                         console_log.ConsoleLogParsed(False, 'itemtest', 'Scout', 'Not queued', True))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_empty.log', {'not Kataiser'}, float('inf'), True),
+                         console_log.ConsoleLogParsed(True, '', '',  'Not queued', False))
         self.assertEqual(app.interpret_console_log('test_resources\\console_tf2bd.log', {'Kataiser'}, float('inf'), True),
-                         (False, 'ctf_turbine', 'Soldier', '45.141.52.51:27015', 'Not queued', False))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_community_disconnect.log', {'not Kataiser'}, float('inf'), True), (True, '', '', '', 'Not queued', False))
+                         console_log.ConsoleLogParsed(False, 'ctf_turbine', 'Soldier', 'Not queued', False))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_community_disconnect.log', {'not Kataiser'}, float('inf'), True),
+                         console_log.ConsoleLogParsed(True, '', '', 'Not queued', False))
         self.assertEqual(app.interpret_console_log('test_resources\\console_community_disconnect2.log', {'not Kataiser'}, float('inf'), True),
-                         (False, 'vsh_military_area_se6', 'Heavy', '45.235.98.47:27070', 'Not queued', False))
+                         console_log.ConsoleLogParsed(False, 'vsh_military_area_se6', 'Heavy', 'Not queued', False))
         self.assertEqual(app.interpret_console_log('test_resources\\console_blanks.log', {'not Kataiser'}, float('inf'), True),
-                         (False, 'sd_doomsday_event', 'Pyro', '162.254.195.114:27046', 'Not queued', False))
+                         console_log.ConsoleLogParsed(False, 'sd_doomsday_event', 'Pyro', 'Not queued', False))
         self.assertEqual(app.interpret_console_log('test_resources\\console_map_material.log', {'not Kataiser'}, float('inf'), True),
-                         (False, 'koth_slaughter_event', '', '162.254.192.150:27051', 'Queued for Casual', False))
+                         console_log.ConsoleLogParsed(False, 'koth_slaughter_event', '', 'Queued for Casual', False))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_valve_server.log', {'not Kataiser'}, float('inf'), True),
+                         console_log.ConsoleLogParsed(False, 'pd_atom_smash', 'Heavy', 'Not queued', False, 'Valve Matchmaking Server (Virginia)', 19, 24))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_community_server.log', {'not Kataiser'}, float('inf'), True),
+                         console_log.ConsoleLogParsed(False, 'pl_swiftwater_final1', 'Soldier', 'Not queued', False, 'Uncletopia | Montréal | 3 | On…', 22, 64))
+
 
         # tests trimming
         trimtest_small = 'test_resources\\console_badwater.log'
@@ -89,7 +103,8 @@ class TestTF2RichPresence(unittest.TestCase):
         with open(trimtest_big, 'rb+') as console_badwater_sacrifice:
             console_badwater_sacrifice.write(console_badwater_sacrifice.read())  # this just doubles the file size
         initial_size = os.stat(trimtest_big).st_size
-        self.assertEqual(app.interpret_console_log(trimtest_big, {'not Kataiser'}), (False, 'pl_badwater', 'Pyro', '', 'Not queued', True))
+        self.assertEqual(app.interpret_console_log(trimtest_big, {'not Kataiser'}),
+                         console_log.ConsoleLogParsed(False, 'pl_badwater', 'Pyro', 'Not queued', True))
         trimmed_size = os.stat(trimtest_big).st_size
         self.assertLess(trimmed_size, initial_size)
         self.assertEqual(trimmed_size, (1024 ** 2) * 2)
@@ -107,7 +122,8 @@ class TestTF2RichPresence(unittest.TestCase):
         self.assertLess(cleaned_size, initial_size)
         with open(errorstest_small, 'r', encoding='UTF8') as errorstest_small_cleaned:
             self.assertFalse('DataTable warning' in errorstest_small_cleaned.read())
-        self.assertEqual(app.interpret_console_log(errorstest_small, {'not Kataiser'}, float('inf')), (True, '', '', '', 'Not queued', False))
+        self.assertEqual(app.interpret_console_log(errorstest_small, {'not Kataiser'}, float('inf')),
+                         console_log.ConsoleLogParsed(True, '', '', 'Not queued', False))
         os.remove(errorstest_small)
 
         app.gui.master.destroy()

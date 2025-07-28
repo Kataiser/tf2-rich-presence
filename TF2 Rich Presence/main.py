@@ -253,7 +253,7 @@ class TF2RichPresense:
 
             console_log_path: str = os.path.join(p_data['TF2']['path'], 'tf', 'console.log')
             self.gui.console_log_path = console_log_path
-            console_log_parsed: Optional[Tuple[bool, str, str, str, str, bool]] = self.interpret_console_log(console_log_path, self.usernames, tf2_start_time=p_data['TF2']['time'])
+            console_log_parsed: Optional[console_log.ConsoleLogParsed] = self.interpret_console_log(console_log_path, self.usernames, tf2_start_time=p_data['TF2']['time'])
             self.old_console_log_mtime = self.console_log_mtime
 
             if console_log_parsed:
@@ -269,14 +269,6 @@ class TF2RichPresense:
             else:
                 self.test_state = 'in game'
                 window_title = window_title_format_main.format(base_window_title, self.game_state.tf2_class, self.game_state.map_fancy)
-
-                # get server data, if needed (game_state doesn't handle it itself)
-                server_modes = []
-                if settings.get('top_line') in ('Server name', 'Player count', 'Kills'):
-                    server_modes.append(settings.get('top_line'))
-                if settings.get('bottom_line') in ('Server name', 'Player count', 'Kills'):
-                    server_modes.append(settings.get('bottom_line'))
-                self.game_state.update_server_data(server_modes, self.usernames)
 
             if self.custom_functions:
                 self.custom_functions.modify_game_state(self)
@@ -483,7 +475,7 @@ class TF2RichPresense:
             self.did_init_operations = True
 
     # reads a console.log and returns current map and class
-    def interpret_console_log(self, *args, **kwargs) -> Optional[Tuple[bool, str, str, str, str, bool]]:
+    def interpret_console_log(self, *args, **kwargs) -> Optional[console_log]:
         return console_log.interpret(self, *args, **kwargs)
 
     # reads steam's launch options save file to find TF2 launch options

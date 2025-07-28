@@ -2,17 +2,31 @@
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 # cython: language_level=3
 
+import dataclasses
+import functools
 import os
 import re
 from tkinter import messagebox
-from typing import Dict, List, Optional, Set, Tuple
+from typing import Dict, List, Optional, Set, Tuple, Pattern
 
 import settings
 
 
-# reads a console.log and returns as much game state as possible, alternatively returns whether an old scan was reused
-def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: float = float(settings.get('console_scan_kb')), force: bool = False,
-              tf2_start_time: int = 0) -> Optional[Tuple[bool, str, str, str, str, bool]]:
+@dataclasses.dataclass
+class ConsoleLogParsed:
+    in_menus: bool = True
+    tf2_map: str = ''
+    tf2_class: str = ''
+    queued_state: str = "Not queued"
+    hosting: bool = False
+    server_name: str = ''
+    server_players: int = 0
+    server_players_max: int = 0
+
+
+# reads a console.log and returns as much game state as possible, alternatively None if whether an old scan was reused
+def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: float = float(settings.get('console_scan_kb')),
+              force: bool = False, tf2_start_time: int = 0) -> Optional[ConsoleLogParsed]:
     TF2_LOAD_TIME_ASSUMPTION: int = 10
     SIZE_LIMIT_MULTIPLE_TRIGGER: int = 4
     SIZE_LIMIT_MULTIPLE_TARGET: int = 2
@@ -20,13 +34,15 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     KATAISER_LOOP_FREQ: int = 4
 
     # defaults
-    in_menus: bool = True
-    tf2_map: str = ''
-    tf2_class: str = ''
-    server_address: str = ''
-    queued_state: str = "Not queued"
-    hosting: bool = False
-    default_state = (in_menus, tf2_map, tf2_class, server_address, queued_state, hosting)
+    default_state = ConsoleLogParsed()
+    in_menus: bool = default_state.in_menus
+    tf2_map: str = default_state.tf2_map
+    tf2_class: str = default_state.tf2_class
+    queued_state: str = default_state.queued_state
+    hosting: bool = default_state.hosting
+    server_name: str = default_state.server_name
+    server_players: int = default_state.server_players
+    server_players_max: int = default_state.server_players_max
 
     # console.log is a log of tf2's console (duh), only exists if tf2 has -condebug (see no_condebug_warning() in GUI)
     self.log.debug(f"Looking for console.log at {console_log_path}")
@@ -58,15 +74,8 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
 
         self.last_console_log_size = consolelog_file_size
 
-    # decode console.log with UTF8 if any usernames need it
-    if non_ascii_in_usernames(user_usernames):
-        decode_mode: Optional[str] = 'UTF8'
-        self.log.debug("Decoding console.log with UTF8")
-    else:
-        decode_mode = None
-
     # actually open the file finally
-    with open(console_log_path, 'r', errors='replace', encoding=decode_mode) as consolelog_file:
+    with open(console_log_path, 'r', errors='replace', encoding='UTF8') as consolelog_file:
         if consolelog_file_size > byte_limit:
             skip_to_byte: int = consolelog_file_size - int(byte_limit)
             consolelog_file.seek(skip_to_byte, 0)  # skip to last few KBs
@@ -155,7 +164,15 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
                     now_in_menus = True
                     break
 
-            if line.endswith(' selected \n'):
+            if line.startswith('hostname: '):
+                server_name = line[10:-1]
+
+            elif line.startswith('players : '):
+                line_split = line.split()
+                server_players = int(line_split[2]) + int(line_split[4])  # humans + bots
+                server_players_max = int(line_split[6][1:])
+
+            elif line.endswith(' selected \n'):
                 class_line_possibly: List[str] = line[:-11].split()
 
                 if class_line_possibly and class_line_possibly[-1] in tf2_classes:
@@ -170,10 +187,8 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
             elif 'Missing map' in line and 'Missing map material' not in line:
                 now_in_menus = True
 
-            if kataiser_scan and not user_is_kataiser and 'Kataiser' in line:
-                # makes sure no one's just talking about me for some reason
-                if not (line.count(' :  ') == 1 and 'Kataiser' not in line.split(' :  ')[0] and 'Kataiser' in line.split(' :  ')[1]):
-                    kataiser_seen_on = tf2_map
+            if kataiser_scan and not user_is_kataiser and '[U:1:160315024]' in line:
+                kataiser_seen_on = tf2_map
 
         elif 'SV_ActivateServer' in line:  # full line: "SV_ActivateServer: setting tickrate to 66.7"
             just_started_server = True
@@ -190,14 +205,11 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
                 just_started_server = False
                 server_still_running = False
 
-        elif 'Connected to' in line:
-            server_address = line.split()[-1]
-
-            if not connecting_to_matchmaking:
-                # joined a community server, so must use CAsyncWavDataCache method to detect disconnects
-                using_wav_cache = True
-                found_first_wav_cache = False
-                connecting_to_matchmaking = False
+        elif not connecting_to_matchmaking and 'Connected to' in line:
+            # joined a community server, so must use CAsyncWavDataCache method to detect disconnects
+            using_wav_cache = True
+            found_first_wav_cache = False
+            connecting_to_matchmaking = False
 
         elif 'matchmaking server' in line:
             connecting_to_matchmaking = True
@@ -243,27 +255,31 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     if in_menus:
         tf2_map = ''
         tf2_class = ''
-        server_address = ''
         hosting = False
+        server_name = ''
+        server_players = 0
+        server_players_max = 0
         self.gui.set_bottom_text('kataiser', False)
 
         if menus_message_used:
             self.log.debug(f"Menus message used: \"{menus_message_used.strip()}\"")
     else:
+        server_name, is_valve_server = cleanup_server_name(server_name)
+
+        if is_valve_server and server_players_max == 32:
+            server_players_max = 24  # cool
+
         if tf2_class != '' and tf2_map == '':
             self.log.error("Have class without map")
 
         if server_still_running:
             hosting = True
-            server_address = ''
-        elif server_address == '':
-            self.log.error("Server address is blank but user isn't hosting")
 
     if settings.get('hide_queued_gamemode') and "Queued" in queued_state:
         self.log.debug(f"Hiding queued state (\"{queued_state}\" to \"Queued\")")
         queued_state = "Queued"
 
-    scan_results = (in_menus, tf2_map, tf2_class, server_address, queued_state, hosting)
+    scan_results = ConsoleLogParsed(in_menus, tf2_map, tf2_class, queued_state, hosting, server_name, server_players, server_players_max)
     self.log.debug(f"console.log parse results: {scan_results}")
 
     if gui_updates != 0:
@@ -342,5 +358,24 @@ def non_ascii_in_usernames(usernames: Set[str]) -> bool:
     return False
 
 
+# make server names look a bit nicer
+@functools.cache
+def cleanup_server_name(name: str) -> tuple[str, bool]:
+    if re_valve_server.match(name):
+        return re_valve_server_remove.sub("", name), True
+    else:
+        name = ''.join(c for c in name if c.isprintable() and c not in ('█', '▟', '▙')).strip()  # removes unprintable/ugly characters
+        name = re_double_space.sub(' ', name)  # removes double space
+
+        if len(name) > 32:
+            # TODO: would prefer to use actual text width here
+            return f'{name[:30]}…', False
+        else:
+            return name, False
+
+
+re_valve_server: Pattern[str] = re.compile(r'Valve Matchmaking Server \([a-zA-Z]+ srcds[0-9]+-[a-zA-Z]+\d #[0-9]+\)')
+re_valve_server_remove: Pattern[str] = re.compile(r' srcds[0-9]+-[a-zA-Z]+\d #[0-9]+')
+re_double_space: Pattern[str] = re.compile(r' {2,}')
 tf2_classes: Tuple[str, ...] = ('Scout', 'Soldier', 'Pyro', 'Demoman', 'Heavy', 'Engineer', 'Medic', 'Sniper', 'Spy')
 non_ascii_regex = re.compile('[^\x00-\x7F]')

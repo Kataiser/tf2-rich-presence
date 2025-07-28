@@ -26,22 +26,33 @@ def class_config_files(log, exe_location: str):
         else:
             log.error(f"{exe_location} doesn't exist, can't read/modify class config files")
 
+    # reads each existing class.cfg
+    def prepare_class_config(path: str):
+        with open(path, 'r+', errors='ignore') as class_config_file:
+            if selected_line not in class_config_file.read():
+                # if it doesn't already have the echo line, add it
+                class_config_file.write('\n' + selected_line)
+                classes_not_found.append(config_filename)
+            else:
+                classes_found.append(config_filename)
+
     for tf2_class in console_log.tf2_classes:
         # 'echo' means 'output to console' in source-speak
-        selected_line: str = f'\n// Added by TF2 Rich Presence, please don\'t remove\necho "{tf2_class} selected"\n'
+        selected_line: str = (f'\n// Added by TF2 Rich Presence, please don\'t remove\n'
+                              f'echo "{tf2_class} selected"\n'
+                              f'alias status_loop\n'
+                              f'wait 20\n'
+                              f'alias status_loop "status; wait 1500; status_loop"\n'
+                              f'status_loop\n')
 
         config_filename: str = tf2_class.lower().replace('heavy', 'heavyweapons')  # valve why
         config_path: str = os.path.join(cfg_path, f'{config_filename}.cfg')
+        config_path_overrides: str = os.path.join(cfg_path, 'overrides', f'{config_filename}.cfg')
 
-        if os.path.isfile(config_path):
-            # reads each existing class.cfg
-            with open(config_path, 'r+', errors='ignore') as class_config_file:
-                if selected_line not in class_config_file.read():
-                    # if it doesn't already have the echo line, add it
-                    class_config_file.write('\n' + selected_line)
-                    classes_not_found.append(config_filename)
-                else:
-                    classes_found.append(config_filename)
+        if os.path.isfile(config_path_overrides):
+            prepare_class_config(config_path_overrides)
+        elif os.path.isfile(config_path):
+            prepare_class_config(config_path)
         else:
             # the config file doesn't exist, so create it and add the echo line
             with open(config_path, 'w') as class_config_file:

@@ -26,7 +26,7 @@ def main():
         os.chdir(og_cwd)
 
 
-targets = ('configs', 'console_log', 'game_state', 'gamemodes', 'gui', 'localization', 'logger', 'main', 'processes', 'server', 'settings', 'settings_gui', 'updater', 'utils')
+targets = ('configs', 'console_log', 'game_state', 'gamemodes', 'gui', 'localization', 'logger', 'main', 'processes', 'settings', 'settings_gui', 'updater', 'utils')
 
 if __name__ == '__main__':
     main()

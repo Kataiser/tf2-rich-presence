@@ -104,7 +104,6 @@ def main(version_num='v2.1.12'):
         print("Copied", shutil.copy('localization.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('custom.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('utils.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
-        print("Copied", shutil.copy('server.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('generate_map_pics.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('map list generator.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
         print("Copied", shutil.copy('format_gamemode_images.py', Path(f'{github_repo_path}/TF2 Rich Presence')))
@@ -308,7 +307,7 @@ def main(version_num='v2.1.12'):
     os.mkdir(new_packages_dir)
     venv_packages_dir = site.getsitepackages()[1]
     assert 'site-packages' in venv_packages_dir.lower()
-    needed_packages = ('PIL', 'pillow', 'a2s', 'certifi', 'charset_normalizer', 'idna', 'psutil', 'python-a2s', 'requests', 'requests_futures', 'sentry_sdk', 'urllib3', 'vdf', 'discoIPC')
+    needed_packages = ('PIL', 'pillow', 'certifi', 'charset_normalizer', 'idna', 'psutil', 'python-a2s', 'requests', 'requests_futures', 'sentry_sdk', 'urllib3', 'vdf', 'discoIPC')
     for site_package in os.listdir(venv_packages_dir):
         for needed_package in needed_packages:
             if needed_package in site_package and 'requests_cache' not in site_package:
@@ -340,7 +339,7 @@ def main(version_num='v2.1.12'):
     # ensure everything exists that needs to
     assert os.listdir(Path(f'{new_build_folder_name}/resources/__pycache__')) != []
     assert os.listdir(Path(f'{new_build_folder_name}/resources/{interpreter_name}')) != []
-    assert len(os.listdir(Path(f'{new_build_folder_name}/resources/packages'))) == 25
+    assert len(os.listdir(Path(f'{new_build_folder_name}/resources/packages'))) == 23
     assert len(os.listdir(Path(f'{new_build_folder_name}/resources/gui_images'))) == 13
     assert len(os.listdir(Path(f'{new_build_folder_name}/locales'))) == 13
     assert os.path.isfile(Path(f'{new_build_folder_name}/TF2 Rich Presence.bat'))

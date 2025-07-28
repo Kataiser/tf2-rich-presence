@@ -24,7 +24,7 @@ class GUI(tk.Frame):
 
         self.log_levels: Tuple[str, ...] = ('Debug', 'Info', 'Error', 'Critical', 'Off')
         self.sentry_levels: Tuple[str, ...] = ('All errors', 'Crashes', 'Never')
-        self.rpc_lines: Tuple[str, ...] = ('Server name', 'Player count', 'Time on map', 'Kills', 'Class', 'Map')
+        self.rpc_lines: Tuple[str, ...] = ('Server name', 'Player count', 'Time on map', 'Class', 'Map')
 
         self.log_levels_display: List[str] = [self.loc.text(item) for item in self.log_levels]
         self.sentry_levels_display: List[str] = [self.loc.text(item) for item in self.sentry_levels]
@@ -33,7 +33,7 @@ class GUI(tk.Frame):
         if reload_settings:
             # the GUI was reloaded with a new language, so persist the currently selected (but not saved) settings
             self.sentry_level, self.wait_time, self.wait_time_slow, self.check_updates, self.request_timeout, self.hide_queued_gamemode, self.log_level, self.console_scan_kb, \
-            self.language, self.top_line, self.bottom_line, self.trim_console_log, self.server_rate_limit, self.gui_scale, self.drawing_gamemodes, self.preserve_window_pos = reload_settings
+            self.language, self.top_line, self.bottom_line, self.trim_console_log, self.gui_scale, self.drawing_gamemodes, self.preserve_window_pos = reload_settings
         else:
             # create every setting variable without values
             self.sentry_level: tk.StringVar = tk.StringVar()
@@ -48,7 +48,6 @@ class GUI(tk.Frame):
             self.top_line: tk.StringVar = tk.StringVar()
             self.bottom_line: tk.StringVar = tk.StringVar()
             self.trim_console_log: tk.BooleanVar = tk.BooleanVar()
-            self.server_rate_limit: tk.IntVar = tk.IntVar()
             self.gui_scale: tk.IntVar = tk.IntVar()
             self.drawing_gamemodes: tk.BooleanVar = tk.BooleanVar()
             self.preserve_window_pos: tk.BooleanVar = tk.BooleanVar()
@@ -72,7 +71,6 @@ class GUI(tk.Frame):
                 self.top_line.set(self.settings_loaded['top_line'])
                 self.bottom_line.set(self.settings_loaded['bottom_line'])
                 self.trim_console_log.set(self.settings_loaded['trim_console_log'])
-                self.server_rate_limit.set(self.settings_loaded['server_rate_limit'])
                 self.gui_scale.set(self.settings_loaded['gui_scale'])
                 self.drawing_gamemodes.set(self.settings_loaded['drawing_gamemodes'])
                 self.preserve_window_pos.set(self.settings_loaded['preserve_window_pos'])
@@ -158,11 +156,6 @@ class GUI(tk.Frame):
             self.loc.text("Delay between refreshes when TF2 and Discord aren't running: ")))  # and Steam but whatever
         setting16_option = ttk.Spinbox(setting16_frame, textvariable=self.wait_time_slow, width=6, from_=0, to=float('inf'), validate='all', validatecommand=(check_int_command, '%P'),
                                        command=self.setting_changed)
-        setting17_frame = ttk.Frame(self.lf_advanced)
-        setting17_text = ttk.Label(setting17_frame, text="{}".format(
-            self.loc.text("Server querying rate limit: ")))
-        setting17_option = ttk.Spinbox(setting17_frame, textvariable=self.server_rate_limit, width=6, from_=0, to=float('inf'), validate='all', validatecommand=(check_int_command, '%P'),
-                                       command=self.setting_changed)
         setting18_frame = ttk.Frame(self.lf_main)
         setting18_text = ttk.Label(setting18_frame, text="{}".format(
             self.loc.text("GUI scale: ")))
@@ -203,8 +196,6 @@ class GUI(tk.Frame):
             setting14_radiobutton.pack(side='left', fill='none', expand=False, padx=(0, 5))
         setting16_text.pack(side='left', fill='none', expand=False)
         setting16_option.pack(side='left', fill='none', expand=False)
-        setting17_text.pack(side='left', fill='none', expand=False)
-        setting17_option.pack(side='left', fill='none', expand=False)
         setting18_text.pack(side='left', fill='none', expand=False)
         setting18_option.pack(side='left', padx=5)
         setting19_text.pack(side='left', fill='none', expand=False)
@@ -225,7 +216,6 @@ class GUI(tk.Frame):
         setting15.grid(row=10, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
         setting5.grid(row=11, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 10))
         setting6_frame.grid(row=12, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
-        setting17_frame.grid(row=13, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(3, 0))
         setting1_frame.grid(row=14, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
         setting9_frame.grid(row=15, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 10))
 
@@ -287,8 +277,7 @@ class GUI(tk.Frame):
             self.bottom_line.set(self.rpc_lines[self.rpc_lines_display.index(self.bottom_line.get())])
 
             selected_settings: tuple = (self.sentry_level, self.wait_time, self.wait_time_slow, self.check_updates, self.request_timeout, self.hide_queued_gamemode, self.log_level,
-                                        self.console_scan_kb, self.language, self.top_line, self.bottom_line, self.trim_console_log, self.server_rate_limit, self.gui_scale,
-                                        self.drawing_gamemodes, self.preserve_window_pos)
+                                        self.console_scan_kb, self.language, self.top_line, self.bottom_line, self.trim_console_log, self.gui_scale, self.drawing_gamemodes, self.preserve_window_pos)
             self.window_x = self.master.winfo_rootx() - 8
             self.window_y = self.master.winfo_rooty() - 31
             self.__init__(self.master, self.log, reload_settings=selected_settings)
@@ -307,7 +296,6 @@ class GUI(tk.Frame):
                 'top_line': self.rpc_lines[self.rpc_lines_display.index(self.top_line.get())],
                 'bottom_line': self.rpc_lines[self.rpc_lines_display.index(self.bottom_line.get())],
                 'trim_console_log': self.trim_console_log.get(),
-                'server_rate_limit': self.server_rate_limit.get(),
                 'gui_scale': self.gui_scale.get(),
                 'drawing_gamemodes': self.drawing_gamemodes.get(),
                 'preserve_window_pos': self.preserve_window_pos.get()}
@@ -339,7 +327,6 @@ class GUI(tk.Frame):
             self.top_line.set(settings.get_setting_default('top_line'))
             self.bottom_line.set(settings.get_setting_default('bottom_line'))
             self.trim_console_log.set(settings.get_setting_default('trim_console_log'))
-            self.server_rate_limit.set(settings.get_setting_default('server_rate_limit'))
             self.gui_scale.set(settings.get_setting_default('gui_scale'))
             self.drawing_gamemodes.set(settings.get_setting_default('drawing_gamemodes'))
 
@@ -380,8 +367,8 @@ class GUI(tk.Frame):
 
     # a spinbox can be set to blank, so set it to defualt in that case
     def fix_blank_spinboxes(self):
-        int_settings: tuple = (self.wait_time, self.wait_time_slow, self.request_timeout, self.console_scan_kb, self.server_rate_limit)
-        int_settings_str: Tuple[str, ...] = ('wait_time', 'wait_time_slow', 'request_timeout', 'console_scan_kb', 'server_rate_limit')
+        int_settings: tuple = (self.wait_time, self.wait_time_slow, self.request_timeout, self.console_scan_kb)
+        int_settings_str: Tuple[str, ...] = ('wait_time', 'wait_time_slow', 'request_timeout', 'console_scan_kb')
 
         for int_setting in int_settings:
             try:

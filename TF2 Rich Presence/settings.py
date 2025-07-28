@@ -67,7 +67,6 @@ def get_setting_default(setting: str = '', return_all: bool = False) -> Union[st
                         'top_line': 'Player count',
                         'bottom_line': 'Time on map',
                         'trim_console_log': True,
-                        'server_rate_limit': 10,
                         'gui_scale': 100,
                         'drawing_gamemodes': False,
                         'preserve_window_pos': True}
