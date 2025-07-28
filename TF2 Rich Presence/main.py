@@ -111,7 +111,6 @@ class TF2RichPresense:
         self.usernames: Set[str] = set()
         self.last_name_scan_time: float = time.time()  # close enough
         self.steam_config_mtimes: Dict[str, int] = {}
-        self.cleanup_primed: bool = True
         self.slow_sleep_time: bool = False
         self.has_set_process_priority: bool = not set_process_priority
         self.kataiser_scan_loop: int = 0
@@ -253,7 +252,8 @@ class TF2RichPresense:
 
             console_log_path: str = os.path.join(p_data['TF2']['path'], 'tf', 'console.log')
             self.gui.console_log_path = console_log_path
-            console_log_parsed: Optional[console_log.ConsoleLogParsed] = self.interpret_console_log(console_log_path, self.usernames, tf2_start_time=p_data['TF2']['time'])
+            console_log_parsed: Optional[console_log.ConsoleLogParsed] = self.interpret_console_log(console_log_path, self.usernames, from_game_state=self.game_state,
+                                                                                                    tf2_start_time=p_data['TF2']['time'])
             self.old_console_log_mtime = self.console_log_mtime
 
             if console_log_parsed:
@@ -311,6 +311,7 @@ class TF2RichPresense:
                     self.gui.set_launch_tf2_button_state(p_data['Steam']['running'])
 
             self.last_console_log_size = None
+            self.game_state.console_log_file_position = 0
             self.necessary_program_not_running('Team Fortress 2', 'TF2')
             self.should_mention_tf2 = False
         elif not p_data['Discord']['running']:

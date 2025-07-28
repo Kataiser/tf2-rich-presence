@@ -26,6 +26,7 @@ class GameState:
         self.hosting: bool = False
         self.server_name: str = ''
         self.player_count: str = ''
+        self.server_players: tuple[int, int] = (0, 0)
         self.gamemode: str = ''
         self.gamemode_fancy: str = ''
         self.custom_map: bool = False
@@ -35,11 +36,8 @@ class GameState:
 
         self.update_rpc: bool = True
         # don't track whether the GUI needs to be updated, main just always calls its updates and lets it handle whether or not it needs to set elements
-        self.last_server_request_time: float = 0.0
-        self.last_server_request_data: Dict[str, str] = {}
-        self.last_server_request_address: str = ''
-        self.updated_server_state: bool = False
         self.force_zero_map_time: bool = False
+        self.console_log_file_position: int = 0
 
         if log:
             self.log: logger.Log = log
@@ -128,10 +126,6 @@ class GameState:
 
             # TODO: fix queued in game
 
-            if not self.updated_server_state:
-                self.log.error("Haven't updated server data since last activity generation")
-            self.updated_server_state = False
-
         if not top_line:
             self.log.error("Top line is blank")
             top_line = "In menus"
@@ -167,6 +161,7 @@ class GameState:
         self.set_queued_state(state.queued_state)
         self.set_server_name(state.server_name)
         self.set_player_count(state.server_players, state.server_players_max)
+        self.console_log_file_position = state.file_position
 
         if str(self) != prev_state:  # don't use self.update_rpc because of server data changes not mattering here
             self.log.debug(f"Game state updated from ({prev_state}) to ({str(self)})")
@@ -213,6 +208,7 @@ class GameState:
 
         if player_count != self.player_count:
             self.player_count = player_count
+            self.server_players = (server_players, server_players_max)
 
             if 'Player count' in (settings.get('top_line'), settings.get('bottom_line')):
                 self.update_rpc = True

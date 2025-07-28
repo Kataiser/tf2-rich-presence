@@ -6,7 +6,6 @@ import dataclasses
 import functools
 import os
 import re
-from tkinter import messagebox
 from typing import Dict, List, Optional, Set, Tuple, Pattern
 
 import settings
@@ -22,27 +21,24 @@ class ConsoleLogParsed:
     server_name: str = ''
     server_players: int = 0
     server_players_max: int = 0
+    file_position: int = 0
 
 
 # reads a console.log and returns as much game state as possible, alternatively None if whether an old scan was reused
-def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: float = float(settings.get('console_scan_kb')),
-              force: bool = False, tf2_start_time: int = 0) -> Optional[ConsoleLogParsed]:
+def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool = False, from_game_state: Optional = None, tf2_start_time: int = 0) -> Optional[ConsoleLogParsed]:
     TF2_LOAD_TIME_ASSUMPTION: int = 10
-    SIZE_LIMIT_MULTIPLE_TRIGGER: int = 4
-    SIZE_LIMIT_MULTIPLE_TARGET: int = 2
-    SIZE_LIMIT_MIN_LINES: int = 15000
-    KATAISER_LOOP_FREQ: int = 4
 
     # defaults
-    default_state = ConsoleLogParsed()
-    in_menus: bool = default_state.in_menus
-    tf2_map: str = default_state.tf2_map
-    tf2_class: str = default_state.tf2_class
-    queued_state: str = default_state.queued_state
-    hosting: bool = default_state.hosting
-    server_name: str = default_state.server_name
-    server_players: int = default_state.server_players
-    server_players_max: int = default_state.server_players_max
+    parse_results = ConsoleLogParsed()
+    in_menus: bool = parse_results.in_menus
+    tf2_map: str = parse_results.tf2_map
+    tf2_class: str = parse_results.tf2_class
+    queued_state: str = parse_results.queued_state
+    hosting: bool = parse_results.hosting
+    server_name: str = parse_results.server_name
+    server_players: int = parse_results.server_players
+    server_players_max: int = parse_results.server_players_max
+    file_position: int = 0
 
     # console.log is a log of tf2's console (duh), only exists if tf2 has -condebug (see no_condebug_warning() in GUI)
     self.log.debug(f"Looking for console.log at {console_log_path}")
@@ -50,7 +46,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     if not os.path.isfile(console_log_path):
         self.log.error(f"console.log doesn't exist, issuing warning (files/dirs in /tf/: {os.listdir(os.path.dirname(console_log_path))})", reportable=False)
         self.no_condebug = False
-        return default_state  # might as well
+        return parse_results  # might as well
 
     # only interpret console.log again if it's been modified
     self.console_log_mtime = int(os.stat(console_log_path).st_mtime)
@@ -62,10 +58,22 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     console_log_mtime_relative: int = self.console_log_mtime - tf2_start_time
     if console_log_mtime_relative <= TF2_LOAD_TIME_ASSUMPTION:
         self.log.debug(f"console.log's mtime relative to TF2's start time is {console_log_mtime_relative} (<= {TF2_LOAD_TIME_ASSUMPTION}), assuming default state")
-        return default_state
+        return parse_results
 
+    # if we already have a game state and file position, just update the state from the new lines since then
+    if from_game_state:
+        in_menus = from_game_state.in_menus
+        tf2_map = from_game_state.tf2_map
+        tf2_class = from_game_state.tf2_class
+        queued_state = from_game_state.queued_state
+        hosting = from_game_state.hosting
+        server_name = from_game_state.server_name
+        server_players = from_game_state.server_players[0]
+        server_players_max = from_game_state.server_players[1]
+        file_position = from_game_state.console_log_file_position
+
+    is_initial_parse = file_position == 0
     consolelog_file_size: int = os.stat(console_log_path).st_size
-    byte_limit: float = kb_limit * 1024.0
 
     if self.last_console_log_size is not None:
         if consolelog_file_size < self.last_console_log_size:
@@ -76,39 +84,14 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
 
     # actually open the file finally
     with open(console_log_path, 'r', errors='replace', encoding='UTF8') as consolelog_file:
-        if consolelog_file_size > byte_limit:
-            skip_to_byte: int = consolelog_file_size - int(byte_limit)
-            consolelog_file.seek(skip_to_byte, 0)  # skip to last few KBs
-
-            lines: List[str] = consolelog_file.readlines()
-            self.log.debug(f"console.log: {consolelog_file_size} bytes, skipped to {skip_to_byte}, read {int(byte_limit)} bytes and {len(lines)} lines")
-        else:
-            lines = consolelog_file.readlines()
-            self.log.debug(f"console.log: {consolelog_file_size} bytes, {len(lines)} lines (didn't skip lines)")
+        consolelog_file.seek(file_position)  # skip to last saved position
+        consolelog_read = consolelog_file.read()
+        lines: List[str] = consolelog_read.splitlines(keepends=True)
+        self.log.debug(f"console.log: {consolelog_file_size} bytes, skipped to {file_position}, read {len(consolelog_read)} bytes and {len(lines)} lines")
+        file_position = consolelog_file.tell()
 
     # update this again late, fixes wrong detections but may cause a duplicate scan
     self.console_log_mtime = int(os.stat(console_log_path).st_mtime)
-
-    # limit the file size, for better readlines performance
-    if consolelog_file_size > byte_limit * SIZE_LIMIT_MULTIPLE_TRIGGER and len(lines) > SIZE_LIMIT_MIN_LINES and settings.get('trim_console_log') and not force:
-        trim_size = int(byte_limit * SIZE_LIMIT_MULTIPLE_TARGET)
-        self.log.debug(f"Limiting console.log to {trim_size} bytes")
-
-        try:
-            with open(console_log_path, 'rb+') as consolelog_file_b:
-                # this can probably be done faster and/or cleaner
-                consolelog_file_b.seek(-trim_size, 2)
-                consolelog_file_trimmed: bytes = consolelog_file_b.read()
-                trimmed_line_count: int = consolelog_file_trimmed.count(b'\n')
-
-                if trimmed_line_count > SIZE_LIMIT_MIN_LINES:
-                    consolelog_file_b.seek(0)
-                    consolelog_file_b.truncate()
-                    consolelog_file_b.write(consolelog_file_trimmed)
-                else:
-                    self.log.error(f"Trimmed line count will be {trimmed_line_count} (< {SIZE_LIMIT_MIN_LINES}), aborting (trim len = {len(consolelog_file_trimmed)})")
-        except PermissionError as error:
-            self.log.error(f"Failed to trim console.log: {error}")
 
     # setup
     now_in_menus: bool = False
@@ -119,10 +102,6 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
     found_first_wav_cache: bool = False
     with_optimization: bool = True  # "with" optimization, not "with optimization"
     chat_safety: bool = True
-    self.kataiser_scan_loop += 1
-    kataiser_scan: bool = self.kataiser_scan_loop == KATAISER_LOOP_FREQ if not force else True
-    if kataiser_scan:
-        self.kataiser_scan_loop = 0
     user_is_kataiser: bool = 'Kataiser' in user_usernames
     kataiser_seen_on: str = ''
     # TODO: detection for canceling loading into community servers (if possible)
@@ -155,8 +134,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
         # this (probably) improves performance
         # same goes for chat logs, this one's actually to reduce false detections
         if (with_optimization and 'with' in line) or (chat_safety and ' :  ' in line):
-            if not kataiser_scan or user_is_kataiser or 'Kataiser' not in line:
-                continue
+            continue
 
         if not in_menus:
             for menus_message in menus_messages:
@@ -187,7 +165,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
             elif 'Missing map' in line and 'Missing map material' not in line:
                 now_in_menus = True
 
-            if kataiser_scan and not user_is_kataiser and '[U:1:160315024]' in line:
+            if not user_is_kataiser and '[U:1:160315024]' in line:
                 kataiser_seen_on = tf2_map
 
         elif 'SV_ActivateServer' in line:  # full line: "SV_ActivateServer: setting tickrate to 66.7"
@@ -279,74 +257,13 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], kb_limit: f
         self.log.debug(f"Hiding queued state (\"{queued_state}\" to \"Queued\")")
         queued_state = "Queued"
 
-    scan_results = ConsoleLogParsed(in_menus, tf2_map, tf2_class, queued_state, hosting, server_name, server_players, server_players_max)
-    self.log.debug(f"console.log parse results: {scan_results}")
+    parse_results = ConsoleLogParsed(in_menus, tf2_map, tf2_class, queued_state, hosting, server_name, server_players, server_players_max, file_position)
+    self.log.debug(f"console.log parse results (initial = {is_initial_parse}): {parse_results}")
 
     if gui_updates != 0:
         self.log.debug(f"Mid-parse GUI updates: {gui_updates}")
 
-    # remove empty lines (bot spam probably) and some error logs
-    # TODO: move this into a function
-    if (in_menus and settings.get('trim_console_log') and not force and self.cleanup_primed) or self.gui.clean_console_log:
-        if self.gui.clean_console_log:
-            self.log.debug("Forcing cleanup of console.log")
-        else:
-            self.log.debug("Potentially cleaning up console.log")
-
-        console_log_lines_out: List[str] = []
-        total_line_count: int = 0
-        blank_line_count: int = 0
-        error_line_count: int = 0
-
-        with open(console_log_path, 'r', encoding='UTF8', errors='replace') as console_log_read:
-            console_log_lines_in: List[str] = console_log_read.readlines()
-
-        error_substrings: Tuple[str, ...] = ('bad reference count', 'particle system', 'DataTable warning', 'SOLID_VPHYSICS', 'BlockingGetDataPointer', 'No such variable')
-        if user_is_kataiser:
-            error_substrings += ('Usage: spec_player',)  # cause I have a bind that errors a lot
-
-        for line in console_log_lines_in:
-            remove_line: bool = False
-
-            for error_substring in error_substrings:
-                if error_substring in line and ' :  ' not in line:
-                    remove_line = True
-                    error_line_count += 1
-                    break
-
-            if not remove_line:
-                if line.strip(' \t') == '\n':
-                    remove_line = True
-                    blank_line_count += 1
-
-            if remove_line:
-                total_line_count += 1
-            else:
-                console_log_lines_out.append(line)
-
-        line_count_text: str = f"{error_line_count} error lines and {blank_line_count} blank lines (total: {total_line_count})"
-
-        if total_line_count >= (1 if self.gui.clean_console_log else 50):
-            with open(console_log_path, 'w', encoding='UTF8') as console_log_write:
-                for line in console_log_lines_out:
-                    console_log_write.write(line)
-
-            self.last_console_log_size = os.stat(console_log_path).st_size
-            self.log.debug(f"Removed {line_count_text} from console.log")
-        else:
-            self.log.debug(f"Didn't remove {line_count_text} from console.log")
-
-        if self.gui.clean_console_log:
-            self.gui.pause()
-            messagebox.showinfo("TF2 Rich Presence", f"Removed {line_count_text} from console.log.")
-            self.gui.unpause()
-            self.gui.clean_console_log = False
-
-        self.cleanup_primed = False
-    else:
-        self.cleanup_primed = True
-
-    return scan_results
+    return parse_results
 
 
 # check if any characters outside of ASCII exist in any usernames

@@ -53,7 +53,6 @@ class GUI(tk.Frame):
         self.blank_image: ImageTk.PhotoImage = ImageTk.PhotoImage(Image.new('RGBA', (1, 1), color=(0, 0, 0, 0)))
         self.paused_image: ImageTk.PhotoImage = ImageTk.PhotoImage(Image.new('RGBA', self.size, (0, 0, 0, 128)))
         self.vignette: Image = self.load_image('vignette').resize(self.size)
-        self.clean_console_log: bool = False
         self.text_state: Tuple[str, ...] = ('',)
         self.bg_state: Tuple[str, int, int] = ('', 0, 0)
         self.fg_state: str = ''
@@ -77,7 +76,6 @@ class GUI(tk.Frame):
         self.file_menu.add_command(label=self.loc.text("Change settings"), command=self.menu_open_settings, accelerator="Ctrl+S")
         self.file_menu.add_command(label=self.loc.text("Restore default settings"), command=self.menu_restore_defaults)
         self.file_menu.add_command(label=self.loc.text("Open console.log"), command=self.menu_open_console_log, state=tk.DISABLED)
-        self.file_menu.add_command(label=self.loc.text("Trim/clean console.log"), command=self.menu_clean_console_log, state=tk.DISABLED)
         self.file_menu.add_command(label=self.loc.text("Open save directory"), command=self.menu_open_save_directory)
         self.file_menu.add_command(label=self.loc.text("Exit"), command=self.menu_exit, accelerator="Ctrl+Q")
         self.console_log_command_indices: Tuple[int, int] = (2, 3)
@@ -501,11 +499,6 @@ class GUI(tk.Frame):
                 self.log.debug("Didn't restore default settings")
 
         self.unpause()
-
-    def menu_clean_console_log(self, *args):
-        self.log.info("GUI: Cleaning console.log next loop")
-        self.clean_console_log = True  # console_log.py will see this and force a cleanup
-        # TODO: do this immediately instead of waiting till next scan
 
     def menu_exit(self, *args):
         self.log.info("GUI: Exiting")

@@ -55,75 +55,44 @@ class TestTF2RichPresence(unittest.TestCase):
         recent_time = int(time.time()) - 10
         app = main.TF2RichPresense(self.log, set_process_priority=False)
 
-        self.assertEqual(app.interpret_console_log('test_resources\\console_in_menus.log', {'not Kataiser'}, float('inf'), True),
+        self.assertEqual(app.interpret_console_log('test_resources\\console_in_menus.log', {'not Kataiser'}, True),
+                         console_log.ConsoleLogParsed(True, '', '', 'Not queued', False, file_position=9325172))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_queued_casual.log', {'not Kataiser'}, True),
+                         console_log.ConsoleLogParsed(True, '', '', 'Queued for Casual', False, file_position=9330226))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', {'not Kataiser'}, True),
+                         console_log.ConsoleLogParsed(False, 'pl_badwater', 'Pyro', 'Not queued', True, file_position=9333634))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', {'not Kataiser'}, True, tf2_start_time=recent_time),
                          console_log.ConsoleLogParsed(True, '', '', 'Not queued', False))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_in_menus.log', {'not Kataiser'}, 4, True),
-                         console_log.ConsoleLogParsed(True, '', '', 'Not queued', False))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_queued_casual.log', {'not Kataiser'}, float('inf'), True),
-                         console_log.ConsoleLogParsed(True, '', '', 'Queued for Casual', False))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', {'not Kataiser'}, float('inf'), True),
-                         console_log.ConsoleLogParsed(False, 'pl_badwater', 'Pyro', 'Not queued', True))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', {'not Kataiser'}, float('inf'), True, recent_time),
-                         console_log.ConsoleLogParsed(True, '', '', 'Not queued', False))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', {'not Kataiser'}, 0.2, True),
-                         console_log.ConsoleLogParsed(True, '', '', 'Not queued', False))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_custom_map.log', {'not Kataiser'}, float('inf'), True),
-                         console_log.ConsoleLogParsed(False, 'cp_catwalk_a5c', 'Soldier', 'Not queued', True))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_soundemitter.log', {'not Kataiser'}, float('inf'), True),
-                         console_log.ConsoleLogParsed(True, '', '', 'Not queued', False))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_queued_in_game.log', {'not Kataiser'}, float('inf'), True),
-                         console_log.ConsoleLogParsed(False, 'itemtest', 'Heavy', 'Queued for Casual', True))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_canceled_load.log', {'not Kataiser'}, float('inf'), True),
-                         console_log.ConsoleLogParsed(True, '', '', 'Not queued', False))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_chat.log', {'not Kataiser'}, float('inf'), True),
-                         console_log.ConsoleLogParsed(False, 'itemtest', 'Scout', 'Not queued', True))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_empty.log', {'not Kataiser'}, float('inf'), True),
-                         console_log.ConsoleLogParsed(True, '', '',  'Not queued', False))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_tf2bd.log', {'Kataiser'}, float('inf'), True),
-                         console_log.ConsoleLogParsed(False, 'ctf_turbine', 'Soldier', 'Not queued', False))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_community_disconnect.log', {'not Kataiser'}, float('inf'), True),
-                         console_log.ConsoleLogParsed(True, '', '', 'Not queued', False))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_community_disconnect2.log', {'not Kataiser'}, float('inf'), True),
-                         console_log.ConsoleLogParsed(False, 'vsh_military_area_se6', 'Heavy', 'Not queued', False))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_blanks.log', {'not Kataiser'}, float('inf'), True),
-                         console_log.ConsoleLogParsed(False, 'sd_doomsday_event', 'Pyro', 'Not queued', False))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_map_material.log', {'not Kataiser'}, float('inf'), True),
-                         console_log.ConsoleLogParsed(False, 'koth_slaughter_event', '', 'Queued for Casual', False))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_valve_server.log', {'not Kataiser'}, float('inf'), True),
-                         console_log.ConsoleLogParsed(False, 'pd_atom_smash', 'Heavy', 'Not queued', False, 'Valve Matchmaking Server (Virginia)', 19, 24))
-        self.assertEqual(app.interpret_console_log('test_resources\\console_community_server.log', {'not Kataiser'}, float('inf'), True),
-                         console_log.ConsoleLogParsed(False, 'pl_swiftwater_final1', 'Soldier', 'Not queued', False, 'Uncletopia | Montréal | 3 | On…', 62, 64))
-
-
-        # tests trimming
-        trimtest_small = 'test_resources\\console_badwater.log'
-        trimtest_big = 'test_resources\\console_badwater_big.log'
-        shutil.copy(trimtest_small, trimtest_big)
-        with open(trimtest_big, 'rb+') as console_badwater_sacrifice:
-            console_badwater_sacrifice.write(console_badwater_sacrifice.read())  # this just doubles the file size
-        initial_size = os.stat(trimtest_big).st_size
-        self.assertEqual(app.interpret_console_log(trimtest_big, {'not Kataiser'}),
-                         console_log.ConsoleLogParsed(False, 'pl_badwater', 'Pyro', 'Not queued', True))
-        trimmed_size = os.stat(trimtest_big).st_size
-        self.assertLess(trimmed_size, initial_size)
-        self.assertEqual(trimmed_size, (1024 ** 2) * 2)
-        os.remove(trimtest_big)
-
-        # tests removing error and empty lines
-        errorstest_big = 'test_resources\\console_in_menus.log'
-        errorstest_small = 'test_resources\\console_in_menus_small.log'
-        shutil.copy(errorstest_big, errorstest_small)
-        initial_size = os.stat(errorstest_small).st_size
-        with open(errorstest_small, 'r', encoding='UTF8') as errorstest_small_unclean:
-            self.assertTrue('DataTable warning' in errorstest_small_unclean.read())
-        app.interpret_console_log(errorstest_small, {'not Kataiser'}, float('inf'))
-        cleaned_size = os.stat(errorstest_small).st_size
-        self.assertLess(cleaned_size, initial_size)
-        with open(errorstest_small, 'r', encoding='UTF8') as errorstest_small_cleaned:
-            self.assertFalse('DataTable warning' in errorstest_small_cleaned.read())
-        self.assertEqual(app.interpret_console_log(errorstest_small, {'not Kataiser'}, float('inf')),
-                         console_log.ConsoleLogParsed(True, '', '', 'Not queued', False))
-        os.remove(errorstest_small)
+        self.assertEqual(app.interpret_console_log('test_resources\\console_custom_map.log', {'not Kataiser'}, True),
+                         console_log.ConsoleLogParsed(False, 'cp_catwalk_a5c', 'Soldier', 'Not queued', True, file_position=9328261))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_soundemitter.log', {'not Kataiser'}, True),
+                         console_log.ConsoleLogParsed(True, '', '', 'Not queued', False, file_position=2915843))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_queued_in_game.log', {'not Kataiser'}, True),
+                         console_log.ConsoleLogParsed(False, 'itemtest', 'Heavy', 'Queued for Casual', True, file_position=4965728))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_canceled_load.log', {'not Kataiser'}, True),
+                         console_log.ConsoleLogParsed(True, '', '', 'Not queued', False, file_position=3270628))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_chat.log', {'not Kataiser'}, True),
+                         console_log.ConsoleLogParsed(False, 'itemtest', 'Scout', 'Not queued', True, file_position=3276283))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_empty.log', {'not Kataiser'}, True),
+                         console_log.ConsoleLogParsed(True, '', '',  'Not queued', False, file_position=67))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_tf2bd.log', {'Kataiser'}, True),
+                         console_log.ConsoleLogParsed(False, 'ctf_turbine', 'Soldier', 'Not queued', False, file_position=6312533))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_community_disconnect.log', {'not Kataiser'}, True),
+                         console_log.ConsoleLogParsed(True, '', '', 'Not queued', False, file_position=22418))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_community_disconnect2.log', {'not Kataiser'}, True),
+                         console_log.ConsoleLogParsed(False, 'vsh_military_area_se6', 'Heavy', 'Not queued', False, file_position=22160))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_blanks.log', {'not Kataiser'}, True),
+                         console_log.ConsoleLogParsed(False, 'sd_doomsday_event', 'Pyro', 'Not queued', False, file_position=94920))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_map_material.log', {'not Kataiser'}, True),
+                         console_log.ConsoleLogParsed(False, 'koth_slaughter_event', '', 'Queued for Casual', False, file_position=9612))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_valve_server.log', {'not Kataiser'}, True),
+                         console_log.ConsoleLogParsed(False, 'pd_atom_smash', 'Heavy', 'Not queued', False, 'Valve Matchmaking Server (Virginia)', 19, 24, 824501))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_community_server.log', {'not Kataiser'}, True),
+                         console_log.ConsoleLogParsed(False, 'pl_swiftwater_final1', 'Soldier', 'Not queued', False, 'Uncletopia | Montréal | 3 | On…', 62, 64, file_position=483227))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_file_position_1.log', {'not Kataiser'}, True),
+                         console_log.ConsoleLogParsed(False, 'koth_mannhole', 'Sniper', 'Not queued', True, 'Team Fortress', 18, 24, file_position=27014))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_file_position_2.log', {'not Kataiser'}, True, from_game_state=app.game_state),
+                         console_log.ConsoleLogParsed(False, 'koth_mannhole', 'Scout', 'Not queued', True, 'Team Fortress', 16, 24, file_position=194861))
 
         app.gui.master.destroy()
 

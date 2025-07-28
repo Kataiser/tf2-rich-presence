@@ -19,7 +19,7 @@ class GUI(tk.Frame):
     def __init__(self, master: tk.Toplevel, log: logger.Log, position: Optional[tuple] = None, reload_settings: Optional[tuple] = None):
         self.log: logger.Log = log
         self.log.info(f"Opening settings menu for TF2 Rich Presence {launcher.VERSION}")
-        self.gui_language: Optional[str] = localization.langs[localization.langs.index(reload_settings[8].get())] if reload_settings else None
+        self.gui_language: Optional[str] = localization.langs[localization.langs.index(reload_settings[7].get())] if reload_settings else None
         self.loc: localization.Localizer = localization.Localizer(self.log, self.gui_language if self.gui_language else settings.get('language'))
 
         self.log_levels: Tuple[str, ...] = ('Debug', 'Info', 'Error', 'Critical', 'Off')
@@ -32,8 +32,8 @@ class GUI(tk.Frame):
 
         if reload_settings:
             # the GUI was reloaded with a new language, so persist the currently selected (but not saved) settings
-            self.sentry_level, self.wait_time, self.wait_time_slow, self.check_updates, self.request_timeout, self.hide_queued_gamemode, self.log_level, self.console_scan_kb, \
-            self.language, self.top_line, self.bottom_line, self.trim_console_log, self.gui_scale, self.drawing_gamemodes, self.preserve_window_pos = reload_settings
+            self.sentry_level, self.wait_time, self.wait_time_slow, self.check_updates, self.request_timeout, self.hide_queued_gamemode, self.log_level, \
+            self.language, self.top_line, self.bottom_line, self.gui_scale, self.drawing_gamemodes, self.preserve_window_pos = reload_settings
         else:
             # create every setting variable without values
             self.sentry_level: tk.StringVar = tk.StringVar()
@@ -43,11 +43,9 @@ class GUI(tk.Frame):
             self.request_timeout: tk.IntVar = tk.IntVar()
             self.hide_queued_gamemode: tk.BooleanVar = tk.BooleanVar()
             self.log_level: tk.StringVar = tk.StringVar()
-            self.console_scan_kb: tk.IntVar = tk.IntVar()
             self.language: tk.StringVar = tk.StringVar()
             self.top_line: tk.StringVar = tk.StringVar()
             self.bottom_line: tk.StringVar = tk.StringVar()
-            self.trim_console_log: tk.BooleanVar = tk.BooleanVar()
             self.gui_scale: tk.IntVar = tk.IntVar()
             self.drawing_gamemodes: tk.BooleanVar = tk.BooleanVar()
             self.preserve_window_pos: tk.BooleanVar = tk.BooleanVar()
@@ -66,11 +64,9 @@ class GUI(tk.Frame):
                 self.request_timeout.set(self.settings_loaded['request_timeout'])
                 self.hide_queued_gamemode.set(self.settings_loaded['hide_queued_gamemode'])
                 self.log_level.set(self.settings_loaded['log_level'])
-                self.console_scan_kb.set(self.settings_loaded['console_scan_kb'])
                 self.language.set(self.gui_language if self.gui_language else self.settings_loaded['language'])
                 self.top_line.set(self.settings_loaded['top_line'])
                 self.bottom_line.set(self.settings_loaded['bottom_line'])
-                self.trim_console_log.set(self.settings_loaded['trim_console_log'])
                 self.gui_scale.set(self.settings_loaded['gui_scale'])
                 self.drawing_gamemodes.set(self.settings_loaded['drawing_gamemodes'])
                 self.preserve_window_pos.set(self.settings_loaded['preserve_window_pos'])
@@ -123,7 +119,7 @@ class GUI(tk.Frame):
             self.loc.text("Check for program updates when launching")))
         setting6_frame = ttk.Frame(self.lf_advanced)
         setting6_text = ttk.Label(setting6_frame, text="{}".format(
-            self.loc.text("Internet connection timeout (for updater and server querying): ")))
+            self.loc.text("Internet connection timeout (for update querying): ")))
         setting6_option = ttk.Spinbox(setting6_frame, textvariable=self.request_timeout, width=6, from_=0, to=float('inf'), validate='all', validatecommand=(check_int_command, '%P'),
                                       command=self.setting_changed)
         setting8 = ttk.Checkbutton(self.lf_main, variable=self.hide_queued_gamemode, command=self.setting_changed, text="{}".format(
@@ -134,11 +130,6 @@ class GUI(tk.Frame):
         setting9_radiobuttons = []
         for log_level_text in self.log_levels_display:
             setting9_radiobuttons.append(ttk.Radiobutton(setting9_frame, variable=self.log_level, text=log_level_text, value=log_level_text, command=self.setting_changed))
-        setting10_frame = ttk.Frame(self.lf_advanced)
-        setting10_text = ttk.Label(setting10_frame, text="{}".format(
-            self.loc.text("Max kilobytes of console.log to scan: ")))
-        setting10_option = ttk.Spinbox(setting10_frame, textvariable=self.console_scan_kb, width=8, from_=0, to=float('inf'), validate='all', validatecommand=(check_int_command, '%P'),
-                                       command=self.setting_changed)
         setting13_frame = ttk.Frame(self.lf_main)
         setting13_text = ttk.Label(setting13_frame, text="{}".format(
             self.loc.text("Language: ")))
@@ -149,8 +140,6 @@ class GUI(tk.Frame):
         setting14_radiobuttons = []
         for rpc_line_text in self.rpc_lines_display:
             setting14_radiobuttons.append(ttk.Radiobutton(setting14_frame, variable=self.bottom_line, text=rpc_line_text, value=rpc_line_text, command=self.setting_changed))
-        setting15 = ttk.Checkbutton(self.lf_advanced, variable=self.trim_console_log, command=self.setting_changed, text="{}".format(
-            self.loc.text("Occasionally limit console.log's size and remove empty lines and common errors")))
         setting16_frame = ttk.Frame(self.lf_main)
         setting16_text = ttk.Label(setting16_frame, text="{}".format(
             self.loc.text("Delay between refreshes when TF2 and Discord aren't running: ")))  # and Steam but whatever
@@ -187,8 +176,6 @@ class GUI(tk.Frame):
         setting9_text.pack(side='left', fill='none', expand=False)
         for setting9_radiobutton in setting9_radiobuttons:
             setting9_radiobutton.pack(side='left', fill='none', expand=False, padx=(0, 5))
-        setting10_text.pack(side='left', fill='none', expand=False)
-        setting10_option.pack(side='left', fill='none', expand=False)
         setting13_text.pack(side='left', fill='none', expand=False)
         setting13_options.pack(side='left', fill='none', expand=False)
         setting14_text.pack(side='left', fill='none', expand=False)
@@ -209,11 +196,9 @@ class GUI(tk.Frame):
         setting19_frame.grid(row=3, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(3, 0))
         setting14_frame.grid(row=4, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(3, 0))
         setting18_frame.grid(row=5, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(0, 0))
-        setting10_frame.grid(row=6, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(11, 0))
         setting20.grid(row=7, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
         setting8.grid(row=8, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
         setting21.grid(row=9, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
-        setting15.grid(row=10, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 0))
         setting5.grid(row=11, sticky=tk.W, columnspan=2, padx=(20, 40), pady=(4, 10))
         setting6_frame.grid(row=12, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
         setting1_frame.grid(row=14, columnspan=2, sticky=tk.W, padx=(20, 40), pady=(4, 0))
@@ -277,7 +262,7 @@ class GUI(tk.Frame):
             self.bottom_line.set(self.rpc_lines[self.rpc_lines_display.index(self.bottom_line.get())])
 
             selected_settings: tuple = (self.sentry_level, self.wait_time, self.wait_time_slow, self.check_updates, self.request_timeout, self.hide_queued_gamemode, self.log_level,
-                                        self.console_scan_kb, self.language, self.top_line, self.bottom_line, self.trim_console_log, self.gui_scale, self.drawing_gamemodes, self.preserve_window_pos)
+                                        self.language, self.top_line, self.bottom_line, self.gui_scale, self.drawing_gamemodes, self.preserve_window_pos)
             self.window_x = self.master.winfo_rootx() - 8
             self.window_y = self.master.winfo_rooty() - 31
             self.__init__(self.master, self.log, reload_settings=selected_settings)
@@ -291,11 +276,9 @@ class GUI(tk.Frame):
                 'request_timeout': max(self.request_timeout.get(), 1),
                 'hide_queued_gamemode': self.hide_queued_gamemode.get(),
                 'log_level': self.log_levels[self.log_levels_display.index(self.log_level.get())],
-                'console_scan_kb': self.console_scan_kb.get(),
                 'language': localization.langs[localization.langs_localized.index(self.language.get())],
                 'top_line': self.rpc_lines[self.rpc_lines_display.index(self.top_line.get())],
                 'bottom_line': self.rpc_lines[self.rpc_lines_display.index(self.bottom_line.get())],
-                'trim_console_log': self.trim_console_log.get(),
                 'gui_scale': self.gui_scale.get(),
                 'drawing_gamemodes': self.drawing_gamemodes.get(),
                 'preserve_window_pos': self.preserve_window_pos.get()}
@@ -322,11 +305,9 @@ class GUI(tk.Frame):
             self.request_timeout.set(settings.get_setting_default('request_timeout'))
             self.hide_queued_gamemode.set(settings.get_setting_default('hide_queued_gamemode'))
             self.log_level.set(settings.get_setting_default('log_level'))
-            self.console_scan_kb.set(settings.get_setting_default('console_scan_kb'))
             self.language.set(settings.get_setting_default('language'))
             self.top_line.set(settings.get_setting_default('top_line'))
             self.bottom_line.set(settings.get_setting_default('bottom_line'))
-            self.trim_console_log.set(settings.get_setting_default('trim_console_log'))
             self.gui_scale.set(settings.get_setting_default('gui_scale'))
             self.drawing_gamemodes.set(settings.get_setting_default('drawing_gamemodes'))
 
@@ -367,8 +348,8 @@ class GUI(tk.Frame):
 
     # a spinbox can be set to blank, so set it to defualt in that case
     def fix_blank_spinboxes(self):
-        int_settings: tuple = (self.wait_time, self.wait_time_slow, self.request_timeout, self.console_scan_kb)
-        int_settings_str: Tuple[str, ...] = ('wait_time', 'wait_time_slow', 'request_timeout', 'console_scan_kb')
+        int_settings: tuple = (self.wait_time, self.wait_time_slow, self.request_timeout)
+        int_settings_str: Tuple[str, ...] = ('wait_time', 'wait_time_slow', 'request_timeout')
 
         for int_setting in int_settings:
             try:

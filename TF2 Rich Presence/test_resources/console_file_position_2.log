@@ -1,0 +1,3055 @@
+For FCVAR_REPLICATED, ConVar must be defined in client and game .dlls (sv_use_steam_voice)
+[TF Workshop] Got 5 subscribed maps, 5 new
+ProtoDefs post data loaded.
+ProtoDefs loaded. 43.17 MB used
+ProtoDefs post data loaded.
+ProtoDefs loaded. 43.17 MB used
+maxplayers set to 24
+Steam config directory: C:\Program Files (x86)\Steam\steamapps\common\Team Fortress 2\platform\config
+CClientSteamContext logged on = 1
+Convar tf_impactwatertimeenable has conflicting FCVAR_CHEAT flags (child: FCVAR_CHEAT, parent: no FCVAR_CHEAT, parent wins)
+Parent cvar in server.dll not allowed (tf_mvm_max_invaders)
+Parent cvar in server.dll not allowed (tf_mvm_max_connected_players)
+Convar cl_particle_retire_cost has conflicting FCVAR_CHEAT flags (child: FCVAR_CHEAT, parent: no FCVAR_CHEAT, parent wins)
+Convar r_drawropes has conflicting FCVAR_CHEAT flags (child: FCVAR_CHEAT, parent: no FCVAR_CHEAT, parent wins)
+KeyValues Error: RecursiveLoadFromBuffer:  got } in key in file resource/clientscheme_fonts.res
+Scheme, CustomFontFiles, resource/linux_fonts/FiraSans-Regular.ttf, (*7*), (*russian*), 
+Failed to load custom font file '19'
+Failed to load custom font file '20'
+Failed to load custom font file '21'
+Failed to load custom font file '22'
+Failed to load custom font file '23'
+Failed to load custom font file '24'
+Failed to load custom font file '25'
+Failed to load custom font file '26'
+KeyValues Error: RecursiveLoadFromBuffer:  got } in key in file Resource/clientscheme_fonts.res
+Scheme, CustomFontFiles, resource/linux_fonts/FiraSans-Regular.ttf, (*7*), (*russian*), 
+Failed to load custom font file '19'
+Failed to load custom font file '20'
+Failed to load custom font file '21'
+Failed to load custom font file '22'
+Failed to load custom font file '23'
+Failed to load custom font file '24'
+Failed to load custom font file '25'
+Failed to load custom font file '26'
+ProtoDefs post data loaded.
+ProtoDefs loaded. 43.17 MB used
+ProtoDefs post data loaded.
+ProtoDefs loaded. 43.17 MB used
+KeyValues Error: RecursiveLoadFromBuffer:  got } in key in file resource/clientscheme_fonts.res
+Scheme, CustomFontFiles, resource/linux_fonts/FiraSans-Regular.ttf, (*7*), (*russian*), 
+Failed to load custom font file '19'
+Failed to load custom font file '20'
+Failed to load custom font file '21'
+Failed to load custom font file '22'
+Failed to load custom font file '23'
+Failed to load custom font file '24'
+Failed to load custom font file '25'
+Failed to load custom font file '26'
+Cleaning up unneeded replay block data...
+Replay cleanup done.
+Loading default settings for high sensitivity
+Unable to bind a key for command "save_replay" after 107 attempt(s).
+Unable to bind a key for command "+attack3" after 107 attempt(s).
+Unable to bind a key for command "show_quest_log" after 107 attempt(s).
+Unable to bind a key for command "say_party" after 107 attempt(s).
+ProtoDefs post data loaded.
+ProtoDefs post data loaded.
+Connection to game coordinator established.
+KeyValues Error: RecursiveLoadFromBuffer:  got } in key in file Resource/clientscheme_fonts.res
+Scheme, CustomFontFiles, resource/linux_fonts/FiraSans-Regular.ttf, (*7*), (*russian*), 
+Failed to load custom font file '19'
+Failed to load custom font file '20'
+Failed to load custom font file '21'
+Failed to load custom font file '22'
+Failed to load custom font file '23'
+Failed to load custom font file '24'
+Failed to load custom font file '25'
+Failed to load custom font file '26'
+Current item schema is up-to-date with version EAB1F148.
+CTFGCClientSystem::PostInitGC
+CTFGCClientSystem - adding listener
+ProtoDefs post data loaded.
+ProtoDefs post data loaded.
+'overrides/pre_comfig.cfg' not present; not executing.
+Lobby-based matchmaking mode not active
+Can't alias "kill" as it's already a ConCommand or ConVar and not an input command (+/-).
+Can't alias "explode" as it's already a ConCommand or ConVar and not an input command (+/-).
+Can't alias "commentary_finishnode" as it's already a ConCommand or ConVar and not an input command (+/-).
+Unknown command "r_shadowlod"
+Unknown command "cat_ipc_exec_all"
+Unknown command "cat_detach"
+Unknown command "block_game_overrides_once"
+'overrides/setup_hook.cfg' not present; not executing.
+Ultra preset selected 
+'addons/disable-pyroland.cfg' not present; not executing.
+'addons/flat-mouse.cfg' not present; not executing.
+'addons/lowmem.cfg' not present; not executing.
+'addons/no-footsteps.cfg' not present; not executing.
+'addons/no-soundscapes.cfg' not present; not executing.
+'addons/no-tutorial.cfg' not present; not executing.
+'addons/null-canceling-movement.cfg' not present; not executing.
+'addons/transparent-viewmodels.cfg' not present; not executing.
+Unknown command "r_shadowlod"
+Modules applied 
+ 
+ 
+ 
+ 
+---------------|||||-------------------- 
+----------||||||||||-------------------- 
+-------||||||||------------------------- 
+-----||||||-----||||||||---------------- 
+---|||||----||||||||||||||||------------ 
+--||||----|||||||------|||||||---------- 
+-||||---|||||--------------|||||-------- 
+-|||---||||------------------||||------- 
+|||---||||--------------------||||------ 
+|||---|||----------------------|||------ 
+|||---|||----------------------|||---||| 
+|||---|||----------------------|||---||| 
+|||---||||--------------------||||---||| 
+||||---||||------------------||||---|||| 
+|||||---|||||--------------|||||---||||| 
+||||||---||||||||------|||||||----|||||| 
+||||||||----||||||||||||||||----|||||||| 
+|||--||||||-----||||||||-----||||||--||| 
+|||----||||||||----------||||||||----||| 
+|||-------||||||||||||||||||||-------||| 
+|||-----------||||||||||||-----------||| 
+ 
+ 
+ 
+ 
+  ********************************** 
+  ********************************** 
+  mastercomfig 9.10.3 loaded 
+  May 6, 2024 
+  ********************************** 
+  ********************************** 
+ 
+ 
+ 
+ 
+  ################################################## 
+  This release took 50 hours to produce. 
+  If you like the work I do, consider supporting me! 
+ 
+  docs.comfig.app/latest/support_me 
+ 
+  I accept Ko-fi, Liberapay, and trade offers! 
+ 
+  Your continued support, gratitude and dedication 
+  are much appreciated. Thank you so much! 
+  ################################################## 
+ 
+ 
+ 
+ 
+------------------------------------------------------------------------------------------------------------- 
+Client settings initiated 
+Can't use cheat cvar mat_fullbright in multiplayer, unless the server has sv_cheats set to 1.
+Can't use cheat cvar mat_drawwater in multiplayer, unless the server has sv_cheats set to 1.
+Aliases initiated 
+Various binds initiated 
+Engineer build binds initiated 
+Network settings initiated 
+Blood toggle initiated 
+Hitsound initiated 
+Scoreboard toggle initiated 
+Numpad binds initiated 
+Movie rendering initiated 
+------------------------------------------------------------------------------------------------------------- 
+Can't alias "mat_antialias" as it's already a ConCommand or ConVar and not an input command (+/-).
+Creating fallback sound cache at: c:\program files (x86)\steam\steamapps\common\team fortress 2\tf\sound_workshop
+[TF Workshop] Got updated information for map [ workshop/koth_mannhole_b1.ugc3478225408 ]
+[TF Workshop] Got updated information for map [ workshop/koth_snobed_a1.ugc2889109326 ]
+[TF Workshop] Got updated information for map [ workshop/koth_sewer_b3.ugc3329421443 ]
+[TF Workshop] Got updated information for map [ workshop/pl_blocked_b14.ugc3475774414 ]
+[TF Workshop] Got updated information for map [ workshop/cp_gravelpit_snowy_rc1.ugc2880304700 ]
+Network: IP 192.168.1.249, mode MP, dedicated No, ports 27015 SV / 27005 CL
+env_cubemap used on world geometry without rebuilding map. . ignoring: maps/koth_mannhole/metal/blendwetmudground003a_sewer_wvt_patch
+Missing map material: LIGHTS/GRADIENT_WINDOW_ONSEN002
+Using map cycle file 'cfg/mapcycle_default.txt'.  ('cfg\mapcycle.txt' was not found.)
+VSCRIPT: Started VScript virtual machine using script language 'Squirrel'
+Script not found (scripts/vscripts/mapspawn.nut) 
+Dynamic prop prop_dynamic: no sequence named:spin
+Dynamic prop prop_dynamic: no sequence named:spin
+prop_dynamic executing script: rat
+prop_dynamic executing script: rat
+prop_dynamic executing script: rat
+prop_dynamic executing script: rat
+prop_dynamic executing script: rat
+prop_dynamic executing script: rat
+prop_dynamic executing script: rat
+Set motd from file 'cfg/motd_default.txt'.  ('cfg/motd.txt' was not found.)
+Set motd_text from file 'cfg/motd_text_default.txt'.  ('cfg/motd_text.txt' was not found.)
+SV_ActivateServer: setting tickrate to 66.7
+Connection to game coordinator established.
+Current item schema is up-to-date with version EAB1F148.
+'overrides/listenserver.cfg' not present; not executing.
+'koth_mannhole.cfg' not present; not executing.
+
+Team Fortress
+Map: koth_mannhole
+Players: 1 / 24
+Build: 9930791
+Server Number: 1
+
+Attemped to precache unknown particle system "burning_trash_master"!
+Attemped to precache unknown particle system "burning_trash_embers"!
+Attemped to precache unknown particle system "burning_trash_smoke"!
+Attemped to precache unknown particle system "sewer_flies"!
+Attemped to precache unknown particle system "sewer_flies_sml"!
+Attemped to precache unknown particle system "sewer_fog_ground"!
+Attemped to precache unknown particle system "sewer_guttersplash"!
+Attemped to precache unknown particle system "sewer_gutterdrip"!
+Attemped to precache unknown particle system "sewer_splashripple"!
+Attemped to precache unknown particle system "sewer_bottomwaves"!
+Attemped to precache unknown particle system "sewer_rocksplash"!
+Attemped to precache unknown particle system "sewer_rocksplash_2"!
+Attemped to precache unknown particle system "sewer_waterfall_sides"!
+Attemped to precache unknown particle system "sewer_drip_radial"!
+Attemped to precache unknown particle system "sewer_stink_sml"!
+Attemped to precache unknown particle system "sewer_stink"!
+Attemped to precache unknown particle system "sewer_manhole_steam"!
+The server is using sv_pure 0.  (Enforcing consistency for select files only)
+Cannot figure out which search path sound\physics\metal\metal_grenade_roll_loop1.wav came from. Not playing.
+Cannot figure out which search path sound\weapons\timer.wav came from. Not playing.
+Cannot figure out which search path sound\items\pyro_guitar_solo_with_verb.wav came from. Not playing.
+Cannot figure out which search path sound\player\sniper_taunt_hawk.wav came from. Not playing.
+Cannot figure out which search path sound\player\taunt_pyro_twirl.wav came from. Not playing.
+Cannot figure out which search path sound\player\taunt_yeti_standee_spy_swing1.wav came from. Not playing.
+Cannot figure out which search path sound\player\taunt_yeti_standee_spy_swing2.wav came from. Not playing.
+Cannot figure out which search path sound\player\cyoa_pda_dial1.wav came from. Not playing.
+Cannot figure out which search path sound\player\cyoa_pda_dial2.wav came from. Not playing.
+Cannot figure out which search path sound\player\cyoa_pda_dial3.wav came from. Not playing.
+Cannot figure out which search path sound\player\cyoa_pda_dial4.wav came from. Not playing.
+Cannot figure out which search path sound\player\cyoa_pda_dial5.wav came from. Not playing.
+Cannot figure out which search path sound\ui\quest_status_complete.wav came from. Not playing.
+Cannot figure out which search path sound\weapons\shotgun_cock.wav came from. Not playing.
+Cannot figure out which search path sound\weapons\airstrike_fail.wav came from. Not playing.
+Cannot figure out which search path sound\vo\halloween_eyeball\eyeball_biglaugh02.mp3 came from. Not playing.
+MP3 is completely missing, sound system will be upset to learn of this [ vo\halloween_eyeball\eyeball_biglaugh02.mp3 ]
+Voice_Init: Using Steam voice optimal sample rate 24000
+Kataiser connected
+CAsyncWavDataCache:  0 .wavs total 0 bytes, 0.00 % of capacity
+Compact freed 430080 bytes
+Using joystick 'Xbox360 controller' configuration
+JOY_AXIS_X:  mapped to Side (absolute)
+JOY_AXIS_Y:  mapped to Forward (absolute)
+JOY_AXIS_Z:  unmapped
+JOY_AXIS_R:  mapped to Look (absolute)
+JOY_AXIS_U:  mapped to Turn (absolute)
+JOY_AXIS_V:  unmapped
+Advanced Joystick settings initialized
+Redownloading all lightmaps
+'overrides/game_overrides.cfg' not present; not executing.
+'app/game_overrides.cfg' not present; not executing.
+Sniper selected 
+Sniper selected 
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 528 x, -464 y, 640 z
+tags    : cp,hidden
+players : 1 humans, 0 bots (24 max)
+edicts  : 686 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     00:11       16    0 active loopback
+'app/sniper.cfg' not present; not executing.
+Dynamic prop prop_dynamic: no sequence named:spin
+Dynamic prop prop_dynamic: no sequence named:spin
+prop_dynamic executing script: rat
+prop_dynamic executing script: rat
+prop_dynamic executing script: rat
+prop_dynamic executing script: rat
+prop_dynamic executing script: rat
+prop_dynamic executing script: rat
+prop_dynamic executing script: rat
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 3815 x, -80 y, 491 z
+tags    : cp,hidden
+players : 1 humans, 0 bots (24 max)
+edicts  : 690 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     00:16       15    0 active loopback
+NextBot tickrate changed from 0 (0.000ms) to 7 (0.105ms)
+No such variable "$bloomamount" for material "dev/blurfiltery_nohdr"
+No such variable "$bloomamount" for material "dev/blurfiltery_nohdr"
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 3516 x, -200 y, 491 z
+tags    : cp,hidden,nocrits
+players : 1 humans, 12 bots (24 max)
+edicts  : 772 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     00:21       15    0 active loopback
+#      7 "Companion Cube"    BOT                                     active
+#      3 "Saxton Hale"       BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      9 "Delicious Cake"    BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+No such variable "$bloomamount" for material "dev/blurfiltery_nohdr"
+No such variable "$C0_X" for material "dev/lumcompare"
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 2193 x, -312 y, 459 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 801 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     00:26       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 1019 x, -780 y, 523 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 798 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     00:31       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 743 x, -888 y, 523 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 804 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     00:36       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+Crazed Gunman killed Divide by Zero with scattergun.
+The Administrator killed Crazed Gunman with tf_projectile_pipe.
+Delicious Cake killed Companion Cube with minigun.
+One-Man Cheeseburger Apocalypse killed The Administrator with tf_projectile_rocket.
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 710 x, -819 y, 523 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 825 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     00:42       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#     11 "trigger_hurt"      BOT                                     active
+#      9 "Delicious Cake"    BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+Delicious Cake killed One-Man Cheeseburger Apocalypse with minigun.
+Maggot killed Screamin' Eagles with obj_sentrygun.
+Maggot defended the Underpass for team #3
+Maggot killed MoreGun with obj_sentrygun.
+Kataiser killed Delicious Cake with sniperrifle. (crit)
+Entity 679 (class 'tf_weapon_flamethrower') reported ENTITY_CHANGE_NONE but 'm_hFlameManager' changed.
+Kataiser killed Saxton Hale with sniperrifle. (crit)
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 598 x, -775 y, 523 z
+tags    : bots,cp,hidden,nocrits
+edicts  : 827 used of 2048 max
+players : 1 humans, 17 bots (24 max)
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     00:48       15    0 active loopback
+#      4 "Screamin' Eagles"  BOT                                     active
+#      3 "Saxton Hale"       BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#      7 "Companion Cube"    BOT                                     active
+#     15 "Crazed Gunman"     BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#     16 "Poopy Joe"         BOT                                     active
+#      9 "Delicious Cake"    BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     10 "I LIVE!"           BOT                                     active
+#     18 "The Administrator" BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+Herr Doktor killed Kataiser with tf_projectile_rocket.
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 41 x, -216 y, 516 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 817 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     00:53       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+Unknown command: checkpoint
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+No such variable "$C0_X" for material "dev/lumcompare"
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+No such variable "$C0_Z" for material "dev/lumcompare"
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+No such variable "$C0_Y" for material "dev/lumcompare"
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 558 x, -955 y, 331 z
+players : 1 humans, 17 bots (24 max)
+tags    : bots,cp,hidden,nocrits
+edicts  : 819 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     00:58       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      5 "Maggot"            BOT                                     active
+#      9 "Delicious Cake"    BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     18 "The Administrator" BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     19 "Archimedes!"       BOT                                     active
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+No such variable "$bloomamount" for material "dev/blurfiltery_nohdr"
+No such variable "$bloomamount" for material "dev/blurfiltery_nohdr"
+*You will spawn as Soldier
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+No such variable "$C0_X" for material "dev/lumcompare"
+No such variable "$bloomamount" for material "dev/blurfiltery_nohdr"
+No such variable "$C0_Y" for material "dev/lumcompare"
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+No such variable "$bloomamount" for material "dev/blurfiltery_nohdr"
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+'overrides/game_overrides.cfg' not present; not executing.
+'app/game_overrides.cfg' not present; not executing.
+Soldier selected 
+Soldier selected 
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 208 x, -1242 y, 339 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 824 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     01:02       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+'app/soldier.cfg' not present; not executing.
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 3749 x, -223 y, 484 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+# userid name                uniqueid            connected ping loss state  adr
+edicts  : 827 used of 2048 max
+#      2 "Kataiser"          [U:1:160315024]     01:03       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     13 "MoreGun"           BOT                                     active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+No such variable "$bloomamount" for material "dev/blurfiltery_nohdr"
+No such variable "$bloomamount" for material "dev/blurfiltery_nohdr"
+No such variable "$bloomamount" for material "dev/blurfiltery_nohdr"
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+No such variable "$C0_X" for material "dev/lumcompare"
+No such variable "$C0_X" for material "dev/lumcompare"
+No such variable "$C0_X" for material "dev/lumcompare"
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+No such variable "$bloomamount" for material "dev/blurfiltery_nohdr"
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+No such variable "$bloomamount" for material "dev/blurfiltery_nohdr"
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+No such variable "$C0_Y" for material "dev/lumcompare"
+No such variable "$bloomamount" for material "dev/blurfiltery_nohdr"
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 2022 x, -534 y, 767 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 827 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     01:08       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 1649 x, -568 y, 556 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 827 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     01:08       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+I LIVE!, Freakin' Unbelievable captured the Underpass for team #3
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+edicts  : 838 used of 2048 max
+map     : koth_mannhole at: 804 x, -406 y, 376 z
+# userid name                uniqueid            connected ping loss state  adr
+tags    : bots,cp,hidden,nocrits
+#      2 "Kataiser"          [U:1:160315024]     01:13       15    0 active loopback
+players : 1 humans, 17 bots (24 max)
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      6 "Herr Doktor"       BOT                                     active
+#      9 "Delicious Cake"    BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     13 "MoreGun"           BOT                                     active
+#     15 "Crazed Gunman"     BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     16 "Poopy Joe"         BOT                                     active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+Freakin' Unbelievable killed Crazed Gunman with tf_projectile_rocket.
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 436 x, -244 y, 691 z
+players : 1 humans, 17 bots (24 max)
+tags    : bots,cp,hidden,nocrits
+edicts  : 835 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     01:14       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+Freakin' Unbelievable killed Kataiser with shotgun_soldier.
+Archimedes! killed Freakin' Unbelievable with tf_projectile_rocket.
+Archimedes! killed I LIVE! with tf_projectile_rocket.
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: -65 x, -1419 y, 262 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 838 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     01:19       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      9 "Delicious Cake"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     12 "Divide by Zero"    BOT                                     active
+#     15 "Crazed Gunman"     BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: -183 x, -143 y, 525 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 835 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     01:19       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+No such variable "$bloomamount" for material "dev/blurfiltery_nohdr"
+trigger_hurt killed The Administrator with minigun.
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 515 x, -367 y, 456 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 839 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      3 "Saxton Hale"       BOT                                     active
+#      2 "Kataiser"          [U:1:160315024]     01:24       15    0 active loopback
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+No such variable "$C0_Y" for material "dev/lumcompare"
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 481 x, -415 y, 448 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 847 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      4 "Screamin' Eagles"  BOT                                     active
+#      2 "Kataiser"          [U:1:160315024]     01:25       15    0 active loopback
+#      5 "Maggot"            BOT                                     active
+#      3 "Saxton Hale"       BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#     15 "Crazed Gunman"     BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#      9 "Delicious Cake"    BOT                                     active
+#     18 "The Administrator" BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+*You will spawn as Scout
+Delicious Cake killed Poopy Joe with minigun.
+'overrides/game_overrides.cfg' not present; not executing.
+'app/game_overrides.cfg' not present; not executing.
+Scout selected 
+Scout selected 
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 432 x, -345 y, 334 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 839 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     01:26       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+'app/scout.cfg' not present; not executing.
+DataTable warning: env_lightglow: Out-of-range value (1.000000/1.000000) in SendPropFloat 'm_vecNormal', clamping.
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+SCRIPT PERF WARNING --- "UpdateRats" ran long at 2.977151ms
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+No such variable "$C0_X" for material "dev/lumcompare"
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+No such variable "$C0_Z" for material "dev/lumcompare"
+No such variable "$C0_Y" for material "dev/lumcompare"
+No such variable "$C0_Y" for material "dev/lumcompare"
+No such variable "$bloomamount" for material "dev/blurfiltery_nohdr"
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+No such variable "$C0_Z" for material "dev/lumcompare"
+No such variable "$C0_Y" for material "dev/lumcompare"
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+map     : koth_mannhole at: 2990 x, -204 y, 449 z
+account : not logged in  (No account specified)
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 830 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     01:29       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+No such variable "$bloomamount" for material "dev/blurfiltery_nohdr"
+No such variable "$C0_Z" for material "dev/lumcompare"
+No such variable "$bloomamount" for material "dev/blurfiltery_nohdr"
+No such variable "$bloomamount" for material "dev/blurfiltery_nohdr"
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 2708 x, -168 y, 543 z
+tags    : bots,cp,hidden,nocrits
+edicts  : 833 used of 2048 max
+players : 1 humans, 17 bots (24 max)
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     01:30       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      7 "Companion Cube"    BOT                                     active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     19 "Archimedes!"       BOT                                     active
+#     18 "The Administrator" BOT                                     active
+No such variable "$C0_Y" for material "dev/lumcompare"
+No such variable "$C0_Y" for material "dev/lumcompare"
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 2104 x, -40 y, 407 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 837 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     01:32       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+No such variable "$C0_X" for material "dev/lumcompare"
+trigger_hurt killed Divide by Zero with minigun.
+No such variable "$bloomamount" for material "dev/blurfiltery_nohdr"
+One-Man Cheeseburger Apocalypse killed Delicious Cake with tf_projectile_rocket.
+No such variable "$C0_X" for material "dev/lumcompare"
+One-Man Cheeseburger Apocalypse killed Herr Doktor with tf_projectile_rocket.
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+tags    : bots,cp,hidden,nocrits
+map     : koth_mannhole at: 1306 x, 415 y, 300 z
+players : 1 humans, 17 bots (24 max)
+edicts  : 832 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     01:35       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+No such variable "$basetexture" for material "effects/tracer1"
+Herr Doktor killed trigger_hurt with tf_projectile_rocket.
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+tags    : bots,cp,hidden,nocrits
+map     : koth_mannhole at: 1022 x, 354 y, 289 z
+players : 1 humans, 17 bots (24 max)
+edicts  : 834 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     01:35       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     16 "Poopy Joe"         BOT                                     active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+No such variable "$C0_X" for material "dev/lumcompare"
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 819 x, 592 y, 449 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 837 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     01:37       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 472 x, 101 y, 449 z
+# userid name                uniqueid            connected ping loss state  adr
+tags    : bots,cp,hidden,nocrits
+#      2 "Kataiser"          [U:1:160315024]     01:40       15    0 active loopback
+players : 1 humans, 17 bots (24 max)
+#      3 "Saxton Hale"       BOT                                     active
+edicts  : 848 used of 2048 max
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#     18 "The Administrator" BOT                                     active
+#      9 "Delicious Cake"    BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+Companion Cube killed Saxton Hale with obj_sentrygun.
+hostname: Team Fortress
+udp/ip  : 192.168.1.249:27015
+version : 9930791/24 9930791 insecure
+map     : koth_mannhole at: 359 x, 111 y, 511 z
+account : not logged in  (No account specified)
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 848 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      4 "Screamin' Eagles"  BOT                                     active
+#      2 "Kataiser"          [U:1:160315024]     01:41       15    0 active loopback
+#      5 "Maggot"            BOT                                     active
+#      3 "Saxton Hale"       BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     11 "trigger_hurt"      BOT                                     active
+#     15 "Crazed Gunman"     BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+map     : koth_mannhole at: 305 x, 39 y, 472 z
+account : not logged in  (No account specified)
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+# userid name                uniqueid            connected ping loss state  adr
+edicts  : 847 used of 2048 max
+#      2 "Kataiser"          [U:1:160315024]     01:43       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     15 "Crazed Gunman"     BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+Archimedes! killed Maggot with tf_projectile_rocket.
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: -4 x, -108 y, 289 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 839 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     01:46       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: -2 x, 171 y, 289 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 840 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#     10 "I LIVE!"           BOT                                     active
+#      2 "Kataiser"          [U:1:160315024]     01:46       15    0 active loopback
+#     11 "trigger_hurt"      BOT                                     active
+#      3 "Saxton Hale"       BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#      6 "Herr Doktor"       BOT                                     active
+#     15 "Crazed Gunman"     BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#      9 "Delicious Cake"    BOT                                     active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+Maggot killed Crazed Gunman with obj_sentrygun2.
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: -474 x, 514 y, 321 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 839 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     01:48       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+players : 1 humans, 17 bots (24 max)
+account : not logged in  (No account specified)
+edicts  : 833 used of 2048 max
+map     : koth_mannhole at: -37 x, 237 y, 297 z
+# userid name                uniqueid            connected ping loss state  adr
+tags    : bots,cp,hidden,nocrits
+#      2 "Kataiser"          [U:1:160315024]     01:51       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 17 x, -31 y, 289 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 832 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     01:52       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 398 x, -385 y, 297 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 841 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     01:53       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 330 x, 7 y, 455 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 845 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     01:56       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 447 x, 120 y, 452 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 840 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      9 "Delicious Cake"    BOT                                     active
+#      2 "Kataiser"          [U:1:160315024]     01:57       15    0 active loopback
+#     10 "I LIVE!"           BOT                                     active
+#      3 "Saxton Hale"       BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#      7 "Companion Cube"    BOT                                     active
+#     15 "Crazed Gunman"     BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+One-Man Cheeseburger Apocalypse, MoreGun captured the Underpass for team #2
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 195 x, 64 y, 529 z
+tags    : bots,cp,hidden,nocrits
+edicts  : 852 used of 2048 max
+players : 1 humans, 17 bots (24 max)
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     01:59       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+players : 1 humans, 17 bots (24 max)
+map     : koth_mannhole at: -383 x, -154 y, 605 z
+edicts  : 843 used of 2048 max
+tags    : bots,cp,hidden,nocrits
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     02:02       15    0 active loopback
+#      4 "Screamin' Eagles"  BOT                                     active
+#      3 "Saxton Hale"       BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      9 "Delicious Cake"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: -461 x, -360 y, 609 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 844 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     02:03       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+Kataiser killed I LIVE! with scattergun.
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: -433 x, -821 y, 609 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 837 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     02:04       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: -605 x, -812 y, 609 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 837 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     02:07       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+tags    : bots,cp,hidden,nocrits
+map     : koth_mannhole at: -518 x, -719 y, 609 z
+players : 1 humans, 17 bots (24 max)
+edicts  : 837 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     02:08       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     16 "Poopy Joe"         BOT                                     active
+#     15 "Crazed Gunman"     BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+One-Man Cheeseburger Apocalypse killed Freakin' Unbelievable with world.
+Poopy Joe killed Big Mean Muther Hubbard with flamethrower.
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+players : 1 humans, 17 bots (24 max)
+map     : koth_mannhole at: -514 x, -277 y, 659 z
+edicts  : 844 used of 2048 max
+tags    : bots,cp,hidden,nocrits
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     02:10       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     10 "I LIVE!"           BOT                                     active
+#     18 "The Administrator" BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+Entity 679 (class 'tf_weapon_flamethrower') reported ENTITY_CHANGE_NONE but 'm_hFlameManager' changed.
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: -634 x, 409 y, 297 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 838 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     02:13       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      6 "Herr Doktor"       BOT                                     active
+#      9 "Delicious Cake"    BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: -334 x, 337 y, 326 z
+#      2 "Kataiser"          [U:1:160315024]     02:13       15    0 active loopback
+tags    : bots,cp,hidden,nocrits
+#      3 "Saxton Hale"       BOT                                     active
+players : 1 humans, 17 bots (24 max)
+#      4 "Screamin' Eagles"  BOT                                     active
+edicts  : 839 used of 2048 max
+#      5 "Maggot"            BOT                                     active
+# userid name                uniqueid            connected ping loss state  adr
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#      9 "Delicious Cake"    BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     18 "The Administrator" BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+Archimedes! killed Divide by Zero with tf_projectile_rocket.
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: -7 x, 318 y, 289 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 846 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     02:15       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#     15 "Crazed Gunman"     BOT                                     active
+#      9 "Delicious Cake"    BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     11 "trigger_hurt"      BOT                                     active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+Kataiser killed The Administrator with scattergun.
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+players : 1 humans, 17 bots (24 max)
+map     : koth_mannhole at: -421 x, 409 y, 297 z
+edicts  : 835 used of 2048 max
+tags    : bots,cp,hidden,nocrits
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     02:18       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     15 "Crazed Gunman"     BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: -626 x, 434 y, 310 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 835 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     02:19       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: -929 x, 572 y, 321 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 836 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     02:20       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+No such variable "$fogcolor" for material "maps/koth_mannhole/water/water_2fort_expensive_-2560_608_272"
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+map     : koth_mannhole at: -1686 x, 813 y, 513 z
+account : not logged in  (No account specified)
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+# userid name                uniqueid            connected ping loss state  adr
+edicts  : 849 used of 2048 max
+#      2 "Kataiser"          [U:1:160315024]     02:23       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     18 "The Administrator" BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+Herr Doktor killed trigger_hurt with tf_projectile_rocket.
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: -1963 x, 722 y, 452 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 846 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     02:24       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+Archimedes! killed Herr Doktor with tf_projectile_rocket.
+Freakin' Unbelievable killed Kataiser with tf_projectile_pipe.
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: -2109 x, 147 y, 454 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 857 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     02:25       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+Entity 699 (class 'tf_weapon_flamethrower') reported ENTITY_CHANGE_NONE but 'm_hFlameManager' changed.
+Companion Cube defended the Underpass for team #2
+Companion Cube killed Maggot with obj_sentrygun.
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: -2177 x, 4 y, 417 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 853 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     02:28       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: -2196 x, -75 y, 508 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 856 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     02:29       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: -2037 x, -271 y, 465 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 856 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     02:30       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: -349 x, 192 y, 497 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 849 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     02:33       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: -173 x, 101 y, 550 z
+players : 1 humans, 17 bots (24 max)
+tags    : bots,cp,hidden,nocrits
+edicts  : 850 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     02:34       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      6 "Herr Doktor"       BOT                                     active
+#      9 "Delicious Cake"    BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+Unknown command: checkpoint
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 201 x, 24 y, 561 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 849 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     02:36       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     13 "MoreGun"           BOT                                     active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 22 x, 64 y, 569 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 847 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     02:38       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#     13 "MoreGun"           BOT                                     active
+#      9 "Delicious Cake"    BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     10 "I LIVE!"           BOT                                     active
+#     15 "Crazed Gunman"     BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+map     : koth_mannhole at: 53 x, 213 y, 561 z
+account : not logged in  (No account specified)
+tags    : bots,cp,hidden,nocrits
+edicts  : 844 used of 2048 max
+players : 1 humans, 17 bots (24 max)
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     02:39       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     16 "Poopy Joe"         BOT                                     active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: -156 x, 45 y, 609 z
+tags    : bots,cp,hidden,nocrits
+# userid name                uniqueid            connected ping loss state  adr
+players : 1 humans, 17 bots (24 max)
+#      2 "Kataiser"          [U:1:160315024]     02:41       15    0 active loopback
+edicts  : 855 used of 2048 max
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      7 "Companion Cube"    BOT                                     active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     15 "Crazed Gunman"     BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+I LIVE! killed Poopy Joe with tf_projectile_rocket.
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: -61 x, 141 y, 664 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 859 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      3 "Saxton Hale"       BOT                                     active
+#      2 "Kataiser"          [U:1:160315024]     02:44       15    0 active loopback
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     15 "Crazed Gunman"     BOT                                     active
+#     18 "The Administrator" BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 42 x, -42 y, 511 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 858 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     02:45       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+Entity 699 (class 'tf_weapon_flamethrower') reported ENTITY_CHANGE_NONE but 'm_hFlameManager' changed.
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+tags    : bots,cp,hidden,nocrits
+account : not logged in  (No account specified)
+players : 1 humans, 17 bots (24 max)
+map     : koth_mannhole at: 107 x, -104 y, 507 z
+edicts  : 859 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      6 "Herr Doktor"       BOT                                     active
+#      2 "Kataiser"          [U:1:160315024]     02:46       15    0 active loopback
+#      7 "Companion Cube"    BOT                                     active
+#      3 "Saxton Hale"       BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      9 "Delicious Cake"    BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+MoreGun defended the Underpass for team #2
+MoreGun killed Freakin' Unbelievable with tf_projectile_pipe_remote.
+The Administrator killed Archimedes! with tf_projectile_pipe.
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 3840 x, -493 y, 481 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 858 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     02:49       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#     10 "I LIVE!"           BOT                                     active
+#      9 "Delicious Cake"    BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+udp/ip  : 192.168.1.249:27015
+version : 9930791/24 9930791 insecure
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 3840 x, -493 y, 481 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 857 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     02:50       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+Delicious Cake killed Screamin' Eagles with minigun.
+Delicious Cake killed Crazed Gunman with minigun.
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 3840 x, -493 y, 481 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 847 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     02:52       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+SCRIPT PERF WARNING --- "UpdateRats" ran long at 3.376069ms
+Divide by Zero killed One-Man Cheeseburger Apocalypse with scattergun.
+Companion Cube killed Divide by Zero with obj_sentrygun2.
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 3840 x, -493 y, 481 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 842 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     02:54       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 3840 x, -493 y, 481 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 842 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     02:55       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+No such variable "$C0_X" for material "dev/halo_add_to_screen"
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 3840 x, -493 y, 481 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 836 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     02:57       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 3840 x, -493 y, 481 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 836 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     02:59       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 3840 x, -493 y, 481 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 17 bots (24 max)
+edicts  : 835 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     03:00       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      5 "Maggot"            BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+Dropped Maggot from server (Kicked from server)
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 3840 x, -493 y, 481 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 16 bots (24 max)
+edicts  : 823 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     03:02       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+Companion Cube killed I LIVE! with obj_sentrygun2.
+MoreGun killed The Administrator with tf_projectile_pipe.
+MoreGun killed Big Mean Muther Hubbard with tf_projectile_pipe.
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 3840 x, -493 y, 481 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 16 bots (24 max)
+edicts  : 833 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     03:04       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 3840 x, -493 y, 481 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 16 bots (24 max)
+edicts  : 833 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     03:05       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 3840 x, -493 y, 481 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 16 bots (24 max)
+edicts  : 832 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     03:06       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 3840 x, -493 y, 481 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 16 bots (24 max)
+edicts  : 835 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     03:09       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     13 "MoreGun"           BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+Dropped MoreGun from server (Kicked from server)
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 3840 x, -493 y, 481 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 15 bots (24 max)
+edicts  : 822 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     03:10       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 3505 x, -213 y, 481 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 15 bots (24 max)
+edicts  : 824 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     03:11       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+One-Man Cheeseburger Apocalypse suicided.
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 2392 x, -165 y, 571 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 15 bots (24 max)
+edicts  : 842 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     03:14       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+Freakin' Unbelievable killed trigger_hurt with tf_projectile_pipe.
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 2154 x, -50 y, 556 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 15 bots (24 max)
+edicts  : 839 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     03:15       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 2027 x, 114 y, 507 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 15 bots (24 max)
+edicts  : 832 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     03:17       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 1469 x, 638 y, 449 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 15 bots (24 max)
+edicts  : 828 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     03:19       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 1475 x, 885 y, 497 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 15 bots (24 max)
+edicts  : 828 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     03:20       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 866 x, 964 y, 609 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 15 bots (24 max)
+edicts  : 831 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     03:22       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+Saxton Hale, Delicious Cake, Divide by Zero, Freakin' Unbelieva captured the Underpass for team #3
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: 403 x, 238 y, 676 z
+tags    : bots,cp,hidden,nocrits
+#     15 "Crazed Gunman"     BOT                                     active
+players : 1 humans, 15 bots (24 max)
+#     16 "Poopy Joe"         BOT                                     active
+edicts  : 831 used of 2048 max
+#     17 "Freakin' Unbelievable" BOT                                 active
+# userid name                uniqueid            connected ping loss state  adr
+#     18 "The Administrator" BOT                                     active
+#      2 "Kataiser"          [U:1:160315024]     03:24       15    0 active loopback
+#     19 "Archimedes!"       BOT                                     active
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+#      2 "Kataiser"          [U:1:160315024]     03:25       15    0 active loopback
+account : not logged in  (No account specified)
+#      3 "Saxton Hale"       BOT                                     active
+map     : koth_mannhole at: 303 x, 199 y, 600 z
+#      4 "Screamin' Eagles"  BOT                                     active
+tags    : bots,cp,hidden,nocrits
+#      6 "Herr Doktor"       BOT                                     active
+players : 1 humans, 15 bots (24 max)
+#      7 "Companion Cube"    BOT                                     active
+edicts  : 835 used of 2048 max
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+# userid name                uniqueid            connected ping loss state  adr
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     18 "The Administrator" BOT                                     active
+#     15 "Crazed Gunman"     BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+tags    : bots,cp,hidden,nocrits
+map     : koth_mannhole at: 362 x, -343 y, 474 z
+players : 1 humans, 15 bots (24 max)
+edicts  : 840 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     03:27       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#     12 "Divide by Zero"    BOT                                     active
+#      9 "Delicious Cake"    BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+No such variable "$basetexture" for material "effects/circle2"
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: -64 x, 241 y, 299 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 15 bots (24 max)
+edicts  : 832 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     03:30       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: -289 x, 364 y, 289 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 15 bots (24 max)
+edicts  : 828 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     03:31       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+map     : koth_mannhole at: -624 x, 261 y, 350 z
+account : not logged in  (No account specified)
+tags    : bots,cp,hidden,nocrits
+edicts  : 831 used of 2048 max
+players : 1 humans, 15 bots (24 max)
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     03:32       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#     11 "trigger_hurt"      BOT                                     active
+#      9 "Delicious Cake"    BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     16 "Poopy Joe"         BOT                                     active
+#     15 "Crazed Gunman"     BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+Freakin' Unbelievable killed Companion Cube with tf_projectile_pipe_remote.
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+tags    : bots,cp,hidden,nocrits
+map     : koth_mannhole at: -889 x, 818 y, 404 z
+players : 1 humans, 15 bots (24 max)
+edicts  : 845 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     03:35       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#     11 "trigger_hurt"      BOT                                     active
+#      9 "Delicious Cake"    BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: -852 x, 1081 y, 449 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 15 bots (24 max)
+edicts  : 845 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     03:36       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+Delicious Cake killed Poopy Joe with minigun.
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: -1002 x, 963 y, 451 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 15 bots (24 max)
+edicts  : 847 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     03:38       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+Archimedes! killed Saxton Hale with obj_sentrygun.
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: -921 x, 186 y, 297 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 15 bots (24 max)
+edicts  : 844 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     03:41       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+Delicious Cake killed Archimedes! with minigun.
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: -1019 x, -70 y, 298 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 15 bots (24 max)
+edicts  : 842 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     03:41       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+map     : koth_mannhole at: -975 x, -340 y, 289 z
+account : not logged in  (No account specified)
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 15 bots (24 max)
+edicts  : 830 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     03:43       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+The Administrator killed Kataiser with tf_projectile_rocket.
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: -1025 x, -442 y, 308 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 15 bots (24 max)
+edicts  : 826 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     03:46       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
+hostname: Team Fortress
+version : 9930791/24 9930791 insecure
+udp/ip  : 192.168.1.249:27015
+account : not logged in  (No account specified)
+map     : koth_mannhole at: -1017 x, -406 y, 305 z
+tags    : bots,cp,hidden,nocrits
+players : 1 humans, 15 bots (24 max)
+edicts  : 828 used of 2048 max
+# userid name                uniqueid            connected ping loss state  adr
+#      2 "Kataiser"          [U:1:160315024]     03:47       15    0 active loopback
+#      3 "Saxton Hale"       BOT                                     active
+#      4 "Screamin' Eagles"  BOT                                     active
+#      6 "Herr Doktor"       BOT                                     active
+#      7 "Companion Cube"    BOT                                     active
+#      8 "One-Man Cheeseburger Apocalypse" BOT                       active
+#      9 "Delicious Cake"    BOT                                     active
+#     10 "I LIVE!"           BOT                                     active
+#     11 "trigger_hurt"      BOT                                     active
+#     12 "Divide by Zero"    BOT                                     active
+#     14 "Big Mean Muther Hubbard" BOT                               active
+#     15 "Crazed Gunman"     BOT                                     active
+#     16 "Poopy Joe"         BOT                                     active
+#     17 "Freakin' Unbelievable" BOT                                 active
+#     18 "The Administrator" BOT                                     active
+#     19 "Archimedes!"       BOT                                     active
