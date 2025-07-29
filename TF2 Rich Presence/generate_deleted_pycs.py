@@ -1,5 +1,5 @@
 def main():
-    # build with deleting pycs disabled
+    # build with deleting pycs disabled (--keeppycs)
     # search for pycs, export to pycs_all.txt
     # delete all pycs and run program (remove -B from cmd)
     # search for pycs, export to pycs_to_keep.txt

@@ -30,11 +30,13 @@ def main(version_num='v2.1.12'):
     parser.add_argument('--release', action='store_true', help="Release build, invalidates all caches", default=False)
     parser.add_argument('--nocython', action='store_true', help="Don't compile modules with Cython", default=False)
     parser.add_argument('--noinstall', action='store_true', help="Don't automatically run the installer after finishing", default=False)
+    parser.add_argument('--keeppycs', action='store_true', help="Don't delete any PYCs", default=False)
     cli_skip_repo = parser.parse_args().n
     ide_build_log_handling = parser.parse_args().ide
     release_build = parser.parse_args().release
     nocython = parser.parse_args().nocython
     noinstall = parser.parse_args().noinstall
+    keeppycs = parser.parse_args().keeppycs
 
     if not ide_build_log_handling:
         if os.path.isfile('build.log'):
@@ -324,17 +326,20 @@ def main(version_num='v2.1.12'):
     # TODO: if it's not too slow, determine which ones need to be deleted at build time (maybe cache somehow?)
     print("Compiling PYCs")
     compileall.compile_dir(Path(f'{new_build_folder_name}/resources'), quiet=True)
-    with open('pycs_to_delete.txt', 'r') as pycs_to_delete_txt:
-        pycs_to_delete = [pyc_path.rstrip('\n') for pyc_path in pycs_to_delete_txt.readlines()]
-    missing_pycs = []
-    for pyc_to_delete in pycs_to_delete:
-        if sys.platform != 'win32':
-            pyc_to_delete = pyc_to_delete.replace('\\', os.path.sep)
-        try:
-            os.remove(Path(f'{new_build_folder_name}/resources/{pyc_to_delete}'))
-        except FileNotFoundError:
-            missing_pycs.append(str(Path(f'{new_build_folder_name}/resources/{pyc_to_delete}')))
-    print(f"Deleted {len(pycs_to_delete) - len(missing_pycs)} unused PYCs")
+    if keeppycs:
+        print("Skipped deleting PYCs")
+    else:
+        with open('pycs_to_delete.txt', 'r') as pycs_to_delete_txt:
+            pycs_to_delete = [pyc_path.rstrip('\n') for pyc_path in pycs_to_delete_txt.readlines()]
+        missing_pycs = []
+        for pyc_to_delete in pycs_to_delete:
+            if sys.platform != 'win32':
+                pyc_to_delete = pyc_to_delete.replace('\\', os.path.sep)
+            try:
+                os.remove(Path(f'{new_build_folder_name}/resources/{pyc_to_delete}'))
+            except FileNotFoundError:
+                missing_pycs.append(str(Path(f'{new_build_folder_name}/resources/{pyc_to_delete}')))
+        print(f"Deleted {len(pycs_to_delete) - len(missing_pycs)} unused PYCs")
 
     # ensure everything exists that needs to
     assert os.listdir(Path(f'{new_build_folder_name}/resources/__pycache__')) != []
@@ -462,7 +467,7 @@ def main(version_num='v2.1.12'):
         print(f"Missing files: {missing_files}", file=sys.stderr)
     if not readme_source_exists:
         print("README-source doesn't exist, didn't build README.md", file=sys.stderr)
-    if missing_pycs:
+    if not keeppycs and missing_pycs:
         print(f"Couldn't delete {len(missing_pycs)}/{len(pycs_to_delete)} PYCs: {missing_pycs}", file=sys.stderr)
     if not build_log_exists:
         print("build.log doesn't exist (or is old), consider setting up your IDE to save the console to a file or just not using --ide", file=sys.stderr)
