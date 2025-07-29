@@ -122,7 +122,7 @@ def steam_config_file(self, exe_location: str, require_condebug: bool) -> Option
         except KeyError:
             pass  # (hopefully) -condebug was in some other game
         else:
-            last_played_time: int = int(tf2_savedata['lastplayed'])
+            last_played_time: int = int(tf2_savedata['lastplayed']) if 'lastplayed' in tf2_savedata else 0
             launch_options: str = tf2_savedata['launchoptions'] if 'launchoptions' in tf2_savedata else ''
 
             if username in self.usernames or last_played_time > most_likely_args[0]:
