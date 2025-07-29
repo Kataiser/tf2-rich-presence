@@ -49,26 +49,6 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
     server_players: int = parse_results.server_players
     server_players_max: int = parse_results.server_players_max
 
-    # console.log is a log of tf2's console (duh), only exists if tf2 has -condebug (see no_condebug_warning() in GUI)
-    self.log.debug(f"Looking for console.log at {console_log_path}")
-
-    if not os.path.isfile(console_log_path):
-        self.log.error(f"console.log doesn't exist, issuing warning (files/dirs in /tf/: {os.listdir(os.path.dirname(console_log_path))})", reportable=False)
-        self.no_condebug = False
-        return parse_results  # might as well
-
-    # only interpret console.log again if it's been modified
-    self.console_log_mtime = int(os.stat(console_log_path).st_mtime)
-    if not force and self.console_log_mtime == self.old_console_log_mtime:
-        self.log.debug("Not rescanning console.log")
-        return None
-
-    # TF2 takes some time to load the console when starting up, so wait until it's been modified to avoid getting outdated information
-    console_log_mtime_relative: int = self.console_log_mtime - tf2_start_time
-    if console_log_mtime_relative <= TF2_LOAD_TIME_ASSUMPTION:
-        self.log.debug(f"console.log's mtime relative to TF2's start time is {console_log_mtime_relative} (<= {TF2_LOAD_TIME_ASSUMPTION}), assuming default state")
-        return parse_results
-
     # if we already have a game state and file position, just update the state from the new lines since then
     if from_game_state:
         in_menus = from_game_state.in_menus
@@ -82,6 +62,35 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
         persistence: ConsoleLogPersistence = from_game_state.console_log_persistence
     else:
         persistence = ConsoleLogPersistence()
+
+    def store_parsing_persistence(default: bool):
+        if default:
+            self.game_state.console_log_persistence = ConsoleLogPersistence()
+        else:
+            self.game_state.console_log_persistence = ConsoleLogPersistence(file_position, just_started_server, server_still_running, connecting_to_matchmaking,
+                                                                            using_wav_cache, found_first_wav_cache, kataiser_seen_on)
+
+    # console.log is a log of tf2's console (duh), only exists if tf2 has -condebug (see no_condebug_warning() in GUI)
+    self.log.debug(f"Looking for console.log at {console_log_path}")
+
+    if not os.path.isfile(console_log_path):
+        self.log.error(f"console.log doesn't exist, issuing warning (files/dirs in /tf/: {os.listdir(os.path.dirname(console_log_path))})", reportable=False)
+        self.no_condebug = False
+        store_parsing_persistence(True)
+        return parse_results  # might as well
+
+    # only interpret console.log again if it's been modified
+    self.console_log_mtime = int(os.stat(console_log_path).st_mtime)
+    if not force and self.console_log_mtime == self.old_console_log_mtime:
+        self.log.debug("Not rescanning console.log")
+        return None
+
+    # TF2 takes some time to load the console when starting up, so wait until it's been modified to avoid getting outdated information
+    console_log_mtime_relative: int = self.console_log_mtime - tf2_start_time
+    if console_log_mtime_relative <= TF2_LOAD_TIME_ASSUMPTION:
+        self.log.debug(f"console.log's mtime relative to TF2's start time is {console_log_mtime_relative} (<= {TF2_LOAD_TIME_ASSUMPTION}), assuming default state")
+        store_parsing_persistence(True)
+        return parse_results
 
     # resume parsing from persistence
     file_position: int = persistence.file_position
@@ -187,6 +196,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
 
         if line.startswith('Map:'):
             in_menus = False
+            connecting_to_matchmaking = False
             tf2_map = line[5:-1]
             tf2_class = ''
 
@@ -279,9 +289,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
     if gui_updates != 0:
         self.log.debug(f"Mid-parse GUI updates: {gui_updates}")
 
-    # store parsing persistence
-    self.game_state.console_log_persistence = ConsoleLogPersistence(file_position, just_started_server, server_still_running, connecting_to_matchmaking,
-                                                                    using_wav_cache, found_first_wav_cache, kataiser_seen_on)
+    store_parsing_persistence(False)
     return parse_results
 
 
