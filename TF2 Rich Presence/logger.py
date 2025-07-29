@@ -190,8 +190,8 @@ class Log:
 
             try:
                 os.remove(log_to_delete)
-            except Exception:
-                self.error(f"Couldn't delete old log file {log_to_delete}: {traceback.format_exc()}")
+            except Exception as e:
+                self.error(f"Couldn't delete old log file {log_to_delete}: {traceback.format_exc()}", reportable=not isinstance(e, PermissionError))
 
             overshoot = max_logs - len(all_logs_sorted)
 
@@ -207,8 +207,8 @@ class Log:
 
             try:
                 os.remove(old_log)
-            except Exception:
-                self.error(f"Couldn't replace log file {old_log}: {traceback.format_exc()}")
+            except Exception as e:
+                self.error(f"Couldn't replace log file {old_log}: {traceback.format_exc()}", reportable=not isinstance(e, PermissionError))
 
             compressed_logs.append((old_log, round(len(data_in) / 1024, 1), round(len(data_out) / 1024, 1)))
 
