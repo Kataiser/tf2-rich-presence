@@ -208,16 +208,16 @@ class ProcessScanner:
 
         # don't detect gmod (or any other program named tf_win64.exe)
         if self.process_data['TF2']['running']:
-            if not self.hl2_exe_is_tf2(self.parsed_tasklist['tf_win64.exe']):
+            if not self.tf_win64_exe_is_tf2(self.parsed_tasklist['tf_win64.exe']):
                 self.log.debug(f"Found running non-TF2 tf_win64.exe with PID {self.parsed_tasklist['tf_win64.exe']}")
                 self.process_data['TF2'] = copy.deepcopy(self.p_data_default['TF2'])
                 del self.parsed_tasklist['tf_win64.exe']
 
     # makes sure a process's path is a TF2 install, not some other game
     @functools.cache
-    def hl2_exe_is_tf2(self, hl2_exe_pid: int) -> bool:
-        hl2_exe_dir: str = self.get_process_info(hl2_exe_pid, ('path',))['path']
-        return configs.is_tf2_install(self.log, os.path.join(hl2_exe_dir, 'tf_win64.exe'))
+    def tf_win64_exe_is_tf2(self, pid: int) -> bool:
+        tf_win64_exe_dir: str = self.get_process_info(pid, ('path',))['path']
+        return configs.is_tf2_install(self.log, os.path.join(tf_win64_exe_dir, 'tf_win64.exe'))
 
 
 if __name__ == '__main__':

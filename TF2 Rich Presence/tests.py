@@ -379,7 +379,7 @@ class TestTF2RichPresence(unittest.TestCase):
         self.assertTrue('python' in path or 'venv' in path)  # hope your Python installation is sane
         self.assertGreater(p_info['time'], 1228305600)  # Python 3 release date lol
 
-        self.assertFalse(process_scanner.hl2_exe_is_tf2(os.getpid()))
+        self.assertFalse(process_scanner.tf_win64_exe_is_tf2(os.getpid()))
 
     def test_settings_gui(self):
         root = tk.Toplevel()
