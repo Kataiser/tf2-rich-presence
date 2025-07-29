@@ -8,6 +8,7 @@ import os
 import re
 from typing import Dict, List, Optional, Set, Tuple, Pattern
 
+import logger
 import settings
 
 
@@ -268,6 +269,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
         if menus_message_used:
             self.log.debug(f"Menus message used: \"{menus_message_used.strip()}\"")
     else:
+        server_name_full = server_name
         server_name, is_valve_server = cleanup_server_name(server_name)
 
         if is_valve_server and server_players_max == 32:
@@ -304,18 +306,25 @@ def non_ascii_in_usernames(usernames: Set[str]) -> bool:
 
 # make server names look a bit nicer
 @functools.cache
-def cleanup_server_name(name: str) -> tuple[str, bool]:
+def cleanup_server_name(name: str, log: Optional[logger.Log] = None) -> tuple[str, bool]:
+    cleaned: tuple[str, bool]
+
     if re_valve_server.match(name):
-        return re_valve_server_remove.sub("", name), True
+        cleaned = re_valve_server_remove.sub("", name), True
     else:
         name = ''.join(c for c in name if c.isprintable() and c not in ('█', '▟', '▙')).strip()  # removes unprintable/ugly characters
         name = re_double_space.sub(' ', name)  # removes double space
 
         if len(name) > 32:
             # TODO: would prefer to use actual text width here
-            return f'{name[:30]}…', False
+            cleaned = f'{name[:30]}…', False
         else:
-            return name, False
+            cleaned = name, False
+
+    if log and name != cleaned[0]:
+        log.debug(f"Cleaned up server name from \"{name}\" to \"{cleaned[0]}\"")
+
+    return cleaned
 
 
 re_valve_server: Pattern[str] = re.compile(r'Valve Matchmaking Server \(.*srcds.*\)')
