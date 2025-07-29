@@ -318,8 +318,8 @@ def cleanup_server_name(name: str) -> tuple[str, bool]:
             return name, False
 
 
-re_valve_server: Pattern[str] = re.compile(r'Valve Matchmaking Server \([a-zA-Z]+ srcds[0-9]+-[a-zA-Z]+\d #[0-9]+\)')
-re_valve_server_remove: Pattern[str] = re.compile(r' srcds[0-9]+-[a-zA-Z]+\d #[0-9]+')
+re_valve_server: Pattern[str] = re.compile(r'Valve Matchmaking Server \(.*srcds.*\)')
+re_valve_server_remove: Pattern[str] = re.compile(r' \(.*srcds.*\)')
 re_double_space: Pattern[str] = re.compile(r' {2,}')
 tf2_classes: Tuple[str, ...] = ('Scout', 'Soldier', 'Pyro', 'Demoman', 'Heavy', 'Engineer', 'Medic', 'Sniper', 'Spy')
 non_ascii_regex = re.compile('[^\x00-\x7F]')
