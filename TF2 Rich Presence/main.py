@@ -421,7 +421,6 @@ class TF2RichPresense:
         self.gui.clear_fg_image()
         self.gui.clear_class_image()
         self.gui.set_console_log_button_states(False)
-        self.gui.clean_console_log = False
         self.gui.set_bottom_text('queued', False)
         self.gui.set_bottom_text('kataiser', False)
 

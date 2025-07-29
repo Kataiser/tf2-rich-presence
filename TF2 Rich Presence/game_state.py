@@ -37,11 +37,7 @@ class GameState:
         self.update_rpc: bool = True
         # don't track whether the GUI needs to be updated, main just always calls its updates and lets it handle whether or not it needs to set elements
         self.force_zero_map_time: bool = False
-
-        default_console_log_parsed = console_log.ConsoleLogParsed()
-        self.console_log_file_position: int = default_console_log_parsed.file_position
-        self.console_log_just_started_server: bool = default_console_log_parsed.just_started_server
-        self.console_log_server_still_running: bool = default_console_log_parsed.server_still_running
+        self.console_log_persistence: console_log.ConsoleLogPersistence = console_log.ConsoleLogPersistence()
 
         if log:
             self.log: logger.Log = log
@@ -165,7 +161,6 @@ class GameState:
         self.set_queued_state(state.queued_state)
         self.set_server_name(state.server_name)
         self.set_player_count(state.server_players, state.server_players_max)
-        self.console_log_file_position = state.file_position
 
         if str(self) != prev_state:  # don't use self.update_rpc because of server data changes not mattering here
             self.log.debug(f"Game state updated from ({prev_state}) to ({str(self)})")

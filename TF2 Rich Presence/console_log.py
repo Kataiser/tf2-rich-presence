@@ -21,9 +21,17 @@ class ConsoleLogParsed:
     server_name: str = ''
     server_players: int = 0
     server_players_max: int = 0
+
+
+@dataclasses.dataclass
+class ConsoleLogPersistence:
     file_position: int = 0
     just_started_server: bool = False
     server_still_running: bool = False
+    connecting_to_matchmaking: bool = False
+    using_wav_cache: bool = False
+    found_first_wav_cache: bool = False
+    kataiser_seen_on: str = ''
 
 
 # reads a console.log and returns as much game state as possible, alternatively None if whether an old scan was reused
@@ -40,9 +48,6 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
     server_name: str = parse_results.server_name
     server_players: int = parse_results.server_players
     server_players_max: int = parse_results.server_players_max
-    file_position: int = 0
-    just_started_server: bool = False
-    server_still_running: bool = False
 
     # console.log is a log of tf2's console (duh), only exists if tf2 has -condebug (see no_condebug_warning() in GUI)
     self.log.debug(f"Looking for console.log at {console_log_path}")
@@ -54,7 +59,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
 
     # only interpret console.log again if it's been modified
     self.console_log_mtime = int(os.stat(console_log_path).st_mtime)
-    if not force and self.console_log_mtime == self.old_console_log_mtime and not self.gui.clean_console_log:
+    if not force and self.console_log_mtime == self.old_console_log_mtime:
         self.log.debug("Not rescanning console.log")
         return None
 
@@ -74,11 +79,19 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
         server_name = from_game_state.server_name
         server_players = from_game_state.server_players[0]
         server_players_max = from_game_state.server_players[1]
-        file_position = from_game_state.console_log_file_position
-        just_started_server = from_game_state.console_log_just_started_server
-        server_still_running = from_game_state.console_log_server_still_running
+        persistence: ConsoleLogPersistence = from_game_state.console_log_persistence
+    else:
+        persistence = ConsoleLogPersistence()
 
-    is_initial_parse = file_position == 0
+    # resume parsing from persistence
+    file_position: int = persistence.file_position
+    just_started_server: bool = persistence.just_started_server
+    server_still_running: bool = persistence.server_still_running
+    connecting_to_matchmaking: bool = persistence.connecting_to_matchmaking
+    using_wav_cache: bool = persistence.using_wav_cache
+    found_first_wav_cache: bool = persistence.found_first_wav_cache
+    kataiser_seen_on: str = persistence.kataiser_seen_on
+
     consolelog_file_size: int = os.stat(console_log_path).st_size
 
     if self.last_console_log_size is not None:
@@ -101,13 +114,9 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
 
     # setup
     now_in_menus: bool = False
-    using_wav_cache: bool = False
-    connecting_to_matchmaking: bool = False
-    found_first_wav_cache: bool = False
     with_optimization: bool = True  # "with" optimization, not "with optimization"
     chat_safety: bool = True
     user_is_kataiser: bool = 'Kataiser' in user_usernames
-    kataiser_seen_on: str = ''
     # TODO: detection for canceling loading into community servers (if possible)
     match_types: Dict[str, str] = {'12v12 Casual Match': 'Casual', 'MvM Practice': 'MvM (Boot Camp)', 'MvM MannUp': 'MvM (Mann Up)', '6v6 Ladder Match': 'Competitive'}
     menus_messages: Tuple[str, ...] = ('For FCVAR_REPLICATED', '[TF Workshop]', 'request to abandon', 'Server shutting down', 'Lobby destroyed', 'Disconnect:', 'destroyed CAsyncWavDataCache',
@@ -116,6 +125,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
     menus_message: str
     gui_update: int = 0
     gui_updates: int = 0
+    is_initial_parse = file_position == 0
 
     for username in user_usernames:
         if 'with' in username:
@@ -129,7 +139,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
         gui_update += 1
 
         if gui_update == 1500:
-            # update the GUI occasionally, to prevent UI lag
+            # update the GUI occasionally during big parses, to prevent UI lag
             self.gui.safe_update()
             gui_update = 0
             gui_updates += 1
@@ -263,12 +273,15 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
         self.log.debug(f"Hiding queued state (\"{queued_state}\" to \"Queued\")")
         queued_state = "Queued"
 
-    parse_results = ConsoleLogParsed(in_menus, tf2_map, tf2_class, queued_state, hosting, server_name, server_players, server_players_max, file_position, just_started_server, server_still_running)
+    parse_results = ConsoleLogParsed(in_menus, tf2_map, tf2_class, queued_state, hosting, server_name, server_players, server_players_max)
     self.log.debug(f"console.log parse results (initial = {is_initial_parse}): {parse_results}")
 
     if gui_updates != 0:
         self.log.debug(f"Mid-parse GUI updates: {gui_updates}")
 
+    # store parsing persistence
+    self.game_state.console_log_persistence = ConsoleLogPersistence(file_position, just_started_server, server_still_running, connecting_to_matchmaking,
+                                                                    using_wav_cache, found_first_wav_cache, kataiser_seen_on)
     return parse_results
 
 
