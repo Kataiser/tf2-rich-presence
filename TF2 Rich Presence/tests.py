@@ -539,13 +539,13 @@ class TestTF2RichPresence(unittest.TestCase):
         self.assertEqual(str(game_state_test), 'Demoman on Highpass, gamemode=koth, hosting=True, queued="Not queued", server="Team Fortress"')
         self.assertEqual(fix_activity_dict(game_state_test.activity()),
                          {'details': 'Map: Highpass (hosting)',
-                          'state': 'Time on map: 0:00',
+                          'state': 'Team Fortress',
                           'timestamps': {'start': 0},
                           'assets': {'large_image': 'z_koth_highpass',
                                      'large_text': 'Highpass - TF2 Rich Presence {tf2rpvnum}',
                                      'small_image': 'demoman',
                                      'small_text': 'Demoman'}})
-        self.assertTrue(game_state_test.update_rpc)
+        self.assertFalse(game_state_test.update_rpc)
 
         settings.change('bottom_line', 'Class')
         game_state_test.set_bulk(console_log.ConsoleLogParsed(False, 'koth_highpass', 'Demoman', 'Not queued', True, 'Team Fortress'))
@@ -567,13 +567,13 @@ class TestTF2RichPresence(unittest.TestCase):
         self.assertEqual(str(game_state_test), 'Pyro on Snowycoast, gamemode=payload, hosting=False, queued="Not queued", server="Valve Matchmaking Server (Virginia)"')
         self.assertEqual(fix_activity_dict(game_state_test.activity()),
                          {'details': 'Players: 0/0',
-                          'state': 'Time on map: 0:00',
+                          'state': 'Valve Matchmaking Server (Virginia)',
                           'timestamps': {'start': 0},
                           'assets': {'large_image': 'z_pl_snowycoast',
                                      'large_text': 'Snowycoast - TF2 Rich Presence {tf2rpvnum}',
                                      'small_image': 'pyro',
                                      'small_text': 'Pyro'}})
-        self.assertTrue(game_state_test.update_rpc)
+        self.assertFalse(game_state_test.update_rpc)
 
         settings.change('bottom_line', 'Server name')
         self.assertEqual(fix_activity_dict(game_state_test.activity()),
@@ -603,6 +603,17 @@ class TestTF2RichPresence(unittest.TestCase):
         game_state_test.set_bulk(console_log.ConsoleLogParsed(False, 'arena_badlands', 'Engineer', 'Not queued', True, 'Team Fortress'))
         self.assertTrue(game_state_test.update_rpc)
         self.assertEqual(str(game_state_test), 'Engineer on Badlands (Arena), gamemode=arena, hosting=True, queued="Not queued", server="Team Fortress"')
+        self.assertEqual(fix_activity_dict(game_state_test.activity()),
+                         {'details': 'Map: Badlands (Arena) (hosting)',
+                          'state': 'Team Fortress',
+                          'timestamps': {'start': 0},
+                          'assets': {'large_image': 'z_cp_badlands',
+                                     'large_text': 'Badlands (Arena) - TF2 Rich Presence {tf2rpvnum}',
+                                     'small_image': 'engineer',
+                                     'small_text': 'Engineer'}})
+        self.assertFalse(game_state_test.update_rpc)
+
+        settings.change('bottom_line', 'Time on map')
         self.assertEqual(fix_activity_dict(game_state_test.activity()),
                          {'details': 'Map: Badlands (Arena) (hosting)',
                           'state': 'Time on map: 0:00',
@@ -675,33 +686,33 @@ class TestTF2RichPresence(unittest.TestCase):
         app.game_state.set_bulk(console_log.ConsoleLogParsed(False, 'plr_hightower', 'Heavy', 'Not queued', True, 'Team Fortress', 1, 24))
         app.set_gui_from_game_state()
         self.assertEqual((app.gui.text_state, app.gui.bg_state, app.gui.fg_state, app.gui.class_state),
-                         (('Map: Hightower (hosting)', 'Players: 1/24', 'Time on map: 0:00', '0:00 elapsed'),
+                         (('Map: Hightower (hosting)', 'Players: 1/24', 'Team Fortress', '0:00 elapsed'),
                           ('bg_modes/payload-race', 77, 172), 'fg_maps/plr_hightower', 'classes/heavy'))
 
         app.game_state.set_bulk(console_log.ConsoleLogParsed(False, 'tr_dustbowl', 'Scout', 'Queued for Casual', True, 'Team Fortress', 7, 24))
         app.set_gui_from_game_state()
         self.assertEqual((app.gui.text_state, app.gui.bg_state, app.gui.fg_state, app.gui.class_state),
-                         (('Map: Dustbowl (Training) (hosting)', 'Players: 7/24', 'Time on map: 0:00', '0:00 elapsed'),
+                         (('Map: Dustbowl (Training) (hosting)', 'Players: 7/24', 'Team Fortress', '0:00 elapsed'),
                           ('bg_modes/training', 77, 172), 'fg_maps/cp_dustbowl', 'classes/scout'))
         self.assertEqual(app.gui.bottom_text_state, {'discord': False, 'kataiser': False, 'queued': True, 'holiday': False})
 
         app.game_state.set_bulk(console_log.ConsoleLogParsed(False, 'itemtest', 'Spy', 'Not queued', True, 'Team Fortress', 17, 24))
         app.set_gui_from_game_state()
         self.assertEqual((app.gui.text_state, app.gui.bg_state, app.gui.fg_state, app.gui.class_state),
-                         (('Map: itemtest (hosting)', 'Players: 17/24', 'Time on map: 0:00', '0:00 elapsed'),
+                         (('Map: itemtest (hosting)', 'Players: 17/24', 'Team Fortress', '0:00 elapsed'),
                           ('bg_modes/unknown', 77, 172), 'fg_maps/itemtest', 'classes/spy'))
 
         app.game_state.set_bulk(console_log.ConsoleLogParsed(False, 'cp_steel', 'Medic', 'Not queued', False, 'Valve Matchmaking Server (Virginia)', 8, 24))
         app.set_gui_from_game_state()
         self.assertEqual((app.gui.text_state, app.gui.bg_state, app.gui.fg_state, app.gui.class_state),
-                         (('Map: Steel', 'Players: 8/24', 'Time on map: 0:00', '0:00 elapsed'),
+                         (('Map: Steel', 'Players: 8/24', 'Valve Matchmaking Server (Virginia)', '0:00 elapsed'),
                           ('bg_modes/attack-defend', 77, 172), 'fg_maps/cp_steel', 'classes/medic'))
         self.assertEqual(app.gui.bottom_text_state, {'discord': False, 'kataiser': False, 'queued': False, 'holiday': False})
 
         app.game_state.set_bulk(console_log.ConsoleLogParsed(False, 'plr_highertower', 'Engineer',  'Not queued', True, 'Valve Matchmaking Server (Virginia)', 5, 24))
         app.set_gui_from_game_state()
         self.assertEqual((app.gui.text_state, app.gui.bg_state, app.gui.fg_state, app.gui.class_state),
-                         (('Map: plr_highertower (hosting)', 'Players: 5/24', 'Time on map: 0:00', '0:00 elapsed'),
+                         (('Map: plr_highertower (hosting)', 'Players: 5/24', 'Valve Matchmaking Server (Virginia)', '0:00 elapsed'),
                           ('bg_modes/payload-race', 77, 172), 'fg_modes/payload-race', 'classes/engineer'))
 
         app.gui.master.destroy()
@@ -755,24 +766,25 @@ class TestTF2RichPresence(unittest.TestCase):
         game_state_test = game_state.GameState(self.log)
         game_state_test.force_zero_map_time = True
 
-        game_state_test.set_bulk(console_log.ConsoleLogParsed(False, 'ctf_mexico_b4', 'Engineer', 'Not queued', True))
+        game_state_test.set_bulk(console_log.ConsoleLogParsed(False, 'ctf_mexico_b4', 'Engineer', 'Not queued', True, 'Team Fortress'))
         self.assertTrue(game_state_test.update_rpc)
-        self.assertEqual(str(game_state_test), 'Engineer on ctf_mexico_b4, gamemode=ctf, hosting=True, queued="Not queued", server=""')
+        self.assertEqual(str(game_state_test), 'Engineer on ctf_mexico_b4, gamemode=ctf, hosting=True, queued="Not queued", server="Team Fortress"')
         self.assertEqual(fix_activity_dict(game_state_test.activity()),
                          {'details': 'Mapa: ctf_mexico_b4 (alojamiento)',
-                          'state': 'El tiempo en el mapa: 0:00',
+                          'state': 'Team Fortress',
                           'timestamps': {'start': 0},
                           'assets': {'large_image': 'ctf',
                                      'large_text': 'Capturar la Bandera - TF2 Rich Presence {tf2rpvnum}',
                                      'small_image': 'engineer',
                                      'small_text': 'Engineer'}})
-        self.assertTrue(game_state_test.update_rpc)
+        self.assertFalse(game_state_test.update_rpc)
 
     def test_set_gui_from_game_state_localized(self):
         settings.change('language', 'German')
         app = main.TF2RichPresense(self.log, set_process_priority=False)
         app.game_state.force_zero_map_time = True
 
+        settings.change('bottom_line', 'Time on map')
         app.game_state.set_bulk(console_log.ConsoleLogParsed(False, 'mvm_rottenburg', 'Medic', 'Queued for MvM (Boot Camp)', True))
         app.set_gui_from_game_state()
         self.assertEqual((app.gui.text_state, app.gui.bg_state, app.gui.fg_state, app.gui.class_state),
