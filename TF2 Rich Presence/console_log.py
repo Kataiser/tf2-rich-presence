@@ -33,6 +33,7 @@ class ConsoleLogPersistence:
     using_wav_cache: bool = False
     found_first_wav_cache: bool = False
     kataiser_seen_on: str = ''
+    server_name_full: str = ''
 
 
 # reads a console.log and returns as much game state as possible, alternatively None if whether an old scan was reused
@@ -46,7 +47,6 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
     tf2_class: str = parse_results.tf2_class
     queued_state: str = parse_results.queued_state
     hosting: bool = parse_results.hosting
-    server_name: str = parse_results.server_name
     server_players: int = parse_results.server_players
     server_players_max: int = parse_results.server_players_max
 
@@ -57,7 +57,6 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
         tf2_class = from_game_state.tf2_class
         queued_state = from_game_state.queued_state
         hosting = from_game_state.hosting
-        server_name = from_game_state.server_name
         server_players = from_game_state.server_players[0]
         server_players_max = from_game_state.server_players[1]
         persistence: ConsoleLogPersistence = from_game_state.console_log_persistence
@@ -69,7 +68,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
             self.game_state.console_log_persistence = ConsoleLogPersistence()
         else:
             self.game_state.console_log_persistence = ConsoleLogPersistence(file_position, just_started_server, server_still_running, connecting_to_matchmaking,
-                                                                            using_wav_cache, found_first_wav_cache, kataiser_seen_on)
+                                                                            using_wav_cache, found_first_wav_cache, kataiser_seen_on, server_name_full)
 
     # console.log is a log of tf2's console (duh), only exists if tf2 has -condebug (see no_condebug_warning() in GUI)
     self.log.debug(f"Looking for console.log at {console_log_path}")
@@ -101,6 +100,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
     using_wav_cache: bool = persistence.using_wav_cache
     found_first_wav_cache: bool = persistence.found_first_wav_cache
     kataiser_seen_on: str = persistence.kataiser_seen_on
+    server_name_full: str = persistence.server_name_full
 
     consolelog_file_size: int = os.stat(console_log_path).st_size
 
@@ -167,7 +167,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
                     break
 
             if line.startswith('hostname: '):
-                server_name = line[10:-1]
+                server_name_full = line[10:-1]
 
             elif line.startswith('players : '):
                 line_split = line.split()
@@ -262,6 +262,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
         tf2_class = ''
         hosting = False
         server_name = ''
+        server_name_full = ''
         server_players = 0
         server_players_max = 0
         self.gui.set_bottom_text('kataiser', False)
@@ -269,8 +270,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
         if menus_message_used:
             self.log.debug(f"Menus message used: \"{menus_message_used.strip()}\"")
     else:
-        server_name_full = server_name
-        server_name, is_valve_server = cleanup_server_name(server_name)
+        server_name, is_valve_server = cleanup_server_name(server_name_full)
 
         if is_valve_server and server_players_max == 32:
             server_players_max = 24  # cool
@@ -328,7 +328,7 @@ def cleanup_server_name(name: str, log: Optional[logger.Log] = None) -> tuple[st
 
 
 re_valve_server: Pattern[str] = re.compile(r'Valve Matchmaking Server \(.*srcds.*\)')
-re_valve_server_remove: Pattern[str] = re.compile(r' srcds[^)]+')
+re_valve_server_remove: Pattern[str] = re.compile(r'( srcds[^)]+)|( \(srcds.*\))')
 re_double_space: Pattern[str] = re.compile(r' {2,}')
 tf2_classes: Tuple[str, ...] = ('Scout', 'Soldier', 'Pyro', 'Demoman', 'Heavy', 'Engineer', 'Medic', 'Sniper', 'Spy')
 non_ascii_regex = re.compile('[^\x00-\x7F]')

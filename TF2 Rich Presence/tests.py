@@ -102,18 +102,21 @@ class TestTF2RichPresence(unittest.TestCase):
         self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(9612))
         self.assertEqual(app.interpret_console_log('test_resources\\console_valve_server.log', {'not Kataiser'}, True),
                          console_log.ConsoleLogParsed(False, 'pd_atom_smash', 'Heavy', 'Not queued', False, 'Valve Matchmaking Server (Virginia)', 19, 24))
-        self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(824501, kataiser_seen_on='pd_atom_smash'))
+        self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(824501, kataiser_seen_on='pd_atom_smash',
+                                                                                                   server_name_full='Valve Matchmaking Server (Virginia srcds1015-iad1 #30)'))
         self.assertEqual(app.interpret_console_log('test_resources\\console_community_server.log', {'not Kataiser'}, True),
                          console_log.ConsoleLogParsed(False, 'pl_swiftwater_final1', 'Soldier', 'Not queued', False, 'Uncletopia | Montréal | 3 | On…', 62, 64))
-        self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(483227, using_wav_cache=True, found_first_wav_cache=True))
-
+        self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(483227, using_wav_cache=True, found_first_wav_cache=True,
+                                                                                                   server_name_full='Uncletopia | Montréal | 3 | One Thousand Uncles'))
         parsed = app.interpret_console_log('test_resources\\console_file_position_1.log', {'not Kataiser'}, True)
         self.assertEqual(parsed, console_log.ConsoleLogParsed(False, 'koth_mannhole', 'Sniper', 'Not queued', True, 'Team Fortress', 18, 24))
-        self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(27014, server_still_running=True, kataiser_seen_on='koth_mannhole'))
+        self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(27014, server_still_running=True, kataiser_seen_on='koth_mannhole',
+                                                                                                   server_name_full='Team Fortress'))
         app.game_state.set_bulk(parsed)
         self.assertEqual(app.interpret_console_log('test_resources\\console_file_position_2.log', {'not Kataiser'}, True, from_game_state=app.game_state),
                          console_log.ConsoleLogParsed(False, 'koth_mannhole', 'Scout', 'Not queued', True, 'Team Fortress', 16, 24))
-        self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(194861, server_still_running=True, kataiser_seen_on='koth_mannhole'))
+        self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(194861, server_still_running=True, kataiser_seen_on='koth_mannhole',
+                                                                                                   server_name_full='Team Fortress'))
 
         parsed = app.interpret_console_log('test_resources\\console_hosting_1.log', {'not Kataiser'}, True)
         self.assertEqual(parsed, console_log.ConsoleLogParsed(True, '', '', 'Not queued', False))
@@ -121,7 +124,8 @@ class TestTF2RichPresence(unittest.TestCase):
         app.game_state.set_bulk(parsed)
         self.assertEqual(app.interpret_console_log('test_resources\\console_hosting_2.log', {'not Kataiser'}, True, from_game_state=app.game_state),
                          console_log.ConsoleLogParsed(False, 'pl_aquarius', 'Scout', 'Not queued', True, 'Team Fortress', 1, 24))
-        self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(388130, server_still_running=True, kataiser_seen_on='pl_aquarius'))
+        self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(388130, server_still_running=True, kataiser_seen_on='pl_aquarius',
+                                                                                                   server_name_full='Team Fortress'))
 
         app.gui.master.destroy()
 
@@ -169,6 +173,7 @@ class TestTF2RichPresence(unittest.TestCase):
     def test_cleanup_server_name(self):
         self.assertEqual(console_log.cleanup_server_name("Valve Matchmaking Server (Virginia srcds3155-iad2 #4)"), ("Valve Matchmaking Server (Virginia)", True))
         self.assertEqual(console_log.cleanup_server_name("Valve Matchmaking Server (LA srcds1153-lax2 #35)"), ("Valve Matchmaking Server (LA)", True))
+        self.assertEqual(console_log.cleanup_server_name("Valve Matchmaking Server (srcds1020-dfw2 #206)"), ("Valve Matchmaking Server", True))
         self.assertEqual(console_log.cleanup_server_name("D .U .S .T .B .O .W .L - BEGINNERS - FRAGMASTERS.CO.UK"), ("D .U .S .T .B .O .W .L - BEGIN…", False))
         self.assertEqual(console_log.cleanup_server_name("  ►  BlackWonder LA | 2Fort  ◄ "), ("► BlackWonder LA | 2Fort ◄", False))
         self.assertEqual(console_log.cleanup_server_name("▟█▙ ZOMBIE ESCAPE AC ▟█ Otaku.TF █▙ ▟"), ("ZOMBIE ESCAPE AC Otaku.TF", False))
