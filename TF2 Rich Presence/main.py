@@ -345,13 +345,17 @@ class TF2RichPresense:
             self.custom_functions.after_loop(self)
 
         if not self.has_set_process_priority:
-            self_process: psutil.Process = psutil.Process()
-            priorities_before: tuple = (self_process.nice(), self_process.ionice())
-            self_process.nice(psutil.BELOW_NORMAL_PRIORITY_CLASS)
-            self_process.ionice(psutil.IOPRIO_LOW)
-            priorities_after: tuple = (self_process.nice(), self_process.ionice())
-            self.log.debug(f"Set process priorities from {priorities_before} to {priorities_after}")
-            self.has_set_process_priority = True
+            try:
+                self_process: psutil.Process = psutil.Process()
+                priorities_before: tuple = (self_process.nice(), self_process.ionice())
+                self_process.nice(psutil.BELOW_NORMAL_PRIORITY_CLASS)
+                self_process.ionice(psutil.IOPRIO_LOW)
+                priorities_after: tuple = (self_process.nice(), self_process.ionice())
+            except OSError:
+                self.log.error(f"Failed to set process priority: {traceback.format_exc()}", reportable=False)
+            else:
+                self.has_set_process_priority = True
+                self.log.debug(f"Set process priorities from {priorities_before} to {priorities_after}")
 
         if not gc.isenabled():
             gc.enable()
