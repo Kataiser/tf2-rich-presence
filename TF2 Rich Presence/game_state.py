@@ -36,6 +36,7 @@ class GameState:
 
         self.update_rpc: bool = True
         # don't track whether the GUI needs to be updated, main just always calls its updates and lets it handle whether or not it needs to set elements
+        self.prev_line_settings: tuple[str, str] = ('', '')
         self.force_zero_map_time: bool = False
         self.console_log_persistence: console_log.ConsoleLogPersistence = console_log.ConsoleLogPersistence()
 
@@ -153,6 +154,7 @@ class GameState:
     # set everything straight from console.log parse results
     def set_bulk(self, state: console_log.ConsoleLogParsed):
         prev_state: str = str(self)
+        line_settings: tuple[str, str] = (settings.get('top_line'), settings.get('bottom_line'))
 
         self.set_in_menus(state.in_menus)
         self.set_hosting(state.hosting)
@@ -162,7 +164,13 @@ class GameState:
         self.set_server_name(state.server_name)
         self.set_player_count(state.server_players, state.server_players_max)
 
-        if str(self) != prev_state:  # don't use self.update_rpc because of server data changes not mattering here
+        # check for changed line setting
+        if not self.update_rpc and self.prev_line_settings != line_settings:
+            self.update_rpc = True
+
+        self.prev_line_settings = line_settings
+
+        if self.update_rpc:
             self.log.debug(f"Game state updated from ({prev_state}) to ({str(self)})")
 
     def set_in_menus(self, in_menus: bool):
