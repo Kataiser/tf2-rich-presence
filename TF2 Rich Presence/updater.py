@@ -73,8 +73,7 @@ class UpdateChecker:
                 changelog: str = response['body']
             except KeyError:
                 if 'message' in response and 'API rate limit exceeded' in response['message']:
-                    rate_limit_message: str = f"Github {response['message'].split('(')[0][:-1]}"
-                    raise RateLimitError(rate_limit_message)
+                    self.log.error(f"Rate limited: Github {response['message'].split('(')[0][:-1]}")
                 else:
                     raise
 
