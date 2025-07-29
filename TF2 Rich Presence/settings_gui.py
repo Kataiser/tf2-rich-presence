@@ -2,6 +2,8 @@
 # https://github.com/Kataiser/tf2-rich-presence/blob/master/LICENSE
 # cython: language_level=3
 
+import os
+import subprocess
 import tkinter as tk
 import tkinter.ttk as ttk
 import traceback
@@ -16,11 +18,12 @@ import settings
 
 
 class GUI(tk.Frame):
-    def __init__(self, master: tk.Toplevel, log: logger.Log, position: Optional[tuple] = None, reload_settings: Optional[tuple] = None):
+    def __init__(self, master: tk.Toplevel, log: logger.Log, position: Optional[tuple] = None, reload_settings: Optional[tuple] = None, base_gui = None):
         self.log: logger.Log = log
         self.log.info(f"Opening settings menu for TF2 Rich Presence {launcher.VERSION}")
         self.gui_language: Optional[str] = localization.langs[localization.langs.index(reload_settings[7].get())] if reload_settings else None
         self.loc: localization.Localizer = localization.Localizer(self.log, self.gui_language if self.gui_language else settings.get('language'))
+        self.base_gui = base_gui
 
         self.log_levels: Tuple[str, ...] = ('Debug', 'Info', 'Error', 'Critical', 'Off')
         self.sentry_levels: Tuple[str, ...] = ('All errors', 'Crashes', 'Never')
@@ -265,7 +268,7 @@ class GUI(tk.Frame):
                                         self.language, self.top_line, self.bottom_line, self.gui_scale, self.drawing_gamemodes, self.preserve_window_pos)
             self.window_x = self.master.winfo_rootx() - 8
             self.window_y = self.master.winfo_rooty() - 31
-            self.__init__(self.master, self.log, reload_settings=selected_settings)
+            self.__init__(self.master, self.log, reload_settings=selected_settings, base_gui=self.base_gui)
 
     # return the settings as a dict, as they currently are in the GUI
     def get_working_settings(self) -> Dict[str, str]:
@@ -324,7 +327,6 @@ class GUI(tk.Frame):
 
     # saves settings to file and closes window
     def save_and_close(self, force: bool = False):
-        # TODO: update GUI scale immediately if possible (and anything else if needed)
         self.fix_blank_spinboxes()
         settings_to_save: Dict[str, str] = self.get_working_settings()
         settings_changed = settings.compare_settings(self.settings_loaded, settings_to_save)
@@ -332,14 +334,28 @@ class GUI(tk.Frame):
         self.log.info("Saving and closing settings menu")
         settings.access_registry(save=settings_to_save)
         self.log.info(f"Settings have been saved as: {settings_to_save}")
+        gui_scale_changed = 'gui_scale' in settings_changed
+        language_changed = 'language' in settings_changed
+        restart_needed = gui_scale_changed or language_changed
+        can_self_restart = self.base_gui and os.path.isfile('TF2 Rich Presence.bat')
 
-        if not force:
-            if 'gui_scale' in settings_changed:
+        if force:
+            self.master.destroy()  # closes window
+            return
+
+        if not restart_needed:
+            return
+
+        if can_self_restart:
+            self.log.info(f"Restarting to update {gui_scale_changed=} {language_changed=}")
+            subprocess.run('TF2 Rich Presence.bat', creationflags=0x08000000)
+            self.base_gui.close_window()
+        else:
+            if gui_scale_changed:
                 messagebox.showinfo(self.loc.text("TF2 Rich Presence"), self.loc.text("Changing GUI scale requires a restart to take effect."))
-            if 'language' in settings_changed:
-                messagebox.showinfo(self.loc.text("TF2 Rich Presence"), self.loc.text("Changing language requires a restart to take effect."))
 
-        self.master.destroy()  # closes window
+            if language_changed:
+                messagebox.showinfo(self.loc.text("TF2 Rich Presence"), self.loc.text("Changing language requires a restart to take effect."))
 
     # closes window without saving
     def close_without_saving(self):
