@@ -27,7 +27,7 @@ class GUI(tk.Frame):
 
         self.log_levels: Tuple[str, ...] = ('Debug', 'Info', 'Error', 'Critical', 'Off')
         self.sentry_levels: Tuple[str, ...] = ('All errors', 'Crashes', 'Never')
-        self.rpc_lines: Tuple[str, ...] = ('Server name', 'Player count', 'Time on map', 'Class', 'Map')
+        self.rpc_lines: Tuple[str, ...] = ('Player count', 'Server name', 'Time on map', 'Class', 'Map')
 
         self.log_levels_display: List[str] = [self.loc.text(item) for item in self.log_levels]
         self.sentry_levels_display: List[str] = [self.loc.text(item) for item in self.sentry_levels]
