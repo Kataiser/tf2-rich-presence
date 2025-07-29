@@ -339,11 +339,8 @@ class GUI(tk.Frame):
         restart_needed = gui_scale_changed or language_changed
         can_self_restart = self.base_gui and os.path.isfile('TF2 Rich Presence.bat')
 
-        if force:
+        if not restart_needed or force:
             self.master.destroy()  # closes window
-            return
-
-        if not restart_needed:
             return
 
         if can_self_restart:
