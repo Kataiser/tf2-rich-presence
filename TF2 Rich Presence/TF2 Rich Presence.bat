@@ -13,7 +13,7 @@ if not exist resources\ (
     )
 )
 
-start "" "resources\python-3.12.2-embed-amd64\pythonw.exe" -I -B "resources\launcher.py" %*
+start "" "resources\python-3.13.5-embed-amd64\pythonw.exe" -I -B "resources\launcher.py" %*
 goto close
 
 :bail

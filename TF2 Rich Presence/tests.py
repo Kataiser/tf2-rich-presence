@@ -373,9 +373,10 @@ class TestTF2RichPresence(unittest.TestCase):
 
         self.assertEqual(len(process_scanner.scan()), 3)
         p_info = process_scanner.get_process_info(os.getpid(), ('path', 'time'))
+        path = p_info['path'].lower()
 
         self.assertEqual(p_info['running'], True)
-        self.assertTrue('python' in p_info['path'].lower())  # hope your Python installation is sane
+        self.assertTrue('python' in path or 'venv' in path)  # hope your Python installation is sane
         self.assertGreater(p_info['time'], 1228305600)  # Python 3 release date lol
 
         self.assertFalse(process_scanner.hl2_exe_is_tf2(os.getpid()))

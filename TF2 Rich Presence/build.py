@@ -67,7 +67,7 @@ def main(version_num='v2.1.12'):
 
             vnum_in_action = version_num in open(Path(f'{github_repo_path}/.github/workflows/Tests.CD.yml'), 'r').read()
 
-    interpreter_name, interpreter_prefix = ('python-3.12.2-embed-amd64', 'cp312')
+    interpreter_name, interpreter_prefix = ('python-3.13.5-embed-amd64', 'cp313')
     build_start_time = time.perf_counter()
     print()
 
