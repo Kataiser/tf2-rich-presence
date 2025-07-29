@@ -9,7 +9,7 @@ pillow==11.3.0
 psutil==7.0.0
 requests-futures==1.0.2
 requests==2.32.4
-sentry-sdk==2.33.2
+sentry-sdk==2.34.0
 setuptools==80.9.0
 ujson==5.10.0
 urllib3==2.5.0
