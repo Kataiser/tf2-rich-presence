@@ -214,11 +214,15 @@ class TF2RichPresense:
 
                 for steam_config in self.steam_config_mtimes:
                     old_mtime: int = self.steam_config_mtimes[steam_config]
-                    new_mtime: int = int(os.stat(steam_config).st_mtime)
 
-                    if new_mtime > old_mtime:
-                        self.log.debug(f"Rescanning Steam config files ({new_mtime} > {old_mtime} for {steam_config})")
-                        config_scan_needed = True
+                    try:
+                        new_mtime: int = int(os.stat(steam_config).st_mtime)
+                    except FileNotFoundError:
+                        self.log.error(f"Can't update mtime for {steam_config} since it no longer exists", reportable=False)
+                    else:
+                        if new_mtime > old_mtime:
+                            self.log.debug(f"Rescanning Steam config files ({new_mtime} > {old_mtime} for {steam_config})")
+                            config_scan_needed = True
 
                 if config_scan_needed:
                     # to be clear, this scan is always needed but doesn't need to be re-done every loop
