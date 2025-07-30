@@ -171,7 +171,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
 
             elif line.startswith('players : '):
                 line_split = line.split()
-                server_players = int(line_split[2]) + int(line_split[4])  # humans + bots
+                server_players = int(line_split[2])  # can add line_split[4] to include bots
                 server_players_max = int(line_split[6][1:])
 
             elif line.endswith(' selected \n'):
