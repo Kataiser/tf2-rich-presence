@@ -34,6 +34,7 @@ class ConsoleLogPersistence:
     found_first_wav_cache: bool = False
     kataiser_seen_on: str = ''
     server_name_full: str = ''
+    is_mvm: bool = False
 
 
 # reads a console.log and returns as much game state as possible, alternatively None if whether an old scan was reused
@@ -68,7 +69,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
             self.game_state.console_log_persistence = ConsoleLogPersistence()
         else:
             self.game_state.console_log_persistence = ConsoleLogPersistence(file_position, just_started_server, server_still_running, connecting_to_matchmaking,
-                                                                            using_wav_cache, found_first_wav_cache, kataiser_seen_on, server_name_full)
+                                                                            using_wav_cache, found_first_wav_cache, kataiser_seen_on, server_name_full, is_mvm)
 
     # console.log is a log of tf2's console (duh), only exists if tf2 has -condebug (see no_condebug_warning() in GUI)
     self.log.debug(f"Looking for console.log at {console_log_path}")
@@ -101,6 +102,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
     found_first_wav_cache: bool = persistence.found_first_wav_cache
     kataiser_seen_on: str = persistence.kataiser_seen_on
     server_name_full: str = persistence.server_name_full
+    is_mvm: bool = persistence.is_mvm
 
     consolelog_file_size: int = os.stat(console_log_path).st_size
 
@@ -124,7 +126,6 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
 
     # setup
     now_in_menus: bool = False
-    with_optimization: bool = True  # "with" optimization, not "with optimization"
     chat_safety: bool = True
     user_is_kataiser: bool = 'Kataiser' in user_usernames
     # TODO: detection for canceling loading into community servers (if possible)
@@ -138,8 +139,6 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
     is_initial_parse = file_position == 0
 
     for username in user_usernames:
-        if 'with' in username:
-            with_optimization = False
         if ' :  ' in username:
             chat_safety = False
 
@@ -154,10 +153,8 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
             gui_update = 0
             gui_updates += 1
 
-        # lines that have "with" in them are basically always kill logs and can be safely ignored
-        # this (probably) improves performance
         # same goes for chat logs, this one's actually to reduce false detections
-        if (with_optimization and 'with' in line) or (chat_safety and ' :  ' in line):
+        if chat_safety and ' :  ' in line:
             continue
 
         if not in_menus:
@@ -171,8 +168,14 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
 
             elif line.startswith('players : '):
                 line_split = line.split()
-                server_players = int(line_split[2])  # can add line_split[4] to include bots
+                server_players = int(line_split[2]) + (0 if is_mvm else int(line_split[4]))  # exclude bots from count if in mvm
                 server_players_max = int(line_split[6][1:])
+
+            elif tf2_map and line.startswith('Players: ') and ' / ' in line:
+                # just joined, don't have info from status yet but just read map
+                line_split = line.split()
+                server_players = int(line_split[1])
+                server_players_max = int(line_split[3])
 
             elif line.endswith(' selected \n'):
                 class_line_possibly: List[str] = line[:-11].split()
@@ -199,6 +202,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
             in_menus = False
             connecting_to_matchmaking = False
             tf2_map = line[5:-1]
+            is_mvm = tf2_map.startswith('mvm_')
             tf2_class = ''
 
             if just_started_server:
@@ -265,6 +269,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
         server_name_full = ''
         server_players = 0
         server_players_max = 0
+        is_mvm = False
         self.gui.set_bottom_text('kataiser', False)
 
         if menus_message_used:
@@ -272,8 +277,8 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
     else:
         server_name, is_valve_server = cleanup_server_name(server_name_full)
 
-        if is_valve_server and server_players_max == 32:
-            server_players_max = 24  # cool
+        if is_valve_server and server_players_max == 32:  # cool
+            server_players_max = 6 if is_mvm else 24
 
         if tf2_class != '' and tf2_map == '':
             self.log.error("Have class without map")

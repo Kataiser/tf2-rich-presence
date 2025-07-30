@@ -62,43 +62,43 @@ class TestTF2RichPresence(unittest.TestCase):
                          console_log.ConsoleLogParsed(True, '', '', 'Queued for Casual', False))
         self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(9330226))
         self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', {'not Kataiser'}, True),
-                         console_log.ConsoleLogParsed(False, 'pl_badwater', 'Pyro', 'Not queued', True))
+                         console_log.ConsoleLogParsed(False, 'pl_badwater', 'Pyro', 'Not queued', True, '', 1, 24))
         self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(9333634, server_still_running=True))
         self.assertEqual(app.interpret_console_log('test_resources\\console_badwater.log', {'not Kataiser'}, True, tf2_start_time=recent_time),
                          console_log.ConsoleLogParsed(True, '', '', 'Not queued', False))
         self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence())
         self.assertEqual(app.interpret_console_log('test_resources\\console_custom_map.log', {'not Kataiser'}, True),
-                         console_log.ConsoleLogParsed(False, 'cp_catwalk_a5c', 'Soldier', 'Not queued', True))
+                         console_log.ConsoleLogParsed(False, 'cp_catwalk_a5c', 'Soldier', 'Not queued', True, '', 1, 24))
         self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(9328261, server_still_running=True))
         self.assertEqual(app.interpret_console_log('test_resources\\console_soundemitter.log', {'not Kataiser'}, True),
                          console_log.ConsoleLogParsed(True, '', '', 'Not queued', False))
         self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(2915843))
         self.assertEqual(app.interpret_console_log('test_resources\\console_queued_in_game.log', {'not Kataiser'}, True),
-                         console_log.ConsoleLogParsed(False, 'itemtest', 'Heavy', 'Queued for Casual', True))
+                         console_log.ConsoleLogParsed(False, 'itemtest', 'Heavy', 'Queued for Casual', True, '', 1, 24))
         self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(4965728, server_still_running=True))
         self.assertEqual(app.interpret_console_log('test_resources\\console_canceled_load.log', {'not Kataiser'}, True),
                          console_log.ConsoleLogParsed(True, '', '', 'Not queued', False))
         self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(3270628))
         self.assertEqual(app.interpret_console_log('test_resources\\console_chat.log', {'not Kataiser'}, True),
-                         console_log.ConsoleLogParsed(False, 'itemtest', 'Scout', 'Not queued', True))
+                         console_log.ConsoleLogParsed(False, 'itemtest', 'Scout', 'Not queued', True, '', 1, 24))
         self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(3276283, server_still_running=True))
         self.assertEqual(app.interpret_console_log('test_resources\\console_empty.log', {'not Kataiser'}, True),
                          console_log.ConsoleLogParsed(True, '', '',  'Not queued', False))
         self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(67))
         self.assertEqual(app.interpret_console_log('test_resources\\console_tf2bd.log', {'Kataiser'}, True),
-                         console_log.ConsoleLogParsed(False, 'ctf_turbine', 'Soldier', 'Not queued', False))
+                         console_log.ConsoleLogParsed(False, 'ctf_turbine', 'Soldier', 'Not queued', False, '', 20, 24))
         self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(6312533, using_wav_cache=True, found_first_wav_cache=True))
         self.assertEqual(app.interpret_console_log('test_resources\\console_community_disconnect.log', {'not Kataiser'}, True),
                          console_log.ConsoleLogParsed(True, '', '', 'Not queued', False))
         self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(22418))
         self.assertEqual(app.interpret_console_log('test_resources\\console_community_disconnect2.log', {'not Kataiser'}, True),
-                         console_log.ConsoleLogParsed(False, 'vsh_military_area_se6', 'Heavy', 'Not queued', False))
+                         console_log.ConsoleLogParsed(False, 'vsh_military_area_se6', 'Heavy', 'Not queued', False, '', 14, 32))
         self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(22160, using_wav_cache=True, found_first_wav_cache=True))
         self.assertEqual(app.interpret_console_log('test_resources\\console_blanks.log', {'not Kataiser'}, True),
-                         console_log.ConsoleLogParsed(False, 'sd_doomsday_event', 'Pyro', 'Not queued', False))
+                         console_log.ConsoleLogParsed(False, 'sd_doomsday_event', 'Pyro', 'Not queued', False, '', 16, 32))
         self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(94920))
         self.assertEqual(app.interpret_console_log('test_resources\\console_map_material.log', {'not Kataiser'}, True),
-                         console_log.ConsoleLogParsed(False, 'koth_slaughter_event', '', 'Queued for Casual', False))
+                         console_log.ConsoleLogParsed(False, 'koth_slaughter_event', '', 'Queued for Casual', False, '', 23, 32))
         self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(9612))
         self.assertEqual(app.interpret_console_log('test_resources\\console_valve_server.log', {'not Kataiser'}, True),
                          console_log.ConsoleLogParsed(False, 'pd_atom_smash', 'Heavy', 'Not queued', False, 'Valve Matchmaking Server (Virginia)', 19, 24))
@@ -790,10 +790,10 @@ class TestTF2RichPresence(unittest.TestCase):
         app.game_state.force_zero_map_time = True
 
         settings.change('bottom_line', 'Time on map')
-        app.game_state.set_bulk(console_log.ConsoleLogParsed(False, 'mvm_rottenburg', 'Medic', 'Queued for MvM (Boot Camp)', True))
+        app.game_state.set_bulk(console_log.ConsoleLogParsed(False, 'mvm_rottenburg', 'Medic', 'Queued for MvM (Boot Camp)', True, 'Valve Matchmaking Server', 6, 6))
         app.set_gui_from_game_state()
         self.assertEqual((app.gui.text_state, app.gui.bg_state, app.gui.fg_state, app.gui.class_state),
-                         (('Karte: Rottenburg (Hosting)', 'Spieler: 0/0', 'Zeit auf der Karte: 0:00', '0:00 verstrichen'),
+                         (('Karte: Rottenburg (Hosting)', 'Spieler: 6/6', 'Zeit auf der Karte: 0:00', '0:00 verstrichen'),
                           ('bg_modes/mvm', 77, 172), 'fg_maps/mvm_rottenburg', 'classes/medic'))
         self.assertEqual(app.gui.bottom_text_queue_state, "Warteschlange für MvM (Boot Camp)")
         app.gui.master.destroy()

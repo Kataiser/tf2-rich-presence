@@ -25,7 +25,7 @@ class GameState:
         self.queued_state: str = "Not queued"
         self.hosting: bool = False
         self.server_name: str = ''
-        self.player_count: str = ''
+        self.player_count_text: str = ''
         self.server_players: tuple[int, int] = (0, 0)
         self.gamemode: str = ''
         self.gamemode_fancy: str = ''
@@ -211,11 +211,11 @@ class GameState:
             self.update_rpc = True
 
     def set_player_count(self, server_players: int, server_players_max: int):
-        player_count = self.loc.text("Players: {0}/{1}").format(server_players, server_players_max)
+        server_players_tuple: tuple[int, int] = (server_players, server_players_max)
 
-        if player_count != self.player_count:
-            self.player_count = player_count
+        if server_players_tuple != self.server_players:
             self.server_players = (server_players, server_players_max)
+            self.player_count_text = self.loc.text("Players: {0}/{1}").format(server_players, server_players_max)
 
             if 'Player count' in (settings.get('top_line'), settings.get('bottom_line')):
                 self.update_rpc = True
@@ -247,7 +247,7 @@ class GameState:
         if line_setting == 'Server name':
             return self.server_name
         elif line_setting == 'Player count':
-            return self.player_count
+            return self.player_count_text
         elif line_setting == 'Time on map':
             if rpc:
                 self.update_rpc = True  # because new time on map guarantees changed RPC
