@@ -9,6 +9,7 @@ import platform
 import statistics
 import subprocess
 import tkinter as tk
+import tkinter.font
 import tkinter.ttk as ttk
 import traceback
 import urllib.parse
@@ -67,6 +68,8 @@ class GUI(tk.Frame):
         self.main_loop_body_times: List[float] = []
         self.update_checker: updater.UpdateChecker = updater.UpdateChecker(self.log)
         self.console_log_path: Optional[str] = None
+        self.main_font: tkinter.font.Font = tkinter.font.Font(self.master, ('TkDefaultFont', font_size))
+        self.centerable_elements_offset: int = 0
 
         menu_bar: tk.Menu = tk.Menu(self.master)
         self.file_menu = tk.Menu(menu_bar, tearoff=0)
@@ -113,15 +116,15 @@ class GUI(tk.Frame):
         self.fg_shadow: int = self.canvas.create_image(65 * self.scale, 45 * self.scale, anchor=tk.NW)
         self.fg_image: int = self.canvas.create_image(85 * self.scale, 65 * self.scale, anchor=tk.NW)
         self.class_image: int = self.canvas.create_image(90 * self.scale, 180 * self.scale, anchor=tk.CENTER)
-        self.text_1: int = self.canvas.create_text(358 * self.scale, 110 * self.scale, font=('TkDefaultFont', font_size), fill='white', anchor=tk.CENTER)
-        self.text_3_0: int = self.canvas.create_text(220 * self.scale, 105 * self.scale, font=('TkDefaultFont', font_size), fill='white', anchor=tk.W)
-        self.text_3_1: int = self.canvas.create_text(220 * self.scale, 125 * self.scale, font=('TkDefaultFont', font_size), fill='white', anchor=tk.W)
-        self.text_3_2: int = self.canvas.create_text(220 * self.scale, 145 * self.scale, font=('TkDefaultFont', font_size), fill='gray', anchor=tk.W)
-        self.text_4_0: int = self.canvas.create_text(220 * self.scale, 95 * self.scale, font=('TkDefaultFont', font_size), fill='white', anchor=tk.W)
-        self.text_4_1: int = self.canvas.create_text(220 * self.scale, 115 * self.scale, font=('TkDefaultFont', font_size), fill='white', anchor=tk.W)
-        self.text_4_2: int = self.canvas.create_text(220 * self.scale, 135 * self.scale, font=('TkDefaultFont', font_size), fill='white', anchor=tk.W)
-        self.text_4_3: int = self.canvas.create_text(220 * self.scale, 155 * self.scale, font=('TkDefaultFont', font_size), fill='gray', anchor=tk.W)
-        self.update_text: int = self.canvas.create_text(467 * self.scale, 20 * self.scale, font=('TkDefaultFont', font_size), fill='light gray', anchor=tk.E)
+        self.text_1: int = self.canvas.create_text(358 * self.scale, 110 * self.scale, font=self.main_font, fill='white', anchor=tk.CENTER)
+        self.text_3_0: int = self.canvas.create_text(220 * self.scale, 105 * self.scale, font=self.main_font, fill='white', anchor=tk.W)
+        self.text_3_1: int = self.canvas.create_text(220 * self.scale, 125 * self.scale, font=self.main_font, fill='white', anchor=tk.W)
+        self.text_3_2: int = self.canvas.create_text(220 * self.scale, 145 * self.scale, font=self.main_font, fill='gray', anchor=tk.W)
+        self.text_4_0: int = self.canvas.create_text(220 * self.scale, 95 * self.scale, font=self.main_font, fill='white', anchor=tk.W)
+        self.text_4_1: int = self.canvas.create_text(220 * self.scale, 115 * self.scale, font=self.main_font, fill='white', anchor=tk.W)
+        self.text_4_2: int = self.canvas.create_text(220 * self.scale, 135 * self.scale, font=self.main_font, fill='white', anchor=tk.W)
+        self.text_4_3: int = self.canvas.create_text(220 * self.scale, 155 * self.scale, font=self.main_font, fill='gray', anchor=tk.W)
+        self.update_text: int = self.canvas.create_text(467 * self.scale, 20 * self.scale, font=self.main_font, fill='light gray', anchor=tk.E)
         self.update_icon: int = self.canvas.create_image(492 * self.scale, 8 * self.scale, anchor=tk.NE)
         self.paused_overlay: int = self.canvas.create_image(0, 0, anchor=tk.NW)
         self.paused_text: int = self.canvas.create_text(5 * self.scale, 5 * self.scale, font=('TkDefaultFont', round(14 * self.scale)), fill='white', anchor=tk.NW)
@@ -129,6 +132,8 @@ class GUI(tk.Frame):
         self.canvas.tag_bind(self.update_text, '<Button-1>', self.show_update_menu)
         self.canvas.tag_bind(self.update_icon, '<Button-1>', self.show_update_menu)
         self.canvas.place(x=0, y=0)
+        self.centerable_elements: tuple[int, ...] = (self.fg_shadow, self.fg_image, self.class_image, self.text_3_0, self.text_3_1, self.text_3_2,
+                                                     self.text_4_0, self.text_4_1, self.text_4_2, self.text_4_3)
         self.log.debug("Created canvas elements")
 
         self.launch_tf2_button: tk.Button = tk.Button(self.master, text=self.loc.text("Launch TF2"), font=('TkDefaultFont', round(9 * self.scale)), command=self.launch_tf2)
@@ -183,6 +188,7 @@ class GUI(tk.Frame):
             self.canvas.itemconfigure(self.text_3_0, text=lines[0])
             self.canvas.itemconfigure(self.text_3_1, text=lines[1])
             self.canvas.itemconfigure(self.text_3_2, text=lines[2])
+            self.auto_adjust_centered(lines)
             self.text_state = lines
             self.log.debug(f"Updated GUI text state: {lines}")
 
@@ -201,6 +207,7 @@ class GUI(tk.Frame):
             self.canvas.itemconfigure(self.text_4_1, text=lines[1])
             self.canvas.itemconfigure(self.text_4_2, text=lines[2])
             self.canvas.itemconfigure(self.text_4_3, text=lines[3])
+            self.auto_adjust_centered(lines)
             self.text_state = lines
             self.log.debug(f"Updated GUI text state: {lines}")
 
@@ -314,6 +321,22 @@ class GUI(tk.Frame):
     def enable_update_notification(self):
         self.canvas.itemconfigure(self.update_text, text=self.loc.text("{0} update available  ").format(self.available_update_data[0]))  # the extra spaces are intentional
         self.canvas.itemconfigure(self.update_icon, image=self.fg_image_load('dl_icon', 25))
+
+    # dynamically offset centered elements to look better
+    def auto_adjust_centered(self, lines: tuple[str, ...]):
+        max_char_line: str = max(lines, key=len)
+        width: int = self.main_font.measure(max_char_line)
+        target_offset: int = min(max(210 - width, -20), 0)
+        move_delta: int = target_offset - self.centerable_elements_offset
+
+        if not move_delta:
+            return
+
+        self.centerable_elements_offset = target_offset
+        self.log.debug(f"Offset centerable elements to {target_offset} (delta = {move_delta})")
+
+        for centerable_element in self.centerable_elements:
+            self.canvas.move(centerable_element, move_delta, 0)
 
     # create and show the available update window
     def show_update_menu(self, *args):
@@ -710,7 +733,7 @@ def test_state(test_gui: GUI, state: int):
         test_gui.set_fg_image('fg_maps/pl_swiftwater_final1')
         test_gui.set_class_image('sniper')
     elif state == 4:
-        test_gui.set_state_4('bg_modes/control-point', ("Map: cp_catwalk_a5c (hosting)", "Players: ?/?", "Time on map: 2:39", "06:21 elapsed"))
+        test_gui.set_state_4('bg_modes/control-point', ("Map: cp_catwalk_a5c (hosting)", "Players: ?/?", "Valve Matchmaking Server (Virginia)", "06:21 elapsed"))
         test_gui.set_fg_image('fg_modes/control-point')
         test_gui.set_class_image('pyro')
 
