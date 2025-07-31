@@ -245,7 +245,10 @@ class GameState:
         line_setting: str = settings.get('top_line' if line == 'top' else 'bottom_line')
 
         if line_setting == 'Server name':
-            return self.server_name
+            if self.server_name:
+                return self.server_name
+            else:
+                return self.loc.text("Joining...")
         elif line_setting == 'Player count':
             return self.player_count_text
         elif line_setting == 'Time on map':
