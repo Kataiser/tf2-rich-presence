@@ -105,7 +105,7 @@ class TestTF2RichPresence(unittest.TestCase):
         self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(824501, kataiser_seen_on='pd_atom_smash',
                                                                                                    server_name_full='Valve Matchmaking Server (Virginia srcds1015-iad1 #30)'))
         self.assertEqual(app.interpret_console_log('test_resources\\console_community_server.log', {'not Kataiser'}, True),
-                         console_log.ConsoleLogParsed(False, 'pl_swiftwater_final1', 'Soldier', 'Not queued', False, 'Uncletopia | Montréal | 3 | On…', 62, 64))
+                         console_log.ConsoleLogParsed(False, 'pl_swiftwater_final1', 'Soldier', 'Not queued', False, 'Uncletopia | Montréal | 3 | One Thousa…', 62, 64))
         self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(483227, using_wav_cache=True, found_first_wav_cache=True,
                                                                                                    server_name_full='Uncletopia | Montréal | 3 | One Thousand Uncles'))
         parsed = app.interpret_console_log('test_resources\\console_file_position_1.log', {'not Kataiser'}, True)
@@ -178,6 +178,13 @@ class TestTF2RichPresence(unittest.TestCase):
         self.assertEqual(console_log.cleanup_server_name("  ►  BlackWonder LA | 2Fort  ◄ "), ("► BlackWonder LA | 2Fort ◄", False))
         self.assertEqual(console_log.cleanup_server_name("▟█▙ ZOMBIE ESCAPE AC ▟█ Otaku.TF █▙ ▟"), ("ZOMBIE ESCAPE AC Otaku.TF", False))
         self.assertEqual(console_log.cleanup_server_name("UGC.TF | 2FORT | US | Fast"), ("UGC.TF | 2FORT | US | Fast", False))
+
+        gui.GUI(self.log)
+        self.assertEqual(console_log.cleanup_server_name("BMod.TF | Poland #2 | Manned Machines - Giant Robot PvP"), ("BMod.TF | Poland #2 | Manned Machi…", False))
+        self.assertEqual(console_log.cleanup_server_name("tiny kitty's girl pound #5 - [nospread crits rtv good maps] 18+"), ("tiny kitty's girl pound #5 - [nospread cr…", False))
+        self.assertEqual(console_log.cleanup_server_name("﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽"), ("﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽﷽…", False))
+        self.assertEqual(console_log.cleanup_server_name("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||"),
+                                                        ("||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||…", False))
 
     def test_get_map_gamemode(self):
         self.assertEqual(gamemodes.get_map_gamemode(self.log, 'cp_dustbowl'), ['Dustbowl', 'attack-defend', 'Attack/Defend', False])

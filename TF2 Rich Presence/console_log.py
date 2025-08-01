@@ -6,6 +6,7 @@ import dataclasses
 import functools
 import os
 import re
+import tkinter.font
 from typing import Dict, List, Optional, Set, Tuple, Pattern
 
 import logger
@@ -309,7 +310,7 @@ def non_ascii_in_usernames(usernames: Set[str]) -> bool:
     return False
 
 
-# make server names look a bit nicer
+# make server names look a bit nicer (would make more sense in gui but eh)
 @functools.cache
 def cleanup_server_name(name: str, log: Optional[logger.Log] = None) -> tuple[str, bool]:
     cleaned: tuple[str, bool]
@@ -320,11 +321,18 @@ def cleanup_server_name(name: str, log: Optional[logger.Log] = None) -> tuple[st
         name = ''.join(c for c in name if c.isprintable() and c not in ('█', '▟', '▙')).strip()  # removes unprintable/ugly characters
         name = re_double_space.sub(' ', name)  # removes double space
 
-        if len(name) > 32:
-            # TODO: would prefer to use actual text width here
-            cleaned = f'{name[:30]}…', False
-        else:
-            cleaned = name, False
+        if gui_font:
+            if gui_font.measure(name) > 260:
+                for length in range(len(name) - 1, 8, -1):
+                    name_shortened = name[:length].rstrip()
+
+                    if gui_font.measure(name_shortened) <= 260:
+                        name = f'{name_shortened}…'
+                        break
+        elif len(name) > 32:
+            name = f'{name[:30].rstrip()}…'
+
+        cleaned = name, False
 
     if log and name != cleaned[0]:
         log.debug(f"Cleaned up server name from \"{name}\" to \"{cleaned[0]}\"")
@@ -337,3 +345,4 @@ re_valve_server_remove: Pattern[str] = re.compile(r'( srcds[^)]+)|( \(srcds.*\))
 re_double_space: Pattern[str] = re.compile(r' {2,}')
 tf2_classes: Tuple[str, ...] = ('Scout', 'Soldier', 'Pyro', 'Demoman', 'Heavy', 'Engineer', 'Medic', 'Sniper', 'Spy')
 non_ascii_regex = re.compile('[^\x00-\x7F]')
+gui_font: Optional[tkinter.font.Font] = None

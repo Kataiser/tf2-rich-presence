@@ -19,6 +19,7 @@ from typing import Dict, List, Optional, Set, Tuple, Union
 
 from PIL import Image, ImageDraw, ImageFilter, ImageTk
 
+import console_log
 import launcher
 import localization
 import logger
@@ -68,8 +69,9 @@ class GUI(tk.Frame):
         self.main_loop_body_times: List[float] = []
         self.update_checker: updater.UpdateChecker = updater.UpdateChecker(self.log)
         self.console_log_path: Optional[str] = None
-        self.main_font: tkinter.font.Font = tkinter.font.Font(self.master, ('TkDefaultFont', font_size))
         self.centerable_elements_offset: int = 0
+        self.main_font: tkinter.font.Font = tkinter.font.Font(self.master, ('TkDefaultFont', font_size))
+        console_log.gui_font = self.main_font  # for cleanup_server_name()
 
         menu_bar: tk.Menu = tk.Menu(self.master)
         self.file_menu = tk.Menu(menu_bar, tearoff=0)
@@ -346,8 +348,8 @@ class GUI(tk.Frame):
             newest_version, downloads_url, changelog = self.available_update_data
             window_text = (self.loc.text("This version ({0}) is out of date (newest version is {1}).").format(launcher.VERSION, newest_version), '\n',
                            self.loc.text("{0} changelog:").format(newest_version),
-                           changelog,
-                           self.loc.text("(If you're more than one version out of date, there may have been more changes and fixes than this.)"), '\n',
+                           changelog, '\n',
+                           self.loc.text("(If you're more than one version out of date, there have been more changes and fixes than this.)"),
                            self.loc.text("Would you like to open the download page?"))
 
             # this bit is kinda ugly
@@ -729,7 +731,8 @@ def test_state(test_gui: GUI, state: int):
         test_gui.set_fg_image('casual')
         test_gui.clear_class_image()
     elif state == 3:
-        test_gui.set_state_4('bg_modes/payload', ("Map: Swiftwater", "Players: 19/24", "Time on map: 2:39", "06:21 elapsed"))
+        server = console_log.cleanup_server_name("Panda-Community.com #13 | Freak Fortress 2 | Handsome Jack")[0]
+        test_gui.set_state_4('bg_modes/payload', ("Map: Swiftwater", "Players: 19/24", server, "06:21 elapsed"))
         test_gui.set_fg_image('fg_maps/pl_swiftwater_final1')
         test_gui.set_class_image('sniper')
     elif state == 4:
