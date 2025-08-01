@@ -131,7 +131,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
     user_is_kataiser: bool = 'Kataiser' in user_usernames
     # TODO: detection for canceling loading into community servers (if possible)
     match_types: Dict[str, str] = {'12v12 Casual Match': 'Casual', 'MvM Practice': 'MvM (Boot Camp)', 'MvM MannUp': 'MvM (Mann Up)', '6v6 Ladder Match': 'Competitive'}
-    menus_messages: Tuple[str, ...] = ('For FCVAR_REPLICATED', '[TF Workshop]', 'request to abandon', 'Server shutting down', 'Lobby destroyed', 'Disconnect:', 'destroyed CAsyncWavDataCache',
+    menus_messages: Tuple[str, ...] = ('For FCVAR_REPLICATED', 'request to abandon', 'Server shutting down', 'Lobby destroyed', 'Disconnect:', 'destroyed CAsyncWavDataCache',
                                        'ShutdownGC', 'Connection failed after', 'Host_Error')
     menus_message_used: Optional[str] = None
     menus_message: str
@@ -154,7 +154,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
             gui_update = 0
             gui_updates += 1
 
-        # same goes for chat logs, this one's actually to reduce false detections
+        # reduce false detections
         if chat_safety and ' :  ' in line:
             continue
 
@@ -202,7 +202,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
         if line.startswith('Map:'):
             in_menus = False
             connecting_to_matchmaking = False
-            tf2_map = line[5:-1]
+            tf2_map = line[5:-1].removeprefix('workshop/').partition('.')[0]
             is_mvm = tf2_map.startswith('mvm_')
             tf2_class = ''
 

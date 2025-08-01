@@ -108,6 +108,10 @@ class TestTF2RichPresence(unittest.TestCase):
                          console_log.ConsoleLogParsed(False, 'pl_swiftwater_final1', 'Soldier', 'Not queued', False, 'Uncletopia | Montréal | 3 | One Thousa…', 62, 64))
         self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(483227, using_wav_cache=True, found_first_wav_cache=True,
                                                                                                    server_name_full='Uncletopia | Montréal | 3 | One Thousand Uncles'))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_workshop_joined.log', {'not Kataiser'}, True),
+                         console_log.ConsoleLogParsed(False, 'trade_unusual_paradise_v45', '', 'Not queued', False, '', 32, 46))
+        self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(18264, using_wav_cache=True, found_first_wav_cache=True))
+
         parsed = app.interpret_console_log('test_resources\\console_file_position_1.log', {'not Kataiser'}, True)
         self.assertEqual(parsed, console_log.ConsoleLogParsed(False, 'koth_mannhole', 'Sniper', 'Not queued', True, 'Team Fortress', 18, 24))
         self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(27014, server_still_running=True, kataiser_seen_on='koth_mannhole',

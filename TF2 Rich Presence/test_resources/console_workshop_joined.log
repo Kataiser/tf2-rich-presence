@@ -1,0 +1,324 @@
+For FCVAR_REPLICATED, ConVar must be defined in client and game .dlls (sv_use_steam_voice)
+[TF Workshop] Got 5 subscribed maps, 5 new
+ProtoDefs post data loaded.
+ProtoDefs loaded. 43.17 MB used
+ProtoDefs post data loaded.
+ProtoDefs loaded. 43.17 MB used
+maxplayers set to 24
+Steam config directory: C:\Program Files (x86)\Steam\steamapps\common\Team Fortress 2\platform\config
+CClientSteamContext logged on = 1
+Convar tf_impactwatertimeenable has conflicting FCVAR_CHEAT flags (child: FCVAR_CHEAT, parent: no FCVAR_CHEAT, parent wins)
+Parent cvar in server.dll not allowed (tf_mvm_max_invaders)
+Parent cvar in server.dll not allowed (tf_mvm_max_connected_players)
+Convar cl_particle_retire_cost has conflicting FCVAR_CHEAT flags (child: FCVAR_CHEAT, parent: no FCVAR_CHEAT, parent wins)
+Convar r_drawropes has conflicting FCVAR_CHEAT flags (child: FCVAR_CHEAT, parent: no FCVAR_CHEAT, parent wins)
+KeyValues Error: RecursiveLoadFromBuffer:  got } in key in file resource/clientscheme_fonts.res
+Scheme, CustomFontFiles, resource/linux_fonts/FiraSans-Regular.ttf, (*7*), (*russian*), 
+Failed to load custom font file '19'
+Failed to load custom font file '20'
+Failed to load custom font file '21'
+Failed to load custom font file '22'
+Failed to load custom font file '23'
+Failed to load custom font file '24'
+Failed to load custom font file '25'
+Failed to load custom font file '26'
+KeyValues Error: RecursiveLoadFromBuffer:  got } in key in file Resource/clientscheme_fonts.res
+Scheme, CustomFontFiles, resource/linux_fonts/FiraSans-Regular.ttf, (*7*), (*russian*), 
+Failed to load custom font file '19'
+Failed to load custom font file '20'
+Failed to load custom font file '21'
+Failed to load custom font file '22'
+Failed to load custom font file '23'
+Failed to load custom font file '24'
+Failed to load custom font file '25'
+Failed to load custom font file '26'
+ProtoDefs post data loaded.
+ProtoDefs loaded. 43.17 MB used
+ProtoDefs post data loaded.
+ProtoDefs loaded. 43.17 MB used
+KeyValues Error: RecursiveLoadFromBuffer:  got } in key in file resource/clientscheme_fonts.res
+Scheme, CustomFontFiles, resource/linux_fonts/FiraSans-Regular.ttf, (*7*), (*russian*), 
+Failed to load custom font file '19'
+Failed to load custom font file '20'
+Failed to load custom font file '21'
+Failed to load custom font file '22'
+Failed to load custom font file '23'
+Failed to load custom font file '24'
+Failed to load custom font file '25'
+Failed to load custom font file '26'
+Cleaning up unneeded replay block data...
+Replay cleanup done.
+Loading default settings for high sensitivity
+Unable to bind a key for command "save_replay" after 107 attempt(s).
+Unable to bind a key for command "+attack3" after 107 attempt(s).
+Unable to bind a key for command "show_quest_log" after 107 attempt(s).
+Unable to bind a key for command "say_party" after 107 attempt(s).
+ProtoDefs post data loaded.
+ProtoDefs post data loaded.
+Connection to game coordinator established.
+KeyValues Error: RecursiveLoadFromBuffer:  got } in key in file Resource/clientscheme_fonts.res
+Scheme, CustomFontFiles, resource/linux_fonts/FiraSans-Regular.ttf, (*7*), (*russian*), 
+Failed to load custom font file '19'
+Failed to load custom font file '20'
+Failed to load custom font file '21'
+Failed to load custom font file '22'
+Failed to load custom font file '23'
+Failed to load custom font file '24'
+Failed to load custom font file '25'
+Failed to load custom font file '26'
+Current item schema is up-to-date with version 4106C592.
+CTFGCClientSystem::PostInitGC
+CTFGCClientSystem - adding listener
+ProtoDefs post data loaded.
+ProtoDefs post data loaded.
+'overrides/pre_comfig.cfg' not present; not executing.
+Lobby-based matchmaking mode not active
+Can't alias "kill" as it's already a ConCommand or ConVar and not an input command (+/-).
+Can't alias "explode" as it's already a ConCommand or ConVar and not an input command (+/-).
+Can't alias "commentary_finishnode" as it's already a ConCommand or ConVar and not an input command (+/-).
+Unknown command "r_shadowlod"
+Unknown command "cat_ipc_exec_all"
+Unknown command "cat_detach"
+Unknown command "block_game_overrides_once"
+'overrides/setup_hook.cfg' not present; not executing.
+Ultra preset selected 
+'addons/disable-pyroland.cfg' not present; not executing.
+'addons/flat-mouse.cfg' not present; not executing.
+'addons/lowmem.cfg' not present; not executing.
+'addons/no-footsteps.cfg' not present; not executing.
+'addons/no-soundscapes.cfg' not present; not executing.
+'addons/no-tutorial.cfg' not present; not executing.
+'addons/null-canceling-movement.cfg' not present; not executing.
+'addons/transparent-viewmodels.cfg' not present; not executing.
+Unknown command "r_shadowlod"
+Modules applied 
+ 
+ 
+ 
+ 
+---------------|||||-------------------- 
+----------||||||||||-------------------- 
+-------||||||||------------------------- 
+-----||||||-----||||||||---------------- 
+---|||||----||||||||||||||||------------ 
+--||||----|||||||------|||||||---------- 
+-||||---|||||--------------|||||-------- 
+-|||---||||------------------||||------- 
+|||---||||--------------------||||------ 
+|||---|||----------------------|||------ 
+|||---|||----------------------|||---||| 
+|||---|||----------------------|||---||| 
+|||---||||--------------------||||---||| 
+||||---||||------------------||||---|||| 
+|||||---|||||--------------|||||---||||| 
+||||||---||||||||------|||||||----|||||| 
+||||||||----||||||||||||||||----|||||||| 
+|||--||||||-----||||||||-----||||||--||| 
+|||----||||||||----------||||||||----||| 
+|||-------||||||||||||||||||||-------||| 
+|||-----------||||||||||||-----------||| 
+ 
+ 
+ 
+ 
+  ********************************** 
+  ********************************** 
+  mastercomfig 9.10.3 loaded 
+  May 6, 2024 
+  ********************************** 
+  ********************************** 
+ 
+ 
+ 
+ 
+  ################################################## 
+  This release took 50 hours to produce. 
+  If you like the work I do, consider supporting me! 
+ 
+  docs.comfig.app/latest/support_me 
+ 
+  I accept Ko-fi, Liberapay, and trade offers! 
+ 
+  Your continued support, gratitude and dedication 
+  are much appreciated. Thank you so much! 
+  ################################################## 
+ 
+ 
+ 
+ 
+------------------------------------------------------------------------------------------------------------- 
+Client settings initiated 
+Can't use cheat cvar mat_fullbright in multiplayer, unless the server has sv_cheats set to 1.
+Can't use cheat cvar mat_drawwater in multiplayer, unless the server has sv_cheats set to 1.
+Aliases initiated 
+Various binds initiated 
+Engineer build binds initiated 
+Network settings initiated 
+Blood toggle initiated 
+Hitsound initiated 
+Scoreboard toggle initiated 
+Numpad binds initiated 
+Movie rendering initiated 
+------------------------------------------------------------------------------------------------------------- 
+Can't alias "mat_antialias" as it's already a ConCommand or ConVar and not an input command (+/-).
+Creating fallback sound cache at: c:\program files (x86)\steam\steamapps\common\team fortress 2\tf\sound_workshop
+[TF Workshop] Got updated information for map [ workshop/pl_blocked_b14.ugc3475774414 ]
+[TF Workshop] Got updated information for map [ workshop/koth_snobed_a1.ugc2889109326 ]
+[TF Workshop] Got updated information for map [ workshop/cp_gravelpit_snowy_rc1.ugc2880304700 ]
+[TF Workshop] Got updated information for map [ workshop/koth_mannhole_b1.ugc3478225408 ]
+[TF Workshop] Got updated information for map [ workshop/koth_sewer_b3.ugc3329421443 ]
+Network: IP 192.168.1.249, mode MP, dedicated No, ports 27015 SV / 27005 CL
+Connecting to 192.223.27.84:27015...
+Connected to 192.223.27.84:27015
+
+Team Fortress
+Map: workshop/trade_unusual_paradise_v45.ugc3511867483
+Players: 32 / 46
+Build: 9939410
+Server Number: 5
+
+Attemped to precache unknown particle system "Explosions_MA_Dustup_2"!
+Attemped to precache unknown particle system "Explosions_UW_Debris001"!
+Attemped to precache unknown particle system "projectile_fireball_center"!
+Attemped to precache unknown particle system "projectile_fireball_ring_fire"!
+Attemped to precache unknown particle system "projectile_fireball_smoke"!
+Attemped to precache unknown particle system "projectile_fireball_end"!
+Attemped to precache unknown particle system "projectile_fireball_end_ring_fire"!
+Attemped to precache unknown particle system "projectile_fireball_end_ring_smoke"!
+Attemped to precache unknown particle system "dragons_fury_FloatieEmbers"!
+Attemped to precache unknown particle system "projectile_fireball_fireball_pyrovision"!
+Attemped to precache unknown particle system "projectile_fireball_smokeball_pyrovision"!
+Attemped to precache unknown particle system "projectile_fireball_smokepuff_pyrovision"!
+Attemped to precache unknown particle system "projectile_fireball_trail_pyrovision"!
+Attemped to precache unknown particle system "env_fire_medium"!
+Attemped to precache unknown particle system "smoke_burning_engine_01"!
+Attemped to precache unknown particle system "fire_jet_01"!
+ConVarRef sm_dbzones_version doesn't point to an existing ConVar
+SetConVar: No such cvar ( sm_dbzones_version set to 1.0.1), skipping
+[TF Workshop] Map ID 3511867483 isn't tracked, adding
+[TF Workshop] New version available for map, download queued [ workshop/trade_unusual_paradise_v45.ugc3511867483 ]
+[TF Workshop] Installed subscribed map [ workshop/trade_unusual_paradise_v45.ugc3511867483 ]
+[TF Workshop] Successfully prepared client map from workshop [ workshop/trade_unusual_paradise_v45.ugc3511867483 ]
+env_cubemap used on world geometry without rebuilding map. . ignoring: concrete/concretewall013b
+KeyValues Error: LoadFromBuffer: missing { in file materials/tgp/tgp_pyrododgeball_courtlines4.vmt
+(*UnlitGeneric*), (*proxies*), (*TextureScroll*), 
+KeyValues Error: LoadFromBuffer: missing { in file materials/tgp/tgp_pyrododgeball_courtlines3.vmt
+(*UnlitGeneric*), (*proxies*), (*TextureScroll*), 
+
+qhull precision error: Only 4 facets remain.  Can not merge another
+pair.  The convexity constraints may be too strong.  Reduce the
+magnitude of 'Cn' or increase the magnitude of 'An'.  For example,
+try 'C-0.001' instead of 'C-0.1' or 'A-0.999' instead of 'A-0.9'.
+
+qhull precision error: Only 4 facets remain.  Can not merge another
+pair.  The convexity constraints may be too strong.  Reduce the
+magnitude of 'Cn' or increase the magnitude of 'An'.  For example,
+try 'C-0.001' instead of 'C-0.1' or 'A-0.999' instead of 'A-0.9'.
+
+qhull precision error: Only 4 facets remain.  Can not merge another
+pair.  The convexity constraints may be too strong.  Reduce the
+magnitude of 'Cn' or increase the magnitude of 'An'.  For example,
+try 'C-0.001' instead of 'C-0.1' or 'A-0.999' instead of 'A-0.9'.
+
+qhull precision error: Only 4 facets remain.  Can not merge another
+pair.  The convexity constraints may be too strong.  Reduce the
+magnitude of 'Cn' or increase the magnitude of 'An'.  For example,
+try 'C-0.001' instead of 'C-0.1' or 'A-0.999' instead of 'A-0.9'.
+
+qhull precision error: Only 4 facets remain.  Can not merge another
+pair.  The convexity constraints may be too strong.  Reduce the
+magnitude of 'Cn' or increase the magnitude of 'An'.  For example,
+try 'C-0.001' instead of 'C-0.1' or 'A-0.999' instead of 'A-0.9'.
+*** Encountered VTF file with an invalid minor version!
+*** Encountered VTF file with an invalid full header!
+Error reading texture header "materials/de_dust/tilefloor01_normal.vtf"
+The server is using sv_pure 0.  (Enforcing consistency for select files only)
+Unable to load sprite material materials/sprites/bblack.vmt!
+Cannot figure out which search path sound\physics\metal\metal_grenade_roll_loop1.wav came from. Not playing.
+Cannot figure out which search path sound\weapons\timer.wav came from. Not playing.
+Cannot figure out which search path sound\items\pyro_guitar_solo_with_verb.wav came from. Not playing.
+Cannot figure out which search path sound\player\sniper_taunt_hawk.wav came from. Not playing.
+Cannot figure out which search path sound\player\taunt_pyro_twirl.wav came from. Not playing.
+Cannot figure out which search path sound\player\taunt_yeti_standee_spy_swing1.wav came from. Not playing.
+Cannot figure out which search path sound\player\taunt_yeti_standee_spy_swing2.wav came from. Not playing.
+Cannot figure out which search path sound\player\cyoa_pda_dial1.wav came from. Not playing.
+Cannot figure out which search path sound\player\cyoa_pda_dial2.wav came from. Not playing.
+Cannot figure out which search path sound\player\cyoa_pda_dial3.wav came from. Not playing.
+Cannot figure out which search path sound\player\cyoa_pda_dial4.wav came from. Not playing.
+Cannot figure out which search path sound\player\cyoa_pda_dial5.wav came from. Not playing.
+Cannot figure out which search path sound\ui\quest_status_complete.wav came from. Not playing.
+Cannot figure out which search path sound\vo\halloween_eyeball\eyeball_biglaugh02.mp3 came from. Not playing.
+MP3 is completely missing, sound system will be upset to learn of this [ vo\halloween_eyeball\eyeball_biglaugh02.mp3 ]
+Cannot figure out which search path sound\weapons\shotgun_cock.wav came from. Not playing.
+Cannot figure out which search path sound\weapons\airstrike_fail.wav came from. Not playing.
+Cannot figure out which search path sound\doors\de_bank_doors_move_03.wav came from. Not playing.
+Cannot figure out which search path sound\vo\compmode\cm_soldier_gamewon_02.mp3 came from. Not playing.
+MP3 is completely missing, sound system will be upset to learn of this [ vo\compmode\cm_soldier_gamewon_02.mp3 ]
+Cannot figure out which search path sound\vo\mvm_sentry_buster_alerts01.wav came from. Not playing.
+Cannot figure out which search path sound\vo\mvm_sentry_buster_alerts02.wav came from. Not playing.
+Cannot figure out which search path sound\vo\mvm_sentry_buster_alerts03.wav came from. Not playing.
+Cannot figure out which search path sound\vo\mvm_sentry_buster_alerts04.wav came from. Not playing.
+Cannot figure out which search path sound\vo\mvm_sentry_buster_alerts05.wav came from. Not playing.
+Cannot figure out which search path sound\vo\mvm_sentry_buster_alerts06.wav came from. Not playing.
+Cannot figure out which search path sound\vo\taunt\spy\spy_taunt_exert_13.mp3 came from. Not playing.
+MP3 is completely missing, sound system will be upset to learn of this [ vo\taunt\spy\spy_taunt_exert_13.mp3 ]
+Cannot figure out which search path sound\vo\taunt\spy\spy_taunt_exert_14.mp3 came from. Not playing.
+MP3 is completely missing, sound system will be upset to learn of this [ vo\taunt\spy\spy_taunt_exert_14.mp3 ]
+Cannot figure out which search path sound\vo\taunt\spy\spy_taunt_dosi_end_06.mp3 came from. Not playing.
+MP3 is completely missing, sound system will be upset to learn of this [ vo\taunt\spy\spy_taunt_dosi_end_06.mp3 ]
+Cannot figure out which search path sound\vo\taunt\spy\spy_taunt_rps_lose_05.mp3 came from. Not playing.
+MP3 is completely missing, sound system will be upset to learn of this [ vo\taunt\spy\spy_taunt_rps_lose_05.mp3 ]
+Error! Variable "$surfaceprop" is multiply defined in material "tgp/woodwall_orangeworn001"!
+Error! Variable "$surfaceprop" is multiply defined in material "tgp/woodwall_yellowworn002"!
+SOLID_VPHYSICS static prop with no vphysics model! (models/tgp/tgp_c.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/tgp/tgp_a.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/tgp/tgp_ramp_1.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_forest/rock006.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/tgp/tgp_ramp_1.mdl)
+SOLID_VPHYSICS static prop with no vphysics model! (models/tgp/tgp_skull_horns.mdl)
+Voice_Init: Using Steam voice optimal sample rate 24000
+Saving c:\program files (x86)\steam\steamapps\common\team fortress 2\tf\sound\sound.cache
+Saving c:\program files (x86)\steam\steamapps\common\team fortress 2\tf\sound_workshop\sound\sound.cache
+Blocking HTML info panel 'http://theglobalparadise.com'; Using plaintext instead.
+Blocking HTML info panel 'http://theglobalparadise.com'; Using plaintext instead.
+Blocking HTML info panel 'http://theglobalparadise.com'; Using plaintext instead.
+Blocking HTML info panel 'http://theglobalparadise.com'; Using plaintext instead.
+Blocking HTML info panel 'http://theglobalparadise.com'; Using plaintext instead.
+Blocking HTML info panel 'http://theglobalparadise.com'; Using plaintext instead.
+Kataiser connected
+hit surface has no samples
+hit surface has no samples
+hit surface has no samples
+hit surface has no samples
+hit surface has no samples
+hit surface has no samples
+hit surface has no samples
+hit surface has no samples
+hit surface has no samples
+CAsyncWavDataCache:  36 .wavs total 0 bytes, 0.00 % of capacity
+Compact freed 3399680 bytes
+Using joystick 'Xbox360 controller' configuration
+JOY_AXIS_X:  mapped to Side (absolute)
+JOY_AXIS_Y:  mapped to Forward (absolute)
+JOY_AXIS_Z:  unmapped
+JOY_AXIS_R:  mapped to Look (absolute)
+JOY_AXIS_U:  mapped to Turn (absolute)
+JOY_AXIS_V:  unmapped
+Advanced Joystick settings initialized
+Attempting to create unknown particle system 'env_fire_medium' 
+Attempting to create unknown particle system 'smoke_burning_engine_01' 
+Attempting to create unknown particle system 'fire_jet_01' 
+Attempting to create unknown particle system 'fire_jet_01' 
+Redownloading all lightmaps
+Pootsworthy :  >Spelled loadout
+Attempting to create unknown particle system 'env_fire_medium' 
+Attempting to create unknown particle system 'smoke_burning_engine_01' 
+Attempting to create unknown particle system 'fire_jet_01' 
+Attempting to create unknown particle system 'fire_jet_01' 
+Unable to load sprite material materials/sprites/halo.vmt!
+Download file 'user_custom/c1/c12cc55b.dat' already exists!
+call_me_kevin killed shooksavage69 with sniperrifle. (crit)
+UkuleleJoJo suicided.
+FreeziePop :  whoosh
+Costacal :  yes 
+[TGP Coins] Thanks for playing! You got 5 coins.
