@@ -122,9 +122,6 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
         self.log.debug(f"console.log: {consolelog_file_size} bytes, skipped to {file_position}, read {len(consolelog_read)} bytes and {len(lines)} lines")
         file_position = consolelog_file.tell()
 
-    # update this again late, fixes wrong detections but may cause a duplicate scan
-    self.console_log_mtime = int(os.stat(console_log_path).st_mtime)
-
     # setup
     now_in_menus: bool = False
     chat_safety: bool = True
