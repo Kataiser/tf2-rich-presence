@@ -1,4 +1,4 @@
-<!-- Copyright (C) 2018-2022 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors -->
+<!-- Copyright (C) 2018-2025 Kataiser & https://github.com/Kataiser/tf2-rich-presence/contributors -->
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
@@ -70,6 +70,78 @@
     </h1>
     <div>Generated from <a class="underlined_link" href="https://github.com/Kataiser/tf2-rich-presence/releases">releases</a></div>
     
+        <h4>
+            <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v2.2">
+                v2.2
+            </a>
+            (2025-08-01)
+        </h4>
+        <div class="markdown-heading">
+            <h3 class="heading-element">
+                Changes
+            </h3>
+        </div>
+        <ul>
+            <li>
+                New server state detection method using status command
+                <ul>
+                    <li>
+                        Finally fixes "?/?" players
+                    </li>
+                    <li>
+                        Removes a2s querying
+                    </li>
+                    <li>
+                        Doesn't support kill count thought :(
+                    </li>
+                </ul>
+            </li>
+            <li>
+                Game state detection improvements
+                <ul>
+                    <li>
+                        Persists console.log file position, only parses new lines each update
+                    </li>
+                    <li>
+                        Massively better average performance
+                    </li>
+                    <li>
+                        Fixes incorrect game state with too many lines
+                    </li>
+                    <li>
+                        Removes trimming/cleanup
+                    </li>
+                </ul>
+            </li>
+            <li>
+                Made server name the new bottom line default
+            </li>
+            <li>
+                Dynamically center GUI elements (and better trimming for long text)
+            </li>
+            <li>
+                Auto restart after language or GUI scale change
+            </li>
+        </ul>
+        <div class="markdown-heading">
+            <h3 class="heading-element">
+                Fixes
+            </h3>
+        </div>
+        <ul>
+            <li>
+                Fixed crash when rescanning a Steam config
+            </li>
+            <li>
+                Fixed crash when checking tf_win64.exe validity
+            </li>
+            <li>
+                Fixed crash when checking for updates
+            </li>
+            <li>
+                Fixes for servers with workshop maps
+            </li>
+        </ul>
         <h4>
             <a class="version_a" href="https://github.com/Kataiser/tf2-rich-presence/releases/tag/v2.1.12">
                 v2.1.12
