@@ -689,6 +689,11 @@ class TestTF2RichPresence(unittest.TestCase):
         fg_image = gui_test.fg_image_load('tf2_logo', 120)
         self.assertEqual((fg_image.width(), fg_image.height()), (240, 240))
 
+        title = str(random.random())
+        gui_test.set_window_title(title)
+        self.assertEqual(gui_test.window_title, title)
+        self.assertEqual(gui_test.master.title(), title)
+
         with self.assertRaises(SystemExit):
             gui_test.menu_exit()
 

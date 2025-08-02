@@ -295,8 +295,7 @@ class TF2RichPresense:
             else:
                 self.log.debug("Not updating RPC state")
 
-            self.gui.master.title(window_title)
-            self.log.debug(f"Set window title to \"{window_title}\"")
+            self.gui.set_window_title(window_title)
 
         elif not p_data['TF2']['running']:
             # there's probably a better way to do this
@@ -434,8 +433,7 @@ class TF2RichPresense:
 
         base_window_title: str = self.loc.text("TF2 Rich Presence ({0})").format(launcher.VERSION)
         window_title: str = self.loc.text("{0} - Waiting for {1}").format(base_window_title, program_name)
-        self.gui.master.title(window_title)
-        self.log.debug(f"Set window title to \"{window_title}\"")
+        self.gui.set_window_title(window_title)
 
     # sends RPC data, connecting to Discord initially if need be
     @utils.timeout(2.0)

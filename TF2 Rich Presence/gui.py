@@ -39,11 +39,12 @@ class GUI(tk.Frame):
         tk.Frame.__init__(self, self.master)
         self.pack(fill=tk.BOTH, expand=1, padx=0, pady=0)
         self.alive: bool = True
+        self.window_title: str = ""
 
         self.scale: float = settings.get('gui_scale') / 100
         self.size: Tuple[int, int] = (round(500 * self.scale), round(250 * self.scale))
         self.master.geometry(f'{self.size[0]}x{self.size[1] + 20}')  # the +20 is for the menu bar
-        self.master.title(self.loc.text("TF2 Rich Presence").format(launcher.VERSION))
+        self.set_window_title(self.loc.text("TF2 Rich Presence").format(launcher.VERSION))
         set_window_icon(self.log, self.master, False)
         self.master.resizable(False, False)  # disables resizing
         self.master.protocol('WM_DELETE_WINDOW', self.close_window)
@@ -277,6 +278,12 @@ class GUI(tk.Frame):
             self.launched_tf2_with_button = False
         else:
             self.launch_tf2_button.place_forget()
+
+    def set_window_title(self, title: str):
+        if title != self.window_title:
+            self.window_title = title
+            self.master.title(title)
+            self.log.debug(f"Set window title to \"{title}\"")
 
     # clears any text that isn't blank, set dont_clear to avoid clearing text that will be overwritten anyway
     def clear_text(self, dont_clear: int):
