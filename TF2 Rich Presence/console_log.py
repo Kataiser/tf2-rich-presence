@@ -122,6 +122,10 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
         self.log.debug(f"console.log: {consolelog_file_size} bytes, skipped to {file_position}, read {len(consolelog_read)} bytes and {len(lines)} lines")
         file_position = consolelog_file.tell()
 
+    if not lines and not force:
+        self.log.debug("No lines read, so skipping parsing")
+        return None
+
     # setup
     now_in_menus: bool = False
     chat_safety: bool = True
