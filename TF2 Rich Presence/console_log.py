@@ -31,7 +31,7 @@ class ConsoleLogPersistence:
     just_started_server: bool = False
     server_still_running: bool = False
     connecting_to_matchmaking: bool = False
-    using_wav_cache: bool = False
+    in_community_server: bool = False
     found_first_wav_cache: bool = False
     kataiser_seen_on: str = ''
     server_name_full: str = ''
@@ -70,7 +70,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
             self.game_state.console_log_persistence = ConsoleLogPersistence()
         else:
             self.game_state.console_log_persistence = ConsoleLogPersistence(file_position, just_started_server, server_still_running, connecting_to_matchmaking,
-                                                                            using_wav_cache, found_first_wav_cache, kataiser_seen_on, server_name_full, is_mvm)
+                                                                            in_community_server, found_first_wav_cache, kataiser_seen_on, server_name_full, is_mvm)
 
     # console.log is a log of tf2's console (duh), only exists if tf2 has -condebug (see no_condebug_warning() in GUI)
     self.log.debug(f"Looking for console.log at {console_log_path}")
@@ -99,7 +99,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
     just_started_server: bool = persistence.just_started_server
     server_still_running: bool = persistence.server_still_running
     connecting_to_matchmaking: bool = persistence.connecting_to_matchmaking
-    using_wav_cache: bool = persistence.using_wav_cache
+    in_community_server: bool = persistence.in_community_server
     found_first_wav_cache: bool = persistence.found_first_wav_cache
     kataiser_seen_on: str = persistence.kataiser_seen_on
     server_name_full: str = persistence.server_name_full
@@ -179,6 +179,12 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
                 server_players = int(line_split[1])
                 server_players_max = int(line_split[3])
 
+                # valve servers report as 32 players when joining but they're 24
+                # this can be inaccurate when joining a community server directly from a valve server,
+                # but should only happen for a moment because the status loop will have been started
+                if not in_community_server and server_players_max == 32:
+                    server_players_max = 24
+
             elif line.endswith(' selected \n'):
                 class_line_possibly: List[str] = line[:-11].split()
 
@@ -216,14 +222,14 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
 
         elif not connecting_to_matchmaking and 'Connected to' in line:
             # joined a community server, so must use CAsyncWavDataCache method to detect disconnects
-            using_wav_cache = True
+            in_community_server = True
             found_first_wav_cache = False
             connecting_to_matchmaking = False
 
-        elif 'matchmaking server' in line:
+        elif 'Connecting to matchmaking server' in line:
             connecting_to_matchmaking = True
 
-        elif using_wav_cache and 'CAsyncWavDataCache' in line:
+        elif in_community_server and 'CAsyncWavDataCache' in line:
             if found_first_wav_cache:
                 # it's the one after disconnecting
 
@@ -254,7 +260,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
             menus_message_used = line
             kataiser_seen_on = ''
             connecting_to_matchmaking = False
-            using_wav_cache = False
+            in_community_server = False
             found_first_wav_cache = False
             just_started_server = False
             server_still_running = False

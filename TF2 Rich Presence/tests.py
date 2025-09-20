@@ -87,18 +87,18 @@ class TestTF2RichPresence(unittest.TestCase):
         self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(67))
         self.assertEqual(app.interpret_console_log('test_resources\\console_tf2bd.log', {'Kataiser'}, True),
                          console_log.ConsoleLogParsed(False, 'ctf_turbine', 'Soldier', 'Not queued', False, '', 20, 24))
-        self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(6312533, using_wav_cache=True, found_first_wav_cache=True))
+        self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(6312533, in_community_server=True, found_first_wav_cache=True))
         self.assertEqual(app.interpret_console_log('test_resources\\console_community_disconnect.log', {'not Kataiser'}, True),
                          console_log.ConsoleLogParsed(True, '', '', 'Not queued', False))
         self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(22418))
         self.assertEqual(app.interpret_console_log('test_resources\\console_community_disconnect2.log', {'not Kataiser'}, True),
                          console_log.ConsoleLogParsed(False, 'vsh_military_area_se6', 'Heavy', 'Not queued', False, '', 14, 32))
-        self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(22160, using_wav_cache=True, found_first_wav_cache=True))
+        self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(22160, in_community_server=True, found_first_wav_cache=True))
         self.assertEqual(app.interpret_console_log('test_resources\\console_blanks.log', {'not Kataiser'}, True),
-                         console_log.ConsoleLogParsed(False, 'sd_doomsday_event', 'Pyro', 'Not queued', False, '', 16, 32))
+                         console_log.ConsoleLogParsed(False, 'sd_doomsday_event', 'Pyro', 'Not queued', False, '', 16, 24))
         self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(94920))
         self.assertEqual(app.interpret_console_log('test_resources\\console_map_material.log', {'not Kataiser'}, True),
-                         console_log.ConsoleLogParsed(False, 'koth_slaughter_event', '', 'Queued for Casual', False, '', 23, 32))
+                         console_log.ConsoleLogParsed(False, 'koth_slaughter_event', '', 'Queued for Casual', False, '', 23, 24))
         self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(9612))
         self.assertEqual(app.interpret_console_log('test_resources\\console_valve_server.log', {'not Kataiser'}, True),
                          console_log.ConsoleLogParsed(False, 'pd_atom_smash', 'Heavy', 'Not queued', False, 'Valve Matchmaking Server (Virginia)', 19, 24))
@@ -106,11 +106,11 @@ class TestTF2RichPresence(unittest.TestCase):
                                                                                                    server_name_full='Valve Matchmaking Server (Virginia srcds1015-iad1 #30)'))
         self.assertEqual(app.interpret_console_log('test_resources\\console_community_server.log', {'not Kataiser'}, True),
                          console_log.ConsoleLogParsed(False, 'pl_swiftwater_final1', 'Soldier', 'Not queued', False, 'Uncletopia | Montréal | 3 | One Thousa…', 62, 64))
-        self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(483227, using_wav_cache=True, found_first_wav_cache=True,
+        self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(483227, in_community_server=True, found_first_wav_cache=True,
                                                                                                    server_name_full='Uncletopia | Montréal | 3 | One Thousand Uncles'))
         self.assertEqual(app.interpret_console_log('test_resources\\console_workshop_joined.log', {'not Kataiser'}, True),
                          console_log.ConsoleLogParsed(False, 'trade_unusual_paradise_v45', '', 'Not queued', False, '', 32, 46))
-        self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(18264, using_wav_cache=True, found_first_wav_cache=True))
+        self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(18264, in_community_server=True, found_first_wav_cache=True))
 
         parsed = app.interpret_console_log('test_resources\\console_file_position_1.log', {'not Kataiser'}, True)
         self.assertEqual(parsed, console_log.ConsoleLogParsed(False, 'koth_mannhole', 'Sniper', 'Not queued', True, 'Team Fortress', 18, 24))
