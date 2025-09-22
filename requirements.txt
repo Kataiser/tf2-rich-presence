@@ -4,7 +4,7 @@ certifi==2025.7.14
 charset-normalizer==3.4.2
 discoIPC==1.0.0
 idna==3.10
-lxml==6.0.0
+lxml==6.0.2
 pillow==11.3.0
 psutil==7.0.0
 requests-futures==1.0.2
