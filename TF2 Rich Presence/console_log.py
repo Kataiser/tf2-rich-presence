@@ -183,7 +183,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
                 # this can be inaccurate when joining a community server directly from a valve server,
                 # but should only happen for a moment because the status loop will have been started
                 if not in_community_server and server_players_max == 32:
-                    server_players_max = 24
+                    server_players_max = 6 if is_mvm else 24
 
             elif line.endswith(' selected \n'):
                 class_line_possibly: List[str] = line[:-11].split()
