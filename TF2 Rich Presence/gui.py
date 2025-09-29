@@ -335,7 +335,7 @@ class GUI(tk.Frame):
     def auto_adjust_centered(self, lines: tuple[str, ...]):
         max_char_line: str = max(lines, key=len)
         width: int = self.main_font.measure(max_char_line)
-        target_offset: int = min(max(210 - width, -20), 0)
+        target_offset: int = min(max(210 - width, -30), 0)
         move_delta: int = target_offset - self.centerable_elements_offset
 
         if not move_delta:
@@ -743,7 +743,7 @@ def test_state(test_gui: GUI, state: int):
         test_gui.set_fg_image('fg_maps/pl_swiftwater_final1')
         test_gui.set_class_image('sniper')
     elif state == 4:
-        test_gui.set_state_4('bg_modes/control-point', ("Map: cp_catwalk_a5c (hosting)", "Players: ?/?", "Valve Matchmaking Server (Virginia)", "06:21 elapsed"))
+        test_gui.set_state_4('bg_modes/control-point', ("Map: cp_catwalk_a5c (hosting)", "Players: ?/?", "Valve Matchmaking Server (Washington)", "06:21 elapsed"))
         test_gui.set_fg_image('fg_modes/control-point')
         test_gui.set_class_image('pyro')
 

@@ -651,9 +651,9 @@ class TestTF2RichPresence(unittest.TestCase):
             gui.test_state(gui_test, state)
             gui_test.safe_update()
 
-        self.assertEqual(gui_test.centerable_elements_offset, -20)
+        self.assertEqual(gui_test.centerable_elements_offset, -30)
         self.assertEqual((gui_test.text_state, gui_test.bg_state, gui_test.fg_state, gui_test.class_state),
-                         (('Map: cp_catwalk_a5c (hosting)', 'Players: ?/?', 'Valve Matchmaking Server (Virginia)', '06:21 elapsed'),
+                         (('Map: cp_catwalk_a5c (hosting)', 'Players: ?/?', 'Valve Matchmaking Server (Washington)', '06:21 elapsed'),
                           ('bg_modes/control-point', 77, 172), 'fg_modes/control-point', 'classes/pyro'))
 
         gui_test.set_state_4('bg_modes/control-point', ("", "", "Valve Matchmaking Server", ""))
