@@ -6,11 +6,10 @@
 import _thread
 import functools
 import gzip
+import json
 import os
 import threading
 from typing import Any, Callable, Dict, Optional, Union
-
-import ujson
 
 
 # read from or write to DB.json (intentionally uncached)
@@ -31,7 +30,7 @@ def access_db(write: dict = None, pass_permission_error: bool = True) -> Optiona
             with open(db_path, 'w', encoding='UTF8') as db_json:
                 db_data: dict = write
                 db_json.truncate(0)
-                ujson.dump(db_data, db_json, indent=4, ensure_ascii=False, escape_forward_slashes=False)
+                json.dump(db_data, db_json, indent=4, ensure_ascii=False)
         except UnicodeEncodeError:
             pass
         except PermissionError:
@@ -45,8 +44,8 @@ def access_db(write: dict = None, pass_permission_error: bool = True) -> Optiona
     else:
         try:
             with open(db_path, 'r', encoding='UTF8') as db_json:
-                return ujson.load(db_json)
-        except ujson.JSONDecodeError:
+                return json.load(db_json)
+        except json.JSONDecodeError:
             access_db(write=default_db)
             return default_db
 
@@ -66,7 +65,7 @@ def get_api_key(service: str) -> str:
     data: bytes = b'\x1f\x8b\x08\x00bl\xfa_\x02\xff-\x8eK\x0e\xc20\x0c\x05\xef\x925\xa2q\xfc\x12\xdb]q\x954\x1f\xd1\rEm7\x08qw"\xc1\xfa\xe9\xcd\xcc\xdb\xd5\xf5(\xdb^\xdd\xec\x10\x8c\xd5' \
                   b'\x08,1\xb1\xc0\x93\xb8\x8b;\xda\xe3\xdc_c\xbd\x9f\xe7\xf3\x98\xa7\xa96Q*- \xa2#j\xcb=/d\x16\x12\xfb\xa5\x90\xf7si\xe3\xdd\xa3\x19/\x84\x948{\x85/\xd5\xbai\x16B\xbe\xfd' \
                   b'\x90\xd7u\x9bhP\x0c\x18\x9a\x7fE\x18"\x01\xe9\x08\x01\x07\x92\xa0\x91\x84\xdc\xe7\x0b)\x81\xb1\xd4\xa7\x00\x00\x00'
-    return ujson.loads(gzip.decompress(data))[service]
+    return json.loads(gzip.decompress(data))[service]
 
 
 # decorator to kill a synchronous function after some time

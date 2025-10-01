@@ -144,7 +144,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
         if ' :  ' in username:
             chat_safety = False
 
-    # iterates though 0 (initially) to roughly 16000 lines from console.log and learns (almost) everything from them
+    # iterates though console.log lines and learns (almost) everything from them
     line: str
     for line in lines:
         gui_update += 1
