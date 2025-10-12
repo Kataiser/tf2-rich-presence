@@ -20,7 +20,8 @@ def main():
                           'cp_degrootkeep': ('attack-defend', 'Attack/Defend (Medieval)'),
                           'cp_degrootkeep_rats': ('attack-defend', 'Attack/Defend (Medieval)'),
                           'cp_standin_final': ('control-point', 'Control Point (Domination)'),
-                          'cp_cloak': ('control-point', 'Control Point')}
+                          'cp_cloak': ('control-point', 'Control Point'),
+                          'sd_dynamite': ('special-delivery', 'Hold the Flag')}
     map_gamemodes = {'itemtest': ('itemtest', 'unknown', 'Unknown gamemode'),
                      'devtest': ('devtest', 'unknown', 'Unknown gamemode'),
                      'background01': ('background01', 'unknown', 'Unknown gamemode')}
@@ -43,10 +44,10 @@ def main():
         for replacement in gamemode_replacements:
             gamemode_fancy = gamemode_fancy.replace(*replacement)
 
-        map_mode = gamemodes_reversed[gamemode_fancy]
-
         if map_file in gamemode_overrides:
             map_mode, gamemode_fancy = gamemode_overrides[map_file]
+        else:
+            map_mode = gamemodes_reversed[gamemode_fancy]
 
         if map_mode and map_name:
             map_file = map_file.replace(' ', '')
