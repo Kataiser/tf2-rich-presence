@@ -205,7 +205,7 @@
     "rd_asteroid": ["Asteroid", "beta-map", "Robot Destruction"],
     "sd_doomsday": ["Doomsday", "special-delivery", "Special Delivery"],
     "sd_doomsday_event": ["Carnival of Carnage", "special-delivery", "Special Delivery"],
-    "sd_dynamite": ["Marshlands", "special-delivery", "Hold the Flag"],
+    "sd_marshlands": ["Marshlands", "special-delivery", "Hold the Flag"],
     "tc_hydro": ["Hydro", "territorial-control", "Territorial Control"],
     "tow_dynamite": ["Dynamite", "tug-of-war", "Tug of War"],
     "tr_dustbowl": ["Dustbowl", "training", "Training"],

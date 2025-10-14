@@ -41,6 +41,9 @@ def main():
         elif map_file == 'ctf_devilcross':  # incorrect on the wiki
             map_gamemodes['ctf_doublecross_event'] = ('Devilcross', 'ctf', 'Capture the Flag')
             continue
+        elif map_file == 'sd_dynamite':  # incorrect on the wiki
+            map_gamemodes['sd_marshlands'] = ('Marshlands', 'special-delivery', 'Hold the Flag')
+            continue
 
         gamemode_fancy = tr.find_all('td')[2].text.strip()
 
