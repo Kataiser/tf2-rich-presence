@@ -14,14 +14,14 @@ def main():
     gamemodes_reversed['Attack/Defend (Medieval)'] = 'medieval-mode'
     gamemodes_reversed['Medieval'] = 'medieval-mode'
     gamemodes_reversed['Domination'] = 'control-point'
+    gamemodes_reversed['Hold the Flag'] = 'special-delivery'
     gamemodes_reversed['N/A'] = 'control-point'
     gamemode_replacements = [('d(M', 'd (M'), ('t(D', 't (D'), (' Mode', ''), ('Developer aidTest', 'No gamemode'), ('Developer aidControl Point', 'Control Point'), ('Capture point', 'Control Point')]
     gamemode_overrides = {'tc_hydro': ('territorial-control', 'Territorial Control'),
                           'cp_degrootkeep': ('attack-defend', 'Attack/Defend (Medieval)'),
                           'cp_degrootkeep_rats': ('attack-defend', 'Attack/Defend (Medieval)'),
                           'cp_standin_final': ('control-point', 'Control Point (Domination)'),
-                          'cp_cloak': ('control-point', 'Control Point'),
-                          'sd_dynamite': ('special-delivery', 'Hold the Flag')}
+                          'cp_cloak': ('control-point', 'Control Point')}
     map_gamemodes = {'itemtest': ('itemtest', 'unknown', 'Unknown gamemode'),
                      'devtest': ('devtest', 'unknown', 'Unknown gamemode'),
                      'background01': ('background01', 'unknown', 'Unknown gamemode')}
@@ -37,6 +37,9 @@ def main():
             continue
 
         if map_file == 'itemtest':
+            continue
+        elif map_file == 'ctf_devilcross':  # incorrect on the wiki
+            map_gamemodes['ctf_doublecross_event'] = ('Devilcross', 'ctf', 'Capture the Flag')
             continue
 
         gamemode_fancy = tr.find_all('td')[2].text.strip()
