@@ -113,6 +113,10 @@ class TestTF2RichPresence(unittest.TestCase):
         self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(18264, in_community_server=True, found_first_wav_cache=True))
         self.assertEqual(app.interpret_console_log('test_resources\\console_just_joined_mvm.log', {'not Kataiser'}, True),
                          console_log.ConsoleLogParsed(False, 'mvm_rottenburg', '', 'Not queued', False, '', 1, 6))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_vip.log', {'not Kataiser'}, True),
+                         console_log.ConsoleLogParsed(False, 'vip_snowswept_b3', 'Heavy', 'Not queued', False, 'UEAKCrash\'s House of Nerds (24/7…', 23, 25))
+        self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(588386, in_community_server=True, found_first_wav_cache=True, kataiser_seen_on='vip_snowswept_b3',
+                                                                                                   server_name_full='UEAKCrash\'s House of Nerds (24/7 Trainsawlaser + Map Testing)'))
 
         parsed = app.interpret_console_log('test_resources\\console_file_position_1.log', {'not Kataiser'}, True)
         self.assertEqual(parsed, console_log.ConsoleLogParsed(False, 'koth_mannhole', 'Sniper', 'Not queued', True, 'Team Fortress', 18, 24))

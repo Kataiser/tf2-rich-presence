@@ -209,6 +209,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
         if line.startswith('Map:'):
             in_menus = False
             connecting_to_matchmaking = False
+            found_first_wav_cache = False
             tf2_map = line[5:-1].removeprefix('workshop/').partition('.')[0]
             is_mvm = tf2_map.startswith('mvm_')
             tf2_class = ''
@@ -223,8 +224,8 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
         elif not connecting_to_matchmaking and 'Connected to' in line:
             # joined a community server, so must use CAsyncWavDataCache method to detect disconnects
             in_community_server = True
-            found_first_wav_cache = False
             connecting_to_matchmaking = False
+            found_first_wav_cache = False
 
         elif 'Connecting to matchmaking server' in line:
             connecting_to_matchmaking = True
