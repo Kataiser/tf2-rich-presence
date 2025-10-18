@@ -10,7 +10,7 @@ def main():
     # these are to make the cropping a bit better
     fg_override_coords = {'jumping': 0, 'achievement': 0, 'attack-defend': 65, 'control-point': 245, 'ctf': 48, 'deathmatch': 0, 'deathrun': 45, 'koth': 28, 'medieval-mode': 20,
                           'mvm': 87, 'passtime': 70, 'payload': 0, 'payload-race': 480, 'surfing': 0, 'territorial-control': 92, 'trading': 52, 'mannpower': 381, 'prophunt': 270,
-                          'mario-kart': 0, 'mge-mod': 156}
+                          'mario-kart': 0, 'mge-mod': 156, 'vip': 152}
     bg_override_coords = {'drawing_passtime': 32, 'drawing_attack-defend': 189, 'drawing_control-point': 165, 'drawing_koth': 238, 'drawing_mannpower': 172,
                           'drawing_payload-race': 129, 'drawing_training': 185, 'drawing_ctf': 275}
 

@@ -204,6 +204,7 @@ class TestTF2RichPresence(unittest.TestCase):
         self.assertEqual(gamemodes.get_map_gamemode(self.log, 'cp_catwalk_a5c'), ('cp_catwalk_a5c', 'control-point', 'Control Point', True))
         self.assertEqual(gamemodes.get_map_gamemode(self.log, 'cp_orange_x3'), ('cp_orange_x3', 'cp-orange', 'Orange', True))
         self.assertEqual(gamemodes.get_map_gamemode(self.log, 'surf_air_arena_v4'), ('surf_air_arena_v4', 'surfing', 'Surfing', True))
+        self.assertEqual(gamemodes.get_map_gamemode(self.log, 'vip_snowswept_b3'), ('vip_snowswept_b3', 'vip', 'VIP', True))
         self.assertEqual(gamemodes.get_map_gamemode(self.log, 'ytsb8eitybw'), ('ytsb8eitybw', 'unknown', 'Unknown gamemode', True))
 
     def test_logger(self):
