@@ -3,7 +3,7 @@ beautifulsoup4==4.14.2
 certifi==2025.10.5
 charset-normalizer==3.4.3
 discoIPC==1.0.0
-idna==3.10
+idna==3.11
 lxml==6.0.2
 pillow==11.3.0
 psutil==7.1.0
