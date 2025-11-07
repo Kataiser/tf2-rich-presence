@@ -133,7 +133,7 @@ def interpret(self, console_log_path: str, user_usernames: Set[str], force: bool
     # TODO: detection for canceling loading into community servers (if possible)
     match_types: Dict[str, str] = {'12v12 Casual Match': 'Casual', 'MvM Practice': 'MvM (Boot Camp)', 'MvM MannUp': 'MvM (Mann Up)', '6v6 Ladder Match': 'Competitive'}
     menus_messages: Tuple[str, ...] = ('For FCVAR_REPLICATED', 'request to abandon', 'Server shutting down', 'Lobby destroyed', 'Disconnect:', 'destroyed CAsyncWavDataCache',
-                                       'ShutdownGC', 'Connection failed after', 'Host_Error')
+                                       'ShutdownGC', 'Connection failed after', 'Host_Error', 'destroyed Lobby')
     menus_message_used: Optional[str] = None
     menus_message: str
     gui_update: int = 0

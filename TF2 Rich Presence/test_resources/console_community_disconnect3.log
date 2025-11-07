@@ -1,0 +1,363 @@
+For FCVAR_REPLICATED, ConVar must be defined in client and game .dlls (sv_use_steam_voice)
+[TF Workshop] Got 5 subscribed maps, 5 new
+ProtoDefs post data loaded.
+ProtoDefs loaded. 43.18 MB used
+ProtoDefs post data loaded.
+ProtoDefs loaded. 43.18 MB used
+maxplayers set to 24
+Steam config directory: C:\Program Files (x86)\Steam\steamapps\common\Team Fortress 2\platform\config
+CClientSteamContext logged on = 1
+Convar tf_impactwatertimeenable has conflicting FCVAR_CHEAT flags (child: FCVAR_CHEAT, parent: no FCVAR_CHEAT, parent wins)
+Parent cvar in server.dll not allowed (tf_mvm_max_invaders)
+Parent cvar in server.dll not allowed (tf_mvm_max_connected_players)
+Convar cl_particle_retire_cost has conflicting FCVAR_CHEAT flags (child: FCVAR_CHEAT, parent: no FCVAR_CHEAT, parent wins)
+Convar r_drawropes has conflicting FCVAR_CHEAT flags (child: FCVAR_CHEAT, parent: no FCVAR_CHEAT, parent wins)
+KeyValues Error: RecursiveLoadFromBuffer:  got } in key in file resource/clientscheme_fonts.res
+Scheme, CustomFontFiles, resource/linux_fonts/FiraSans-Regular.ttf, (*7*), (*russian*), 
+Failed to load custom font file '19'
+Failed to load custom font file '20'
+Failed to load custom font file '21'
+Failed to load custom font file '22'
+Failed to load custom font file '23'
+Failed to load custom font file '24'
+Failed to load custom font file '25'
+Failed to load custom font file '26'
+KeyValues Error: RecursiveLoadFromBuffer:  got } in key in file Resource/clientscheme_fonts.res
+Scheme, CustomFontFiles, resource/linux_fonts/FiraSans-Regular.ttf, (*7*), (*russian*), 
+Failed to load custom font file '19'
+Failed to load custom font file '20'
+Failed to load custom font file '21'
+Failed to load custom font file '22'
+Failed to load custom font file '23'
+Failed to load custom font file '24'
+Failed to load custom font file '25'
+Failed to load custom font file '26'
+ProtoDefs post data loaded.
+ProtoDefs loaded. 43.18 MB used
+ProtoDefs post data loaded.
+ProtoDefs loaded. 43.18 MB used
+KeyValues Error: RecursiveLoadFromBuffer:  got } in key in file resource/clientscheme_fonts.res
+Scheme, CustomFontFiles, resource/linux_fonts/FiraSans-Regular.ttf, (*7*), (*russian*), 
+Failed to load custom font file '19'
+Failed to load custom font file '20'
+Failed to load custom font file '21'
+Failed to load custom font file '22'
+Failed to load custom font file '23'
+Failed to load custom font file '24'
+Failed to load custom font file '25'
+Failed to load custom font file '26'
+Cleaning up unneeded replay block data...
+Replay cleanup done.
+Loading default settings for high sensitivity
+Unable to bind a key for command "save_replay" after 107 attempt(s).
+Unable to bind a key for command "+attack3" after 107 attempt(s).
+Unable to bind a key for command "show_quest_log" after 107 attempt(s).
+Unable to bind a key for command "say_party" after 107 attempt(s).
+ProtoDefs post data loaded.
+ProtoDefs post data loaded.
+Connection to game coordinator established.
+KeyValues Error: RecursiveLoadFromBuffer:  got } in key in file Resource/clientscheme_fonts.res
+Scheme, CustomFontFiles, resource/linux_fonts/FiraSans-Regular.ttf, (*7*), (*russian*), 
+Failed to load custom font file '19'
+Failed to load custom font file '20'
+Failed to load custom font file '21'
+Failed to load custom font file '22'
+Failed to load custom font file '23'
+Failed to load custom font file '24'
+Failed to load custom font file '25'
+Failed to load custom font file '26'
+Current item schema is up-to-date with version 5EE386FD.
+CTFGCClientSystem::PostInitGC
+CTFGCClientSystem - adding listener
+ProtoDefs post data loaded.
+ProtoDefs post data loaded.
+'overrides/pre_comfig.cfg' not present; not executing.
+Lobby-based matchmaking mode not active
+Can't alias "kill" as it's already a ConCommand or ConVar and not an input command (+/-).
+Can't alias "explode" as it's already a ConCommand or ConVar and not an input command (+/-).
+Can't alias "commentary_finishnode" as it's already a ConCommand or ConVar and not an input command (+/-).
+Unknown command "r_shadowlod"
+Unknown command "cat_ipc_exec_all"
+Unknown command "cat_detach"
+Unknown command "block_game_overrides_once"
+'overrides/setup_hook.cfg' not present; not executing.
+Ultra preset selected 
+'addons/disable-pyroland.cfg' not present; not executing.
+'addons/flat-mouse.cfg' not present; not executing.
+'addons/lowmem.cfg' not present; not executing.
+'addons/no-footsteps.cfg' not present; not executing.
+'addons/no-soundscapes.cfg' not present; not executing.
+'addons/no-tutorial.cfg' not present; not executing.
+'addons/null-canceling-movement.cfg' not present; not executing.
+'addons/transparent-viewmodels.cfg' not present; not executing.
+Unknown command "r_shadowlod"
+Modules applied 
+ 
+ 
+ 
+ 
+---------------|||||-------------------- 
+----------||||||||||-------------------- 
+-------||||||||------------------------- 
+-----||||||-----||||||||---------------- 
+---|||||----||||||||||||||||------------ 
+--||||----|||||||------|||||||---------- 
+-||||---|||||--------------|||||-------- 
+-|||---||||------------------||||------- 
+|||---||||--------------------||||------ 
+|||---|||----------------------|||------ 
+|||---|||----------------------|||---||| 
+|||---|||----------------------|||---||| 
+|||---||||--------------------||||---||| 
+||||---||||------------------||||---|||| 
+|||||---|||||--------------|||||---||||| 
+||||||---||||||||------|||||||----|||||| 
+||||||||----||||||||||||||||----|||||||| 
+|||--||||||-----||||||||-----||||||--||| 
+|||----||||||||----------||||||||----||| 
+|||-------||||||||||||||||||||-------||| 
+|||-----------||||||||||||-----------||| 
+ 
+ 
+ 
+ 
+  ********************************** 
+  ********************************** 
+  mastercomfig 9.10.3 loaded 
+  May 6, 2024 
+  ********************************** 
+  ********************************** 
+ 
+ 
+ 
+ 
+  ################################################## 
+  This release took 50 hours to produce. 
+  If you like the work I do, consider supporting me! 
+ 
+  docs.comfig.app/latest/support_me 
+ 
+  I accept Ko-fi, Liberapay, and trade offers! 
+ 
+  Your continued support, gratitude and dedication 
+  are much appreciated. Thank you so much! 
+  ################################################## 
+ 
+ 
+ 
+ 
+------------------------------------------------------------------------------------------------------------- 
+Client settings initiated 
+Can't use cheat cvar mat_fullbright in multiplayer, unless the server has sv_cheats set to 1.
+Can't use cheat cvar mat_drawwater in multiplayer, unless the server has sv_cheats set to 1.
+Aliases initiated 
+Various binds initiated 
+Engineer build binds initiated 
+Network settings initiated 
+Blood toggle initiated 
+Hitsound initiated 
+Scoreboard toggle initiated 
+Numpad binds initiated 
+Movie rendering initiated 
+------------------------------------------------------------------------------------------------------------- 
+Can't alias "mat_antialias" as it's already a ConCommand or ConVar and not an input command (+/-).
+Creating fallback sound cache at: c:\program files (x86)\steam\steamapps\common\team fortress 2\tf\sound_workshop
+[TF Workshop] Got updated information for map [ workshop/cp_gravelpit_snowy_rc1.ugc2880304700 ]
+[TF Workshop] Got updated information for map [ workshop/pl_blocked_b14.ugc3475774414 ]
+[TF Workshop] Got updated information for map [ workshop/koth_mannhole_b1.ugc3478225408 ]
+[TF Workshop] Got updated information for map [ workshop/koth_sewer_b3.ugc3329421443 ]
+[TF Workshop] Got updated information for map [ workshop/koth_snobed_a1.ugc2889109326 ]
+Creating fallback sound cache at: c:\program files (x86)\steam\steamapps\common\team fortress 2\tf\sound_workshop
+Network: IP 192.168.1.249, mode MP, dedicated No, ports 27015 SV / 27005 CL
+Connecting to 85.117.240.14:27020...
+Connected to 85.117.240.14:27020
+
+Team Fortress
+Map: cp_dustbowl
+Players: 43 / 64
+Build: 10195385
+Server Number: 6
+
+Attemped to precache unknown particle system "Explosions_MA_Dustup_2"!
+Attemped to precache unknown particle system "Explosions_UW_Debris001"!
+Attemped to precache unknown particle system "projectile_fireball_center"!
+Attemped to precache unknown particle system "projectile_fireball_ring_fire"!
+Attemped to precache unknown particle system "projectile_fireball_smoke"!
+Attemped to precache unknown particle system "projectile_fireball_end"!
+Attemped to precache unknown particle system "projectile_fireball_end_ring_fire"!
+Attemped to precache unknown particle system "projectile_fireball_end_ring_smoke"!
+Attemped to precache unknown particle system "dragons_fury_FloatieEmbers"!
+Attemped to precache unknown particle system "projectile_fireball_fireball_pyrovision"!
+Attemped to precache unknown particle system "projectile_fireball_smokeball_pyrovision"!
+Attemped to precache unknown particle system "projectile_fireball_smokepuff_pyrovision"!
+Attemped to precache unknown particle system "projectile_fireball_trail_pyrovision"!
+The server is using sv_pure -1 (no file checking).
+No such variable "" for material "models/workshop/player/items/spy/sum25_spy_ties_style2/sum25_spy_ties_style2"
+Error: Material "models/workshop/player/items/spy/sum25_spy_ties_style2/sum25_spy_ties_style2" : proxy "Multiply" unable to initialize!
+No such variable "" for material "models/workshop/player/items/spy/sum25_spy_ties_style2/sum25_spy_ties_style2_blue"
+Error: Material "models/workshop/player/items/spy/sum25_spy_ties_style2/sum25_spy_ties_style2_blue" : proxy "Multiply" unable to initialize!
+Cannot figure out which search path sound\physics\metal\metal_grenade_roll_loop1.wav came from. Not playing.
+Cannot figure out which search path sound\weapons\timer.wav came from. Not playing.
+Cannot figure out which search path sound\items\pyro_guitar_solo_with_verb.wav came from. Not playing.
+Cannot figure out which search path sound\player\sniper_taunt_hawk.wav came from. Not playing.
+Cannot figure out which search path sound\player\taunt_pyro_twirl.wav came from. Not playing.
+Cannot figure out which search path sound\player\taunt_yeti_standee_spy_swing1.wav came from. Not playing.
+Cannot figure out which search path sound\player\taunt_yeti_standee_spy_swing2.wav came from. Not playing.
+Cannot figure out which search path sound\player\cyoa_pda_dial1.wav came from. Not playing.
+Cannot figure out which search path sound\player\cyoa_pda_dial2.wav came from. Not playing.
+Cannot figure out which search path sound\player\cyoa_pda_dial3.wav came from. Not playing.
+Cannot figure out which search path sound\player\cyoa_pda_dial4.wav came from. Not playing.
+Cannot figure out which search path sound\player\cyoa_pda_dial5.wav came from. Not playing.
+Cannot figure out which search path sound\ui\quest_status_complete.wav came from. Not playing.
+Cannot figure out which search path sound\vo\halloween_eyeball\eyeball_biglaugh02.mp3 came from. Not playing.
+MP3 is completely missing, sound system will be upset to learn of this [ vo\halloween_eyeball\eyeball_biglaugh02.mp3 ]
+Cannot figure out which search path sound\weapons\shotgun_cock.wav came from. Not playing.
+Cannot figure out which search path sound\weapons\airstrike_fail.wav came from. Not playing.
+Cannot figure out which search path sound\vo\mvm_sentry_buster_alerts01.wav came from. Not playing.
+Cannot figure out which search path sound\vo\mvm_sentry_buster_alerts02.wav came from. Not playing.
+Cannot figure out which search path sound\vo\mvm_sentry_buster_alerts03.wav came from. Not playing.
+Cannot figure out which search path sound\vo\mvm_sentry_buster_alerts04.wav came from. Not playing.
+Cannot figure out which search path sound\vo\mvm_sentry_buster_alerts05.wav came from. Not playing.
+Cannot figure out which search path sound\vo\mvm_sentry_buster_alerts06.wav came from. Not playing.
+SOLID_VPHYSICS static prop with no vphysics model! (models/props_foliage/grass_02_cluster01.mdl)
+Voice_Init: Using Steam voice optimal sample rate 24000
+Kataiser connected
+Blocking HTML info panel 'https://adjuka.com/motd/b46f995f-f13f-4a3c-a6d2-1786fd2fc4b5?version=1.1.4&player=70.130.70.38&server=85.117.240.14:27020&game=tf'; Using plaintext instead.
+Blocking HTML info panel 'https://adjuka.com/motd/b46f995f-f13f-4a3c-a6d2-1786fd2fc4b5?version=1.1.4&player=70.130.70.38&server=85.117.240.14:27020&game=tf'; Using plaintext instead.
+Compact freed 434176 bytes
+Using joystick 'Xbox360 controller' configuration
+JOY_AXIS_X:  mapped to Side (absolute)
+JOY_AXIS_Y:  mapped to Forward (absolute)
+JOY_AXIS_Z:  unmapped
+JOY_AXIS_R:  mapped to Look (absolute)
+JOY_AXIS_U:  mapped to Turn (absolute)
+JOY_AXIS_V:  unmapped
+Advanced Joystick settings initialized
+Redownloading all lightmaps
+King Ham of the Vro Nation killed Edzone with tomislav.
+PseuomodulatedSpectralProjectio killed andrey with brass_beast.
+Roxy : i'd rather see a surrender
+a cringe child : !rtd
+Mintmaka : !rtd
+TheRedGuy killed MrCraftyPanther with tomislav. (crit)
+MrCraftyPanther killed a cringe child with player.
+Mostarda : !rtd
+[Class Wars] andrey has voted to surrender for the blue team (2/11)
+Mister Loquen : !rtd
+charlie perc : !rtd
+PalpaLore killed Phoenixtotem with tomislav. (crit)
+probablykeanu : brass beast, trust
+Edzone : !rtd
+[Class Wars] Mr. Lollipop has voted to surrender for the blue team (3/11)
+Mr. Lollipop : !surrender
+Mister Loquen : fuck!
+No such variable "$basetexture" for material "effects/tracer1"
+charlie perc killed miraphysix with minigun. (crit)
+charlie perc killed TheRedGuy with minigun. (crit)
+[Class Wars] Edzone has voted to surrender for the red team (1/12)
+Edzone : !surrender
+probablykeanu killed green with natascha.
+Mister Loquen : why me?!
+kfccarrasco : !rtd
+charlie perc killed PalpaLore with minigun. (crit)
+Hgrunt John suicided.
+RickV2 killed andrey with minigun.
+Mostarda : MOTHER RUSSIA DOES NOT SURRENDEr
+RickV2 killed probablykeanu with minigun.
+charlie perc killed My name is Gelvin with minigun. (crit)
+Edzone : !rtd
+p4p5ik killed MrCraftyPanther with minigun.
+charlie perc killed bruhbruh23 with minigun. (crit)
+Gume00 killed p4p5ik with minigun.
+kfccarrasco killed charlie perc with minigun.
+No such variable "$basetexture" for material "effects/healsign"
+No such variable "$basetexture" for material "effects/tracer1"
+Mostarda killed PseuomodulatedSpectralProjectio with tomislav.
+miraphysix suicided.
+RickV2 killed trashcan462 with minigun.
+Phoenixtotem killed Vens with minigun.
+kfccarrasco killed Mr. Lollipop with minigun.
+a cringe child : !rtd
+Mostarda killed Mister Loquen with tomislav.
+kfccarrasco killed Gume00 with minigun.
+Cyclist killed Edzone with tomislav.
+probablykeanu killed RickV2 with natascha.
+PseuomodulatedSpectralProjectio suicided.
+Nazbol killed Jimmy Carter's Peanut with tomislav.
+Nazbol killed probablykeanu with tomislav.
+bruhbruh23 suicided.
+Edzone : !rtd
+MrCraftyPanther killed PalpaLore with natascha. (crit)
+MrCraftyPanther killed tecknitian with natascha. (crit)
+RickV2 : !rtd
+Tyto killed Mintmaka with minigun.
+Download file 'user_custom/c1/c12cc55b.dat' already exists!
+visionary killed Gordon Freeman Gaming with minigun.
+RickV2 :  !rtd
+Nazbol killed andrey with tomislav.
+charlie perc killed My name is Gelvin with minigun.
+John 'Deep' Throat : 10 fucking minutes
+Nazbol killed trashcan462 with tomislav.
+RickV2 : !rtd
+visionary killed p4p5ik with minigun.
+No such variable "$basetexture" for material "effects/brightglow_y_nomodel"
+John 'Deep' Throat killed Mostarda with minigun.
+green killed charlie perc with tomislav.
+ranged weapon? .͜. : yeah
+Phoenixtotem killed a cringe child with minigun.
+probablykeanu : !rtd
+Edzone : ten
+TheRedGuy killed visionary with tomislav.
+probablykeanu killed John 'Deep' Throat with natascha.
+StrikeZero killed Mr. Lollipop with tomislav.
+Edzone : !rtd
+green killed Phoenixtotem with tomislav.
+Tyto killed Nazbol with minigun.
+John 'Deep' Throat killed Hgrunt John with player.
+No such variable "$C0_X" for material "dev/lumcompare"
+green killed Gume00 with tomislav.
+No such variable "$bloomamount" for material "dev/blurfiltery_nohdr"
+PseuomodulatedSpectralProjectio suicided.
+Silly | StrikeZero : !rtd
+No such variable "$C0_Y" for material "dev/lumcompare"
+No such variable "$bloomamount" for material "dev/blurfiltery_nohdr"
+No such variable "$C0_X" for material "dev/lumcompare"
+No such variable "$C0_X" for material "dev/lumcompare"
+Edzone defended First Cap, Stage Two for team #2
+Edzone killed Jimmy Carter's Peanut with tomislav.
+No such variable "$C0_X" for material "dev/lumcompare"
+[StoreBot] Got too many Store Credits? Buy TF2 Items with them by typing in !storebot
+No such variable "$C0_X" for material "dev/lumcompare"
+No such variable "$C0_Y" for material "dev/lumcompare"
+TheRedGuy : !rtd
+Edzone killed Tyto with tomislav.
+No such variable "$basetexture" for material "effects/softglow_translucent"
+bruhbruh23 : !thirdperson
+kfccarrasco defended First Cap, Stage Two for team #2
+kfccarrasco killed probablykeanu with minigun.
+Mister Loquen : !rtd
+StrikeZero killed MrCraftyPanther with tomislav.
+a cringe child : !rtd
+a cringe child suicided.
+Cyclist killed RickV2 with tomislav.
+StrikeZero killed trashcan462 with tomislav.
+charlie perc : !rtd
+a cringe child suicided.
+Nazbol suicided.
+Gordon Freeman Gaming killed Cyclist with minigun.
+King Ham of the Vro Nation killed PalpaLore with player.
+Vens killed visionary with minigun.
+green killed probablykeanu with tomislav.
+Gordon Freeman Gaming killed Mr. Lollipop with minigun.
+No such variable "$basetexture" for material "effects/healsign"
+destroyed Lobby 
+[PartyClient] Requesting queue for 12v12 Casual Match
+[ReliableMsg] PartyQueueForMatch queued for Party ID 0, Embedded Options 1
+[PartyClient] Entering queue for match group 12v12 Casual Match
+[ReliableMsg] PartyQueueForMatch started for Party ID 0, Embedded Options 1
+[PartyClient] Joining party 689682234294374
+[PartyClient] Re-joining party 689682234294374 we previously had queued messages for.  Triggering full resend of options.
+[ReliableMsg] PartySetOptions queued for Party ID 689682234294374, Overwrite 1
+[ReliableMsg] PartyQueueForMatch successfully sent for Party ID 0, Embedded Options 1
+[ReliableMsg] PartySetOptions started for Party ID 689682234294374, Overwrite 1
+[ReliableMsg] PartySetOptions successfully sent for Party ID 689682234294374, Overwrite 1

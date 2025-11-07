@@ -94,6 +94,9 @@ class TestTF2RichPresence(unittest.TestCase):
         self.assertEqual(app.interpret_console_log('test_resources\\console_community_disconnect2.log', {'not Kataiser'}, True),
                          console_log.ConsoleLogParsed(False, 'vsh_military_area_se6', 'Heavy', 'Not queued', False, '', 14, 32))
         self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(22160, in_community_server=True, found_first_wav_cache=True))
+        self.assertEqual(app.interpret_console_log('test_resources\\console_community_disconnect3.log', {'not Kataiser'}, True),
+                         console_log.ConsoleLogParsed(True, '', '', 'Queued for Casual', False))
+        self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(18588))
         self.assertEqual(app.interpret_console_log('test_resources\\console_blanks.log', {'not Kataiser'}, True),
                          console_log.ConsoleLogParsed(False, 'sd_doomsday_event', 'Pyro', 'Not queued', False, '', 16, 24))
         self.assertEqual(app.game_state.console_log_persistence, console_log.ConsoleLogPersistence(94920))
