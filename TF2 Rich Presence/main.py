@@ -184,7 +184,12 @@ class TF2RichPresense:
     def loop_body(self):
         # because closing the GUI doesn't actually exit the program
         if not self.gui.alive:
-            del self.log
+            try:
+                self.disconnect_client()
+                del self.log
+            except Exception:
+                pass
+
             raise SystemExit
 
         loop_start_time: float = time.perf_counter()
@@ -413,16 +418,7 @@ class TF2RichPresense:
         name_short = program_name if not name_short else name_short
         self.test_state = f'no {name_short.lower()}'
         self.slow_sleep_time = True  # update less often if not all programs are running
-
-        if self.client_connected:
-            self.log.debug("Disconnecting RPC client")
-            self.client_connected = False
-
-            try:
-                self.rpc_client.disconnect()
-            except Exception as client_connect_error:
-                if program_name == 'Discord' and str(client_connect_error) in ("Can't send data to Discord via IPC.", "Can't connect to Discord Client."):
-                    self.log.error("RPC client disconnect failed, ignoring cause Discord is closed", reportable=False)
+        self.disconnect_client(program_name)
 
         self.gui.set_state_1('default', self.loc.text("{0} isn't running").format(program_name))
         self.gui.clear_fg_image()
@@ -434,6 +430,16 @@ class TF2RichPresense:
         base_window_title: str = self.loc.text("TF2 Rich Presence ({0})").format(launcher.VERSION)
         window_title: str = self.loc.text("{0} - Waiting for {1}").format(base_window_title, program_name)
         self.gui.set_window_title(window_title)
+
+    def disconnect_client(self, program_name: str):
+        self.log.debug("Disconnecting RPC client")
+        self.client_connected = False
+
+        try:
+            self.rpc_client.disconnect()
+        except Exception as client_connect_error:
+            if program_name == 'Discord' and str(client_connect_error) in ("Can't send data to Discord via IPC.", "Can't connect to Discord Client."):
+                self.log.error("RPC client disconnect failed, ignoring cause Discord is closed", reportable=False)
 
     # sends RPC data, connecting to Discord initially if need be
     @utils.timeout(2.0)
