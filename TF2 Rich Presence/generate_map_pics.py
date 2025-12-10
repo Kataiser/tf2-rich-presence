@@ -51,7 +51,7 @@ def main():
         map_datas.append((map_entry.find('code').text, map_entry.find_all('a')[1].get('href')))
 
     for map_data in enumerate(map_datas):
-        map_file = map_data[1][0].strip()
+        map_file = map_data[1][0].strip().replace('ctf_devilcross', 'ctf_doublecross_event')
         print(f"\n({map_data[0] + 1}/{len(map_datas)}) {map_file}", end=' ')
 
         if map_file in excluded or map_file in local_images or (whitelist and map_file not in whitelist):

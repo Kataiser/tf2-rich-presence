@@ -359,7 +359,7 @@ class TestTF2RichPresence(unittest.TestCase):
 
     def test_load_maps_db(self):
         maps_db = gamemodes.load_maps_db()
-        self.assertEqual(len(maps_db), 223)
+        self.assertEqual(len(maps_db), 229)
 
         for map_ in maps_db:
             map_data = maps_db[map_]
@@ -758,7 +758,7 @@ class TestTF2RichPresence(unittest.TestCase):
         map_pics_discord_exists = os.path.isdir('map_pics_discord')
         self.assertEqual(len(console_log.tf2_classes), len(os.listdir('gui_images\\classes')))
         self.assertEqual(len(gamemodes.modes) + len(gamemodes.have_drawing) + 1, len(os.listdir('gui_images\\bg_modes')), len(os.listdir('gui_images\\fg_modes')))
-        self.assertEqual(len(gamemodes.load_maps_db()) - len(game_state.map_fallbacks), len(os.listdir('gui_images\\fg_maps')))
+        self.assertEqual(set(gamemodes.load_maps_db()) - set(game_state.map_fallbacks), set([m.removesuffix('.webp') for m in os.listdir('gui_images\\fg_maps')]))
 
         if map_pics_discord_exists:
             self.assertEqual(len(gamemodes.load_maps_db()) - len(game_state.map_fallbacks), len(os.listdir('map_pics_discord')))
