@@ -319,8 +319,6 @@ def main(version_num='v2.2.3'):
                 break
     shutil.copy(Path(f'{venv_packages_dir}/ujson.{interpreter_prefix}-win_amd64.pyd'), new_packages_dir)
     print(f"Copied {len(needed_packages) + 1} packages from {venv_packages_dir} to {new_packages_dir}")
-    shutil.rmtree(Path(f'{new_packages_dir}/psutil/tests'))
-    print("Deleted psutil tests")
     list(Path(f'{new_packages_dir}\\PIL').glob('_avif.*.pyd'))[0].unlink()
     print("Deleted PIL avif")
 
