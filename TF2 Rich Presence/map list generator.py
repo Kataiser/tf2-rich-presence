@@ -24,7 +24,9 @@ def main():
                           'cp_cloak': ('control-point', 'Control Point')}
     map_gamemodes = {'itemtest': ('itemtest', 'unknown', 'Unknown gamemode'),
                      'devtest': ('devtest', 'unknown', 'Unknown gamemode'),
-                     'background01': ('background01', 'unknown', 'Unknown gamemode')}
+                     'background01': ('background01', 'unknown', 'Unknown gamemode'),
+                     'cp_cloak': ('Cloak', 'control-point', 'Control Point'),
+                     'mvm_example': ('Example', 'mvm', 'Mann vs. Machine')}
 
     r = requests.get('https://wiki.teamfortress.com/wiki/List_of_maps')
     soup = BeautifulSoup(r.text, 'lxml')
@@ -43,6 +45,9 @@ def main():
             continue
         elif map_file == 'sd_marshlands':  # incorrect on the wiki
             map_gamemodes['htf_marshlands'] = ('Marshlands', 'special-delivery', 'Hold the Flag')
+            continue
+        elif map_file == 'cppl_gavle':
+            map_gamemodes['cppl_gavle'] = ('Gavle', 'payload', 'Payload')
             continue
 
         gamemode_fancy = tr.find_all('td')[2].text.strip()

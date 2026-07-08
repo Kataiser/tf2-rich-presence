@@ -359,7 +359,7 @@ class TestTF2RichPresence(unittest.TestCase):
 
     def test_load_maps_db(self):
         maps_db = gamemodes.load_maps_db()
-        self.assertEqual(len(maps_db), 229)
+        self.assertEqual(len(maps_db), 235)
 
         for map_ in maps_db:
             map_data = maps_db[map_]
