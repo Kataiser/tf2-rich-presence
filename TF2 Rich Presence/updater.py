@@ -74,8 +74,10 @@ class UpdateChecker:
             except KeyError:
                 if 'message' in response and 'API rate limit exceeded' in response['message']:
                     self.log.error(f"Rate limited: Github {response['message'].split('(')[0][:-1]}")
-                else:
+                elif raise_exceptions:
                     raise
+                else:
+                    return None
 
             if launcher.VERSION == newest_version:
                 self.log.debug(f"Up to date ({launcher.VERSION})")
