@@ -611,7 +611,7 @@ class GUI(tk.Frame):
 
             for line in build_info_lines:
                 if line.startswith("Built at"):
-                    build_time: str = line.removeprefix("Built at: ").rstrip('\n')
+                    build_time = line.removeprefix("Built at: ").rstrip('\n')
                     break
 
         # yeah not gonna localize this

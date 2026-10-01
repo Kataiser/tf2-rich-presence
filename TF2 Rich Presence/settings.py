@@ -34,7 +34,7 @@ def access_registry(save: Optional[dict] = None) -> Optional[dict]:
         # assume no key means default settings. might not be true but whatever
         default_settings: dict = defaults()
         winreg.SetValue(reg_key, 'Settings', winreg.REG_SZ, json.dumps(default_settings, separators=(',', ':')))
-        reg_key_data: dict = default_settings
+        reg_key_data = default_settings
 
     if save:
         winreg.SetValue(reg_key, 'Settings', winreg.REG_SZ, json.dumps(save, separators=(',', ':')))

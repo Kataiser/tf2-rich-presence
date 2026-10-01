@@ -109,18 +109,18 @@ class ProcessScanner:
             self.process_data['Discord'] = copy.deepcopy(self.p_data_default['Discord'])
 
     # a mess of logic that gives process info from a process name (not exe name) or PID
-    def get_process_info(self, process: Union[str, int], return_data: Tuple[str, ...], validate_condebug: bool = False) -> Dict[str, Union[str, bool, int, None]]:
+    def get_process_info(self, process_id: Union[str, int], return_data: Tuple[str, ...], validate_condebug: bool = False) -> Dict[str, Union[str, bool, int, None]]:
         p_info: Dict[str, Union[str, bool, None, int]] = {'running': False, 'path': None, 'time': None}
         p_info_nones: Dict[str, Union[str, bool, None, int]] = {'running': False, 'path': None, 'time': None}
 
-        if isinstance(process, str):
-            pid: int = self.process_data[process]['pid']
+        if isinstance(process_id, str):
+            pid: Union[int, None] = self.process_data[process_id]['pid']
 
             if pid is None:
                 self.all_pids_cached = False
                 return p_info
         else:
-            pid = process
+            pid = process_id
 
         try:
             process: psutil.Process = psutil.Process(pid=pid)
