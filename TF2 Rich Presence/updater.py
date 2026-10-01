@@ -7,7 +7,7 @@ import traceback
 from concurrent.futures import Future
 from typing import Dict, Optional, Tuple, Union
 
-import ujson
+import orjson
 
 import launcher
 import logger
@@ -64,7 +64,7 @@ class UpdateChecker:
             self.log.error(f"Non-connection based update error: {traceback.format_exc()}")
         else:
             self.log.debug(f"Update check took {round(result.elapsed.microseconds / 1000000, 3)} seconds")
-            response: dict = ujson.loads(result.content)
+            response: dict = orjson.loads(result.content)
             self.api_future = None
 
             try:

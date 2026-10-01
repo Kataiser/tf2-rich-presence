@@ -11,7 +11,7 @@ from tkinter import messagebox
 from typing import Dict, Optional, Tuple, Union
 from typing import List
 
-import ujson
+import orjson
 
 import launcher
 import logger
@@ -87,10 +87,13 @@ def access_localization_data(append: Optional[tuple] = None) -> Optional[dict]:
                     else:
                         localization_data_out[key] = ""
 
-                with open(os.path.join('locales', f'{lang}.json'), 'w', encoding='UTF8') as localization_file:
-                    ujson.dump(localization_data_out, localization_file, indent=4, ensure_ascii=False, escape_forward_slashes=False)
+                with open(os.path.join('locales', f'{lang}.json'), 'wb') as localization_file:
+                    localization_file.write(orjson.dumps(localization_data_out, option=orjson.OPT_INDENT_2))
+
+            return None
         else:
             print(f"Already exists with hash {append_hash}")
+            return None
 
 
 @functools.cache
@@ -105,7 +108,7 @@ def read_localization_files() -> dict:
             lang_name: str = file_split[0]
 
             with open(file_path, 'r', encoding='UTF8') as localization_file:
-                locale_datas[lang_name] = ujson.load(localization_file)
+                locale_datas[lang_name] = orjson.loads(localization_file.read())
 
     return locale_datas
 

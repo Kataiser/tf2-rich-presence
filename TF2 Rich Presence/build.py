@@ -16,7 +16,7 @@ import zipfile
 from pathlib import Path
 
 import requests
-import ujson
+import orjson
 
 import changelog_generator
 import cython_compile
@@ -260,7 +260,7 @@ def main(version_num='v2.2.4'):
     # creates build_info.txt
     if github_repo_path != 'n':
         try:
-            commits_info = ujson.loads(requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/commits', timeout=5, params={'accept': 'application/vnd.github.v3+json'}).text)
+            commits_info = orjson.loads(requests.get('https://api.github.com/repos/Kataiser/tf2-rich-presence/commits', timeout=5, params={'accept': 'application/vnd.github.v3+json'}).text)
             latest_commit_message = commits_info[0]['commit']['message'].split('\n')[0]
             latest_commit = f"\"{latest_commit_message}\" @\n\t{commits_info[0]['html_url'][:60]}"
             got_latest_commit = True
@@ -310,7 +310,7 @@ def main(version_num='v2.2.4'):
     os.mkdir(new_packages_dir)
     venv_packages_dir = site.getsitepackages()[1]
     assert 'site-packages' in venv_packages_dir.lower()
-    needed_packages = ('PIL', 'pillow', 'certifi', 'charset_normalizer', 'idna', 'psutil', 'python-a2s', 'requests', 'requests_futures', 'sentry_sdk', 'urllib3', 'vdf', 'discoIPC')
+    needed_packages = ('PIL', 'pillow', 'certifi', 'charset_normalizer', 'idna', 'psutil', 'python-a2s', 'requests', 'requests_futures', 'sentry_sdk', 'urllib3', 'vdf', 'discoIPC', 'orjson')
     for site_package in os.listdir(venv_packages_dir):
         for needed_package in needed_packages:
             if needed_package in site_package and 'requests_cache' not in site_package:
@@ -318,7 +318,6 @@ def main(version_num='v2.2.4'):
                 new_package_dir = Path(f'{new_packages_dir}/{site_package}')
                 shutil.copytree(site_package_path, new_package_dir)
                 break
-    shutil.copy(Path(f'{venv_packages_dir}/ujson.{interpreter_prefix}-win_amd64.pyd'), new_packages_dir)
     print(f"Copied {len(needed_packages) + 1} packages from {venv_packages_dir} to {new_packages_dir}")
     list(Path(f'{new_packages_dir}\\PIL').glob('_avif.*.pyd'))[0].unlink()
     print("Deleted PIL avif")
@@ -345,7 +344,7 @@ def main(version_num='v2.2.4'):
     # ensure everything exists that needs to
     assert os.listdir(Path(f'{new_build_folder_name}/resources/__pycache__')) != []
     assert os.listdir(Path(f'{new_build_folder_name}/resources/{interpreter_name}')) != []
-    assert len(os.listdir(Path(f'{new_build_folder_name}/resources/packages'))) == 23
+    assert len(os.listdir(Path(f'{new_build_folder_name}/resources/packages'))) == 24
     assert len(os.listdir(Path(f'{new_build_folder_name}/resources/gui_images'))) == 13
     assert len(os.listdir(Path(f'{new_build_folder_name}/locales'))) == 13
     assert os.path.isfile(Path(f'{new_build_folder_name}/TF2 Rich Presence.bat'))
@@ -359,7 +358,7 @@ def main(version_num='v2.2.4'):
     assert os.path.isfile(Path(f'{new_build_folder_name}/resources/launcher.py'))
     assert os.path.isfile(Path(f'{new_build_folder_name}/resources/build_info.txt'))
     with open(Path(f'{new_build_folder_name}/resources/maps.json'), 'r') as assertjson_maps:
-        assert ujson.load(assertjson_maps) != {}
+        assert orjson.loads(assertjson_maps.read()) != {}
     pyd_extension = f'{interpreter_prefix}-win_amd64.pyd' if sys.maxsize.bit_length() > 32 else f'{interpreter_prefix}-win32.pyd'
     for file in cython_compile.targets:
         assert os.stat(f'{file}.py').st_mtime < os.stat(Path(f'cython_build/{file}.{pyd_extension}')).st_mtime or nocython

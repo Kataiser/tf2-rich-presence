@@ -6,7 +6,7 @@ import functools
 import os
 from typing import Dict, List, Tuple, Union
 
-import ujson
+import orjson
 
 import game_state
 import launcher
@@ -66,7 +66,7 @@ def load_maps_db() -> Dict[str, List[str]]:
 
     if os.path.isfile(maps_db_path):
         with open(maps_db_path, 'r') as maps_db:
-            return ujson.load(maps_db)
+            return orjson.loads(maps_db.read())
     else:
         return {}
 
