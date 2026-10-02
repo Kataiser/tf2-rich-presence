@@ -160,14 +160,14 @@ class ProcessScanner:
 
             return p_info
         except psutil.NoSuchProcess:
-            self.log.debug(f"Cached PID {pid} ({process}) is no longer running")
+            self.log.debug(f"Cached PID {pid} ({process_id}) is no longer running")
             self.all_pids_cached = False
             return p_info_nones
         except Exception:
             formatted_exception: str = traceback.format_exc()
 
             try:
-                self.log.error(f"psutil error for {process}: {formatted_exception}")
+                self.log.error(f"psutil error for PID {process_id}: {formatted_exception}")
             except NameError:
                 self.log.error(f"psutil error: {formatted_exception}")
 
