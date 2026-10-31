@@ -14,9 +14,9 @@ jobs:
     if: "!contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     - name: Install Python 3.13.5
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v7
       with:
         python-version: 3.13.5
     - name: Install dependencies
@@ -34,7 +34,7 @@ jobs:
         cd "TF2 Rich Presence"
         python build.py --n
     - name: Upload installer artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: TF2RichPresence_v2.2.5_setup.exe
         path: TF2 Rich Presence/TF2RichPresence_v2.2.5_setup.exe
@@ -44,6 +44,6 @@ jobs:
         mkdir logs
         coverage run tests.py
     - name: "Upload coverage to Codecov"
-      uses: codecov/codecov-action@v5
+      uses: codecov/codecov-action@v7
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
