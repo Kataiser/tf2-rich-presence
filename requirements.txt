@@ -3,7 +3,9 @@ certifi==2026.10.23
 charset-normalizer==3.5.2
 cython==3.3.0
 discoIPC==1.0.0
+h11==0.16.0
 idna==3.20
+jh2==5.0.15
 lxml==6.1.3
 orjson==3.13.0
 pillow==13.0.0
@@ -12,5 +14,5 @@ requests-futures==1.1.0
 requests==2.34.2
 sentry-sdk==2.73.0
 setuptools==84.2.1
-urllib3==2.8.0
+urllib3-future==2.25.905
 vdf==3.4

@@ -310,8 +310,9 @@ def main(version_num='v2.2.5'):
     os.mkdir(new_packages_dir)
     venv_packages_dir = site.getsitepackages()[1]
     assert 'site-packages' in venv_packages_dir.lower()
-    needed_packages = ('PIL', 'pillow', 'certifi', 'charset_normalizer', 'idna', 'psutil', 'python-a2s', 'requests', 'requests_futures', 'sentry_sdk', 'urllib3', 'vdf', 'discoIPC', 'orjson')
-    for site_package in os.listdir(venv_packages_dir):
+    needed_packages = ('PIL', 'pillow', 'certifi', 'charset_normalizer', 'idna', 'psutil', 'python-a2s', 'requests', 'requests_futures', 'sentry_sdk',
+                       'urllib3', 'urllib3_future', 'h11', 'jh2', 'vdf', 'discoIPC', 'orjson')
+    for site_package in [p.name for p in Path(venv_packages_dir).iterdir() if p.is_dir()]:
         for needed_package in needed_packages:
             if needed_package in site_package and 'requests_cache' not in site_package:
                 site_package_path = Path(f'{venv_packages_dir}/{site_package}')
@@ -344,7 +345,7 @@ def main(version_num='v2.2.5'):
     # ensure everything exists that needs to
     assert os.listdir(Path(f'{new_build_folder_name}/resources/__pycache__')) != []
     assert os.listdir(Path(f'{new_build_folder_name}/resources/{interpreter_name}')) != []
-    assert len(os.listdir(Path(f'{new_build_folder_name}/resources/packages'))) == 24
+    assert len(os.listdir(Path(f'{new_build_folder_name}/resources/packages'))) == 29
     assert len(os.listdir(Path(f'{new_build_folder_name}/resources/gui_images'))) == 13
     assert len(os.listdir(Path(f'{new_build_folder_name}/locales'))) == 13
     assert os.path.isfile(Path(f'{new_build_folder_name}/TF2 Rich Presence.bat'))
